@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["events", "ads-routing", "ads-redlines", "team-shared-sql-practice", "cursor-sql-standards-md"]
+sources: ["events", "ads-routing", "ads-redlines-review-954bdf4e17", "team-shared-sql-practice", "cursor-sql-standards-md"]
 tags: ["SQL", "BigQuery", "分区", "_TABLE_SUFFIX", "30天", "时区"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["ads-redlines"]
 ---
 
 # SQL 查询范围与验证约定
@@ -42,7 +43,7 @@ GROUP BY event_name
 
 ## 来源与状态
 
-来源摘录：[events](../../provenance/excerpts/events.txt)、[ads-routing](../../provenance/excerpts/ads-routing.txt)、[ads-redlines](../../provenance/excerpts/ads-redlines.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[events](../../provenance/excerpts/events.txt)、[ads-routing](../../provenance/excerpts/ads-routing.txt)、[ads-redlines](../../library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
 
 ## 合并的业务细节
 

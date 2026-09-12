@@ -1,0 +1,48 @@
+# Collart iOS / Android 俄罗斯支付播报口径
+
+> 文档整理：2026-09-12；业务状态：documented；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+> 建立：2026-07-31  
+> SQL 积木：[`../sql_presets/russia_payment_broadcast.sql`](../sql_presets/russia_payment_broadcast.sql)
+
+## 1. 数据源
+
+> **2026-08-28 起（推荐）**：用户粒度收入改 Stripe，不再用 `ods.orders`。
+
+- T+1：`pubdata2025.dwd.dwd_cdct_revenue_stripe_di`（`revneue>0`，按 `transaction_id` 去重）
+- **不要用** `dwd_cdct_orders_revenue_hi`（2026-09-07 起：空表，补不上洞）
+- 产品：Stripe `app_name`：Android=`collart_android` / `collart-android`；iOS=`vidart` / `vidart_ios` / `vidart-ios`
+- 俄罗斯收银：`UPPER(currency) = 'RUB'`
+- 用户主键：`user_id`
+- 金额：`ROUND(revneue + IFNULL(fee, 0), 2)`，**不要** `/rate/100`
+
+## 2. 支付成功口径
+
+Stripe：`IFNULL(revneue, 0) > 0`（`pending`/`available` 是打款状态，不是未支付）。
+
+历史 orders 对照（2026-07-20 至 2026-07-30）成功状态只有 `paid`；新口径不再扫 orders。
+
+## 3. 俄罗斯支付专用红线
+
+俄罗斯支付**不查询、不关联**
+`aidata2025.dwd.dwd_apple_user_subscribtion_di`。该表可用于 Apple 订阅对账，
+但不是俄罗斯 Web 收银支付播报的数据源。
+
+切日：`event_date = run_date`（北京日）。12:00、18:00 的 `run_date` 为当天；
+次日 00:00 作为前一日 24:00 汇总。当天 Stripe 可能尚未刷到；明确标注 T+1 与数据截至时间，不能使用已确认空表的 HI 补当天。
+
+## 4. 累计汇总播报规则
+
+1. 每天北京时间 12:00、18:00、次日 00:00 各发送一张累计汇总卡。
+2. 12:00、18:00 全量重算当天累计；次日 00:00 汇总前一自然日全天。
+3. 去重键为 `pay_date + report_cutoff`，发送成功后才写入已播报状态。
+4. 合计与 iOS、Android 分产品均展示：
+   - 累计付费用户：`COUNT(DISTINCT user_id)`
+   - 累计订单：成功订单数
+   - 累计充值：汇总第 1 节已定义的美元金额 `revneue + IFNULL(fee, 0)`，不再除汇率或 100
+5. 卡片完整列出 iOS、Android 当日累计付费用户 ID。
+6. 当前俄罗斯订单包含点数包，因此使用“累计付费用户”，不使用容易误解为
+   仅订阅商品的“累计订阅用户”。
+7. 24:00 正点汇总可能不包含跨日后才回流的延迟订单。
+

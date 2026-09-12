@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["ads-routing", "events", "fashion-orders", "team-shared-project-overview", "cursor-platforms-md"]
+sources: ["ads-routing", "events", "fashion-orders-review-7afb4b3f3b", "team-shared-project-overview", "cursor-platforms-md", "review-e4b31288e0a4a0ad"]
 tags: ["业务", "项目", "Android", "iOS", "VidArt", "Web", "Fashion"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["fashion-orders"]
 ---
 
 # 项目范围与四端标识
@@ -41,7 +42,7 @@ ODS、旧 DWD、DM 和 ADS 可能使用不同 app_name / package_name，不能�
 
 ## 来源与状态
 
-来源摘录：[ads-routing](../../provenance/excerpts/ads-routing.txt)、[events](../../provenance/excerpts/events.txt)、[fashion-orders](../../provenance/excerpts/fashion-orders.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[ads-routing](../../provenance/excerpts/ads-routing.txt)、[events](../../provenance/excerpts/events.txt)、[fashion-orders](../../library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
 
 ## 合并的业务细节
 
@@ -62,7 +63,7 @@ ODS、旧 DWD、DM 和 ADS 可能使用不同 app_name / package_name，不能�
 - **核心功能梯队**：img2video 等生成功能为主；功能渗透率/漏斗用 event_metric 三层。
 - **投放**：ga_delivery / fb_delivery 留存弱于自然量；巴西常见无效流量拖累。
 - **巴西订阅瓶颈**：卡在支付成功率（点击→成功约 1.06%），非曝光；关注 GP 可用性与场景化定价。
-- **大 R 准实时**：`ads_oper_...big_r_realtime_today_income`（当日累计价值播报）；手动加大 R 走平台+UUID 直写，不查高价值表。
+- **大 R 准实时**：`aidata2025.ads_collart.big_r_user_value_state.lifetime_value` 提供累计价值；旧 today_income 是历史辅助源。手动加入流程留作资料，检索本条不授权写状态表或发送播报。
 - **俄罗斯支付**：用户粒度收入用 Stripe `currency='RUB'`（不要 `ods.orders`）；整点播报见知识库。
 
 ### iOS（`collart_ios` / 项目名 VidArt）
@@ -104,3 +105,5 @@ ODS、旧 DWD、DM 和 ADS 可能使用不同 app_name / package_name，不能�
 
 
 来源快照：[cursor-platforms-md](../../provenance/excerpts/cursor-platforms-md.txt)。
+
+本次校正依据：[collart_android/tables/aidata2025.ads_collart.big_r_user_value_state.md](../../library/text/947f56e7da0a743ed6c7940ea59ea07f0952cb7437d98621fa4e9bb160156e96.txt)。

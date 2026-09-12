@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["fashion-orders", "revenue", "ads-redlines", "team-collart_fashion-revenue-boundary"]
+sources: ["fashion-orders-review-7afb4b3f3b", "revenue", "ads-redlines-review-954bdf4e17", "team-collart_fashion-revenue-boundary", "review-979740ccfe320f48"]
 tags: ["Fashion", "收入", "Web", "去重", "transaction_id", "ads_oper_user_revenue_di"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["fashion-orders", "ads-redlines"]
 ---
 
 # Fashion 订单收入与主站边界
@@ -34,4 +35,6 @@ verification_evidence: []
 
 ## 来源与状态
 
-来源摘录：[fashion-orders](../../provenance/excerpts/fashion-orders.txt)、[revenue](../../provenance/excerpts/revenue.txt)、[ads-redlines](../../provenance/excerpts/ads-redlines.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[fashion-orders](../../library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt)、[revenue](../../provenance/excerpts/revenue.txt)、[ads-redlines](../../library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+
+本次校正依据：[collart_fashion/indicators/fashion_revenue.md](../../library/text/46dea22014119ee3fe10b47a69e0e06102e3d8b4b59a7f5efcf631e206de5e19.txt)。

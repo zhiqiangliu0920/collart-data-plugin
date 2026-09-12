@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["full-a7cc6cb8e2b227f3", "full-96da852291e4720b"]
+sources: ["full-a7cc6cb8e2b227f3", "full-96da852291e4720b-review-7afb4b3f3b"]
 tags: ["collart_fashion", "Fashion 2026-09-09 仓库审计的历史证据"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["full-96da852291e4720b"]
 ---
 
 # Fashion 2026-09-09 仓库审计的历史证据
@@ -27,6 +28,6 @@ verification_evidence: []
 ## 来源与状态
 
 - [_generated/fashion_warehouse_audit_20260909/fashion_warehouse_review.md](../../library/text/30963c0d69f6b26d466c87f3e2ec4d574379ffa128300f3ea1b8baacded7b6c8.txt)
-- [collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md](../../library/text/b44e3d7a2111b1b8db778432c5ec8d703c518e8815df4bec5334c5d9c8cf4ea0.txt)
+- [collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md](../../library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。

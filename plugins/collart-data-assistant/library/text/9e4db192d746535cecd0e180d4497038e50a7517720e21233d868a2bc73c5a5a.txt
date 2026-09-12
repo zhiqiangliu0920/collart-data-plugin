@@ -1,0 +1,18 @@
+{
+  "bytes_processed": 77013741,
+  "bytes_billed": 77594624,
+  "slot_millis": 12310,
+  "rows": [
+    {
+      "event_date": "2026-09-07",
+      "stripe_web_source_revenue": 1842.5724325911387,
+      "fashion_matched_in_stripe_web": 25.341137461666953,
+      "fashion_matched_transactions": 2,
+      "fashion_attributed_revenue": 25.341137461666953,
+      "shared_web_sub_revenue": 1842.5724325911392,
+      "shared_fashion_sub_revenue": 25.34,
+      "shared_fashion_us_revenue": 25.34,
+      "shared_fashion_other_country_revenue": 0.0
+    }
+  ]
+}

@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["ads-routing", "ads-redlines", "team-shared-table-routing", "cursor-table-routing-md"]
+sources: ["ads-routing", "ads-redlines-review-954bdf4e17", "team-shared-table-routing", "cursor-table-routing-md"]
 tags: ["选表", "DAU", "日活", "收入", "渠道", "国家", "profile"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["ads-redlines"]
 ---
 
 # 按分析问题选择 ADS 表
@@ -40,7 +41,7 @@ verification_evidence: []
 
 ## 来源与状态
 
-来源摘录：[ads-routing](../../provenance/excerpts/ads-routing.txt)、[ads-redlines](../../provenance/excerpts/ads-redlines.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[ads-routing](../../provenance/excerpts/ads-routing.txt)、[ads-redlines](../../library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
 
 ## 合并的业务细节
 
@@ -75,7 +76,7 @@ verification_evidence: []
 | Web | `aidata2025.ads_collartweb` |
 | Fashion | `aidata2025.ads_collartfashion` |
 
-每端常用表（全限定 = `{dataset}.表名`）：
+每端常用表（全限定 = `{dataset}.表名`）；事件规则例外，统一在公司层 `aidata2025.ads_collart.ads_dim_metric_rule`，四端用 app_name 区分：
 
 | 层 | 表名 | 粒度 | 主要用途 |
 |----|------|------|----------|
@@ -88,7 +89,7 @@ verification_evidence: []
 | 事件 attr | `ads_oper_event_metric_attr_di` | 日×默认维 | 漏斗 `STRUCT<uv,pv>` 多维 |
 | 事件 country | `ads_oper_event_metric_country_di` | 日×国家 | 漏斗上卷 → daily |
 | 日报环比 | `ads_oper_basic_indicator_daily_compare_di` | 指标×国家 | 昨日 vs 前 7 日均；`首日订阅转化率` 用 `purchase_uv_1d` |
-| 指标规则维表 | `ads_dim_metric_rule` | 1 指标 1 行 | 热/冷漏斗口径；Sheet 外表。宽表没有的指标按规则扫 DM / `events_*`，见 [raw-events.md](event-evidence.md) |
+| 指标规则维表 | `aidata2025.ads_collart.ads_dim_metric_rule` | app_name × metric_name | 热/冷漏斗口径；Sheet 外表。宽表没有的指标按规则扫 DM / `events_*`，见 [raw-events.md](event-evidence.md) |
 
 默认维度（attr）：`is_new × is_vip × country × traffic_src_type × traffic_src_platform × traffic_src_name × app_version`(Top5→other)。
 

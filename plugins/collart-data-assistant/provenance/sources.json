@@ -64,7 +64,9 @@
       "excerpt_sha256": "0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104",
       "note": "文档摘录；采集日不代表内容核验日，未把文件时间戳当生效日期。",
       "origin_source": "ai-knowledge",
-      "origin_path": "1company/analysis_playbooks/collart_ads_redlines.md"
+      "origin_path": "1company/analysis_playbooks/collart_ads_redlines.md",
+      "tracking_status": "historical",
+      "superseded_by": "ads-redlines-review-954bdf4e17"
     },
     {
       "id": "web-profile",
@@ -77,7 +79,9 @@
       "excerpt_sha256": "ee1a9a0e81ee33957b51774bf3359a81a1fa6648e6c5cb141bad54635e9c63ac",
       "note": "文档摘录；采集日不代表内容核验日，未把文件时间戳当生效日期。",
       "origin_source": "ai-knowledge",
-      "origin_path": "collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md"
+      "origin_path": "collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md",
+      "tracking_status": "historical",
+      "superseded_by": "web-profile-review-be4e210655"
     },
     {
       "id": "web-channel",
@@ -90,7 +94,9 @@
       "excerpt_sha256": "94a42fe141cb07d9e0695384e100311b4a15a8249e399549207f2ac15da25029",
       "note": "文档摘录；采集日不代表内容核验日，未把文件时间戳当生效日期。",
       "origin_source": "ai-knowledge",
-      "origin_path": "collart_web/indicators/channel_attribution.md"
+      "origin_path": "collart_web/indicators/channel_attribution.md",
+      "tracking_status": "historical",
+      "superseded_by": "web-channel-review-7003847ee3"
     },
     {
       "id": "legacy-ios",
@@ -103,7 +109,9 @@
       "excerpt_sha256": "471c8b526df8b1a78fcbad7fd3ee583aa13421e821a093c5d46c899550c98329",
       "note": "文档摘录；采集日不代表内容核验日，未把文件时间戳当生效日期。",
       "origin_source": "ai-knowledge",
-      "origin_path": "collart_ios/README.md"
+      "origin_path": "collart_ios/README.md",
+      "tracking_status": "historical",
+      "superseded_by": "legacy-ios-review-7873df86c6"
     },
     {
       "id": "legacy-conversion",
@@ -116,7 +124,9 @@
       "excerpt_sha256": "a041b1a1a5232ebcdd38520a8987c2d33a7c1066eec9b785e77070b548cac83a",
       "note": "文档摘录；采集日不代表内容核验日，未把文件时间戳当生效日期。",
       "origin_source": "ai-knowledge",
-      "origin_path": "collart_web/indicators/conversion.md"
+      "origin_path": "collart_web/indicators/conversion.md",
+      "tracking_status": "historical",
+      "superseded_by": "legacy-conversion-review-95f777f166"
     },
     {
       "id": "fashion-orders",
@@ -129,7 +139,9 @@
       "excerpt_sha256": "b44e3d7a2111b1b8db778432c5ec8d703c518e8815df4bec5334c5d9c8cf4ea0",
       "note": "文档摘录；采集日不代表内容核验日，未把文件时间戳当生效日期。",
       "origin_source": "ai-knowledge",
-      "origin_path": "collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md"
+      "origin_path": "collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md",
+      "tracking_status": "historical",
+      "superseded_by": "fashion-orders-review-7afb4b3f3b"
     },
     {
       "id": "retention",
@@ -610,7 +622,9 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/06f8ed14451fd932afccaab126e4ae18fed2f0d64d51dd6843753925ee2a3302.txt",
       "excerpt_sha256": "06f8ed14451fd932afccaab126e4ae18fed2f0d64d51dd6843753925ee2a3302",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json",
+      "tracking_status": "historical",
+      "superseded_by": "full-1fd6dc1741d54dde-review-1afb72cc7d"
     },
     {
       "id": "full-eeebc9e82bd76fe2",
@@ -623,7 +637,9 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637.txt",
       "excerpt_sha256": "f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json",
+      "tracking_status": "historical",
+      "superseded_by": "full-eeebc9e82bd76fe2-review-ddff0eff3b"
     },
     {
       "id": "full-2ce0fdb15495c7bc",
@@ -636,7 +652,9 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/b104829732baa11e181babc0e45e2a11ec4cf1374bfcad810cd55e726eb34a1b.txt",
       "excerpt_sha256": "b104829732baa11e181babc0e45e2a11ec4cf1374bfcad810cd55e726eb34a1b",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json",
+      "tracking_status": "historical",
+      "superseded_by": "full-2ce0fdb15495c7bc-review-00d8e8ef02"
     },
     {
       "id": "full-199b51ce0dcab10c",
@@ -649,7 +667,9 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/a1b61f1d8aad90419c28bdd99057ca25f732df1cea13086ffadc9f1eab1ebff6.txt",
       "excerpt_sha256": "a1b61f1d8aad90419c28bdd99057ca25f732df1cea13086ffadc9f1eab1ebff6",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json",
+      "tracking_status": "historical",
+      "superseded_by": "full-199b51ce0dcab10c-review-d5bb4ac56d"
     },
     {
       "id": "full-b5bb84b662377244",
@@ -662,7 +682,9 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/95430681f5f3137a1b4763c532e30bb7f342e3e46af79f8bd010f7f925dd27e2.txt",
       "excerpt_sha256": "95430681f5f3137a1b4763c532e30bb7f342e3e46af79f8bd010f7f925dd27e2",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json",
+      "tracking_status": "historical",
+      "superseded_by": "full-b5bb84b662377244-review-ec7e5e69e4"
     },
     {
       "id": "full-873bfac8f8c2b8d2",
@@ -675,7 +697,9 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/3a61af64a5c953792839f90c4743d5ef08aae790b2f2654aa9f1da6c3a2b684d.txt",
       "excerpt_sha256": "3a61af64a5c953792839f90c4743d5ef08aae790b2f2654aa9f1da6c3a2b684d",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json",
+      "tracking_status": "historical",
+      "superseded_by": "full-873bfac8f8c2b8d2-review-2648364e66"
     },
     {
       "id": "full-7190043e9eae148f",
@@ -688,7 +712,9 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104.txt",
       "excerpt_sha256": "0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json",
+      "tracking_status": "historical",
+      "superseded_by": "full-7190043e9eae148f-review-954bdf4e17"
     },
     {
       "id": "full-cc76b025aa572d07",
@@ -701,7 +727,9 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/28632f99d8bbd4cde7fbb691f346c65da89ac075b09d48955dec61ec211d024a.txt",
       "excerpt_sha256": "28632f99d8bbd4cde7fbb691f346c65da89ac075b09d48955dec61ec211d024a",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json",
+      "tracking_status": "historical",
+      "superseded_by": "full-cc76b025aa572d07-review-dae7423731"
     },
     {
       "id": "full-da2c0238684d2dd6",
@@ -714,7 +742,9 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/32cbf8fcc38f12c806a8f3439792f3a68ba9ca440c64f397f2cbcc3e10fbaee7.txt",
       "excerpt_sha256": "32cbf8fcc38f12c806a8f3439792f3a68ba9ca440c64f397f2cbcc3e10fbaee7",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json",
+      "tracking_status": "historical",
+      "superseded_by": "full-da2c0238684d2dd6-review-061a38c432"
     },
     {
       "id": "full-e93d64fdcfbfe6ff",
@@ -753,7 +783,259 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/b44e3d7a2111b1b8db778432c5ec8d703c518e8815df4bec5334c5d9c8cf4ea0.txt",
       "excerpt_sha256": "b44e3d7a2111b1b8db778432c5ec8d703c518e8815df4bec5334c5d9c8cf4ea0",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json",
+      "tracking_status": "historical",
+      "superseded_by": "full-96da852291e4720b-review-7afb4b3f3b"
+    },
+    {
+      "id": "ads-redlines-review-954bdf4e17",
+      "source_path": "1company/analysis_playbooks/collart_ads_redlines.md",
+      "source_sha256": "954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0",
+      "source_declared_date": "2026-09-07",
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt",
+      "excerpt_sha256": "954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/analysis_playbooks/collart_ads_redlines.md",
+      "previous_source_id": "ads-redlines"
+    },
+    {
+      "id": "web-profile-review-be4e210655",
+      "source_path": "collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md",
+      "source_sha256": "be4e21065526e2f9411c6e4eca219696aaa5de1ba9e3d067939342bf03dbf3dc",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/89103e23f6e453c60ca981f572a9f9dfe9c4454db375035a9efe1a5490493d78.txt",
+      "excerpt_sha256": "89103e23f6e453c60ca981f572a9f9dfe9c4454db375035a9efe1a5490493d78",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md",
+      "previous_source_id": "web-profile"
+    },
+    {
+      "id": "web-channel-review-7003847ee3",
+      "source_path": "collart_web/indicators/channel_attribution.md",
+      "source_sha256": "7003847ee3571b56821e6c6a1df55b36d64edbfbe087fbf66ee737f90aaae32a",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/7003847ee3571b56821e6c6a1df55b36d64edbfbe087fbf66ee737f90aaae32a.txt",
+      "excerpt_sha256": "7003847ee3571b56821e6c6a1df55b36d64edbfbe087fbf66ee737f90aaae32a",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_web/indicators/channel_attribution.md",
+      "previous_source_id": "web-channel"
+    },
+    {
+      "id": "legacy-ios-review-7873df86c6",
+      "source_path": "collart_ios/README.md",
+      "source_sha256": "7873df86c69295f85ed8e9755eeb3d430d763d7da3b80770e34a94a7a5201c95",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/7873df86c69295f85ed8e9755eeb3d430d763d7da3b80770e34a94a7a5201c95.txt",
+      "excerpt_sha256": "7873df86c69295f85ed8e9755eeb3d430d763d7da3b80770e34a94a7a5201c95",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_ios/README.md",
+      "previous_source_id": "legacy-ios"
+    },
+    {
+      "id": "legacy-conversion-review-95f777f166",
+      "source_path": "collart_web/indicators/conversion.md",
+      "source_sha256": "95f777f166eb1b047679b87e249be2d23256592aec35ea025fecc122ab8a2d33",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/95f777f166eb1b047679b87e249be2d23256592aec35ea025fecc122ab8a2d33.txt",
+      "excerpt_sha256": "95f777f166eb1b047679b87e249be2d23256592aec35ea025fecc122ab8a2d33",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_web/indicators/conversion.md",
+      "previous_source_id": "legacy-conversion"
+    },
+    {
+      "id": "fashion-orders-review-7afb4b3f3b",
+      "source_path": "collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md",
+      "source_sha256": "7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt",
+      "excerpt_sha256": "7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md",
+      "previous_source_id": "fashion-orders"
+    },
+    {
+      "id": "full-1fd6dc1741d54dde-review-1afb72cc7d",
+      "source_path": "1company/indicators/subscription_purchase.md",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/indicators/subscription_purchase.md",
+      "source_sha256": "1afb72cc7dfbf5c6f188b8e1e4e26b3c8d1d1504c5a55644708add2c041bb83a",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/1afb72cc7dfbf5c6f188b8e1e4e26b3c8d1d1504c5a55644708add2c041bb83a.txt",
+      "excerpt_sha256": "1afb72cc7dfbf5c6f188b8e1e4e26b3c8d1d1504c5a55644708add2c041bb83a",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "previous_source_id": "full-1fd6dc1741d54dde"
+    },
+    {
+      "id": "full-eeebc9e82bd76fe2-review-ddff0eff3b",
+      "source_path": "1company/indicators/collart_daily_report_date_windows.md",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/indicators/collart_daily_report_date_windows.md",
+      "source_sha256": "ddff0eff3b96808dab82e55c3457eab63bf57896b7d980a8fd88c1beea878a87",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/ddff0eff3b96808dab82e55c3457eab63bf57896b7d980a8fd88c1beea878a87.txt",
+      "excerpt_sha256": "ddff0eff3b96808dab82e55c3457eab63bf57896b7d980a8fd88c1beea878a87",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "previous_source_id": "full-eeebc9e82bd76fe2"
+    },
+    {
+      "id": "full-2ce0fdb15495c7bc-review-00d8e8ef02",
+      "source_path": "1company/tables/ads_dim_metric_rule.md",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/tables/ads_dim_metric_rule.md",
+      "source_sha256": "00d8e8ef020a1db21d780542a941fae2ff8e8274bc2671ea8c836f24e010d538",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/cf2e1ab194e209ff9a1f349aa9ce58310dbdc8ca4315162417692541d431a90e.txt",
+      "excerpt_sha256": "cf2e1ab194e209ff9a1f349aa9ce58310dbdc8ca4315162417692541d431a90e",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "previous_source_id": "full-2ce0fdb15495c7bc"
+    },
+    {
+      "id": "full-199b51ce0dcab10c-review-d5bb4ac56d",
+      "source_path": "1company/analysis_playbooks/event_metric_from_rule.md",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/analysis_playbooks/event_metric_from_rule.md",
+      "source_sha256": "d5bb4ac56d7af15a3ec8287fbcffd730e92d761566d7645b61da747c74e0159a",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/d5bb4ac56d7af15a3ec8287fbcffd730e92d761566d7645b61da747c74e0159a.txt",
+      "excerpt_sha256": "d5bb4ac56d7af15a3ec8287fbcffd730e92d761566d7645b61da747c74e0159a",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "previous_source_id": "full-199b51ce0dcab10c"
+    },
+    {
+      "id": "full-b5bb84b662377244-review-ec7e5e69e4",
+      "source_path": "collart_android/indicators/dau.md",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_android/indicators/dau.md",
+      "source_sha256": "ec7e5e69e41a23c131dfd5b6e803e3643646548c2c1f1c4ad52243632f9f60f3",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/ec7e5e69e41a23c131dfd5b6e803e3643646548c2c1f1c4ad52243632f9f60f3.txt",
+      "excerpt_sha256": "ec7e5e69e41a23c131dfd5b6e803e3643646548c2c1f1c4ad52243632f9f60f3",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "previous_source_id": "full-b5bb84b662377244"
+    },
+    {
+      "id": "full-873bfac8f8c2b8d2-review-2648364e66",
+      "source_path": "collart_ios/indicators/asa_delivery.md",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_ios/indicators/asa_delivery.md",
+      "source_sha256": "2648364e66543d2d89cfb09c750d551278e4b7a4c3b5093035b2e74b2f028fca",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/2648364e66543d2d89cfb09c750d551278e4b7a4c3b5093035b2e74b2f028fca.txt",
+      "excerpt_sha256": "2648364e66543d2d89cfb09c750d551278e4b7a4c3b5093035b2e74b2f028fca",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "previous_source_id": "full-873bfac8f8c2b8d2"
+    },
+    {
+      "id": "full-7190043e9eae148f-review-954bdf4e17",
+      "source_path": "1company/analysis_playbooks/collart_ads_redlines.md",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/analysis_playbooks/collart_ads_redlines.md",
+      "source_sha256": "954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt",
+      "excerpt_sha256": "954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "previous_source_id": "full-7190043e9eae148f"
+    },
+    {
+      "id": "full-cc76b025aa572d07-review-dae7423731",
+      "source_path": "collart_fashion/product/ai_fashion_video_product.md",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_fashion/product/ai_fashion_video_product.md",
+      "source_sha256": "dae7423731dae6fd291cd8ba8d9380802111a36f1ea07bb8f9f14a9b6213e1ce",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/dae7423731dae6fd291cd8ba8d9380802111a36f1ea07bb8f9f14a9b6213e1ce.txt",
+      "excerpt_sha256": "dae7423731dae6fd291cd8ba8d9380802111a36f1ea07bb8f9f14a9b6213e1ce",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "previous_source_id": "full-cc76b025aa572d07"
+    },
+    {
+      "id": "full-da2c0238684d2dd6-review-061a38c432",
+      "source_path": "collart_fashion/analysis_playbooks/fashion_video_funnel.md",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_fashion/analysis_playbooks/fashion_video_funnel.md",
+      "source_sha256": "061a38c43258460ec5728701bb0ee32a81d20dd85b37f969b5793b5d0ef1aeb4",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/061a38c43258460ec5728701bb0ee32a81d20dd85b37f969b5793b5d0ef1aeb4.txt",
+      "excerpt_sha256": "061a38c43258460ec5728701bb0ee32a81d20dd85b37f969b5793b5d0ef1aeb4",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "previous_source_id": "full-da2c0238684d2dd6"
+    },
+    {
+      "id": "full-96da852291e4720b-review-7afb4b3f3b",
+      "source_path": "collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md",
+      "source_sha256": "7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt",
+      "excerpt_sha256": "7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb",
+      "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
+      "previous_source_id": "full-96da852291e4720b"
+    },
+    {
+      "id": "review-e4b31288e0a4a0ad",
+      "source_path": "collart_android/tables/aidata2025.ads_collart.big_r_user_value_state.md",
+      "source_sha256": "947f56e7da0a743ed6c7940ea59ea07f0952cb7437d98621fa4e9bb160156e96",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/947f56e7da0a743ed6c7940ea59ea07f0952cb7437d98621fa4e9bb160156e96.txt",
+      "excerpt_sha256": "947f56e7da0a743ed6c7940ea59ea07f0952cb7437d98621fa4e9bb160156e96",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_android/tables/aidata2025.ads_collart.big_r_user_value_state.md",
+      "note": "本次跨文档校正证据；未执行生产查询。"
+    },
+    {
+      "id": "review-979740ccfe320f48",
+      "source_path": "collart_fashion/indicators/fashion_revenue.md",
+      "source_sha256": "46dea22014119ee3fe10b47a69e0e06102e3d8b4b59a7f5efcf631e206de5e19",
+      "source_declared_date": null,
+      "captured_at": "2026-09-12",
+      "locator": "完整已审阅正文",
+      "excerpt": "library/text/46dea22014119ee3fe10b47a69e0e06102e3d8b4b59a7f5efcf631e206de5e19.txt",
+      "excerpt_sha256": "46dea22014119ee3fe10b47a69e0e06102e3d8b4b59a7f5efcf631e206de5e19",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_fashion/indicators/fashion_revenue.md",
+      "note": "本次跨文档校正证据；未执行生产查询。"
     }
   ]
 }

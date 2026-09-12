@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["full-2ce0fdb15495c7bc", "full-199b51ce0dcab10c"]
+sources: ["full-2ce0fdb15495c7bc-review-00d8e8ef02", "full-199b51ce0dcab10c-review-d5bb4ac56d"]
 tags: ["company", "四端事件指标规则与宽表关系"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["full-2ce0fdb15495c7bc", "full-199b51ce0dcab10c"]
 ---
 
 # 四端事件指标规则与宽表关系
@@ -24,7 +25,7 @@ verification_evidence: []
 
 ## 来源与状态
 
-- [1company/tables/ads_dim_metric_rule.md](../../library/text/b104829732baa11e181babc0e45e2a11ec4cf1374bfcad810cd55e726eb34a1b.txt)
-- [1company/analysis_playbooks/event_metric_from_rule.md](../../library/text/a1b61f1d8aad90419c28bdd99057ca25f732df1cea13086ffadc9f1eab1ebff6.txt)
+- [1company/tables/ads_dim_metric_rule.md](../../library/text/cf2e1ab194e209ff9a1f349aa9ce58310dbdc8ca4315162417692541d431a90e.txt)
+- [1company/analysis_playbooks/event_metric_from_rule.md](../../library/text/d5bb4ac56d7af15a3ec8287fbcffd730e92d761566d7645b61da747c74e0159a.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。

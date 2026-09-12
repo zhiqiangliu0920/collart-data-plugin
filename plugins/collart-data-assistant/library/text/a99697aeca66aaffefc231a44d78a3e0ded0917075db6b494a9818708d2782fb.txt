@@ -1,0 +1,72 @@
+"""Generate local audit catalog and checks from downloaded read-only evidence."""
+import json, re
+from pathlib import Path
+from datetime import datetime, timezone, timedelta
+
+R=Path(__file__).resolve().parent
+def read(name): return json.loads((R/name).read_text(encoding='utf-8'))
+def save(name,obj): (R/name).write_text(json.dumps(obj,ensure_ascii=False,indent=2),encoding='utf-8')
+def local_time(value):
+    return datetime.fromisoformat(value.replace('Z','+00:00')).astimezone(timezone(timedelta(hours=8))).isoformat(timespec='seconds')
+
+stats=read('job_summary.json')
+catalog=[]
+for a in read('compiled_fashion_actions.json'):
+    name=a['target']['name']
+    op=a['operations']
+    sql='\n'.join(op.get('queries',[]))
+    table_token=r'((?:aidata2025|pubdata2025)\.[A-Za-z0-9_]+\.[A-Za-z0-9_*]+)'
+    targets=sorted(set(re.findall(r'(?:CREATE TABLE(?: IF NOT EXISTS)?|INSERT INTO|MERGE|DELETE\s+FROM|ALTER TABLE)\s+`?'+table_token,sql,re.I)))
+    tables=sorted(set(re.findall(table_token,sql))-set(targets))
+    s=stats.get(name,{})
+    reference=('/collart_web/' in a['filePath'] or name=='ads_template_search_user_keyword_di')
+    category='Fashion专属' if 'collart_fashion/' in a['filePath'] else ('参考（共享上游或注释命中）' if reference else '直接相关共享')
+    catalog.append({'action':name,'file':a['filePath'],'category':category,
+                    'targets':targets,'sql_read_tables':tables,
+                    'declared_dependencies':[d['name'] for d in op.get('dependencyTargets',[])],
+                    'date_declarations':re.findall(r'DECLARE\s+[^;]*(?:date|DATE)[^;]*;',sql),
+                    'parent_runs':s.get('parent_runs',0),'leaf_processed_bytes':s.get('bytes',0),
+                    'leaf_slot_ms':s.get('slot_ms',0),'has_job_errors':bool(s.get('errors'))})
+catalog.sort(key=lambda x:(x['category']!='Fashion专属',x['action']))
+save('task_catalog.json',catalog)
+md=['# Fashion 任务目录（2026-09-09 只读快照）','',
+    '范围：当前 release 编译动作中，源码/依赖/SQL 命中 Fashion 或共享 Web DM 的 20 个动作。不是全公司任务清单。运行观察窗为 9 月 6 日 00:00 至 9 月 9 日约 10:00（北京时间）。',
+    '', 'Dataform action 名称不等于实际输出表名；以下二者分别列示。处理量仅累计非 SCRIPT 作业，避免父子双计。GB=10^9 bytes，不等于账单费用。', '',
+    '| 分类 | 动作 | 运行次数 | 处理量 GB | 源码 |','|---|---|---:|---:|---|']
+for x in catalog:
+    p=(R/'sources'/x['file']).as_posix()
+    md.append(f"| {x['category']} | `{x['action']}` | {x['parent_runs']} | {x['leaf_processed_bytes']/1e9:.4f} | [SQLX](<{p}>) |")
+md.extend(['','## 逐任务实际表及依赖',''])
+for x in catalog:
+    md.extend([f"### {x['action']}",'',f"- 输出表：{', '.join('`'+t+'`' for t in x['targets']) or '无持久输出表识别结果'}",
+               f"- 读取表：{', '.join('`'+t+'`' for t in x['sql_read_tables']) or '未识别到静态项目表名'}",
+               f"- 显式依赖：{', '.join('`'+d+'`' for d in x['declared_dependencies']) or '无'}",
+               f"- 日期声明：{'；'.join('`'+v.replace(chr(10),' ').strip()+'`' for v in x['date_declarations']) or '无日期声明'}",''])
+(R/'task_inventory.md').write_text('\n'.join(md)+'\n',encoding='utf-8')
+dedicated=[x for x in catalog if x['category']=='Fashion专属']
+summary={'compiled_related_actions':len(catalog),'fashion_actions':len(dedicated),'source_snapshots':len(read('workspace_sources.json'))+len(read('additional_sources.json')),
+         'fashion_leaf_processed_bytes':sum(x['leaf_processed_bytes'] for x in dedicated),
+         'fashion_leaf_slot_ms':sum(x['leaf_slot_ms'] for x in dedicated),
+         'fashion_actions_with_job_errors':sum(x['has_job_errors'] for x in dedicated),
+         'latest_triggers':[]}
+for r in read('trigger_trace.json'):
+    summary['latest_triggers'].append({'workflow':r.get('workflowConfig','').split('/')[-1],
+        'start':local_time(r['invocationTiming']['startTime']),
+        'include_downstream':r.get('invocationConfig',{}).get('transitiveDependentsIncluded',False),
+        'fashion_action_count':sum('fashion' in a['target']['name'] for a in r['fashion_actions']),
+        'has_enrichment':any(a['target']['name']=='fashion_active_revenue_enrichment' for a in r['fashion_actions'])})
+save('catalog_summary.json',summary)
+print(json.dumps(summary,ensure_ascii=False,indent=2))
+for file,pattern in [
+    ('fashion_daily_metric.sqlx','traffic_src_type = "organic"'),
+    ('ads_oper_user_profile_df.sqlx','changed_users AS'),
+    ('ads_oper_user_profile_df.sqlx','current_is_churn_14d ='),
+    ('ads_oper_user_active_di.sqlx','FALSE AS is_subscribe'),
+    ('ads_oper_user_active_di.sqlx','0.0 AS resub_revenue'),
+    ('ads_oper_basic_indicator_country_di.sqlx','STRUCT(0.0, 0, 0, 0)'),
+    ('fashion_user_revenue.sqlx','first_fashion_succeed_date'),
+    ('ads_oper_user_event_metric_di.sqlx','INNER JOIN act')]:
+    p=R/'sources/definitions/ads/collart/collart_fashion'/file
+    lines=p.read_text(encoding='utf-8').splitlines()
+    hit=next((i+1 for i,line in enumerate(lines) if pattern in line),None)
+    print(file,hit,pattern)

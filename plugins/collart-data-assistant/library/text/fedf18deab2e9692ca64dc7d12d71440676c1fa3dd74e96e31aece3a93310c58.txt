@@ -1,0 +1,167 @@
+from __future__ import annotations
+
+import argparse
+import json
+import subprocess
+from datetime import date
+from decimal import Decimal, ROUND_HALF_UP
+from pathlib import Path
+from typing import Any
+
+from google.cloud import bigquery
+from google.oauth2 import service_account
+
+from backfill_snapshot import SOURCE_TABLE, as_date, make_query
+
+
+MONEY_FIELDS = ("revenue", "ad_spend", "other_spend", "net_revenue")
+INTEGER_FIELDS = ("dau", "new_users")
+RETENTION_FIELD = "next_day_retention"
+
+
+def decimal_value(value: Any) -> Decimal | None:
+    if value is None:
+        return None
+    return Decimal(str(value))
+
+
+def key(row: dict[str, Any]) -> tuple[str, str, str, str, str]:
+    return (
+        str(row["metric_date"])[:10],
+        str(row["level"]),
+        str(row.get("group_name") or ""),
+        str(row.get("line_name") or ""),
+        str(row.get("product_name") or ""),
+    )
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--credentials", required=True)
+    parser.add_argument("--lark-cli", required=True)
+    parser.add_argument("--app-id", required=True)
+    parser.add_argument("--qa-output", required=True)
+    args = parser.parse_args()
+
+    credentials = service_account.Credentials.from_service_account_file(args.credentials)
+    client = bigquery.Client(project=credentials.project_id, credentials=credentials, location="US")
+    latest_row = next(
+        iter(
+            client.query(
+                f"SELECT MAX(stats_date) AS latest_date FROM `{SOURCE_TABLE}`",
+                location="US",
+            ).result()
+        )
+    )
+    latest_date: date = as_date(latest_row.latest_date)
+    config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("date_from", "DATE", latest_date),
+            bigquery.ScalarQueryParameter("date_to", "DATE", latest_date),
+        ]
+    )
+    expected_rows = [
+        dict(row.items())
+        for row in client.query(make_query(), job_config=config, location="US").result()
+    ]
+
+    sql = (
+        "SELECT metric_date::text AS metric_date, level, group_name, line_name, "
+        "product_name, revenue::text AS revenue, ad_spend::text AS ad_spend, "
+        "other_spend::text AS other_spend, net_revenue::text AS net_revenue, dau, "
+        "new_users, next_day_retention::text AS next_day_retention FROM daily_metric "
+        f"WHERE data_mode='real' AND metric_date='{latest_date.isoformat()}' "
+        "ORDER BY level, group_name, line_name, product_name LIMIT 500"
+    )
+    command = [
+        args.lark_cli,
+        "apps",
+        "+db-execute",
+        "--app-id",
+        args.app_id,
+        "--environment",
+        "dev",
+        "--sql",
+        sql,
+        "--yes",
+        "--as",
+        "user",
+    ]
+    completed = subprocess.run(command, check=True, capture_output=True, text=True, encoding="utf-8")
+    envelope = json.loads(completed.stdout)
+    data = envelope["data"]
+    actual_rows = data[0]["rows"] if data and "rows" in data[0] else data
+
+    expected = {key(row): row for row in expected_rows}
+    actual = {key(row): row for row in actual_rows}
+    missing_keys = sorted(set(expected) - set(actual))
+    extra_keys = sorted(set(actual) - set(expected))
+    mismatches: list[dict[str, Any]] = []
+    max_money_diff = Decimal("0")
+    max_retention_diff = Decimal("0")
+    max_retention_raw_rounding = Decimal("0")
+
+    for row_key in sorted(set(expected) & set(actual)):
+        exp = expected[row_key]
+        got = actual[row_key]
+        row_mismatches: dict[str, Any] = {}
+        for field in MONEY_FIELDS:
+            diff = abs(decimal_value(exp[field]) - decimal_value(got[field]))
+            max_money_diff = max(max_money_diff, diff)
+            if diff > Decimal("0.01"):
+                row_mismatches[field] = str(diff)
+        for field in INTEGER_FIELDS:
+            if int(exp[field]) != int(got[field]):
+                row_mismatches[field] = {"expected": int(exp[field]), "actual": int(got[field])}
+        exp_ret = decimal_value(exp[RETENTION_FIELD])
+        got_ret = decimal_value(got[RETENTION_FIELD])
+        if exp_ret is None or got_ret is None:
+            if exp_ret is not got_ret:
+                row_mismatches[RETENTION_FIELD] = {
+                    "expected": None if exp_ret is None else str(exp_ret),
+                    "actual": None if got_ret is None else str(got_ret),
+                }
+        else:
+            stored_expected = exp_ret.quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)
+            max_retention_raw_rounding = max(
+                max_retention_raw_rounding, abs(exp_ret - stored_expected)
+            )
+            diff = abs(stored_expected - got_ret)
+            max_retention_diff = max(max_retention_diff, diff)
+            if diff > Decimal("0.000000001"):
+                row_mismatches[RETENTION_FIELD] = str(diff)
+        if row_mismatches:
+            mismatches.append({"key": row_key, "fields": row_mismatches})
+
+    counts_by_level: dict[str, int] = {}
+    for row in actual_rows:
+        counts_by_level[str(row["level"])] = counts_by_level.get(str(row["level"]), 0) + 1
+
+    qa = {
+        "latest_date": latest_date.isoformat(),
+        "expected_rows": len(expected_rows),
+        "actual_rows": len(actual_rows),
+        "counts_by_level": dict(sorted(counts_by_level.items())),
+        "missing_keys": len(missing_keys),
+        "extra_keys": len(extra_keys),
+        "metric_mismatch_rows": len(mismatches),
+        "max_money_diff": str(max_money_diff),
+        "max_retention_diff": str(max_retention_diff),
+        "retention_storage_scale": 4,
+        "max_retention_raw_rounding": str(max_retention_raw_rounding),
+        "passed": not missing_keys and not extra_keys and not mismatches,
+    }
+    if not qa["passed"]:
+        qa["sample_missing_keys"] = missing_keys[:3]
+        qa["sample_extra_keys"] = extra_keys[:3]
+        qa["sample_mismatches"] = mismatches[:3]
+    Path(args.qa_output).write_text(
+        json.dumps(qa, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    print(json.dumps(qa, ensure_ascii=False))
+    if not qa["passed"]:
+        raise SystemExit(1)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,64 @@
+---
+doc_type: table_knowledge
+table_name: aidata2025.ads_collart.ads_oper_basic_indicator_collart_di
+table_cn_name: Collart Android 运营基础指标表
+project: aidata2025
+table_type: 指标汇总表
+grain: 按日期、国家、包名等维度汇总
+partition_field: event_date
+update_frequency: 日更
+data_freshness: 高
+source_type: 数据仓库汇总表
+priority: 高
+cost_efficiency: 高
+---
+
+# 1 表说明
+
+> 文档整理：2026-09-12；业务状态：documented；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 表定位
+Collart Android 的运营基础指标汇总表，包含 DAU、新增、收入等核心指标。
+
+## 关键字段
+
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| event_date | DATE | 日期（分区字段） |
+| package_name | STRING | 应用包名，Android 端固定为 `free.ai.photo.generator.collart.ai` |
+| country | STRING | 国家/地区代码 |
+| dau | INT64 | 日活跃用户数 |
+| new_user | INT64 | 新增用户数 |
+| ... | ... | 其他运营指标 |
+
+## 使用注意
+
+- **必须过滤 package_name**：Android 端使用 `package_name = 'free.ai.photo.generator.collart.ai'`
+- 日期字段直接使用 `event_date`，无需转换
+- 该表已预计算好 DAU，比从原始事件表计算更高效
+
+## 典型查询示例
+
+### 查询某日期范围的 DAU
+```sql
+SELECT
+  event_date,
+  country,
+  dau
+FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di`
+WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) AND DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+  AND package_name = 'free.ai.photo.generator.collart.ai'
+ORDER BY event_date, dau DESC;
+```
+
+### 按国家汇总 DAU
+```sql
+SELECT
+  country,
+  AVG(dau) AS avg_dau
+FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di`
+WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) AND DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+  AND package_name = 'free.ai.photo.generator.collart.ai'
+GROUP BY country;
+```

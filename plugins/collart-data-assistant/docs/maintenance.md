@@ -19,3 +19,12 @@
 5. 按仓库 SYNC.md 非强制发布，再通过 Codex CLI 安装并核对全部缓存文件。发布与安装是两个独立状态；不能重置旧基线掩盖差异。
 
 本机每 30 分钟任务采用上述流程。同事更新安装或自行配置其授权与任务；更新后开启新任务使用新版。插件本身不启动定时器、不运行生产查询、不发送外部消息。
+
+## 目录整理后的标识与检索
+
+ai-knowledge 的正式正文按公司/四端维护，0global/knowledge_registry.json 记录持久 ID、旧路径别名及精确正文哈希。两个历史包的标识表由 inputs.source_registries 指向本机状态文件。纯迁移更新 path/aliases 并保留 id；内容变化必须审阅差异后更新记录，禁止只重设哈希。
+
+收录 status、业务 business_status、复核 review_status 分开。默认 search 返回正式主题和 documented + reviewed_static 全文；--include-history 包含历史、废弃与待核对资料；--business-status 可精确筛选。read 接受持久 ID 和新旧路径别名，返回来源状态与完整正文。旧档案按带内容哈希的版本 ID 读取，不能冒充当前版本。
+
+主题来源重新捕获时新增 source ID 和摘录，旧证据记录 tracking_status=historical 并保留哈希。它们不参与当前来源漂移报警，但仍接受包内证据完整性校验。新日期仅为整理/捕获日，不是业务生效日。
+

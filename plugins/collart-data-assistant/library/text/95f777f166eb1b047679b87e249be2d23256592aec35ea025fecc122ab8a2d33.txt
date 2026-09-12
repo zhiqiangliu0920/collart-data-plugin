@@ -1,0 +1,42 @@
+# 📈 指标档案：CONVERSION (Web)
+
+> 文档整理：2026-09-12；业务状态：uncertain；复核：needs_review。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 1. 基本定义与业务口径
+## 口径定义
+
+订阅转化率：完成订阅购买的用户数占总活跃用户的比例。
+
+## 计算逻辑
+
+| 要素 | 说明 |
+|------|------|
+| 付费事件（埋点） | `vip_subscribe_succeed` |
+| 付费订单（服务端，2026-09-07） | Stripe `dwd_cdct_revenue_stripe_di`（`revneue>0`）或 `ads_oper_user_active_di.revenue`；**不要用 `ods.orders`，不要用空表 HI** |
+| 分母 | DAU（`session_start` 去重用户数） |
+
+> 用 orders 补数或交叉验证时，禁止把 `pending` / `expired` 当作成功付费。
+
+## SQL
+
+参见 [conversion.sql](../history/undated/indicator_sql/conversion.sql)
+
+
+## 2. 数据源与计算逻辑 (Lineage)
+*   **推荐表**: [待补]
+*   **明细表**: [待补]
+
+## 3. ⚠️ 异常监控阈值 (Anomaly Thresholds)
+*   **正常波动**: ±5% (参考)
+*   **核心警报**: [待补]
+
+## 4. 🔗 关联积木 (Logic Blocks)
+*   **基础 SQL**: [common_params.sql](../../0global/sql_standards/common_params.sql)
+
+---
+*更新时间: 2026-04-01 (Q2 指标体系升级)*
+
+## 口径分离与待核对
+
+订阅成功事件转化、同窗 Stripe 支付转化、订阅与点数包购买并集是不同指标。[四端 purchase 定义](../../1company/indicators/subscription_purchase.md)规定购买 UV 去重并集；收入源见[公司 ADS 红线](../../1company/analysis_playbooks/collart_ads_redlines.md)。本页旧 session_start 分母及历史 SQL 不能自动用于所有转化分析，必须固定同一 cohort 和支付观察窗口。

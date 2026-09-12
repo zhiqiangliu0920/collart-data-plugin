@@ -7,6 +7,13 @@
     ]
   },
   {
+    "source": "ai-knowledge:0global/sql_standards/bq_advanced_tips.md",
+    "reason": "保留历史资料；按原日期和适用范围使用，不能视为当前口径",
+    "issues": [
+      "学习摘记中的固定加速倍数、免费额度、时间旅行保留期与函数示例未独立核验；作为 2026-04-02 历史学习资料。"
+    ]
+  },
+  {
     "source": "ai-knowledge:CHANGELOG.md",
     "reason": "编码或表身份需人工确认",
     "issues": [
@@ -14,239 +21,10 @@
     ]
   },
   {
-    "source": "ai-knowledge:_generated/company_dashboard_backfill/backfill_snapshot.py",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/company_dashboard_backfill/reconcile_snapshot.py",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/additional_sources.json",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/build_catalog.py",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/catalog_summary.json",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/compiled_fashion_actions.json",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/compiled_result.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/dm_quality.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/inspect_readonly.py",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/job_summary.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/jobs.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/morning_runs.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/profile_consistency.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/qa.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/raw_table_overlap.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/reconciliation.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/releaseConfigs.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/revenue_country.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/shared_revenue_reconciliation.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/summarize_jobs.py",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/task_catalog.json",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/trigger_trace.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/validate_artifacts.py",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/workflowConfigs.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/workflowInvocations.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/workspace_file_index.json",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/workspace_sources.json",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
     "source": "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_tempalte_data_android_BigQuery_–_AIDATA_–_Google_Cloud_控制台.md",
     "reason": "编码或表身份需人工确认",
     "issues": [
       "文件名与标题中的表名不一致：不自动合并口径"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/active_revenue_history_receipt.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/ads_daily_receipt.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/build_report.py",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/freshness_receipt.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/internal-exclusions.json",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/qa_receipt.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/query.py",
-    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
-    "issues": []
-  },
-  {
-    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/recheck_0911_receipt.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_analysis_receipt.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_probe_receipt.json",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
     ]
   },
   {
@@ -260,7 +38,36 @@
     "source": "ai-knowledge:collart_android/analysis_playbooks/template_analysis_daily.py",
     "reason": "疑似凭证内容：整份隔离",
     "issues": [
-      "疑似凭证内容：整份隔离"
+      "疑似凭证内容：整份隔离",
+      "脚本包含疑似凭证与飞书发送调用；保留本机原文，仅登记用途/副作用，禁止发布或执行。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/indicators/conversion.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "订阅事件转化不能代表 purchase 并集；旧 session_start 分母与本项目 DAU 文档冲突，30 点赠送为无生效日期旧描述。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/indicators/dau.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "正文是 2026-03 旧 ADS/DWD 方法，虽已反对 session_start，但关联 SQL 日期写死且与新 ADS 路由不同；保留历史方法，当前入口指向新 ADS 与 is_active。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/indicators/feature_usage.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "旧 ai_service_task_create 和 service_type 清单只覆盖历史功能；模板输出任务数/用户数，没有活跃分母，不能直接称功能使用率。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/indicators/retention.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "旧示例只有 retained_users 且缺少完整首日分母；首日活跃与新增 cohort 未区分，不直接作为现网 N 日留存公式。"
     ]
   },
   {
@@ -341,10 +148,83 @@
     ]
   },
   {
+    "source": "ai-knowledge:collart_fashion/indicators/fashion_new_user.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "保留 2026-07-23 新人 cohort 定义；orders 关联只作旧诊断示例，不作为当前收入/成功付费来源，不能跨产品回溯归属。"
+    ]
+  },
+  {
     "source": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_user_collartweb_di.md",
     "reason": "编码或表身份需人工确认",
     "issues": [
-      "文件名与标题中的表名不一致：不自动合并口径"
+      "文件名与标题中的表名不一致：不自动合并口径",
+      "文件名指向 ADS，但正文标题和上游描述指向 DWD；不能确定是错名还是错正文，保留原件，禁止自动合并成一张表。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_fashion/tables/aidata2025.ods.orders.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "同一物理 orders 表在 Web 文档明确无分区，Fashion 旧版却声明 event_date 分区；保留双方及原日期，不直接使用本页作为当前 schema 或收入依据。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_ios/indicators/asa_delivery.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "保留关键词归因和历史成本去重方法；7 月表可用性快照、DWS 关键词成本与 9 月 cdct 经营成本标准须分场景，不能无条件一律使用旧表。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/indicators/conversion.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "正文混合订阅事件、Stripe 付费与 session_start 分母；须区分同窗支付转化、首日购买并集和事件漏斗。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/indicators/dau.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "session_start UV 为历史事件指标；新 active 可有仅收入骨架行，当前 DAU 需要 is_active 与产品范围，旧定义不能直接替代。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/indicators/new_user_pseudo_id.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "首次发现与 first_visit 需区分；现有 SQL 仅扫描有界窗口，latest_user_id 按字符串排序并非末次登录，不能视为全生命周期真值。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/indicators/page_conversion.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "页面 A/B 同窗出现不等于先后转化；旧示例需按事件时间、用户和会话核对顺序，不能用曝光代替进入。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/indicators/retention.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "旧 session_start 活跃回访口径未区分新增留存和活跃留存；示例窗口有限，不保证 cohort 首次发现或完整 N 日观察。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/indicators/user_segmentation.md",
+    "reason": "保留历史资料；按原日期和适用范围使用，不能视为当前口径",
+    "issues": [
+      "正文含异常控制字符，保留原文待找回来源",
+      "金额阈值丢失且含控制字符；与 user_value_tier 的历史阈值不一致，不从残留 SQL 推断当前大R标准。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/indicators/user_value_tier.md",
+    "reason": "保留历史资料；按原日期和适用范围使用，不能视为当前口径",
+    "issues": [
+      "正文含异常控制字符，保留原文待找回来源",
+      "头部收入源已改 Stripe，但公式和末尾仍要求 orders；金额阈值损坏，不能继续作为当前分层定义。"
     ]
   },
   {
@@ -383,10 +263,25 @@
     ]
   },
   {
+    "source": "ai-knowledge:collart_web/sql_presets/new_user_by_pseudo_id.sql",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "有界扫描最早日期不能当终身首次；GA4 窗口可能超 30 天；latest_user_id 按 ID 排序，保留待修模板，不执行。"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/sql_presets/user_grain_revenue_from_stripe.sql",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "transaction_id 去重和 revneue>0 有依据，但模板缺日期和 app_name 的实际 WHERE 条件；只可作为片段，不能直接运行全表。"
+    ]
+  },
+  {
     "source": "ai-knowledge:collart_web/tables/aidata2025.ads_collart.ads_oper_user_collartweb_di.md",
     "reason": "编码或表身份需人工确认",
     "issues": [
-      "文件名与标题中的表名不一致：不自动合并口径"
+      "文件名与标题中的表名不一致：不自动合并口径",
+      "文件名指向 ADS，但正文标题和上游描述指向 DWD；不能确定是错名还是错正文，保留原件，禁止自动合并成一张表。"
     ]
   },
   {

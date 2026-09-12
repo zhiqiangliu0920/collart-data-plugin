@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["metrics", "retention", "legacy-conversion", "team-shared-core-metrics", "cursor-metric-glossary-md"]
+sources: ["metrics", "retention", "legacy-conversion-review-95f777f166", "team-shared-core-metrics", "cursor-metric-glossary-md"]
 tags: ["DAU", "DNU", "日活", "新增", "留存", "retain.d2", "is_active"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["legacy-conversion"]
 ---
 
 # 活跃、新增、留存与指标粒度
@@ -38,7 +39,7 @@ verification_evidence: []
 
 ## 来源与状态
 
-来源摘录：[metrics](../../provenance/excerpts/metrics.txt)、[retention](../../provenance/excerpts/retention.txt)、[legacy-conversion](../../provenance/excerpts/legacy-conversion.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[metrics](../../provenance/excerpts/metrics.txt)、[retention](../../provenance/excerpts/retention.txt)、[legacy-conversion](../../library/text/95f777f166eb1b047679b87e249be2d23256592aec35ea025fecc122ab8a2d33.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
 
 ## 合并的业务细节
 

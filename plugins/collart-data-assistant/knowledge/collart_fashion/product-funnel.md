@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["full-cc76b025aa572d07", "full-da2c0238684d2dd6"]
+sources: ["full-cc76b025aa572d07-review-dae7423731", "full-da2c0238684d2dd6-review-061a38c432"]
 tags: ["collart_fashion", "Fashion 产品步骤、事件与结果"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["full-cc76b025aa572d07", "full-da2c0238684d2dd6"]
 ---
 
 # Fashion 产品步骤、事件与结果
@@ -26,7 +27,7 @@ verification_evidence: []
 
 ## 来源与状态
 
-- [collart_fashion/product/ai_fashion_video_product.md](../../library/text/28632f99d8bbd4cde7fbb691f346c65da89ac075b09d48955dec61ec211d024a.txt)
-- [collart_fashion/analysis_playbooks/fashion_video_funnel.md](../../library/text/32cbf8fcc38f12c806a8f3439792f3a68ba9ca440c64f397f2cbcc3e10fbaee7.txt)
+- [collart_fashion/product/ai_fashion_video_product.md](../../library/text/dae7423731dae6fd291cd8ba8d9380802111a36f1ea07bb8f9f14a9b6213e1ce.txt)
+- [collart_fashion/analysis_playbooks/fashion_video_funnel.md](../../library/text/061a38c43258460ec5728701bb0ee32a81d20dd85b37f969b5793b5d0ef1aeb4.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。

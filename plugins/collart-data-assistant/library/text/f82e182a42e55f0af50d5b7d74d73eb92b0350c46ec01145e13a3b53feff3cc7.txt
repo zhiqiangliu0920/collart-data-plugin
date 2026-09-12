@@ -1,0 +1,23 @@
+# Collart Android 俄罗斯支付播报
+
+> 文档整理：2026-09-12；业务状态：documented；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+> 建立：2026-08-07  
+> 共用完整口径：
+> [`collart_ios/indicators/russia_orders_payment.md`](../../collart_ios/indicators/russia_orders_payment.md)
+
+## Android 过滤
+
+```sql
+-- Stripe app_name 为 collart_android / collart-android
+UPPER(currency) = 'RUB'
+AND IFNULL(revneue, 0) > 0   -- Stripe；不要扫空表 HI
+```
+
+- 数据源（2026-09-07）：只 `dwd_cdct_revenue_stripe_di`，不再用 `ods.orders`，不用空表 HI
+- 时间：北京时间 12:00、18:00 累计当天；次日 00:00 汇总前一日全天
+- 播报：与 `vidart-ios` 共用同一张累计汇总卡
+- 去重：`pay_date + report_cutoff`
+- 不查询 GA4、AI 使用表或 `dwd_apple_user_subscribtion_di`
+

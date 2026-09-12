@@ -14,3 +14,5 @@ description: 将 Collart 项目的表字段解释、业务规则、指标口径�
 5. 没有独立核验时用 documented 或 draft。verified 必须同时记录 owner、verified_by、verified_at、review_after、verification_evidence，证据文件要随版本保存。冲突未解决则更新 [冲突清单](../../knowledge/shared/known-conflicts.md)。
 6. 运行 `--root "<源码>" --authoring index`、`--root "<源码>" check`；检查受影响 SQL、相对链接和来源漂移。交付改动、验证结果及仍待核验的口径。
 7. 维护者现有 30 分钟任务会检测三个来源，校验并发布无冲突内容，再更新本机插件。权限以当前任务明确授权为准；普通查询不隐含外部发布授权。发布成功但安装失败时保留 published 状态，只重试安装，不重复提交。其他同事仍需更新安装或自行配置同步。更新后开新任务；插件本身不启动定时器、不发送消息。
+
+8. 更新原文或移动文件时维护持久 ID、path/aliases 与独立业务状态；正文变化先审阅再更新 reviewed_sha256，隐私批准不得跨哈希沿用。查询历史用 --include-history 或 read 原 ID；源文档 review_status 不等于业务已 verified。

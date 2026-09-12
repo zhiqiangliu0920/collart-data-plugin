@@ -1,0 +1,129 @@
+# 四端 ads_dim_metric_rule 行清单（2026-09-02 晚间回补后快照）
+
+> 文档整理：2026-09-12；业务状态：historical；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+权威以 Sheet / BQ 外表为准。正文见 [ads_dim_metric_rule.md](./ads_dim_metric_rule.md)。
+
+## android
+| metric_name | 中文 | event_name | event_params | agg | enabled | materialized |
+|---|---|---|---|---|---|---|
+| `img2video_generate_start_pv` | 图生视频 生成开始 | `= 'ai_service_start'` | `service_type = 'img2video'` | count_distinct_task_id | True | True |
+| `img2video_generate_success_pv` | 图生视频 生成成功 | `= 'ai_service_success'` | `service_type = 'img2video'` | count_distinct_task_id | True | True |
+| `home_show_pv` | 首页曝光 | `= 'Home_show'` | `` | count_events | True | True |
+| `home_template_click_pv` | 首页模板点击 | `= 'Home_Template_Click'` | `` | count_events | True | True |
+| `album_show_pv` | 相册曝光 | `= 'album_show'` | `` | count_events | True | True |
+| `generate_ready_pv` | 生成准备 | `in ('generate_watch_ad','generate_pro_create')` | `` | count_events | True | True |
+| `generate_save_pv` | 生成保存 | `= 'ai_service_download_start'` | `` | count_events | True | True |
+| `generate_start_pv` | 服务调用开始 | `= 'ai_service_start'` | `` | count_distinct_task_id | True | True |
+| `generate_success_pv` | 服务调用成功 | `= 'ai_service_success'` | `` | count_distinct_task_id | True | True |
+| `video_generate_start_pv` | 视频生成·开始 | `= 'ai_service_start'` | `service_type like '%video%'` | count_distinct_task_id | True | True |
+| `framestransition_video_generate_start_pv` | FramesTransition 视频生成·开始 | `= 'ai_service_start'` | `service_type like '%video%' and function_type = 'framestransition'` | count_distinct_task_id | True | True |
+| `motioncontrol_video_generate_start_pv` | MotionControl 视频生成·开始 | `= 'ai_service_start'` | `service_type like '%video%' and function_type = 'motioncontrol'` | count_distinct_task_id | True | True |
+| `text2video_video_generate_start_pv` | AItext2video 视频生成·开始 | `= 'ai_service_start'` | `service_type like '%video%' and function_type = 'aitext2video'` | count_distinct_task_id | True | True |
+| `referencetovideo_video_generate_start_pv` | referencetovideo 生成开始 | `= 'ai_service_start'` | `service_type like '%video%' and function_type = 'referencetovideo'` | count_distinct_task_id | True | True |
+| `img2img_generate_start_pv` | 图生图·生成开始 | `= 'ai_service_start'` | `service_type in ('aigeneral','img2img')` | count_distinct_task_id | True | True |
+| `img_generate_start_pv` | 图片生成·生成开始 | `= 'ai_service_start'` | `service_type in ('aigeneral','img2img','texttoimage','text2img')` | count_distinct_task_id | True | True |
+| `text2img_generate_start_pv` | 文生图·开始 | `= 'ai_service_start'` | `service_type in ('text2img','texttoimage')` | count_distinct_task_id | True | True |
+| `aiedit_img2img_generate_start_pv` | AIEdit 图生图·开始 | `= 'ai_service_start'` | `service_type in ('aigeneral','img2img') and function_type = 'aiedit'` | count_distinct_task_id | True | True |
+| `multireference_img2img_generate_start_pv` | MultiReference 图生图·开始 | `= 'ai_service_start'` | `service_type in ('aigeneral','img2img') and function_type = 'multireference'` | count_distinct_task_id | True | True |
+| `video_generate_success_pv` | 视频生成·成功 | `= 'ai_service_success'` | `service_type like '%video%'` | count_distinct_task_id | True | True |
+| `framestransition_video_generate_success_pv` | FramesTransition 视频生成·成功 | `= 'ai_service_success'` | `service_type like '%video%' and function_type = 'framestransition'` | count_distinct_task_id | True | True |
+| `motioncontrol_video_generate_success_pv` | MotionControl 视频生成·成功 | `= 'ai_service_success'` | `service_type like '%video%' and function_type = 'motioncontrol'` | count_distinct_task_id | True | True |
+| `text2video_video_generate_success_pv` | AItext2video 视频生成·成功 | `= 'ai_service_success'` | `service_type like '%video%' and function_type = 'aitext2video'` | count_distinct_task_id | True | True |
+| `referencetovideo_video_generate_success_pv` | referencetovideo 生成成功 | `= 'ai_service_success'` | `service_type like '%video%' and function_type = 'referencetovideo'` | count_distinct_task_id | True | True |
+| `img2img_generate_success_pv` | 图生图·生成成功 | `= 'ai_service_success'` | `service_type in ('aigeneral','img2img')` | count_distinct_task_id | True | True |
+| `img_generate_success_pv` | 图片生成·生成成功 | `= 'ai_service_success'` | `service_type in ('aigeneral','img2img','texttoimage','text2img')` | count_distinct_task_id | True | True |
+| `text2img_generate_success_pv` | 文生图·成功 | `= 'ai_service_success'` | `service_type in ('text2img','texttoimage')` | count_distinct_task_id | True | True |
+| `aiedit_img2img_generate_success_pv` | AIEdit 图生图·成功 | `= 'ai_service_success'` | `service_type in ('aigeneral','img2img') and function_type = 'aiedit'` | count_distinct_task_id | True | True |
+| `multireference_img2img_generate_success_pv` | MultiReference 图生图·成功 | `= 'ai_service_success'` | `service_type in ('aigeneral','img2img') and function_type = 'multireference'` | count_distinct_task_id | True | True |
+| `video_save_pv` | 视频保存 | `= 'ai_service_download_start'` | `service_type like '%video%'` | count_distinct_task_id | True | True |
+| `image_save_pv` | 生图保存 | `= 'ai_service_download_start'` | `service_type in ('aigeneral','img2img','texttoimage','text2img')` | count_distinct_task_id | True | True |
+| `ai_tool_execute_start_pv` | AI Tool 执行开始 | `= 'ai_tool_service_execute_start'` | `` | count_events | True | False |
+
+## fashion
+| metric_name | 中文 | event_name | event_params | agg | enabled | materialized |
+|---|---|---|---|---|---|---|
+| `welcome_show_pv` | 欢迎页曝光 | `= 'fashion_welcome_page_show'` | `` | count_events | True | True |
+| `page_view_pv` | 页面浏览 | `= 'page_view'` | `` | count_events | True | True |
+| `inspiration_template_show_pv` | 灵感模板曝光 | `= 'fashion_inspiration_template_show'` | `` | count_events | True | True |
+| `generator_show_pv` | 生成器曝光 | `= 'fashion_generator_show'` | `` | count_events | True | True |
+| `video_generate_click_pv` | 视频生成点击 | `= 'fashion_video_generate_click'` | `` | count_events | True | True |
+| `generate_start_pv` | AI 服务开始 | `= 'ai_service_start'` | `` | count_events | True | True |
+| `generate_success_pv` | AI 服务成功 | `= 'ai_service_success'` | `` | count_events | True | True |
+| `ai_execute_start_pv` | AI 执行开始 | `= 'ai_service_execute_start'` | `` | count_events | True | True |
+| `ai_execute_success_pv` | AI 执行成功 | `= 'ai_service_execute_success'` | `` | count_events | True | True |
+| `fashion_ai_service_start_pv` | Fashion 视频服务开始 | `= 'ai_service_start'` | `service_type = 'fashion_video'` | count_events | True | True |
+| `fashion_ai_service_success_pv` | Fashion 视频服务成功 | `= 'ai_service_success'` | `service_type = 'fashion_video'` | count_events | True | True |
+| `vip_subscribe_succeed_pv` | VIP 订阅成功 | `= 'vip_subscribe_succeed'` | `` | count_events | True | True |
+
+## web
+| metric_name | 中文 | event_name | event_params | agg | enabled | materialized |
+|---|---|---|---|---|---|---|
+| `video_generate_start_pv` | 视频生成·开始 | `= 'ai_service_start'` | `service_type in( 'text2video', 'startendframe', 'img2video', 'motionsync', 'referencetovideo')` | count_events | True | True |
+| `video_generate_success_pv` | 视频生成·成功 | `= 'ai_service_success'` | `service_type in( 'text2video', 'startendframe', 'img2video', 'motionsync', 'referencetovideo')` | count_events | True | True |
+| `page_view_pv` | 页面浏览 | `= 'page_view'` | `` | count_events | True | True |
+| `session_start_pv` | 会话开始 | `= 'session_start'` | `` | count_events | True | True |
+| `first_visit_pv` | 首次访问 | `= 'first_visit'` | `` | count_events | True | True |
+| `user_engagement_pv` | 用户互动 | `= 'user_engagement'` | `` | count_events | True | True |
+| `generate_start_pv` | AI 服务开始 | `= 'ai_service_start'` | `` | count_events | True | True |
+| `generate_success_pv` | AI 服务成功 | `= 'ai_service_success'` | `` | count_events | True | True |
+| `framestransition_video_generate_start_pv` | FramesTransition 视频生成·开始 | `= 'ai_service_start'` | `service_type = 'startendframe'` | count_events | True | True |
+| `explore_page_show_pv` | Explore 页曝光 | `= 'explore_page_show'` | `` | count_events | True | True |
+| `motioncontrol_video_generate_start_pv` | MotionControl 视频生成·开始 | `= 'ai_service_start'` | `service_type = 'motionsync'` | count_events | True | True |
+| `explore_card_click_pv` | Explore 卡片点击 | `= 'explore_card_click'` | `` | count_events | True | True |
+| `text2video_video_generate_start_pv` | AItext2video 视频生成·开始 | `= 'ai_service_start'` | `service_type = 'text2video'` | count_events | True | True |
+| `explore_content_click_pv` | Explore 内容点击 | `= 'explore_content_click'` | `` | count_events | True | True |
+| `explore_content_generate_click_pv` | Explore 内容生成点击 | `= 'explore_content_generate_click'` | `` | count_events | True | True |
+| `feature_show_pv` | 功能位曝光 | `in ('img2video_show', 'text2video_show', 'referenceToVideo_show', 'startEndFrame_show', 'motionSync_show', 'img2img_show', 'text2img_show')` | `` | count_events | True | True |
+| `photo_add_pv` | 加图 | `= 'photo_add'` | `` | count_events | True | True |
+| `photo_add_success_pv` | 加图成功 | `= 'photo_add_success'` | `` | count_events | True | True |
+| `generate_click_pv` | 生成点击 | `like '%generate_click%'` | `` | count_events | True | True |
+| `framestransition_video_generate_success_pv` | FramesTransition 视频生成·成功 | `= 'ai_service_success'` | `service_type = 'startendframe'` | count_events | True | True |
+| `login_show_pv` | 登录曝光 | `= 'login_show'` | `` | count_events | True | True |
+| `login_account_choose_pv` | 登录账号选择 | `= 'login_account_choose'` | `` | count_events | True | True |
+| `motioncontrol_video_generate_success_pv` | MotionControl 视频生成·成功 | `= 'ai_service_success'` | `service_type = 'motionsync'` | count_events | True | True |
+| `login_success_pv` | 登录成功 | `= 'login_account_success'` | `` | count_events | True | True |
+| `text2video_video_generate_success_pv` | AItext2video 视频生成·成功 | `= 'ai_service_success'` | `service_type = 'text2video'` | count_events | True | True |
+| `vip_show_pv` | VIP 页曝光 | `= 'vip_show'` | `` | count_events | True | True |
+| `vip_subscribe_pv` | VIP 订阅点击 | `= 'vip_subscribe'` | `` | count_events | True | True |
+| `vip_subscribe_succeed_pv` | VIP 订阅成功 | `= 'vip_subscribe_succeed'` | `` | count_events | True | True |
+| `generate_save_pv` | 结果下载/保存 | `= 'ai_result_download'` | `` | count_events | True | True |
+| `valid_user_pv` | 有效行为用户(OR) | `COMPOSITE` | `` | count_events | True | True |
+| `img2video_generate_start_pv` | 图生视频 生成开始 | `= 'ai_service_start'` | `service_type = 'img2video'` | count_events | True | True |
+| `img2video_generate_success_pv` | 图生视频 生成成功 | `= 'ai_service_success'` | `service_type = 'img2video'` | count_events | True | True |
+| `img2img_generate_start_pv` | 图生图·生成开始 | `= 'ai_service_start'` | `service_type = 'img2img'` | count_events | True | True |
+| `img_generate_start_pv` | 图片生成·生成开始 | `= 'ai_service_start'` | `service_type in( 'img2img','text2img','texttoimage')` | count_events | True | True |
+| `img2img_generate_success_pv` | 图生图·生成成功 | `= 'ai_service_success'` | `service_type = 'img2img'` | count_events | True | True |
+| `img_generate_success_pv` | 图片生成·生成成功 | `= 'ai_service_success'` | `service_type in( 'img2img','text2img','texttoimage')` | count_events | True | True |
+| `text2img_generate_start_pv` | 文生图·开始 | `= 'ai_service_start'` | `service_type in ('text2img','texttoimage')` | count_events | True | True |
+| `text2img_generate_success_pv` | 文生图·成功 | `= 'ai_service_success'` | `service_type in ('text2img','texttoimage')` | count_events | True | True |
+| `referencetovideo_generate_start_pv` | referencetovideo 生成开始 | `= 'ai_service_start'` | `service_type = 'referencetovideo'` | count_events | True | True |
+| `referencetovideo_generate_success_pv` | referencetovideo 生成成功 | `= 'ai_service_success'` | `service_type = 'referencetovideo'` | count_events | True | True |
+
+## ios
+| metric_name | 中文 | event_name | event_params | agg | enabled | materialized |
+|---|---|---|---|---|---|---|
+| `img2video_generate_start_pv` | 图生视频 生成开始 | `= 'ai_service_start'` | `service_type = 'aivideoi2v'` | count_distinct_task_id | True | True |
+| `img2video_generate_success_pv` | 图生视频 生成成功 | `= 'ai_service_success'` | `service_type = 'aivideoi2v'` | count_distinct_task_id | None | None |
+| `home_show_pv` | 首页曝光 | `= 'home_show'` | `` | count_events | True | True |
+| `home_template_click_pv` | 首页模板点击 | `= 'temp_click'` | `` | count_events | True | True |
+| `album_show_pv` | 相册曝光 | `= 'album_show'` | `` | count_events | True | True |
+| `generate_ready_pv` | 生成准备 | `= 'create_generate_click'` | `` | count_events | True | True |
+| `generate_save_pv` | 生成保存 | `= 'ai_service_download_success'` | `` | count_events | True | True |
+| `generate_start_pv` | 服务调用开始 | `= 'ai_service_start'` | `` | count_events | True | True |
+| `generate_success_pv` | 服务调用成功 | `= 'ai_service_success'` | `` | count_events | True | True |
+| `video_generate_start_pv` | 视频生成·开始 | `= 'ai_service_start'` | `service_type like '%aivideo%'` | count_distinct_task_id | True | True |
+| `text2video_video_generate_start_pv` | AItext2video 视频生成·开始 | `= 'ai_service_start'` | `service_type = 'aivideot2v'` | count_distinct_task_id | True | True |
+| `referencetovideo_video_generate_start_pv` | referencetovideo 生成开始 | `= 'ai_service_start'` | `service_type = 'aivideor2v'` | count_distinct_task_id | True | True |
+| `img2img_generate_start_pv` | 图生图·生成开始 | `= 'ai_service_start'` | `service_type in ('aigeneral','img2img','ai_generation')` | count_distinct_task_id | True | True |
+| `img_generate_start_pv` | 图片生成·生成开始 | `= 'ai_service_start'` | `service_type in ('aigeneral','img2img','text2img','texttoimage','ai_generation')` | count_distinct_task_id | True | True |
+| `text2img_generate_start_pv` | 文生图·开始 | `= 'ai_service_start'` | `service_type in ('text2img','texttoimage')` | count_distinct_task_id | True | True |
+| `video_generate_success_pv` | 视频生成·成功 | `= 'ai_service_success'` | `service_type like '%aivideo%'` | count_distinct_task_id | True | True |
+| `text2video_video_generate_success_pv` | AItext2video 视频生成·成功 | `= 'ai_service_success'` | `service_type = 'aivideot2v'` | count_distinct_task_id | True | True |
+| `referencetovideo_video_generate_success_pv` | referencetovideo 生成成功 | `= 'ai_service_success'` | `service_type = 'aivideor2v'` | count_distinct_task_id | True | True |
+| `img2img_generate_success_pv` | 图生图·生成成功 | `= 'ai_service_success'` | `service_type in ('aigeneral','img2img','ai_generation')` | count_distinct_task_id | True | True |
+| `img_generate_success_pv` | 图片生成·生成成功 | `= 'ai_service_success'` | `service_type in ('aigeneral','img2img','text2img','texttoimage','ai_generation')` | count_distinct_task_id | True | True |
+| `text2img_generate_success_pv` | 文生图·成功 | `= 'ai_service_success'` | `service_type in ('text2img','texttoimage')` | count_distinct_task_id | True | True |
+| `video_save_pv` | 视频保存 | `= 'ai_service_download_success'` | `service_type like '%aivideo%'` | count_distinct_task_id | True | True |
+| `image_save_pv` | 生图保存 | `= 'ai_service_download_success'` | `service_type in ('aigeneral','img2img','text2img','texttoimage','ai_generation')` | count_distinct_task_id | True | True |

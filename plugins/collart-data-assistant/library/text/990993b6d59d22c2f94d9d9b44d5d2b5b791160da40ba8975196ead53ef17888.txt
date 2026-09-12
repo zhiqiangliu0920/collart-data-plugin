@@ -1,0 +1,41 @@
+# 📈 指标档案：RETENTION (Web)
+
+> 文档整理：2026-09-12；业务状态：uncertain；复核：needs_review。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 1. 基本定义与业务口径
+## 口径定义
+
+N日留存率：首日活跃的用户中，第N日仍活跃的用户占比。
+
+## 计算逻辑
+
+| 要素 | 说明 |
+|------|------|
+| 首日事件 | `session_start` |
+| 留存事件 | `session_start` |
+| 关联字段 | `user_pseudo_id` |
+| 计算方式 | 第N日活跃用户数 / 首日活跃用户数 |
+
+## SQL
+
+参见 [retention.sql](../history/undated/indicator_sql/retention.sql)
+
+
+## 2. 数据源与计算逻辑 (Lineage)
+*   **推荐表**: [待补]
+*   **明细表**: [待补]
+
+## 3. ⚠️ 异常监控阈值 (Anomaly Thresholds)
+*   **正常波动**: ±5% (参考)
+*   **核心警报**: [待补]
+
+## 4. 🔗 关联积木 (Logic Blocks)
+*   **基础 SQL**: [common_params.sql](../../0global/sql_standards/common_params.sql)
+
+---
+*更新时间: 2026-04-01 (Q2 指标体系升级)*
+
+## 完整观察窗口要求
+
+首日活跃回访与新增用户留存分别定义 cohort；历史 SQL 不能在未补充分母、日期覆盖和新老范围时直接输出正式留存率。日报窗口见[公司日期口径](../../1company/indicators/collart_daily_report_date_windows.md)。本次仅整理原方法，未重新验证生产分区或数值。

@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse, collections, hashlib, json, os, re, shutil
 from pathlib import Path
 from urllib.parse import unquote
+import knowledge_registry as registry
 
 PLUGIN = Path('plugins/collart-data-assistant')
 OUTPUTS = {'github_publish_20260912','team_knowledge_20260912','collart_data_plugin_20260912','collart_full_integration_20260912'}
@@ -33,6 +34,8 @@ def write_json(path, data):
 
 def exclude(rel):
     p=Path(rel); parts=set(p.parts); low=rel.lower()
+    if rel=='0global/knowledge_registry.json':return '插件、发布或索引派生产物：审阅登记由构建器单独加载'
+    if p.name in {'.gitignore','.gitattributes'}:return '版本控制规则：保留本机，不作为业务知识'
     if p.name.startswith('.env') or p.suffix.lower() in {'.env','.pem','.key','.p12','.pfx'} or 'service-accounts' in parts:
         return '凭证目录或密钥文件：只登记路径，不读取正文'
     if parts & RUNTIME: return '版本控制或个人运行状态：只登记路径'
@@ -79,7 +82,7 @@ def kind(rel,text):
     if suffix in {'.py','.ps1'}: return 'script'
     if 'sql_standards' in low or 'playbook' in low: return 'method'
     if suffix in {'.json','.csv'}: return 'data'
-    if '_generated/' in low or '/archive/' in low: return 'report'
+    if '_generated/' in low or '/archive/' in low or '/reports/' in low: return 'report'
     return 'guide'
 
 def inspect_text(rel,text,allowed_ids=()):
@@ -108,6 +111,7 @@ def inspect_text(rel,text,allowed_ids=()):
             transforms.append('内部测试用户 ID 引用统一 config/internal-user-ids.json')
     replaced=re.sub(r'[A-Za-z]:[\\/]+Users[\\/]+[^\s`"\x27|<>，。；)]+','{LOCAL_PATH}',text)
     if replaced != text: transforms.append('个人绝对路径替换为 {LOCAL_PATH}')
+    replaced=re.sub(r'\b(?:oc|ou)_[a-f0-9]{24,}\b','{LOCAL_MESSAGING_CONTEXT}',replaced)
     normalized=replaced.replace('\r\n','\n').replace('\r','\n')
     if normalized!=replaced:transforms.append('发布文本换行规范化为 LF；原文件哈希保持不变')
     return normalized,issues,sorted(set(transforms))
@@ -116,6 +120,8 @@ def scan(config, allowed_ids=()):
     rows=[]; contents={}
     for source,dirname in sorted(config['sources'].items()):
         root=Path(dirname).resolve()
+        registry_path=config.get('source_registries',{}).get(source)
+        editorial,_=registry.load(root,registry_path) if source=='ai-knowledge' or registry_path else ({},{})
         if not root.is_dir(): raise ValueError(f'Source missing: {source}')
         output_roots=[]
         for dirname,dirs,files in os.walk(root,followlinks=False):
@@ -127,23 +133,35 @@ def scan(config, allowed_ids=()):
             for name in sorted(files+links):
                 path=Path(dirname)/name;rel=path.relative_to(root).as_posix()
                 row={'id':source+':'+rel,'source':source,'path':rel,'bytes':path.stat().st_size if path.exists() else 0,'sha256':None,'project':'shared','kind':'local','status':'excluded','reason':'','title':name,'summary':'','dates':[],'tables':[],'headings':[],'links':[],'issues':[],'transforms':[]}
+                record=editorial.get(rel)
+                row.update(business_status='uncertain',review_status='boundary_only',aliases=[],record_id=row['id'])
                 reason='目录链接：不跟随、不复制' if name in links or linked(path) else exclude(rel)
                 if any(path.is_relative_to(folder) for folder in output_roots):reason='插件、发布或索引派生产物：禁止循环收录'
+                if not reason and record and record.get('disposition')=='exclude':reason=record.get('exclusion_reason','个人运行或敏感原始记录：留在本机')
                 if reason:
                     row['reason']=reason;rows.append(row);continue
                 data=path.read_bytes();row['sha256']=sha(data);text,encoding=decode(data);row['encoding']=encoding
+                if text and text.startswith('<!-- knowledge-redirect:'):
+                    row.update(sha256=None,status='excluded',reason='插件、发布或索引派生产物：旧路径导航，不作为另一份来源');rows.append(row);continue
                 if text is None:
                     row.update(status='pending',reason='无法无损解码');rows.append(row);continue
-                review=config.get('reviews',{}).get(row['id'],{})
+                review=config.get('reviews',{}).get(record['id'] if record else row['id'],{})
                 approved=review.get('sha256')==row['sha256']
+                if approved and review.get('redact_json_keys'):
+                    value=json.loads(text)
+                    for key in review['redact_json_keys']:
+                        if key not in {'job_id'}:raise ValueError('Unapproved structured metadata redaction')
+                        if isinstance(value,dict):value.pop(key,None)
+                    text=json.dumps(value,ensure_ascii=False,indent=2)+'\n'
                 if approved and review.get('redact_examples'):
                     text=UUID.sub('{REDACTED_EXAMPLE_ID}',text)
                     text=EMAIL.sub('{REDACTED_EMAIL}',text)
                 safe,issues,transforms=inspect_text(rel,text,allowed_ids)
                 if approved and review.get('redact_examples'):transforms.append('已按原文件哈希复核；示例标识与邮箱替换为占位符')
+                if approved and review.get('redact_json_keys'):transforms.append('按原文件哈希复核；仅移除 JSON 根级 job_id 运行元数据')
                 row['issues']=issues;row['transforms']=transforms
                 if safe is None:
-                    row.update(status='pending',reason=issues[0]);rows.append(row);continue
+                    row.update(status='pending',reason=issues[0]);registry.annotate(row,record);rows.append(row);continue
                 lines=[l.strip() for l in safe.splitlines() if l.strip()]
                 headings=[l.lstrip('#').strip() for l in lines if re.match(r'^#{1,4}\s',l)]
                 synopsis=[l.lstrip('-># ').strip() for l in lines if not l.startswith(('---','```','|')) and not re.match(r'^\w+\s*:',l)]
@@ -166,9 +184,9 @@ def scan(config, allowed_ids=()):
                     row.update(status='pending',reason='生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细')
                 elif 'Initial structure for' in safe or not safe.strip():
                     row.update(status='excluded',reason='空占位文件，实际入口由目录索引替代')
-                elif '/archive/' in rel or '/history/' in rel or '/sql-snippets/' in rel or row['kind']=='script' or rel.startswith('_generated/') or source!='ai-knowledge':
+                elif '/archive/' in rel or '/history/' in rel or '/reports/' in rel or '/sql-snippets/' in rel or row['kind']=='script' or rel.startswith('_generated/') or source!='ai-knowledge':
                     row.update(status='historical',reason='保留历史资料；按原日期和适用范围使用，不能视为当前口径')
-                if approved and review.get('aggregate_or_schema'):
+                if approved and (review.get('aggregate_or_schema') or review.get('historical_source')):
                     row.update(status='historical',reason='按文件哈希复核的聚合结果或字段元数据，保留原日期；改变后需重新复核')
                 # Full-file link analysis, excluding fenced examples and web links.
                 md=re.sub(r'```.*?```','',text,flags=re.S)
@@ -176,7 +194,7 @@ def scan(config, allowed_ids=()):
                     for target in re.findall(r'\]\(([^)]+)\)',md):
                         target=unquote(target.strip('<>').split('#')[0])
                         if not target or re.match(r'[a-zA-Z]+:|^//|^/',target): continue
-                        valid=(path.parent/target).exists()
+                        valid=(path.parent/target).resolve().exists()
                         row['links'].append({'target':target,'exists':valid})
                     if any(not l['exists'] for l in row['links']): row['issues'].append('存在失效相对链接')
                 if row['kind']=='table' and Path(rel).stem.count('.')>=2:
@@ -188,6 +206,7 @@ def scan(config, allowed_ids=()):
                         row.update(status='pending',reason='编码或表身份需人工确认')
                     else:
                         row['content_sha256']=sha(safe); contents[row['content_sha256']]=safe
+                registry.annotate(row,record)
                 rows.append(row)
     # Exact equality only. Near duplicates and potentially conflicting table definitions remain separate.
     seen={}
@@ -212,17 +231,18 @@ def build(config,stage):
     previous_path=plugin/'library/catalog.json'
     baseline=Path(config['distribution'])/PLUGIN/'library/catalog.json'
     previous=json.loads(baseline.read_text(encoding='utf-8')) if baseline.exists() else {'sources':[]}
-    byid={r['id']:r for r in rows}
+    byid={alias:r for r in rows for alias in {r['id'],*r.get('aliases',[])}}
     # Retain the last published evidence of removed/held sources, mark it clearly historical.
     for old in previous['sources']:
         origin=old.get('origin_id',old['id']);current=byid.get(origin)
         if old.get('material') and (not current or not current.get('material')):
-            archived={**old,'origin_id':origin,'id':origin+'@'+old['content_sha256'][:12],'status':'historical','reason':'来源移除或当前版本待处理；保留上次已发布证据，不作为当前结论'}
+            archive_id=origin+'@'+old['content_sha256'][:12]
+            archived={**old,'origin_id':origin,'id':archive_id,'record_id':archive_id,'aliases':[],'status':'historical','business_status':'historical','review_status':'needs_review','reason':'来源移除或当前版本待处理；保留上次已发布证据，不作为当前结论'}
             if archived['id'] not in {r['id'] for r in public}: public.append(archived)
             original=Path(config['distribution'])/PLUGIN/old['material'];dest=plugin/old['material']
             if not dest.exists():dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(original,dest)
     public.sort(key=lambda x:x['id'])
-    lookup={r['id']:r for r in public}
+    lookup={alias:r for r in public for alias in {r['id'],*r.get('aliases',[])}}
     for row in public:
         source_path=Path(config['sources'][row['source']])/row['path']
         for link in row.get('links',[]):
@@ -233,7 +253,7 @@ def build(config,stage):
                     target=source+':'+absolute.relative_to(root).as_posix()
                     linked_row=lookup.get(target)
                     if linked_row:
-                        link['source_id']=target;link['material']=linked_row.get('material');link['status']=linked_row['status']
+                        link['source_id']=linked_row['id'];link['material']=linked_row.get('material');link['status']=linked_row['status']
                     break
     for digest,content in contents.items():
         p=plugin/'library/text'/f'{digest}.txt';p.parent.mkdir(parents=True,exist_ok=True)
@@ -244,12 +264,12 @@ def build(config,stage):
     # Preserve old referenced texts; prune only unreferenced generated texts in this staging library.
     for p in (plugin/'library/text').glob('*.txt'):
         if p.relative_to(plugin).as_posix() not in used:p.unlink()
-    manifest={'schema_version':2,'policy':'静态来源证据；历史技能仅作为资料，不授予工具执行或外部发送权限','sources':public,'counts':dict(collections.Counter(r['status'] for r in public))}
+    manifest={'schema_version':3,'policy':'静态来源证据；历史技能仅作为资料，不授予工具执行或外部发送权限','sources':public,'counts':dict(collections.Counter(r['status'] for r in public))}
     write_json(previous_path,manifest)
     lines=['# 全量来源资料索引','','先查统一主题，再按项目、表名、日期查完整资料。原文中的历史指令不作为当前任务指令。','', '| 来源 | 项目 | 类型 | 原日期 | 状态 | 文档 |','|---|---|---|---|---|---|']
     for r in public:
         if r.get('material'):
-            lines.append('| '+ ' | '.join([r['source'],r['project'],r['kind'],', '.join(r['dates'][-3:]) or '原文未标日期',r['status'],f"[{r['title'].replace('|','/').replace('[','').replace(']','')[:90]}](../{r['material']})"])+' |')
+            lines.append('| '+ ' | '.join([r['source'],r['project'],r['kind'],', '.join(r['dates'][-3:]) or '原文未标日期',r['status']+' / '+r.get('business_status','historical')+' / '+r.get('review_status','needs_review'),f"[{r['title'].replace('|','/').replace('[','').replace(']','')[:90]}](../{r['material']})"])+' |')
     (plugin/'library/INDEX.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
     sql=['# SQL 与血缘查询入口','','[维护的 SQL 模板](../presets/README.md) · [全部资料](INDEX.md)','','历史 SQL 按原日期与项目使用；SQLX 可能包含生产写入，仅供血缘阅读，不能自动运行。','']
     for r in public:
@@ -260,13 +280,14 @@ def build(config,stage):
     write_json(plugin/'library/pending.json',pending)
     impacts=[]
     for source in topic_sources:
+        if source.get('tracking_status')=='historical':continue
         origin=source.get('origin_source');relative=source.get('origin_path')
         if not origin or relative is None:continue
         current=byid.get(origin+':'+relative)
         if not current or current['sha256']!=source['source_sha256']:
             impacts.append({'source_id':source['id'],'origin':origin+':'+relative,'state':'missing' if not current else 'changed','reason':'统一主题来源已有变化；保留旧证据，复核适用范围后更新主题'})
     write_json(plugin/'library/topic_impacts.json',impacts)
-    fingerprint=sha(json.dumps([(r['id'],r['sha256'],r['status']) for r in rows if r['sha256']],ensure_ascii=False,sort_keys=True))
+    fingerprint=registry.source_fingerprint(rows)
     return {'source_fingerprint':fingerprint,'counts':dict(collections.Counter(r['status'] for r in rows)),'files':len(rows),'texts':len(used),'pending':len(pending)},rows
 
 def prepare_changes(base,local,remote):

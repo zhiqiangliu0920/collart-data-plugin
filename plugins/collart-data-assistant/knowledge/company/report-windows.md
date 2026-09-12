@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["full-eeebc9e82bd76fe2"]
+sources: ["full-eeebc9e82bd76fe2-review-ddff0eff3b"]
 tags: ["company", "经营日报日期与比较窗口"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["full-eeebc9e82bd76fe2"]
 ---
 
 # 经营日报日期与比较窗口
@@ -29,6 +30,6 @@ verification_evidence: []
 
 ## 来源与状态
 
-- [1company/indicators/collart_daily_report_date_windows.md](../../library/text/f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637.txt)
+- [1company/indicators/collart_daily_report_date_windows.md](../../library/text/ddff0eff3b96808dab82e55c3457eab63bf57896b7d980a8fd88c1beea878a87.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。

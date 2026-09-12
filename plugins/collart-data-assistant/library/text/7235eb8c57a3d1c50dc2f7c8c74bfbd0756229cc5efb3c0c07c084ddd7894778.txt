@@ -1,0 +1,27 @@
+# 生成器与表对照
+
+本地 SQLX：`cursor-sync/project/1company/2026-07/collart_ads_rebuild/sql/{android,ios,web,fashion}/`
+
+| 端 | 生成脚本 |
+|---|---|
+| Android | `gen_event_metric_sqlx.py` → attr → country → `gen_indicator_daily_sqlx.py` |
+| iOS | `gen_event_metric_sqlx_ios.py` → attr_ios → country_ios → daily_ios |
+| Web | `gen_event_metric_sqlx_web.py` + `gen_run_web_fashion_event_metric.gen9_web` + country_web + daily `--end web` |
+| Fashion | `gen_event_metric_sqlx_fashion.py` + `gen9_fashion` + country_fashion + daily `--end fashion` |
+
+编排：`sync_event_metric_from_sheet.py`。对齐：`align_metric_rule_vs_tables.py`。解析：`event_params_rule.py`。
+
+## 下游四张表
+
+1. `ads_oper_user_event_metric_di` — 用户×日 `*_pv`
+2. `ads_oper_event_metric_attr_di` — 日×默认维 `STRUCT<uv,pv>`
+3. `ads_oper_event_metric_country_di` — 日×国家
+4. `ads_oper_basic_indicator_daily_di` — 日报事件 STRUCT（另有 DAU/留存/收入，勿覆盖）
+
+回补必须按 1→2→3→4。
+
+## Sheet 列
+
+`app_name, metric_name, metric_chinese_name, event_name, event_params, agg_type, is_enabled, is_materialized, sort_order`
+
+`is_materialized=TRUE` 且 `is_enabled=TRUE` 才进宽表。

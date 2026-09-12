@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["metrics", "revenue", "ads-redlines", "fashion-orders", "team-shared-payment-evidence", "cursor-revenue-subscription-md"]
+sources: ["metrics", "revenue", "ads-redlines-review-954bdf4e17", "fashion-orders-review-7afb4b3f3b", "team-shared-payment-evidence", "cursor-revenue-subscription-md"]
 tags: ["付费", "订阅", "收入", "conversion", "Stripe", "purchase_revenue", "ROAS"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["ads-redlines", "fashion-orders"]
 ---
 
 # 付费转化与收入口径
@@ -43,7 +44,7 @@ Web/Fashion 和移动端俄罗斯支付资料推荐 Stripe 或 active.revenue；
 
 ## 来源与状态
 
-来源摘录：[metrics](../../provenance/excerpts/metrics.txt)、[revenue](../../provenance/excerpts/revenue.txt)、[ads-redlines](../../provenance/excerpts/ads-redlines.txt)、[fashion-orders](../../provenance/excerpts/fashion-orders.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[metrics](../../provenance/excerpts/metrics.txt)、[revenue](../../provenance/excerpts/revenue.txt)、[ads-redlines](../../library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt)、[fashion-orders](../../library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
 
 ## 合并的业务细节
 
@@ -66,7 +67,7 @@ Web/Fashion 和移动端俄罗斯支付资料推荐 Stripe 或 active.revenue；
 
 Web 用户收入可从 `pubdata2025.dwd.dwd_cdct_revenue_stripe_di` 核对；不能把 Web 全部支付限制成 RUB。Android/iOS 的俄罗斯 Stripe 补充支付才限定 `UPPER(currency)='RUB'`。按 `transaction_id` 和适用产品去重，币种及毛净额采用下述规则。不要使用旧 `ods.orders` 替代成功收入证据。
 
-`dwd_cdct_orders_revenue_hi` 是 **0 行空表**，不要当「当天补洞」源。
+既有资料曾记录 `dwd_cdct_orders_revenue_hi` 为 0 行；这不是本次实时检查，不能假定它可补当天数据。
 
 落表：Android/iOS `ads_oper_user_active_di.revenue.purchase_revenue` 与 `credit_revenue` 叠加 RUB；**四端 profile 终身收入都是 `SUM(active.revenue)`**，不再回扫 DWS、不再 orphan 二次叠加。country/daily 仍读 `ads_ad_sub`（用户粒度与国家层允许对不齐）。
 
@@ -86,14 +87,14 @@ Web 用户收入可从 `pubdata2025.dwd.dwd_cdct_revenue_stripe_di` 核对；不
 ### country 收入 vs ads_ad_sub_revenue_1h
 
 - country 层订阅三类（new/resub/credit）来自 **DWS**，不是 `ads_ad_sub_revenue_1h`。
-- 国家×日仅约 15% 键与 `ads_ad_sub_revenue_1h` 完全对齐；日级 `new_revenue` 可对齐，国家拆分不完全等价。
+- 原历史样本中，国家×日仅约 15% 键与 `ads_ad_sub_revenue_1h` 完全对齐；日级 `new_revenue` 可对齐，国家拆分不完全等价。
 - 2026-08-10 起 ADS 层 `new_revenue` 已扣点数包，可与旧表直比。
 
 ### Stripe 归属（Web）
 
 - active：同日 DM 末次 pseudo，否则 id_map **最近一次绑定（不卡首见日）**；两级都没有才丢掉。
 - profile：`SUM(active.revenue)`，不再 orphan 叠加。2026-09-06 起 too_new 进日活；真 miss（无设备）仍不硬挂。
-- profile 无 active 的骨架人约 2442，付费为 0，不是漏单。
+- 原历史样本中的 profile 无 active 骨架人约 2442，付费为 0，不是漏单。
 
 ### Stripe 归属（Fashion）
 
@@ -109,7 +110,7 @@ Web 用户收入可从 `pubdata2025.dwd.dwd_cdct_revenue_stripe_di` 核对；不
 
 ### ARPU / ARPPU
 
-- Web/OS 维度：iOS 端 ARPPU 最高，Android 量大付费率低、收入以点数包为主。
+- 历史样本的 Web/OS 维度中：iOS 端 ARPPU 最高，Android 量大付费率低、收入以点数包为主。
 - ARPDAU 敏感性用于收入作战台（见 [playbooks.md](analysis-playbook.md)）。
 
 ### 埋点 vs 订单差异

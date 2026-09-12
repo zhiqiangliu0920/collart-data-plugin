@@ -1,0 +1,25 @@
+# 1company 表文档索引
+
+> 文档整理：2026-09-12；业务状态：documented；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+项目名称：公司
+
+表数量：14
+
+| 表名 | 中文名 | 分层 | 主题 | 优先级 | 字段数 | 状态 | 文档 |
+|---|---|---|---|---|---:|---|---|
+| `aidata2025.ads.ads_hangzhou_revenue_country_1d` | 公司分产品、国家、分来源收入 | ADS应用层 | 收入成本主题 | 低 | 10 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_hangzhou_revenue_country_1d.md) |
+| `pubdata2025.ads.ads_atlasv_basic_data_daily_1h` | 公司分产品收入等基础数据 | ADS应用层 | 收入成本主题 | - | 23 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/pubdata2025.ads.ads_atlasv_basic_data_daily_1h.md) |
+| `pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h` | 公司分产品、分来源的收入与成本 | ADS应用层 | 收入成本主题 | - | 12 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h.md) |
+| `aidata2025.dim.dim_country_info` | 国家名称表 | DIM层 | 业务数据（维表） | 高 | 6 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_country_info.md) |
+| `aidata2025.dim.dim_product_info_copy` | 产品名称表 | DIM层 | 业务数据（维表） | 高 | 7 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_product_info_copy.md) |
+| `aidata2025.dim.exchange_rate_days` | 国家汇率转换表 | DIM层 | 业务数据（维表） | 低 | 3 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.exchange_rate_days.md) |
+| `aidata2025.dwd.dwd_cdct_woolong_request_di` | woolong表 | DWD明细层 | 收入成本主题 | - | 20 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_cdct_woolong_request_di.md) |
+| `pubdata2025.dwd.dwd_cdct_revenue_adplatform_di` | 广告平台明细汇总表 | DWD明细层 | 收入成本主题 | - | 16 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/pubdata2025.dwd.dwd_cdct_revenue_adplatform_di.md) |
+| `aidata2025.dws.dws_oper_asa_collart_1d` | asa投放平台数据（cam粒度） | DWS汇总层 | 增长主题 | - | 23 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_asa_collart_1d.md) |
+| `aidata2025.dws.dws_oper_asa_keyword_collart_1d` | asa投放平台数据（keyid映射） | DWS汇总层 | 增长主题 | - | 24 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_asa_keyword_collart_1d.md) |
+| `aidata2025.dws.dws_oper_fb_delivery_1d` | fb投放平台安装花费（**旧表，会停更；现网花费用 cdct**） | DWS汇总层 | 增长主题 | 中 | 10 | `deprecated/do-not-use-for-ads` | [打开](history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_fb_delivery_1d.md) |
+| `aidata2025.dws.dws_oper_tiktok_ad_1d` | tt投放平台花费安装数据 | DWS汇总层 | 增长主题 | - | 9 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_tiktok_ad_1d.md) |
+| `pubdata2025.dws.dws_cdct_cost_google_1h` | ga投放平台花费 | DWS汇总层 | 增长主题 | 中 | 16 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/pubdata2025.dws.dws_cdct_cost_google_1h.md) |
+| `pubdata2025.dws.dws_cdct_revenue_country_1d` | 分产品、国家、广告平台的广告收入 | DWS汇总层 | 收入成本主题 | - | 14 | `complete/available` | [打开](history/2026-05-21/table_dictionary_export/tables/pubdata2025.dws.dws_cdct_revenue_country_1d.md) |

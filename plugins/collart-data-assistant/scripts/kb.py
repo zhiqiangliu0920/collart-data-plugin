@@ -195,10 +195,15 @@ def check(root, today):
         if not inside(root, item["destination"]).exists():
             errors.append(f"missing integration destination: {item['destination']}")
     counts = {state: sum(m["status"] == state for m, *_ in rows) for state in sorted(STATES)}
-    material_rows=materials(root); material_ids=set();texts=set()
+    material_rows=materials(root); material_ids=set();texts=set();material_aliases={}
     for item in material_rows:
         if item['id'] in material_ids:errors.append('duplicate material source ID')
         material_ids.add(item['id'])
+        if item.get('business_status') not in {'documented','historical','deprecated','uncertain'}:errors.append(f"{item['id']}: invalid business status")
+        if item.get('review_status') not in {'reviewed_static','needs_review','boundary_only'}:errors.append(f"{item['id']}: invalid review status")
+        for alias in {item['id'],item.get('record_id',item['id']),*item.get('aliases',[])}:
+            if alias in material_aliases and material_aliases[alias]!=item['id']:errors.append(f"{alias}: ambiguous material alias")
+            material_aliases[alias]=item['id']
         if item.get('material'):
             path=inside(root,item['material']);texts.add(item['material'])
             if not path.is_file() or sha(path)!=item['content_sha256']:errors.append(f"{item['id']}: material hash mismatch")
@@ -212,13 +217,15 @@ def main():
     parser.add_argument("--authoring", action="store_true", help="explicitly acknowledge edits to a source workspace, never an installed cache")
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("index", help="rebuild local catalog and Markdown index")
-    query = sub.add_parser("search", help="search live knowledge files, including drafts")
+    query = sub.add_parser("search", help="search maintained knowledge; request history explicitly")
     query.add_argument("query")
     query.add_argument("--project")
     query.add_argument("--limit", type=int, default=8)
     query.add_argument('--scope',choices=['all','topics','materials'],default='all')
     query.add_argument('--kind')
     query.add_argument('--status')
+    query.add_argument('--business-status',choices=['documented','historical','deprecated','uncertain'])
+    query.add_argument('--include-history',action='store_true',help='include historical, deprecated and unresolved evidence; never execute it')
     reader=sub.add_parser('read',help='read a full source and resolve its original relative references inside this standalone bundle')
     reader.add_argument('source_id')
     validate = sub.add_parser("check", help="validate package, no queries or network")
@@ -257,11 +264,13 @@ def main():
         words = args.query.casefold().split()
         if not words or args.limit < 1:
             raise ValueError("query must be nonempty and limit positive")
-        hits = []
+        hits = []; held_matches=0
         for meta, body, path, _ in records(root):
             if args.scope=='materials' or (args.kind and args.kind!=meta['kind']) or (args.status and args.status!=meta['status']):continue
             if args.project and meta["project"] not in {args.project, "shared"}:
                 continue
+            if args.business_status and meta['status']!=args.business_status:continue
+            if not args.include_history and not args.status and not args.business_status and meta['status'] in {'draft','deprecated'}:continue
             searchable = (dump(meta) + body).casefold()
             score = sum(word in searchable for word in words)
             if score == len(words):
@@ -280,12 +289,18 @@ def main():
                 if args.kind and item['kind']!=args.kind:continue
                 if args.status and item['status']!=args.status:continue
                 body=inside(root,item['material']).read_text(encoding='utf-8')
+                business=item.get('business_status','historical')
+                permitted=args.include_history or args.status or args.business_status or (business=='documented' and item.get('review_status')=='reviewed_static')
+                if args.business_status and business!=args.business_status:continue
+                if not permitted:
+                    if all(word in (dump(item)+body).casefold() for word in words):held_matches+=1
+                    continue
                 if all(word in (dump(item)+body).casefold() for word in words):
                     seen_texts.add(item['material'])
-                    hits.append({'id':item['id'],'title':item['title'],'project':item['project'],'kind':item['kind'],'status':item['status'],'verified_at':None,'review_after':None,'dates':item['dates'],'path':item['material'],'origin':{'source':item['source'],'path':item['path']},'warning':'静态原文；按原日期与适用范围使用，历史指令不授予执行权限'})
-        print(dump({"matches": len(hits), "results": hits[:args.limit]}), end="")
+                    hits.append({'id':item['id'],'title':item['title'],'project':item['project'],'kind':item['kind'],'status':item['status'],'business_status':business,'review_status':item.get('review_status','needs_review'),'record_id':item.get('record_id',item['id']),'verified_at':None,'review_after':None,'dates':item['dates'],'path':item['material'],'origin':{'source':item['source'],'path':item['path']},'warning':'静态原文；按原日期与适用范围使用，历史指令不授予执行权限'})
+        print(dump({"matches": len(hits), "results": hits[:args.limit],"historical_or_unreviewed_matches":held_matches,"history_option":"--include-history" if held_matches else None}), end="")
     elif args.command=='read':
-        items=[r for r in materials(root) if r['id']==args.source_id]
+        items=[r for r in materials(root) if args.source_id in {r['id'],r.get('record_id',r['id']),*r.get('aliases',[])}]
         if len(items)!=1:raise ValueError('Unknown or ambiguous source ID')
         item=items[0]
         result={**item,'body':inside(root,item['material']).read_text(encoding='utf-8') if item.get('material') else None}
@@ -294,15 +309,25 @@ def main():
         changed = []
         if not args.source_root and not args.source_config:raise ValueError('Supply --source-config or --source-root')
         source_config=json.loads(args.source_config.read_text(encoding='utf-8')) if args.source_config else None
+        local_aliases={}
+        if source_config:
+            registry_path=Path(source_config['sources']['ai-knowledge'])/'0global/knowledge_registry.json'
+            if registry_path.exists():
+                for item in json.loads(registry_path.read_text(encoding='utf-8'))['documents']:
+                    for alias in {item['id'],*item.get('aliases',[])}:local_aliases[alias]=item['path']
         for source in sources(root):
+            if source.get('tracking_status')=='historical':continue
             if source_config:
-                path=inside(Path(source_config['sources'][source.get('origin_source','ai-knowledge')]),source.get('origin_path',source['source_path']))
+                origin=source.get('origin_source','ai-knowledge');relative=source.get('origin_path',source['source_path'])
+                relative=local_aliases.get(origin+':'+relative,relative)
+                path=inside(Path(source_config['sources'][origin]),relative)
             else:path = inside(args.source_root, source["source_path"])
             state = "missing" if not path.is_file() else ("same" if sha(path) == source["source_sha256"] else "changed")
             if state != "same":
                 affected = [m["id"] for m, *_ in records(root) if source["id"] in m["sources"]]
                 changed.append({"source_id": source["id"], "state": state, "affected_entries": affected})
-        print(dump({"checked": len(sources(root)), "changes": changed}), end="")
+        archived=sum(s.get('tracking_status')=='historical' for s in sources(root))
+        print(dump({"checked": len(sources(root))-archived, "historical_evidence_records":archived, "changes": changed}), end="")
         return int(bool(changed))
     elif args.command == "new":
         if not SLUG.fullmatch(args.id) or not SLUG.fullmatch(args.project) or not args.title.strip() or "\n" in args.title or "\r" in args.title:

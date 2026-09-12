@@ -1,0 +1,58 @@
+# Collart Web 数据血缘
+
+> 文档整理：2026-09-12；业务状态：documented；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 整体数据流
+
+```
+Firebase SDK
+    │
+    └──→ events_* (原始埋点)
+            │
+            ├──→ 用户行为分析
+            │       └──→ 与 orders 关联（user_id）→ 付费分析
+            │
+            ├──→ 页面分析
+            │       └──→ page_view 事件 → 页面漏斗
+            │
+            └──→ 留存分析
+                    └──→ 自关联（user_pseudo_id + 日期）
+```
+
+## 表间关联关系
+
+| 主表 | 关联表 | 关联字段 | 用途 | 示例 |
+|------|--------|---------|------|------|
+| events_* | orders | user_id | 行为+付费 | 用户行为与付费关联 |
+| events_* | user_collartweb_di | user_id | 用户画像 | 用户属性分析 |
+| events_* | events_* | user_pseudo_id | 留存分析 | 自关联计算留存 |
+
+## 常用 JOIN 模式
+
+### 用户行为 + 付费
+```sql
+SELECT 
+  e.user_id,
+  e.event_name,
+  o.revenue
+FROM events_* e
+LEFT JOIN orders o ON e.user_id = o.user_id
+WHERE e.app_info.id IS NULL
+  AND e._TABLE_SUFFIX = '20260301';
+```
+
+### 页面漏斗分析
+```sql
+SELECT 
+  event_name,
+  COUNT(DISTINCT user_pseudo_id) as uv
+FROM events_*
+WHERE app_info.id IS NULL
+  AND event_name IN ('page_view', 'explore_page_show', 'ai_service_task_create')
+GROUP BY event_name;
+```
+
+## 跨项目关联
+
+参见 [company/cross_product_tables.md](../../1company/tables/cross_product_tables.md) 了解与 Android 端及其他产品的关联方式。

@@ -1,0 +1,59 @@
+# 表名 → 项目路由
+
+> 用户只给表名时，按下列规则推断 `{project}`。多个命中时：以**用户当前对话上下文**为准；仍不确定则问一句。
+
+## 项目目录对照
+
+| 业务 | 知识库目录 | 典型过滤 |
+|------|-----------|----------|
+| Collart Web 主站 | `collart_web/` | `app_info.id IS NULL`；加工表 `package_name='collart_web'` |
+| Collart Fashion 服装带货 | `collart_ fashion/` | 加工表 `package_name='collart_fashion'`；events 用 `page_location` |
+| Collart Android | `collart_android/` | `package_name='free.ai.photo.generator.collart.ai'` |
+| Collart iOS | `collart_ios/` | iOS 账单/订阅相关 |
+| 公司层 / 跨产品 | `1company/` | 按 `product_id` / `platform` 过滤 |
+| Vibedance | `vibedance/` | 独立产品线 |
+
+## 表名关键词（优先级从高到低）
+
+| 模式 | 路由 | 说明 |
+|------|------|------|
+| `*collartweb*` / `*_collart_web_*` | `collart_web` | Web 用户/指标/事件汇总 |
+| `*fashion*` 且上下文为服装带货 | `collart_ fashion` | 与 web 共用部分物理表时，两项目 tables 均可有文档，正文注明 `package_name` |
+| `*collart_di*` / `*collart_android*` / `ads_oper_user_new_collart_di` | `collart_android` | Android 用户/指标（非 web） |
+| `*collart_ios*` / `*apple*` / `*ios*` 订阅账单 | `collart_ios` | iOS 收入与订阅 |
+| `storytemplate*.analytics*.events_*` | 按分析场景：`collart_web` / `collart_android` / `collart_ios` | GA4 原始埋点；**同一张表**可在多项目 lineage 引用，表文档主仓通常放最常用项目 + 1company 索引 |
+| `pubdata2025.*` | 多数 → `1company` | 跨产品收入、投放、公司 KPI |
+| `aidata2025.ads.ads_*` 非 collart 专属 | 看 Bitable 索引项目列；默认 `1company` 或 AI 组 | 查 `_generated/.../README.md` |
+| `aidata2025.ai_service.*` | `1company` 或具体产品 | 成本/AI 服务明细 |
+| `aidata2025.dim.*` | 按使用场景 | 汇率 `exchange_rate_days` → 多项目引用；产品维表 → `1company` |
+| `aidata2025.ods.orders` | `collart_web` | Web 订单事实表（Fashion 项目可镜像短链） |
+| `dwd_cdct_revenue_stripe_di` | `1company` + 各产品引用 | Stripe 跨产品收入 |
+| `hzdw2024.*` | `1company` | 杭州/历史仓 |
+
+## 数仓分层 → 文档侧重点
+
+| 分层前缀 | 文档应强调 |
+|----------|-----------|
+| `ods.*` | 来源系统、原始粒度、状态枚举、是否需汇率/单位换算 |
+| `dwd.*` | 行粒度、分区、与 ODS/events 关系、常用过滤 |
+| `dws.*` / `ads.*` | 汇总粒度、指标含义、与 DWD 差异、是否可替代明细查询 |
+| `dim.*` | 维表键、关联字段、是否 copy 表 |
+| `dm.*` | 主题宽表、ID 映射规则 |
+| `events_*` | 分区 `_TABLE_SUFFIX`、单次 ≤30 天、项目过滤条件 |
+
+## 已有文档检索顺序
+
+1. `{project}/tables/{表名}.md`
+2. 各项目 `tables/` 下模糊匹配表名片段
+3. `1company/history/2026-05-21/table_dictionary_export/tables/{表名}.md`（飞书 Bitable 导出，作**参考**）
+4. `_generated/.../tables/README.md` 索引（含中文名、项目、complete/missing 状态）
+
+## 多项目同表策略
+
+物理表服务多个产品时：
+
+1. **canonical 正文**：放在主使用项目 `tables/`，或 `1company/tables/`（跨产品）
+2. **其他项目**：短文档 + 链接 canonical + 本项目过滤条件
+3. **lineage**：各项目 `lineage/lineage.md` 只写本项目 JOIN 场景
+
+示例：`aidata2025.ods.orders` canonical 在 `collart_web/tables/`；Fashion 目录可有同名文件但 §2 注明「Fashion 分析需额外 filter / 或共用 web 订单」。

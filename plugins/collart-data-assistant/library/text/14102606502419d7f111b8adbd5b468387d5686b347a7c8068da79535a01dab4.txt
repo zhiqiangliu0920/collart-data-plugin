@@ -1,0 +1,49 @@
+# 📈 指标档案：FEATURE_USAGE (Android)
+
+> 文档整理：2026-09-12；业务状态：uncertain；复核：needs_review。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 1. 基本定义与业务口径
+## 口径定义
+
+功能使用率：使用某功能的用户数占总活跃用户的比例。
+
+## 计算逻辑
+
+| 要素 | 说明 |
+|------|------|
+| 功能创建事件 | `ai_service_task_create` |
+| 功能类型字段 | `service_type` |
+| 分母 | DAU（`session_start` 去重用户数） |
+
+## 功能类型
+
+| service_type | 说明 |
+|-------------|------|
+| img2video | 图生视频 |
+| text2video | 文生视频 |
+| img2img | 图生图 |
+| text2img | 文生图 |
+| video_edit | 视频编辑 |
+
+## SQL
+
+参见 [feature_usage.sql](../history/undated/indicator_sql/feature_usage.sql)
+
+
+## 2. 数据源与计算逻辑 (Lineage)
+*   **推荐表**: [待补]
+*   **明细表**: [待补]
+
+## 3. ⚠️ 异常监控阈值 (Anomaly Thresholds)
+*   **正常波动**: ±5% (参考)
+*   **核心警报**: [待补]
+
+## 4. 🔗 关联积木 (Logic Blocks)
+*   **基础 SQL**: [common_params.sql](../../0global/sql_standards/common_params.sql)
+
+## 5. 常见坑点 (Common Pitfalls)
+*   [待补]
+
+---
+*更新时间: 2026-04-01 (Q2 指标体系升级)*

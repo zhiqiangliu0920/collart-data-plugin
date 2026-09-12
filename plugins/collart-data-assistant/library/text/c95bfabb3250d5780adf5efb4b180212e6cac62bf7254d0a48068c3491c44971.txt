@@ -1,0 +1,322 @@
+from __future__ import annotations
+
+import argparse
+import json
+from collections import Counter
+from datetime import date, datetime, timedelta, timezone
+from decimal import Decimal
+from pathlib import Path
+from typing import Any
+
+from google.cloud import bigquery
+from google.oauth2 import service_account
+
+
+SOURCE_TABLE = "pubdata2025.ads.ads_atlasv_basic_data_daily_1h"
+GROUP_NAMES = {
+    "downloader": "下载器组",
+    "ai_photo": "AI影像组",
+    "guangzhou_tool": "广州工具组",
+    "guangzhou_game": "广州游戏组",
+}
+
+
+def sql_text(value: str) -> str:
+    return "'" + value.replace("'", "''") + "'"
+
+
+def sql_number(value: Any) -> str:
+    if value is None:
+        return "NULL"
+    if isinstance(value, Decimal):
+        return format(value, "f")
+    return format(float(value), ".15g")
+
+
+def as_date(value: Any) -> date:
+    if isinstance(value, date):
+        return value
+    return date.fromisoformat(str(value)[:10])
+
+
+def make_query() -> str:
+    return f"""
+WITH base AS (
+  SELECT
+    stats_date,
+    team,
+    app_name,
+    SUM(IFNULL(revenue, 0)) AS revenue,
+    SUM(IFNULL(cost, 0)) AS ad_spend,
+    SUM(IFNULL(else_cost, 0)) AS other_spend,
+    SUM(IFNULL(active_users, 0)) AS dau,
+    SUM(IFNULL(new_users, 0)) AS new_users,
+    SUM(CASE WHEN retan_2 IS NOT NULL
+      THEN IFNULL(retan_2, 0) * IFNULL(new_users, 0) ELSE 0 END) AS retention_num,
+    SUM(CASE WHEN retan_2 IS NOT NULL
+      THEN IFNULL(new_users, 0) ELSE 0 END) AS retention_den
+  FROM `{SOURCE_TABLE}`
+  WHERE stats_date BETWEEN @date_from AND @date_to
+  GROUP BY stats_date, team, app_name
+),
+products AS (
+  SELECT
+    stats_date,
+    team,
+    app_name,
+    CASE team
+      WHEN 'downloader' THEN '下载器组'
+      WHEN 'ai_photo' THEN 'AI影像组'
+      WHEN 'guangzhou_tool' THEN '广州工具组'
+      WHEN 'guangzhou_game' THEN '广州游戏组'
+    END AS group_name,
+    CASE
+      WHEN team = 'guangzhou_game' AND STARTS_WITH(app_name, 'TTG_') THEN 'TTG'
+      WHEN team = 'guangzhou_game' AND STARTS_WITH(app_name, 'FBG_') THEN 'FBG'
+      ELSE ''
+    END AS line_name,
+    revenue,
+    ad_spend,
+    other_spend,
+    dau,
+    new_users,
+    retention_num,
+    retention_den
+  FROM base
+  WHERE team IN ('downloader', 'ai_photo', 'guangzhou_tool', 'guangzhou_game')
+),
+public_spend AS (
+  SELECT
+    stats_date,
+    SUM(other_spend) AS other_spend
+  FROM base
+  WHERE (team = 'guangzhou' AND app_name = 'gz')
+     OR (team = 'hangzhou' AND app_name = 'hz')
+  GROUP BY stats_date
+),
+metric_rows AS (
+  SELECT
+    stats_date AS metric_date,
+    'product' AS level,
+    group_name,
+    line_name,
+    app_name AS product_name,
+    revenue,
+    ad_spend,
+    other_spend,
+    revenue - ad_spend - other_spend AS net_revenue,
+    CAST(ROUND(dau) AS INT64) AS dau,
+    CAST(ROUND(new_users) AS INT64) AS new_users,
+    SAFE_DIVIDE(retention_num, NULLIF(retention_den, 0)) AS next_day_retention
+  FROM products
+
+  UNION ALL
+
+  SELECT
+    stats_date,
+    'group',
+    group_name,
+    '',
+    '',
+    SUM(revenue),
+    SUM(ad_spend),
+    SUM(other_spend),
+    SUM(revenue) - SUM(ad_spend) - SUM(other_spend),
+    CAST(ROUND(SUM(dau)) AS INT64),
+    CAST(ROUND(SUM(new_users)) AS INT64),
+    SAFE_DIVIDE(SUM(retention_num), NULLIF(SUM(retention_den), 0))
+  FROM products
+  GROUP BY stats_date, group_name
+
+  UNION ALL
+
+  SELECT
+    stats_date,
+    'line',
+    '广州游戏组',
+    line_name,
+    '',
+    SUM(revenue),
+    SUM(ad_spend),
+    SUM(other_spend),
+    SUM(revenue) - SUM(ad_spend) - SUM(other_spend),
+    CAST(ROUND(SUM(dau)) AS INT64),
+    CAST(ROUND(SUM(new_users)) AS INT64),
+    SAFE_DIVIDE(SUM(retention_num), NULLIF(SUM(retention_den), 0))
+  FROM products
+  WHERE team = 'guangzhou_game'
+  GROUP BY stats_date, line_name
+
+  UNION ALL
+
+  SELECT
+    p.stats_date,
+    'company',
+    '',
+    '',
+    '',
+    SUM(p.revenue),
+    SUM(p.ad_spend),
+    SUM(p.other_spend) + IFNULL(MAX(s.other_spend), 0),
+    SUM(p.revenue) - SUM(p.ad_spend)
+      - SUM(p.other_spend) - IFNULL(MAX(s.other_spend), 0),
+    CAST(ROUND(SUM(p.dau)) AS INT64),
+    CAST(ROUND(SUM(p.new_users)) AS INT64),
+    SAFE_DIVIDE(SUM(p.retention_num), NULLIF(SUM(p.retention_den), 0))
+  FROM products p
+  LEFT JOIN public_spend s USING (stats_date)
+  GROUP BY p.stats_date
+)
+SELECT *
+FROM metric_rows
+ORDER BY metric_date, level, group_name, line_name, product_name
+"""
+
+
+def build_sql(rows: list[dict[str, Any]], date_from: date, date_to: date) -> str:
+    source_updated_at = datetime.now(timezone.utc).isoformat()
+    columns = (
+        "metric_date, level, group_name, line_name, product_name, revenue, "
+        "ad_spend, other_spend, net_revenue, dau, new_users, "
+        "next_day_retention, source_updated_at, data_mode"
+    )
+    statements = ["BEGIN;"]
+    batch_size = 350
+    for start in range(0, len(rows), batch_size):
+        values = []
+        for row in rows[start : start + batch_size]:
+            values.append(
+                "(" + ", ".join(
+                    [
+                        sql_text(str(row["metric_date"])),
+                        sql_text(str(row["level"])),
+                        sql_text(str(row["group_name"] or "")),
+                        sql_text(str(row["line_name"] or "")),
+                        sql_text(str(row["product_name"] or "")),
+                        sql_number(row["revenue"]),
+                        sql_number(row["ad_spend"]),
+                        sql_number(row["other_spend"]),
+                        sql_number(row["net_revenue"]),
+                        str(int(row["dau"])),
+                        str(int(row["new_users"])),
+                        sql_number(row["next_day_retention"]),
+                        sql_text(source_updated_at),
+                        "'real'",
+                    ]
+                ) + ")"
+            )
+        statements.append(
+            f"INSERT INTO daily_metric ({columns}) VALUES\n"
+            + ",\n".join(values)
+            + "\nON CONFLICT (metric_date, level, group_name, line_name, product_name, data_mode) "
+            "DO UPDATE SET revenue = EXCLUDED.revenue, ad_spend = EXCLUDED.ad_spend, "
+            "other_spend = EXCLUDED.other_spend, net_revenue = EXCLUDED.net_revenue, "
+            "dau = EXCLUDED.dau, new_users = EXCLUDED.new_users, "
+            "next_day_retention = EXCLUDED.next_day_retention, "
+            "source_updated_at = EXCLUDED.source_updated_at, _updated_at = CURRENT_TIMESTAMP;"
+        )
+
+    product_count = sum(1 for row in rows if row["level"] == "product")
+    statements.append(
+        "INSERT INTO sync_run "
+        "(source, sync_type, date_from, date_to, source_max_date, source_rows, "
+        "written_rows, status, started_at, finished_at) VALUES ("
+        f"'bigquery', 'backfill', {sql_text(date_from.isoformat())}, "
+        f"{sql_text(date_to.isoformat())}, {sql_text(date_to.isoformat())}, "
+        f"{product_count}, {len(rows)}, 'success', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);"
+    )
+    statements.append("COMMIT;")
+    return "\n\n".join(statements) + "\n"
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--credentials", required=True)
+    parser.add_argument("--sql-output", required=True)
+    parser.add_argument("--qa-output", required=True)
+    args = parser.parse_args()
+
+    credentials = service_account.Credentials.from_service_account_file(args.credentials)
+    client = bigquery.Client(project=credentials.project_id, credentials=credentials, location="US")
+
+    latest_query = f"SELECT MAX(stats_date) AS latest_date FROM `{SOURCE_TABLE}`"
+    latest_row = next(iter(client.query(latest_query, location="US").result()))
+    date_to = as_date(latest_row.latest_date)
+    date_from = date_to - timedelta(days=90)
+
+    invalid_query = f"""
+SELECT
+  COUNTIF(team = 'guangzhou_game'
+    AND NOT STARTS_WITH(app_name, 'TTG_')
+    AND NOT STARTS_WITH(app_name, 'FBG_')) AS invalid_game_products,
+  COUNTIF(team NOT IN ('downloader', 'ai_photo', 'guangzhou_tool', 'guangzhou_game', 'guangzhou', 'hangzhou')) AS unknown_teams
+FROM `{SOURCE_TABLE}`
+WHERE stats_date BETWEEN @date_from AND @date_to
+"""
+    config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("date_from", "DATE", date_from),
+            bigquery.ScalarQueryParameter("date_to", "DATE", date_to),
+        ]
+    )
+    invalid = next(iter(client.query(invalid_query, job_config=config, location="US").result()))
+    if int(invalid.invalid_game_products or 0) != 0 or int(invalid.unknown_teams or 0) != 0:
+        raise RuntimeError("源数据包含未知 team 或非 TTG/FBG 广州游戏产品")
+
+    result = client.query(make_query(), job_config=config, location="US").result()
+    rows = [dict(row.items()) for row in result]
+    if not rows:
+        raise RuntimeError("BigQuery 查询结果为空")
+
+    keys = [
+        (
+            str(r["metric_date"]),
+            r["level"],
+            r["group_name"] or "",
+            r["line_name"] or "",
+            r["product_name"] or "",
+        )
+        for r in rows
+    ]
+    if len(keys) != len(set(keys)):
+        raise RuntimeError("聚合结果存在重复业务键")
+
+    levels = Counter(str(row["level"]) for row in rows)
+    group_latest = sorted(
+        str(row["group_name"])
+        for row in rows
+        if as_date(row["metric_date"]) == date_to and row["level"] == "group"
+    )
+    lines_latest = sorted(
+        str(row["line_name"])
+        for row in rows
+        if as_date(row["metric_date"]) == date_to and row["level"] == "line"
+    )
+    if group_latest != sorted(GROUP_NAMES.values()):
+        raise RuntimeError("最新日期未完整覆盖四个项目组")
+    if lines_latest != ["FBG", "TTG"]:
+        raise RuntimeError("最新日期广州游戏线路不是 TTG/FBG")
+
+    sql_path = Path(args.sql_output)
+    sql_path.parent.mkdir(parents=True, exist_ok=True)
+    sql_path.write_text(build_sql(rows, date_from, date_to), encoding="utf-8")
+
+    qa = {
+        "source_table": SOURCE_TABLE,
+        "date_from": date_from.isoformat(),
+        "date_to": date_to.isoformat(),
+        "rows_total": len(rows),
+        "level_counts": dict(sorted(levels.items())),
+        "latest_groups": group_latest,
+        "latest_lines": lines_latest,
+        "invalid_game_products": int(invalid.invalid_game_products or 0),
+        "unknown_teams": int(invalid.unknown_teams or 0),
+    }
+    Path(args.qa_output).write_text(
+        json.dumps(qa, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    print(json.dumps(qa, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()

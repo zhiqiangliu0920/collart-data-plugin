@@ -14,8 +14,8 @@
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-b5bb84b662377244",
-        "full-7190043e9eae148f"
+        "full-b5bb84b662377244-review-ec7e5e69e4",
+        "full-7190043e9eae148f-review-954bdf4e17"
       ],
       "tags": [
         "collart_android",
@@ -23,8 +23,12 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "full-b5bb84b662377244",
+        "full-7190043e9eae148f"
+      ],
       "path": "knowledge/collart_android/dau-source-selection.md",
-      "sha256": "58ba28135a86450723a247b9f6ca689d292246188d7165aef1ae23fb6cbc3152"
+      "sha256": "6a4f33032734357d75f01c0c694af854c0995ced453731ca44128b69a9cab74a"
     },
     {
       "id": "collart-fashion-product-funnel",
@@ -39,8 +43,8 @@
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-cc76b025aa572d07",
-        "full-da2c0238684d2dd6"
+        "full-cc76b025aa572d07-review-dae7423731",
+        "full-da2c0238684d2dd6-review-061a38c432"
       ],
       "tags": [
         "collart_fashion",
@@ -48,8 +52,12 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "full-cc76b025aa572d07",
+        "full-da2c0238684d2dd6"
+      ],
       "path": "knowledge/collart_fashion/product-funnel.md",
-      "sha256": "c7213b2b6c494b3edc07adaff300d19ffecac89d99652ff77838c5a2ad9fedd1"
+      "sha256": "42feb7218268fdcab2503cc3a96da0c98fb815626ce65847c6af076e1f9d1ad6"
     },
     {
       "id": "collart_fashion-revenue-boundary",
@@ -64,10 +72,11 @@
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "fashion-orders",
+        "fashion-orders-review-7afb4b3f3b",
         "revenue",
-        "ads-redlines",
-        "team-collart_fashion-revenue-boundary"
+        "ads-redlines-review-954bdf4e17",
+        "team-collart_fashion-revenue-boundary",
+        "review-979740ccfe320f48"
       ],
       "tags": [
         "Fashion",
@@ -79,8 +88,12 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "fashion-orders",
+        "ads-redlines"
+      ],
       "path": "knowledge/collart_fashion/revenue-boundary.md",
-      "sha256": "c1662af4932023714a9d1a8eb86b06868b25f77f4b7c67880d07c9967cf752c2"
+      "sha256": "9a683d042fa9a7d205c74e2ee6c412710002da642583bb6bb9e6f0b972679bba"
     },
     {
       "id": "collart-fashion-warehouse-audit-20260909",
@@ -96,7 +109,7 @@
       "effective_from": null,
       "sources": [
         "full-a7cc6cb8e2b227f3",
-        "full-96da852291e4720b"
+        "full-96da852291e4720b-review-7afb4b3f3b"
       ],
       "tags": [
         "collart_fashion",
@@ -104,8 +117,11 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "full-96da852291e4720b"
+      ],
       "path": "knowledge/collart_fashion/warehouse-audit-20260909.md",
-      "sha256": "0eedbe435c90d8349c9fef807685a02dee4cab655c551ca5317db249650627ed"
+      "sha256": "fbe72a6dc3508b18eedbe71b94be2f77ec7e6f1828c431aad91bd0dc673377c4"
     },
     {
       "id": "collart-ios-asa-history-boundary",
@@ -120,8 +136,8 @@
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-873bfac8f8c2b8d2",
-        "full-7190043e9eae148f"
+        "full-873bfac8f8c2b8d2-review-2648364e66",
+        "full-7190043e9eae148f-review-954bdf4e17"
       ],
       "tags": [
         "collart_ios",
@@ -129,8 +145,12 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "full-873bfac8f8c2b8d2",
+        "full-7190043e9eae148f"
+      ],
       "path": "knowledge/collart_ios/asa-history-boundary.md",
-      "sha256": "a814ba95bca2e2afbe6564211872e53528a5767ec58dbb732b0990ff64972c62"
+      "sha256": "0dabfb56f7ad5e1492b323f3ceb6daba505b58820f4b0c82ad8b123ac8955976"
     },
     {
       "id": "collart_web-identity",
@@ -145,8 +165,8 @@
       "verified_by": null,
       "effective_from": "2026-09-07",
       "sources": [
-        "web-profile",
-        "ads-redlines",
+        "web-profile-review-be4e210655",
+        "ads-redlines-review-954bdf4e17",
         "team-collart_web-identity"
       ],
       "tags": [
@@ -159,8 +179,12 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "web-profile",
+        "ads-redlines"
+      ],
       "path": "knowledge/collart_web/identity.md",
-      "sha256": "a1bdcdea6e34659626a29f69c48c32cfa6630d2637adf8345289613c1a6fab71"
+      "sha256": "333b9d77ae240015c7c43000fd0fd968a817ff0bec8809a2cf759b1812c2613d"
     },
     {
       "id": "collart-web-revenue-report-20260912",
@@ -199,8 +223,8 @@
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-2ce0fdb15495c7bc",
-        "full-199b51ce0dcab10c"
+        "full-2ce0fdb15495c7bc-review-00d8e8ef02",
+        "full-199b51ce0dcab10c-review-d5bb4ac56d"
       ],
       "tags": [
         "company",
@@ -208,8 +232,12 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "full-2ce0fdb15495c7bc",
+        "full-199b51ce0dcab10c"
+      ],
       "path": "knowledge/company/event-rule-contract.md",
-      "sha256": "82670af1e687e9d1174aaa7f14ad47b8fc33a411820efaf9df4f2e8ec5046215"
+      "sha256": "c74ef4d16a58c0d419939cda7091c947f6607dc09050b41614c3d4f8524c2118"
     },
     {
       "id": "company-purchase-union",
@@ -224,7 +252,7 @@
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-1fd6dc1741d54dde"
+        "full-1fd6dc1741d54dde-review-1afb72cc7d"
       ],
       "tags": [
         "company",
@@ -232,8 +260,11 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "full-1fd6dc1741d54dde"
+      ],
       "path": "knowledge/company/purchase-union.md",
-      "sha256": "c4ffd11f1247cab788a4325543e14cd40420677f8d8ff727ce52caf41ee4002a"
+      "sha256": "1dbe9ea8651b7115416c320593258ae26ab3d8ba71fca8ba8573ae9920215070"
     },
     {
       "id": "company-report-windows",
@@ -248,7 +279,7 @@
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-eeebc9e82bd76fe2"
+        "full-eeebc9e82bd76fe2-review-ddff0eff3b"
       ],
       "tags": [
         "company",
@@ -256,8 +287,11 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "full-eeebc9e82bd76fe2"
+      ],
       "path": "knowledge/company/report-windows.md",
-      "sha256": "f535e00fcd3b697b8717b92730ad090af7c3140ff331d6cf1af8200866121e55"
+      "sha256": "8bf636b9578823785af2149febf5db8b59f2a7abbfd60fef48e8815ce122dce6"
     },
     {
       "id": "shared-analysis-playbook",
@@ -328,8 +362,8 @@
       "verified_by": null,
       "effective_from": "2026-09-05",
       "sources": [
-        "web-channel",
-        "ads-redlines",
+        "web-channel-review-7003847ee3",
+        "ads-redlines-review-954bdf4e17",
         "team-collart_web-channel-attribution",
         "cursor-channels-attribution-md"
       ],
@@ -349,8 +383,12 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "web-channel",
+        "ads-redlines"
+      ],
       "path": "knowledge/shared/channel-attribution.md",
-      "sha256": "ddbd1ccdd66bba5446a4d2b5bc3c08fb426e1ae8c6760d704c41b05b94bc36ff"
+      "sha256": "36557f24449409867b43f8031294066c5858381f032e876909fedfd9bc92f7a3"
     },
     {
       "id": "shared-core-metrics",
@@ -367,7 +405,7 @@
       "sources": [
         "metrics",
         "retention",
-        "legacy-conversion",
+        "legacy-conversion-review-95f777f166",
         "team-shared-core-metrics",
         "cursor-metric-glossary-md"
       ],
@@ -382,8 +420,11 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "legacy-conversion"
+      ],
       "path": "knowledge/shared/core-metrics.md",
-      "sha256": "811143ba593f6e7c1a4c2caba4f06263e4660c7bcf9ab91490f3a0ba05846fe7"
+      "sha256": "9782d548abeb7c1d2f0e2d13067210c53242f808a71fcad3566cde1820a7f71c"
     },
     {
       "id": "shared-data-caveats",
@@ -478,14 +519,16 @@
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "legacy-ios",
+        "legacy-ios-review-7873df86c6",
         "ads-routing",
-        "legacy-conversion",
+        "legacy-conversion-review-95f777f166",
         "metrics",
         "revenue",
-        "ads-redlines",
-        "web-profile",
-        "team-shared-known-conflicts"
+        "ads-redlines-review-954bdf4e17",
+        "web-profile-review-be4e210655",
+        "team-shared-known-conflicts",
+        "review-e4b31288e0a4a0ad",
+        "review-979740ccfe320f48"
       ],
       "tags": [
         "冲突",
@@ -498,8 +541,14 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "legacy-ios",
+        "legacy-conversion",
+        "ads-redlines",
+        "web-profile"
+      ],
       "path": "knowledge/shared/known-conflicts.md",
-      "sha256": "b8810754910fe8732ef2f88e1b269ff013aa3d2eed3c24ace6d77bb07b8877f0"
+      "sha256": "bfbe0575cfeb99c639c67b6ba32300e58f6c397c951e6858cb91ce1cd4f5e106"
     },
     {
       "id": "shared-metric-upgrades",
@@ -540,8 +589,8 @@
       "sources": [
         "metrics",
         "revenue",
-        "ads-redlines",
-        "fashion-orders",
+        "ads-redlines-review-954bdf4e17",
+        "fashion-orders-review-7afb4b3f3b",
         "team-shared-payment-evidence",
         "cursor-revenue-subscription-md"
       ],
@@ -556,8 +605,12 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "ads-redlines",
+        "fashion-orders"
+      ],
       "path": "knowledge/shared/payment-evidence.md",
-      "sha256": "fcaa4760d40ce686797c0e0400113efdf0d9329cea26d4d9c13dd416f82ff8b3"
+      "sha256": "55de80456c87f3957ff3d8f88198583dec07891f6f74643a4a6f6156429937c8"
     },
     {
       "id": "shared-project-overview",
@@ -574,9 +627,10 @@
       "sources": [
         "ads-routing",
         "events",
-        "fashion-orders",
+        "fashion-orders-review-7afb4b3f3b",
         "team-shared-project-overview",
-        "cursor-platforms-md"
+        "cursor-platforms-md",
+        "review-e4b31288e0a4a0ad"
       ],
       "tags": [
         "业务",
@@ -589,8 +643,11 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "fashion-orders"
+      ],
       "path": "knowledge/shared/project-overview.md",
-      "sha256": "e7c2a0f4e527465372fedc3b7bbc2c1243da68849159d2b103738c27d32bb04f"
+      "sha256": "a2b24a28d0573dbdeec9bf77839288614141d58612b4d3cb9f04d5fb94a4d402"
     },
     {
       "id": "shared-retention-newuser",
@@ -631,7 +688,7 @@
       "sources": [
         "events",
         "ads-routing",
-        "ads-redlines",
+        "ads-redlines-review-954bdf4e17",
         "team-shared-sql-practice",
         "cursor-sql-standards-md"
       ],
@@ -645,8 +702,11 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "ads-redlines"
+      ],
       "path": "knowledge/shared/sql-practice.md",
-      "sha256": "37ff9c7ed4b3cad2868ab474ef87ecc2e64ed77b887d3dc637031a81931d9151"
+      "sha256": "a9d79e3fa2dddd49b2ca68ab18ed3d730f512834767890c67d31608d3c63afa9"
     },
     {
       "id": "shared-table-routing",
@@ -662,7 +722,7 @@
       "effective_from": null,
       "sources": [
         "ads-routing",
-        "ads-redlines",
+        "ads-redlines-review-954bdf4e17",
         "team-shared-table-routing",
         "cursor-table-routing-md"
       ],
@@ -677,8 +737,11 @@
       ],
       "supersedes": [],
       "verification_evidence": [],
+      "historical_sources": [
+        "ads-redlines"
+      ],
       "path": "knowledge/shared/table-routing.md",
-      "sha256": "56445151613a6a058c4d1a60d1c974280f50dd7b4924d981e3880a1220261d99"
+      "sha256": "6001ce8e45388d0bf015ea2de2495a2136d4e85f685007d8da4e66b49a208f15"
     },
     {
       "id": "shared-warehouse-lineage",

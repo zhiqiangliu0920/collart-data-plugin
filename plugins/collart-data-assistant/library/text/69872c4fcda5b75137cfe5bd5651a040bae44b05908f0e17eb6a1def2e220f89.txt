@@ -1,0 +1,52 @@
+# 📈 指标档案：RETENTION (Android)
+
+> 文档整理：2026-09-12；业务状态：uncertain；复核：needs_review。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 1. 基本定义与业务口径
+## 口径定义（2026-03-23 更新）
+
+N日留存率：首日活跃的用户中，第N日仍活跃的用户占比。
+
+## 计算逻辑
+
+| 方法 | 数据源 | 计算方式 |
+|------|--------|---------|
+| **方法1（推荐）** | `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di` | 直接用算好的留存字段 |
+| **方法2** | `aidata2025.dwd.dwd_oper_user_collart_di` | 重新计算 |
+
+## ⚠️ 重要说明
+
+- **不要**使用 `events_*` 表的 `session_start` 事件计算留存
+- 使用加工好的数据表，数据更准确、查询更快
+- `ads_oper_basic_indicator_collart_di` 表已包含计算好的留存率字段
+
+## SQL
+
+参见 [retention.sql](../history/undated/indicator_sql/retention.sql)
+
+---
+
+*更新时间: 2026-03-23（修正数据源）*
+
+
+## 2. 数据源与计算逻辑 (Lineage)
+*   **推荐表**: [待补]
+*   **明细表**: [待补]
+
+## 3. ⚠️ 异常监控阈值 (Anomaly Thresholds)
+*   **正常波动**: ±5% (参考)
+*   **核心警报**: [待补]
+
+## 4. 🔗 关联积木 (Logic Blocks)
+*   **基础 SQL**: [common_params.sql](../../0global/sql_standards/common_params.sql)
+
+## 5. 常见坑点 (Common Pitfalls)
+*   [待补]
+
+---
+*更新时间: 2026-04-01 (Q2 指标体系升级)*
+
+## 完整观察窗口要求
+
+首日活跃回访与新增用户留存分别定义 cohort；历史 SQL 不能在未补充分母、日期覆盖和新老范围时直接输出正式留存率。日报窗口见[公司日期口径](../../1company/indicators/collart_daily_report_date_windows.md)。本次仅整理原方法，未重新验证生产分区或数值。

@@ -10,10 +10,11 @@ review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: "2026-09-07"
-sources: ["web-profile", "ads-redlines", "team-collart_web-identity"]
+sources: ["web-profile-review-be4e210655", "ads-redlines-review-954bdf4e17", "team-collart_web-identity"]
 tags: ["user_ids", "user_id", "user_pseudo_id", "身份", "UUID", "ads_oper_user_profile_df"]
 supersedes: []
 verification_evidence: []
+historical_sources: ["web-profile", "ads-redlines"]
 ---
 
 # Web 设备画像与登录账号映射
@@ -47,4 +48,4 @@ WHERE @login_user_id IN UNNEST(user_ids)
 
 ## 来源与状态
 
-来源摘录：[web-profile](../../provenance/excerpts/web-profile.txt)、[ads-redlines](../../provenance/excerpts/ads-redlines.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[web-profile](../../library/text/89103e23f6e453c60ca981f572a9f9dfe9c4454db375035a9efe1a5490493d78.txt)、[ads-redlines](../../library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。

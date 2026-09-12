@@ -1,0 +1,150 @@
+# Collart Fashion 服装带货埋点
+
+> 文档整理：2026-09-12；业务状态：documented；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+> 权威来源：飞书 Wiki [Collart 项目埋点2026](https://cwtus1pn64.feishu.cn/wiki/DpcRwAuBSiSmaZkiIxWc62gxnhf?sheet=PIvKn2)（sheet：`PIvKn2`，子表：`collart web服装带货埋点`）  
+> 同步时间：2026-08-18；同步范围：`A1:F51`；事件数：47  
+> 产品核对：[Fashion Generator](https://collart.ai/en/studio/ai-fashion-video)
+
+Collart Fashion 与 Collart Web 共用 GA4 事件表。本文件记录 Fashion 专属事件，以及复用 Web 埋点时新增的 Fashion 参数值。事件名和参数拼写以源表原文为准；源表中的疑似错拼不会在查询中擅自修正。
+
+## 当前产品流程
+
+| 步骤 | 当前界面 | 主要输入 | 对应埋点 |
+|---|---|---|---|
+| Step 1 | Select Reference Video | 预设参考视频、上传视频、视频链接；可选提示词微调与自定义场景图 | `fashion_generator_show`、`fashion_reference_video_*`、`fashion_upload_video_*` |
+| Step 2 | Pick a Model | Preset / History / Upload | `fashion_model_category_show`、`fashion_model_*` |
+| Step 3 | Add Clothing | 上传服装、商品链接导入、多套 Outfit | `fashion_outfit_*` |
+| Step 4 | Output Settings | 背景音乐、分辨率、视频模型 | `fashion_video_generate_click` |
+
+当前界面已是四步流程。2026-07-22 旧版文档中的“模特 → 服装 → 参考视频/生成”顺序不再适用。
+
+## 复用说明
+
+| 模块 | 事件前缀 | Fashion 扩展 |
+|---|---|---|
+| 页面展示 | `page_view` | 包含欢迎页 |
+| AI 服务 | `ai_service_*` | `service_type` 增加 `fashion_video`、`ai_model` |
+| VIP | `vip_*` | `from` 增加 `fashion_video` |
+| 点数包 | `credit_pack_purchase` | 源表归在 VIP 模块 |
+
+## 事件清单
+
+### 入口、欢迎页与 Inspirations
+
+| 功能模块 | 事件中文名 | 事件英文名 | 参数 | 备注 |
+|---|---|---|---|---|
+| 页面展示 | 页面展示 | `page_view` | — | 复用 Collart Web；包含欢迎页 |
+| 欢迎页 | 服装带货网站_承接页展示 | `fashion_welcome_page_show` | — | 源表仍记录测试页 `https://test.collart.ai/en/ai-fashion-video` |
+| 欢迎页 | 服装带货网站_承接页行动按钮展示 | `fashion_welcome_action_click` | — | 中文名写“展示”，事件名写 `click`，需按事件名查询并待产品确认语义 |
+| 导航栏 | 点击 asset | `fashion_aesset_click` | — | 源表拼写为 `aesset`，备注“未触发” |
+| Inspirations | Inspirations 页面_曝光 | `fashion_inspiration_show` | — | — |
+| Inspirations | 模块_曝光 | `fashion_inspiration_module_show` | `module_name`；`from`: `inspiration` / `fashion_video` | — |
+| Inspirations | 模板_曝光 | `fashion_inspiration_template_show` | `template_id`；`module_name` | 展示到用户视口就上报 |
+| Inspirations | 模板_点击 | `fashion_inspiration_template_click` | `template_id`；`module_name` | — |
+| Inspirations | 模板_静音/取消静音 | `fashion_inspiration_template_mute_toggle` | — | — |
+| Inspirations | 模板_点击 Recreate | `fashion_inspiration_template_recreate` | `template_id`；`module_name` | — |
+
+### Step 1 — 选择参考视频
+
+| 事件中文名 | 事件英文名 | 参数 | 备注 |
+|---|---|---|---|
+| generator 页面_曝光 | `fashion_generator_show` | `step`: `1/2/3` | 当前产品为四步，源表枚举尚未写入 4 |
+| step1_上传视频页面曝光 | `fashion_reference_video_show` | — | — |
+| step1_通过链接上传视频 confirm | `fashion_reference_video_link_confirm` | — | — |
+| step1_通过链接上传视频成功 | `fashion_reference_video_link_success` | — | — |
+| step1_点击自己上传视频 | `fashion_upload_video_click` | — | — |
+| step1_自己上传视频成功 | `fashion_upload_video_success` | — | — |
+
+### Step 2 — 选择模特
+
+| 事件中文名 | 事件英文名 | 参数 | 备注 |
+|---|---|---|---|
+| step2_模特上传页_切换目录 | `fashion_model_category_show` | `type`: `preset` / `history` / `upload` | — |
+| step2_upload_点击上传区域 | `fashion_model_upload_click` | — | — |
+| step2_upload_模特图手动开始上传 | `fashion_model_upload_start` | — | 源表参数栏写“自己开始上传图片” |
+| step2_upload_模特图手动上传成功 | `fashion_model_upload_success` | — | 源表参数栏写“自己上传图片成功” |
+| step2_模板图手动上传失败 | `fashion_model_upload_failed` | — | 中文名沿用源表原文 |
+| step2_选中某个预设模特 | `fashion_model_preset_click` | `model_preset_id` | — |
+| step2_选中某个历史模特 | `fashion_model_history_click` | — | 源表备注“补充新埋点” |
+| step2_下一步 | `fashion_model_next` | — | — |
+
+### Step 3 — 添加服装
+
+| 事件中文名 | 事件英文名 | 参数 | 备注 |
+|---|---|---|---|
+| step3_点击 Add Outfit | `fashion_outfit_add_click` | — | — |
+| step3_服装图手动上传成 | `fashion_outfit_confirm` | `outfit_type`: `upload` / `presrt_id` | `presrt_id` 为源表原文，疑似 `preset_id`，查询前先验数 |
+| step3_链接导入提示 | `fashion_outfit_link_notify` | — | 当前界面支持 TikTok Shop、Lazada、Shopee 商品链接 |
+| step3_下一步 | `fashion_outfit_next` | `outfit_count` | — |
+| step3_上一步 | `fashion_outfit_previous` | — | — |
+
+### Step 4 — 输出设置与生成
+
+| 事件中文名 | 事件英文名 | 参数 | 备注 |
+|---|---|---|---|
+| step4_点击 Generate Video | `fashion_video_generate_click` | `model_source`、`template_id`、`model_preset_id`、`outfit_preset_id`、`outfit_count`、`resolution`、`bgm_enabled`、`has_prompt`、`video_model`、`has_scene` | 2026-08-18 源表最新参数增加 `video_model`；`has_scene` 为自定义场景标识 |
+
+### AI Model
+
+| 事件中文名 | 事件英文名 | 参数 |
+|---|---|---|
+| AI Model 页面展示 | `fashion_ai_model_show` | — |
+| AI Model 图片上传成功 | `fashion_ai_model_upload_success` | `preset_id` |
+| AI Model 生成按钮点击 | `fashion_ai_model_generate_click` | `generate_count` |
+
+### AI 服务（复用 Collart Web）
+
+| 事件中文名 | 事件英文名 | Fashion 参数扩展 |
+|---|---|---|
+| 服务开启执行 | `ai_service_start` | `service_type`: `fashion_video` / `ai_model` |
+| 图片开始上传 | `ai_service_upload_start` | — |
+| 图片上传成功 | `ai_service_upload_success` | — |
+| 图片上传失败 | `ai_service_upload_failed` | — |
+| 任务开始执行 | `ai_service_execute_start` | — |
+| 任务执行成功 | `ai_service_execute_success` | — |
+| 任务执行失败 | `ai_service_execute_failed` | — |
+| 服务执行成功 | `ai_service_success` | — |
+| 服务执行失败 | `ai_service_failed` | — |
+| 生成结果_下载 | `ai_result_download` | — |
+
+### VIP 与点数包（复用 Collart Web）
+
+| 事件中文名 | 事件英文名 | Fashion 参数扩展 |
+|---|---|---|
+| 订阅页面_展示 | `vip_show` | `from`: `fashion_video` |
+| 订阅页面_点击购买 | `vip_subscribe` | `from`: `fashion_video` |
+| 订阅页面_点击购买 | `credit_pack_purchase` | 源表未列参数 |
+| 订阅页面_购买成功 | `vip_subscribe_succeed` | `from`: `fashion_video` |
+
+## 与 2026-07-22 版本相比
+
+- 流程从三步改为四步，参考视频移到 Step 1，生成移到 Step 4。
+- 新增 `fashion_reference_video_show`、`fashion_reference_video_link_confirm`、`fashion_reference_video_link_success`。
+- 新增 `fashion_model_category_show`、`fashion_outfit_link_notify`、`credit_pack_purchase`。
+- `fashion_video_generate_click` 新增 `video_model` 参数。
+- 当前源表已移除旧事件 `fashion_inspiration_view_more`；除非 GA4 实际仍有数据，否则不再放入标准漏斗。
+- 源表第六列“最新更新内容”在本次同步范围内无非空内容。
+
+## 已知埋点缺口与验数红线
+
+1. `fashion_generator_show.step` 只写 `1/2/3`，但当前界面存在 Step 4；按步骤分析前先检查实际枚举。
+2. 参考视频预设模板的“选中”动作没有独立事件；不能用模板曝光替代模板选择。
+3. 商品链接导入只有 `fashion_outfit_link_notify`，未记录平台、confirm、success/fail；暂时无法评估各平台导入成功率。
+4. BGM、分辨率、视频模型没有单独交互事件，只能使用 Generate 点击时快照参数分析最终选择。
+5. `fashion_aesset_click`、`presrt_id` 为源表拼写；SQL 必须先按原值验数，不得静默纠错。
+6. 服务失败事件未在本表定义错误码/失败原因；失败归因需要再查公共参数或服务日志。
+
+分析口径与转化率定义见 [`../analysis_playbooks/fashion_video_funnel.md`](../analysis_playbooks/fashion_video_funnel.md)。
+
+## 关联文档
+
+- [AI Fashion Video 产品与流程](ai_fashion_video_product.md)
+- [Collart Fashion 项目配置](project_config.md)
+- [Fashion / 主站用户划分](../indicators/fashion_vs_main_site_user.md)
+- [Collart Web GA4 事件表](../tables/storytemplate-10a27.analytics_232977577.events_.md)
+
+---
+
+*最后同步：2026-08-18*

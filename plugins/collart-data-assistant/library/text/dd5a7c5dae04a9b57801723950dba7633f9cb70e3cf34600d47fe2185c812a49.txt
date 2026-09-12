@@ -1,0 +1,40 @@
+# `aidata2025.dm.dm_collart_ios_user_event_di`
+
+> 文档整理：2026-09-12；业务状态：documented；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 1. 基础信息
+
+- 中文名：Collart iOS 事件明细 DM
+- 粒度：事件行
+- 分区：`event_date`
+- 更新：Dataform 三日滚动刷新
+- Dataform：`definitions/dm/daily/h_dm_collart_ios_user_event_di.sqlx`
+- 上游：`aidata2025.dwd.dwd_oper_user_event_di`、事件参数表、用户属性表
+- 产品过滤：`LOWER(app_name)='vidart'` 且 `package_name='ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'`
+
+## 2. 核心作用
+
+Collart iOS 新 ADS 体系的统一事件入口。`ads_collartios.ads_oper_user_active_di` 等下游应优先从本表读取身份、渠道、设备和事件字段，不应为补字段反向依赖旧 `dwd_oper_user_basic_di`。
+
+## 3. 核心身份字段
+
+| 字段 | 来源 | 说明 |
+|---|---|---|
+| `identity.adjust_id` | `dwd_oper_user_event_di.adjust_id` | DWD 原生列；不要从 event params 提取，近三日 event param 无该 key |
+| `identity.advertising_id` | DWD 历史列 `` ` advertising_id` `` | 源列名带前导空格；DM 必须 alias 为无空格标准字段名 |
+| `identity.clarity_user_id` | 用户属性 | 用户维度属性 |
+
+## 4. 口径与红线
+
+1. `traffic_src_type` 保持 DM 归因口径；同一用户一天内只要出现过 `delivery`，active 即认为是 `delivery`。
+2. 与旧 `dwd_oper_user_basic_di` 相比，DM 会把更多用户识别为 delivery；这是已确认的口径升级，不得为追求旧表对账而回退。
+3. 下游只能引用无空格 `identity.advertising_id`；禁止暴露或继续传播源列前导空格。
+4. `adjust_id` / `advertising_id` 应在 DM 完善后下传，active 不应直接 JOIN 旧 basic 表。
+
+## 5. 数据质量验证（2026-08-07~2026-08-09）
+
+- `adjust_id` 用户填充：843 / 813 / 819。
+- `advertising_id` 用户填充：855 / 828 / 827（100%）。
+- 对旧 basic 活跃用户逐值对账：两个 ID 三日均 100% 一致。
+- Dataform workspace 编译：0 errors。

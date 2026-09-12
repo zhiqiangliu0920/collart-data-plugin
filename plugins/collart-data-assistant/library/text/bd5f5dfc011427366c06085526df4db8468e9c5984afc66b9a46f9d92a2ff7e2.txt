@@ -1,0 +1,10 @@
+# `aidata2025.ads_collartandroid.ads_dim_event_tag`（已废弃）
+
+> 文档整理：2026-09-12；业务状态：deprecated；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+> **2026-09-02**：物理表与字段已改为 `ads_dim_metric_rule` / `metric_name`。  
+> 权威文档：[aidata2025.ads_collartandroid.ads_dim_metric_rule.md](aidata2025.ads_collartandroid.ads_dim_metric_rule.md)  
+> 跨项目：[ads_dim_metric_rule.md](../../../../1company/tables/ads_dim_metric_rule.md)
+
+不要再对本名 `INSERT` / 跑旧 seed。Sheet 外表也不要 `CREATE OR REPLACE`。

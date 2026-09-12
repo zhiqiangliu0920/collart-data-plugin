@@ -1,0 +1,16 @@
+# Collart Fashion 表索引
+
+> 文档整理：2026-09-12；业务状态：documented；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 收入
+
+- [Fashion Stripe 订单明细](aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md)
+- [Fashion 用户日明细（含 Stripe 收入）](aidata2025.ads_collartfashion.ads_oper_user_active_di.md)
+- [【停更】旧用户日收入](../history/2026-09-09/tables/aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di.md)
+- [【已删除】旧每日收入汇总](../history/2026-09-09/tables/aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di.md)
+- [Stripe 收入源表](pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md)
+
+## 事件指标
+
+- [Fashion 用户日事件指标](aidata2025.ads_collartfashion.ads_oper_user_event_metric_di.md)

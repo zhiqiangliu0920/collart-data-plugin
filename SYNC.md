@@ -44,3 +44,13 @@ sync_plugin.py 使用官方 plugin-creator helper 更新本机缓存后缀，再
 无变化安静结束。仅报告实际更新、故障状态变化和新增待处理事项；同一已知故障或未解决事项不每半小时重复提醒。通知摘要指纹保存在本机，失败后恢复也视为状态变化。
 
 测试覆盖三个输入新增/修改、幂等、去重、生成目录有效资料、循环拦截、敏感内容、三方冲突、历史保留、独立引用解析、安装失败回滚和状态分离。失败场景使用可控故障注入，不关闭用户真实网络或破坏现有插件。业务正确性仍依赖原日期、证据与实际复核。
+
+## 目录整理后的标识与检索
+
+ai-knowledge 的正式正文按公司/四端维护，0global/knowledge_registry.json 记录持久 ID、旧路径别名及精确正文哈希。两个历史包的标识表由 inputs.source_registries 指向本机状态文件。纯迁移更新 path/aliases 并保留 id；内容变化必须审阅差异后更新记录，禁止只重设哈希。
+
+收录 status、业务 business_status、复核 review_status 分开。默认 search 返回正式主题和 documented + reviewed_static 全文；--include-history 包含历史、废弃与待核对资料；--business-status 可精确筛选。read 接受持久 ID 和新旧路径别名，返回来源状态与完整正文。旧档案按带内容哈希的版本 ID 读取，不能冒充当前版本。
+
+主题来源重新捕获时新增 source ID 和摘录，旧证据记录 tracking_status=historical 并保留哈希。它们不参与当前来源漂移报警，但仍接受包内证据完整性校验。新日期仅为整理/捕获日，不是业务生效日。
+
+来源指纹以 source_pipeline 构建结果为准（包含审阅登记摘要）；不要沿用旧的三字段指纹计算。业务正文变化使旧复核失效，别名或状态变化也触发构建。build_local_catalog.py 使用 --evidence 指向本机保留的整理证据根，持续保留完整迁移基线。

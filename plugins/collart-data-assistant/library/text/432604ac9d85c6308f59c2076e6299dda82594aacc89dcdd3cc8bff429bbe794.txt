@@ -1,0 +1,19 @@
+{
+  "bytes_processed": 10485760,
+  "bytes_billed": 10485760,
+  "slot_millis": 444,
+  "rows": [
+    {
+      "table_name": "events_20260906",
+      "creation_time": "2026-09-06 19:39:47.999000+00:00"
+    },
+    {
+      "table_name": "events_20260907",
+      "creation_time": "2026-09-07 19:43:09.418000+00:00"
+    },
+    {
+      "table_name": "events_20260908",
+      "creation_time": "2026-09-08 19:54:43.699000+00:00"
+    }
+  ]
+}

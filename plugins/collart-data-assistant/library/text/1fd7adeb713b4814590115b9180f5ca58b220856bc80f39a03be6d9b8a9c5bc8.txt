@@ -1,0 +1,71 @@
+# aidata2025.ods.ods_ai_request_info_new_1d
+
+> 文档整理：2026-09-12；业务状态：documented；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 基础信息
+
+- 用途：AI 请求明细；本次用于为 Collart 服务成功率补充任务级 sexual 评分与用户身份映射。
+- 2026-09-08 已查实时 schema：按 `event_date`（DATE）分区；`request` 是 JSON 内容的 STRING；`created_at`、`updated_at` 为 TIMESTAMP。
+- 本表不是每个服务任务必然一行；关联前必须检查重复、版本与一对多关系。
+- 服务成功率的任务状态、创建时间、产品和模型仍来自 `pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi`。
+
+## 本次用户确认的监控口径（2026-09-08）
+
+- 范围：`collart-android` 与 `collart-web`，全部国家。
+- 非大R任务：排除任务级 sexual 评分 `> 0.6` 的任务，成功、失败两侧一致排除。
+- 大R任务：不按 sexual 评分过滤，单独监控成功率。
+- 大R判断权威：`aidata2025.ads_collart.ads_vip_user_info_all` 的 `is_r`；按 `app_name + user_id` 关联。
+- 不用 `hv_user_tag`、用户级 `sexual_score` 或自行设置的收入门槛替代任务评分/大R标记。
+- 示例里的 JP/KR、`dataframe_20` 是排查条件，不加入全量监控。
+- 用户已确认：缺少 sexual 评分的非大R任务默认按 sexual < 0.6 纳入统计；仅排除明确 sexual > 0.6 的任务。当前窗口、历史基线和恢复判断统一执行。保留原始 NULL 与缺失标志，不把默认值作为实际评分展示。
+- 用户本轮追加确认：无法确认身份的任务统一归为非大R，保留identity_issue标记；不认定为免费或未付费用户。当前窗口与历史基线一致执行。
+
+## 相关字段
+
+| 字段 | 类型 | 在本任务中的作用 |
+|---|---|---|
+| `app_name` | STRING | 产品关联范围 |
+| `task_id` | STRING | 请求侧任务ID候选关联键 |
+| `service_task_id` | STRING | 具体服务任务ID候选关联键，不能忽略 |
+| `client_task_id` | STRING | 仅用于核查，不直接作多对多回退连接 |
+| `atlas_uid` | STRING | 用于查 VIP 表的内部用户ID候选 |
+| `at_uid` | STRING | 旧服务记录用户ID的候选映射 |
+| `request` | STRING | 从 moderation_text 数组提取 sexual 类评分 |
+| `created_at` / `updated_at` | TIMESTAMP | 请求时间与当前版本更新时间；不等于拥有历史状态变更流水 |
+| `service_req_status` | INTEGER | schema 说明：0未知、1成功、2失败(failed/nsfw)、3未找到；本次不替换 DWD 状态 |
+| `failed_reason` | STRING | schema 说明中 6010 表示后置检测拦截；不自行扩展过滤规则 |
+
+## 评分提取与关联要求
+
+```sql
+-- 每条请求保留一行；类别重复时取该请求的最大 sexual 分。
+SELECT MAX(SAFE_CAST(JSON_VALUE(item, '$.severity') AS FLOAT64))
+FROM UNNEST(JSON_EXTRACT_ARRAY(request, '$.moderation_text')) AS item
+WHERE JSON_VALUE(item, '$.category') = 'sexual'
+```
+
+- 用原始数值判断 `> 0.6`，ROUND 仅用于展示。无法解析、类别缺失、无请求关联等情况保留原始 NULL 和缺失标志；按用户规则，非大R过滤时可用 `COALESCE(sexual, 0) <= 0.6` 默认纳入。身份、任务归属或评分冲突仍走质量核查，不作为普通缺失评分回退。
+- 请求数组不可直接在服务任务事实表上 CROSS JOIN 后计数；应先提取并归并为任务级维度，再 LEFT JOIN。
+- 先验证 `service_task_id`，再验证 `task_id`；必须约束产品、身份一致性，避免 OR JOIN 放大任务数。
+- 新数据主要可用服务 `user_id = atlas_uid` 核对；旧数据有 `user_id = at_uid` 的情况，应验证映射后再用 `atlas_uid` 查大R。
+- 先尝试经任务验证的身份映射；多个候选身份不一致或仍无唯一映射时保留身份问题标记，但按用户追加规则归为非大R，不因此丢弃任务。
+- 评分、身份、状态有冲突的任务不静默选择有利结果；归入质量核查。
+
+## 已核验的限制
+
+- 2026-09-07 小窗口探查证明：加入 `service_task_id` 会补回直接 `task_id` 关联遗漏的记录；旧ID需要映射。
+- 请求分区日期和服务任务创建日期不能假定完全对应；关联覆盖率应按产品/数据源/模型/状态检查，并检查日期边界。
+- 2026-09-08核验08-24至09-08分区：event_date基本对应DATE(created_at)即UTC日期，少量午夜毫秒边界记录例外；与DATE(created_at,'Asia/Shanghai')相差0或-1天。09-01至09-07回放读取服务create_date 08-25至09-07、请求event_date 08-24至09-07，直接常量过滤分区。原始请求JSON只读一次至临时窄表后复用。
+- 存在高 sexual 分且 completed 的观测任务，因此统计上应统一过滤，不应把所有高分记录解释为已主动拦截。
+- VIP 表当前说明为日全量刷新，没有任务时点生效日期；当前名单不能无条件代表历史任务发生时的大R身份。
+- 评分过滤后必须重算历史基线，不能复用未过滤或未分人群的旧基线。
+
+## 核验依据
+
+- BigQuery schema：2026-09-08 实时读取。
+- VIP 枚举核验 job：`{REDACTED_EXAMPLE_ID}`。
+- 当日关联核验 job：`{REDACTED_EXAMPLE_ID}`。
+- 扩展请求分区及旧ID映射核验 job：`{REDACTED_EXAMPLE_ID}`。
+- 分区时区核验 job：`{REDACTED_EXAMPLE_ID}`。
+- 按分区一次提取回放源 job：`{REDACTED_EXAMPLE_ID}`；38个事件窗口与基线均完成独立SQL计数复核，结果见其他任务/ai_service_alert/replay_20260901_07_filtered。

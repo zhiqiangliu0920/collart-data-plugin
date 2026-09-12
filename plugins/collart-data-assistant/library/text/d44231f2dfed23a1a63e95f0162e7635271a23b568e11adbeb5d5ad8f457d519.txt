@@ -1,0 +1,227 @@
+# 查询右上角新用户 Claim 按钮相关事件
+
+> 文档整理：2026-09-12；业务状态：historical；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 需求
+计算 Collart Web 右上角新用户点击率，和点击领取后后续的注册转化步骤漏斗数据。
+
+---
+
+## 一、Claim 按钮点击漏斗分析（2026-04-15）
+
+### PC 端
+| 指标 | UV | 占DAU比例 |
+|---|---|---|
+| DAU（分母） | 4,711 | 100.00% |
+| Claim 点击 | 331 | 7.03% |
+| 登录弹窗展示 | 324 | 6.88% |
+| 选择登录方式 | 272 | 5.77% |
+| 登录成功 | 195 | 4.14% |
+
+**漏斗转化率：**
+- Claim点击 → 登录弹窗展示：**97.89%**
+- 登录弹窗展示 → 选择登录方式：**83.95%**
+- 选择登录方式 → 登录成功：**71.69%**
+- **整体转化率：58.91%**
+
+### 移动端
+| 指标 | UV | 占DAU比例 |
+|---|---|---|
+| DAU（分母） | 15,079 | 100.00% |
+| Claim 点击 | 1,957 | 12.98% |
+| 登录弹窗展示 | 1,949 | 12.93% |
+| 选择登录方式 | 1,630 | 10.81% |
+| 登录成功 | 939 | 6.23% |
+
+**漏斗转化率：**
+- Claim点击 → 登录弹窗展示：**99.59%**
+- 登录弹窗展示 → 选择登录方式：**83.63%**
+- 选择登录方式 → 登录成功：**57.61%**
+- **整体转化率：47.98%**
+
+### 对比分析
+| 指标 | PC端 | 移动端 | 差异 |
+|---|---|---|---|
+| DAU | 4,711 | 15,079 | - |
+| Claim 点击率 | 7.03% | 12.98% | **+5.95%** |
+| 整体转化率 | 58.91% | 47.98% | **-10.93%** |
+
+### 关键发现
+1. **Claim 点击率**：移动端 (12.98%) 远高于 PC 端 (7.03%)
+2. **整体转化率**：PC 端 (58.91%) 高于移动端 (47.98%)
+3. **主要流失点**："选择登录方式 → 登录成功" 环节
+   - PC 端转化率：71.69%
+   - 移动端转化率：57.61%（低 14.08%）
+
+---
+
+## 二、登录入口漏斗分析（2026-04-15）
+
+### PC 端
+| 入口 | 展示UV | 选择UV | 成功UV | 展示→选择 | 选择→成功 | 整体转化 |
+|---|---|---|---|---|---|---|
+| home | 642 | 619 | 292 | 96.42% | 47.17% | **45.48%** |
+| header_login | 613 | 596 | 323 | 97.23% | 54.19% | **52.69%** |
+| free_credit_modal | 320 | 267 | 185 | 83.44% | 69.29% | **57.81%** |
+| generate | 349 | 251 | 165 | 71.92% | 65.74% | **47.28%** |
+| asset_direct_access | 139 | 127 | 53 | 91.37% | 41.73% | **38.13%** |
+| workspace_assets | 134 | 91 | 45 | 67.91% | 49.45% | **33.58%** |
+| header_credit | 81 | 66 | 33 | 81.48% | 50.00% | **40.74%** |
+| google_one_tap | 13 | 10 | 8 | 76.92% | 80.00% | **61.54%** |
+
+### 移动端
+| 入口 | 展示UV | 选择UV | 成功UV | 展示→选择 | 选择→成功 | 整体转化 |
+|---|---|---|---|---|---|---|
+| home | 2,339 | 2,262 | 1,019 | 96.71% | 45.05% | **43.57%** |
+| header_login | 2,038 | 1,994 | 853 | 97.84% | 42.78% | **41.85%** |
+| free_credit_modal | 1,947 | 1,629 | 936 | 83.67% | 57.46% | **48.07%** |
+| generate | 1,026 | 762 | 371 | 74.27% | 48.69% | **36.16%** |
+| asset_direct_access | 953 | 851 | 378 | 89.30% | 44.42% | **39.66%** |
+| workspace_assets | 335 | 220 | 103 | 65.67% | 46.82% | **30.75%** |
+| header_credit | 221 | 167 | 91 | 75.57% | 54.49% | **41.18%** |
+| google_one_tap | 44 | 33 | 26 | 75.00% | 78.79% | **59.09%** |
+
+### 主要入口对比
+| 入口 | PC整体转化 | 移动端整体转化 | 差异 |
+|---|---|---|---|
+| home | 45.48% | 43.57% | -1.92% |
+| header_login | 52.69% | 41.85% | **-10.84%** |
+| free_credit_modal | 57.81% | 48.07% | **-9.74%** |
+| generate | 47.28% | 36.16% | **-11.12%** |
+| asset_direct_access | 38.13% | 39.66% | +1.53% |
+
+### 关键发现
+1. **转化率最高的入口**：
+   - PC端：`google_one_tap` (61.54%)、`free_credit_modal` (57.81%)
+   - 移动端：`google_one_tap` (59.09%)、`free_credit_modal` (48.07%)
+
+2. **PC端 vs 移动端差异最大的入口**：
+   - `header_login`：PC端高 10.84%
+   - `generate`：PC端高 11.12%
+   - `free_credit_modal`：PC端高 9.74%
+
+3. **主要流失环节**：
+   - `home` 和 `header_login` 入口在 "选择→成功" 环节流失严重（约50%）
+   - `free_credit_modal` 入口的 "选择→成功" 转化率最高（PC 69.29%, 移动 57.46%）
+
+---
+
+## 三、SQL 代码（优化版）
+
+### 1. Claim 按钮点击漏斗（PC端）
+
+```sql
+-- 一次扫描，条件聚合
+WITH base AS (
+  SELECT
+    user_pseudo_id,
+    event_name
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY))
+    AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+    AND app_info.id IS NULL
+    AND device.category = 'desktop'
+    AND event_name IN ('session_start', 'dev_free_credit_claim_click', 'login_show', 'login_account_choose', 'login_success')
+),
+claim_users AS (
+  SELECT DISTINCT user_pseudo_id
+  FROM base
+  WHERE event_name = 'dev_free_credit_claim_click'
+)
+SELECT
+  COUNTIF(event_name = 'session_start') AS dau,
+  (SELECT COUNT(*) FROM claim_users) AS claim_click_uv,
+  COUNT(DISTINCT CASE WHEN event_name = 'login_show' AND user_pseudo_id IN (SELECT user_pseudo_id FROM claim_users) THEN user_pseudo_id END) AS login_show_uv,
+  COUNT(DISTINCT CASE WHEN event_name = 'login_account_choose' AND user_pseudo_id IN (SELECT user_pseudo_id FROM claim_users) THEN user_pseudo_id END) AS login_choose_uv,
+  COUNT(DISTINCT CASE WHEN event_name = 'login_success' AND user_pseudo_id IN (SELECT user_pseudo_id FROM claim_users) THEN user_pseudo_id END) AS login_success_uv
+FROM base
+WHERE event_name = 'session_start' 
+   OR (event_name IN ('login_show', 'login_account_choose', 'login_success') AND user_pseudo_id IN (SELECT user_pseudo_id FROM claim_users));
+```
+
+### 2. 登录入口漏斗（PC端）
+
+```sql
+-- 宽表先行 + 条件聚合
+WITH base AS (
+  SELECT
+    user_pseudo_id,
+    event_name,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'from') AS login_from
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY))
+    AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+    AND app_info.id IS NULL
+    AND device.category = 'desktop'
+    AND event_name IN ('login_show', 'login_account_choose', 'login_success')
+),
+-- 记录每个用户首次登录弹窗的入口
+user_first_show AS (
+  SELECT user_pseudo_id, login_from
+  FROM (
+    SELECT user_pseudo_id, login_from,
+           ROW_NUMBER() OVER (PARTITION BY user_pseudo_id ORDER BY event_name = 'login_show' DESC) AS rn
+    FROM base
+    WHERE event_name = 'login_show'
+  )
+  WHERE rn = 1
+)
+SELECT
+  COALESCE(u.login_from, '(null)') AS login_from,
+  COUNT(DISTINCT CASE WHEN b.event_name = 'login_show' THEN b.user_pseudo_id END) AS show_uv,
+  COUNT(DISTINCT CASE WHEN b.event_name = 'login_account_choose' THEN b.user_pseudo_id END) AS choose_uv,
+  COUNT(DISTINCT CASE WHEN b.event_name = 'login_success' THEN b.user_pseudo_id END) AS success_uv,
+  -- 转化率
+  ROUND(COUNT(DISTINCT CASE WHEN b.event_name = 'login_account_choose' THEN b.user_pseudo_id END) * 100.0 
+    / NULLIF(COUNT(DISTINCT CASE WHEN b.event_name = 'login_show' THEN b.user_pseudo_id END), 0), 2) AS show_to_choose_pct,
+  ROUND(COUNT(DISTINCT CASE WHEN b.event_name = 'login_success' THEN b.user_pseudo_id END) * 100.0 
+    / NULLIF(COUNT(DISTINCT CASE WHEN b.event_name = 'login_account_choose' THEN b.user_pseudo_id END), 0), 2) AS choose_to_success_pct,
+  ROUND(COUNT(DISTINCT CASE WHEN b.event_name = 'login_success' THEN b.user_pseudo_id END) * 100.0 
+    / NULLIF(COUNT(DISTINCT CASE WHEN b.event_name = 'login_show' THEN b.user_pseudo_id END), 0), 2) AS overall_pct
+FROM base b
+LEFT JOIN user_first_show u ON b.user_pseudo_id = u.user_pseudo_id
+GROUP BY ALL
+ORDER BY show_uv DESC;
+```
+
+### 3. 登录方式漏斗（PC端）
+
+```sql
+-- 一次扫描，条件聚合
+WITH base AS (
+  SELECT
+    user_pseudo_id,
+    event_name,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'type') AS login_type
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY))
+    AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+    AND app_info.id IS NULL
+    AND device.category = 'desktop'
+    AND event_name IN ('session_start', 'login_account_choose', 'login_success')
+),
+choose_users AS (
+  SELECT DISTINCT user_pseudo_id, login_type
+  FROM base
+  WHERE event_name = 'login_account_choose'
+)
+SELECT
+  COUNTIF(event_name = 'session_start') AS dau,
+  (SELECT COUNT(*) FROM choose_users WHERE login_type = 'google') AS google_choose_uv,
+  (SELECT COUNT(*) FROM choose_users WHERE login_type = 'email') AS email_choose_uv,
+  COUNT(DISTINCT CASE WHEN event_name = 'login_success' 
+    AND user_pseudo_id IN (SELECT user_pseudo_id FROM choose_users WHERE login_type = 'google') 
+    THEN user_pseudo_id END) AS google_success_uv,
+  COUNT(DISTINCT CASE WHEN event_name = 'login_success' 
+    AND user_pseudo_id IN (SELECT user_pseudo_id FROM choose_users WHERE login_type = 'email') 
+    THEN user_pseudo_id END) AS email_success_uv
+FROM base
+WHERE event_name = 'session_start';
+```
+
+> **注**：移动端查询只需将 `device.category = 'desktop'` 改为 `device.category IN ('mobile', 'tablet')`
+
+---
+
+## 时间范围：过去 14 天

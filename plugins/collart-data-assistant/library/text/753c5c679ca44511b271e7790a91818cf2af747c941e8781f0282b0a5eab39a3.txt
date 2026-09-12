@@ -1,0 +1,100 @@
+# 指标：Fashion 用户 vs 主站用户（Collart Web 站内划分）
+
+> 文档整理：2026-09-12；业务状态：documented；复核：reviewed_static。原业务日期见正文，本次未重新查询生产数据。
+
+
+## 1. 业务定义
+
+Collart Web 与 Collart Fashion（服装带货）共用同一套 Web 埋点（`app_info.id IS NULL`）。在同一批 Web 用户中，按 **主站 vs 服装带货** 划分两类用户。
+
+### 方式 A：原始埋点表（`events_*`）
+
+| 用户类型 | 判定条件 |
+|---|---|
+| **Fashion 用户** | 该用户 **任意一次** 事件（含 `page_view` 等）的 `page_location` 中，包含子串 `studio` **或** `fashion`（不区分大小写） |
+| **主站用户** | 已进入 Collart Web 埋点，但 **从未** 出现过上述 Fashion 相关 `page_location` 的用户 |
+
+### 方式 B：加工表（含 `package_name` 字段的 DWD / ADS）
+
+| 站点 | `package_name` |
+|---|---|
+| **主站** | `'collartweb'` |
+| **服装带货（Fashion）** | `'collart_fashion'` |
+
+**适用表示例：** `dwd_oper_user_event_di`、`dwd_oper_user_collartweb_di`、`ads_oper_user_new_collartweb_di`、`ads_oper_user_collartweb_di` 等。
+
+**说明：**
+
+- 查 **原始 events** 时用方式 A（`page_location`）；查 **数仓加工表** 时优先用方式 B（`package_name`），成本更低、口径与数仓产品线一致。
+- 方式 A 判定基于 **历史全量行为**，不限于首次落地页；只要曾进入 Fashion/Studio 页面即归为 Fashion 用户。
+- 同一 `user_pseudo_id` 可能先访问主站再访问 Fashion，仍计为 Fashion 用户（方式 A）；加工表则按该行记录的 `package_name` 归属。
+- 与「新用户口径」独立：新用户见 [`new_user_pseudo_id.md`](./new_user_pseudo_id.md)；本指标仅做 **站内产品线划分**。
+
+## 2. 字段与数据源
+
+| 要素 | 说明 |
+|---|---|
+| 主键 | `user_pseudo_id`（分析时以 pseudo 为主；`user_id` 仅作补充映射） |
+| 原始埋点判定 | GA4 `event_params` 中 `key = 'page_location'` 的 `string_value` |
+| 加工表判定 | 字段 `package_name`：`collartweb` = 主站，`collart_fashion` = 服装带货 |
+| 原始表 | `storytemplate-10a27.analytics_232977577.events_*` |
+| 加工表示例 | `aidata2025.dwd.dwd_oper_user_event_di`、`dwd_oper_user_collartweb_di`；`ads_oper_user_new_collartweb_di` 等 |
+| 项目过滤 | `app_info.id IS NULL`（仅 events 原始表） |
+
+## 3. SQL 模板
+
+### 3.1 原始 events（`page_location`）
+
+```sql
+-- page_location 提取（events 表）
+LOWER((
+  SELECT ep.value.string_value
+  FROM UNNEST(event_params) ep
+  WHERE ep.key = 'page_location'
+)) AS page_location
+
+-- Fashion 页面判定（单次事件）
+REGEXP_CONTAINS(LOWER(COALESCE(page_location, '')), r'(studio|fashion)')
+
+-- 用户级：是否 Fashion 用户（曾访问过 Fashion/Studio 页面）
+LOGICAL_OR(REGEXP_CONTAINS(LOWER(COALESCE(page_location, '')), r'(studio|fashion)'))
+  -- GROUP BY user_pseudo_id
+```
+
+### 3.2 加工表（`package_name`）
+
+```sql
+-- 主站
+WHERE package_name = 'collartweb'
+
+-- 服装带货 / Fashion
+WHERE package_name = 'collart_fashion'
+
+-- 主站 + Fashion 全 Web（需显式说明范围时）
+WHERE package_name IN ('collartweb', 'collart_fashion')
+```
+
+可复用 preset：[`../sql_presets/fashion_vs_main_site_user.sql`](../sql_presets/fashion_vs_main_site_user.sql)
+
+## 4. 典型用法
+
+| 场景 | 做法 |
+|---|---|
+| 仅 Fashion 用户（events） | `page_location` 含 `studio` 或 `fashion` |
+| 仅主站用户（events） | 从未出现上述 `page_location` |
+| 仅主站（加工表） | `package_name = 'collartweb'` |
+| 仅 Fashion（加工表） | `package_name = 'collart_fashion'` |
+| Fashion 先访问再回流主站 | 见 [`../sql-snippets/fashion_first_then_main_site_users.sql`](../sql-snippets/fashion_first_then_main_site_users.sql)（cohort 专项，首次落地页口径） |
+
+## 5. 关联项目
+
+- Collart Fashion 专属知识库镜像口径：[`../../collart_ fashion/indicators/fashion_vs_main_site_user.md`](../../collart_fashion/indicators/fashion_vs_main_site_user.md)
+
+---
+
+*记录时间：2026-07-22*
+*更新时间：2026-07-22（补充加工表 `package_name` 划分）*
+
+## 表版本与观察窗口
+
+旧共享 DWD/ADS 示例中的 `collartweb` 与新四端 ADS/cdct 的 `collart_web` 分别按具体表解释，不能全库替换枚举。方式 A 的“从未到访”必须有足够的历史覆盖；在有限 events 窗口内只能称“窗口内未观察到”，不能据此断定用户终身没有访问 Fashion。
