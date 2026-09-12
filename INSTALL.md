@@ -20,6 +20,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 
 维护者改 [统一源码](plugins/collart-data-assistant/README.md)，运行检查、记录版本后发布新包；同事替换自己的发行副本并重新运行 install.ps1，然后开新任务。旧安装是缓存版本，不会随 OneDrive 文件变化即时更新。安装目录应长期保留以供后续更新。
 
+维护者电脑已配置从本私有仓库到插件的周期同步，默认每 30 分钟检查；详见 [同步说明](SYNC.md)。此配置不会自动部署到其他同事电脑，同事仍可按本页手动更新，或在自己的 Codex 中设置同样的周期检查。
+
 marketplace 的本地标识由脚手架默认设为 `personal`，只是安装来源名称，并不意味着对外公开。若同事已有同名 marketplace 指向其他目录，安装脚本会拒绝覆盖；由同事与维护者先确认来源命名冲突，再处理安装配置。
 
 避免在同一次分析里同时选择旧 collart-biz-analysis、旧 team-data-knowledge 和新插件。原两个目录保留用于历史对照，新知识维护集中在此插件。未自动卸载或改动任何旧技能。

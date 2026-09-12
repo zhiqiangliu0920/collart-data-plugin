@@ -7,6 +7,7 @@
 - [插件说明](plugins/collart-data-assistant/README.md)：数据分析和知识维护两个 skill。
 - [维护说明](plugins/collart-data-assistant/docs/maintenance.md)：来源、状态、校验和版本维护。
 - [安装说明](INSTALL.md)：完整仓库可作为插件发行目录使用。
+- [自动同步](SYNC.md)：仓库更新后，维护者电脑每 30 分钟检查并刷新插件；保留本地未发布修改。
 
 ## 下载与使用
 
@@ -27,7 +28,7 @@ cd collart-ai-knowledge
 python plugins/collart-data-assistant/scripts/kb.py check
 ```
 
-记录变更后提交并推送，同事同步更新。已安装插件使用缓存，更新仓库后仍需按安装说明更新插件，再开启新任务。
+记录变更后提交并推送。维护者电脑已配置周期同步，按 [同步说明](SYNC.md) 更新本地源码并刷新插件缓存；同事需自行更新或配置相同流程。更新后开启新任务使用新版。
 
 ## 内容与权限边界
 
