@@ -56,6 +56,12 @@ def decode(data):
         try: return data.decode('gb18030'),'gb18030'
         except UnicodeDecodeError: return None,'unreadable'
 
+def sql_operations(text):
+    # Labels such as 'Subscription update' and commented CALL examples are data,
+    # not executable statement evidence. This remains a static lexical profile.
+    code=re.sub(r"'(?:''|[^'])*'|\"(?:\\.|[^\"])*\"|/\*.*?\*/|--[^\n]*",' ',text,flags=re.S)
+    return sorted(set(x.upper() for x in re.findall(r'\b(SELECT|INSERT|UPDATE|DELETE|MERGE|CREATE|DROP|ALTER|TRUNCATE|EXPORT|EXECUTE|CALL)\b',code,re.I)))
+
 def project(rel,text):
     low=rel.lower().replace('collart_ fashion','collart_fashion')
     if 'vibedance' in low or 'fx-editor.analytics_' in text: return 'other_projects'
@@ -142,7 +148,9 @@ def scan(config, allowed_ids=()):
                     row['reason']=reason;rows.append(row);continue
                 data=path.read_bytes();row['sha256']=sha(data);text,encoding=decode(data);row['encoding']=encoding
                 if text and text.startswith('<!-- knowledge-redirect:'):
-                    row.update(sha256=None,status='excluded',reason='插件、发布或索引派生产物：旧路径导航，不作为另一份来源');rows.append(row);continue
+                    # A redirect occupies an old pathname but must never shadow the
+                    # stable identity of the document now stored at its new path.
+                    row.update(id=row['id']+'@redirect',record_id=row['id']+'@redirect',sha256=None,status='excluded',reason='插件、发布或索引派生产物：旧路径导航，不作为另一份来源');rows.append(row);continue
                 if text is None:
                     row.update(status='pending',reason='无法无损解码');rows.append(row);continue
                 review=config.get('reviews',{}).get(record['id'] if record else row['id'],{})
@@ -172,10 +180,12 @@ def scan(config, allowed_ids=()):
                     'parameters':sorted(set(re.findall(r'(?<!\w)@[A-Za-z_]\w*',safe))),
                     'declared_variables':sorted(set(re.findall(r'\bDECLARE\s+(\w+)',safe,re.I))),
                     'functions':sorted(set(re.findall(r'^def\s+(\w+)',safe,re.M))),
-                    'sql_operations':sorted(set(x.upper() for x in re.findall(r'\b(SELECT|INSERT|UPDATE|DELETE|MERGE|CREATE|CALL)\b',safe,re.I))) if Path(rel).suffix in {'.sql','.sqlx'} else [],
+                    'sql_operations':sql_operations(safe) if Path(rel).suffix in {'.sql','.sqlx'} else [],
                     'missing_sections':len(re.findall(r'待补|TODO|TBD',safe,re.I)),
                     'execution_side_effects':bool(re.search(r'requests\.post|send_feishu|send_message|subprocess\.|\.write_text|\.to_csv|INSERT INTO|CREATE OR REPLACE',safe,re.I)),
                 }
+                if Path(rel).suffix in {'.sql','.sqlx'}:
+                    row['content_analysis']['execution_side_effects']=Path(rel).suffix=='.sqlx' or bool(set(row['content_analysis']['sql_operations'])-{'SELECT'})
                 if rel.startswith('_generated/') and Path(rel).suffix=='.sql' and len(safe)>100000 and re.search(r'INSERT\s+INTO[\s\S]*?\bVALUES\b',safe,re.I):
                     row.update(status='excluded',reason='批量数据回填载荷：属于运行产物，保留本机；不作为可复用 SQL')
                 elif Path(rel).stem.startswith(('temp_','bq_check_missing_temp','check_missing_temp')):

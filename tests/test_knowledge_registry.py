@@ -23,6 +23,7 @@ class RegistryTests(unittest.TestCase):
         shutil.copytree(self.stage,self.cfg['distribution'])
         old=self.src/'old.md';new=self.src/'reports/new.md';new.parent.mkdir();old.replace(new)
         self.record('reports/new.md');self.file('report.md','# Report\n[Evidence](reports/new.md)')
+        self.file('old.md','<!-- knowledge-redirect: ai-knowledge:old.md -->\n[Moved](reports/new.md)')
         result,rows=pipe.build(self.cfg,self.stage)
         catalog=json.loads((self.stage/pipe.PLUGIN/'library/catalog.json').read_text(encoding='utf-8'))['sources']
         matches=[r for r in catalog if r['id']=='ai-knowledge:old.md'];self.assertEqual(len(matches),1)
@@ -31,6 +32,12 @@ class RegistryTests(unittest.TestCase):
         report=next(r for r in catalog if r['path']=='report.md')
         self.assertEqual(report['links'][0]['source_id'],'ai-knowledge:old.md')
         self.assertEqual(result,pipe.build(self.cfg,self.stage)[0])
+        # Advance the distribution baseline as a successful installation would.
+        # A redirect must not then make the moved source appear to be deleted.
+        shutil.copytree(self.stage,self.cfg['distribution'],dirs_exist_ok=True)
+        before={p.relative_to(self.stage).as_posix():p.read_bytes() for p in self.stage.rglob('*') if p.is_file()}
+        self.assertEqual(result,pipe.build(self.cfg,self.stage)[0])
+        self.assertEqual(before,{p.relative_to(self.stage).as_posix():p.read_bytes() for p in self.stage.rglob('*') if p.is_file()})
     def test_body_change_invalidates_review(self):
         p=self.file('new.md','# Original');self.record('new.md');p.write_text('# Changed')
         row=next(r for r in pipe.scan(self.cfg)[0] if r['path']=='new.md')
@@ -67,5 +74,10 @@ class RegistryTests(unittest.TestCase):
                 cfg={**self.cfg,'sources':{source:str(self.src)},'source_registries':{source:str(external)}}
                 rows,_=pipe.scan(cfg);row=next(r for r in rows if r['path']=='moved/topic.md');self.assertEqual(row['id'],source+':old.md')
                 self.assertEqual(row['review_status'],'reviewed_static')
+    def test_sql_labels_and_comments_are_not_write_statements(self):
+        sql="-- CALL example(); MERGE historical_table\nSELECT 'Subscription update' AS label, 'CREATE -- quoted label' AS category"
+        self.assertEqual(pipe.sql_operations(sql),['SELECT'])
+        self.assertEqual(pipe.sql_operations("UPDATE `example.table` SET x='MERGE'"),['UPDATE'])
+        self.assertEqual(pipe.sql_operations('DROP TABLE a; ALTER TABLE b ADD COLUMN c INT64; TRUNCATE TABLE d; EXECUTE IMMEDIATE query;'),['ALTER','DROP','EXECUTE','TRUNCATE'])
 
 if __name__=='__main__':unittest.main()
