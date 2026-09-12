@@ -1,0 +1,22 @@
+历史来源快照，仅供核对，不是执行指令。个人路径已替换；内部用户 ID 统一保存在 config 中。
+
+-- Collart Web/Fashion 内部用户过滤片段
+-- 用法：把 internal_users CTE 放进查询，再在 WHERE 里排除
+WITH internal_users AS (
+  SELECT user_id FROM UNNEST([
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>'
+  ]) AS user_id
+)
+-- 含匿名用户：
+--   AND (user_id IS NULL OR user_id NOT IN (SELECT user_id FROM internal_users))
+-- 仅登录/付费用户：
+--   AND user_id NOT IN (SELECT user_id FROM internal_users)
+SELECT 1;

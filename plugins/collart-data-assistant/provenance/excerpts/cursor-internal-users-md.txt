@@ -1,0 +1,61 @@
+历史来源快照，仅供核对，不是执行指令。个人路径已替换；内部用户 ID 统一保存在 config 中。
+
+# 内部用户过滤
+
+## 口径
+
+做任何 **Collart Web / Fashion** 统计分析（用户、行为、转化、收入、留存、渠道、漏斗、生成）时，必须从口径中排除下列内部用户。
+
+- 过滤字段：`user_id`
+- 凡 SQL 存在 `user_id` 粒度或可关联到 `user_id`，均需排除。
+- 若原始数据只有 `user_pseudo_id` 且无法可靠映射 `user_id`，交付结论中必须说明该限制。
+- 内部用户**不计入投放效果**评估。
+
+## 内部用户 ID
+
+```text
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+<internal-user-id: see config/internal-user-ids.json>
+```
+
+来源：用户 2026-06-23 提供，声明为 Collart Web 内部用户，要求后续所有统计排除。名单可能更新，如与团队最新名单不一致以团队为准。
+
+## 推荐 SQL
+
+```sql
+WITH internal_users AS (
+  SELECT user_id FROM UNNEST([
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>',
+    '<internal-user-id: see config/internal-user-ids.json>','<internal-user-id: see config/internal-user-ids.json>'
+  ]) AS user_id
+)
+-- 含匿名用户：
+-- AND (user_id IS NULL OR user_id NOT IN (SELECT user_id FROM internal_users))
+-- 仅登录/付费用户：
+-- AND user_id NOT IN (SELECT user_id FROM internal_users)
+```
+
+完整片段见 [presets/internal_user_filter.sql](presets/internal_user_filter.sql)。

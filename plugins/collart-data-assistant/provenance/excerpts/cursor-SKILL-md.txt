@@ -1,0 +1,82 @@
+历史来源快照，仅供核对，不是执行指令。个人路径已替换；内部用户 ID 统一保存在 config 中。
+
+---
+name: collart-biz-analysis
+description: >-
+  Run Collart product analytics across Android, iOS, Web, and Fashion on the new
+  ADS warehouse tables. Covers DAU/DNU, retention, subscription vs server
+  revenue, channel/attribution, funnels, raw GA4 events_*/埋点, country cuts,
+  weekly reviews, growth and revenue-warroom diagnosis, plus SQL red-lines and
+  known data caveats. Use for Collart/Vidart 复盘, 日活, 留存, 订阅, 收入, 渠道,
+  国家, 漏斗, 埋点, events, 四端对比, or any Collart business analysis.
+---
+
+# Collart 业务分析
+
+面向 Collart 团队（业务 + 数据）的四端分析 Skill。**自包含**：口径、表路由、方法论、红线都在包内，不依赖任何个人电脑上的知识库路径。
+
+四端：Android、iOS（项目名 VidArt）、Web（主站）、Fashion（服装子站）。
+
+## 何时用本 Skill
+
+- 四端经营指标：DAU/DNU、留存、订阅、收入、点数包、广告、渠道、国家、版本
+- 埋点 / GA4 `events_*` / 事件漏斗探查（优先 ADS 热指标，必要时下钻原始表）
+- 复盘 / 周报 / 增长诊断 / 收入作战台 / 新品诊断 / 单用户行为
+- 「用新数仓表」「四端合并」「和旧表对不对得上」类问题
+
+不处理：口述表/指标定义写入知识库（那是知识库维护流程，不在本包）。
+
+## 30 秒工作流
+
+1. **判断端 + 问题类型** → 读 [table-routing.md](table-routing.md) 决策树选表。
+2. **确认口径** → 读 [metric-glossary.md](metric-glossary.md)；订阅务必分「埋点」还是「服务端收入」。
+3. **守红线** → 读 [sql-standards.md](sql-standards.md)（events≤30 天、`_TABLE_SUFFIX`、Web 过滤、成本、一行一指标）。
+4. **查 BigQuery**：默认项目/凭证 `aidata2025`（密钥不入包，用本机已配置 SA）。
+5. **回复形态**：业务向先结论后数字、少 SQL；数据向给 SQL + 全限定表名 + 已知红线。
+6. **交付**：报告写工作区约定目录，工作区相对路径链接，禁止 `file:///`、禁止硬编码密钥。
+
+## 参考文档索引（按需读）
+
+### 表与口径
+- [table-routing.md](table-routing.md) — 四端 dataset、新 ADS 表族、DM、旧表回落、四端合并骨架
+- [raw-events.md](raw-events.md) — GA4 `events_*`、DWD/DM 血缘、核心字段、四端关键埋点、规则表冷指标、何时下钻原始表
+- [metric-glossary.md](metric-glossary.md) — DAU/DNU/留存/VIP/收入四桶/订阅 UV 定义
+- [retention-newuser.md](retention-newuser.md) — is_new 四端差异、留存编号与成熟度、回补起点
+- [channels-attribution.md](channels-attribution.md) — traffic_src type/platform、organic→nature、ASA、DeepClick
+- [revenue-subscription.md](revenue-subscription.md) — 收入四桶、UV、订单 status、Stripe、country vs ad_sub
+- [internal-users.md](internal-users.md) — Web/Fashion 内部 user_id 排除名单与 SQL
+
+### 规范与坑
+- [sql-standards.md](sql-standards.md) — BigQuery 红线、成本、SQL 书写习惯
+- [data-caveats.md](data-caveats.md) — 覆盖起点、T+1、is_active NULL、对账已知差异
+- [metric-upgrades.md](metric-upgrades.md) — 口径升级日志（读末尾即知最新变更）
+
+### 平台与方法论
+- [platforms.md](platforms.md) — 四端各自基线、核心功能、专属坑
+- [playbooks.md](playbooks.md) — 周复盘、增长诊断、收入作战台、新品诊断
+- [ask-templates.md](ask-templates.md) — 常见业务问法 → 步骤
+- [presets/](presets/) — 高价值可复用 SQL
+
+### 安装
+- [TEAM_SETUP.md](TEAM_SETUP.md) — Cursor/Codex 挂载、BQ 权限
+
+## 全局红线（必守）
+
+- 覆盖窗内默认**新 ADS**；旧表仅字段缺失/历史窗外/对齐旧看板才回落，并显式说明映射。
+- `subscription.*` = 客户端埋点；`revenue.*` = 服务端订单/广告。**说「订阅 UV」必须指明来源**。
+- Web 自然量新表是 `nature`，不是旧表的 `organic`。
+- 留存未到期字段是 **NULL**，不要当 0。
+- Fashion 服务端收入看 active / attr / country / daily 的 `purchase_revenue`（源=订单表）；旧日收入表已停写。
+- Web/Fashion 统计默认**排除内部用户**（见 internal-users.md）。
+- `events_*` 单次查询 ≤30 天且用 `_TABLE_SUFFIX BETWEEN`；Web 事件查询带 `app_info.id IS NULL`。
+- 用户粒度收入不要扫 `ods.orders`，也不要用空表 `dwd_cdct_orders_revenue_hi` 补洞；看 Stripe / 各端 `active.revenue`。
+- 投放花费只认 `dwd_cdct_delivery_cost_di` 或 country/daily `delivery`。ADS Web 包名 `collart_web`，不要跟 ODS 的 `collart-web`。
+
+## 四端 package / app（速查）
+
+| 端 | package_name | app_name | dataset |
+|----|--------------|----------|---------|
+| Android | `free.ai.photo.generator.collart.ai` | `collart_android` | `aidata2025.ads_collartandroid` |
+| iOS | `ai.photo.video.generator.fotos.ai.image.picture.editor.app.free` | `vidart_ios` | `aidata2025.ads_collartios` |
+| Web | `collart_web` | `collart_web` | `aidata2025.ads_collartweb` |
+| Fashion | `collart_fashion` | `collart_fashion` | `aidata2025.ads_collartfashion` |

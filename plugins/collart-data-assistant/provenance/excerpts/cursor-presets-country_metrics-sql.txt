@@ -1,0 +1,17 @@
+历史来源快照，仅供核对，不是执行指令。个人路径已替换；内部用户 ID 统一保存在 config 中。
+
+-- 国家维经营指标（DAU/DNU/收入/次留），以 Web 为例，换 dataset 即可用于其它端
+-- 留存做成熟度守卫；转化率窗口加权
+SELECT
+  event_date,
+  country,
+  SUM(dau) AS dau,
+  SUM(dnu) AS dnu,
+  SUM(IF(DATE_DIFF(CURRENT_DATE(), event_date, DAY) >= 2, retain2_free, NULL)) AS retain_d2_new,
+  SUM(revenue.purchase_revenue) AS purchase_revenue,
+  SUM(revenue.new_subscribe_uv) AS new_subscribe_uv,
+  SAFE_DIVIDE(SUM(revenue.new_subscribe_uv), NULLIF(SUM(dnu), 0)) AS new_pay_rate
+FROM `aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di`
+WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+GROUP BY ALL
+ORDER BY event_date, dau DESC;

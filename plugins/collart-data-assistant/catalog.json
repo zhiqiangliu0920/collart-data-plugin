@@ -1,0 +1,518 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "id": "collart_fashion-revenue-boundary",
+      "title": "Fashion 订单收入与主站边界",
+      "project": "collart_fashion",
+      "kind": "table",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "fashion-orders",
+        "revenue",
+        "ads-redlines",
+        "team-collart_fashion-revenue-boundary"
+      ],
+      "tags": [
+        "Fashion",
+        "收入",
+        "Web",
+        "去重",
+        "transaction_id",
+        "ads_oper_user_revenue_di"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_fashion/revenue-boundary.md",
+      "sha256": "c1662af4932023714a9d1a8eb86b06868b25f77f4b7c67880d07c9967cf752c2"
+    },
+    {
+      "id": "collart_web-identity",
+      "title": "Web 设备画像与登录账号映射",
+      "project": "collart_web",
+      "kind": "table",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": "2026-09-07",
+      "sources": [
+        "web-profile",
+        "ads-redlines",
+        "team-collart_web-identity"
+      ],
+      "tags": [
+        "user_ids",
+        "user_id",
+        "user_pseudo_id",
+        "身份",
+        "UUID",
+        "ads_oper_user_profile_df"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_web/identity.md",
+      "sha256": "a1bdcdea6e34659626a29f69c48c32cfa6630d2637adf8345289613c1a6fab71"
+    },
+    {
+      "id": "shared-analysis-playbook",
+      "title": "经营变化分析的取数与判断流程",
+      "project": "shared",
+      "kind": "playbook",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "playbooks",
+        "metrics",
+        "ads-routing",
+        "team-shared-analysis-playbook",
+        "cursor-playbooks-md"
+      ],
+      "tags": [
+        "分析方法",
+        "周报",
+        "诊断",
+        "增长",
+        "国家",
+        "新老用户"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/analysis-playbook.md",
+      "sha256": "6a62c8632ed1e82a004a6c4eee6f0414f6e0b6f2f1d2999a03cc79c5b9bb6f61"
+    },
+    {
+      "id": "shared-ask-templates",
+      "title": "业务问法模板",
+      "project": "shared",
+      "kind": "playbook",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "cursor-ask-templates-md"
+      ],
+      "tags": [
+        "ask-templates",
+        "业务问法模板"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/ask-templates.md",
+      "sha256": "1fbf53c0703fc854689c720e5093d9c4df6548215bf06aca2fd37f25336d2d30"
+    },
+    {
+      "id": "collart_web-channel-attribution",
+      "title": "四端渠道归因：Web、Android、iOS 与 Fashion",
+      "project": "shared",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": "2026-09-05",
+      "sources": [
+        "web-channel",
+        "ads-redlines",
+        "team-collart_web-channel-attribution",
+        "cursor-channels-attribution-md"
+      ],
+      "tags": [
+        "ASA",
+        "Android",
+        "DeepClick",
+        "Facebook",
+        "Instagram",
+        "X",
+        "fb_delivery",
+        "iOS",
+        "traffic_src_platform",
+        "x_delivery",
+        "归因",
+        "渠道"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/channel-attribution.md",
+      "sha256": "ddbd1ccdd66bba5446a4d2b5bc3c08fb426e1ae8c6760d704c41b05b94bc36ff"
+    },
+    {
+      "id": "shared-core-metrics",
+      "title": "活跃、新增、留存与指标粒度",
+      "project": "shared",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "metrics",
+        "retention",
+        "legacy-conversion",
+        "team-shared-core-metrics",
+        "cursor-metric-glossary-md"
+      ],
+      "tags": [
+        "DAU",
+        "DNU",
+        "日活",
+        "新增",
+        "留存",
+        "retain.d2",
+        "is_active"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/core-metrics.md",
+      "sha256": "811143ba593f6e7c1a4c2caba4f06263e4660c7bcf9ab91490f3a0ba05846fe7"
+    },
+    {
+      "id": "shared-data-caveats",
+      "title": "数据坑与校验经验",
+      "project": "shared",
+      "kind": "quality",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "cursor-data-caveats-md"
+      ],
+      "tags": [
+        "data-caveats",
+        "数据坑与校验经验"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/data-caveats.md",
+      "sha256": "c9861adbdec6dff33f42a2b8d4b5b732485640c0caddd0e7a91f4c60e19bdbd5"
+    },
+    {
+      "id": "shared-event-evidence",
+      "title": "原始埋点与漏斗证据",
+      "project": "shared",
+      "kind": "event",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "events",
+        "ads-routing",
+        "metrics",
+        "team-shared-event-evidence",
+        "cursor-raw-events-md"
+      ],
+      "tags": [
+        "埋点",
+        "事件",
+        "events_*",
+        "漏斗",
+        "GA4",
+        "event_params"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/event-evidence.md",
+      "sha256": "2e10b0d211f18f8b2cb052343ae81ee65b81c0f11019f4ebe02861a024df47a8"
+    },
+    {
+      "id": "shared-internal-users",
+      "title": "内部用户过滤",
+      "project": "shared",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "cursor-internal-users-md"
+      ],
+      "tags": [
+        "internal-users",
+        "内部用户过滤"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/internal-users.md",
+      "sha256": "db874cc108c6332362e923a91173c97cbe773c1cc2fbc5ae3e621803a51e53d8"
+    },
+    {
+      "id": "shared-known-conflicts",
+      "title": "旧资料冲突与待核验清单",
+      "project": "shared",
+      "kind": "quality",
+      "status": "draft",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-09-26",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "legacy-ios",
+        "ads-routing",
+        "legacy-conversion",
+        "metrics",
+        "revenue",
+        "ads-redlines",
+        "web-profile",
+        "team-shared-known-conflicts"
+      ],
+      "tags": [
+        "冲突",
+        "旧口径",
+        "空表",
+        "DAU",
+        "iOS",
+        "收入",
+        "current_active_days"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/known-conflicts.md",
+      "sha256": "b8810754910fe8732ef2f88e1b269ff013aa3d2eed3c24ace6d77bb07b8877f0"
+    },
+    {
+      "id": "shared-metric-upgrades",
+      "title": "口径升级日志",
+      "project": "shared",
+      "kind": "quality",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "cursor-metric-upgrades-md"
+      ],
+      "tags": [
+        "metric-upgrades",
+        "口径升级日志"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/metric-upgrades.md",
+      "sha256": "50d77238bbf8da7cd851f0c75fd0a204f094ba789c66374cfe33c5cc258ceb21"
+    },
+    {
+      "id": "shared-payment-evidence",
+      "title": "付费转化与收入口径",
+      "project": "shared",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "metrics",
+        "revenue",
+        "ads-redlines",
+        "fashion-orders",
+        "team-shared-payment-evidence",
+        "cursor-revenue-subscription-md"
+      ],
+      "tags": [
+        "付费",
+        "订阅",
+        "收入",
+        "conversion",
+        "Stripe",
+        "purchase_revenue",
+        "ROAS"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/payment-evidence.md",
+      "sha256": "fcaa4760d40ce686797c0e0400113efdf0d9329cea26d4d9c13dd416f82ff8b3"
+    },
+    {
+      "id": "shared-project-overview",
+      "title": "项目范围与四端标识",
+      "project": "shared",
+      "kind": "business",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "ads-routing",
+        "events",
+        "fashion-orders",
+        "team-shared-project-overview",
+        "cursor-platforms-md"
+      ],
+      "tags": [
+        "业务",
+        "项目",
+        "Android",
+        "iOS",
+        "VidArt",
+        "Web",
+        "Fashion"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/project-overview.md",
+      "sha256": "e7c2a0f4e527465372fedc3b7bbc2c1243da68849159d2b103738c27d32bb04f"
+    },
+    {
+      "id": "shared-retention-newuser",
+      "title": "新用户与留存",
+      "project": "shared",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "cursor-retention-newuser-md"
+      ],
+      "tags": [
+        "retention-newuser",
+        "新用户与留存"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/retention-newuser.md",
+      "sha256": "67df84de8c5a1aad9d32b69ef652ac03a5792280b2adcc9c11707b251b97604c"
+    },
+    {
+      "id": "shared-sql-practice",
+      "title": "SQL 查询范围与验证约定",
+      "project": "shared",
+      "kind": "sql",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "events",
+        "ads-routing",
+        "ads-redlines",
+        "team-shared-sql-practice",
+        "cursor-sql-standards-md"
+      ],
+      "tags": [
+        "SQL",
+        "BigQuery",
+        "分区",
+        "_TABLE_SUFFIX",
+        "30天",
+        "时区"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/sql-practice.md",
+      "sha256": "37ff9c7ed4b3cad2868ab474ef87ecc2e64ed77b887d3dc637031a81931d9151"
+    },
+    {
+      "id": "shared-table-routing",
+      "title": "按分析问题选择 ADS 表",
+      "project": "shared",
+      "kind": "table",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "ads-routing",
+        "ads-redlines",
+        "team-shared-table-routing",
+        "cursor-table-routing-md"
+      ],
+      "tags": [
+        "选表",
+        "DAU",
+        "日活",
+        "收入",
+        "渠道",
+        "国家",
+        "profile"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/table-routing.md",
+      "sha256": "56445151613a6a058c4d1a60d1c974280f50dd7b4924d981e3880a1220261d99"
+    },
+    {
+      "id": "shared-warehouse-lineage",
+      "title": "事件到经营指标的数据血缘",
+      "project": "shared",
+      "kind": "lineage",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "ads-routing",
+        "events",
+        "revenue",
+        "team-shared-warehouse-lineage"
+      ],
+      "tags": [
+        "血缘",
+        "DM",
+        "DWD",
+        "Dataform",
+        "分区",
+        "daily"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/warehouse-lineage.md",
+      "sha256": "f37af71d55d6a702e000a18887507d7c065f35b33b7ba99b9301a5e6149c311b"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "collart-data-assistant",
+  "version": "0.1.0",
+  "description": "Collart 四端数据分析与团队知识维护，共用有来源记录的业务知识和 SQL 模板。仅公司内部使用。",
+  "author": {
+    "name": "Collart 数据团队"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Collart 团队数据助手",
+    "shortDescription": "四端数据分析、业务口径与团队知识维护",
+    "longDescription": "整合 Cursor 业务分析沉淀与团队知识库，提供分析和知识维护两个入口，共享可追溯知识与 SQL 模板。使用同事已有的数据连接，知识更新通过团队源码发布。",
+    "developerName": "Collart 数据团队",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "使用 Collart 团队数据助手，先核对项目和指标口径，再帮助我完成数据分析。"
+  }
+}

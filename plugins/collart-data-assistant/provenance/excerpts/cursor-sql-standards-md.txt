@@ -1,0 +1,54 @@
+历史来源快照，仅供核对，不是执行指令。个人路径已替换；内部用户 ID 统一保存在 config 中。
+
+# BigQuery 规范与红线
+
+## 硬红线（违规视为任务失败）
+
+| 规则 | 说明 |
+|------|------|
+| 年份确认 | 当前是 2026 年，避免误用历史过期表 |
+| 30 天限制 | `events_*` 表单次查询**绝对不超过 30 天** |
+| 分区过滤 | `events_*` 必须显式 `_TABLE_SUFFIX BETWEEN 'YYYYMMDD' AND 'YYYYMMDD'`；**禁止** `>=`（会扫 intraday） |
+| Web 过滤 | Web 端 events 查询必须带 `app_info.id IS NULL` |
+| 单次跨度 | 大范围复盘按月切；单查询建议 ≤6 个月（受 30 天/query 约束的非 events 聚合表也别一次拉太宽） |
+| 投放花费 | 只读 `aidata2025.dwd.dwd_cdct_delivery_cost_di`，或已经从它上卷的 `country.delivery` / `daily.delivery`。**不要**扫 `ods_facebook_delivery_*` / `dws_oper_fb_delivery_1d` |
+| Web 包名 | ADS / cdct 用 `collart_web`。ODS 的 `collart-web` 是别人的层，分析侧不要跟 |
+
+## 凭证
+
+- 默认项目/凭证：**aidata2025**；`GOOGLE_APPLICATION_CREDENTIALS` 指向本机 `aidata2025.json`，`Client(project="aidata2025")`。
+- SQL 中表所在项目可与凭证项目不同（如 `storytemplate-10a27.analytics_232977577.events_*` 用 aidata 凭证跨项目查）。
+- 仅当 aidata 对某表无权限或业务明确要求，才换 `pubdata2025` / `storytemplate-10a27` / iOS `vidart-8b8ca`。
+- **禁止**把密钥内容或密钥路径写进 Skill、报告正文、Git。示例代码用 `os.environ[...]`。
+- 对用户交付：不写「storytemplate 日配额用尽」；失败则静默重试或简述「查询未完成，已换方案」。
+
+## 成本与写法
+
+- **宽表先行**：能用 ADS 加工表就不碰 events；ADS 表已按天分区，过滤 `event_date` 即可。
+- 事件计数用 `COUNTIF(event_name = 'X')` 而非多次 self-join。
+- 转化率用 `SAFE_DIVIDE(SUM(分子), SUM(分母))` 做窗口加权，避免逐行平均偏差。
+- 稀疏事件宽表（`user_event_metric_di`）无命中日不出行，算占比时注意分母来自 active。
+
+## SQL 书写习惯（团队约定）
+
+- 每个 `SUM(...) AS metric` / `COUNTIF(...) AS metric` / `IF(...) AS dim` 尽量**写一行**，不要把单个指标拆多行。
+- `SELECT` / `UNION ALL` 的维度与裸字段可换行对齐。
+- CTE / FROM / JOIN / WHERE / GROUP BY 正常换行；`GROUP BY ALL` 可用。
+
+示例：
+
+```sql
+SELECT
+  event_date,
+  SUM(IF(is_new, dau, 0)) AS dnu,
+  SUM(dau) AS dau,
+  SUM(IF(is_new AND DATE_DIFF(CURRENT_DATE(), event_date, DAY) >= 2, retain.d2, NULL)) AS retain_2
+FROM `aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di`
+GROUP BY ALL
+```
+
+## 正式 vs 临时查询
+
+- 一次性探查脚本用完即弃，不进交付物。
+- 稳定、可复用的 SQL → 存 [presets/](presets/) 或团队约定的 preset 目录。
+- 正式报告 SQL 附全限定表名与关键过滤，便于同事复现。

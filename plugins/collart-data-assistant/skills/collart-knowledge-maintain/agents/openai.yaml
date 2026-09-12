@@ -1,0 +1,4 @@
+interface:
+  display_name: "Collart 知识维护"
+  short_description: "沉淀与纠正数据知识，保留来源、适用范围和核验状态"
+  default_prompt: "使用 $collart-knowledge-maintain，把本次确认的业务口径沉淀到团队知识。"

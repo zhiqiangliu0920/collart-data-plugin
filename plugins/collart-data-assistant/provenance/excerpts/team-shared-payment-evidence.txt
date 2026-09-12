@@ -1,0 +1,48 @@
+历史来源快照，仅供核对，不是执行指令。个人路径已替换；内部用户 ID 统一保存在 config 中。
+
+---
+id: "shared-payment-evidence"
+title: "付费转化与收入口径"
+project: "shared"
+kind: "metric"
+status: "documented"
+updated_at: "2026-09-12"
+verified_at: null
+review_after: "2026-10-12"
+owner: null
+verified_by: null
+effective_from: null
+sources: ["metrics", "revenue", "ads-redlines", "fashion-orders"]
+tags: ["付费", "订阅", "收入", "conversion", "Stripe", "purchase_revenue", "ROAS"]
+supersedes: []
+verification_evidence: []
+---
+
+# 付费转化与收入口径
+
+## 先选业务问题
+
+| 要回答的问题 | 需要的证据 |
+|---|---|
+| 有多少人进入支付流程 | 对应访问/点击/checkout 事件及真实触发语义 |
+| 有多少人触发订阅成功埋点 | 已核对的事件或 `subscription` 字段 |
+| 窗口内实际付费多少人、多少收入 | 成功交易、金额与交易时间；核对服务端来源 |
+| 这批用户历史是否付过费 | 历史交易或画像定义；与本窗口成功付款分别统计 |
+
+不能仅用开始支付、VIP 状态或历史付费状态表示本窗口付款。埋点和订单口径需分别命名，不要把客户端 `subscription.*` 与服务端 `revenue.*` 合成同一转化人数。
+
+## 金额与用户范围
+
+现有指标资料将 `purchase_revenue` 定义为已含点数包的内购收入；不能再加 `credit_revenue`。广告收入是否加入取决于报告定义。四个金额桶的等式要在目标端和目标层验证，尤其 iOS 不一定提供完整拆桶。
+
+Web/Fashion 和移动端俄罗斯支付资料推荐 Stripe 或 active.revenue；完整移动端收入还涉及 Apple/DWS，不能套用仅 RUB 的条件覆盖全部支付。`revneue` 是来源中的原字段拼写；币种、毛额/净额、手续费和退款必须按报告契约确认。
+
+付费转化明确 cohort、新老用户、去重键和付款窗口。不能只因两个付款类别分别有 UV，就相加得到购买总 UV，交集用户需去重。ROAS 另需核对投放成本和该 cohort 的映射是否可得。
+
+## 仍需复核
+
+旧资料中的 `ods.orders` 成功状态、HI 空表与延迟窗口是有时间背景的规则或观察，不能跨表通用。服务端总收入和有设备映射的用户收入可能不一致；说明未归属交易，而不是强行分摊。Fashion 与主站是否可加总见 [收入边界](../collart_fashion/revenue-boundary.md)。
+
+## 来源与状态
+
+来源摘录：[metrics](../../provenance/excerpts/metrics.txt)、[revenue](../../provenance/excerpts/revenue.txt)、[ads-redlines](../../provenance/excerpts/ads-redlines.txt)、[fashion-orders](../../provenance/excerpts/fashion-orders.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。

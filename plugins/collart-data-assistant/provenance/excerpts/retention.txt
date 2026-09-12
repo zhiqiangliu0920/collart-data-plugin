@@ -1,0 +1,32 @@
+# 新用户与留存
+
+## is_new 四端口径
+
+| 端 | 口径 | 红线 |
+|----|------|------|
+| Android / iOS | 当日有 `first_open` | 付费-only 行 FALSE；DAU/留存滤 `is_active=TRUE` |
+| Web / Fashion | 当日有 `first_visit` | 同上 |
+| 统一语义 | pseudo **首次发现日**，不绑死 first_visit/first_open 分裂口径 | — |
+
+- 旧 Web DWD 的 is_new 填充更窄；新表 2026-08 起 DNU 可能比旧表高 ~8–17%，属语义升级，**不可逐日硬比新增总量**。
+- Web 新用户主口径推荐按 `user_pseudo_id` 首次发现（`new_user_by_pseudo_id`），而非 first_visit 事件手拼。
+
+## is_active
+
+- 表只落「活跃 ∪ 当日有收入」行。
+- DAU / 留存 / 流失 / 回流 **必须** `is_active=TRUE`。
+- 汇总 `revenue.*` 金额时**不过滤** is_active（含付费-only 行）。
+- 旧 DWD 表 2025-08 前 `is_active` 全 NULL；与旧表对账时**勿筛 is_active**。
+
+## 留存编号与成熟度
+
+| 字段 | 含义 | 分层 |
+|------|------|------|
+| `retain.d2` | 次日留存（对齐旧 `retain_2`） | attr=全活跃可按 is_new 切片；**country/daily=仅新用户** |
+| `retain.dN` | 锚点后第 (N-1) 天当天活跃 | 同上 |
+| `rolling_retain.dN` | 锚点后 [1,N-1] 内任一天活跃 | 同上 |
+| `retain2_vip`/`retain2_free`/`retain2_by_source` | 新增×VIP/渠道次日留存 | country/daily 切片；与 `retain.d2` 同属新用户 |
+
+- 前视未到期 = **NULL**，随每日回刷定稿；勿当 0。
+- 取成熟留存的典型写法：`SUM(IF(DATE_DIFF(CURRENT_DATE(), event_date, DAY) >= N, retain.dN, NULL))`。
+- country/daily 次留率：`retain.d2 / dnu`（不要用 `retain.d2 / dau`）。

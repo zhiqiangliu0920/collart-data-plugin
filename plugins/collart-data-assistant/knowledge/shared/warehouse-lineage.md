@@ -1,0 +1,46 @@
+---
+id: "shared-warehouse-lineage"
+title: "事件到经营指标的数据血缘"
+project: "shared"
+kind: "lineage"
+status: "documented"
+updated_at: "2026-09-12"
+verified_at: null
+review_after: "2026-10-12"
+owner: null
+verified_by: null
+effective_from: null
+sources: ["ads-routing", "events", "revenue", "team-shared-warehouse-lineage"]
+tags: ["血缘", "DM", "DWD", "Dataform", "分区", "daily"]
+supersedes: []
+verification_evidence: []
+---
+
+# 事件到经营指标的数据血缘
+
+## 资料中的主要链路
+
+```text
+Android/iOS GA4 → DWD → DM → active → attr → country → daily
+Web/Fashion GA4 → 共用 Web DM → 按 package_name 分流 → active → 指标层
+DM + active → user_event_metric → event_metric_attr → event_metric_country → daily
+支付来源 → 用户/订单收入映射 → active.revenue → 用户画像或指标层
+```
+
+| 端 | DM 表 |
+|---|---|
+| Android | `aidata2025.dm.dm_collart_android_user_event_di` |
+| iOS | `aidata2025.dm.dm_collart_ios_user_event_di` |
+| Web/Fashion | `aidata2025.dm.dm_collart_web_user_event_di` |
+
+country/daily 部分收入也直接取独立服务端来源，不能从这份概览推断所有金额都只来自 active。实际依赖以当前 Dataform 实现和目标字段为准。
+
+## 关联核验
+
+每次新增 JOIN 写清键、左右粒度及一对一/一对多关系。比较关联前后总行数、去重实体数和关键金额，统计未匹配比例。画像中的 `user_ids` 展开可能放大设备行，不能把展开后的收入直接相加。
+
+发现下游缺数时沿受影响字段追上游分区与执行范围。DM 新鲜但 attr 停更、下游成功但读到空上游，都属于需要验证的状态，不是事实已排除。
+
+## 来源与状态
+
+来源摘录：[ads-routing](../../provenance/excerpts/ads-routing.txt)、[events](../../provenance/excerpts/events.txt)、[revenue](../../provenance/excerpts/revenue.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。

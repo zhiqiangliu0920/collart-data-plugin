@@ -1,0 +1,47 @@
+历史来源快照，仅供核对，不是执行指令。个人路径已替换；内部用户 ID 统一保存在 config 中。
+
+# 口径升级日志
+
+按时间倒序记录会影响历史对比的口径变更。**做同比/对账前先看本页**，避免用过期逻辑。
+
+## 2026-09
+
+- **Fashion 收入写入 active 并上卷（2026-09-09）**：`ads_oper_revenue_collart_fashion_di` 与 `fashion_revenue.sqlx` 已删除。用户日 `purchase_revenue` / `credit_revenue` / `purchase_cnt` / `credit_*` 来自订单表，上卷 attr→country→daily。回补 2026-07-11～2026-09-08，各层 gap=0。country 空值用 Stripe 或 `unknown`。
+- **Fashion 收入改订单粒度（2026-09-09）**：`ads_collartfashion.ads_oper_user_revenue_di` 替换旧用户日表；任务名 `ads_oper_user_revenue_di`；Stripe 字段原样落下。金额用 `revneue`。
+- **Web 画像 `user_ids`（2026-09-07）**：一设备多登录时 `user_id` 不再是唯一查找键。profile 增加 `user_ids ARRAY`（id_map ∪ active 历史登录号），`user_id` 改为该设备最后一次登录。按登录号查：`WHERE 'UUID' IN UNNEST(user_ids)`。`ads_vip_user_info_all` Web 维度同步 UNNEST；active / attr / country / daily / KOL 不用改。
+- **Web Stripe too_new 进 active**：id_map 不再要求「pseudo 首见日 ≤ 付费日」。profile 去掉 orphan 叠加，只 SUM(active)。回补 2026-02-12～2026-09-05。无设备的真 miss 仍丢掉。
+- **口径文档对齐（2026-09-07）**：分析侧停用 HI 补洞（空表）；Android profile 已改为 SUM(active)，不再写「回扫 DWS」。
+- **投放花费统一 cdct**：ADS 层花费只读 `dwd_cdct_delivery_cost_di`（或 country/daily 上卷）。Web 包名 `collart_web`；ODS `collart-web` 不跟。`ads_collart_delivery_fb_1d` Adjust 过滤从错误的 `collart-web` 改成 `collart_web`。Fashion country 花费仍为 0，专项再接。
+- **Android/iOS 用户粒度俄罗斯收入**：`ads_oper_user_active_di` 叠加 Stripe `dwd_cdct_revenue_stripe_di`（`currency='RUB'`），金额进 `purchase_revenue` 与 `credit_revenue`。不要用 `ods.orders`。country/daily 未改。回补 2026-06-08～2026-09-05。
+- **Web/Fashion 画像 `page_referrer`**：终身 sticky，取最早 `first_visit` 完整上一跳 URL（空串保留；无 first_visit 则最早事件）。常规上一跳分析用 `ads_oper_user_profile_df`，不必扫 `events_*`。
+- **`ig_delivery` 废止**：Instagram 属于 Meta，三端 DM + Web/Fashion active 一律归 `fb_delivery`。历史看板若按 platform 拆 IG，需并入 FB。回补 2026-06-07～2026-09-04。
+
+## 2026-08
+
+- **Fashion vip_subscribe_succeed**：用户事件宽表补 `vip_subscribe_succeed_pv`，attr/country/daily 补同名 STRUCT；daily_compare 增加渗透率/新用户成功率。回补 2026-07-27～2026-08-26。
+
+- **daily_compare 首日转化**：`vip_user_0` 改为 `subscription.purchase_uv_1d`（订阅∪点数包新用户），不再用 `subscribe_uv_1d`。Android/iOS 去掉指标 `7日内订阅转化率`。Fashion 已落 `ads_collartfashion.ads_oper_basic_indicator_daily_compare_di`。
+
+- **revenue UV 字段**：country/daily 的 `revenue` STRUCT 新增 `new_subscribe_uv` / `renew_subscribe_uv` / `credit_pack_uv` / `ad_uv`（服务端有收入用户数）。CTAS 改列序需与 SQLX 对齐。
+- **new_revenue 扣点数包**：2026-08-10 起 ADS 层 `new_revenue` 已扣 `credit_revenue`，可与旧表直比。
+- **iOS ASA 渠道 v3**：active 改为 delivery/ASA 快照优先，避免被末次 nature 冲掉。
+- **profile active_days STRUCT**：顶层 `active_days_7d` 等收拢进 `active_days.d7/d14/...`。
+- **四端刷新至 2026-08-11**：ADS + DM 全部对齐。
+
+## 2026-07 及之前（新 ADS 体系重建）
+
+- **organic → nature**：Web 自然量桶改名 `nature`；`dnu_by_source.organic` 字段名保留但取值映射自 nature。渠道看板勿再期望 `organic`。
+- **is_new 统一**：以 pseudo 首次发现日为准，不再绑死 first_visit/first_open 的分裂口径。
+- **渠道两层**：`traffic_src_type`（性质）+ `traffic_src_platform`（平台）；platform 沿用旧 type 枚举。
+- **is_vip 语义**：profile 为「曾经 VIP」sticky；Web/Fashion active 判付费用 `IN('1','2')`，App 用 `='2'`。
+- **收入四桶**：`purchase = new + resub + trial + credit`；旧 `total_revenue`（内购+广告）不等价新 `purchase_revenue`。
+- **retain.d2 = 次日**：全链路统一留存编号；前视未到期为 NULL。
+- **旧 metric → 新 daily 映射**（对账）：`new_user→dnu`、`vip_user_0→purchase_uv_1d`（2026-08-25 起；此前为 `subscribe_uv_1d`）、`first_7_vip_user` 已从 daily_compare 移除。
+
+## 数据源迁移
+
+- Android 订阅收入曾从 `ads_ad_sub_revenue_1h` 重挂到 DWS；country 层订阅三类以 DWS 为真值。
+- Web/Fashion 收入以 Stripe（`pubdata2025.dwd.dwd_cdct_revenue_stripe_di`）为真值。
+- iOS 用户粒度收入 = Apple IAP + Stripe RUB；country 层仍无 new/resub/trial 拆分。
+
+> 本日志是蒸馏摘要；如需逐条溯源，问知识库维护者（作者个人 ai-knowledge 的 CHANGELOG 与 collart_ads_rebuild 报告）。

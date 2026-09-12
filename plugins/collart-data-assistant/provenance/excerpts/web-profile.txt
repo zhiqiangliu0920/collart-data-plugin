@@ -1,0 +1,44 @@
+# 表名：aidata2025.ads_collartweb.ads_oper_user_profile_df
+
+## 1. 基础信息
+- 表中文名：Collart Web 用户生命周期画像
+- 表类型：汇总表 / 维度表
+- 表描述：一台设备一行的终身画像（渠道、活跃、VIP、收入、事件 PV）
+- 行粒度：一个 `user_pseudo_id`（设备/浏览器）1 行
+- 主键字段：`user_pseudo_id`
+- 分区字段：无（全量表）
+- 更新频率：T+1；近 3 日 active / UEM 变化用户 MERGE
+- 上游来源：`ads_oper_user_active_di`、`ads_oper_user_event_metric_di`、`ads_oper_collart_web_id_map`
+- 优先级：高
+- 成本效率：高（按设备或登录号点查，不必扫 events）
+
+## 2. 核心作用
+本表主要用于以下场景：
+1. 查单设备生命周期：首末活跃、渠道、VIP、终身收入、generate PV
+2. **按登录 UUID 反查设备画像**（必须走 `user_ids`，见 §4）
+3. 常规上一跳用终身 sticky `page_referrer`，不必再扫 `events_*`
+
+## 3. 核心字段
+
+字段名：`user_pseudo_id`
+- 类型：STRING
+- 字段角色：主键 / 设备标识
+- 业务含义：GA 设备/浏览器 ID
+- 注意：一行一台设备，不是一个登录账号
+
+字段名：`user_id`
+- 类型：STRING
+- 字段角色：用户标识（末次登录）
+- 业务含义：该设备**最后一次**登录号（active 非空 `user_id` 与 `id_map.user_id_last_date` 取更晚）
+- 注意：一设备多登录时会被盖掉；**不能**当登录号唯一查找键
+
+字段名：`user_ids`
+- 类型：ARRAY\<STRING\>
+- 字段角色：用户标识（全历史）
+- 业务含义：该设备历史绑定过的全部登录号（`id_map` ∪ active）
+- 注意：2026-09-07 起生效。按登录 UUID 查必须 `IN UNNEST(user_ids)`
+
+字段名：`current_active_days`
+- 类型：STRUCT(d7, d14, d30, d90, d360)
+- 字段角色：度量
+- 业务含义：滚动窗口内活跃天数，不是日历「累计活跃天数」

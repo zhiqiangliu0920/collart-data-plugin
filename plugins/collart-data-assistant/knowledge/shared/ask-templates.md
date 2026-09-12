@@ -1,0 +1,104 @@
+---
+id: "shared-ask-templates"
+title: "业务问法模板"
+project: "shared"
+kind: "playbook"
+status: "documented"
+updated_at: "2026-09-12"
+verified_at: null
+review_after: "2026-10-12"
+owner: null
+verified_by: null
+effective_from: null
+sources: ["cursor-ask-templates-md"]
+tags: ["ask-templates", "业务问法模板"]
+supersedes: []
+verification_evidence: []
+---
+
+# 业务问法模板
+
+## 合并的业务细节
+
+来源为 Cursor 资料，按项目与层级适用；尚未独立查询核验。历史状态须复核，上文约束与明确的修正说明优先。
+
+## 业务问法模板
+
+Agent 收到类似问法时，按「目标表 → 步骤 → 回复重点」执行。
+
+---
+
+### 1. 近 N 日 DAU / DNU 怎么样？
+
+- **表**：各端 `ads_oper_basic_indicator_daily_di`
+- **步骤**：按 `event_date` 拉 `dau`/`dnu`；可四端 `UNION ALL`
+- **回复**：趋势一句 + 近日对比表；点明端与日期范围
+
+### 2. 哪个国家表现最好 / 最差？
+
+- **表**：`ads_oper_basic_indicator_country_di`
+- **步骤**：`SUM(dau)` 或收入字段按 `country` 排序；排除异常空值
+- **回复**：Top/Bottom 国家 + 占比；业务向不贴全量国家列表时可只给 Top10
+
+### 3. 投放 / 自然量如何？
+
+- **表**：`ads_oper_basic_indicator_attr_di`
+- **步骤**：按 `traffic_src_type`（及必要时 platform）聚合；Web 自然量用 `nature`
+- **回复**：delivery vs nature（及 inhouse/kol）DAU/DNU；注明枚举已升级
+
+### 4. 新用户次日留存？
+
+- **表**：attr 或 country 上的 retain / retain2_*
+- **步骤**：看成熟度（日期是否已满 N 日）；NULL ≠ 0
+- **回复**：给出可成熟日期的留存率；未成熟标明「未到期」
+
+### 5. 订阅转化怎么样？（先澄清）
+
+先问清或同时给两套：
+
+| 用户口语 | 表字段 |
+|----------|--------|
+| 点击订阅 | 实际订阅点击事件；不能用成功 UV 代替 |
+| 埋点订阅成功 | `subscription.subscribe_uv` 等（先核对规则来源） |
+| 实际付费人数 | 窗口内成功交易用户去重；`new_subscribe_uv` / `renew_subscribe_uv` 是分类人数，不可直接相加 |
+
+- **回复**：必须标明「埋点」或「服务端」
+
+### 6. 收入 / 点数包 / 广告？
+
+- **表**：country 或 daily 的 `revenue`
+- **步骤**：金额与对应 `*_uv`；Android 才有显著 `ad_uv`
+- **回复**：分 new / renew / credit / ad；Fashion 用 active/daily 的 Stripe `purchase_revenue`
+
+### 7. 四端一起看
+
+- **表**：四端 daily（或 country）`UNION ALL`
+- **步骤**：统一 `event_date` 窗口；用 `package_name`/`app_name` 区分
+- **回复**：分端小表或一张长表；Fashion 收入已接 Stripe，country 花费仍为 0
+
+### 8. 某个功能漏斗（生成开始→成功等）
+
+- **表**：优先 `event_metric_country_di` / attr，或 daily 上事件 STRUCT
+- **步骤**：取对应 `*.uv` / `*.pv`；注意稀疏日可能无行
+- **若 ADS 没有该事件**：读 [raw-events.md](event-evidence.md)，短窗探查 `events_*`（`_TABLE_SUFFIX` + 端过滤）
+- **回复**：漏斗转化率 + 样本是否过小；标明用的是 ADS 热指标还是原始埋点
+
+### 8b. 某个埋点有没有报 / 参数长什么样？
+
+- **表**：GA4 `events_*`（四端表名见 raw-events.md）
+- **步骤**：先 `GROUP BY event_name` TopN → 再对目标事件抽 `event_params`；单次 ≤30 天
+- **回复**：事件量级 + 关键参数枚举；提醒经营指标仍应以 ADS 为准
+
+### 9. 查一个用户
+
+- **表**：`ads_oper_user_profile_df`；行为可再查 active / uem
+- **步骤**：`user_pseudo_id` 或 `user_id`。Web **不要**只扫 `profile.user_id`（一设备多登录会被盖掉）；用 `UNNEST(user_ids)` 或 `ads_oper_collart_web_id_map`
+- **回复**：画像摘要 + 最近活跃日；敏感信息最小化
+
+### 10. 「和新表 / 旧表是否一致」
+
+- **步骤**：先新表；对照时显式映射包名与渠道；引用已知语义差（organic→nature、is_new 定义）
+- **回复**：一致结论或「预期语义差」清单，避免无说明的数字对冲
+
+
+来源快照：[cursor-ask-templates-md](../../provenance/excerpts/cursor-ask-templates-md.txt)。
