@@ -1,0 +1,41 @@
+-- 俄罗斯 DAU：激励展示次数 / 生成成功次数分布（含 0）
+-- Android · 2026-08-01 ~ 08-20 · aidata2025
+
+WITH dau_users AS (
+  SELECT event_date AS dt, user_pseudo_id
+  FROM `aidata2025.ads_collartandroid.ads_oper_user_active_di`
+  WHERE event_date BETWEEN DATE '2026-08-01' AND DATE '2026-08-20'
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+    AND LOWER(country) = 'russia'
+    AND is_active = TRUE
+    AND user_pseudo_id IS NOT NULL
+),
+ev AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS dt,
+    user_pseudo_id,
+    COUNTIF(event_name = 'generate_watch_ad_show') AS ad_show,
+    COUNTIF(event_name = 'ai_service_success') AS success_cnt
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260801' AND '20260820'
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND platform = 'ANDROID'
+    AND geo.country = 'Russia'
+    AND event_name IN ('generate_watch_ad_show', 'ai_service_success')
+  GROUP BY 1, 2
+),
+user_day AS (
+  SELECT d.dt, COALESCE(e.ad_show, 0) AS ad_show, COALESCE(e.success_cnt, 0) AS success_cnt
+  FROM dau_users d
+  LEFT JOIN ev e USING (dt, user_pseudo_id)
+)
+SELECT
+  dt,
+  COUNT(*) AS dau,
+  ROUND(AVG(ad_show), 2) AS ad_avg,
+  ROUND(100 * COUNTIF(ad_show > 0) / COUNT(*), 1) AS ad_pen_pct,
+  ROUND(AVG(success_cnt), 2) AS success_avg,
+  ROUND(100 * COUNTIF(success_cnt > 0) / COUNT(*), 1) AS success_pen_pct
+FROM user_day
+GROUP BY 1
+ORDER BY 1;

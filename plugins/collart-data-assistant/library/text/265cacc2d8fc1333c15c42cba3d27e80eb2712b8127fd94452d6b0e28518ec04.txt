@@ -1,0 +1,15 @@
+# ios 表文档索引
+
+项目名称：ios
+
+表数量：7
+
+| 表名 | 中文名 | 分层 | 主题 | 优先级 | 字段数 | 状态 | 文档 |
+|---|---|---|---|---|---:|---|---|
+| `aidata2025.revenue.vip_event_data_ios` | 苹果商店收入与订阅事件报告清洗 | ADS应用层 | 收入成本主题 | - | 10 | `complete/available` | [打开](../tables/aidata2025.revenue.vip_event_data_ios.md) |
+| `aidata2025.dwd.dwd_oper_user_transaction_di` | iOS账单粒度 账单表（原始表） | DWD明细层 | 收入成本主题 | 低 | 28 | `complete/available` | [打开](../tables/aidata2025.dwd.dwd_oper_user_transaction_di.md) |
+| `aidata2025.dws.dws_oper_user_ad_di` | 客户端广告明细表 / 用户粒度广告收入表 | DWS汇总层 | 收入成本主题 | - | 36 | `complete/available` | [打开](../tables/aidata2025.dws.dws_oper_user_ad_di.md) |
+| `pubdata2025.ods.ods_apple_sales_1d` | 苹果商店收入与订阅事件报告 | ODS原始层 | 收入成本主题 | - | 33 | `complete/available` | [打开](../tables/pubdata2025.ods.ods_apple_sales_1d.md) |
+| `pubdata2025.ods.ods_apple_subscriber_1d` | 苹果商店收入与订阅事件报告3 | ODS原始层 | 收入成本主题 | - | 30 | `complete/available` | [打开](../tables/pubdata2025.ods.ods_apple_subscriber_1d.md) |
+| `pubdata2025.ods.ods_apple_subscription_1d` | 苹果商店收入与订阅事件报告2 | ODS原始层 | 收入成本主题 | - | 36 | `complete/available` | [打开](../tables/pubdata2025.ods.ods_apple_subscription_1d.md) |
+| `pubdata2025.ods.ods_apple_subscription_event_1d` | 苹果商店收入与订阅事件报告4 | ODS原始层 | 收入成本主题 | - | 32 | `complete/available` | [打开](../tables/pubdata2025.ods.ods_apple_subscription_event_1d.md) |

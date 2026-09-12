@@ -1,0 +1,658 @@
+[
+  {
+    "layer": "active",
+    "event_date": "2026-08-28",
+    "package_name": "collart_web",
+    "row_count": 4791,
+    "revenue": 2709.925003091829,
+    "dau": 4776
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-08-29",
+    "package_name": "collart_web",
+    "row_count": 4684,
+    "revenue": 2645.410458257306,
+    "dau": 4672
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-08-30",
+    "package_name": "collart_web",
+    "row_count": 4781,
+    "revenue": 1892.0601542565985,
+    "dau": 4769
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-08-31",
+    "package_name": "collart_web",
+    "row_count": 5335,
+    "revenue": 1993.8000000000002,
+    "dau": 5325
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-09-01",
+    "package_name": "collart_web",
+    "row_count": 5359,
+    "revenue": 2153.8263119606445,
+    "dau": 5348
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-09-02",
+    "package_name": "collart_web",
+    "row_count": 4251,
+    "revenue": 1910.385788652894,
+    "dau": 4237
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-09-03",
+    "package_name": "collart_web",
+    "row_count": 4341,
+    "revenue": 3480.56,
+    "dau": 4327
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-09-04",
+    "package_name": "collart_web",
+    "row_count": 4328,
+    "revenue": 2738.1490489884254,
+    "dau": 4313
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-09-05",
+    "package_name": "collart_web",
+    "row_count": 4650,
+    "revenue": 2835.8815720237667,
+    "dau": 4628
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-09-06",
+    "package_name": "collart_web",
+    "row_count": 4712,
+    "revenue": 2349.8229802161445,
+    "dau": 4691
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-09-07",
+    "package_name": "collart_web",
+    "row_count": 4772,
+    "revenue": 1805.4524325911389,
+    "dau": 4758
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-09-08",
+    "package_name": "collart_web",
+    "row_count": 6761,
+    "revenue": 2365.0602609520724,
+    "dau": 6747
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-09-09",
+    "package_name": "collart_web",
+    "row_count": 6634,
+    "revenue": 2237.2116182190744,
+    "dau": 6625
+  },
+  {
+    "layer": "active",
+    "event_date": "2026-09-10",
+    "package_name": "collart_web",
+    "row_count": 6810,
+    "revenue": 0.0,
+    "dau": 6810
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-08-28",
+    "package_name": "collart_web",
+    "row_count": 113,
+    "revenue": 2794.88500309183,
+    "dau": 4791
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-08-29",
+    "package_name": "collart_web",
+    "row_count": 112,
+    "revenue": 3052.340458257306,
+    "dau": 4684
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-08-30",
+    "package_name": "collart_web",
+    "row_count": 110,
+    "revenue": 1910.2601542565985,
+    "dau": 4781
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-08-31",
+    "package_name": "collart_web",
+    "row_count": 109,
+    "revenue": 2078.76,
+    "dau": 5335
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-09-01",
+    "package_name": "collart_web",
+    "row_count": 111,
+    "revenue": 2185.9057115995056,
+    "dau": 5359
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-09-02",
+    "package_name": "collart_web",
+    "row_count": 114,
+    "revenue": 2016.6737210008419,
+    "dau": 4251
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-09-03",
+    "package_name": "collart_web",
+    "row_count": 104,
+    "revenue": 3592.5,
+    "dau": 4341
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-09-04",
+    "package_name": "collart_web",
+    "row_count": 102,
+    "revenue": 2862.220395205791,
+    "dau": 4328
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-09-05",
+    "package_name": "collart_web",
+    "row_count": 111,
+    "revenue": 2891.7215720237677,
+    "dau": 4650
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-09-06",
+    "package_name": "collart_web",
+    "row_count": 110,
+    "revenue": 2617.362980216145,
+    "dau": 4712
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-09-07",
+    "package_name": "collart_web",
+    "row_count": 103,
+    "revenue": 1842.5724325911392,
+    "dau": 4772
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-09-08",
+    "package_name": "collart_web",
+    "row_count": 107,
+    "revenue": 2468.1802609520723,
+    "dau": 6761
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-09-09",
+    "package_name": "collart_web",
+    "row_count": 112,
+    "revenue": 2322.5482430225848,
+    "dau": 6634
+  },
+  {
+    "layer": "country",
+    "event_date": "2026-09-10",
+    "package_name": "collart_web",
+    "row_count": 107,
+    "revenue": 4028.8054702915306,
+    "dau": 6810
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-08-28",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 2794.88500309183,
+    "dau": 4791
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-08-29",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 3052.340458257306,
+    "dau": 4684
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-08-30",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 1910.2601542565985,
+    "dau": 4781
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-08-31",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 2078.76,
+    "dau": 5335
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-09-01",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 2185.9057115995056,
+    "dau": 5359
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-09-02",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 2016.6737210008419,
+    "dau": 4251
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-09-03",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 3592.5,
+    "dau": 4341
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-09-04",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 2862.220395205791,
+    "dau": 4328
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-09-05",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 2891.7215720237677,
+    "dau": 4650
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-09-06",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 2617.362980216145,
+    "dau": 4712
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-09-07",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 1842.5724325911392,
+    "dau": 4772
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-09-08",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 2468.1802609520723,
+    "dau": 6761
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-09-09",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 2322.5482430225848,
+    "dau": 6634
+  },
+  {
+    "layer": "daily",
+    "event_date": "2026-09-10",
+    "package_name": "collart_web",
+    "row_count": 1,
+    "revenue": 4028.8054702915306,
+    "dau": 6810
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-28",
+    "package_name": "collart_android",
+    "row_count": 5,
+    "revenue": 29.58160338102035,
+    "dau": 5
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-28",
+    "package_name": "collart_web",
+    "row_count": 82,
+    "revenue": 2794.885003091828,
+    "dau": 82
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-28",
+    "package_name": "vidart",
+    "row_count": 1,
+    "revenue": 5.91632067620407,
+    "dau": 1
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-29",
+    "package_name": "collart_android",
+    "row_count": 3,
+    "revenue": 17.77453922388004,
+    "dau": 3
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-29",
+    "package_name": "collart_web",
+    "row_count": 86,
+    "revenue": 3052.340458257306,
+    "dau": 86
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-29",
+    "package_name": "vidart",
+    "row_count": 2,
+    "revenue": 11.849692815920026,
+    "dau": 2
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-30",
+    "package_name": "collart_android",
+    "row_count": 3,
+    "revenue": 17.748528801550062,
+    "dau": 3
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-30",
+    "package_name": "collart_web",
+    "row_count": 68,
+    "revenue": 1910.2601542565988,
+    "dau": 68
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-30",
+    "package_name": "vidart",
+    "row_count": 1,
+    "revenue": 5.916176267183354,
+    "dau": 1
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-31",
+    "package_name": "collart_android",
+    "row_count": 2,
+    "revenue": 11.781875586634401,
+    "dau": 2
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-31",
+    "package_name": "collart_web",
+    "row_count": 71,
+    "revenue": 2078.7599999999993,
+    "dau": 71
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-08-31",
+    "package_name": "vidart",
+    "row_count": 5,
+    "revenue": 29.454688966586,
+    "dau": 5
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-01",
+    "package_name": "collart_android",
+    "row_count": 5,
+    "revenue": 35.20351781666746,
+    "dau": 5
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-01",
+    "package_name": "collart_web",
+    "row_count": 79,
+    "revenue": 2185.905711599506,
+    "dau": 79
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-01",
+    "package_name": "vidart",
+    "row_count": 1,
+    "revenue": 5.865332428374382,
+    "dau": 1
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-02",
+    "package_name": "collart_android",
+    "row_count": 4,
+    "revenue": 23.415540742580863,
+    "dau": 4
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-02",
+    "package_name": "collart_web",
+    "row_count": 78,
+    "revenue": 2016.673721000842,
+    "dau": 78
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-02",
+    "package_name": "vidart",
+    "row_count": 5,
+    "revenue": 35.134811870621085,
+    "dau": 5
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-03",
+    "package_name": "collart_android",
+    "row_count": 4,
+    "revenue": 23.489263122433748,
+    "dau": 4
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-03",
+    "package_name": "collart_web",
+    "row_count": 110,
+    "revenue": 3592.500000000002,
+    "dau": 110
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-03",
+    "package_name": "vidart",
+    "row_count": 4,
+    "revenue": 29.373115869212334,
+    "dau": 4
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-04",
+    "package_name": "collart_android",
+    "row_count": 5,
+    "revenue": 29.392131455008673,
+    "dau": 5
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-04",
+    "package_name": "collart_web",
+    "row_count": 99,
+    "revenue": 2862.220395205792,
+    "dau": 99
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-04",
+    "package_name": "vidart",
+    "row_count": 5,
+    "revenue": 41.17208197921647,
+    "dau": 5
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-05",
+    "package_name": "collart_android",
+    "row_count": 9,
+    "revenue": 52.920810551353746,
+    "dau": 9
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-05",
+    "package_name": "collart_web",
+    "row_count": 90,
+    "revenue": 2891.721572023767,
+    "dau": 90
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-05",
+    "package_name": "vidart",
+    "row_count": 2,
+    "revenue": 47.91869071534934,
+    "dau": 2
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-06",
+    "package_name": "collart_android",
+    "row_count": 8,
+    "revenue": 53.22312360030851,
+    "dau": 8
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-06",
+    "package_name": "collart_web",
+    "row_count": 85,
+    "revenue": 2617.362980216146,
+    "dau": 85
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-06",
+    "package_name": "vidart",
+    "row_count": 1,
+    "revenue": 7.887058255043535,
+    "dau": 1
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-07",
+    "package_name": "collart_android",
+    "row_count": 9,
+    "revenue": 94.66953931207499,
+    "dau": 9
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-07",
+    "package_name": "collart_web",
+    "row_count": 68,
+    "revenue": 1842.5724325911387,
+    "dau": 68
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-08",
+    "package_name": "collart_android",
+    "row_count": 1,
+    "revenue": 5.8854408761791115,
+    "dau": 1
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-08",
+    "package_name": "collart_web",
+    "row_count": 90,
+    "revenue": 2468.180260952073,
+    "dau": 90
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-09",
+    "package_name": "collart_android",
+    "row_count": 3,
+    "revenue": 148.51200970945442,
+    "dau": 3
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-09",
+    "package_name": "collart_web",
+    "row_count": 82,
+    "revenue": 2322.548243022585,
+    "dau": 82
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-09",
+    "package_name": "vidart",
+    "row_count": 1,
+    "revenue": 18.73240542126825,
+    "dau": 1
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-10",
+    "package_name": "collart_android",
+    "row_count": 5,
+    "revenue": 50.55054996421045,
+    "dau": 5
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-10",
+    "package_name": "collart_web",
+    "row_count": 109,
+    "revenue": 4028.8054702915315,
+    "dau": 109
+  },
+  {
+    "layer": "stripe_raw",
+    "event_date": "2026-09-10",
+    "package_name": "vidart",
+    "row_count": 3,
+    "revenue": 45.419346978272046,
+    "dau": 3
+  }
+]

@@ -1,0 +1,141 @@
+DECLARE start_date DATE DEFAULT DATE '2026-06-10';
+DECLARE end_date DATE DEFAULT DATE '2026-06-16';
+
+WITH event_base AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS event_dt,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    traffic_source.name AS traffic_campaign_name,
+    traffic_source.source AS traffic_source,
+    traffic_source.medium AS traffic_medium,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'page_location') AS page_location,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'campaign') AS ep_campaign,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'source') AS ep_source,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'medium') AS ep_medium,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'term') AS ep_term,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'content') AS ep_content
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', start_date) AND FORMAT_DATE('%Y%m%d', end_date)
+    AND app_info.id IS NULL
+),
+ig_event_hits AS (
+  SELECT
+    *,
+    REGEXP_CONTAINS(
+      LOWER(CONCAT(
+        IFNULL(page_location, ''), ' ',
+        IFNULL(ep_campaign, ''), ' ',
+        IFNULL(ep_source, ''), ' ',
+        IFNULL(ep_medium, ''), ' ',
+        IFNULL(ep_term, ''), ' ',
+        IFNULL(ep_content, ''), ' ',
+        IFNULL(traffic_campaign_name, ''), ' ',
+        IFNULL(traffic_source, ''), ' ',
+        IFNULL(traffic_medium, '')
+      )),
+      r'igdrama'
+    ) AS is_igdrama_hit
+  FROM event_base
+),
+ig_users AS (
+  SELECT DISTINCT user_pseudo_id
+  FROM ig_event_hits
+  WHERE is_igdrama_hit
+),
+ig_user_ids AS (
+  SELECT DISTINCT user_id
+  FROM event_base
+  WHERE user_pseudo_id IN (SELECT user_pseudo_id FROM ig_users)
+    AND user_id IS NOT NULL
+    AND user_id != ''
+),
+orders AS (
+  SELECT
+    COUNT(*) AS paid_orders,
+    COUNT(DISTINCT a.user_id) AS paid_users,
+    SUM(CAST(a.total_price AS FLOAT64) / b.rate / 100) AS revenue_usd
+  FROM `aidata2025.ods.orders` a
+  LEFT JOIN `aidata2025.dim.exchange_rate_days` b
+    ON DATE(a.created_at) = CAST(b.stats_date AS DATE)
+   AND LOWER(a.currency) = LOWER(b.currency)
+  WHERE DATE(a.created_at) BETWEEN start_date AND end_date
+    AND a.status IN ('active', 'paid', 'active_ending')
+    AND a.user_id IN (SELECT user_id FROM ig_user_ids)
+),
+event_summary AS (
+  SELECT
+    COUNT(DISTINCT IF(is_igdrama_hit, user_pseudo_id, NULL)) AS igdrama_hit_users,
+    COUNTIF(is_igdrama_hit) AS igdrama_hit_events,
+    COUNT(DISTINCT IF(event_name = 'page_view' AND is_igdrama_hit, user_pseudo_id, NULL)) AS igdrama_page_view_users,
+    COUNTIF(event_name = 'page_view' AND is_igdrama_hit) AS igdrama_page_views
+  FROM ig_event_hits
+),
+cohort_summary AS (
+  SELECT
+    COUNT(DISTINCT user_pseudo_id) AS cohort_users,
+    COUNT(DISTINCT IF(event_name = 'session_start', user_pseudo_id, NULL)) AS dau_users,
+    COUNT(DISTINCT IF(event_name = 'first_visit', user_pseudo_id, NULL)) AS first_visit_users,
+    COUNT(DISTINCT IF(event_name = 'login_show', user_pseudo_id, NULL)) AS login_show_users,
+    COUNT(DISTINCT IF(event_name = 'login_account_choose', user_pseudo_id, NULL)) AS login_choose_users,
+    COUNT(DISTINCT IF(event_name = 'login_success', user_pseudo_id, NULL)) AS login_success_users,
+    COUNT(DISTINCT IF(event_name = 'ai_service_start', user_pseudo_id, NULL)) AS ai_start_users,
+    COUNT(DISTINCT IF(event_name = 'ai_service_success', user_pseudo_id, NULL)) AS ai_success_users,
+    COUNT(DISTINCT IF(event_name = 'vip_show', user_pseudo_id, NULL)) AS vip_show_users,
+    COUNT(DISTINCT IF(event_name = 'vip_subscribe', user_pseudo_id, NULL)) AS vip_subscribe_users,
+    COUNT(DISTINCT IF(event_name = 'vip_subscribe_succeed', user_pseudo_id, NULL)) AS vip_success_users,
+    COUNT(DISTINCT IF(event_name = 'credit_pack_purchase', user_pseudo_id, NULL)) AS credit_pack_purchase_users
+  FROM event_base
+  WHERE user_pseudo_id IN (SELECT user_pseudo_id FROM ig_users)
+),
+daily_hits AS (
+  SELECT
+    event_dt,
+    COUNT(DISTINCT IF(is_igdrama_hit, user_pseudo_id, NULL)) AS hit_users,
+    COUNTIF(is_igdrama_hit) AS hit_events,
+    COUNT(DISTINCT IF(event_name = 'page_view' AND is_igdrama_hit, user_pseudo_id, NULL)) AS page_view_users,
+    COUNTIF(event_name = 'page_view' AND is_igdrama_hit) AS page_views
+  FROM ig_event_hits
+  GROUP BY event_dt
+),
+processed_attr AS (
+  SELECT
+    COUNT(*) AS processed_rows,
+    SUM(dau) AS processed_dau,
+    SUM(IF(is_new, dau, 0)) AS processed_new_users,
+    SUM(IF(is_login, dau, 0)) AS processed_login_users,
+    SUM(IF(is_vip, dau, 0)) AS processed_vip_users
+  FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di`
+  WHERE event_date BETWEEN start_date AND end_date
+    AND REGEXP_CONTAINS(
+      LOWER(CONCAT(
+        IFNULL(traffic_src_name, ''), ' ',
+        IFNULL(traffic_src_source, ''), ' ',
+        IFNULL(traffic_src_type, '')
+      )),
+      r'igdrama'
+    )
+)
+SELECT
+  'summary' AS section,
+  TO_JSON_STRING(STRUCT(
+    start_date,
+    end_date,
+    event_summary,
+    cohort_summary,
+    orders,
+    processed_attr
+  )) AS payload
+FROM event_summary, cohort_summary, orders, processed_attr
+UNION ALL
+SELECT
+  'daily_hits' AS section,
+  TO_JSON_STRING(ARRAY_AGG(STRUCT(
+    event_dt,
+    hit_users,
+    hit_events,
+    page_view_users,
+    page_views
+  ) ORDER BY event_dt)) AS payload
+FROM daily_hits;

@@ -1,0 +1,15 @@
+-- Web 按登录 user_id 查画像（一设备可能绑过多个登录号）
+-- 不要：WHERE p.user_id = @uid
+SELECT
+  p.user_pseudo_id,
+  p.user_id AS last_login_user_id,
+  p.user_ids,
+  p.first_open_date,
+  p.last_active_date,
+  p.country,
+  p.traffic_src_type,
+  p.is_vip,
+  p.revenue
+FROM `aidata2025.ads_collartweb.ads_oper_user_profile_df` AS p
+WHERE @uid IN UNNEST(p.user_ids)
+   OR UPPER(p.user_id) = UPPER(@uid)

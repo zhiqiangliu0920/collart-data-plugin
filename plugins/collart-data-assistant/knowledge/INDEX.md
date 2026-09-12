@@ -4,8 +4,16 @@
 
 | 项目 | 类型 | 知识 | 状态 | 最后核验 | 下次复核 |
 |---|---|---|---|---|---|
+| collart_android | metric | [Android 活跃用户与历史 SQL 选择](collart_android/dau-source-selection.md) | documented | 未核验 | 2026-10-12 |
+| collart_fashion | business | [Fashion 产品步骤、事件与结果](collart_fashion/product-funnel.md) | documented | 未核验 | 2026-10-12 |
 | collart_fashion | table | [Fashion 订单收入与主站边界](collart_fashion/revenue-boundary.md) | documented | 未核验 | 2026-10-12 |
+| collart_fashion | quality | [Fashion 2026-09-09 仓库审计的历史证据](collart_fashion/warehouse-audit-20260909.md) | documented | 未核验 | 2026-10-12 |
+| collart_ios | quality | [iOS ASA 历史成本与当前口径差异](collart_ios/asa-history-boundary.md) | documented | 未核验 | 2026-10-12 |
 | collart_web | table | [Web 设备画像与登录账号映射](collart_web/identity.md) | documented | 未核验 | 2026-10-12 |
+| collart_web | playbook | [Web 2026-09-12 收入报告的复用边界](collart_web/revenue-report-20260912.md) | documented | 未核验 | 2026-10-12 |
+| company | event | [四端事件指标规则与宽表关系](company/event-rule-contract.md) | documented | 未核验 | 2026-10-12 |
+| company | metric | [订阅与点数包购买人数并集](company/purchase-union.md) | documented | 未核验 | 2026-10-12 |
+| company | metric | [经营日报日期与比较窗口](company/report-windows.md) | documented | 未核验 | 2026-10-12 |
 | shared | playbook | [经营变化分析的取数与判断流程](shared/analysis-playbook.md) | documented | 未核验 | 2026-10-12 |
 | shared | playbook | [业务问法模板](shared/ask-templates.md) | documented | 未核验 | 2026-10-12 |
 | shared | metric | [四端渠道归因：Web、Android、iOS 与 Fashion](shared/channel-attribution.md) | documented | 未核验 | 2026-10-12 |

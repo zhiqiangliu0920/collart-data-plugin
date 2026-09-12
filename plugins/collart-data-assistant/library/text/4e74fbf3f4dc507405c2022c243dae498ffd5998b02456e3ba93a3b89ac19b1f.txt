@@ -1,0 +1,31 @@
+-- Current stored business-date coverage, not the historical deployment timestamp.
+WITH daily AS (
+  SELECT event_date,COUNT(*) AS row_count,
+    COUNTIF(IFNULL(revenue.purchase_revenue,0)!=0) AS revenue_rows,
+    COUNTIF(revenue.purchase_revenue IS NULL) AS null_revenue_rows,
+    SUM(revenue.purchase_revenue) AS purchase_revenue,
+    SUM(revenue.new_revenue) AS new_revenue,
+    SUM(revenue.resub_revenue) AS resub_revenue,
+    SUM(revenue.credit_revenue) AS credit_revenue
+  FROM `aidata2025.ads_collartweb.ads_oper_user_active_di`
+  WHERE event_date BETWEEN '2000-01-01' AND '2026-09-12'
+    AND package_name='collart_web'
+  GROUP BY event_date
+)
+SELECT 'summary' AS section,TO_JSON_STRING(STRUCT(
+  MIN(event_date) AS first_data_date,MAX(event_date) AS last_data_date,
+  MIN(IF(revenue_rows>0,event_date,NULL)) AS first_nonzero_revenue_date,
+  MAX(IF(revenue_rows>0,event_date,NULL)) AS last_nonzero_revenue_date,
+  COUNT(*) AS data_days,COUNTIF(revenue_rows>0) AS nonzero_days,
+  COUNTIF(revenue_rows=0) AS zero_days,
+  SUM(null_revenue_rows) AS null_revenue_rows
+)) AS detail FROM daily
+UNION ALL
+SELECT 'first_revenue_days',TO_JSON_STRING(d) FROM (
+  SELECT * FROM daily WHERE revenue_rows>0 ORDER BY event_date LIMIT 5
+) d
+UNION ALL
+SELECT 'recent',TO_JSON_STRING(d) FROM daily d WHERE event_date>='2026-09-01'
+UNION ALL
+SELECT 'zero_revenue_days',TO_JSON_STRING(d) FROM daily d WHERE revenue_rows=0
+ORDER BY section,detail;

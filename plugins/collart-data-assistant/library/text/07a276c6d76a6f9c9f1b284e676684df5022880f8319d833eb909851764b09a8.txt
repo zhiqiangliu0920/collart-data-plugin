@@ -1,0 +1,41 @@
+---
+id: "shared-core-metrics"
+title: "活跃、新增、留存与指标粒度"
+project: "shared"
+kind: "metric"
+status: "documented"
+updated_at: "2026-09-12"
+verified_at: null
+review_after: "2026-10-12"
+owner: null
+verified_by: null
+effective_from: null
+sources: ["metrics", "retention", "legacy-conversion"]
+tags: ["DAU", "DNU", "日活", "新增", "留存", "retain.d2", "is_active"]
+supersedes: []
+verification_evidence: []
+---
+
+# 活跃、新增、留存与指标粒度
+
+## 资料提供的 ADS 口径
+
+| 指标 | 起点 | 易错点 |
+|---|---|---|
+| DAU | daily/country `dau`；明细需 `is_active=TRUE` | active 可能包含仅付费、无活跃的行 |
+| DNU | daily/country `dnu`；明细确认 `is_new` | 新用户是设备首次发现、first_visit 还是业务注册，不能混称 |
+| 新用户次留 | country/daily `retain.d2 / dnu` | `d2` 表示锚点后第 1 天；不能用 DAU 作新用户分母 |
+| 当天留存 | `retain.dN` | 锚点后第 N−1 天当天活跃 |
+| 区间留存 | `rolling_retain.dN` | 锚点后 [1,N−1] 任一天活跃，语义不同 |
+
+未成熟留存是 NULL，不能补成 0。汇总跨日期留存时，分子和分母使用相同的成熟 cohort 范围。跨维度 UV、跨日 DAU不能直接相加后称为独立用户数。
+
+## 分析前明确
+
+写清项目、起止日期、日期所属时区、设备/账号去重、是否新用户、是否去除内部测试流量。既有资料中“session_start 去重算 DAU”和“使用加工表 DAU”并存，不能把二者视为相同指标，见 [冲突清单](known-conflicts.md)。
+
+金额汇总不要沿用活跃人数的 `is_active=TRUE` 过滤，否则可能丢掉无活跃支付日。`is_vip` 或曾经 VIP 状态不是指定时间窗实际付款证据。
+
+## 来源与状态
+
+来源摘录：[metrics](../../provenance/excerpts/metrics.txt)、[retention](../../provenance/excerpts/retention.txt)、[legacy-conversion](../../provenance/excerpts/legacy-conversion.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。

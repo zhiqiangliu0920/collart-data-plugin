@@ -1,0 +1,55 @@
+import csv
+from collections import defaultdict
+
+# 读取数据
+rows = []
+with open('knowledge/collart_android/analysis_result/ai_analysis_20260514.csv', 'r', encoding='utf-8') as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        rows.append(row)
+
+# 1. 成功率分析 - 按日期+service_type汇总
+success_daily = defaultdict(lambda: {'start': 0, 'success': 0})
+for row in rows:
+    if row['analysis_type'] == 'success_rate':
+        key = (row['dt'], row['service_type'])
+        success_daily[key]['start'] += int(row['submit_start'] or 0)
+        success_daily[key]['success'] += int(row['submit_success'] or 0)
+
+print('=== 每日成功率趋势（Top10国家汇总）===')
+for key in sorted(success_daily.keys()):
+    dt, st = key
+    d = success_daily[key]
+    rate = d['success'] / d['start'] * 100 if d['start'] > 0 else 0
+    print(f"{dt} | {st} | start={d['start']:,} | success={d['success']:,} | rate={rate:.1f}%")
+
+# 2. 5/13 分国家成功率
+print('\n=== 5/13 各国 img2video 成功率 ===')
+for row in rows:
+    if row['analysis_type'] == 'success_rate' and row['dt'] == '2026-05-13' and row['service_type'] == 'img2video':
+        start = int(row['submit_start'] or 0)
+        succ = int(row['submit_success'] or 0)
+        rate = int(row['submit_success'] or 0) / int(row['submit_start'] or 1) * 100
+        print(f"{row['country']} | start={start:,} | success={succ:,} | rate={rate:.1f}%")
+
+print('\n=== 5/13 各国 img2img 成功率 ===')
+for row in rows:
+    if row['analysis_type'] == 'success_rate' and row['dt'] == '2026-05-13' and row['service_type'] == 'img2img':
+        start = int(row['submit_start'] or 0)
+        succ = int(row['submit_success'] or 0)
+        rate = succ / (start or 1) * 100
+        print(f"{row['country']} | start={start:,} | success={succ:,} | rate={rate:.1f}%")
+
+# 3. 错误码走势 - 按日期汇总
+daily_error = defaultdict(lambda: defaultdict(int))
+for row in rows:
+    if row['analysis_type'] == 'error_code' and row['error_count']:
+        code = row['error_code'] or 'unknown'
+        daily_error[row['dt']][code] += int(row['error_count'])
+
+print('\n=== 错误码每日走势（汇总）===')
+for dt in sorted(daily_error.keys()):
+    codes = daily_error[dt]
+    total = sum(codes.values())
+    code_str = ', '.join([f"{k}:{v}" for k, v in sorted(codes.items(), key=lambda x: -x[1])])
+    print(f"{dt} | total={total} | {code_str}")

@@ -1,0 +1,140 @@
+-- KOL引流用户积分领取行为分析
+-- 目的：分析akshu KOL引流用户为什么没有在端内领取积分
+-- 创建时间: 2026-04-20
+
+-- ============================================
+-- Step 1: 定义KOL新用户（akshu来源）
+-- ============================================
+WITH kol_new_users AS (
+  SELECT DISTINCT
+    PARSE_DATE('%Y%m%d', event_date) AS first_visit_date,
+    user_pseudo_id,
+    traffic_source.name AS traffic_source_name,
+    MIN(TIMESTAMP_MICROS(event_timestamp)) AS first_visit_time
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= '20260414'
+    AND _TABLE_SUFFIX <= '20260420'
+    AND traffic_source.name LIKE '%akshu%'
+    AND event_name IN ('first_open', 'first_visit')
+    AND (app_info.id IS NULL OR app_info.id = 'free.ai.photo.generator.collart.web')
+  GROUP BY 1, 2, 3
+),
+
+-- ============================================
+-- Step 2: 获取所有KOL用户的后续行为
+-- ============================================
+user_all_events AS (
+  SELECT
+    a.user_pseudo_id,
+    PARSE_DATE('%Y%m%d', a.event_date) AS event_date,
+    a.event_name,
+    TIMESTAMP_MICROS(a.event_timestamp) AS event_time,
+    -- 关键参数提取
+    (SELECT LOWER(value.string_value) FROM UNNEST(event_params) WHERE key = 'feature') AS feature,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'page_location') AS page_location,
+    (SELECT LOWER(value.string_value) FROM UNNEST(event_params) WHERE key = 'name') AS click_name,
+    (SELECT LOWER(value.string_value) FROM UNNEST(event_params) WHERE key = 'campaign') AS campaign,
+    a.geo.country AS country,
+    a.device.mobile_brand_name AS mobile_brand,
+    a.device.operating_system AS os
+  FROM `storytemplate-10a27.analytics_232977577.events_*` a
+  INNER JOIN kol_new_users k ON a.user_pseudo_id = k.user_pseudo_id
+  WHERE _TABLE_SUFFIX >= '20260414'
+    AND _TABLE_SUFFIX <= '20260420'
+    AND (a.app_info.id IS NULL OR a.app_info.id = 'free.ai.photo.generator.collart.web')
+),
+
+-- ============================================
+-- Step 3: 用户行为汇总（每个用户的关键标记）
+-- ============================================
+user_behavior_summary AS (
+  SELECT
+    user_pseudo_id,
+    -- 是否领取积分（核心指标）
+    MAX(CASE WHEN event_name = 'navigation_click' AND feature = '/invite-code' THEN 1 ELSE 0 END) AS claimed_invite_code,
+    
+    -- 是否到达邀请码页面（通过page_location判断）
+    MAX(CASE WHEN page_location LIKE '%invite%' OR feature LIKE '%invite%' THEN 1 ELSE 0 END) AS visited_invite_page,
+    
+    -- 是否点击过navigation相关按钮（但没到invite-code）
+    MAX(CASE WHEN event_name = 'navigation_click' AND feature IS NOT NULL AND feature != '/invite-code' THEN 1 ELSE 0 END) AS clicked_other_nav,
+    
+    -- 是否触发主页相关事件
+    MAX(CASE WHEN event_name IN ('page_view', 'home_page_show', 'tabbar_home_show') THEN 1 ELSE 0 END) AS visited_home,
+    
+    -- 首页后是否有任何点击行为
+    MAX(CASE WHEN event_name LIKE '%click%' THEN 1 ELSE 0 END) AS had_any_click,
+    
+    -- 浏览深度（统计不同event_name数量）
+    COUNT(DISTINCT event_name) AS event_type_count,
+    
+    -- 总事件数
+    COUNT(*) AS total_events,
+    
+    -- 停留时长估算（分钟）
+    TIMESTAMP_DIFF(MAX(event_time), MIN(event_time), MINUTE) AS session_duration_min,
+    
+    -- 来源信息（取第一条记录）
+    MIN(country) AS country,
+    MIN(mobile_brand) AS device_brand,
+    MIN(os) AS os
+  FROM user_all_events
+  GROUP BY user_pseudo_id
+),
+
+-- ============================================
+-- Step 4: 用户分层（流失原因归类）
+-- ============================================
+user_segments AS (
+  SELECT
+    *,
+    CASE
+      -- 领取成功
+      WHEN claimed_invite_code = 1 THEN 'C. 成功领取积分'
+      -- 到了邀请码页面但没领
+      WHEN visited_invite_page = 1 AND claimed_invite_code = 0 THEN 'B2. 看到邀请码但未领取'
+      -- 有点击其他导航
+      WHEN clicked_other_nav = 1 AND visited_invite_page = 0 THEN 'B1. 点击导航但未找到邀请码入口'
+      -- 有主页访问但没点击
+      WHEN visited_home = 1 AND had_any_click = 0 THEN 'A2. 进入主页但无点击行为'
+      -- 基本无事件
+      WHEN total_events <= 2 THEN 'A1. 跳出（几乎无行为）'
+      -- 其他
+      ELSE 'D. 其他情况'
+    END AS user_segment,
+    
+    -- 是否深度流失（无任何有意义交互）
+    CASE WHEN event_type_count <= 2 AND had_any_click = 0 THEN 1 ELSE 0 END AS is_bounce
+    
+  FROM user_behavior_summary
+)
+
+-- ============================================
+-- Step 5: 输出结果 - 分层统计
+-- ============================================
+SELECT
+  user_segment AS 用户分层,
+  COUNT(DISTINCT user_pseudo_id) AS 用户数,
+  ROUND(100.0 * COUNT(DISTINCT user_pseudo_id) / SUM(COUNT(DISTINCT user_pseudo_id)) OVER (), 2) AS 占比,
+  -- 平均事件数
+  ROUND(AVG(total_events), 1) AS 平均事件数,
+  -- 平均停留时长
+  ROUND(AVG(session_duration_min), 1) AS 平均停留_分钟,
+  -- 设备分布（取众数）
+  MODE() OVER (PARTITION BY user_segment ORDER BY COUNT(os) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS 主要设备系统
+FROM user_segments
+GROUP BY user_segment
+ORDER BY 
+  CASE 
+    WHEN user_segment LIKE 'A%' THEN 1
+    WHEN user_segment LIKE 'B%' THEN 2
+    WHEN user_segment LIKE 'C%' THEN 3
+    ELSE 4
+  END,
+  user_segment;
+
+-- ============================================
+-- 追加查询：流失用户的行为路径详情
+-- ============================================
+-- 查看A2类用户（进入主页但无点击）到底看了什么页面
+-- 查看B1类用户（点了导航）点了哪些导航

@@ -1,0 +1,12 @@
+SELECT
+  (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'id') AS temp_id,
+  COUNT(DISTINCT CASE WHEN event_name = 'Home_Template_Show' THEN user_pseudo_id END) AS show_uv,
+  COUNT(DISTINCT CASE WHEN event_name = 'Home_Template_Click' THEN user_pseudo_id END) AS click_uv,
+  COUNT(DISTINCT CASE WHEN event_name = 'ai_service_start' THEN user_pseudo_id END) AS start_uv
+FROM `storytemplate-10a27.analytics_232977577.events_20260401`
+WHERE app_info.id = 'free.ai.photo.generator.collart.ai'
+  AND event_name IN ('Home_Template_Show', 'Home_Template_Click', 'ai_service_start')
+GROUP BY 1
+HAVING temp_id IS NOT NULL
+ORDER BY click_uv DESC
+LIMIT 10

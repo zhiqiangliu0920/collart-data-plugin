@@ -1,0 +1,185 @@
+{
+  "tables": {
+    "events": {
+      "name": "events",
+      "label": "事件表",
+      "layer": "ODS",
+      "description": "原始事件表，记录用户所有行为事件",
+      "update_freq": "T+1 10:00",
+      "partition": "dt (yyyyMMdd)",
+      "fields": [
+        {"name": "user_id", "type": "STRING", "desc": "用户ID", "required": true},
+        {"name": "event_type", "type": "STRING", "desc": "事件类型 (click/show/convert)", "required": true},
+        {"name": "event_time", "type": "TIMESTAMP", "desc": "事件时间", "required": true},
+        {"name": "template_id", "type": "STRING", "desc": "模板ID"},
+        {"name": "country", "type": "STRING", "desc": "国家"},
+        {"name": "platform", "type": "STRING", "desc": "平台 (android/ios/web)"},
+        {"name": "device_id", "type": "STRING", "desc": "设备ID"},
+        {"name": "source", "type": "STRING", "desc": "来源"}
+      ],
+      "upstream": [],
+      "downstream": ["dau", "new_users", "dwd_template", "dwd_payment"]
+    },
+    "dau": {
+      "name": "dau",
+      "label": "日活表",
+      "layer": "DWD",
+      "description": "日活用户明细表，每天一条记录",
+      "update_freq": "T+1 10:30",
+      "partition": "dt (yyyyMMdd)",
+      "fields": [
+        {"name": "user_id", "type": "STRING", "desc": "用户ID", "required": true},
+        {"name": "country", "type": "STRING", "desc": "国家"},
+        {"name": "platform", "type": "STRING", "desc": "平台"},
+        {"name": "is_new", "type": "BOOLEAN", "desc": "是否新用户"},
+        {"name": "first_date", "type": "DATE", "desc": "首次活跃日期"}
+      ],
+      "upstream": ["events"],
+      "downstream": ["user_profile", "dws_daily_summary"]
+    },
+    "new_users": {
+      "name": "new_users",
+      "label": "新增用户表",
+      "layer": "DWD",
+      "description": "新增用户明细表，记录每个新用户",
+      "update_freq": "T+1 10:30",
+      "partition": "dt (yyyyMMdd)",
+      "fields": [
+        {"name": "user_id", "type": "STRING", "desc": "用户ID", "required": true},
+        {"name": "first_date", "type": "DATE", "desc": "首次活跃日期"},
+        {"name": "source", "type": "STRING", "desc": "来源渠道"},
+        {"name": "country", "type": "STRING", "desc": "国家"},
+        {"name": "platform", "type": "STRING", "desc": "平台"}
+      ],
+      "upstream": ["events"],
+      "downstream": ["user_profile"]
+    },
+    "dwd_template": {
+      "name": "dwd_template",
+      "label": "模板事件表",
+      "layer": "DWD",
+      "description": "模板相关事件明细表",
+      "update_freq": "T+1 11:00",
+      "partition": "dt (yyyyMMdd)",
+      "fields": [
+        {"name": "user_id", "type": "STRING", "desc": "用户ID", "required": true},
+        {"name": "template_id", "type": "STRING", "desc": "模板ID", "required": true},
+        {"name": "event_type", "type": "STRING", "desc": "事件类型 (show/click/use)"},
+        {"name": "event_time", "type": "TIMESTAMP", "desc": "事件时间"},
+        {"name": "template_name", "type": "STRING", "desc": "模板名称"},
+        {"name": "category", "type": "STRING", "desc": "模板分类"}
+      ],
+      "upstream": ["events"],
+      "downstream": ["template_stats", "template_ctr"]
+    },
+    "dwd_payment": {
+      "name": "dwd_payment",
+      "label": "支付事件表",
+      "layer": "DWD",
+      "description": "支付相关事件明细表",
+      "update_freq": "T+1 11:00",
+      "partition": "dt (yyyyMMdd)",
+      "fields": [
+        {"name": "user_id", "type": "STRING", "desc": "用户ID", "required": true},
+        {"name": "order_id", "type": "STRING", "desc": "订单ID"},
+        {"name": "amount", "type": "FLOAT", "desc": "支付金额"},
+        {"name": "currency", "type": "STRING", "desc": "货币"},
+        {"name": "product_id", "type": "STRING", "desc": "产品ID"},
+        {"name": "pay_time", "type": "TIMESTAMP", "desc": "支付时间"}
+      ],
+      "upstream": ["events"],
+      "downstream": ["revenue_stats"]
+    },
+    "user_profile": {
+      "name": "user_profile",
+      "label": "用户画像表",
+      "layer": "DWS",
+      "description": "用户画像汇总表",
+      "update_freq": "T+1 12:00",
+      "partition": "dt (yyyyMMdd)",
+      "fields": [
+        {"name": "user_id", "type": "STRING", "desc": "用户ID", "required": true},
+        {"name": "total_days", "type": "INT", "desc": "累计活跃天数"},
+        {"name": "is_paying", "type": "BOOLEAN", "desc": "是否付费用户"},
+        {"name": "favorite_category", "type": "STRING", "desc": "偏好模板分类"},
+        {"name": "lifetime_value", "type": "FLOAT", "desc": "生命周期价值"}
+      ],
+      "upstream": ["dau", "new_users"],
+      "downstream": []
+    },
+    "template_stats": {
+      "name": "template_stats",
+      "label": "模板统计表",
+      "layer": "DWS",
+      "description": "模板维度统计汇总表",
+      "update_freq": "T+1 12:00",
+      "partition": "dt (yyyyMMdd)",
+      "fields": [
+        {"name": "template_id", "type": "STRING", "desc": "模板ID", "required": true},
+        {"name": "show_uv", "type": "INT", "desc": "展示UV"},
+        {"name": "click_uv", "type": "INT", "desc": "点击UV"},
+        {"name": "use_uv", "type": "INT", "desc": "使用UV"},
+        {"name": "ctr", "type": "FLOAT", "desc": "点击率"}
+      ],
+      "upstream": ["dwd_template"],
+      "downstream": []
+    },
+    "template_ctr": {
+      "name": "template_ctr",
+      "label": "模板点击率表",
+      "layer": "ADS",
+      "description": "模板点击率指标表",
+      "update_freq": "T+1 12:30",
+      "partition": "dt (yyyyMMdd)",
+      "fields": [
+        {"name": "template_id", "type": "STRING", "desc": "模板ID", "required": true},
+        {"name": "date", "type": "DATE", "desc": "日期"},
+        {"name": "ctr", "type": "FLOAT", "desc": "点击率"},
+        {"name": "show_uv", "type": "INT", "desc": "展示UV"},
+        {"name": "click_uv", "type": "INT", "desc": "点击UV"}
+      ],
+      "upstream": ["dwd_template"],
+      "downstream": []
+    },
+    "dws_daily_summary": {
+      "name": "dws_daily_summary",
+      "label": "日汇总表",
+      "layer": "DWS",
+      "description": "每日核心指标汇总表",
+      "update_freq": "T+1 12:00",
+      "partition": "dt (yyyyMMdd)",
+      "fields": [
+        {"name": "date", "type": "DATE", "desc": "日期", "required": true},
+        {"name": "dau", "type": "INT", "desc": "日活用户数"},
+        {"name": "new_users", "type": "INT", "desc": "新增用户数"},
+        {"name": "revenue", "type": "FLOAT", "desc": "收入"},
+        {"name": "paying_users", "type": "INT", "desc": "付费用户数"}
+      ],
+      "upstream": ["dau"],
+      "downstream": []
+    },
+    "revenue_stats": {
+      "name": "revenue_stats",
+      "label": "收入统计表",
+      "layer": "ADS",
+      "description": "收入维度统计表",
+      "update_freq": "T+1 12:30",
+      "partition": "dt (yyyyMMdd)",
+      "fields": [
+        {"name": "date", "type": "DATE", "desc": "日期", "required": true},
+        {"name": "country", "type": "STRING", "desc": "国家"},
+        {"name": "total_revenue", "type": "FLOAT", "desc": "总收入"},
+        {"name": "order_count", "type": "INT", "desc": "订单数"},
+        {"name": "arpu", "type": "FLOAT", "desc": "ARPU"}
+      ],
+      "upstream": ["dwd_payment"],
+      "downstream": []
+    }
+  },
+  "layers": {
+    "ODS": {"name": "原始层", "color": "#FF6B6B"},
+    "DWD": {"name": "明细层", "color": "#4ECDC4"},
+    "DWS": {"name": "汇总层", "color": "#45B7D1"},
+    "ADS": {"name": "应用层", "color": "#96CEB4"}
+  }
+}

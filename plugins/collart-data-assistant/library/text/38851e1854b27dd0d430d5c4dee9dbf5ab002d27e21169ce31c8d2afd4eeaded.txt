@@ -1,0 +1,763 @@
+# BigQuery SQL 高级技巧 (43条)
+
+> 来源：2026-04-02 晚间学习
+> 适用：BigQuery 高级用户
+
+---
+
+## 一、查询简化技巧
+
+### 1. QUALIFY：窗口函数过滤神器
+
+**传统写法**（子查询嵌套）：
+```sql
+SELECT * FROM (
+  SELECT 
+    user_id,
+    event_name,
+    ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_timestamp DESC) AS rn
+  FROM events
+)
+WHERE rn = 1
+```
+
+**QUALIFY 写法**（直接过滤）：
+```sql
+SELECT 
+  user_id,
+  event_name,
+  event_timestamp
+FROM events
+QUALIFY ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_timestamp DESC) = 1
+```
+
+**更多场景**：
+```sql
+-- 每个用户最近 3 次事件
+SELECT *
+FROM events
+QUALIFY ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_timestamp DESC) <= 3
+
+-- 每天的 Top 10 活跃用户
+SELECT *
+FROM events
+QUALIFY RANK() OVER (PARTITION BY date ORDER BY event_count DESC) <= 10
+```
+
+---
+
+### 2. GROUP BY ALL：自动识别分组列
+
+```sql
+-- ✅ 推荐
+SELECT
+  event_date,
+  service_type,
+  COUNT(*) AS cnt
+FROM table
+GROUP BY ALL  -- 自动按 event_date, service_type 分组
+
+-- ❌ 避免
+GROUP BY event_date, service_type  -- 字段多的时候容易漏
+```
+
+---
+
+### 3. ANY_VALUE：随机取值
+
+```sql
+-- 问题：想按 user_id 分组，但其他字段不能聚合
+SELECT 
+  user_id,
+  ANY_VALUE(country) AS country,  -- 随机取一个
+  ANY_VALUE(device) AS device
+FROM events
+GROUP BY user_id
+```
+
+**用途**：不需要精确值，只要"某个值"的场景。
+
+---
+
+### 4. EXCEPT：排除列
+
+```sql
+-- 排除敏感字段
+SELECT * EXCEPT(salary, ssn) FROM employees
+
+-- 排除后替换
+SELECT * EXCEPT(revenue), revenue * 1.1 AS revenue FROM sales
+```
+
+---
+
+### 5. REPLACE：替换列
+
+```sql
+SELECT 
+  * REPLACE(revenue * 1.1 AS revenue)
+FROM sales
+```
+
+---
+
+### 6. COUNTIF 替代 CASE WHEN
+
+```sql
+-- ✅ 推荐
+COUNTIF(event_name = 'ai_service_start') AS start_pv
+
+-- ❌ 避免（虽然功能一样，但冗长）
+COUNT(CASE WHEN event_name = 'ai_service_start' THEN 1 END) AS start_pv
+```
+
+---
+
+### 7. 命名参数（可读性提升）
+
+```sql
+-- 传统写法
+SUBSTR('hello', 1, 3)
+
+-- 命名参数
+SUBSTR('hello', pos => 1, length => 3)
+```
+
+---
+
+### 8. 宽表先行模式
+
+**原则**：先在一个CTE里把需要的参数字段都提取成列，后续直接用，避免重复子查询
+
+```sql
+-- ✅ 推荐：先打宽
+WITH base AS (
+  SELECT
+    event_date,
+    event_name,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'service_type') AS service_type,
+    (SELECT ep.value.int_value FROM UNNEST(event_params) ep WHERE ep.key = 'time') AS success_time
+  FROM `project.dataset.events_*`
+  WHERE _TABLE_SUFFIX = '20260326'
+)
+SELECT service_type, AVG(success_time)
+FROM base
+GROUP BY ALL
+```
+
+---
+
+## 二、性能优化技巧
+
+### 9. 分区表 + 聚簇表（查询省钱核心）
+
+```sql
+-- 创建分区 + 聚簇表
+CREATE TABLE events (
+  event_date DATE,
+  user_id STRING,
+  event_name STRING,
+  country STRING
+)
+PARTITION BY event_date
+CLUSTER BY user_id, event_name
+```
+
+**查询时**：
+```sql
+SELECT * FROM events
+WHERE event_date = '2026-04-03'
+  AND user_id = 'u123'  -- 聚簇字段过滤
+```
+
+**效果**：查询成本降低 90%+
+
+---
+
+### 10. _PARTITIONDATE 虚拟列（绕过分区扫描）
+
+```sql
+-- 查全表但只扫特定分区
+SELECT * FROM events
+WHERE _PARTITIONDATE >= '2026-04-01'
+```
+
+**用途**：分区字段不是查询条件时，强制分区裁剪。
+
+---
+
+### 11. APPROX 近似函数（海量数据加速）
+
+```sql
+-- 精确去重（慢）
+SELECT COUNT(DISTINCT user_id) FROM events
+
+-- 近似去重（快 10 倍，误差 <1%）
+SELECT APPROX_COUNT_DISTINCT(user_id) FROM events
+
+-- 近似 Top N
+SELECT APPROX_TOP_COUNT(event_name, 10) FROM events
+
+-- 近似分位数
+SELECT APPROX_QUANTILES(revenue, 100) FROM sales
+```
+
+---
+
+### 12. 临时表复用（多查询共享中间结果）
+
+```sql
+-- 创建临时表
+CREATE TEMP TABLE tmp_users AS
+SELECT user_id FROM events WHERE event_date = '2026-04-03'
+
+-- 多个查询复用
+SELECT COUNT(*) FROM tmp_users;
+SELECT * FROM users u JOIN tmp_users t ON u.id = t.user_id;
+```
+
+**一次计算，多次使用，省重复扫描。**
+
+---
+
+### 13. BI Engine 加速（免费提速）
+
+```sql
+-- 查询前启用（项目级别）
+-- BigQuery Console → BI Engine → 创建预留
+
+-- 自动加速，无需改 SQL
+SELECT * FROM large_table WHERE ...
+```
+
+**效果**：BI 查询快 10-100 倍，免费额度 1GB。
+
+---
+
+### 14. 避免 SELECT *（成本陷阱）
+
+```sql
+-- ❌ 扫描整行（可能几 MB/行）
+SELECT * FROM wide_table
+
+-- ✅ 只扫需要的列
+SELECT user_id, event_name FROM wide_table
+```
+
+**BigQuery 按扫描数据量计费，SELECT * 可能比指定列贵 10 倍。**
+
+---
+
+## 三、窗口函数技巧
+
+### 15. LEAD/LAG：替代自连接
+
+**场景**：找每个用户的下一次事件
+
+**传统写法**（自连接，性能差）：
+```sql
+SELECT a.*, b.event_name AS next_event
+FROM events a
+LEFT JOIN events b ON a.user_id = b.user_id AND a.event_timestamp < b.event_timestamp
+```
+
+**窗口函数写法**：
+```sql
+SELECT 
+  *,
+  LEAD(event_name) OVER (PARTITION BY user_id ORDER BY event_timestamp) AS next_event,
+  LAG(event_name) OVER (PARTITION BY user_id ORDER BY event_timestamp) AS prev_event
+FROM events
+```
+
+---
+
+### 16. ROW_NUMBER vs RANK vs DENSE_RANK
+
+```sql
+-- 值：100, 100, 90, 80
+
+ROW_NUMBER(): 1, 2, 3, 4   -- 连续编号
+RANK():       1, 1, 3, 4   -- 并列跳号
+DENSE_RANK(): 1, 1, 2, 3   -- 并列不跳号
+```
+
+---
+
+### 17. 累计求和/移动平均
+
+```sql
+SELECT 
+  date,
+  revenue,
+  SUM(revenue) OVER (ORDER BY date) AS cumulative_revenue,
+  AVG(revenue) OVER (
+    ORDER BY date 
+    ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+  ) AS ma_7d  -- 7 日移动平均
+FROM daily_revenue
+```
+
+---
+
+### 18. PERCENTILE 计算分位数
+
+```sql
+SELECT 
+  PERCENTILE_CONT(revenue, 0.5) OVER() AS median,
+  PERCENTILE_CONT(revenue, 0.95) OVER() AS p95
+FROM sales
+```
+
+---
+
+### 19. NTILE 分桶
+
+```sql
+-- 按收入分成 4 档
+SELECT 
+  user_id,
+  revenue,
+  NTILE(4) OVER (ORDER BY revenue) AS quartile
+FROM users
+```
+
+---
+
+### 20. FIRST_VALUE / LAST_VALUE
+
+```sql
+SELECT 
+  user_id,
+  event_timestamp,
+  FIRST_VALUE(event_name) OVER (PARTITION BY user_id ORDER BY event_timestamp) AS first_event,
+  LAST_VALUE(event_name) OVER (PARTITION BY user_id ORDER BY event_timestamp ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_event
+FROM events
+```
+
+---
+
+## 四、数据转换技巧
+
+### 21. PIVOT 行转列
+
+**传统写法**：
+```sql
+SELECT 
+  date,
+  SUM(CASE WHEN country = 'US' THEN revenue END) AS us_revenue,
+  SUM(CASE WHEN country = 'CN' THEN revenue END) AS cn_revenue,
+  SUM(CASE WHEN country = 'JP' THEN revenue END) AS jp_revenue
+FROM sales
+GROUP BY date
+```
+
+**PIVOT 写法**：
+```sql
+SELECT * FROM sales
+PIVOT(
+  SUM(revenue) AS revenue
+  FOR country IN ('US', 'CN', 'JP')
+)
+```
+
+---
+
+### 22. UNPIVOT 列转行
+
+**场景**：宽表变长表
+
+```sql
+-- 原始宽表
+| user_id | metric_a | metric_b | metric_c |
+| u1      | 10       | 20       | 30       |
+
+-- UNPIVOT
+SELECT * FROM wide_table
+UNPIVOT(
+  value FOR metric_name IN (metric_a, metric_b, metric_c)
+)
+
+-- 结果
+| user_id | metric_name | value |
+| u1      | metric_a    | 10    |
+| u1      | metric_b    | 20    |
+| u1      | metric_c    | 30    |
+```
+
+---
+
+### 23. STRUCT 嵌套结果
+
+```sql
+SELECT 
+  date,
+  STRUCT(
+    COUNT(DISTINCT user_id) AS uv,
+    COUNT(*) AS pv,
+    SUM(revenue) AS revenue,
+    AVG(order_value) AS aov
+  ) AS metrics
+FROM events
+GROUP BY date
+```
+
+**用途**：API 返回结构化结果、BI 工具友好。
+
+---
+
+### 24. ARRAY_AGG + LIMIT：取每组 Top N
+
+**传统写法**（窗口函数 + 子查询）：
+```sql
+SELECT * FROM (
+  SELECT *, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY ts DESC) AS rn
+  FROM events
+) WHERE rn <= 10
+```
+
+**ARRAY_AGG 写法**：
+```sql
+SELECT 
+  user_id,
+  ARRAY_AGG(event_name ORDER BY ts DESC LIMIT 10) AS recent_events
+FROM events
+GROUP BY user_id
+```
+
+**一次性聚合，无需子查询。**
+
+---
+
+### 25. ARRAY_CONCAT_AGG 聚合数组
+
+```sql
+-- 每个用户的所有事件合并成数组
+SELECT 
+  user_id,
+  ARRAY_CONCAT_AGG([event_name]) AS all_events
+FROM events
+GROUP BY user_id
+```
+
+**用途**：用户行为序列分析。
+
+---
+
+## 五、日期时间技巧
+
+### 26. INTERVAL 日期计算
+
+```sql
+SELECT 
+  DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) AS week_ago,
+  DATE_ADD(CURRENT_DATE(), INTERVAL 1 MONTH) AS next_month,
+  DATE_DIFF('2026-04-10', '2026-04-03', DAY) AS days_diff
+```
+
+---
+
+### 27. LAST_DAY 月末日期
+
+```sql
+SELECT 
+  LAST_DAY('2026-04-03') AS month_end,      -- 2026-04-30
+  LAST_DAY('2026-04-03', YEAR) AS year_end   -- 2026-12-31
+```
+
+---
+
+### 28. FORMAT_DATE 格式化
+
+```sql
+SELECT 
+  FORMAT_DATE('%Y-%m', date) AS year_month,
+  FORMAT_DATE('%Y年%m月%d日', date) AS cn_format
+```
+
+---
+
+### 29. PARSE_DATE 反向解析
+
+```sql
+SELECT PARSE_DATE('%Y%m%d', '20260403') AS date
+```
+
+---
+
+### 30. DATE_TRUNC 日期截断
+
+```sql
+SELECT 
+  DATE_TRUNC(date, WEEK) AS week_start,
+  DATE_TRUNC(date, MONTH) AS month_start,
+  DATE_TRUNC(date, YEAR) AS year_start
+```
+
+---
+
+### 31. EXTRACT 提取时间部分
+
+```sql
+SELECT 
+  EXTRACT(YEAR FROM date) AS year,
+  EXTRACT(WEEK FROM date) AS week,
+  EXTRACT(DAYOFWEEK FROM date) AS weekday,
+  EXTRACT(HOUR FROM timestamp) AS hour
+```
+
+---
+
+### 32. TIMESTAMP vs DATETIME
+
+```sql
+-- TIMESTAMP：带时区（推荐存事件时间）
+-- DATETIME：不带时区（推荐存业务日期）
+
+SELECT 
+  CURRENT_TIMESTAMP() AS ts,      -- UTC 时间
+  CURRENT_DATETIME() AS dt,       -- 无时区
+  DATETIME(TIMESTAMP '2026-04-03 12:00:00', 'Asia/Shanghai') AS beijing_time
+```
+
+---
+
+## 六、安全处理技巧
+
+### 33. SAFE_ 系列函数
+
+```sql
+-- 除法安全（避免除零）
+SAFE_DIVIDE(100, 0)  -- 返回 NULL 而非报错
+
+-- 类型转换安全
+SAFE_CAST('abc' AS INT64)  -- 返回 NULL
+
+-- 函数安全
+SAFE.ADD(9223372036854775807, 1)  -- 溢出返回 NULL
+```
+
+---
+
+### 34. NULLIF 避免除零
+
+```sql
+-- 除数可能为 0 或 NULL
+SELECT 
+  revenue / NULLIF(users, 0) AS arpu
+FROM metrics
+
+-- 等价于
+SAFE_DIVIDE(revenue, users)
+```
+
+---
+
+### 35. COALESCE 多值兜底
+
+```sql
+-- 多个来源优先级
+SELECT 
+  COALESCE(paid_name, organic_name, 'unknown') AS final_name
+FROM users
+```
+
+---
+
+### 36. IFNULL vs COALESCE
+
+```sql
+-- IFNULL 只能两个参数
+IFNULL(value, 0)
+
+-- COALESCE 可以多个
+COALESCE(a, b, c, d, 0)
+```
+
+---
+
+### 37. COUNT(DISTINCT IF(...))：条件去重
+
+```sql
+SELECT 
+  COUNT(DISTINCT IF(event_name = 'show', user_id, NULL)) AS show_uv,
+  COUNT(DISTINCT IF(
+    event_name = 'click' 
+    AND EXISTS (SELECT 1 FROM UNNEST(transfers) WHERE direction = 'from' AND target = 'a'),
+    user_id, NULL
+  )) AS click_from_a_uv
+FROM events
+```
+
+---
+
+## 七、高级特性
+
+### 38. MERGE 增量更新
+
+```sql
+MERGE target_table T
+USING source_table S
+ON T.id = S.id
+WHEN MATCHED THEN
+  UPDATE SET T.value = S.value, T.updated_at = S.updated_at
+WHEN NOT MATCHED THEN
+  INSERT (id, value, updated_at) VALUES (S.id, S.value, S.updated_at)
+```
+
+**用途**：日增量同步、去重写入、CDC 场景。
+
+---
+
+### 39. TIME_TRAVEL 恢复误删数据
+
+```sql
+-- 查 1 小时前的数据
+SELECT * FROM my_table
+FOR SYSTEM_TIME AS OF TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 1 HOUR)
+
+-- 恢复
+CREATE TABLE my_table_restored AS
+SELECT * FROM my_table
+FOR SYSTEM_TIME AS OF TIMESTAMP('2026-04-03 01:00:00')
+```
+
+**免费数据保险，保留 7 天。**
+
+---
+
+### 40. CLONE 表快照（零成本复制）
+
+```sql
+-- 创建快照，不复制数据
+CREATE TABLE my_table_snapshot
+CLONE my_table
+
+-- 指定时间点快照
+CREATE TABLE my_table_yesterday
+CLONE my_table
+FOR SYSTEM_TIME AS OF TIMESTAMP('2026-04-02 00:00:00')
+```
+
+**用途**：测试环境、数据回滚、临时分析。
+
+---
+
+### 41. 递归 CTE（层级数据）
+
+```sql
+WITH RECURSIVE hierarchy AS (
+  -- 基础查询
+  SELECT id, parent_id, 1 AS level
+  FROM org_chart
+  WHERE parent_id IS NULL
+  
+  UNION ALL
+  
+  -- 递归部分
+  SELECT c.id, c.parent_id, h.level + 1
+  FROM org_chart c
+  JOIN hierarchy h ON c.parent_id = h.id
+)
+SELECT * FROM hierarchy
+```
+
+**用途**：组织架构、评论树、分类层级。
+
+---
+
+### 42. SESSION_WINDOW 用户会话切分
+
+```sql
+-- 30 分钟无活动视为新会话
+SELECT 
+  user_id,
+  SESSION_WINDOW(event_timestamp, INTERVAL 30 MINUTE) AS session,
+  COUNT(*) AS events_in_session
+FROM events
+GROUP BY user_id, session
+```
+
+---
+
+### 43. GENERATE_ARRAY + UNNEST 生成序列
+
+```sql
+-- 生成连续日期
+SELECT date
+FROM UNNEST(GENERATE_DATE_ARRAY('2026-01-01', '2026-01-31')) AS date
+
+-- 生成数字序列
+SELECT num FROM UNNEST(GENERATE_ARRAY(1, 100)) AS num
+
+-- 左连接补全缺失日期
+SELECT 
+  d.date,
+  COALESCE(e.revenue, 0) AS revenue
+FROM UNNEST(GENERATE_DATE_ARRAY('2026-01-01', '2026-01-31')) AS d(date)
+LEFT JOIN daily_revenue e ON d.date = e.date
+```
+
+---
+
+## 八、UDF 优化 event_params 提取
+
+### 简化 Firebase 事件参数提取
+
+**问题**：每次提取 event_params 都要写重复子查询
+
+```sql
+-- 原始写法：重复 7 次
+(SELECT value.string_value FROM UNNEST(event_params) WHERE key='product_id') product_id,
+(SELECT value.string_value FROM UNNEST(event_params) WHERE key='service_type') service_type,
+...
+```
+
+**UDF 简化**：
+```sql
+-- 创建 UDF
+CREATE TEMP FUNCTION get_param(
+  params ARRAY<STRUCT<key STRING, value STRUCT<string_value STRING, int_value INT64, double_value FLOAT64>>>,
+  param_key STRING
+)
+RETURNS STRING
+AS (
+  (SELECT LOWER(value.string_value) FROM UNNEST(params) WHERE key = param_key)
+);
+
+-- 使用
+SELECT 
+  event_name,
+  get_param(event_params, 'product_id') AS product_id,
+  get_param(event_params, 'from') AS from_page,
+  get_param(event_params, 'model_type') AS model_type
+FROM events
+```
+
+---
+
+## 总结表
+
+| 类别 | 技巧 | 用途 |
+|:---|:---|:---|
+| 查询简化 | QUALIFY | 窗口函数过滤 |
+| 查询简化 | GROUP BY ALL | 自动分组 |
+| 查询简化 | ANY_VALUE | 随机取值 |
+| 查询简化 | EXCEPT/REPLACE | 列操作 |
+| 性能优化 | PARTITION+CLUSTER | 大表查询降成本 |
+| 性能优化 | APPROX_* | 海量统计加速 |
+| 性能优化 | BI Engine | 免费加速 |
+| 窗口函数 | LEAD/LAG | 替代自连接 |
+| 窗口函数 | NTILE | 分桶 |
+| 数据转换 | PIVOT/UNPIVOT | 行列转换 |
+| 数据转换 | ARRAY_AGG LIMIT | Top N 聚合 |
+| 日期时间 | DATE_TRUNC | 日期截断 |
+| 日期时间 | LAST_DAY | 月末日期 |
+| 安全处理 | SAFE_* | 避免报错 |
+| 高级特性 | MERGE | 增量更新 |
+| 高级特性 | TIME_TRAVEL | 数据恢复 |
+| 高级特性 | CLONE | 零成本复制 |
+
+---
+
+*来源：2026-04-02 晚间学习，共 43 条技巧*

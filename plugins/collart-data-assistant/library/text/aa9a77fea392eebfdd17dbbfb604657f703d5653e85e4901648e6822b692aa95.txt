@@ -1,0 +1,66 @@
+# 收入与订阅
+
+先读 [metric-glossary.md](metric-glossary.md) 的「订阅 vs 收入」；本文补充订单真值、Stripe、收入源对齐等细节。
+
+## 三个收入真值源
+
+| 端 | 服务端收入源 | 备注 |
+|----|--------------|------|
+| Android | DWS IAP + 广告 + Stripe RUB 叠加 | new_revenue 已扣点数包；RUB 进 purchase/credit；profile = SUM(active) |
+| iOS | Apple IAP + Stripe RUB 叠加 | country 层无 new/resub/trial 拆分；`ad_revenue=0` |
+| Web / Fashion | Stripe T+1（含 Web RUB） | Fashion 用户日写在 active，上卷 country/daily；不要用已停写的旧日收入表 |
+| 移动端俄罗斯支付 | Stripe `dwd_cdct_revenue_stripe_di`，`currency='RUB'` | 不要用 `ods.orders`；Android=`collart_android`，iOS=`vidart`/`vidart_ios`/`vidart-ios` |
+
+## 用户粒度收入（2026-08-28）
+
+Web、以及 Android/iOS 俄罗斯用户粒度收入：**只用** `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`（`UPPER(currency)='RUB'`；金额 `ROUND(revneue+IFNULL(fee,0),2)`，按 `transaction_id` 去重）。不要扫 `ods.orders`。
+
+`dwd_cdct_orders_revenue_hi` 是 **0 行空表**，不要当「当天补洞」源。
+
+落表：Android/iOS `ads_oper_user_active_di.revenue.purchase_revenue` 与 `credit_revenue` 叠加 RUB；**四端 profile 终身收入都是 `SUM(active.revenue)`**，不再回扫 DWS、不再 orphan 二次叠加。country/daily 仍读 `ads_ad_sub`（用户粒度与国家层允许对不齐）。
+
+金额：Stripe 用户侧美元（USD=`amount`，非 USD=`revneue+fee`）。`revneue` 是实收；`pending` 不是未支付。
+
+## 订单表 status 口径（历史）
+
+`ods.orders` 旧口径：`status IN ('active','paid','active_ending')`。新分析不要再用它算用户收入。
+
+## 收入四桶与 UV
+
+见 [metric-glossary.md](metric-glossary.md)。要点复述：
+
+- `purchase_revenue = new + resub + trial_conver + credit`；**勿 purchase+credit 双计**。
+- 服务端「付费人数」用 `revenue.*_uv`（country/daily 权威）；埋点转化人数用 `subscription.*`。
+
+## country 收入 vs ads_ad_sub_revenue_1h
+
+- country 层订阅三类（new/resub/credit）来自 **DWS**，不是 `ads_ad_sub_revenue_1h`。
+- 国家×日仅约 15% 键与 `ads_ad_sub_revenue_1h` 完全对齐；日级 `new_revenue` 可对齐，国家拆分不完全等价。
+- 2026-08-10 起 ADS 层 `new_revenue` 已扣点数包，可与旧表直比。
+
+## Stripe 归属（Web）
+
+- active：同日 DM 末次 pseudo，否则 id_map **最近一次绑定（不卡首见日）**；两级都没有才丢掉。
+- profile：`SUM(active.revenue)`，不再 orphan 叠加。2026-09-06 起 too_new 进日活；真 miss（无设备）仍不硬挂。
+- profile 无 active 的骨架人约 2442，付费为 0，不是漏单。
+
+## Stripe 归属（Fashion）
+
+- 订单表 `ads_collartfashion.ads_oper_user_revenue_di`：±10 分钟最近 `vip_subscribe_succeed` 且 `package_name='collart_fashion'`。
+- 用户日写入 `ads_oper_user_active_di`（含 `purchase_cnt` / credit 字段），上卷 attr → country → daily。
+- 旧日表 `ads_oper_revenue_collart_fashion_di` 已删除。
+- 无活跃支付日补 `is_active=FALSE`；country 空值用 Stripe 或 `unknown`。
+
+## 订阅档位（Web）
+
+- 订单数偏月包 Standard，收入偏年包 Premium（历史约 82.9% 收入来自年包）。
+- 分析付费结构时区分「订单口径」与「收入口径」，结论可能相反。
+
+## ARPU / ARPPU
+
+- Web/OS 维度：iOS 端 ARPPU 最高，Android 量大付费率低、收入以点数包为主。
+- ARPDAU 敏感性用于收入作战台（见 [playbooks.md](playbooks.md)）。
+
+## 埋点 vs 订单差异
+
+`vip_subscribe_succeed` 埋点与服务端成功单不一致（埋点在支付成功前触发/漏报）。评估「实际收入」以 Stripe / `active.revenue` 为准；评估「转化漏斗」用埋点。不要拿 `ods.orders` 对埋点。

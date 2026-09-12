@@ -1,0 +1,71 @@
+-- Collart Android Motion Control 功能 Top20 国家统计
+-- 时间范围: 过去7天
+-- 事件: generate_pro_create, generate_watch_ad
+-- 参数过滤: function_type = 'MotionControl'
+-- 
+-- 更新记录:
+-- 2026-03-17: 
+--   - 修正包名: free.ai.photo.generator.collart.ai
+--   - events_* 表必须用 _TABLE_SUFFIX 过滤日期
+--   - ads_oper_basic_indicator_collart_di 表的 DAU 需要按国家汇总（按流量来源细分存储）
+
+WITH dau_data AS (
+  -- 从指标表获取每个国家每天的DAU（按国家汇总）
+  SELECT
+    country,
+    event_date AS dt,
+    SUM(dau) AS dau
+  FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di`
+  WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) 
+    AND DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+    AND country IS NOT NULL
+    AND country != ''
+  GROUP BY country, event_date
+),
+
+motion_usage AS (
+  -- 计算每个国家每天使用 Motion Control 的UV和PV
+  -- 注意：events_* 表必须用 _TABLE_SUFFIX 过滤日期范围
+  -- event_date 是 STRING 格式 (YYYYMMDD)，需要解析为 DATE
+  SELECT
+    geo.country AS country,
+    PARSE_DATE('%Y%m%d', event_date) AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS motion_uv,
+    COUNT(*) AS motion_pv
+  FROM `storytemplate-10a27.analytics_232977577.events_*`,
+  UNNEST(event_params) ep
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+    AND FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name IN ('generate_pro_create', 'generate_watch_ad')
+    AND geo.country IS NOT NULL
+    AND geo.country != ''
+    AND ep.key = 'function_type'
+    AND ep.value.string_value = 'MotionControl'
+  GROUP BY country, dt
+),
+
+country_stats AS (
+  -- 汇总每个国家的7天平均数据
+  SELECT
+    d.country,
+    ROUND(AVG(d.dau), 0) AS avg_daily_dau,
+    ROUND(AVG(COALESCE(m.motion_uv, 0)), 0) AS avg_daily_motion_uv,
+    ROUND(AVG(COALESCE(m.motion_pv, 0)), 0) AS avg_daily_motion_pv
+  FROM dau_data d
+  LEFT JOIN motion_usage m 
+    ON d.country = m.country AND d.dt = m.dt
+  GROUP BY d.country
+)
+
+SELECT
+  country AS 国家,
+  avg_daily_dau AS 过去7天平均日DAU,
+  avg_daily_motion_uv AS 过去7天平均日使用UV,
+  avg_daily_motion_pv AS 过去7天平均日使用PV,
+  ROUND(avg_daily_motion_uv / NULLIF(avg_daily_dau, 0) * 100, 2) AS 使用率_百分比
+FROM country_stats
+WHERE avg_daily_dau > 0  -- 排除无DAU的国家
+ORDER BY avg_daily_motion_uv DESC
+LIMIT 20;

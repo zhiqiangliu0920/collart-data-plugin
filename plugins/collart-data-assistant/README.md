@@ -1,14 +1,17 @@
-# Collart 团队数据助手
+# Collart 团队数据知识助手
 
-将 Cursor 的 collart-biz-analysis 与 team-data-knowledge 整合为一个 Codex 插件，面向公司内部同事。提供数据分析与知识维护两个 skill，共享一套规范知识、来源和 SQL。
+两个入口：分析用 collart-analysis，沉淀用 collart-knowledge-maintain。
 
-| 入口 | 使用示例 |
-|---|---|
-| collart-analysis | 使用 Collart 数据助手分析 Web 最近 7 个完整日的收入变化，区分新老用户并解释口径。 |
-| collart-knowledge-maintain | 把这份表字段说明沉淀到团队知识，注明来源和待核验项。 |
+[统一主题](knowledge/INDEX.md) · [完整资料](library/INDEX.md) · [SQL](library/SQL.md) · [待处理](library/pending.json) · [维护](docs/maintenance.md)
 
-从 [知识索引](knowledge/INDEX.md) 进入 17 个条目；参阅 [SQL 模板](presets/README.md)、[维护说明](docs/maintenance.md) 与 [整合说明](docs/integration.md)。插件本身不提供 BigQuery 连接，同事使用各自已有的连接和权限。
+资料分三层：统一主题回答可复用问题；library 保留完整原文和来源图；provenance 保存原有历史摘录。原文包含旧 Skill 或脚本时仅供参考，不授予执行权限。
 
-本次 2026-09-12 整理包含 16 个 documented 和 1 个 draft，未进行生产查数。历史文档中的规模、固定 0、断档或部署记录不代表当前状态。安装后开启新任务试用；测试 SQL 前检查现网 schema 和请求窗口。
+```sh
+python scripts/kb.py search "purchase_uv"
+python scripts/kb.py search "revenue" --project collart_web --scope materials
+python scripts/kb.py search "SELECT" --kind sql --limit 10
+python scripts/kb.py read "ai-knowledge:1company/indicators/subscription_purchase.md"
+python scripts/kb.py check
+```
 
-插件随团队发行目录内的 install.ps1 安装。仅拷贝本插件子目录会缺少发行目录的 marketplace；请分发完整发行 ZIP。维护者只改源码，安装缓存不会自动同步回团队。
+search 默认先返回统一主题，再返回完整资料；read 显示完整正文、原日期、原路径和可在本包解析的引用。原始文件路径只是来源标识，不要求这台电脑存在该路径。历史资料中的缺失引用明确留在待处理清单。

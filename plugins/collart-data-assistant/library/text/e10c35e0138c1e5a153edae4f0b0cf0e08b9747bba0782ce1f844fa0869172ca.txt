@@ -1,0 +1,92 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dws.dws_oper_fb_delivery_1d"
+table_cn_name: "fb投放平台安装花费数据"
+metadata_status: "complete"
+field_status: "available"
+projects: ["公司"]
+project_dirs: ["1company"]
+warehouse_space: "aidata"
+layer: "DWS汇总层"
+subject: "增长主题"
+secondary_subject: "投放平台"
+table_type: "事实表"
+grain: "每天每个campaign每个国家一行"
+primary_key: "event_date+campaign_name+country"
+update_frequency: "T+1 12:00"
+owner: "恬静"
+priority: "中"
+core_table: "是"
+query_cost: "低"
+source_record_ids: ["recvh3C8YGu5T7"]
+field_count: "10"
+---
+
+# 表名：aidata2025.dws.dws_oper_fb_delivery_1d
+
+> 表中文名：fb投放平台安装花费数据
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：公司；分层：DWS汇总层；表类型：事实表；主题：增长主题；二级主题：投放平台；行粒度：每天每个campaign每个国家一行。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | fb投放平台安装花费数据 |
+| 项目 | 公司 |
+| 数仓空间 | aidata |
+| 分层 | DWS汇总层 |
+| 主题 | 增长主题 |
+| 二级主题 | 投放平台 |
+| 表类型 | 事实表 |
+| 行粒度 | 每天每个campaign每个国家一行 |
+| 主键字段 | event_date+campaign_name+country |
+| 核心表 | 是 |
+| 更新频率 | T+1 12:00 |
+| 维护人 | 恬静 |
+| 使用优先级 | 中 |
+| 查询成本 | 低 |
+| 数据来源 | 投放后台 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `campaign` | string | 维度 | 否 | 投放campaign id |
+| `campaign_name` | string | 维度 | 否 | 投放campaign名称 |
+| `spend` | float | 指标 | 否 | 浮点型指标字段，用于统计金额、比率或均值。 |
+| `impressions` | int | 指标 | 否 | 投放广告展示次数 |
+| `clicks` | int | 指标 | 否 | 点击次数 |
+| `reach` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `country` | string | 维度 | 是 | 国家 |
+| `actions` | record | 维度 | 否 | 复杂结构字段，通常包含嵌套对象或数组信息。 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `event_date` | date | 时间 | 日期 |
+| `package_name` | string | 主键 | 包名 |
+| `country` | string | 维度 | 国家 |
+
+## 5. 典型使用场景
+- 用于中间层汇总分析，通常比从明细表重算更稳定、更省成本。
+
+## 6. 查询风险与注意事项
+- 存在 `event_date` 字段，按天查询时建议显式添加日期范围，避免全表扫描。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | pubdata2025.dws.dws_cdct_cost_delivery_fb_1d |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | 投放后台 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sdws!3sdws_oper_fb_delivery_1d) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdws%2Fdaily%2Fh_dws_oper_fb_delivery_1d.sqlx?project=aidata2025) |
+| 看板 | - |
+
+## 8. 待补充项
+- 暂无，后续可补充典型 SQL 和业务口径案例。

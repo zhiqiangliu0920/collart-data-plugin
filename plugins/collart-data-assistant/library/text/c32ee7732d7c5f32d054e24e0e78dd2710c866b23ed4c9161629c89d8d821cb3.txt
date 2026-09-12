@@ -1,0 +1,38 @@
+-- 四端合并日指标（DAU/DNU 及收入 UV 示例）
+-- 表同构，扩展指标时四段一起加同名列。
+WITH daily AS (
+  SELECT event_date, package_name, app_name, dau, dnu,
+         revenue.new_subscribe_uv AS new_sub_uv,
+         revenue.renew_subscribe_uv AS renew_sub_uv,
+         revenue.credit_pack_uv AS credit_pack_uv,
+         revenue.purchase_revenue AS purchase_revenue,
+         revenue.ad_revenue AS ad_revenue
+  FROM `aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di`
+  UNION ALL
+  SELECT event_date, package_name, app_name, dau, dnu,
+         revenue.new_subscribe_uv, revenue.renew_subscribe_uv, revenue.credit_pack_uv,
+         revenue.purchase_revenue, revenue.ad_revenue
+  FROM `aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di`
+  UNION ALL
+  SELECT event_date, package_name, app_name, dau, dnu,
+         revenue.new_subscribe_uv, revenue.renew_subscribe_uv, revenue.credit_pack_uv,
+         revenue.purchase_revenue, revenue.ad_revenue
+  FROM `aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di`
+  UNION ALL
+  SELECT event_date, package_name, app_name, dau, dnu,
+         revenue.new_subscribe_uv, revenue.renew_subscribe_uv, revenue.credit_pack_uv,
+         revenue.purchase_revenue, revenue.ad_revenue
+  FROM `aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di`
+)
+SELECT event_date, package_name, app_name,
+       SUM(dau) AS dau,
+       SUM(dnu) AS dnu,
+       SUM(new_sub_uv) AS new_subscribe_uv,
+       SUM(renew_sub_uv) AS renew_subscribe_uv,
+       SUM(credit_pack_uv) AS credit_pack_uv,
+       SUM(purchase_revenue) AS purchase_revenue,
+       SUM(ad_revenue) AS ad_revenue
+FROM daily
+WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+GROUP BY ALL
+ORDER BY event_date, package_name;

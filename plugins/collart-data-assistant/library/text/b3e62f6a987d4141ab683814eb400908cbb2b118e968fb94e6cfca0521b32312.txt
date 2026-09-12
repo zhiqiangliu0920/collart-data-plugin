@@ -1,0 +1,87 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.ads.ads_template_recommend_trending_1d"
+table_cn_name: "collart android模板推荐（Trending)"
+metadata_status: "complete"
+field_status: "available"
+projects: ["collart android"]
+project_dirs: ["collart_android"]
+warehouse_space: "aidata"
+layer: "ADS应用层"
+subject: "内容主题"
+secondary_subject: "模板推荐"
+table_type: "汇总表"
+grain: "每个国家每个渠道一组"
+primary_key: "country_code+ traffic_src_type"
+update_frequency: "T+1 8:00"
+owner: "恬静"
+priority: "低"
+core_table: "否"
+query_cost: "低"
+source_record_ids: ["recvh8DkL6XM3x"]
+field_count: "6"
+---
+
+# 表名：aidata2025.ads.ads_template_recommend_trending_1d
+
+> 表中文名：collart android模板推荐（Trending)
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：collart android；分层：ADS应用层；表类型：汇总表；主题：内容主题；二级主题：模板推荐；行粒度：每个国家每个渠道一组。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | collart android模板推荐（Trending) |
+| 项目 | collart android |
+| 数仓空间 | aidata |
+| 分层 | ADS应用层 |
+| 主题 | 内容主题 |
+| 二级主题 | 模板推荐 |
+| 表类型 | 汇总表 |
+| 行粒度 | 每个国家每个渠道一组 |
+| 主键字段 | country_code+ traffic_src_type |
+| 核心表 | 否 |
+| 更新频率 | T+1 8:00 |
+| 维护人 | 恬静 |
+| 使用优先级 | 低 |
+| 查询成本 | 低 |
+| 数据来源 | 客户端埋点 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `platform` | string | 主键 | 否 | 产品名 |
+| `country_code` | string | 维度 | 否 | 国家代码 |
+| `traffic_src_type` | string | 维度 | 否 | 投放渠道类型 |
+| `temp_id_group` | string | 维度 | 否 | 推荐的模板id列表 |
+| `temp_score_group` | string | 维度 | 否 | 模板id评分 |
+| `temp_name_group` | string | 维度 | 否 | 推荐的模板名称列表 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `platform` | string | 主键 | 产品名 |
+
+## 5. 典型使用场景
+- 用于中间层汇总分析，通常比从明细表重算更稳定、更省成本。
+- 优先用于业务指标、看板口径、日常分析和快速查询。
+
+## 6. 查询风险与注意事项
+- 飞书表信息中未提供额外查询限制；仍建议结合日期、项目和主键字段控制扫描范围。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | dws.dws_template_recommend_score_di |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sads!3sads_template_recommend_trending_1d) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fads%2Fdaily%2Fh_ads_template_recommend_trending_1d.sqlx?project=aidata2025) |
+| 看板 | collart android模板推荐 |
+
+## 8. 待补充项
+- 暂无，后续可补充典型 SQL 和业务口径案例。

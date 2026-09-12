@@ -1,0 +1,22 @@
+# unassigned 表文档索引
+
+项目名称：unassigned
+
+表数量：14
+
+| 表名 | 中文名 | 分层 | 主题 | 优先级 | 字段数 | 状态 | 文档 |
+|---|---|---|---|---|---:|---|---|
+| `aidata2025.ads.ads_collart_delivery_kol_1d` | - | ADS | 增长主题 | - | 0 | `table_info_only/missing` | [打开](../tables/aidata2025.ads.ads_collart_delivery_kol_1d.md) |
+| `pubdata2025.ads.ads_atlasv_basic_data_daily_2024` | - | ADS | - | - | 14 | `table_info_missing/available` | [打开](../tables/pubdata2025.ads.ads_atlasv_basic_data_daily_2024.md) |
+| `pubdata2025.ads.ads_atlasv_deliver_cost_daily` | 全公司分产品投放花费数据 | ADS应用层 | 增长主题 | - | 3 | `complete/available` | [打开](../tables/pubdata2025.ads.ads_atlasv_deliver_cost_daily.md) |
+| `pubdata2025.ads.ads_cdct_service_cost_1d` | 分产品服务器成本 | ADS应用层 | 收入成本主题 | - | 11 | `complete/available` | [打开](../tables/pubdata2025.ads.ads_cdct_service_cost_1d.md) |
+| `aidata2025.dim.dim_product_info` | - | DIM | - | - | 7 | `table_info_missing/available` | [打开](../tables/aidata2025.dim.dim_product_info.md) |
+| `aidata2025.dwd.dwd_oper_user_aitask_di` | 分产品、用户ai服务点数以及成本 | DWD明细层 | AI服务主题 | - | 0 | `table_info_only/missing` | [打开](../tables/aidata2025.dwd.dwd_oper_user_aitask_di.md) |
+| `aidata2025.dws.dws_oper_delivery_collart_1d` | adjust跟踪数据（渠道、国家粒度）用处不大 | DWS汇总层 | 增长主题 | - | 8 | `complete/available` | [打开](../tables/aidata2025.dws.dws_oper_delivery_collart_1d.md) |
+| `aidata2025.dws.dws_oper_newuser_lifecycle_1d` | 安卓用户粒度 每日收入表 | DWS汇总层 | 收入成本主题 | - | 0 | `table_info_only/missing` | [打开](../tables/aidata2025.dws.dws_oper_newuser_lifecycle_1d.md) |
+| `aidata2025.dws.dws_oper_user_sub_revenue_df` | 安卓用户粒度 收入表 | DWS汇总层 | 收入成本主题 | - | 27 | `complete/available` | [打开](../tables/aidata2025.dws.dws_oper_user_sub_revenue_df.md) |
+| `pubdata2025.dws.dws_cdct_log_ai_record_1d` | 分产品ai服务成本 | DWS汇总层 | AI服务主题 | - | 0 | `table_info_only/missing` | [打开](../tables/pubdata2025.dws.dws_cdct_log_ai_record_1d.md) |
+| `hzdw2024.ods.ai_base_record_store` | 用户id粒度 服务调用记录 | ODS | AI服务主题 | - | 0 | `table_info_only/missing` | [打开](../tables/hzdw2024.ods.ai_base_record_store.md) |
+| `hzdw2024.ods.ods_ai_record_info` | 用户id粒度 服务调用记录 | ODS | AI服务主题 | - | 0 | `table_info_only/missing` | [打开](../tables/hzdw2024.ods.ods_ai_record_info.md) |
+| `pubdata2025.ods.ods_woolong_subscription_1d` | - | ODS | 收入成本主题 | - | 17 | `complete/available` | [打开](../tables/pubdata2025.ods.ods_woolong_subscription_1d.md) |
+| `aidata2025.ods.ods_ai_request_info_new_1d` | 用户ai服务 输入输出明细表（提示词） | ODS原始层 | AI服务主题 | - | 0 | `table_info_only/missing` | [打开](../tables/aidata2025.ods.ods_ai_request_info_new_1d.md) |

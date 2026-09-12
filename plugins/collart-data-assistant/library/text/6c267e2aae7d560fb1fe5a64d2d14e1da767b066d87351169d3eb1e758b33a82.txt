@@ -1,0 +1,34 @@
+-- 昨日 (2026-04-01) Collart Web FB 投放渠道新增用户分国家付费情况
+-- 记录到: knowledge/collart_web/sql-snippets/web_fb_payment_by_country_20260401.sql
+
+WITH web_fb_new_users AS (
+  -- 1. 识别昨日 Web 端 FB 渠道的新增用户 (使用 first_visit)，并提取国家信息
+  SELECT 
+    user_pseudo_id,
+    geo.country AS country
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX = '20260401'
+    AND app_info.id IS NULL -- Web 端过滤红线
+    AND event_name = 'first_visit'
+    AND (
+      traffic_source.source IN ('facebook', 'fb', 'facebook.com') 
+      OR traffic_source.medium IN ('cpc', 'social', 'paidsocial', 'fb_ad')
+    )
+)
+SELECT 
+  w.country,
+  -- 2. 统计新增用户数
+  COUNT(DISTINCT w.user_pseudo_id) AS new_users,
+  -- 3. 统计发起支付点击 (Web 端通常为 begin_checkout 或自定义按钮事件)
+  COUNT(DISTINCT CASE WHEN e.event_name IN ('begin_checkout', 'subscribe_click') THEN e.user_pseudo_id END) AS purchase_clicks,
+  -- 4. 统计成功付费 (Web 端标准 purchase 事件)
+  COUNT(DISTINCT CASE WHEN e.event_name = 'purchase' THEN e.user_pseudo_id END) AS paid_users,
+  -- 5. 计算转化率
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN e.event_name = 'purchase' THEN e.user_pseudo_id END), COUNT(DISTINCT w.user_pseudo_id)), 4) AS cvr
+FROM web_fb_new_users w
+LEFT JOIN `storytemplate-10a27.analytics_232977577.events_*` e 
+  ON w.user_pseudo_id = e.user_pseudo_id 
+  AND e._TABLE_SUFFIX = '20260401'
+  AND e.app_info.id IS NULL
+GROUP BY 1
+ORDER BY new_users DESC;

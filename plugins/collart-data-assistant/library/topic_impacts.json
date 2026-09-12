@@ -1,0 +1,14 @@
+[
+  {
+    "source_id": "legacy-ios",
+    "origin": "ai-knowledge:collart_ios/README.md",
+    "state": "changed",
+    "reason": "统一主题来源已有变化；保留旧证据，复核适用范围后更新主题"
+  },
+  {
+    "source_id": "legacy-conversion",
+    "origin": "ai-knowledge:collart_web/indicators/conversion.md",
+    "state": "changed",
+    "reason": "统一主题来源已有变化；保留旧证据，复核适用范围后更新主题"
+  }
+]

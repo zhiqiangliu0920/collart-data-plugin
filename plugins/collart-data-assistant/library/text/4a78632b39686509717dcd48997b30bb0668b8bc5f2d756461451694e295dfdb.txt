@@ -1,0 +1,32 @@
+WITH internal_users AS (
+ SELECT user_id FROM UNNEST([
+ '{INTERNAL_USER_ID_15}','{INTERNAL_USER_ID_14}','{INTERNAL_USER_ID_2}',
+ '{INTERNAL_USER_ID_11}','{INTERNAL_USER_ID_7}','{INTERNAL_USER_ID_4}',
+ '{INTERNAL_USER_ID_18}','{INTERNAL_USER_ID_1}','{INTERNAL_USER_ID_8}',
+ '{INTERNAL_USER_ID_9}','{INTERNAL_USER_ID_3}','{INTERNAL_USER_ID_17}',
+ '{INTERNAL_USER_ID_13}','{INTERNAL_USER_ID_6}','{INTERNAL_USER_ID_5}',
+ '{INTERNAL_USER_ID_16}','{INTERNAL_USER_ID_12}','{INTERNAL_USER_ID_10}']) user_id
+), base AS (
+ SELECT *, COALESCE(user_id IN (SELECT user_id FROM internal_users),FALSE) AS is_internal
+ FROM `aidata2025.dm.dm_collart_web_user_event_di`
+ WHERE event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08'
+), dm AS (
+ SELECT event_date,package_name,COUNT(*) AS row_count,
+ COUNTIF(is_internal) AS internal_event_rows,COUNT(DISTINCT IF(is_internal,user_pseudo_id,NULL)) AS internal_pseudo_days,
+ COUNTIF(NOT is_internal AND NULLIF(page.location,'') IS NULL) AS external_missing_page,
+ COUNTIF(NOT is_internal AND event_name='vip_subscribe_succeed') AS external_payment_events,
+ COUNTIF(is_internal AND event_name='vip_subscribe_succeed') AS internal_payment_events,
+ COUNTIF(is_internal AND event_name='ai_service_start' AND LOWER(web_params_info.service_type)='fashion_video') AS internal_fashion_start,
+ COUNTIF(is_internal AND event_name='ai_service_success' AND LOWER(web_params_info.service_type)='fashion_video') AS internal_fashion_success,
+ COUNTIF(NOT is_internal AND STARTS_WITH(event_name,'fashion_')) AS external_fashion_named_events,
+ COUNTIF(NOT is_internal AND web_params_info.service_type='fashion_video') AS external_fashion_service_events,
+ COUNTIF(NOT is_internal AND event_name='ai_service_start' AND web_params_info.service_type='fashion_video') AS external_fashion_start,
+ COUNTIF(NOT is_internal AND event_name='ai_service_success' AND web_params_info.service_type='fashion_video') AS external_fashion_success
+ FROM base GROUP BY event_date,package_name
+), a AS (
+ SELECT event_date,COUNTIF(user_id IN (SELECT user_id FROM internal_users) AND is_active) AS active_internal_pseudo_days,
+ COUNTIF(user_id IN (SELECT user_id FROM internal_users) AND subscription.is_purchase) AS active_internal_purchase_pseudo_days
+ FROM `aidata2025.ads_collartfashion.ads_oper_user_active_di`
+ WHERE event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08' GROUP BY event_date
+)
+SELECT dm.*,a.* EXCEPT(event_date) FROM dm LEFT JOIN a USING(event_date) ORDER BY event_date,package_name

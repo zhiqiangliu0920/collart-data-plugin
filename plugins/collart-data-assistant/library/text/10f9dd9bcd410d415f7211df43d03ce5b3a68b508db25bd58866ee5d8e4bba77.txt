@@ -1,0 +1,78 @@
+-- 综合 AI 服务分析：成功率 + 错误码走势（Top10 国家，img2video/img2img，5/1-5/13）
+WITH top10_countries AS (
+  SELECT country
+  FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di`
+  WHERE event_date BETWEEN '2026-05-01' AND '2026-05-13'
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+  GROUP BY country
+  ORDER BY SUM(dau) DESC
+  LIMIT 10
+),
+submits AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS dt,
+    geo.country AS country,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'service_type') AS service_type,
+    event_name,
+    COUNT(*) AS cnt
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260501' AND '20260513'
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name IN ('ai_service_submit_start', 'ai_service_submit_success', 'ai_service_submit_failed')
+    AND (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'service_type') IN ('img2video', 'img2img')
+    AND geo.country IN (SELECT country FROM top10_countries)
+  GROUP BY 1, 2, 3, 4
+),
+failed_with_code AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS dt,
+    geo.country AS country,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'service_type') AS service_type,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'error_msg') AS error_msg,
+    COUNT(*) AS cnt
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260501' AND '20260513'
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'ai_service_submit_failed'
+    AND (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'service_type') IN ('img2video', 'img2img')
+    AND geo.country IN (SELECT country FROM top10_countries)
+  GROUP BY 1, 2, 3, 4
+)
+-- Part 1: 成功率趋势
+SELECT
+  'success_rate' AS analysis_type,
+  dt,
+  country,
+  service_type,
+  MAX(CASE WHEN event_name = 'ai_service_submit_start' THEN cnt END) AS submit_start,
+  MAX(CASE WHEN event_name = 'ai_service_submit_success' THEN cnt END) AS submit_success,
+  ROUND(MAX(CASE WHEN event_name = 'ai_service_submit_success' THEN cnt END) / NULLIF(MAX(CASE WHEN event_name = 'ai_service_submit_start' THEN cnt END), 0), 4) AS success_rate,
+  NULL AS error_code,
+  NULL AS error_count
+FROM submits
+GROUP BY dt, country, service_type
+
+UNION ALL
+
+-- Part 2: 错误码走势（提取 code）
+SELECT
+  'error_code' AS analysis_type,
+  dt,
+  country,
+  service_type,
+  NULL,
+  NULL,
+  NULL,
+  CASE
+    WHEN REGEXP_CONTAINS(error_msg, r'Response code:\s*(\d+)') THEN REGEXP_EXTRACT(error_msg, r'Response code:\s*(\d+)')
+    WHEN error_msg LIKE '%timeout%' THEN 'timeout'
+    WHEN error_msg LIKE '%Unable to resolve host%' THEN 'dns_error'
+    WHEN error_msg LIKE '%504%' THEN '504'
+    WHEN error_msg LIKE '%Read timed out%' THEN 'read_timeout'
+    ELSE 'other'
+  END AS error_code,
+  SUM(cnt) AS error_count
+FROM failed_with_code
+GROUP BY dt, country, service_type, error_code
+HAVING error_count >= 5
+ORDER BY analysis_type, dt, country, service_type;

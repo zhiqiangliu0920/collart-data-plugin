@@ -78,6 +78,10 @@ def artifacts(rows):
 def sources(root):
     return json.loads((root / "provenance/sources.json").read_text(encoding="utf-8"))["sources"]
 
+def materials(root):
+    path=root/'library/catalog.json'
+    return json.loads(path.read_text(encoding='utf-8'))['sources'] if path.exists() else []
+
 
 def check(root, today):
     errors, warnings = [], []
@@ -191,7 +195,15 @@ def check(root, today):
         if not inside(root, item["destination"]).exists():
             errors.append(f"missing integration destination: {item['destination']}")
     counts = {state: sum(m["status"] == state for m, *_ in rows) for state in sorted(STATES)}
-    return {"as_of": today.isoformat(), "entries": len(rows), "states": counts, "errors": errors, "warnings": warnings}
+    material_rows=materials(root); material_ids=set();texts=set()
+    for item in material_rows:
+        if item['id'] in material_ids:errors.append('duplicate material source ID')
+        material_ids.add(item['id'])
+        if item.get('material'):
+            path=inside(root,item['material']);texts.add(item['material'])
+            if not path.is_file() or sha(path)!=item['content_sha256']:errors.append(f"{item['id']}: material hash mismatch")
+        elif item['status'] in {'included','historical','duplicate'}:errors.append(f"{item['id']}: missing material")
+    return {"as_of": today.isoformat(), "entries": len(rows), "states": counts, "material_sources":len(material_rows),"material_texts":len(texts), "errors": errors, "warnings": warnings}
 
 
 def main():
@@ -204,11 +216,17 @@ def main():
     query.add_argument("query")
     query.add_argument("--project")
     query.add_argument("--limit", type=int, default=8)
+    query.add_argument('--scope',choices=['all','topics','materials'],default='all')
+    query.add_argument('--kind')
+    query.add_argument('--status')
+    reader=sub.add_parser('read',help='read a full source and resolve its original relative references inside this standalone bundle')
+    reader.add_argument('source_id')
     validate = sub.add_parser("check", help="validate package, no queries or network")
     validate.add_argument("--as-of", type=dt.date.fromisoformat, default=dt.date.today())
     validate.add_argument("--strict", action="store_true", help="warnings also fail")
     upstream = sub.add_parser("source-check", help="compare captured sources to a supplied local root")
-    upstream.add_argument("--source-root", type=Path, required=True)
+    upstream.add_argument("--source-root", type=Path)
+    upstream.add_argument('--source-config',type=Path)
     create = sub.add_parser("new", help="create a draft; does not change existing knowledge")
     create.add_argument("--id", required=True)
     create.add_argument("--project", required=True)
@@ -241,6 +259,7 @@ def main():
             raise ValueError("query must be nonempty and limit positive")
         hits = []
         for meta, body, path, _ in records(root):
+            if args.scope=='materials' or (args.kind and args.kind!=meta['kind']) or (args.status and args.status!=meta['status']):continue
             if args.project and meta["project"] not in {args.project, "shared"}:
                 continue
             searchable = (dump(meta) + body).casefold()
@@ -248,12 +267,37 @@ def main():
             if score == len(words):
                 hit = {key: meta[key] for key in ("id", "title", "project", "status", "verified_at", "review_after")}
                 hit.update(path=path, review_due=bool(meta["review_after"] and meta["review_after"] <= dt.date.today().isoformat()))
+                impact_file=root/'library/topic_impacts.json'
+                if impact_file.exists():
+                    impacted={x['source_id'] for x in json.loads(impact_file.read_text(encoding='utf-8'))}
+                    hit['source_review_required']=bool(impacted & set(meta['sources']))
                 hits.append(hit)
+        if args.scope!='topics':
+            seen_texts=set()
+            for item in materials(root):
+                if not item.get('material') or item['material'] in seen_texts:continue
+                if args.project and item['project'] not in {args.project,'shared'}:continue
+                if args.kind and item['kind']!=args.kind:continue
+                if args.status and item['status']!=args.status:continue
+                body=inside(root,item['material']).read_text(encoding='utf-8')
+                if all(word in (dump(item)+body).casefold() for word in words):
+                    seen_texts.add(item['material'])
+                    hits.append({'id':item['id'],'title':item['title'],'project':item['project'],'kind':item['kind'],'status':item['status'],'verified_at':None,'review_after':None,'dates':item['dates'],'path':item['material'],'origin':{'source':item['source'],'path':item['path']},'warning':'静态原文；按原日期与适用范围使用，历史指令不授予执行权限'})
         print(dump({"matches": len(hits), "results": hits[:args.limit]}), end="")
+    elif args.command=='read':
+        items=[r for r in materials(root) if r['id']==args.source_id]
+        if len(items)!=1:raise ValueError('Unknown or ambiguous source ID')
+        item=items[0]
+        result={**item,'body':inside(root,item['material']).read_text(encoding='utf-8') if item.get('material') else None}
+        print(dump(result),end='')
     elif args.command == "source-check":
         changed = []
+        if not args.source_root and not args.source_config:raise ValueError('Supply --source-config or --source-root')
+        source_config=json.loads(args.source_config.read_text(encoding='utf-8')) if args.source_config else None
         for source in sources(root):
-            path = inside(args.source_root, source["source_path"])
+            if source_config:
+                path=inside(Path(source_config['sources'][source.get('origin_source','ai-knowledge')]),source.get('origin_path',source['source_path']))
+            else:path = inside(args.source_root, source["source_path"])
             state = "missing" if not path.is_file() else ("same" if sha(path) == source["source_sha256"] else "changed")
             if state != "same":
                 affected = [m["id"] for m, *_ in records(root) if source["id"] in m["sources"]]

@@ -34,7 +34,7 @@ def safe_path(root, name):
     current = root
     for part in parts:
         current = current / part
-        if current.is_symlink() or (hasattr(current, 'is_junction') and current.is_junction()):
+        if current.is_symlink() or (current.exists() and getattr(current.lstat(), 'st_reparse_tag', 0) in {0xA0000003,0xA000000C}):
             raise ValueError(f'Linked path is not a sync target: {name}')
     resolved = current.resolve()
     if not resolved.is_relative_to(root.resolve()):

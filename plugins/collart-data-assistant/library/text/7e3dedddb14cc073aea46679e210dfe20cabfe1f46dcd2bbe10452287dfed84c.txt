@@ -1,0 +1,128 @@
+# Collart Android DAU 基线指标
+
+**文档版本**: 1.0  
+**更新日期**: 2026-04-20  
+**分析师**: 强强
+
+---
+
+## 📊 核心基线指标
+
+### 日活跃用户 (DAU)
+
+| 指标 | 数值范围 | 说明 |
+|:---|:---|:---|
+| **日均 DAU** | 50,000 - 80,000 | 正常运营区间 |
+| **健康下限** | 45,000 | 低于此值需关注 |
+| **优秀水平** | 100,000+ | 活动/推广后的峰值 |
+| **历史最高** | ~150,000 | 大型活动期间 |
+
+### 用户结构分布
+
+| 指标 | 正常范围 | 健康度评估 |
+|:---|:---|:---|
+| **新用户占比** | 30% - 40% | ✅ 健康获客水平 |
+| **新用户占比** | > 45% | ⚠️ 需关注留存质量 |
+| **新用户占比** | < 25% | ⚠️ 增长动力不足 |
+| **老用户占比** | 60% - 70% | ✅ 稳定基本盘 |
+
+---
+
+## 📈 波动规律
+
+### 周内波动模式
+
+| 时间段 | 典型特征 | 波动范围 |
+|:---|:---|:---|
+| **周一** | 低谷期 | 基准 -5% ~ -10% |
+| **周二-周四** | 平稳期 | 基准 ±5% |
+| **周五** | 开始回升 | 基准 +5% ~ +10% |
+| **周六** | 高峰期 | 基准 +15% ~ +25% |
+| **周日** | 次高峰 | 基准 +10% ~ +20% |
+
+### 节假日效应
+
+| 节日类型 | 典型影响 | 持续时间 |
+|:---|:---|:---|
+| **西方节日** (圣诞/元旦) | +20% ~ +40% | 3-7天 |
+| **黑色星期五** | +30% ~ +50% | 1-3天 |
+| **长假期间** | -10% ~ -20% | 假期全程 |
+
+---
+
+## 🚨 异常阈值
+
+### 需立即关注的异常
+
+| 异常类型 | 阈值 | 响应时间 |
+|:---|:---|:---|
+| **DAU 单日暴跌** | 环比下降 > 15% | 2小时内 |
+| **连续下滑** | 3天累计下降 > 20% | 当天 |
+| **新用户断崖** | 环比下降 > 30% | 4小时内 |
+| **老用户流失** | 环比下降 > 20% | 当天 |
+
+### 预警机制
+
+| 预警级别 | 条件 | 通知方式 |
+|:---|:---|:---|
+| 🔴 **P0 - 紧急** | DAU < 40,000 或单日下降 > 20% | 立即电话/飞书 |
+| 🟠 **P1 - 重要** | DAU < 45,000 或连续2天下降 | 飞书消息通知 |
+| 🟡 **P2 - 关注** | DAU < 50,000 或环比波动 > 10% | 日报中标注 |
+
+---
+
+## 📋 常用监控 SQL
+
+### 每日 DAU 监控
+
+```sql
+-- 过去7天 DAU 趋势
+SELECT
+  event_date,
+  COUNT(DISTINCT user_pseudo_id) AS dau,
+  COUNT(DISTINCT CASE WHEN is_new = 'New' THEN user_pseudo_id END) AS new_users,
+  COUNT(DISTINCT CASE WHEN is_new = 'Old' THEN user_pseudo_id END) AS old_users
+FROM `aidata2025.dwd.dwd_oper_user_collart_di`
+WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+  AND package_name = 'free.ai.photo.generator.collart.ai'
+GROUP BY event_date
+ORDER BY event_date DESC;
+```
+
+### 异常检测查询
+
+```sql
+-- 检测单日环比下降超过15%的日期
+WITH daily_dau AS (
+  SELECT
+    event_date,
+    COUNT(DISTINCT user_pseudo_id) AS dau
+  FROM `aidata2025.dwd.dwd_oper_user_collart_di`
+  WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+  GROUP BY event_date
+)
+SELECT
+  event_date,
+  dau,
+  LAG(dau) OVER (ORDER BY event_date) AS prev_dau,
+  ROUND((dau - LAG(dau) OVER (ORDER BY event_date)) / 
+    LAG(dau) OVER (ORDER BY event_date) * 100, 2) AS change_pct
+FROM daily_dau
+WHERE dau < LAG(dau) OVER (ORDER BY event_date) * 0.85  -- 下降超过15%
+ORDER BY event_date DESC;
+```
+
+---
+
+## 📚 相关文档
+
+- 数据源表: `knowledge/collart_android/tables/dwd_oper_user_collart_di.md`
+- 历史分析报告: `knowledge/collart_android/analysis_result/`
+- SQL 脚本目录: `knowledge/collart_android/sql-snippets/`
+
+---
+
+**维护者**: 强强  
+**审核**: 数据团队  
+**更新频率**: 月度回顾

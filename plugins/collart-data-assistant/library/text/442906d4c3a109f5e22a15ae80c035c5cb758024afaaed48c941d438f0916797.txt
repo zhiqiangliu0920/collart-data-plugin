@@ -1,0 +1,6 @@
+SELECT 
+  COUNT(DISTINCT user_pseudo_id) AS search_uv
+FROM `storytemplate-10a27.analytics_232977577.events_*`
+WHERE _TABLE_SUFFIX >= '20260306' AND _TABLE_SUFFIX <= '20260312'
+  AND app_info.id = 'free.ai.photo.generator.collart.ai'
+  AND event_name = 'action_search_template_start'

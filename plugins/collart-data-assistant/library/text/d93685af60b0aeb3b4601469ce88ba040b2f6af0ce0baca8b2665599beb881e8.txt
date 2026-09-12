@@ -1,0 +1,4 @@
+SELECT event_date, dau, is_new, is_vip
+FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di` 
+WHERE event_date = '2026-05-13'
+LIMIT 10;

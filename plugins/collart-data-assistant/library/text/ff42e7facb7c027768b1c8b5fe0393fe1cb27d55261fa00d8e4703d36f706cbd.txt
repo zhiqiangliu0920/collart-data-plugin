@@ -1,0 +1,91 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dwd.dwd_oper_user_order_event_di"
+table_cn_name: "客户端统计用户粒度订单表"
+metadata_status: "complete"
+field_status: "available"
+projects: ["android"]
+project_dirs: ["android"]
+warehouse_space: "aidata"
+layer: "DWD明细层"
+subject: "收入成本主题"
+secondary_subject: "客户端订阅数据"
+table_type: "事实表"
+grain: "每个账单id一行"
+primary_key: "evnet_order_id"
+update_frequency: "T+1 8:00"
+owner: "恬静"
+priority: "中"
+core_table: "否"
+query_cost: "低"
+source_record_ids: ["recvjweQ0w4FuM"]
+field_count: "8"
+---
+
+# 表名：aidata2025.dwd.dwd_oper_user_order_event_di
+
+> 表中文名：客户端统计用户粒度订单表
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：android；分层：DWD明细层；表类型：事实表；主题：收入成本主题；二级主题：客户端订阅数据；行粒度：每个账单id一行。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | 客户端统计用户粒度订单表 |
+| 项目 | android |
+| 数仓空间 | aidata |
+| 分层 | DWD明细层 |
+| 主题 | 收入成本主题 |
+| 二级主题 | 客户端订阅数据 |
+| 表类型 | 事实表 |
+| 行粒度 | 每个账单id一行 |
+| 主键字段 | evnet_order_id |
+| 核心表 | 否 |
+| 更新频率 | T+1 8:00 |
+| 维护人 | 恬静 |
+| 使用优先级 | 中 |
+| 查询成本 | 低 |
+| 数据来源 | 客户端埋点 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期分区 |
+| `event_order_id` | string | 主键 | 是 | 订单id |
+| `user_id` | string | 维度 | 是 | 用户id |
+| `user_pseudo_id` | string | 维度 | 是 | 用户id |
+| `traffic_src_type` | string | 维度 | 否 | 渠道类型 |
+| `app_name` | string | 维度 | 否 | app名称 |
+| `package_name` | string | 维度 | 否 | 包名 |
+| `adjust_id` | string | 维度 | 否 | adjust_id |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `event_date` | date | 时间 | 日期分区 |
+| `event_order_id` | string | 主键 | 订单id |
+| `user_id` | string | 维度 | 用户id |
+| `user_pseudo_id` | string | 维度 | 用户id |
+
+## 5. 典型使用场景
+- 用于追溯用户、订单、事件等明细事实，适合做深度诊断或二次聚合。
+
+## 6. 查询风险与注意事项
+- 存在 `event_date` 字段，按天查询时建议显式添加日期范围，避免全表扫描。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | aidata2025.dwd.dwd_oper_user_event_di |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdwd%2Fdaily%2Fh_dwd_oper_user_order_event_di.sqlx?project=aidata2025) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m10!1m4!4m3!1saidata2025!2sdwd!3sdwd_oper_delivery_adjust_user_di!1m4!4m3!1saidata2025!2sdwd!3sdwd_oper_user_order_event_di) |
+| 看板 | - |
+
+## 8. 待补充项
+- 暂无，后续可补充典型 SQL 和业务口径案例。

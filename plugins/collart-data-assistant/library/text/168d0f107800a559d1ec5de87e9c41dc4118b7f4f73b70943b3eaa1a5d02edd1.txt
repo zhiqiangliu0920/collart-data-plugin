@@ -1,0 +1,73 @@
+-- Collart Web 过去一周核心数据
+-- 查询时间: 2026-07-02
+-- 周期: 2026-06-25 至 2026-07-01
+
+WITH events AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS dau,
+    COUNTIF(event_name = 'session_start') AS sessions,
+    COUNTIF(event_name = 'page_view') AS pv_cnt,
+    COUNTIF(event_name = 'vip_subscribe_succeed') AS subs,
+    COUNTIF(event_name = 'ai_service_start') AS ai_start_events,
+    COUNT(DISTINCT CASE WHEN event_name = 'ai_service_start' THEN user_pseudo_id END) AS ai_start_users
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260625' AND '20260701'
+    AND app_info.id IS NULL
+  GROUP BY dt
+),
+rev AS (
+  SELECT
+    event_date AS dt,
+    COUNT(DISTINCT transaction_Id) AS orders,
+    ROUND(SUM(revneue), 2) AS revenue,
+    ROUND(SUM(CASE WHEN description_type = 'Subscription creation' AND revneue > 0 THEN revneue END), 2) AS rev_new_sub,
+    ROUND(SUM(CASE WHEN description_type = 'Subscription update' AND revneue > 0 THEN revneue END), 2) AS rev_renew,
+    ROUND(SUM(CASE WHEN description_type = 'credit' AND revneue > 0 THEN revneue END), 2) AS rev_credits
+  FROM (
+    SELECT DISTINCT event_date, transaction_Id, revneue, description_type
+    FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+  )
+  WHERE event_date BETWEEN '2026-06-25' AND '2026-07-01'
+    AND revneue > 0
+  GROUP BY dt
+),
+newu AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS new_users
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260625' AND '20260701'
+    AND app_info.id IS NULL
+    AND event_name = 'session_start'
+    AND user_pseudo_id NOT IN (
+      SELECT DISTINCT user_pseudo_id
+      FROM `storytemplate-10a27.analytics_232977577.events_*`
+      WHERE _TABLE_SUFFIX BETWEEN '20260101' AND '20260624'
+        AND app_info.id IS NULL
+        AND event_name = 'session_start'
+    )
+  GROUP BY dt
+)
+SELECT
+  e.dt,
+  e.dau,
+  e.sessions,
+  e.pv_cnt,
+  e.ai_start_users,
+  e.ai_start_events,
+  e.subs,
+  COALESCE(r.revenue, 0) AS revenue,
+  COALESCE(r.orders, 0) AS orders,
+  COALESCE(r.rev_new_sub, 0) AS rev_new_sub,
+  COALESCE(r.rev_renew, 0) AS rev_renew,
+  COALESCE(r.rev_credits, 0) AS rev_credits,
+  COALESCE(n.new_users, 0) AS new_users,
+  ROUND(e.subs * 100.0 / NULLIF(e.dau, 0), 2) AS sub_rate_pct,
+  ROUND(e.ai_start_users * 100.0 / NULLIF(e.dau, 0), 2) AS ai_usage_pct,
+  ROUND(COALESCE(r.revenue, 0) / NULLIF(e.dau, 0), 2) AS arpu,
+  ROUND(e.pv_cnt * 1.0 / NULLIF(e.dau, 0), 1) AS pv_per_user
+FROM events e
+LEFT JOIN rev r ON e.dt = r.dt
+LEFT JOIN newu n ON e.dt = n.dt
+ORDER BY e.dt;

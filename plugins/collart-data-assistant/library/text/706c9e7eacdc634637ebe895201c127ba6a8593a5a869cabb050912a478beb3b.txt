@@ -1,0 +1,67 @@
+WITH daily_dau AS (
+  SELECT 
+    DATE(TIMESTAMP_MICROS(event_timestamp)) AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS dau
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= '20260306' AND _TABLE_SUFFIX <= '20260312'
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'session_start'
+  GROUP BY dt
+),
+search_uv AS (
+  SELECT 
+    DATE(TIMESTAMP_MICROS(event_timestamp)) AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS uv
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= '20260306' AND _TABLE_SUFFIX <= '20260312'
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'action_search_template_start'
+  GROUP BY dt
+),
+banner_uv AS (
+  SELECT 
+    DATE(TIMESTAMP_MICROS(event_timestamp)) AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS uv
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= '20260306' AND _TABLE_SUFFIX <= '20260312'
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'material_banner_did_click'
+  GROUP BY dt
+),
+video_uv AS (
+  SELECT 
+    DATE(TIMESTAMP_MICROS(event_timestamp)) AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS uv
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= '20260306' AND _TABLE_SUFFIX <= '20260312'
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'aivideo_edit_show'
+  GROUP BY dt
+),
+image_uv AS (
+  SELECT 
+    DATE(TIMESTAMP_MICROS(event_timestamp)) AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS uv
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= '20260306' AND _TABLE_SUFFIX <= '20260312'
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'aiimage_edit_show'
+  GROUP BY dt
+)
+SELECT 
+  d.dt,
+  d.dau,
+  s.uv AS search_uv,
+  ROUND(s.uv * 100.0 / d.dau, 2) AS search_ctr_pct,
+  b.uv AS banner_uv,
+  ROUND(b.uv * 100.0 / d.dau, 2) AS banner_ctr_pct,
+  v.uv AS video_uv,
+  ROUND(v.uv * 100.0 / d.dau, 2) AS video_ctr_pct,
+  i.uv AS image_uv,
+  ROUND(i.uv * 100.0 / d.dau, 2) AS image_ctr_pct
+FROM daily_dau d
+LEFT JOIN search_uv s ON d.dt = s.dt
+LEFT JOIN banner_uv b ON d.dt = b.dt
+LEFT JOIN video_uv v ON d.dt = v.dt
+LEFT JOIN image_uv i ON d.dt = i.dt
+ORDER BY d.dt

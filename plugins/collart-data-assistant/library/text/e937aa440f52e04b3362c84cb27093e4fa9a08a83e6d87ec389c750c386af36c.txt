@@ -1,0 +1,51 @@
+# 原始埋点与事件表
+
+经营指标优先用新 ADS；本文说明 **何时下钻原始埋点**、四端 GA4/`events_*` 位置、DWD/DM 血缘、核心字段与关键事件。
+
+## 何时用哪一层
+
+| 场景 | 用哪张 |
+|------|--------|
+| DAU/DNU/留存/订阅/收入/渠道国家 | ADS 指标表（见 [table-routing.md](table-routing.md)） |
+| 已配置热漏斗（首页/生成/保存等） | ADS `event_metric_*` / daily 事件 STRUCT |
+| **新事件探查、参数明细、未进 ADS 的埋点** | GA4 `events_*` 或 DWD 事件表 |
+| 用户×日语义宽表 / 归因已加工 | DM `dm_collart_*_user_event_di` |
+| ASA keyword/campaign 生命周期（iOS） | 优先 active/profile；缺参再扫 GA4 finalized |
+
+```
+GA4 events_*  ──►  DWD dwd_oper_user_event(_params/_properties)_di
+                         │
+                         ▼
+                   DM dm_collart_*_user_event_di
+                         │
+          ┌──────────────┼──────────────┐
+          ▼              ▼              ▼
+       active      user_event_metric   profile
+                         │
+                         ▼
+              event_metric_attr / country → daily
+```
+
+**原则**：能 ADS 就不扫 `events_*`；扫 `events_*` 必须守红线（见下）。
+
+## 四端原始埋点表（GA4）
+
+| 端 | 全限定名 | 过滤 | 备注 |
+|----|----------|------|------|
+| Android | `storytemplate-10a27.analytics_232977577.events_*` | `app_info.id = 'free.ai.photo.generator.collart.ai'` | 与 Web **同表**，靠 app_info 区分 |
+| Web | 同上 | `app_info.id IS NULL` | 主站 |
+| Fashion | 同上 | `app_info.id IS NULL` **且** `page_location` 含 studio/fashion；或加工后 `package_name='collart_fashion'` | 与 Web 共用 GA4 |
+| iOS | `vidart-8b8ca.analytics_528583115.events_*` | bundle = `ai.photo.video.generator.fotos.ai.image.picture.editor.app.free`；排除 `app_info.install_source = 'manual_install'`、debug 包 | **不在 storytemplate**；导出自约 2026-05-29 |
+
+表名模式：`events_YYYYMMDD`；当日实时：`events_intraday_YYYYMMDD`（未 finalize，勿当正式数）。
+
+## 查询红线（events_*）
+
+| 规则 | 说明 |
+|------|------|
+| 分区 | **必须** `_TABLE_SUFFIX BETWEEN 'YYYYMMDD' AND 'YYYYMMDD'`；禁止只用 `event_date` 过滤；禁止 `>=`（会扫到 `intraday_*`） |
+| 跨度 | 单次 ≤ **30 天** |
+| 端过滤 | Android / Web / Fashion / iOS 按上表过滤，勿混端 |
+| 参数提取 | 先判断字段在顶层还是 `event_params`/`user_properties`；单 key 用标量子查询，勿无脑全量 UNNEST |
+| 粒度 | 一行=一次事件；UNNEST 会膨胀行数 |
+| 凭证 | 默认 `aidata2025` 可跨读 storytemplate / vidart |

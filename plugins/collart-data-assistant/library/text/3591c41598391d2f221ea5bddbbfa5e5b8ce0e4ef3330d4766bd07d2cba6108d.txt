@@ -1,0 +1,134 @@
+-- Collart Android 首订率分析 SQL
+-- 分析时间范围：过去30天 (2026-03-17 至 2026-04-21)
+-- 目标：定位首订率下降原因
+
+-- ============================================
+-- 1. 每日首订率趋势（核心指标）
+-- ============================================
+WITH daily_first_sub AS (
+  SELECT
+    dt,
+    COUNT(DISTINCT user_pseudo_id) as new_users,
+    COUNT(DISTINCT CASE WHEN event_name = 'subscription_first' THEN user_pseudo_id END) as first_sub_users
+  FROM `storytemplate-10a27.analytics_232977577.events_2026*`
+  WHERE _TABLE_SUFFIX BETWEEN '0317' AND '0421'
+    AND event_name IN ('first_open', 'subscription_first')
+    AND platform = 'ANDROID'
+  GROUP BY dt
+)
+SELECT
+  dt,
+  new_users,
+  first_sub_users,
+  ROUND(100.0 * first_sub_users / NULLIF(new_users, 0), 2) as first_sub_rate,
+  -- 7日移动平均
+  ROUND(AVG(100.0 * first_sub_users / NULLIF(new_users, 0)) OVER (
+    ORDER BY dt ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+  ), 2) as ma7_first_sub_rate
+FROM daily_first_sub
+WHERE new_users > 0
+ORDER BY dt DESC;
+
+-- ============================================
+-- 2. 分渠道首订率（定位渠道问题）
+-- ============================================
+WITH channel_first_sub AS (
+  SELECT
+    traffic_source.name as channel,
+    COUNT(DISTINCT user_pseudo_id) as new_users,
+    COUNT(DISTINCT CASE WHEN event_name = 'subscription_first' THEN user_pseudo_id END) as first_sub_users
+  FROM `storytemplate-10a27.analytics_232977577.events_2026*`
+  WHERE _TABLE_SUFFIX BETWEEN '0401' AND '0421'  -- 最近3周
+    AND event_name IN ('first_open', 'subscription_first')
+    AND platform = 'ANDROID'
+  GROUP BY traffic_source.name
+)
+SELECT
+  channel,
+  new_users,
+  first_sub_users,
+  ROUND(100.0 * first_sub_users / NULLIF(new_users, 0), 2) as first_sub_rate
+FROM channel_first_sub
+WHERE new_users >= 100  -- 过滤样本量太小的渠道
+ORDER BY new_users DESC;
+
+-- ============================================
+-- 3. 分国家首订率（定位地区问题）
+-- ============================================
+WITH geo_first_sub AS (
+  SELECT
+    geo.country as country,
+    COUNT(DISTINCT user_pseudo_id) as new_users,
+    COUNT(DISTINCT CASE WHEN event_name = 'subscription_first' THEN user_pseudo_id END) as first_sub_users
+  FROM `storytemplate-10a27.analytics_232977577.events_2026*`
+  WHERE _TABLE_SUFFIX BETWEEN '0401' AND '0421'
+    AND event_name IN ('first_open', 'subscription_first')
+    AND platform = 'ANDROID'
+  GROUP BY geo.country
+)
+SELECT
+  country,
+  new_users,
+  first_sub_users,
+  ROUND(100.0 * first_sub_users / NULLIF(new_users, 0), 2) as first_sub_rate
+FROM geo_first_sub
+WHERE new_users >= 100
+ORDER BY new_users DESC;
+
+-- ============================================
+-- 4. 订阅转化漏斗分析
+-- ============================================
+WITH sub_funnel AS (
+  SELECT
+    user_pseudo_id,
+    -- 是否触发订阅入口
+    MAX(CASE WHEN event_name = 'subscription_entry_show' THEN 1 ELSE 0 END) as entry_show,
+    -- 是否进入订阅页
+    MAX(CASE WHEN event_name = 'subscription_page_view' THEN 1 ELSE 0 END) as page_view,
+    -- 是否点击订阅
+    MAX(CASE WHEN event_name = 'subscription_click' THEN 1 ELSE 0 END) as sub_click,
+    -- 是否完成首订
+    MAX(CASE WHEN event_name = 'subscription_first' THEN 1 ELSE 0 END) as first_sub
+  FROM `storytemplate-10a27.analytics_232977577.events_2026*`
+  WHERE _TABLE_SUFFIX BETWEEN '0408' AND '0421'  -- 最近2周
+    AND platform = 'ANDROID'
+  GROUP BY user_pseudo_id
+)
+SELECT
+  COUNT(DISTINCT user_pseudo_id) as total_users,
+  SUM(entry_show) as entry_show_users,
+  SUM(page_view) as page_view_users,
+  SUM(sub_click) as sub_click_users,
+  SUM(first_sub) as first_sub_users,
+  -- 转化率
+  ROUND(100.0 * SUM(entry_show) / COUNT(DISTINCT user_pseudo_id), 2) as entry_show_rate,
+  ROUND(100.0 * SUM(page_view) / NULLIF(SUM(entry_show), 0), 2) as entry_to_page_rate,
+  ROUND(100.0 * SUM(sub_click) / NULLIF(SUM(page_view), 0), 2) as page_to_click_rate,
+  ROUND(100.0 * SUM(first_sub) / NULLIF(SUM(sub_click), 0), 2) as click_to_sub_rate
+FROM sub_funnel;
+
+-- ============================================
+-- 5. 对比分析：下降前后对比
+-- ============================================
+WITH period_comparison AS (
+  SELECT
+    CASE 
+      WHEN _TABLE_SUFFIX BETWEEN '0324' AND '0406' THEN 'period_before'  -- 下降前2周
+      WHEN _TABLE_SUFFIX BETWEEN '0407' AND '0421' THEN 'period_after'  -- 下降后2周
+    END as period,
+    COUNT(DISTINCT user_pseudo_id) as new_users,
+    COUNT(DISTINCT CASE WHEN event_name = 'subscription_first' THEN user_pseudo_id END) as first_sub_users
+  FROM `storytemplate-10a27.analytics_232977577.events_2026*`
+  WHERE _TABLE_SUFFIX BETWEEN '0324' AND '0421'
+    AND event_name IN ('first_open', 'subscription_first')
+    AND platform = 'ANDROID'
+  GROUP BY period
+)
+SELECT
+  period,
+  new_users,
+  first_sub_users,
+  ROUND(100.0 * first_sub_users / NULLIF(new_users, 0), 2) as first_sub_rate
+FROM period_comparison
+WHERE period IS NOT NULL
+ORDER BY period;

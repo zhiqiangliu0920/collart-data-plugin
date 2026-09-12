@@ -1,0 +1,123 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "pubdata2025.ods.ods_apple_subscriber_1d"
+table_cn_name: "苹果商店收入与订阅事件报告3"
+metadata_status: "complete"
+field_status: "available"
+projects: ["ios"]
+project_dirs: ["ios"]
+warehouse_space: "pubdata"
+layer: "ODS原始层"
+subject: "收入成本主题"
+secondary_subject: "ios订阅收入"
+table_type: "事实表"
+grain: ""
+primary_key: ""
+update_frequency: ""
+owner: "恬静"
+priority: ""
+core_table: "否"
+query_cost: ""
+source_record_ids: ["recvh8LX79cxOO"]
+field_count: "30"
+---
+
+# 表名：pubdata2025.ods.ods_apple_subscriber_1d
+
+> 表中文名：苹果商店收入与订阅事件报告3
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：ios；分层：ODS原始层；表类型：事实表；主题：收入成本主题；二级主题：ios订阅收入。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | 苹果商店收入与订阅事件报告3 |
+| 项目 | ios |
+| 数仓空间 | pubdata |
+| 分层 | ODS原始层 |
+| 主题 | 收入成本主题 |
+| 二级主题 | ios订阅收入 |
+| 表类型 | 事实表 |
+| 行粒度 | - |
+| 主键字段 | - |
+| 核心表 | 否 |
+| 更新频率 | - |
+| 维护人 | 恬静 |
+| 使用优先级 | - |
+| 查询成本 | - |
+| 数据来源 | - |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `stats_date` | date | 时间 | 是 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `event_date` | date | 时间 | 是 | 日期 |
+| `app_name` | string | 维度 | 是 | 产品名 |
+| `app_apple_id` | string | 主键 | 是 | 苹果商店给app 应用定义的唯一id |
+| `subscription_name` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `subscription_apple_id` | int | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `subscription_group_id` | int | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `standard_subscription_duration` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `subscription_offer_name` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `promotional_offer_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `subscription_offer_type` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `subscription_offer_duration` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `marketing_opt_in_duration` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `customer_price` | float | 指标 | 是 | 订阅价格 |
+| `customer_currency` | string | 维度 | 否 | 汇率 |
+| `developer_proceeds` | float | 指标 | 否 | 收入 |
+| `proceeds_currency` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `preserved_pricing` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `proceeds_reason` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `client` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `device` | string | 维度 | 否 | 设备 |
+| `country` | string | 维度 | 是 | 国家 |
+| `subscriber_id` | int | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `subscriber_id_reset` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `refund` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `purchase_date` | date | 时间 | 是 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `units` | float | 指标 | 否 | 浮点型指标字段，用于统计金额、比率或均值。 |
+| `region` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `project` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `stats_date` | date | 时间 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `package_name` | string | 主键 | 包名 |
+| `event_date` | date | 时间 | 日期 |
+| `app_name` | string | 维度 | 产品名 |
+| `app_apple_id` | string | 主键 | 苹果商店给app 应用定义的唯一id |
+| `subscription_apple_id` | int | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `subscription_group_id` | int | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `promotional_offer_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `customer_price` | float | 指标 | 订阅价格 |
+| `country` | string | 维度 | 国家 |
+| `subscriber_id` | int | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `purchase_date` | date | 时间 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+
+## 5. 典型使用场景
+- 用于原始数据核对和异常排查，不建议作为常规分析的首选表。
+
+## 6. 查询风险与注意事项
+- 存在 `event_date` 字段，按天查询时建议显式添加日期范围，避免全表扫描。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | - |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | - |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=pubdata2025&ws=!1m5!1m4!4m3!1spubdata2025!2sods!3sods_apple_subscriber_1d) |
+| 任务地址 | - |
+| 看板 | - |
+
+## 8. 待补充项
+- 补充 `行粒度`。
+- 补充 `主键字段`。
+- 补充 `更新频率`。

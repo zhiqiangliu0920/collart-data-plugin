@@ -1,0 +1,13 @@
+# Collart Web 业务知识
+
+完整入口：[项目资料索引](../catalog/projects/collart_web.md)。本次整理保留业务正文及历史日期，未重新验证表可用性。
+
+| 类型 | 维护位置 |
+|---|---|
+| 表与字段 | [tables](tables/) |
+| 指标口径 | [indicators](indicators/) |
+| 产品和事件 | [product](product/) |
+| 分析方法 | [analysis_playbooks](analysis_playbooks/) |
+| 可复用查询 | [sql_presets](sql_presets/) |
+
+跨端口径见 [公司资料](../catalog/projects/company.md)。历史查询和适用范围见 [SQL 入口](../catalog/types/sql.md)。

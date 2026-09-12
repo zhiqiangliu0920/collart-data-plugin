@@ -1,0 +1,27 @@
+from google.cloud import bigquery
+from google.oauth2 import service_account
+
+credentials = service_account.Credentials.from_service_account_file(
+    r'knowledge\service-accounts\aidata2025.json'
+)
+client = bigquery.Client(credentials=credentials, project='aidata2025')
+
+with open(r'knowledge\collart_android\sql-snippets\ai_analysis_comprehensive.sql', 'r', encoding='utf-8') as f:
+    query = f.read()
+
+results = client.query(query).result()
+rows = list(results)
+
+filepath = r'knowledge\collart_android\analysis_result\ai_analysis_20260514.csv'
+with open(filepath, 'w', encoding='utf-8') as f:
+    f.write('analysis_type,dt,country,service_type,submit_start,submit_success,success_rate,error_code,error_count\n')
+    for row in rows:
+        ss = row.submit_start or ''
+        su = row.submit_success or ''
+        sr = row.success_rate or ''
+        ec = row.error_code or ''
+        en = row.error_count or ''
+        f.write(f'{row.analysis_type},{row.dt},{row.country},{row.service_type},{ss},{su},{sr},{ec},{en}\n')
+
+print(f'Total rows: {len(rows)}')
+print(f'Saved to: {filepath}')

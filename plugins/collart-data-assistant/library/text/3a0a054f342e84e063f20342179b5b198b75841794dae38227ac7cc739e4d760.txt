@@ -1,0 +1,269 @@
+#!/usr/bin/env python3
+"""
+VidArt User Paid Behavior Analysis
+Data: vidart-8b8ca.analytics_528583115.events_*
+Exclude internal test users: app_info.install_source <> "manual_install"
+Purchase event: vip_subscribe_succeed
+"""
+
+import os
+from datetime import datetime
+from google.cloud import bigquery
+from google.oauth2 import service_account
+
+os.environ['PYTHONIOENCODING'] = 'utf-8'
+
+KEY_PATH = r"{LOCAL_PATH}"
+PROJECT_ID = "vidart-8b8ca"
+
+def get_client():
+    creds = service_account.Credentials.from_service_account_file(
+        KEY_PATH, scopes=["https://www.googleapis.com/auth/cloud-platform"],
+    )
+    return bigquery.Client(credentials=creds, project=PROJECT_ID)
+
+def fmt(val):
+    if val is None:
+        return "NULL"
+    if isinstance(val, float):
+        return f"{val:.2f}"
+    return str(val)
+
+def print_table(rows, headers, title):
+    print(f"\n{'='*70}")
+    print(f"[{title}]")
+    print('='*70)
+    if not rows:
+        print("  (no data)")
+        return
+    # Width calc
+    widths = [len(h) for h in headers]
+    for row in rows:
+        for i, v in enumerate(row):
+            widths[i] = max(widths[i], len(fmt(v)))
+    # Header
+    sep = "+-" + "-+-".join("-"*w for w in widths) + "-+"
+    print(sep)
+    header_line = "| " + " | ".join(h.ljust(w) for h, w in zip(headers, widths)) + " |"
+    print(header_line)
+    print(sep)
+    for row in rows:
+        line = "| " + " | ".join(fmt(v).ljust(w) for v, w in zip(row, widths)) + " |"
+        print(line)
+    print(sep)
+    print(f"  Total rows: {len(rows)}")
+
+def run_query(client, sql, title, headers):
+    try:
+        rows = list(client.query(sql).result())
+        data = [tuple(row.values()) for row in rows]
+        print_table(data, headers, title)
+        return data
+    except Exception as e:
+        print(f"\n{'='*70}")
+        print(f"[{title}]")
+        print('='*70)
+        print(f"  Error: {e}")
+        return []
+
+# ========== Queries ==========
+
+SQL_BASIC = """
+SELECT
+  COUNT(DISTINCT user_pseudo_id) as paid_users,
+  COUNT(*) as total_purchases,
+  COUNT(DISTINCT event_date) as purchase_days,
+  ROUND(COUNT(*) * 1.0 / NULLIF(COUNT(DISTINCT user_pseudo_id), 0), 2) as avg_per_user,
+  MIN(PARSE_DATE('%Y%m%d', event_date)) as earliest_date,
+  MAX(PARSE_DATE('%Y%m%d', event_date)) as latest_date
+FROM `vidart-8b8ca.analytics_528583115.events_*`
+WHERE event_name = 'vip_subscribe_succeed'
+  AND app_info.install_source <> 'manual_install'
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+"""
+
+SQL_DAILY = """
+SELECT
+  event_date,
+  COUNT(DISTINCT user_pseudo_id) as daily_paid_users,
+  COUNT(*) as daily_purchases
+FROM `vidart-8b8ca.analytics_528583115.events_*`
+WHERE event_name = 'vip_subscribe_succeed'
+  AND app_info.install_source <> 'manual_install'
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY))
+GROUP BY event_date
+ORDER BY event_date DESC
+LIMIT 31
+"""
+
+SQL_VIP = """
+SELECT
+  (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'vip_level') as vip_level,
+  COUNT(DISTINCT user_pseudo_id) as users,
+  COUNT(*) as events,
+  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) as pct
+FROM `vidart-8b8ca.analytics_528583115.events_*`
+WHERE event_name = 'vip_subscribe_succeed'
+  AND app_info.install_source <> 'manual_install'
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+GROUP BY vip_level
+ORDER BY events DESC
+"""
+
+SQL_PRICE = """
+SELECT
+  (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'price') as price,
+  COUNT(DISTINCT user_pseudo_id) as users,
+  COUNT(*) as events,
+  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) as pct
+FROM `vidart-8b8ca.analytics_528583115.events_*`
+WHERE event_name = 'vip_subscribe_succeed'
+  AND app_info.install_source <> 'manual_install'
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+GROUP BY price
+ORDER BY events DESC
+"""
+
+SQL_LAG = """
+WITH first_events AS (
+  SELECT
+    user_pseudo_id,
+    MIN(CASE WHEN event_name = 'first_open' THEN TIMESTAMP_MICROS(event_timestamp) END) as first_open,
+    MIN(CASE WHEN event_name = 'vip_subscribe_succeed' THEN TIMESTAMP_MICROS(event_timestamp) END) as first_purchase
+  FROM `vidart-8b8ca.analytics_528583115.events_*`
+  WHERE event_name IN ('first_open', 'vip_subscribe_succeed')
+    AND app_info.install_source <> 'manual_install'
+    AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+  GROUP BY user_pseudo_id
+  HAVING first_purchase IS NOT NULL
+)
+SELECT
+  CASE
+    WHEN lag_hr < 1 THEN '0-1hr'
+    WHEN lag_hr < 24 THEN '1-24hr'
+    WHEN lag_hr < 72 THEN '1-3d'
+    WHEN lag_hr < 168 THEN '3-7d'
+    WHEN lag_hr < 720 THEN '7-30d'
+    ELSE '30d+'
+  END as bucket,
+  COUNT(*) as users,
+  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) as pct
+FROM (SELECT user_pseudo_id, TIMESTAMP_DIFF(first_purchase, first_open, HOUR) as lag_hr FROM first_events)
+GROUP BY bucket
+ORDER BY MIN(lag_hr)
+"""
+
+SQL_REPURCHASE = """
+WITH user_purchases AS (
+  SELECT user_pseudo_id, COUNT(*) as cnt
+  FROM `vidart-8b8ca.analytics_528583115.events_*`
+  WHERE event_name = 'vip_subscribe_succeed'
+    AND app_info.install_source <> 'manual_install'
+    AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+  GROUP BY user_pseudo_id
+)
+SELECT
+  CASE WHEN cnt=1 THEN '1x' WHEN cnt=2 THEN '2x' WHEN cnt<=5 THEN '3-5x'
+       WHEN cnt<=10 THEN '6-10x' ELSE '10x+' END as freq,
+  COUNT(*) as users,
+  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) as pct
+FROM user_purchases
+GROUP BY freq
+ORDER BY MIN(cnt)
+"""
+
+SQL_COUNTRY = """
+SELECT
+  IFNULL(geo.country, 'Unknown') as country,
+  COUNT(DISTINCT user_pseudo_id) as users,
+  COUNT(*) as events,
+  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) as pct
+FROM `vidart-8b8ca.analytics_528583115.events_*`
+WHERE event_name = 'vip_subscribe_succeed'
+  AND app_info.install_source <> 'manual_install'
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+GROUP BY country
+ORDER BY events DESC
+LIMIT 20
+"""
+
+SQL_DEVICE = """
+SELECT
+  IFNULL(device.mobile_brand_name, 'Unknown') as brand,
+  IFNULL(device.operating_system, 'Unknown') as os,
+  COUNT(DISTINCT user_pseudo_id) as users,
+  COUNT(*) as events
+FROM `vidart-8b8ca.analytics_528583115.events_*`
+WHERE event_name = 'vip_subscribe_succeed'
+  AND app_info.install_source <> 'manual_install'
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+GROUP BY brand, os
+ORDER BY events DESC
+LIMIT 15
+"""
+
+SQL_TRAFFIC = """
+SELECT
+  IFNULL(traffic_source.source, 'Unknown') as source,
+  IFNULL(traffic_source.medium, 'Unknown') as medium,
+  COUNT(DISTINCT user_pseudo_id) as users,
+  COUNT(*) as events
+FROM `vidart-8b8ca.analytics_528583115.events_*`
+WHERE event_name = 'vip_subscribe_succeed'
+  AND app_info.install_source <> 'manual_install'
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+GROUP BY source, medium
+ORDER BY events DESC
+LIMIT 15
+"""
+
+SQL_TOP20 = """
+SELECT
+  user_pseudo_id,
+  COUNT(*) as purchase_cnt,
+  COUNT(DISTINCT event_date) as purchase_days
+FROM `vidart-8b8ca.analytics_528583115.events_*`
+WHERE event_name = 'vip_subscribe_succeed'
+  AND app_info.install_source <> 'manual_install'
+  AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+GROUP BY user_pseudo_id
+ORDER BY purchase_cnt DESC
+LIMIT 20
+"""
+
+def main():
+    client = get_client()
+    print("="*70)
+    print("VidArt User Paid Behavior Analysis")
+    print("="*70)
+    print(f"Project  : vidart-8b8ca")
+    print(f"Dataset  : analytics_528583115.events_*")
+    print(f"Event    : vip_subscribe_succeed")
+    print(f"Filter   : app_info.install_source <> 'manual_install'")
+    print(f"Period   : Last 90 days")
+    print(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    print("="*70)
+
+    run_query(client, SQL_BASIC, "1. Basic Paid Metrics (Last 90 Days)",
+              ["paid_users", "total_purchases", "purchase_days", "avg_per_user", "earliest_date", "latest_date"])
+    run_query(client, SQL_DAILY, "2. Daily Paid Trend (Last 30 Days)",
+              ["event_date", "daily_paid_users", "daily_purchases"])
+    run_query(client, SQL_VIP, "3. VIP Subscription Level Distribution",
+              ["vip_level", "users", "events", "pct"])
+    run_query(client, SQL_PRICE, "4. Price / Amount Distribution",
+              ["price", "users", "events", "pct"])
+    run_query(client, SQL_LAG, "5. First Install -> First Purchase Lag",
+              ["bucket", "users", "pct"])
+    run_query(client, SQL_REPURCHASE, "6. Repurchase Frequency Distribution",
+              ["freq", "users", "pct"])
+    run_query(client, SQL_COUNTRY, "7. Country / Region (Top 20)",
+              ["country", "users", "events", "pct"])
+    run_query(client, SQL_DEVICE, "8. Device / OS (Top 15)",
+              ["brand", "os", "users", "events"])
+    run_query(client, SQL_TRAFFIC, "9. Traffic Source Analysis",
+              ["source", "medium", "users", "events"])
+    run_query(client, SQL_TOP20, "10. Top 20 High-Frequency Paid Users",
+              ["user_pseudo_id", "purchase_cnt", "purchase_days"])
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""Test cross-project BigQuery access"""
+import os
+from google.cloud import bigquery
+from google.oauth2 import service_account
+
+# Test 1: Try aidata2025 to query vidart data
+print("=== Test 1: aidata2025 -> vidart ===")
+try:
+    creds = service_account.Credentials.from_service_account_file(
+        r"{LOCAL_PATH}",
+        scopes=["https://www.googleapis.com/auth/cloud-platform"],
+    )
+    client = bigquery.Client(credentials=creds, project="vidart-8b8ca")
+    sql = """SELECT COUNT(*) as c FROM `vidart-8b8ca.analytics_528583115.events_*` WHERE _TABLE_SUFFIX >= "20250601" LIMIT 1"""
+    rows = list(client.query(sql).result())
+    print("SUCCESS:", rows[0].c, "rows found")
+except Exception as e:
+    print("FAIL:", str(e)[:200])
+
+# Test 2: Try vidart credentials with aidata project as billing
+print("\n=== Test 2: vidart key + aidata billing ===")
+try:
+    creds = service_account.Credentials.from_service_account_file(
+        r"{LOCAL_PATH}",
+        scopes=["https://www.googleapis.com/auth/cloud-platform"],
+    )
+    # Use aidata as billing project but query vidart
+    client = bigquery.Client(credentials=creds, project="aidata2025")
+    job_config = bigquery.QueryJobConfig()
+    job_config.default_dataset = None
+    sql = """SELECT COUNT(*) as c FROM `vidart-8b8ca.analytics_528583115.events_*` WHERE _TABLE_SUFFIX >= "20250601" LIMIT 1"""
+    query_job = client.query(sql, job_config=job_config, project="vidart-8b8ca")
+    rows = list(query_job.result())
+    print("SUCCESS:", rows[0].c, "rows found")
+except Exception as e:
+    print("FAIL:", str(e)[:200])
+
+# Test 3: Check what projects are accessible
+print("\n=== Test 3: Check accessible datasets ===")
+try:
+    creds = service_account.Credentials.from_service_account_file(
+        r"{LOCAL_PATH}",
+        scopes=["https://www.googleapis.com/auth/cloud-platform"],
+    )
+    client = bigquery.Client(credentials=creds, project="aidata2025")
+    datasets = list(client.list_datasets(project="vidart-8b8ca"))
+    print(f"Datasets in vidart-8b8ca: {len(datasets)}")
+    for ds in datasets[:5]:
+        print(f"  - {ds.dataset_id}")
+except Exception as e:
+    print("FAIL:", str(e)[:200])
+
+# Test 4: Try vidart key with default project
+print("\n=== Test 4: vidart key, query vidart (default project) ===")
+try:
+    creds = service_account.Credentials.from_service_account_file(
+        r"{LOCAL_PATH}",
+        scopes=["https://www.googleapis.com/auth/cloud-platform"],
+    )
+    client = bigquery.Client(credentials=creds, project="vidart-8b8ca")
+    sql = """SELECT COUNT(*) as c FROM `vidart-8b8ca.analytics_528583115.events_*` WHERE _TABLE_SUFFIX >= "20250601" LIMIT 1"""
+    rows = list(client.query(sql).result())
+    print("SUCCESS:", rows[0].c, "rows found")
+except Exception as e:
+    print("FAIL:", str(e)[:200])

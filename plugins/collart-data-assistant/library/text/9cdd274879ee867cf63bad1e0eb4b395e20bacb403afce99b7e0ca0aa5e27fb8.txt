@@ -1,0 +1,27 @@
+# Collart iOS 业务知识库
+
+> **2026-06-23 更名**：原 `vidart/` 目录。  
+> **GCP 项目 id**：`vidart-8b8ca`（凭证见 `credential_index.json` → `collart_ios`）
+
+标准子目录：`tables/`、`indicators/`、`sql-snippets/`、`analysis_playbooks/` 等（待逐步补齐）。
+
+## 项目标识（查数必读）
+
+| 项 | 值 |
+|---|---|
+| bundle id / `app_info.id` / `package_name` | `ai.photo.video.generator.fotos.ai.image.picture.editor.app.free` |
+| GA4 事件表 | `vidart-8b8ca.analytics_528583115.events_*`（导出自 2026-05-29，**不在 storytemplate 项目**） |
+| 内测过滤 | `app_info.install_source <> 'manual_install'`，排除 debug 包 `com.reshotai.debug.aa.bb.cc` |
+| BQ 凭证 | 用默认 `aidata2025` 即可跨读 vidart-8b8ca |
+| 加工层 | 历史记录曾标记 `ads_collartios` 为空；与后续四端 ADS 文档不一致，不能继续据此断定无加工层。当前查询先核对分区与字段，见公司层 ADS 红线 |
+
+## 已建口径
+
+| 文档 | 内容 |
+|---|---|
+| [indicators/asa_delivery.md](indicators/asa_delivery.md) | ASA 投放：成本去重红线、归因三级兜底、收入净额口径、表可用性清单 |
+| [indicators/russia_orders_payment.md](indicators/russia_orders_payment.md) | iOS / Android 俄罗斯支付：RUB、北京日；HI 可用性按正文历史与新版 SQL 核对 |
+| [sql_presets/asa_delivery_1d.sql](sql_presets/asa_delivery_1d.sql) | ASA 投放底层数据（日 × campaign × keyword × 国家） |
+| [sql_presets/russia_payment_broadcast.sql](sql_presets/russia_payment_broadcast.sql) | iOS / Android 俄罗斯付费播报（当前 SQL 为 Stripe T+1） |
+
+完整文件入口：[iOS 项目索引](../catalog/projects/collart_ios.md)。历史与现有文档差异见 [待核对事项](../catalog/REVIEW.md)。

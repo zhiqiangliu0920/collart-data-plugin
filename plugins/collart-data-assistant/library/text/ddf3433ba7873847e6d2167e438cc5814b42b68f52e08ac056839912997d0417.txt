@@ -1,0 +1,42 @@
+WITH a AS (
+ SELECT event_date, COUNT(*) AS active_rows, COUNT(DISTINCT user_pseudo_id) AS pseudo_keys,
+ COUNTIF(is_active) AS active_dau, COUNTIF(is_active AND is_new) AS active_dnu,
+ COUNTIF(is_active AND is_new AND traffic_src_type='nature') AS active_nature_dnu,
+ COUNTIF(country IS NULL) AS null_country_rows,
+ SUM(IF(country IS NULL, revenue.purchase_revenue, 0)) AS null_country_revenue,
+ COUNTIF(NOT is_active AND revenue.purchase_revenue>0) AS revenue_only_rows,
+ SUM(revenue.purchase_revenue) AS active_revenue, COUNTIF(revenue.purchase_revenue>0) AS paid_pseudo_days,
+ COUNTIF(subscription.is_purchase) AS purchase_uv, COUNTIF(subscription.is_subscribe) AS subscribe_uv,
+ COUNTIF(subscription.is_credit_pack) AS credit_uv
+ FROM `aidata2025.ads_collartfashion.ads_oper_user_active_di`
+ WHERE event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08' GROUP BY event_date
+), atr AS (
+ SELECT event_date,SUM(dau) AS attr_dau, SUM(IF(is_new,dau,0)) AS attr_dnu,
+ SUM(IF(is_new AND traffic_src_type='nature',dau,0)) AS attr_nature_dnu,
+ SUM(revenue.purchase_revenue) AS attr_revenue
+ FROM `aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di`
+ WHERE event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08' GROUP BY event_date
+), c AS (
+ SELECT event_date,SUM(dau) AS country_dau,SUM(revenue.purchase_revenue) AS country_revenue
+ FROM `aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di`
+ WHERE event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08' GROUP BY event_date
+), r AS (
+ SELECT event_date,SUM(revenue_usd) AS stripe_attributed_revenue,SUM(pay_cnt) AS attributed_transactions
+ FROM `aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`
+ WHERE event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08' GROUP BY event_date
+), m AS (
+ SELECT event_date,COUNT(*) AS metric_rows,SUM(fashion_ai_service_start_pv) AS metric_start_pv,SUM(fashion_ai_service_success_pv) AS metric_success_pv
+ FROM `aidata2025.ads_collartfashion.ads_oper_user_event_metric_di`
+ WHERE event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08' GROUP BY event_date
+)
+SELECT a.*,atr.* EXCEPT(event_date),c.* EXCEPT(event_date),r.* EXCEPT(event_date),m.* EXCEPT(event_date),
+ d.dau AS daily_dau,d.dnu AS daily_dnu,d.dnu_by_source.organic AS daily_nature_dnu,
+ d.revenue AS daily_revenue,d.delivery AS daily_delivery,d.subscription AS daily_subscription,
+ d.fashion_ai_service_start AS daily_start,d.fashion_ai_service_success AS daily_success,
+ l.active_users AS legacy_dau,l.new_users AS legacy_dnu,l.new_users_organic AS legacy_nature_dnu,l.revenue_usd AS legacy_revenue
+FROM a LEFT JOIN atr USING(event_date) LEFT JOIN c USING(event_date) LEFT JOIN r USING(event_date) LEFT JOIN m USING(event_date)
+LEFT JOIN `aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di` d USING(event_date)
+LEFT JOIN `aidata2025.ads_collart.ads_oper_basic_metric_collart_fashion_di` l USING(event_date)
+WHERE d.event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08'
+  AND (l.event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08' OR l.event_date IS NULL)
+ORDER BY event_date

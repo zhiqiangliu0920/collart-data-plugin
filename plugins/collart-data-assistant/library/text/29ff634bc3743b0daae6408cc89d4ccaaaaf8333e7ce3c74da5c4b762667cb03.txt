@@ -1,0 +1,15 @@
+-- 查询 Web 端 ai_service_start 事件的 key_value 参数分布
+SELECT
+  param.key AS parameter_key,
+  param.value.string_value AS string_value,
+  param.value.int_value AS int_value,
+  param.value.double_value AS double_value,
+  COUNT(*) AS event_count
+FROM `storytemplate-10a27.analytics_232977577.events_*`,
+UNNEST(event_params) AS param
+WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+  AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+  AND app_info.id IS NULL
+  AND event_name = 'ai_service_start'
+GROUP BY parameter_key, string_value, int_value, double_value
+ORDER BY parameter_key, event_count DESC;

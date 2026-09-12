@@ -1,0 +1,95 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dim.dim_product_info"
+table_cn_name: ""
+metadata_status: "table_info_missing"
+field_status: "available"
+projects: ["unassigned"]
+project_dirs: ["unassigned"]
+warehouse_space: ""
+layer: "DIM"
+subject: ""
+secondary_subject: ""
+table_type: ""
+grain: ""
+primary_key: ""
+update_frequency: ""
+owner: ""
+priority: ""
+core_table: ""
+query_cost: ""
+source_record_ids: []
+field_count: "7"
+---
+
+# 表名：aidata2025.dim.dim_product_info
+
+> 生成来源：飞书 Bitable「数据知识库」；状态：`table_info_missing` / `available`。
+
+## 1. 表定位
+飞书字段明细中存在该表，但表信息表中缺少对应记录；当前文档仅能作为字段字典使用。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | - |
+| 项目 | unassigned |
+| 数仓空间 | - |
+| 分层 | DIM |
+| 主题 | - |
+| 二级主题 | - |
+| 表类型 | - |
+| 行粒度 | - |
+| 主键字段 | - |
+| 核心表 | - |
+| 更新频率 | - |
+| 维护人 | - |
+| 使用优先级 | - |
+| 查询成本 | - |
+| 数据来源 | - |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `package_name` | string | 主键 | 是 | 包名 |
+| `app_name` | string | 维度 | 是 | 产品名 |
+| `platform` | string | 维度 | 是 | 应用所属平台，如 iOS、Android、Web。 |
+| `app_type` | string | 维度 | 否 | 产品类型 |
+| `city` | string | 维度 | 否 | 产品所在城市 |
+| `revenue` | int | 指标 | 是 | 收入 |
+| `team` | string | 维度 | 否 | 负责该产品或数据维护的团队。 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `package_name` | string | 主键 | 包名 |
+| `app_name` | string | 维度 | 产品名 |
+| `platform` | string | 维度 | 应用所属平台，如 iOS、Android、Web。 |
+| `revenue` | int | 指标 | 收入 |
+
+## 5. 典型使用场景
+- 用于维度补充、名称映射、枚举解释或查询条件标准化。
+
+## 6. 查询风险与注意事项
+- 缺少表级元数据，不能仅凭本文件判断项目归属、行粒度和优先级。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | - |
+| 是否需要展示血缘 | - |
+| 数据来源 | - |
+| 数据表地址 | - |
+| 任务地址 | - |
+| 看板 | - |
+
+## 8. 待补充项
+- 补充表信息：中文名、项目、分层、主题、表类型、行粒度、主键、维护人、优先级。
+- 补充 `表中文名`。
+- 补充 `项目`。
+- 补充 `行粒度`。
+- 补充 `主键字段`。
+- 补充 `更新频率`。
+- 补充 `维护人`。

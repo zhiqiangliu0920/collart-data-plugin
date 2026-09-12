@@ -1,0 +1,256 @@
+-- ============================================================================
+
+-- Collart Fashion · 用户日 Stripe 收入
+
+-- 目标：aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di
+
+-- 粒度：event_date × user_id
+
+-- 归属：每笔 Stripe 交易匹配前后 10 分钟内最近的 vip_subscribe_succeed，
+
+--       且该事件 package_name = collart_fashion
+
+-- ============================================================================
+
+
+
+config {
+
+    type: "operations",
+
+    tags: ["collart_fashion"],
+
+    description: "Fashion user-day revenue from Stripe",
+
+    dependencies: ["h_dm_collart_web_user_event_di"]
+
+}
+
+
+
+js {
+
+  const cfg = require("../../../../includes/collart_fashion/constants");
+
+}
+
+
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - ${cfg.REVENUE_BACKFILL_DAYS};
+
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+
+
+ALTER TABLE `aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`
+
+ADD COLUMN IF NOT EXISTS user_pseudo_id STRING OPTIONS(description = "匹配支付成功事件的 GA4 用户 ID");
+
+
+
+DELETE FROM `aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`
+
+WHERE event_date BETWEEN from_date AND to_date;
+
+
+
+INSERT INTO `aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di` (
+
+  event_date, package_name, user_id, user_pseudo_id, first_fashion_succeed_date,
+
+  revenue_usd, pay_cnt, etl_time
+
+)
+
+
+
+WITH internal_users AS (
+
+  SELECT user_id
+
+  FROM UNNEST(${JSON.stringify(cfg.INTERNAL_USER_IDS)}) AS user_id
+
+),
+
+
+
+payment_events AS (
+
+  SELECT
+
+    NULLIF(user_id, "") AS user_id,
+
+    user_pseudo_id,
+
+    event_date AS succeed_date,
+
+    TIMESTAMP(event_time) AS succeed_time,
+
+    package_name
+
+  FROM `aidata2025.dm.dm_collart_web_user_event_di`
+
+  WHERE event_date BETWEEN DATE_SUB(from_date, INTERVAL 1 DAY) AND DATE_ADD(to_date, INTERVAL 1 DAY)
+
+    AND event_name = "vip_subscribe_succeed"
+
+    AND NULLIF(user_id, "") IS NOT NULL
+
+    AND user_id NOT IN (SELECT user_id FROM internal_users)
+
+),
+
+
+
+stripe_deduplicated AS (
+
+  SELECT
+
+    event_date,
+
+    event_timestamp,
+
+    transaction_id,
+
+    user_id,
+
+    revneue
+
+  FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+
+  WHERE event_date BETWEEN from_date AND to_date
+
+    AND app_name = "collart_web"
+
+    AND revneue > 0
+
+    AND NULLIF(user_id, "") IS NOT NULL
+
+  QUALIFY ROW_NUMBER() OVER (
+
+    PARTITION BY COALESCE(
+
+      NULLIF(transaction_id, ""),
+
+      CONCAT("missing:", user_id, ":", CAST(event_timestamp AS STRING))
+
+    )
+
+    ORDER BY event_timestamp DESC
+
+  ) = 1
+
+),
+
+
+
+nearest_payment_event AS (
+
+  SELECT
+
+    s.event_date,
+
+    s.event_timestamp,
+
+    s.transaction_id,
+
+    s.user_id,
+
+    s.revneue,
+
+    e.user_pseudo_id,
+
+    e.succeed_date,
+
+    e.package_name,
+
+    ABS(TIMESTAMP_DIFF(e.succeed_time, TIMESTAMP_SECONDS(s.event_timestamp), SECOND)) AS match_diff_seconds
+
+  FROM stripe_deduplicated AS s
+
+  JOIN payment_events AS e
+
+    ON s.user_id = e.user_id
+
+   AND ABS(TIMESTAMP_DIFF(e.succeed_time, TIMESTAMP_SECONDS(s.event_timestamp), SECOND)) <= 600
+
+  QUALIFY ROW_NUMBER() OVER (
+
+    PARTITION BY COALESCE(
+
+      NULLIF(s.transaction_id, ""),
+
+      CONCAT("missing:", s.user_id, ":", CAST(s.event_timestamp AS STRING))
+
+    )
+
+    ORDER BY match_diff_seconds, e.succeed_time
+
+  ) = 1
+
+),
+
+
+
+fashion_first_succeed AS (
+
+  SELECT user_id, MIN(succeed_date) AS first_fashion_succeed_date
+
+  FROM payment_events
+
+  WHERE package_name = "${cfg.PACKAGE_NAME}"
+
+  GROUP BY user_id
+
+),
+
+
+
+user_daily AS (
+
+  SELECT
+
+    n.event_date,
+
+    n.user_id,
+
+    ARRAY_AGG(n.user_pseudo_id ORDER BY n.event_timestamp DESC LIMIT 1)[OFFSET(0)] AS user_pseudo_id,
+
+    f.first_fashion_succeed_date,
+
+    SUM(n.revneue) AS revenue_usd,
+
+    COUNT(*) AS pay_cnt
+
+  FROM nearest_payment_event AS n
+
+  JOIN fashion_first_succeed AS f USING (user_id)
+
+  WHERE n.package_name = "${cfg.PACKAGE_NAME}"
+
+  GROUP BY n.event_date, n.user_id, f.first_fashion_succeed_date
+
+)
+
+
+
+SELECT
+
+  event_date,
+
+  "${cfg.PACKAGE_NAME}" AS package_name,
+
+  user_id,
+
+  user_pseudo_id,
+
+  first_fashion_succeed_date,
+
+  revenue_usd,
+
+  pay_cnt,
+
+  CURRENT_TIMESTAMP() AS etl_time
+
+FROM user_daily;
+

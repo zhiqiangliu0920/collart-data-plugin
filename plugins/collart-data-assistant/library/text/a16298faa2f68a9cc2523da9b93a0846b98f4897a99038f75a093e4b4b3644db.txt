@@ -1,0 +1,25 @@
+# Collart Android 数据表
+
+## 表清单
+
+| 表名 | 说明 | 类型 |
+|------|------|------|
+| [ads_dim_metric_rule](../../1company/tables/ads_dim_metric_rule.md) | 事件指标规则（合并表，`app_name='collart_android'`） | 配置表 |
+| [ads_oper_user_event_metric_di](./aidata2025.ads_collartandroid.ads_oper_user_event_metric_di.md) | 用户日热漏斗 `*_pv` | ADS |
+| [events_.md](./storytemplate-10a27.analytics_232977577.events_.md) | Firebase/GA4埋点数据 | 埋点表 |
+| [dwd_cdct_revenue_stripe_di.md](../../collart_web/tables/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md) | Stripe收入数据 | 跨项目表 |
+
+## 跨项目表说明
+
+`dwd_cdct_revenue_stripe_di` 包含多个产品的收入数据，查询时需要按 `product_id` 过滤。
+
+参见 [company/cross_product_tables.md](../../1company/tables/cross_product_tables.md) 了解详情。
+
+## 数据血缘
+
+表之间的关联关系、数据流向、常用 JOIN 模式，参见项目级的 [lineage.md](../lineage/lineage.md) 文档。
+
+血缘文档包含：
+- 整体数据流（Firebase → events → 业务分析）
+- 表间关联关系（events 与 orders、user_properties 等）
+- 常用 JOIN 模式（行为+付费、留存分析等）

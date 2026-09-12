@@ -1,0 +1,171 @@
+# Fashion 任务目录（2026-09-09 只读快照）
+
+范围：当前 release 编译动作中，源码/依赖/SQL 命中 Fashion 或共享 Web DM 的 20 个动作。不是全公司任务清单。运行观察窗为 9 月 6 日 00:00 至 9 月 9 日约 10:00（北京时间）。
+
+Dataform action 名称不等于实际输出表名；以下二者分别列示。处理量仅累计非 SCRIPT 作业，避免父子双计。GB=10^9 bytes，不等于账单费用。
+
+| 分类 | 动作 | 运行次数 | 处理量 GB | 源码 |
+|---|---|---:|---:|---|
+| Fashion专属 | `ads_collartfashion_oper_basic_indicator_attr_di` | 12 | 0.1059 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `ads_collartfashion_oper_basic_indicator_country_di` | 12 | 0.0152 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `ads_collartfashion_oper_basic_indicator_daily_compare_di` | 12 | 0.0018 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `ads_collartfashion_oper_basic_indicator_daily_di` | 12 | 0.0089 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `ads_collartfashion_oper_event_metric_attr_di` | 12 | 0.0924 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `ads_collartfashion_oper_event_metric_country_di` | 12 | 0.0076 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `ads_collartfashion_oper_user_active_di` | 12 | 62.7509 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `ads_collartfashion_oper_user_event_metric_di` | 12 | 1.4100 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `ads_collartfashion_oper_user_profile_df` | 12 | 7.2364 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `create_fashion_tables` | 0 | 0.0000 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `fashion_active_revenue_enrichment` | 4 | 0.1244 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `fashion_daily_metric` | 12 | 0.0036 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `fashion_revenue` | 12 | 0.0000 | [SQLX](<{LOCAL_PATH}>) |
+| Fashion专属 | `fashion_user_revenue` | 12 | 0.7854 | [SQLX](<{LOCAL_PATH}>) |
+| 参考（共享上游或注释命中） | `ads_collartweb_oper_basic_indicator_daily_di` | 0 | 0.0000 | [SQLX](<{LOCAL_PATH}>) |
+| 参考（共享上游或注释命中） | `ads_collartweb_oper_user_active_di` | 8 | 45.8709 | [SQLX](<{LOCAL_PATH}>) |
+| 参考（共享上游或注释命中） | `ads_collartweb_oper_user_event_metric_di` | 8 | 4.6517 | [SQLX](<{LOCAL_PATH}>) |
+| 参考（共享上游或注释命中） | `ads_template_search_user_keyword_di` | 8 | 3.6960 | [SQLX](<{LOCAL_PATH}>) |
+| 直接相关共享 | `h_ads_ad_sub_revenue_1h` | 87 | 123.3551 | [SQLX](<{LOCAL_PATH}>) |
+| 直接相关共享 | `h_dm_collart_web_user_event_di` | 8 | 798.5762 | [SQLX](<{LOCAL_PATH}>) |
+
+## 逐任务实际表及依赖
+
+### ads_collartfashion_oper_basic_indicator_attr_di
+
+- 输出表：`aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di`
+- 读取表：`aidata2025.ads_collartfashion.ads_oper_user_active_di`
+- 显式依赖：`fashion_active_revenue_enrichment`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`；`DECLARE source_from_date DATE DEFAULT from_date - 6;`
+
+### ads_collartfashion_oper_basic_indicator_country_di
+
+- 输出表：`aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di`
+- 读取表：`aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di`
+- 显式依赖：`ads_collartfashion_oper_basic_indicator_attr_di`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### ads_collartfashion_oper_basic_indicator_daily_compare_di
+
+- 输出表：`aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di`
+- 读取表：`aidata2025.ads_collart.top_country`, `aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di`, `aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di`, `aidata2025.ads_collartfashion.ads_oper_event_metric_country_di`
+- 显式依赖：`ads_collartfashion_oper_basic_indicator_country_di`, `ads_collartfashion_oper_event_metric_country_di`, `ads_collartfashion_oper_event_metric_attr_di`
+- 日期声明：无日期声明
+
+### ads_collartfashion_oper_basic_indicator_daily_di
+
+- 输出表：`aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di`
+- 读取表：`aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di`, `aidata2025.ads_collartfashion.ads_oper_event_metric_country_di`
+- 显式依赖：`ads_collartfashion_oper_basic_indicator_country_di`, `ads_collartfashion_oper_event_metric_country_di`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### ads_collartfashion_oper_event_metric_attr_di
+
+- 输出表：`aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di`
+- 读取表：`aidata2025.ads_collartfashion.ads_oper_user_active_di`, `aidata2025.ads_collartfashion.ads_oper_user_event_metric_di`
+- 显式依赖：`ads_collartfashion_oper_user_event_metric_di`, `ads_collartfashion_oper_user_active_di`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### ads_collartfashion_oper_event_metric_country_di
+
+- 输出表：`aidata2025.ads_collartfashion.ads_oper_event_metric_country_di`
+- 读取表：`aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di`
+- 显式依赖：`ads_collartfashion_oper_event_metric_attr_di`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### ads_collartfashion_oper_user_active_di
+
+- 输出表：`aidata2025.ads_collartfashion.ads_oper_user_active_di`
+- 读取表：`aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`, `aidata2025.dm.dm_collart_web_user_event_di`
+- 显式依赖：`h_dm_collart_web_user_event_di`, `fashion_user_revenue`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`；`DECLARE source_from_date DATE DEFAULT from_date - 14;`
+
+### ads_collartfashion_oper_user_event_metric_di
+
+- 输出表：`aidata2025.ads_collartfashion.ads_oper_user_event_metric_di`
+- 读取表：`aidata2025.ads_collart.ads_dim_metric_rule`, `aidata2025.ads_collartfashion.ads_oper_user_active_di`, `aidata2025.dm.dm_collart_web_user_event_di`
+- 显式依赖：`h_dm_collart_web_user_event_di`, `ads_collartfashion_oper_user_active_di`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### ads_collartfashion_oper_user_profile_df
+
+- 输出表：`aidata2025.ads_collartfashion.ads_oper_user_profile_df`
+- 读取表：`aidata2025.ads_collartfashion.ads_oper_user_active_di`, `aidata2025.dm.dm_collart_web_user_event_di`
+- 显式依赖：`fashion_active_revenue_enrichment`
+- 日期声明：`DECLARE biz_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`；`DECLARE change_from_date DATE DEFAULT biz_date - 2;`
+
+### create_fashion_tables
+
+- 输出表：`aidata2025.ads_collart.ads_oper_basic_metric_collart_fashion_di`, `aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di`, `aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`
+- 读取表：未识别到静态项目表名
+- 显式依赖：无
+- 日期声明：无日期声明
+
+### fashion_active_revenue_enrichment
+
+- 输出表：`aidata2025.ads_collartfashion.ads_oper_user_active_di`
+- 读取表：`aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`
+- 显式依赖：`ads_collartfashion_oper_user_active_di`, `fashion_user_revenue`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### fashion_daily_metric
+
+- 输出表：`aidata2025.ads_collart.ads_oper_basic_metric_collart_fashion_di`
+- 读取表：`aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di`, `aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di`
+- 显式依赖：`fashion_revenue`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 60;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### fashion_revenue
+
+- 输出表：`aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di`
+- 读取表：`aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`
+- 显式依赖：`fashion_user_revenue`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 7;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### fashion_user_revenue
+
+- 输出表：`aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`
+- 读取表：`aidata2025.dm.dm_collart_web_user_event_di`, `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+- 显式依赖：`h_dm_collart_web_user_event_di`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 7;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### ads_collartweb_oper_basic_indicator_daily_di
+
+- 输出表：`aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di`
+- 读取表：`aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di`, `aidata2025.ads_collartweb.ads_oper_event_metric_country_di`
+- 显式依赖：`ads_collartweb_oper_basic_indicator_country_di`, `ads_collartweb_oper_event_metric_country_di`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### ads_collartweb_oper_user_active_di
+
+- 输出表：`aidata2025.ads_collartweb.ads_oper_user_active_di`
+- 读取表：`aidata2025.ads_collart.ads_oper_collart_web_id_map`, `aidata2025.dm.dm_collart_web_user_event_di`, `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+- 显式依赖：`h_dm_collart_web_user_event_di`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`；`DECLARE source_from_date DATE DEFAULT from_date - 14;`
+
+### ads_collartweb_oper_user_event_metric_di
+
+- 输出表：`aidata2025.ads_collartweb.ads_oper_user_event_metric_di`
+- 读取表：`aidata2025.ads_collart.ads_dim_metric_rule`, `aidata2025.ads_collartweb.ads_oper_user_active_di`, `aidata2025.dm.dm_collart_web_user_event_di`
+- 显式依赖：`h_dm_collart_web_user_event_di`, `ads_collartweb_oper_user_active_di`
+- 日期声明：`DECLARE from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1 - 30;`；`DECLARE to_date   DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+
+### ads_template_search_user_keyword_di
+
+- 输出表：`aidata2025.ads_collart.ads_template_search_user_keyword_di`
+- 读取表：`aidata2025.dm.dm_collart_android_user_event_di`, `aidata2025.dm.dm_collart_web_user_event_di`
+- 显式依赖：`h_dm_collart_android_user_event_di`, `h_dm_collart_web_user_event_di`
+- 日期声明：`DECLARE to_date DATE DEFAULT DATE_SUB(CURRENT_DATE('Asia/Shanghai'), INTERVAL 1 DAY);`；`DECLARE from_date DATE DEFAULT DATE_SUB(to_date, INTERVAL 9 DAY);`；`DECLARE retention_start DATE DEFAULT DATE_SUB(to_date, INTERVAL 29 DAY);`
+
+### h_ads_ad_sub_revenue_1h
+
+- 输出表：`aidata2025.ads.ads_ad_sub_revenue_1h`
+- 读取表：`aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di`, `aidata2025.dim.dim_country_info`, `aidata2025.dim.dim_product_info_copy`, `aidata2025.dim.exchange_rate_days`, `aidata2025.dwd.dwd_apple_user_subscribtion_di`, `aidata2025.dwd.dwd_oper_sub_order_revenue_df`, `aidata2025.ods.ods_apple_sales_1d`, `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`, `pubdata2025.dws.dws_cdct_revenue_country_1d`
+- 显式依赖：`h_dwd_oper_sub_order_revenue_df`, `dim_exchange_rate_days`, `h_ods_apple_sales_1d`
+- 日期声明：`DECLARE from_date DATE DEFAULT  "2025-01-01";`
+
+### h_dm_collart_web_user_event_di
+
+- 输出表：`aidata2025.dm.dm_collart_web_user_event_di`
+- 读取表：未识别到静态项目表名
+- 显式依赖：无
+- 日期声明：`DECLARE   from_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1-3;`；`DECLARE   to_date DATE DEFAULT CURRENT_DATE('Asia/Shanghai')-1;`
+

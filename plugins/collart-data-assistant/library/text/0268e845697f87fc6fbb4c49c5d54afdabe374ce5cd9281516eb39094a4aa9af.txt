@@ -1,0 +1,473 @@
+-- ============================================================================
+-- Collart iOS（VidArt）ASA 投放看板底层数据
+--
+-- 粒度：event_date × campaign × adgroup × keyword × country
+-- 口径对齐：aidata2025.ads.ads_collart_delivery_revenue_1d（Collart iOS 老 ASA 看板）
+--
+-- 与老看板（com.SpringTech.NewSC）的四处必要差异，详见交付文档：
+--   1. 成本表存在重复行，必须先去重再聚合（老 SQL 直接 SUM 会放大 2~14 倍）
+--   2. Collart iOS 无 ads_collart.* 加工层，新增用户/事件全部取 GA4 原始表
+--      GA4：vidart-8b8ca.analytics_528583115.events_*（≠ storytemplate-10a27）
+--   3. 收入取 GA4 in_app_purchase.event_value_in_usd（美元），再按 0.85/0.70 折净收入
+--      不再依赖 dim_subscribe_product_info（该表无 VidArt 商品）
+--   4. AI 用量取 GA4 ai_service_* 事件（ai_service.ai_service_detail 不含 VidArt 用户）
+--   5. ⚠ 花费币种：ODS `local_spend_currency = 'RMB'`，local_spend 是人民币，
+--      必须除 dim.exchange_rate_days（currency='CNY'）换成美元才能与收入同币种算 ROI
+--
+-- 数据可用起点：
+--   ASA 成本      2026-05-18
+--   GA4 事件导出   2026-05-29
+--   ASA 用户级归因 2026-07-20（此前 campaignID/keywordID 未下发，只能看成本侧）
+-- ============================================================================
+
+WITH
+-- ---------------------------------------------------------------------------
+-- 1. 维表：keyword → adgroup → campaign（按 keyword_id 取最新一条映射）
+-- ---------------------------------------------------------------------------
+kw_map AS (
+  SELECT keyword_id, keyword, adgroup_id, adgroup_name, campaign_id, campaign_name
+  FROM `aidata2025.dim.dim_collart_asa_keyword_info`
+  WHERE campaign_name LIKE 'VidArt%'
+  QUALIFY ROW_NUMBER() OVER (PARTITION BY keyword_id ORDER BY stats_date DESC) = 1
+),
+
+campaign_map AS (
+  SELECT campaign_id, campaign_name
+  FROM `pubdata2025.ods.ods_apple_campaigns_reports_1d`
+  WHERE campaign_name LIKE 'VidArt%'
+  QUALIFY ROW_NUMBER() OVER (PARTITION BY campaign_id ORDER BY stats_date DESC) = 1
+),
+
+country_map AS (
+  SELECT country_name_3 AS country_code, ANY_VALUE(country_name) AS country_name,
+         ANY_VALUE(class) AS country_level
+  FROM `aidata2025.dim.dim_country_info`
+  WHERE country_name_3 IS NOT NULL AND country_name_3 <> ''
+  GROUP BY 1
+),
+
+-- ⚠ ASA 花费单位是人民币（ODS `local_spend_currency = 'RMB'`），不是美元。
+--   汇率表 currency 用 'CNY'，stats_date 是 STRING 需 CAST。
+rate_cny AS (
+  SELECT CAST(stats_date AS DATE) AS dt, rate
+  FROM `aidata2025.dim.exchange_rate_days`
+  WHERE currency = 'CNY'
+),
+
+-- 汇率表更新到 T-1，当天数据用最近一天汇率兜底，避免 cost 变 NULL
+rate_fallback AS (
+  SELECT rate FROM rate_cny ORDER BY dt DESC LIMIT 1
+),
+
+-- ---------------------------------------------------------------------------
+-- 2. ASA 成本：关键词粒度
+--    ⚠ 源表存在整行重复（2026-05 起 2~14 倍，见交付文档），必须先去重。
+--    去重方式：同一 (日期, adgroup, keyword, 国家) 只保留花费最高的那一行，
+--    保证各指标同源（Apple 偶有重报，12 个组合存在多个花费值）。
+-- ---------------------------------------------------------------------------
+cost_keyword AS (
+  SELECT
+    d.event_date,
+    m.campaign_id,
+    m.campaign_name,
+    d.adgroup_id,
+    d.adgroup_name,
+    d.keyword_id,
+    d.keyword,
+    d.country_region AS country_code,
+    d.impressions         AS impression,
+    d.taps                AS taps,
+    d.local_spend         AS cost_cny,
+    SAFE_DIVIDE(d.local_spend, COALESCE(r.rate, (SELECT rate FROM rate_fallback))) AS cost,
+    d.total_installs      AS install,
+    d.total_new_downloads AS new_download,
+    d.total_redownloads   AS redownload
+  FROM (
+    SELECT
+      event_date, adgroup_id, adgroup_name, keyword_id, keyword, country_region,
+      impressions, taps, local_spend, total_installs, total_new_downloads, total_redownloads
+    FROM `aidata2025.dws.dws_oper_asa_keyword_collart_1d`
+    WHERE event_date >= DATE '2026-05-18'
+    QUALIFY ROW_NUMBER() OVER (
+      PARTITION BY event_date, adgroup_id, keyword_id, country_region
+      ORDER BY local_spend DESC, total_installs DESC, impressions DESC
+    ) = 1
+  ) d
+  JOIN kw_map m ON d.keyword_id = m.keyword_id
+  LEFT JOIN rate_cny r ON d.event_date = r.dt
+),
+
+-- ---------------------------------------------------------------------------
+-- 3. ASA 成本：campaign 粒度（同样去重）
+--    注：aidata2025.dws.dws_oper_asa_collart_1d 已停更（max=2026-01-25），
+--        故直接取 ODS；数仓修复后可替换回 DWS
+-- ---------------------------------------------------------------------------
+cost_campaign AS (
+  SELECT
+    d.event_date,
+    d.campaign_id,
+    d.campaign_name,
+    d.country_code,
+    d.impression,
+    d.taps,
+    d.cost_cny,
+    SAFE_DIVIDE(d.cost_cny, COALESCE(r.rate, (SELECT rate FROM rate_fallback))) AS cost,
+    d.install,
+    d.new_download,
+    d.redownload
+  FROM (
+    SELECT
+      stats_date AS event_date,
+      campaign_id,
+      campaign_name,
+      country_region AS country_code,
+      impressions AS impression,
+      taps,
+      local_spend AS cost_cny,
+      total_installs AS install,
+      total_new_downloads AS new_download,
+      total_redownloads   AS redownload
+    FROM `pubdata2025.ods.ods_apple_campaigns_reports_1d`
+    WHERE stats_date >= DATE '2026-05-18'
+      AND campaign_name LIKE 'VidArt%'
+    QUALIFY ROW_NUMBER() OVER (
+      PARTITION BY stats_date, campaign_id, country_region
+      ORDER BY local_spend DESC, total_installs DESC, impressions DESC
+    ) = 1
+  ) d
+  LEFT JOIN rate_cny r ON d.event_date = r.dt
+),
+
+-- ---------------------------------------------------------------------------
+-- 4. 无关键词残差：Max Conversion 等自动投放 campaign 无 keyword 报表，
+--    用 campaign 合计减去关键词合计补一行 keyword_id = '(no_keyword)'
+-- ---------------------------------------------------------------------------
+cost_kw_rollup AS (
+  SELECT event_date, campaign_id, country_code,
+         SUM(cost) AS cost, SUM(cost_cny) AS cost_cny, SUM(impression) AS impression,
+         SUM(install) AS install, SUM(taps) AS taps
+  FROM cost_keyword
+  GROUP BY 1,2,3
+),
+
+cost_residual AS (
+  SELECT
+    c.event_date,
+    c.campaign_id,
+    c.campaign_name,
+    CAST(NULL AS STRING) AS adgroup_id,
+    '(no_adgroup)'       AS adgroup_name,
+    '(no_keyword)'       AS keyword_id,
+    '(no_keyword)'       AS keyword,
+    c.country_code,
+    GREATEST(c.impression - IFNULL(r.impression, 0), 0) AS impression,
+    GREATEST(c.taps       - IFNULL(r.taps, 0), 0)       AS taps,
+    GREATEST(c.cost_cny   - IFNULL(r.cost_cny, 0), 0)   AS cost_cny,
+    GREATEST(c.cost       - IFNULL(r.cost, 0), 0)       AS cost,
+    GREATEST(c.install    - IFNULL(r.install, 0), 0)    AS install,
+    CAST(NULL AS INT64) AS new_download,
+    CAST(NULL AS INT64) AS redownload
+  FROM cost_campaign c
+  LEFT JOIN cost_kw_rollup r
+    ON c.event_date = r.event_date
+   AND c.campaign_id = r.campaign_id
+   AND c.country_code = r.country_code
+  WHERE c.cost_cny - IFNULL(r.cost_cny, 0) > 0.005
+     OR c.install - IFNULL(r.install, 0) > 0
+),
+
+asa_cost AS (
+  SELECT * FROM cost_keyword
+  UNION ALL
+  SELECT * FROM cost_residual
+),
+
+-- ---------------------------------------------------------------------------
+-- 5. GA4 明细：用户 × 天（只取正式包，排除内测与 debug 包）
+-- ---------------------------------------------------------------------------
+ga4 AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS event_date,
+    user_pseudo_id,
+    event_name,
+    geo.country AS geo_country,
+    event_params,
+    user_properties,
+    event_value_in_usd,
+    traffic_source.source AS ts_source,
+    traffic_source.name   AS ts_name
+  FROM `vidart-8b8ca.analytics_528583115.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260529' AND FORMAT_DATE('%Y%m%d', CURRENT_DATE('UTC'))
+    AND app_info.id = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+    AND app_info.install_source <> 'manual_install'
+),
+
+-- 5.1 新增用户（首开日）
+new_user AS (
+  SELECT user_pseudo_id, MIN(event_date) AS install_date, ANY_VALUE(geo_country) AS geo_country
+  FROM ga4
+  WHERE event_name = 'first_open'
+  GROUP BY 1
+),
+
+-- 5.2 ASA 归因：user_properties 优先，firebase_campaign / traffic_source 兜底
+--     归因属性挂在首开之后的事件上，故对用户全生命周期取值
+attribution AS (
+  SELECT
+    user_pseudo_id,
+    COALESCE(up_campaign_id, ev_campaign_id, ts_campaign_id) AS campaign_id,
+    COALESCE(up_keyword_id, ev_keyword_id)                   AS keyword_id,
+    up_country_code,
+    up_conversion_type
+  FROM (
+    SELECT
+      user_pseudo_id,
+      MAX((SELECT value.string_value FROM UNNEST(user_properties) WHERE key = 'campaignID'))     AS up_campaign_id,
+      MAX((SELECT value.string_value FROM UNNEST(user_properties) WHERE key = 'keywordID'))      AS up_keyword_id,
+      MAX((SELECT value.string_value FROM UNNEST(user_properties) WHERE key = 'countryOrRegion'))AS up_country_code,
+      MAX((SELECT value.string_value FROM UNNEST(user_properties) WHERE key = 'conversionType')) AS up_conversion_type,
+      MAX(IF(event_name = 'firebase_campaign',
+             (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'campaign'), NULL)) AS ev_campaign_id,
+      MAX(IF(event_name = 'firebase_campaign',
+             (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'term'), NULL))     AS ev_keyword_id,
+      MAX(IF(ts_source = 'Apple', ts_name, NULL)) AS ts_campaign_id
+    FROM ga4
+    GROUP BY 1
+  )
+  WHERE COALESCE(up_campaign_id, ev_campaign_id, ts_campaign_id) NOT IN ('0', '1234567890', '(direct)')
+),
+
+-- 5.3 ASA 新增用户主表：install_date × campaign × keyword × country
+asa_new_user AS (
+  SELECT
+    n.user_pseudo_id,
+    n.install_date,
+    a.campaign_id,
+    IFNULL(NULLIF(a.keyword_id, ''), '(no_keyword)') AS keyword_id,
+    COALESCE(NULLIF(a.up_country_code, ''), c.country_code, 'unknown') AS country_code,
+    a.up_conversion_type AS conversion_type
+  FROM new_user n
+  JOIN attribution a USING (user_pseudo_id)
+  LEFT JOIN (
+    SELECT country_name, ANY_VALUE(country_name_3) AS country_code
+    FROM `aidata2025.dim.dim_country_info`
+    GROUP BY 1
+  ) c ON n.geo_country = c.country_name
+),
+
+-- ---------------------------------------------------------------------------
+-- 6. 用户收入：GA4 in_app_purchase（美元）→ 订阅 0.85 / 点数包 0.70 折净收入
+-- ---------------------------------------------------------------------------
+user_revenue AS (
+  SELECT
+    user_pseudo_id,
+    event_date,
+    SUM(gross_usd) AS gross_revenue,
+    SUM(IF(product_type = 'subscribe', gross_usd * 0.85, 0)) AS subscribe_revenue,
+    SUM(IF(product_type = 'pack',      gross_usd * 0.70, 0)) AS pack_revenue,
+    SUM(CASE product_type WHEN 'subscribe' THEN gross_usd * 0.85
+                          WHEN 'pack'      THEN gross_usd * 0.70 END) AS revenue
+  FROM (
+    SELECT
+      user_pseudo_id,
+      event_date,
+      IFNULL(event_value_in_usd, 0) AS gross_usd,
+      IF(LOWER((SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'product_id')) LIKE '%pack%',
+         'pack', 'subscribe') AS product_type
+    FROM ga4
+    WHERE event_name = 'in_app_purchase'
+  )
+  GROUP BY 1,2
+),
+
+-- ---------------------------------------------------------------------------
+-- 7. 用户 AI 用量：ai_service_success（成功次数）+ ai_service_start（消耗点数）
+-- ---------------------------------------------------------------------------
+user_ai AS (
+  SELECT
+    user_pseudo_id,
+    COUNTIF(event_name = 'ai_service_success'
+            AND (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'result_type') = 'video') AS ai_video_num,
+    COUNTIF(event_name = 'ai_service_success'
+            AND (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'result_type') = 'image') AS ai_image_num,
+    COUNTIF(event_name = 'ai_service_success') AS ai_success_num,
+    COUNTIF(event_name = 'ai_service_start')   AS ai_start_num,
+    SUM(IF(event_name = 'ai_service_start',
+           (SELECT COALESCE(value.int_value, CAST(value.double_value AS INT64))
+            FROM UNNEST(event_params) WHERE key = 'credits'), 0)) AS ai_credit_used
+  FROM ga4
+  WHERE event_name IN ('ai_service_success', 'ai_service_start')
+  GROUP BY 1
+),
+
+-- ---------------------------------------------------------------------------
+-- 8. 用户留存：活跃日期集合
+-- ---------------------------------------------------------------------------
+user_active AS (
+  SELECT DISTINCT user_pseudo_id, event_date
+  FROM ga4
+  WHERE event_name IN ('user_engagement', 'app_launch', 'session_start')
+),
+
+-- ---------------------------------------------------------------------------
+-- 9. 用户侧汇总到 ASA 维度
+-- ---------------------------------------------------------------------------
+asa_user_metric AS (
+  SELECT
+    u.install_date AS event_date,
+    u.campaign_id,
+    u.keyword_id,
+    u.country_code,
+    COUNT(DISTINCT u.user_pseudo_id) AS firebase_install_user,
+    COUNT(DISTINCT IF(u.conversion_type = 'Redownload', u.user_pseudo_id, NULL)) AS redownload_user,
+    SUM(ai.ai_video_num)   AS ai_video_num,
+    SUM(ai.ai_image_num)   AS ai_image_num,
+    SUM(ai.ai_success_num) AS ai_success_num,
+    SUM(ai.ai_start_num)   AS ai_start_num,
+    SUM(ai.ai_credit_used) AS ai_credit_used,
+    COUNT(DISTINCT IF(ai.ai_success_num > 0, u.user_pseudo_id, NULL)) AS ai_success_user,
+    COUNT(DISTINCT IF(r1.user_pseudo_id IS NOT NULL, u.user_pseudo_id, NULL)) AS retain_1,
+    COUNT(DISTINCT IF(r3.user_pseudo_id IS NOT NULL, u.user_pseudo_id, NULL)) AS retain_3,
+    COUNT(DISTINCT IF(r7.user_pseudo_id IS NOT NULL, u.user_pseudo_id, NULL)) AS retain_7
+  FROM asa_new_user u
+  LEFT JOIN user_ai ai USING (user_pseudo_id)
+  LEFT JOIN user_active r1
+    ON u.user_pseudo_id = r1.user_pseudo_id AND r1.event_date = DATE_ADD(u.install_date, INTERVAL 1 DAY)
+  LEFT JOIN user_active r3
+    ON u.user_pseudo_id = r3.user_pseudo_id AND r3.event_date = DATE_ADD(u.install_date, INTERVAL 3 DAY)
+  LEFT JOIN user_active r7
+    ON u.user_pseudo_id = r7.user_pseudo_id AND r7.event_date = DATE_ADD(u.install_date, INTERVAL 7 DAY)
+  GROUP BY 1,2,3,4
+),
+
+-- ---------------------------------------------------------------------------
+-- 10. 分日回收（cohort）：revenue_N = 首开后 0~N 日累计净收入
+-- ---------------------------------------------------------------------------
+asa_revenue_metric AS (
+  SELECT
+    u.install_date AS event_date,
+    u.campaign_id,
+    u.keyword_id,
+    u.country_code,
+    COUNT(DISTINCT IF(r.revenue > 0, u.user_pseudo_id, NULL)) AS pay_user,
+    COUNT(DISTINCT IF(r.subscribe_revenue > 0, u.user_pseudo_id, NULL)) AS subscribe_user,
+    COUNT(DISTINCT IF(r.pack_revenue > 0, u.user_pseudo_id, NULL))      AS pack_user,
+    COUNT(DISTINCT IF(r.revenue > 0 AND r.event_date = u.install_date, u.user_pseudo_id, NULL)) AS pay_user_0,
+    SUM(r.revenue)           AS revenue_total,
+    SUM(r.gross_revenue)     AS gross_revenue_total,
+    SUM(r.subscribe_revenue) AS subscribe_revenue_total,
+    SUM(r.pack_revenue)      AS pack_revenue_total,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 0,  r.revenue, 0)) AS revenue_0,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 1,  r.revenue, 0)) AS revenue_1,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 2,  r.revenue, 0)) AS revenue_2,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 3,  r.revenue, 0)) AS revenue_3,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 4,  r.revenue, 0)) AS revenue_4,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 5,  r.revenue, 0)) AS revenue_5,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 6,  r.revenue, 0)) AS revenue_6,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 7,  r.revenue, 0)) AS revenue_7,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 8,  r.revenue, 0)) AS revenue_8,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 9,  r.revenue, 0)) AS revenue_9,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 10, r.revenue, 0)) AS revenue_10,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 11, r.revenue, 0)) AS revenue_11,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 12, r.revenue, 0)) AS revenue_12,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 13, r.revenue, 0)) AS revenue_13,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 14, r.revenue, 0)) AS revenue_14,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 15, r.revenue, 0)) AS revenue_15,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 16, r.revenue, 0)) AS revenue_16,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 17, r.revenue, 0)) AS revenue_17,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 18, r.revenue, 0)) AS revenue_18,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 19, r.revenue, 0)) AS revenue_19,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 20, r.revenue, 0)) AS revenue_20,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 21, r.revenue, 0)) AS revenue_21,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 22, r.revenue, 0)) AS revenue_22,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 23, r.revenue, 0)) AS revenue_23,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 24, r.revenue, 0)) AS revenue_24,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 25, r.revenue, 0)) AS revenue_25,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 26, r.revenue, 0)) AS revenue_26,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 27, r.revenue, 0)) AS revenue_27,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 28, r.revenue, 0)) AS revenue_28,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 29, r.revenue, 0)) AS revenue_29,
+    SUM(IF(DATE_DIFF(r.event_date, u.install_date, DAY) <= 30, r.revenue, 0)) AS revenue_30
+  FROM asa_new_user u
+  JOIN user_revenue r USING (user_pseudo_id)
+  GROUP BY 1,2,3,4
+),
+
+-- ---------------------------------------------------------------------------
+-- 11. 主键骨架：成本侧 ∪ 用户侧
+--     约 6% 的归因用户所在国家当天 Apple 无花费/安装报表（如 RU/IQ/IR），
+--     用 UNION DISTINCT 保底，避免这部分用户与收入被内连丢弃
+-- ---------------------------------------------------------------------------
+spine AS (
+  SELECT event_date, campaign_id, keyword_id, country_code FROM asa_cost
+  UNION DISTINCT
+  SELECT event_date, campaign_id, keyword_id, country_code FROM asa_user_metric
+)
+
+-- ---------------------------------------------------------------------------
+-- 12. 输出
+-- ---------------------------------------------------------------------------
+SELECT
+  s.event_date,
+  'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free' AS package_name,
+  'collart_ios' AS app_name,
+  s.campaign_id,
+  COALESCE(c.campaign_name, pm.campaign_name) AS campaign_name,
+  COALESCE(c.adgroup_name, km.adgroup_name, '(no_adgroup)') AS adgroup_name,
+  s.keyword_id,
+  COALESCE(c.keyword, km.keyword, '(no_keyword)') AS keyword,
+  s.country_code,
+  cm.country_name,
+  cm.country_level,
+
+  -- 成本侧（Apple ASA）：cost 为美元，cost_cny 为账户原币（人民币）
+  c.cost,
+  c.cost_cny,
+  c.impression,
+  c.taps,
+  c.install,
+  c.new_download,
+  c.redownload,
+  SAFE_DIVIDE(c.cost, c.install) AS cpi,
+  SAFE_DIVIDE(c.taps, c.impression) AS ttr,
+
+  -- 用户侧（GA4 归因）
+  u.firebase_install_user,
+  u.redownload_user,
+  u.retain_1,
+  u.retain_3,
+  u.retain_7,
+  u.ai_success_user,
+  u.ai_video_num,
+  u.ai_image_num,
+  u.ai_success_num,
+  u.ai_start_num,
+  u.ai_credit_used,
+
+  -- 收入侧（净收入 = 订阅 ×0.85 + 点数包 ×0.70）
+  r.pay_user,
+  r.pay_user_0,
+  r.subscribe_user,
+  r.pack_user,
+  r.revenue_total,
+  r.gross_revenue_total,
+  r.subscribe_revenue_total,
+  r.pack_revenue_total,
+  SAFE_DIVIDE(r.revenue_total, c.cost) AS roi_total,
+  SAFE_DIVIDE(r.revenue_0, c.cost)     AS roi_0,
+  SAFE_DIVIDE(r.revenue_7, c.cost)     AS roi_7,
+  r.revenue_0,  r.revenue_1,  r.revenue_2,  r.revenue_3,  r.revenue_4,
+  r.revenue_5,  r.revenue_6,  r.revenue_7,  r.revenue_8,  r.revenue_9,
+  r.revenue_10, r.revenue_11, r.revenue_12, r.revenue_13, r.revenue_14,
+  r.revenue_15, r.revenue_16, r.revenue_17, r.revenue_18, r.revenue_19,
+  r.revenue_20, r.revenue_21, r.revenue_22, r.revenue_23, r.revenue_24,
+  r.revenue_25, r.revenue_26, r.revenue_27, r.revenue_28, r.revenue_29,
+  r.revenue_30
+FROM spine s
+LEFT JOIN asa_cost c USING (event_date, campaign_id, keyword_id, country_code)
+LEFT JOIN asa_user_metric u USING (event_date, campaign_id, keyword_id, country_code)
+LEFT JOIN asa_revenue_metric r USING (event_date, campaign_id, keyword_id, country_code)
+LEFT JOIN country_map cm ON s.country_code = cm.country_code
+LEFT JOIN campaign_map pm ON s.campaign_id = pm.campaign_id
+LEFT JOIN kw_map km ON s.keyword_id = km.keyword_id
+ORDER BY s.event_date DESC, c.cost DESC

@@ -1,0 +1,4138 @@
+[
+  {
+    "table": "aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di",
+    "rows": 6677,
+    "bytes": 3294226,
+    "modified": "2026-09-09 00:31:45.598000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date"
+    },
+    "clustering": [
+      "country",
+      "app_version",
+      "is_new"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_vip",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dau",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "churn_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "return_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d3",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d4",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d5",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d6",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d8",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d9",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d10",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d11",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d12",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d13",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d15",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d16",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d17",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d18",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d19",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d20",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d21",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d22",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d23",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d24",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d25",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d26",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d27",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d28",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d29",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rolling_retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d3",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d4",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d5",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d6",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d8",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d9",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d10",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d11",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d12",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d13",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d15",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d16",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d17",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d18",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d19",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d20",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d21",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d22",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d23",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d24",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d25",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d26",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d27",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d28",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d29",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_7d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_7d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_cnt",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_amount",
+            "type": "INTEGER"
+          },
+          {
+            "name": "purchase_uv",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "purchase_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "resub_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "credit_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "ad_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "renew_subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "ad_uv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di",
+    "rows": 2568,
+    "bytes": 1260690,
+    "modified": "2026-09-09 00:31:53.052000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date"
+    },
+    "clustering": [
+      "country"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dau",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_dau",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "churn_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "return_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dnu",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dnu_vip",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dnu_free",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dnu_by_source",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "organic",
+            "type": "INTEGER"
+          },
+          {
+            "name": "delivery",
+            "type": "INTEGER"
+          },
+          {
+            "name": "kol",
+            "type": "INTEGER"
+          },
+          {
+            "name": "inhouse",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d3",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d4",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d5",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d6",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d8",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d9",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d10",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d11",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d12",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d13",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d15",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d16",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d17",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d18",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d19",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d20",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d21",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d22",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d23",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d24",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d25",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d26",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d27",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d28",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d29",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain2_vip",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain2_free",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain2_by_source",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "organic",
+            "type": "INTEGER"
+          },
+          {
+            "name": "delivery",
+            "type": "INTEGER"
+          },
+          {
+            "name": "kol",
+            "type": "INTEGER"
+          },
+          {
+            "name": "inhouse",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rolling_retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d3",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d4",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d5",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d6",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d8",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d9",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d10",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d11",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d12",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d13",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d15",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d16",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d17",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d18",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d19",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d20",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d21",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d22",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d23",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d24",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d25",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d26",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d27",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d28",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d29",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_1d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_old",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_7d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_1d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_old",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_7d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_cnt",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_amount",
+            "type": "INTEGER"
+          },
+          {
+            "name": "purchase_uv",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "purchase_uv_1d",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "purchase_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "resub_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "credit_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "ad_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "renew_subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "ad_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "revenue",
+            "type": "FLOAT"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "delivery",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "cost",
+            "type": "FLOAT"
+          },
+          {
+            "name": "impressions",
+            "type": "INTEGER"
+          },
+          {
+            "name": "clicks",
+            "type": "INTEGER"
+          },
+          {
+            "name": "installs",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di",
+    "rows": 502,
+    "bytes": 26600,
+    "modified": "2026-09-09 00:32:01.336000+00:00",
+    "partitioning": null,
+    "clustering": [
+      "metric_name",
+      "country"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "metric_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "yestoday",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "avg_7days",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "diff",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ratio",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di",
+    "rows": 99,
+    "bytes": 101475,
+    "modified": "2026-09-09 00:32:01.680000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date"
+    },
+    "clustering": [
+      "package_name"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dau",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_dau",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "churn_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "return_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dnu",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dnu_vip",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dnu_free",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dnu_by_source",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "organic",
+            "type": "INTEGER"
+          },
+          {
+            "name": "delivery",
+            "type": "INTEGER"
+          },
+          {
+            "name": "kol",
+            "type": "INTEGER"
+          },
+          {
+            "name": "inhouse",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d3",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d4",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d5",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d6",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d8",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d9",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d10",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d11",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d12",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d13",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d15",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d16",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d17",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d18",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d19",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d20",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d21",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d22",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d23",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d24",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d25",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d26",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d27",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d28",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d29",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain2_vip",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain2_free",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain2_by_source",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "organic",
+            "type": "INTEGER"
+          },
+          {
+            "name": "delivery",
+            "type": "INTEGER"
+          },
+          {
+            "name": "kol",
+            "type": "INTEGER"
+          },
+          {
+            "name": "inhouse",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rolling_retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d3",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d4",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d5",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d6",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d8",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d9",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d10",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d11",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d12",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d13",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d15",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d16",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d17",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d18",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d19",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d20",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d21",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d22",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d23",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d24",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d25",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d26",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d27",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d28",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d29",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_1d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_old",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_7d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_1d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_old",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_7d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_cnt",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_amount",
+            "type": "INTEGER"
+          },
+          {
+            "name": "purchase_uv",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "purchase_uv_1d",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "purchase_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "resub_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "credit_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "ad_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "renew_subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "ad_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "revenue",
+            "type": "FLOAT"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "delivery",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "cost",
+            "type": "FLOAT"
+          },
+          {
+            "name": "impressions",
+            "type": "INTEGER"
+          },
+          {
+            "name": "clicks",
+            "type": "INTEGER"
+          },
+          {
+            "name": "installs",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "welcome_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "page_view",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "inspiration_template_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generator_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "video_generate_click",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_execute_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_execute_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_subscribe_succeed",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "fashion_ai_service_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "fashion_ai_service_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di",
+    "rows": 6637,
+    "bytes": 1723408,
+    "modified": "2026-09-09 00:31:43.379000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date"
+    },
+    "clustering": [
+      "country",
+      "is_new"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_vip",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "welcome_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "page_view",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "inspiration_template_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generator_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "video_generate_click",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_execute_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_execute_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_subscribe_succeed",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "fashion_ai_service_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "fashion_ai_service_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.ads_collartfashion.ads_oper_event_metric_country_di",
+    "rows": 2559,
+    "bytes": 624148,
+    "modified": "2026-09-09 00:31:50.793000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date"
+    },
+    "clustering": [
+      "country"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "welcome_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "page_view",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "inspiration_template_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generator_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "video_generate_click",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_execute_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_execute_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_subscribe_succeed",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "fashion_ai_service_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "fashion_ai_service_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.ads_collartfashion.ads_oper_user_active_di",
+    "rows": 83660,
+    "bytes": 32458772,
+    "modified": "2026-09-09 00:31:36.858000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date"
+    },
+    "clustering": [
+      "user_pseudo_id",
+      "country"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_churn",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_return",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_remove",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_login",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_vip",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "first_open_time",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "identity",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "clarity_user_id",
+            "type": "STRING"
+          },
+          {
+            "name": "clarity_session_id",
+            "type": "STRING"
+          },
+          {
+            "name": "atlasv_id",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "geo",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "city",
+            "type": "STRING"
+          },
+          {
+            "name": "continent",
+            "type": "STRING"
+          },
+          {
+            "name": "sub_continent",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "device",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "category",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_brand_name",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_model_name",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system_version",
+            "type": "STRING"
+          },
+          {
+            "name": "vendor_id",
+            "type": "STRING"
+          },
+          {
+            "name": "language",
+            "type": "STRING"
+          },
+          {
+            "name": "browser",
+            "type": "STRING"
+          },
+          {
+            "name": "browser_version",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "source",
+            "type": "STRING"
+          },
+          {
+            "name": "medium",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign_id",
+            "type": "STRING"
+          },
+          {
+            "name": "term",
+            "type": "STRING"
+          },
+          {
+            "name": "content",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "product_ids",
+            "type": "STRING",
+            "mode": "REPEATED"
+          },
+          {
+            "name": "purchase_cnt",
+            "type": "INTEGER"
+          },
+          {
+            "name": "is_subscribe",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "is_credit_pack",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "credit_pack_cnt",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_amount",
+            "type": "INTEGER"
+          },
+          {
+            "name": "sub_in_7d",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "credit_pack_in_7d",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "is_purchase",
+            "type": "BOOLEAN",
+            "mode": "NULLABLE"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "purchase_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "resub_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "credit_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "ad_revenue",
+            "type": "FLOAT"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d3",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d4",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d5",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d6",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d7",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d8",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d9",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d10",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d11",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d12",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d13",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d14",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d15",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d16",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d17",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d18",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d19",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d20",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d21",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d22",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d23",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d24",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d25",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d26",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d27",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d28",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d29",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d30",
+            "type": "BOOLEAN"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rolling_retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d3",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d4",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d5",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d6",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d7",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d8",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d9",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d10",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d11",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d12",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d13",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d14",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d15",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d16",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d17",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d18",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d19",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d20",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d21",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d22",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d23",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d24",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d25",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d26",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d27",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d28",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d29",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d30",
+            "type": "BOOLEAN"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_active",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.ads_collartfashion.ads_oper_user_event_metric_di",
+    "rows": 83442,
+    "bytes": 13390949,
+    "modified": "2026-09-09 00:31:36.258000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date"
+    },
+    "clustering": [
+      "user_pseudo_id"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "welcome_show_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "page_view_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "inspiration_template_show_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generator_show_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "video_generate_click_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generate_start_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generate_success_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_execute_start_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_execute_success_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_subscribe_succeed_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "fashion_ai_service_start_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "fashion_ai_service_success_pv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.ads_collartfashion.ads_oper_user_profile_df",
+    "rows": 73820,
+    "bytes": 41194041,
+    "modified": "2026-09-09 00:31:47.909000+00:00",
+    "partitioning": null,
+    "clustering": [
+      "user_pseudo_id"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "first_open_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "first_open_time",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "register_app_version",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "last_active_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "last_app_version",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "current_active_days",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d90",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d360",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "current_is_churn_14d",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_vip",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_remove_on_first_open",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_ever_remove",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "identity",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "clarity_user_id",
+            "type": "STRING"
+          },
+          {
+            "name": "clarity_session_id",
+            "type": "STRING"
+          },
+          {
+            "name": "atlasv_id",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "geo",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "country",
+            "type": "STRING"
+          },
+          {
+            "name": "city",
+            "type": "STRING"
+          },
+          {
+            "name": "continent",
+            "type": "STRING"
+          },
+          {
+            "name": "sub_continent",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "device",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "category",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_brand_name",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_model_name",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system_version",
+            "type": "STRING"
+          },
+          {
+            "name": "vendor_id",
+            "type": "STRING"
+          },
+          {
+            "name": "language",
+            "type": "STRING"
+          },
+          {
+            "name": "browser",
+            "type": "STRING"
+          },
+          {
+            "name": "browser_version",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "name",
+            "type": "STRING"
+          },
+          {
+            "name": "type",
+            "type": "STRING"
+          },
+          {
+            "name": "platform",
+            "type": "STRING"
+          },
+          {
+            "name": "source",
+            "type": "STRING"
+          },
+          {
+            "name": "medium",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign_id",
+            "type": "STRING"
+          },
+          {
+            "name": "term",
+            "type": "STRING"
+          },
+          {
+            "name": "content",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "first_date",
+            "type": "DATE"
+          },
+          {
+            "name": "first_product_id",
+            "type": "STRING"
+          },
+          {
+            "name": "first_app_version",
+            "type": "STRING"
+          },
+          {
+            "name": "last_date",
+            "type": "DATE"
+          },
+          {
+            "name": "last_product_id",
+            "type": "STRING"
+          },
+          {
+            "name": "last_app_version",
+            "type": "STRING"
+          },
+          {
+            "name": "purchase_cnt_all",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_cnt_all",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_amount_all",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "purchase_revenue_all",
+            "type": "FLOAT"
+          },
+          {
+            "name": "subscription_revenue_all",
+            "type": "FLOAT"
+          },
+          {
+            "name": "credit_revenue_all",
+            "type": "FLOAT"
+          },
+          {
+            "name": "ad_revenue_all",
+            "type": "FLOAT"
+          },
+          {
+            "name": "total_revenue_all",
+            "type": "FLOAT"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ltv",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d1",
+            "type": "FLOAT"
+          },
+          {
+            "name": "d7",
+            "type": "FLOAT"
+          },
+          {
+            "name": "d30",
+            "type": "FLOAT"
+          },
+          {
+            "name": "d90",
+            "type": "FLOAT"
+          },
+          {
+            "name": "d360",
+            "type": "FLOAT"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d3",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d4",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d5",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d6",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d7",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d8",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d9",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d10",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d11",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d12",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d13",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d14",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d15",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d16",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d17",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d18",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d19",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d20",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d21",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d22",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d23",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d24",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d25",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d26",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d27",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d28",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d29",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d30",
+            "type": "BOOLEAN"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rolling_retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d3",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d4",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d5",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d6",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d7",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d8",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d9",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d10",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d11",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d12",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d13",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d14",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d15",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d16",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d17",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d18",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d19",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d20",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d21",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d22",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d23",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d24",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d25",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d26",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d27",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d28",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d29",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d30",
+            "type": "BOOLEAN"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "profile_updated_at",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "page_referrer",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.dm.dm_collart_web_user_event_di",
+    "rows": 47391660,
+    "bytes": 29472355977,
+    "modified": "2026-09-09 00:00:31.838000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date"
+    },
+    "clustering": [
+      "package_name",
+      "event_name",
+      "user_pseudo_id"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_login",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_vip",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ga_session_id",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ga_session_number",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "session_engaged",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "engagement_time_msec",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "first_open_time",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "page",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "location",
+            "type": "STRING"
+          },
+          {
+            "name": "title",
+            "type": "STRING"
+          },
+          {
+            "name": "referrer",
+            "type": "STRING"
+          },
+          {
+            "name": "name",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "geo",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "city",
+            "type": "STRING"
+          },
+          {
+            "name": "continent",
+            "type": "STRING"
+          },
+          {
+            "name": "sub_continent",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "device",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "device_category",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_brand_name",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_model_name",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system",
+            "type": "STRING"
+          },
+          {
+            "name": "device_operating_system_version",
+            "type": "STRING"
+          },
+          {
+            "name": "device_vendor_id",
+            "type": "STRING"
+          },
+          {
+            "name": "device_language",
+            "type": "STRING"
+          },
+          {
+            "name": "browser",
+            "type": "STRING"
+          },
+          {
+            "name": "browser_version",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "source",
+            "type": "STRING"
+          },
+          {
+            "name": "medium",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign_id",
+            "type": "STRING"
+          },
+          {
+            "name": "term",
+            "type": "STRING"
+          },
+          {
+            "name": "content",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "identity",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "clarity_user_id",
+            "type": "STRING"
+          },
+          {
+            "name": "clarity_session_id",
+            "type": "STRING"
+          },
+          {
+            "name": "atlasv_id",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "product_id",
+            "type": "STRING"
+          },
+          {
+            "name": "price",
+            "type": "STRING"
+          },
+          {
+            "name": "currency",
+            "type": "STRING"
+          },
+          {
+            "name": "points",
+            "type": "STRING"
+          },
+          {
+            "name": "product_type",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "web_params_info",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "service_type",
+            "type": "STRING"
+          },
+          {
+            "name": "task_id",
+            "type": "STRING"
+          },
+          {
+            "name": "feature",
+            "type": "STRING"
+          },
+          {
+            "name": "event_from",
+            "type": "STRING"
+          },
+          {
+            "name": "category",
+            "type": "STRING"
+          },
+          {
+            "name": "module_type",
+            "type": "STRING"
+          },
+          {
+            "name": "entry",
+            "type": "STRING"
+          },
+          {
+            "name": "template_id",
+            "type": "STRING"
+          },
+          {
+            "name": "list_source",
+            "type": "STRING"
+          },
+          {
+            "name": "result_id",
+            "type": "STRING"
+          },
+          {
+            "name": "result_type",
+            "type": "STRING"
+          },
+          {
+            "name": "target_path",
+            "type": "STRING"
+          },
+          {
+            "name": "total_ms",
+            "type": "FLOAT"
+          },
+          {
+            "name": "success",
+            "type": "STRING"
+          },
+          {
+            "name": "model",
+            "type": "STRING"
+          },
+          {
+            "name": "model_type",
+            "type": "STRING"
+          },
+          {
+            "name": "model_value",
+            "type": "STRING"
+          },
+          {
+            "name": "search_keyword",
+            "type": "STRING",
+            "mode": "NULLABLE",
+            "description": "Canonical template-search term extracted from end-specific event params"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "fashion_params_info",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "step",
+            "type": "STRING"
+          },
+          {
+            "name": "module_name",
+            "type": "STRING"
+          },
+          {
+            "name": "template_id",
+            "type": "STRING"
+          },
+          {
+            "name": "model_source",
+            "type": "STRING"
+          },
+          {
+            "name": "model_preset_id",
+            "type": "STRING"
+          },
+          {
+            "name": "outfit_type",
+            "type": "STRING"
+          },
+          {
+            "name": "outfit_preset_id",
+            "type": "STRING"
+          },
+          {
+            "name": "outfit_count",
+            "type": "INTEGER"
+          },
+          {
+            "name": "video_model",
+            "type": "STRING"
+          },
+          {
+            "name": "resolution",
+            "type": "STRING"
+          },
+          {
+            "name": "bgm_enabled",
+            "type": "STRING"
+          },
+          {
+            "name": "has_prompt",
+            "type": "STRING"
+          },
+          {
+            "name": "has_scene",
+            "type": "STRING"
+          },
+          {
+            "name": "generate_count",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di",
+    "rows": 30,
+    "bytes": 3458,
+    "modified": "2026-09-09 00:31:18.757000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date",
+      "requirePartitionFilter": true
+    },
+    "clustering": [
+      "user_id"
+    ],
+    "require_partition_filter": true,
+    "schema": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "REQUIRED",
+        "description": "Stripe 收入日期"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "collart_fashion"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "Collart 登录用户 ID"
+      },
+      {
+        "name": "first_fashion_succeed_date",
+        "type": "DATE",
+        "mode": "REQUIRED",
+        "description": "首次可映射的 Fashion vip_subscribe_succeed 日期"
+      },
+      {
+        "name": "revenue_usd",
+        "type": "FLOAT",
+        "description": "Stripe 用户当日收入 USD",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "pay_cnt",
+        "type": "INTEGER",
+        "description": "Stripe 去重交易笔数",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "etl_time",
+        "type": "TIMESTAMP",
+        "description": "入库时间",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "description": "匹配支付成功事件的 GA4 用户 ID",
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di",
+    "rows": 20,
+    "bytes": 980,
+    "modified": "2026-09-09 00:31:24.457000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date",
+      "requirePartitionFilter": true
+    },
+    "clustering": null,
+    "require_partition_filter": true,
+    "schema": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "revenue_usd",
+        "type": "FLOAT",
+        "description": "当日 Stripe 收入 USD",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "pay_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "etl_time",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "pubdata2025.dwd.dwd_cdct_revenue_stripe_di",
+    "rows": 16508,
+    "bytes": 3541879,
+    "modified": "2026-09-09 01:00:07.635000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date"
+    },
+    "clustering": [
+      "app_name",
+      "country",
+      "product_id"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "日期分区"
+      },
+      {
+        "name": "event_timestamp",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "交易发生时间戳"
+      },
+      {
+        "name": "transaction_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Stripe 流水唯一 ID"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "所属应用名称"
+      },
+      {
+        "name": "charge_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交易类型"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "支付账户国家代码"
+      },
+      {
+        "name": "currency",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "结算币种 "
+      },
+      {
+        "name": "stripe_customer_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Stripe 客户 ID "
+      },
+      {
+        "name": "amount",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "交易总金额"
+      },
+      {
+        "name": "fee",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Stripe 收取的手续费"
+      },
+      {
+        "name": "revneue",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "净收入 (Amount - Fee)"
+      },
+      {
+        "name": "description_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交易描述信息"
+      },
+      {
+        "name": "order_status",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "流水订单状态"
+      },
+      {
+        "name": "product_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品唯一 ID "
+      },
+      {
+        "name": "product_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品名称"
+      },
+      {
+        "name": "subscription_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "关联的订阅 ID"
+      },
+      {
+        "name": "subscription_status",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "该订阅目前的实时状态"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户user_id"
+      },
+      {
+        "name": "payment_channel",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "付款平台"
+      }
+    ],
+    "type": "TABLE"
+  },
+  {
+    "table": "aidata2025.dwd.dwd_cdct_delivery_cost_di",
+    "rows": 1107351,
+    "bytes": 181778573,
+    "modified": "2026-09-09 00:31:21.054000+00:00",
+    "partitioning": {
+      "type": "DAY",
+      "field": "event_date"
+    },
+    "clustering": [
+      "package_name",
+      "campaign_name"
+    ],
+    "require_partition_filter": null,
+    "schema": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "REQUIRED",
+        "description": "业务日期，用于分区"
+      },
+      {
+        "name": "delivery_type",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "投放渠道类型:ga,tt,fb,asa"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "App名称"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用包名"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家或地区代码"
+      },
+      {
+        "name": "campaign_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告系列 ID"
+      },
+      {
+        "name": "campaign_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告系列名称"
+      },
+      {
+        "name": "adgroup_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告组 ID"
+      },
+      {
+        "name": "adgroup_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告组名称"
+      },
+      {
+        "name": "ad_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "素材/广告 ID"
+      },
+      {
+        "name": "ad_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "素材/广告名称"
+      },
+      {
+        "name": "keyword",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "搜索关键词 (主要用于ASA)"
+      },
+      {
+        "name": "impressions",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "展示次数"
+      },
+      {
+        "name": "clicks",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "点击次数 (ASA对应taps)"
+      },
+      {
+        "name": "cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "标准消耗成本"
+      },
+      {
+        "name": "installs",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "安装转化数 (GA/ASA对应Installs, TT对应SKAN等)"
+      },
+      {
+        "name": "conversions",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "通用转化事件数 (如GA中的Conversions)"
+      },
+      {
+        "name": "actions",
+        "type": "RECORD",
+        "mode": "REPEATED",
+        "fields": [
+          {
+            "name": "action_type",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "action_count",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ]
+      },
+      {
+        "name": "country_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ],
+    "type": "TABLE"
+  }
+]

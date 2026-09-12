@@ -1,0 +1,66 @@
+-- Fashion 新用户 cohort + orders（宽口径，含 pending/expired）
+-- 指标：collart_fashion/indicators/fashion_new_user.md
+
+DECLARE start_date DATE DEFAULT @start_date;
+DECLARE end_date DATE DEFAULT @end_date;
+
+WITH cohort AS (
+  SELECT
+    event_date AS cohort_date,
+    user_pseudo_id,
+    NULLIF(user_id, '') AS user_id,
+    country,
+    traffic_src_name AS campaign,
+    traffic_src_source,
+    traffic_src_type,
+    device_category
+  FROM `aidata2025.ads_collart.ads_oper_user_new_collartweb_di`
+  WHERE event_date BETWEEN start_date AND end_date
+    AND package_name = 'collart_fashion'
+),
+user_id_map AS (
+  SELECT
+    user_pseudo_id,
+    ARRAY_AGG(NULLIF(user_id, '') IGNORE NULLS ORDER BY event_date DESC LIMIT 1)[SAFE_OFFSET(0)] AS user_id
+  FROM `aidata2025.dwd.dwd_oper_user_collartweb_di`
+  WHERE event_date BETWEEN start_date AND end_date
+    AND package_name = 'collart_fashion'
+  GROUP BY 1
+),
+cohort_enriched AS (
+  SELECT
+    c.cohort_date,
+    c.user_pseudo_id,
+    COALESCE(c.user_id, m.user_id) AS user_id,
+    c.country,
+    c.campaign,
+    c.traffic_src_source,
+    c.traffic_src_type,
+    c.device_category
+  FROM cohort c
+  LEFT JOIN user_id_map m USING (user_pseudo_id)
+),
+orders AS (
+  SELECT
+    o.*,
+    DATETIME(o.created_at, 'Asia/Shanghai') AS created_cn
+  FROM `aidata2025.ods.orders` o
+  WHERE DATE(o.created_at) BETWEEN start_date AND end_date
+)
+SELECT
+  c.cohort_date,
+  c.user_pseudo_id,
+  c.user_id,
+  c.country,
+  c.campaign,
+  o.id AS order_id,
+  o.status,
+  o.product_name,
+  o.total_price,
+  o.currency,
+  o.payment_channel,
+  o.created_cn
+FROM cohort_enriched c
+INNER JOIN orders o ON c.user_id = o.user_id
+WHERE c.user_id IS NOT NULL
+ORDER BY c.cohort_date, o.created_cn;

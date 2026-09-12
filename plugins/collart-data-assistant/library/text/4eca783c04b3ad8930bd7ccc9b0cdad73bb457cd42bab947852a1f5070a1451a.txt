@@ -1,0 +1,72 @@
+-- 用户从新增到首次购买点数包的时间间隔分布
+-- 创建时间：2026-04-14
+-- 数据范围：近180天
+
+WITH
+-- 1. 用户首次新增日期（从 dwd_oper_user_collart_di 获取 is_new=1 的最早日期）
+user_first_install AS (
+  SELECT
+    user_pseudo_id,
+    MIN(event_date) AS first_install_date
+  FROM aidata2025.dwd.dwd_oper_user_collart_di
+  WHERE is_new = TRUE
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+    AND event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 180 DAY)
+  GROUP BY user_pseudo_id
+),
+
+-- 2. 用户首次购买点数包事件
+first_pack_purchase AS (
+  SELECT
+    user_pseudo_id,
+    MIN(TIMESTAMP_MICROS(event_timestamp)) AS first_pack_time
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 180 DAY))
+    AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'vip_subscribe_succeed'
+    AND EXISTS (
+      SELECT 1 FROM UNNEST(event_params) ep
+      WHERE ep.key = 'product_id' AND ep.value.string_value LIKE '%pack%'
+    )
+  GROUP BY user_pseudo_id
+),
+
+-- 3. 关联并计算时间间隔
+interval_calc AS (
+  SELECT
+    u.user_pseudo_id,
+    u.first_install_date,
+    p.first_pack_time,
+    TIMESTAMP_DIFF(p.first_pack_time, TIMESTAMP(u.first_install_date), DAY) AS days_to_first_pack
+  FROM user_first_install u
+  INNER JOIN first_pack_purchase p ON u.user_pseudo_id = p.user_pseudo_id
+)
+
+-- 4. 时间间隔分布
+SELECT
+  CASE
+    WHEN days_to_first_pack = 0 THEN '当天'
+    WHEN days_to_first_pack = 1 THEN '第2天'
+    WHEN days_to_first_pack = 2 THEN '第3天'
+    WHEN days_to_first_pack BETWEEN 3 AND 6 THEN '4-7天'
+    WHEN days_to_first_pack BETWEEN 7 AND 13 THEN '8-14天'
+    WHEN days_to_first_pack BETWEEN 14 AND 29 THEN '15-30天'
+    WHEN days_to_first_pack BETWEEN 30 AND 59 THEN '31-60天'
+    WHEN days_to_first_pack >= 60 THEN '60天以上'
+  END AS interval_bucket,
+  COUNT(*) AS user_count,
+  ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) AS pct
+FROM interval_calc
+GROUP BY interval_bucket
+ORDER BY
+  CASE interval_bucket
+    WHEN '当天' THEN 1
+    WHEN '第2天' THEN 2
+    WHEN '第3天' THEN 3
+    WHEN '4-7天' THEN 4
+    WHEN '8-14天' THEN 5
+    WHEN '15-30天' THEN 6
+    WHEN '31-60天' THEN 7
+    WHEN '60天以上' THEN 8
+  END

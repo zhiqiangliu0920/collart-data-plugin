@@ -1,0 +1,29 @@
+-- Web付费转化分析
+WITH daily_dau AS (
+  SELECT 
+    DATE(TIMESTAMP_MICROS(event_timestamp)) AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS dau
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= '20260301' AND _TABLE_SUFFIX <= '20260331'
+    AND app_info.id IS NULL
+    AND event_name = 'session_start'
+  GROUP BY dt
+),
+pay_users AS (
+  SELECT 
+    DATE(TIMESTAMP_MICROS(event_timestamp)) AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS paid_users
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= '20260301' AND _TABLE_SUFFIX <= '20260331'
+    AND app_info.id IS NULL
+    AND event_name = 'vip_subscribe_succeed'
+  GROUP BY dt
+)
+SELECT 
+  d.dt,
+  d.dau,
+  p.paid_users,
+  ROUND(p.paid_users * 100.0 / d.dau, 2) AS conversion_rate
+FROM daily_dau d
+LEFT JOIN pay_users p ON d.dt = p.dt
+ORDER BY d.dt;

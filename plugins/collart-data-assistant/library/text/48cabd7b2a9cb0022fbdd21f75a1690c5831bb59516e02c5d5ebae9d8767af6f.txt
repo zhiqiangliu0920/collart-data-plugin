@@ -1,0 +1,101 @@
+---
+name: collart-event-metric-sync
+description: >-
+  Sync Collart four-end ads_dim_metric_rule Google Sheets into warehouse event-metric
+  SQLX, Dataform deploy, and 14-day backfill. Use when the user adjusts metric rule
+  Sheets, says 指标规则/is_materialized/event_params, asks to regenerate
+  ads_oper_user_event_metric_di / attr / country / daily, push Dataform, or
+  同步宽表 after changing Android/iOS/Web/Fashion metric rules.
+---
+
+# Collart 事件指标规则同步
+
+改各端 `ads_dim_metric_rule` Google Sheet 之后，把热指标落到 UEM / attr / country / daily。
+
+**不要**只手改 SQLX。**不要**对 Sheet 外表 `INSERT` / `CREATE OR REPLACE`。
+
+## 何时用
+
+- 「我改了指标规则 Sheet / is_materialized / event_params」
+- 「把热指标补进宽表并部署」
+- 「回补最近 14 天 event metric」
+
+查数、冷指标扫 DM：走 `collart-biz-analysis` + 知识库 `1company/tables/ads_dim_metric_rule.md`，不必跑本 skill 的部署。
+
+## 规则源
+
+权威：[四端合并 Sheet](https://docs.google.com/spreadsheets/d/1erErriZcVUUr96c2VRUf3OiF1I_dlSVGqv28hwJb3Ao/edit?gid=0#gid=0) → `aidata2025.ads_collart.ads_dim_metric_rule`（`app_name` 区分）。  
+各端 `ads_dim_metric_rule` 已删除；生成器 / Android SP 直接读合并表。
+
+| 端 | `--end` | `app_name` |
+|---|---|---|
+| Android | `android` | `collart_android` |
+| iOS | `ios` | `vidart_ios` |
+| Web | `web` | `collart_web` |
+| Fashion | `fashion` | `collart_fashion` |
+
+用户没说端：只同步他刚改的那一端；「四端都改了」才 `--end all`。
+
+## 工作流
+
+脚本目录：`OneDrive/cursor-sync/project/1company/2026-07/collart_ads_rebuild/_scratch/`  
+PowerShell 不要用 `&&`。
+
+```
+Task Progress:
+- [ ] 确认 Sheet 格子是纯文本；is_materialized=TRUE 才进宽表
+- [ ] dry-run 读规则
+- [ ] generate + ALTER + Dataform compile/push
+- [ ] 回补 14 天（UEM → attr → country → daily）
+- [ ] 抽一天对账 UV/PV
+```
+
+**1. 先对齐（必做）**
+
+```text
+python align_metric_rule_vs_tables.py
+python sync_event_metric_from_sheet.py --end android --dry-run
+```
+
+**2. 生成、部署、回补**
+
+```text
+python sync_event_metric_from_sheet.py --end android --days 14
+```
+
+只改 SQLX 不回补：加 `--skip-backfill`。  
+回补窗口：`CURRENT_DATE()-14` ～ `CURRENT_DATE()-1`（T+1）。  
+避开 Android active 日刷约 10:02–10:07 CST。
+
+**3. 编排器实际做的事**
+
+1. 读 Sheet 外表热规则（需 Drive scope）
+2. 跑对应 `gen_event_metric_*.py` / daily 生成器，覆盖本地 `sql/{end}/*.sqlx`
+3. `ALTER TABLE ADD COLUMN IF NOT EXISTS`（UEM=`INT64`，下游=`STRUCT<uv,pv>`）
+4. Dataform workspace `script`：write → compile（0 error）→ commit → `push_git_commits` `main`
+5. 按依赖执行四张表 SQLX（改 `from_date`/`to_date`）
+
+Dataform：`aidata2025` / `us-east1` / repo `aidata` / workspace `script`。  
+远程路径：`definitions/ads/collart/collart_{android|ios|web|fashion}/`
+
+## 红线
+
+- `event_params` 只允许 `key =/'in'/'like'`，AND；Sheet 当纯文本
+- Web `valid_user_pv` 是 `COMPOSITE`，生成器特判，不要改成白名单表达式
+- iOS 停用的 6 条不要强行物化
+- Android 冷指标 `ai_tool_execute_start_pv` 保持 `is_materialized=FALSE`
+- daily 的 `churn_uv` / `dnu_free` / `vip_dau` 等不是规则列，生成器不要删
+- country/daily 上已有的 `new_uv` 等 EXTRA_FIELDS 必须留在生成器里
+- 新 key 必须存在于 DM `params_info` / `web_params_info`
+- 禁止跑旧 seed（会毁掉 EXTERNAL + `event_params`）
+- 编译失败立刻停，不要 push、不要回补
+
+## 对账
+
+回补后抽 1 天：Sheet 热指标在 UEM `SUM(*_pv)` 与按规则扫 DM 的 `COUNTIF` 对齐。Android 也可 `CALL sp_query_event_metric_by_tag`。
+
+## 知识库
+
+同步完成后若规则有增减，更新 `ai-knowledge/1company/tables/ads_dim_metric_rule.md` 与 `ads_dim_metric_rule_catalog.md`，CHANGELOG 加一行。
+
+细节见 [reference.md](reference.md)。

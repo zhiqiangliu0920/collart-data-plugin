@@ -1,0 +1,43 @@
+-- 【单一离线表查询】针对 2026-04-01 结转初期的模板点击率统计
+-- 严格排除了 intraday 数据，仅锁定正式结转表
+-- 记录时间：2026-04-02 14:26
+
+WITH template_show AS (
+  SELECT 
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'id') AS temp_id,
+    COUNT(DISTINCT user_pseudo_id) AS show_uv
+  FROM `storytemplate-10a27.analytics_232977577.events_20260401`
+  WHERE app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'Home_Template_Show'
+  GROUP BY 1
+),
+template_click AS (
+  SELECT 
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'id') AS temp_id,
+    COUNT(DISTINCT user_pseudo_id) AS click_uv
+  FROM `storytemplate-10a27.analytics_232977577.events_20260401`
+  WHERE app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'Home_Template_Click'
+  GROUP BY 1
+),
+service_start AS (
+  SELECT 
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'id') AS temp_id,
+    COUNT(DISTINCT user_pseudo_id) AS start_uv
+  FROM `storytemplate-10a27.analytics_232977577.events_20260401`
+  WHERE app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'ai_service_start'
+  GROUP BY 1
+)
+SELECT 
+  s.temp_id,
+  s.show_uv AS `展示uv`,
+  IFNULL(c.click_uv, 0) AS `点击uv`,
+  ROUND(SAFE_DIVIDE(IFNULL(c.click_uv, 0), s.show_uv) * 100, 1) AS `点击率%`,
+  IFNULL(ss.start_uv, 0) AS `生成uv`,
+  ROUND(SAFE_DIVIDE(IFNULL(ss.start_uv, 0), IFNULL(c.click_uv, 0)) * 100, 1) AS `生成转化率%`
+FROM template_show s
+LEFT JOIN template_click c ON s.temp_id = c.temp_id
+LEFT JOIN service_start ss ON s.temp_id = ss.temp_id
+WHERE s.temp_id IS NOT NULL
+ORDER BY `点击uv` DESC;

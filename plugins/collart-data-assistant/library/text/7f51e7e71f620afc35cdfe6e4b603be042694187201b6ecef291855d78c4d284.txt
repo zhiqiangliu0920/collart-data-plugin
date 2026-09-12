@@ -1,0 +1,143 @@
+-- Collart Fashion Power BI 看板数据源（与 cursor-sync 同步）
+-- 完整 SQL 见 cursor-sync/project/collart_fashion/2026-07/fashion_pbi_dashboard/FASHION_PBI_DASHBOARD.sql
+-- 粒度: event_date × is_new × traffic_source_type × country
+-- 范围: package_name = 'collart_fashion'；已排除内部 user_id
+
+DECLARE start_date DATE DEFAULT DATE '2026-07-01';
+DECLARE end_date   DATE DEFAULT DATE '2026-07-21';
+
+-- 以下为 canonical 副本，修改时请同步两处
+
+WITH internal_users AS (
+  SELECT user_id
+  FROM UNNEST([
+    '{INTERNAL_USER_ID_15}',
+    '{INTERNAL_USER_ID_14}',
+    '{INTERNAL_USER_ID_2}',
+    '{INTERNAL_USER_ID_11}',
+    '{INTERNAL_USER_ID_7}',
+    '{INTERNAL_USER_ID_4}',
+    '{INTERNAL_USER_ID_18}',
+    '{INTERNAL_USER_ID_1}',
+    '{INTERNAL_USER_ID_8}',
+    '{INTERNAL_USER_ID_9}',
+    '{INTERNAL_USER_ID_3}',
+    '{INTERNAL_USER_ID_17}',
+    '{INTERNAL_USER_ID_13}',
+    '{INTERNAL_USER_ID_6}',
+    '{INTERNAL_USER_ID_5}',
+    '{INTERNAL_USER_ID_16}',
+    '{INTERNAL_USER_ID_12}',
+    '{INTERNAL_USER_ID_10}'
+  ]) AS user_id
+),
+
+user_dim AS (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    LOGICAL_OR(is_new) AS is_new,
+    COALESCE(ANY_VALUE(traffic_src_type), '(null)') AS traffic_src_type,
+    COALESCE(ANY_VALUE(country), '(null)') AS country
+  FROM `aidata2025.dwd.dwd_oper_user_collartweb_di`
+  WHERE event_date BETWEEN start_date AND end_date
+    AND package_name = 'collart_fashion'
+    AND (user_id IS NULL OR user_id NOT IN (SELECT user_id FROM internal_users))
+  GROUP BY event_date, user_pseudo_id
+),
+
+event_fact AS (
+  SELECT
+    e.event_date,
+    e.user_pseudo_id,
+    e.event_name,
+    LOWER(COALESCE(e.event_service_type, '')) AS service_type,
+    LOWER(COALESCE(e.event_from, '')) AS event_from
+  FROM `aidata2025.dwd.dwd_oper_user_event_di` e
+  WHERE e.event_date BETWEEN start_date AND end_date
+    AND e.package_name = 'collart_fashion'
+    AND (e.user_id IS NULL OR e.user_id NOT IN (SELECT user_id FROM internal_users))
+),
+
+seo_page_visit AS (
+  SELECT DISTINCT
+    PARSE_DATE('%Y%m%d', event_date) AS event_date,
+    user_pseudo_id
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', start_date)
+                          AND FORMAT_DATE('%Y%m%d', end_date)
+    AND app_info.id IS NULL
+    AND (
+      (
+        event_name = 'page_view'
+        AND LOWER(COALESCE((
+          SELECT ep.value.string_value
+          FROM UNNEST(event_params) ep
+          WHERE ep.key = 'page_location'
+        ), '')) LIKE '%ai-fashion-video%'
+      )
+      OR event_name = 'fashion_welcome_page_show'
+    )
+),
+
+user_daily_flags AS (
+  SELECT
+    d.event_date,
+    d.user_pseudo_id,
+    d.is_new,
+    d.traffic_src_type,
+    d.country,
+    (d.is_new AND s.user_pseudo_id IS NOT NULL) AS is_seo_new_user,
+    LOGICAL_OR(e.event_name = 'fashion_welcome_action_click') AS has_welcome_action_click,
+    LOGICAL_OR(e.event_name = 'login_show') AS has_login_show,
+    LOGICAL_OR(e.event_name IN ('login_success', 'login_account_success')) AS has_login_success,
+    LOGICAL_OR(e.event_name = 'fashion_inspiration_show') AS has_inspiration_show,
+    LOGICAL_OR(e.event_name = 'fashion_inspiration_template_click') AS has_template_click,
+    COUNTIF(e.event_name = 'fashion_inspiration_template_click') AS template_click_pv,
+    LOGICAL_OR(e.event_name = 'fashion_generator_show') AS has_generator_show,
+    LOGICAL_OR(e.event_name = 'fashion_model_next') AS has_model_next,
+    LOGICAL_OR(e.event_name = 'fashion_outfit_next') AS has_outfit_next,
+    LOGICAL_OR(e.event_name = 'fashion_video_generate_click') AS has_generate_click,
+    LOGICAL_OR(e.event_name = 'ai_service_execute_start' AND e.service_type IN ('fashion_video', 'ai_model')) AS has_service_execute_start,
+    LOGICAL_OR(e.event_name = 'ai_service_success' AND e.service_type IN ('fashion_video', 'ai_model')) AS has_service_success,
+    LOGICAL_OR(e.event_name = 'ai_service_failed' AND e.service_type IN ('fashion_video', 'ai_model')) AS has_service_failed,
+    LOGICAL_OR(e.event_name = 'ai_result_download') AS has_result_download,
+    LOGICAL_OR(e.event_name = 'vip_show' AND (e.event_from = 'fashion_video' OR e.event_from = '')) AS has_vip_show,
+    LOGICAL_OR(e.event_name = 'vip_subscribe' AND (e.event_from = 'fashion_video' OR e.event_from = '')) AS has_vip_subscribe,
+    LOGICAL_OR(e.event_name = 'vip_subscribe_succeed' AND (e.event_from = 'fashion_video' OR e.event_from = '')) AS has_vip_subscribe_succeed,
+    COUNTIF(e.event_name = 'fashion_welcome_action_click') AS welcome_action_click_pv
+  FROM user_dim d
+  LEFT JOIN event_fact e
+    ON d.event_date = e.event_date AND d.user_pseudo_id = e.user_pseudo_id
+  LEFT JOIN seo_page_visit s
+    ON d.event_date = s.event_date AND d.user_pseudo_id = s.user_pseudo_id
+  GROUP BY d.event_date, d.user_pseudo_id, d.is_new, d.traffic_src_type, d.country, s.user_pseudo_id
+)
+
+SELECT
+  event_date,
+  is_new,
+  traffic_src_type AS traffic_source_type,
+  country,
+  COUNTIF(is_seo_new_user) AS seo_new_user_uv,
+  COUNTIF(has_welcome_action_click) AS welcome_action_click_uv,
+  SUM(welcome_action_click_pv) AS welcome_action_click_pv,
+  COUNTIF(has_login_show) AS login_show_uv,
+  COUNTIF(has_login_success) AS login_success_uv,
+  COUNTIF(has_inspiration_show) AS inspiration_show_uv,
+  COUNTIF(has_template_click) AS template_click_uv,
+  SUM(template_click_pv) AS template_click_pv,
+  COUNTIF(has_generator_show) AS generator_show_uv,
+  COUNTIF(has_model_next) AS model_next_uv,
+  COUNTIF(has_outfit_next) AS outfit_next_uv,
+  COUNTIF(has_generate_click) AS generate_click_uv,
+  COUNTIF(has_service_execute_start) AS service_execute_start_uv,
+  COUNTIF(has_service_success) AS service_success_uv,
+  COUNTIF(has_service_failed) AS service_failed_uv,
+  COUNTIF(has_result_download) AS result_download_uv,
+  COUNTIF(has_vip_show) AS vip_show_uv,
+  COUNTIF(has_vip_subscribe) AS vip_subscribe_uv,
+  COUNTIF(has_vip_subscribe_succeed) AS vip_subscribe_succeed_uv
+FROM user_daily_flags
+GROUP BY 1, 2, 3, 4
+ORDER BY 1, 2 DESC, 3, 4;

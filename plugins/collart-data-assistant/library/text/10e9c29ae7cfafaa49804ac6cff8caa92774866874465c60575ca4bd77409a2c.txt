@@ -1,0 +1,5 @@
+SELECT table_name,creation_time
+FROM `storytemplate-10a27.analytics_232977577.INFORMATION_SCHEMA.TABLES`
+WHERE table_name BETWEEN 'events_20260906' AND 'events_20260908'
+ OR table_name BETWEEN 'events_intraday_20260906' AND 'events_intraday_20260908'
+ORDER BY table_name

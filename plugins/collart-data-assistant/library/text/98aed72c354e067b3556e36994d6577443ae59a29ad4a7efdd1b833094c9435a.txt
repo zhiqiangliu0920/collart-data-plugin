@@ -1,0 +1,28 @@
+--昨日 (2026-04-01) Collart Web FB 投放渠道新增用户付费情况
+--记录到: knowledge/collart_web/sql-snippets/web_fb_payment_20260401.sql
+
+WITH web_fb_new_users AS (
+  -- 1. 识别昨日 Web 端 FB 渠道的新增用户 (使用 first_visit)
+  SELECT DISTINCT user_pseudo_id
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX = '20260401'
+    AND app_info.id IS NULL -- Web 端过滤红线
+    AND event_name = 'first_visit'
+    AND (
+      traffic_source.source IN ('facebook', 'fb', 'facebook.com') 
+      OR traffic_source.medium IN ('cpc', 'social', 'paidsocial')
+    )
+)
+SELECT 
+  COUNT(DISTINCT w.user_pseudo_id) as new_web_fb_users,
+  -- 2. 统计付费点击 (Web 端通常为 purchase 或自定义订阅点击事件)
+  COUNT(DISTINCT CASE WHEN e.event_name IN ('begin_checkout', 'subscribe_click') THEN e.user_pseudo_id END) as purchase_clicks,
+  -- 3. 统计成功付费 (Web 端通常为 purchase 事件)
+  COUNT(DISTINCT CASE WHEN e.event_name = 'purchase' THEN e.user_pseudo_id END) as paid_users,
+  -- 4. 计算转化率
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN e.event_name = 'purchase' THEN e.user_pseudo_id END), COUNT(DISTINCT w.user_pseudo_id)), 4) as cvr
+FROM web_fb_new_users w
+LEFT JOIN `storytemplate-10a27.analytics_232977577.events_*` e 
+  ON w.user_pseudo_id = e.user_pseudo_id 
+  AND e._TABLE_SUFFIX = '20260401'
+  AND e.app_info.id IS NULL

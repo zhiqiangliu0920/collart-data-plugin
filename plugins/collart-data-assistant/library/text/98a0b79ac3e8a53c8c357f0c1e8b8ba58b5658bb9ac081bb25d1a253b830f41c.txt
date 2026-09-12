@@ -1,0 +1,216 @@
+-- Collart Web: 过去一周访问服装带货 SEO 页 / 男性向页且同周有成功付费的用户信息
+-- 查询日期: 2026-06-30
+-- 时间窗口: 2026-06-23 ~ 2026-06-29（最近 7 个完整自然日，北京时间）
+-- 页面口径:
+--   服装带货 SEO 页: page_location LIKE '%ai-fashion-video%'
+--   男性向页: page_location LIKE '%soft-allure%'
+-- 付费口径: aidata2025.ods.orders status IN ('active','paid','active_ending')
+-- Web 过滤: app_info.id IS NULL
+
+DECLARE start_date DATE DEFAULT DATE '2026-06-23';
+DECLARE end_date DATE DEFAULT DATE '2026-06-29';
+
+WITH internal_users AS (
+  SELECT user_id
+  FROM UNNEST([
+    '{INTERNAL_USER_ID_15}',
+    '{INTERNAL_USER_ID_14}',
+    '{INTERNAL_USER_ID_2}',
+    '{INTERNAL_USER_ID_11}',
+    '{INTERNAL_USER_ID_7}',
+    '{INTERNAL_USER_ID_4}',
+    '{INTERNAL_USER_ID_18}',
+    '{INTERNAL_USER_ID_1}',
+    '{INTERNAL_USER_ID_8}',
+    '{INTERNAL_USER_ID_9}',
+    '{INTERNAL_USER_ID_3}',
+    '{INTERNAL_USER_ID_17}',
+    '{INTERNAL_USER_ID_13}',
+    '{INTERNAL_USER_ID_6}',
+    '{INTERNAL_USER_ID_5}',
+    '{INTERNAL_USER_ID_16}',
+    '{INTERNAL_USER_ID_12}',
+    '{INTERNAL_USER_ID_10}'
+  ]) AS user_id
+),
+
+event_base AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS event_dt,
+    DATETIME(TIMESTAMP_MICROS(event_timestamp), 'Asia/Shanghai') AS event_time_cn,
+    event_timestamp,
+    user_pseudo_id,
+    user_id,
+    event_name,
+    geo.country AS country,
+    device.category AS device_category,
+    device.operating_system AS operating_system,
+    device.web_info.browser AS browser,
+    traffic_source.source AS source,
+    traffic_source.medium AS medium,
+    traffic_source.name AS campaign,
+    (
+      SELECT ep.value.string_value
+      FROM UNNEST(event_params) ep
+      WHERE ep.key = 'page_location'
+    ) AS page_location
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', start_date)
+                          AND FORMAT_DATE('%Y%m%d', end_date)
+    AND app_info.id IS NULL
+),
+
+page_visits AS (
+  SELECT
+    user_pseudo_id,
+    MIN(IF(LOWER(COALESCE(page_location, '')) LIKE '%ai-fashion-video%', event_time_cn, NULL)) AS first_ai_fashion_visit_time_cn,
+    MIN(IF(LOWER(COALESCE(page_location, '')) LIKE '%soft-allure%', event_time_cn, NULL)) AS first_soft_allure_visit_time_cn,
+    COUNTIF(LOWER(COALESCE(page_location, '')) LIKE '%ai-fashion-video%') AS ai_fashion_pv,
+    COUNTIF(LOWER(COALESCE(page_location, '')) LIKE '%soft-allure%') AS soft_allure_pv,
+    ARRAY_AGG(
+      DISTINCT IF(
+        LOWER(COALESCE(page_location, '')) LIKE '%ai-fashion-video%'
+        OR LOWER(COALESCE(page_location, '')) LIKE '%soft-allure%',
+        page_location,
+        NULL
+      ) IGNORE NULLS LIMIT 5
+    ) AS sample_target_pages
+  FROM event_base
+  WHERE event_name = 'page_view'
+    AND (
+      LOWER(COALESCE(page_location, '')) LIKE '%ai-fashion-video%'
+      OR LOWER(COALESCE(page_location, '')) LIKE '%soft-allure%'
+    )
+  GROUP BY user_pseudo_id
+),
+
+identity_map AS (
+  SELECT
+    user_pseudo_id,
+    ARRAY_AGG(user_id IGNORE NULLS ORDER BY event_timestamp DESC LIMIT 1)[SAFE_OFFSET(0)] AS event_user_id
+  FROM event_base
+  WHERE user_id IS NOT NULL
+    AND user_id != ''
+  GROUP BY user_pseudo_id
+),
+
+dwd_user AS (
+  SELECT
+    user_pseudo_id,
+    ARRAY_AGG(user_id IGNORE NULLS ORDER BY event_date DESC LIMIT 1)[SAFE_OFFSET(0)] AS dwd_user_id,
+    MIN(event_date) AS first_active_date_2026,
+    MAX(event_date) AS last_active_date_2026,
+    COUNT(DISTINCT event_date) AS active_days_2026,
+    ARRAY_AGG(country IGNORE NULLS ORDER BY event_date DESC LIMIT 1)[SAFE_OFFSET(0)] AS country,
+    ARRAY_AGG(device_category IGNORE NULLS ORDER BY event_date DESC LIMIT 1)[SAFE_OFFSET(0)] AS device_category,
+    ARRAY_AGG(operating_system IGNORE NULLS ORDER BY event_date DESC LIMIT 1)[SAFE_OFFSET(0)] AS operating_system,
+    ARRAY_AGG(browser IGNORE NULLS ORDER BY event_date DESC LIMIT 1)[SAFE_OFFSET(0)] AS browser,
+    ARRAY_AGG(traffic_src_source IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS traffic_source,
+    ARRAY_AGG(traffic_src_name IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS traffic_campaign,
+    ARRAY_AGG(traffic_src_type IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS traffic_type,
+    LOGICAL_OR(is_login) AS ever_login_2026,
+    LOGICAL_OR(is_vip) AS ever_vip_2026
+  FROM `aidata2025.dwd.dwd_oper_user_collartweb_di`
+  WHERE event_date BETWEEN DATE '2026-01-01' AND end_date
+    AND user_pseudo_id IN (SELECT user_pseudo_id FROM page_visits)
+  GROUP BY user_pseudo_id
+),
+
+new_user AS (
+  SELECT
+    user_pseudo_id,
+    MIN(event_date) AS new_user_date,
+    ARRAY_AGG(traffic_src_source IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS new_user_source,
+    ARRAY_AGG(traffic_src_name IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS new_user_campaign,
+    ARRAY_AGG(traffic_src_type IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS new_user_traffic_type
+  FROM `aidata2025.ads_collart.ads_oper_user_new_collartweb_di`
+  WHERE event_date BETWEEN DATE '2026-01-01' AND end_date
+    AND user_pseudo_id IN (SELECT user_pseudo_id FROM page_visits)
+  GROUP BY user_pseudo_id
+),
+
+page_users AS (
+  SELECT
+    pv.user_pseudo_id,
+    COALESCE(im.event_user_id, du.dwd_user_id) AS user_id,
+    pv.first_ai_fashion_visit_time_cn,
+    pv.first_soft_allure_visit_time_cn,
+    pv.ai_fashion_pv,
+    pv.soft_allure_pv,
+    pv.sample_target_pages,
+    du.first_active_date_2026,
+    du.last_active_date_2026,
+    du.active_days_2026,
+    du.country,
+    du.device_category,
+    du.operating_system,
+    du.browser,
+    COALESCE(du.traffic_source, nu.new_user_source) AS traffic_source,
+    COALESCE(du.traffic_campaign, nu.new_user_campaign) AS traffic_campaign,
+    COALESCE(du.traffic_type, nu.new_user_traffic_type) AS traffic_type,
+    du.ever_login_2026,
+    du.ever_vip_2026,
+    nu.new_user_date
+  FROM page_visits pv
+  LEFT JOIN identity_map im
+    USING (user_pseudo_id)
+  LEFT JOIN dwd_user du
+    USING (user_pseudo_id)
+  LEFT JOIN new_user nu
+    USING (user_pseudo_id)
+),
+
+paid_orders AS (
+  SELECT
+    o.user_id,
+    COUNT(*) AS paid_order_cnt,
+    ROUND(SUM(SAFE_DIVIDE(o.total_price, er.rate) / 100), 2) AS paid_revenue_usd,
+    MIN(DATETIME(TIMESTAMP(o.created_at), 'Asia/Shanghai')) AS first_paid_time_cn,
+    MAX(DATETIME(TIMESTAMP(o.created_at), 'Asia/Shanghai')) AS last_paid_time_cn,
+    ARRAY_AGG(DISTINCT o.product_name IGNORE NULLS LIMIT 10) AS paid_products,
+    ARRAY_AGG(DISTINCT o.status IGNORE NULLS LIMIT 10) AS paid_statuses
+  FROM `aidata2025.ods.orders` o
+  LEFT JOIN `aidata2025.dim.exchange_rate_days` er
+    ON DATE(o.created_at) = CAST(er.stats_date AS DATE)
+   AND LOWER(o.currency) = LOWER(er.currency)
+  WHERE DATE(TIMESTAMP(o.created_at), 'Asia/Shanghai') BETWEEN start_date AND end_date
+    AND o.status IN ('active', 'paid', 'active_ending')
+  GROUP BY o.user_id
+)
+
+SELECT
+  pu.user_pseudo_id,
+  pu.user_id,
+  IF(pu.new_user_date IS NOT NULL, 'new', 'old') AS new_old_type,
+  pu.new_user_date,
+  pu.first_active_date_2026,
+  pu.last_active_date_2026,
+  pu.active_days_2026,
+  pu.country,
+  pu.device_category,
+  pu.operating_system,
+  pu.browser,
+  pu.traffic_source,
+  pu.traffic_campaign,
+  pu.traffic_type,
+  pu.ever_login_2026,
+  pu.ever_vip_2026,
+  pu.first_ai_fashion_visit_time_cn,
+  pu.first_soft_allure_visit_time_cn,
+  pu.ai_fashion_pv,
+  pu.soft_allure_pv,
+  pu.ai_fashion_pv > 0 AS visited_ai_fashion_video,
+  pu.soft_allure_pv > 0 AS visited_soft_allure,
+  po.first_paid_time_cn,
+  po.last_paid_time_cn,
+  po.paid_order_cnt,
+  po.paid_revenue_usd,
+  po.paid_products,
+  po.paid_statuses,
+  pu.sample_target_pages
+FROM page_users pu
+JOIN paid_orders po
+  ON pu.user_id = po.user_id
+WHERE pu.user_id IS NOT NULL
+  AND pu.user_id NOT IN (SELECT user_id FROM internal_users)
+ORDER BY po.paid_revenue_usd DESC, po.first_paid_time_cn;

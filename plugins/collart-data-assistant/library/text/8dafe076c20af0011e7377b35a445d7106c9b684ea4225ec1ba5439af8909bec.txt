@@ -1,0 +1,10 @@
+-- Web 端过去7天按国家累计新增分布
+SELECT
+  country,
+  COUNT(DISTINCT user_id) AS new_users
+FROM `aidata2025.ads_collart.ads_oper_user_new_collartweb_di`
+WHERE dt BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+  AND CURRENT_DATE()
+GROUP BY country
+ORDER BY new_users DESC
+LIMIT 20;

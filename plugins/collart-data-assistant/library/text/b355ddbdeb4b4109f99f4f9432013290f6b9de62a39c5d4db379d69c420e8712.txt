@@ -1,0 +1,19 @@
+# collart_web 表文档索引
+
+项目名称：collart web
+
+表数量：11
+
+| 表名 | 中文名 | 分层 | 主题 | 优先级 | 字段数 | 状态 | 文档 |
+|---|---|---|---|---|---:|---|---|
+| `aidata2025.ads_collart.ads_high_value_user_web_info` | Collart web高价值用户表 | ADS应用层 | 用户画像主题 | 中 | 23 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_high_value_user_web_info.md) |
+| `aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di` | collart web基础指标汇总表 | ADS应用层 | firebase埋点通用 | 高 | 34 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di.md) |
+| `aidata2025.ads_collart.ads_oper_basic_metric_collart_web_di` | collart web分国家指标表 | ADS应用层 | firebase埋点通用 | 高 | 58 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_web_di.md) |
+| `aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di` | collart web指标表 | ADS应用层 | firebase埋点通用 | 高 | 60 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di.md) |
+| `aidata2025.ads_collart.ads_oper_user_new_collartweb_di` | Collart web每日新增用户id表 | ADS应用层 | firebase埋点通用 | 高 | 37 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_user_new_collartweb_di.md) |
+| `aidata2025.dwd.dwd_oper_user_collartweb_di` | Collart web每日活跃用户id表 | ADS应用层 | firebase埋点通用 | 高 | 19 | `complete/available` | [打开](../tables/aidata2025.dwd.dwd_oper_user_collartweb_di.md) |
+| `aidata2025.dim.collart_product_price_copy` | 产品商品价格表 | DIM层 | 业务数据（维表） | 低 | 3 | `complete/available` | [打开](../tables/aidata2025.dim.collart_product_price_copy.md) |
+| `aidata2025.dim.dim_collart_web_core_event_copy` | collart_web 核心事件映射表 | DIM层 | 业务数据（维表） | 中 | 0 | `table_info_only/missing` | [打开](../tables/aidata2025.dim.dim_collart_web_core_event_copy.md) |
+| `aidata2025.dm.dm_user_profile_collart_df` | Collart 用户id映射 | DIM层 | firebase埋点通用 | 中 | 5 | `complete/available` | [打开](../tables/aidata2025.dm.dm_user_profile_collart_df.md) |
+| `pubdata2025.dwd.dwd_cdct_revenue_stripe_di` | collart web收入表 | DWD明细层 | 收入成本主题 | - | 23 | `complete/available` | [打开](../tables/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md) |
+| `storytemplate-10a27.analytics_232977577.events_*` | ai组原始埋点表 | ODS原始层 | firebase埋点通用 | 中 | 0 | `table_info_only/missing` | [打开](../tables/storytemplate-10a27.analytics_232977577.events.md) |

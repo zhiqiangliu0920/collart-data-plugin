@@ -1,39 +1,19 @@
 # Collart AI 分析知识库
 
-公司内部使用的 AI 分析知识与 Codex 插件源码。首版从 2026-09-12 整理的统一知识包导入，仓库应保持 **Private**。
+公司内部的知识与 Codex 插件，仓库保持 Private。原始资料继续在各自目录维护：
 
-- [知识索引](plugins/collart-data-assistant/knowledge/INDEX.md)：17 个条目，包含项目、表路由、指标口径、渠道、收入、留存和数据问题。
-- [SQL 模板](plugins/collart-data-assistant/presets/README.md)：7 个可复用模板。
-- [插件说明](plugins/collart-data-assistant/README.md)：数据分析和知识维护两个 skill。
-- [维护说明](plugins/collart-data-assistant/docs/maintenance.md)：来源、状态、校验和版本维护。
-- [安装说明](INSTALL.md)：完整仓库可作为插件发行目录使用。
-- [自动同步](SYNC.md)：仓库更新后，维护者电脑每 30 分钟检查并刷新插件；保留本地未发布修改。
+`ai-knowledge + cursor_summary + codex_summary → collart-data-plugin`
 
-## 下载与使用
+- [统一主题](plugins/collart-data-assistant/knowledge/INDEX.md)：公司与四端指标、业务规则、历史案例及待复核口径。
+- [完整来源资料](plugins/collart-data-assistant/library/INDEX.md)：表字典、报告、SQL、血缘源码与两个旧包；保留日期、范围和来源。
+- [SQL 入口](plugins/collart-data-assistant/library/SQL.md)：全文 SQL 与维护的 presets。
+- [来源台账](plugins/collart-data-assistant/library/catalog.json) / [待处理](plugins/collart-data-assistant/library/pending.json)：每份来源的收录、重复、历史、排除或待处理状态。
+- [安装](INSTALL.md) / [持续整合发布](SYNC.md)。
 
-在有仓库访问权限的电脑上克隆：
+## 使用与维护
 
-```sh
-git clone https://github.com/zhiqiangliu0920/collart-ai-knowledge.git
-cd collart-ai-knowledge
-```
+两个插件入口仍为 collart-analysis 与 collart-knowledge-maintain。业务资料先改原来源；统一主题在暂存版本中结合来源维护。历史包保留原内部名称，作为来源资料，不额外加载其旧执行流程。
 
-可以直接阅读 Markdown 和 SQL。要在 Codex 中安装插件，按 [安装说明](INSTALL.md) 执行根目录的 `install.ps1`。
+插件副本可以独立检索，不依赖维护者磁盘；数据查询使用每个人自己的授权连接。仓库不携带凭证、个人运行状态或原始用户明细。
 
-## 更新知识
-
-只改 `plugins/collart-data-assistant` 内的统一知识、来源和模板；提交前运行：
-
-```sh
-python plugins/collart-data-assistant/scripts/kb.py check
-```
-
-记录变更后提交并推送。维护者电脑已配置周期同步，按 [同步说明](SYNC.md) 更新本地源码并刷新插件缓存；同事需自行更新或配置相同流程。更新后开启新任务使用新版。
-
-## 内容与权限边界
-
-仓库权限控制谁能读取和修改知识；数据库查询使用每个人单独获授的连接和权限。仓库包含公司内部业务口径与内部测试账号过滤定义，不应公开。
-
-本包不包含数据库凭证、API 密钥、访问令牌、Codex 登录态或原始用户事件导出。没有迁入原始 `ai-knowledge` 仓库的 Git 历史。
-
-首版有 16 个 `documented` 条目和 1 个 `draft` 条目；本次仅检查本地内容，没有查询生产数据库。历史状态与冲突条目在分析时仍需核验。
+验证命令：`python -B plugins/collart-data-assistant/scripts/kb.py check`。documented 表示有资料依据；历史验证只在原日期与范围内成立。本次整理没有重新查询生产数据。

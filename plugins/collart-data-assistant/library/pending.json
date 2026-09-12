@@ -1,0 +1,399 @@
+[
+  {
+    "source": "ai-knowledge:0global/skills/collart-event-metric-sync/SKILL.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "存在失效相对链接"
+    ]
+  },
+  {
+    "source": "ai-knowledge:CHANGELOG.md",
+    "reason": "编码或表身份需人工确认",
+    "issues": [
+      "正文存在替换字符，待核对编码原件"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/company_dashboard_backfill/backfill_snapshot.py",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/company_dashboard_backfill/reconcile_snapshot.py",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/additional_sources.json",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/build_catalog.py",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/catalog_summary.json",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/compiled_fashion_actions.json",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/compiled_result.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/dm_quality.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/inspect_readonly.py",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/job_summary.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/jobs.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/morning_runs.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/profile_consistency.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/qa.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/raw_table_overlap.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/reconciliation.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/releaseConfigs.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/revenue_country.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/shared_revenue_reconciliation.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/summarize_jobs.py",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/task_catalog.json",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/trigger_trace.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/validate_artifacts.py",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/workflowConfigs.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/workflowInvocations.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/workspace_file_index.json",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/workspace_sources.json",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_tempalte_data_android_BigQuery_–_AIDATA_–_Google_Cloud_控制台.md",
+    "reason": "编码或表身份需人工确认",
+    "issues": [
+      "文件名与标题中的表名不一致：不自动合并口径"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/active_revenue_history_receipt.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/ads_daily_receipt.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/build_report.py",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/freshness_receipt.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/internal-exclusions.json",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/qa_receipt.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/query.py",
+    "reason": "生成目录的结构化结果或运行脚本：需区分聚合结果、配置与用户明细",
+    "issues": []
+  },
+  {
+    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/recheck_0911_receipt.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_analysis_receipt.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_probe_receipt.json",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/analysis_playbooks/big_r_manual_entry.md",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/analysis_playbooks/template_analysis_daily.py",
+    "reason": "疑似凭证内容：整份隔离",
+    "issues": [
+      "疑似凭证内容：整份隔离"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bounce_analysis.py",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bounce_analysis_v2.py",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bounce_india.py",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bq_check_missing_temp.py",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/check_missing_temp_v2.py",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/check_missing_temp_v3.py",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/compare_all_countries.py",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/compare_countries.py",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/daily_missing_temp_analysis.py",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/temp_query.py",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_android/tables/storytemplate-10a27.analytics_232977577.events_.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "存在失效相对链接"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_user_collartweb_di.md",
+    "reason": "编码或表身份需人工确认",
+    "issues": [
+      "文件名与标题中的表名不一致：不自动合并口径"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/product/core_metrics.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "存在失效相对链接"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/sql-snippets/archive/2026-05/user_ai_service_start_full.sql",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/sql-snippets/archive/2026-05/user_ai_service_success_full.sql",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/sql-snippets/archive/2026-05/user_ai_service_success_test.sql",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/sql-snippets/user_basic_info_C28B8ACB_20260623.sql",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/tables/aidata2025.ads_collart.ads_oper_user_collartweb_di.md",
+    "reason": "编码或表身份需人工确认",
+    "issues": [
+      "文件名与标题中的表名不一致：不自动合并口径"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/tables/dwd_oper_user_collartweb_di.md",
+    "reason": "编码或表身份需人工确认",
+    "issues": [
+      "正文存在替换字符，待核对编码原件"
+    ]
+  }
+]

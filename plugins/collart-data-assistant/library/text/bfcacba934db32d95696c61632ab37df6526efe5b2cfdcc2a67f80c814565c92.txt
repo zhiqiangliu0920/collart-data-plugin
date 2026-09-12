@@ -1,0 +1,20 @@
+SELECT 'daily' AS layer, event_date, package_name, COUNT(*) AS row_count, SUM(revenue.purchase_revenue) AS revenue, SUM(dau) AS dau
+FROM `aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di`
+WHERE event_date BETWEEN '2026-08-28' AND '2026-09-11'
+GROUP BY 1,2,3
+UNION ALL
+SELECT 'country', event_date, package_name, COUNT(*), SUM(revenue.purchase_revenue), SUM(dau)
+FROM `aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di`
+WHERE event_date BETWEEN '2026-08-28' AND '2026-09-11'
+GROUP BY 1,2,3
+UNION ALL
+SELECT 'active', event_date, package_name, COUNT(*), SUM(revenue.purchase_revenue), COUNTIF(is_active)
+FROM `aidata2025.ads_collartweb.ads_oper_user_active_di`
+WHERE event_date BETWEEN '2026-08-28' AND '2026-09-11'
+GROUP BY 1,2,3
+UNION ALL
+SELECT 'stripe_raw', event_date, app_name, COUNT(*), CAST(SUM(revneue) AS FLOAT64), COUNT(DISTINCT transaction_id)
+FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+WHERE event_date BETWEEN '2026-08-28' AND '2026-09-11'
+GROUP BY 1,2,3
+ORDER BY layer,event_date,package_name;

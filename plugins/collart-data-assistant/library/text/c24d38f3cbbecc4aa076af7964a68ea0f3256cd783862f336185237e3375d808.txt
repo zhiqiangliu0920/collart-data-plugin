@@ -1,0 +1,49 @@
+-- 按 ads_dim_metric_rule 从 DM 算冷/未物化指标（Android 示例）
+-- 把 event_name / event_params / agg 换成规则行；单次建议 ≤30 天
+-- Android/iOS: params_info；Web/Fashion: web_params_info + package_name 过滤
+
+DECLARE from_d DATE DEFAULT DATE '2026-08-20';
+DECLARE to_d DATE DEFAULT DATE '2026-08-26';
+
+-- 1) 先读规则
+-- SELECT * FROM `aidata2025.ads_collart.ads_dim_metric_rule`
+-- WHERE app_name = 'collart_android'
+--   AND metric_name = 'ai_tool_execute_start_pv';
+
+-- 2) count_events：事件次数 + UV
+SELECT
+  e.event_date,
+  COUNT(DISTINCT e.user_pseudo_id) AS uv,
+  COUNT(*) AS metric_value
+FROM `aidata2025.dm.dm_collart_android_user_event_di` AS e
+INNER JOIN `aidata2025.ads_collartandroid.ads_oper_user_active_di` AS a
+  USING (event_date, user_pseudo_id)
+WHERE e.event_date BETWEEN from_d AND to_d
+  AND a.is_active
+  AND e.event_name = 'ai_tool_service_execute_start'
+  -- AND LOWER(e.params_info.service_type) LIKE '%video%'
+GROUP BY e.event_date
+ORDER BY e.event_date;
+
+-- 3) count_distinct_task_id：任务去重
+-- SELECT
+--   e.event_date,
+--   COUNT(DISTINCT e.user_pseudo_id) AS uv,
+--   COUNT(DISTINCT e.params_info.task_id) AS metric_value
+-- FROM `aidata2025.dm.dm_collart_android_user_event_di` AS e
+-- INNER JOIN `aidata2025.ads_collartandroid.ads_oper_user_active_di` AS a
+--   USING (event_date, user_pseudo_id)
+-- WHERE e.event_date BETWEEN from_d AND to_d
+--   AND a.is_active
+--   AND e.event_name = 'ai_service_start'
+--   AND LOWER(e.params_info.service_type) LIKE '%video%'
+-- GROUP BY e.event_date;
+
+-- 4) Android 冷指标也可：
+-- CALL `aidata2025.ads_collartandroid.sp_query_event_metric_by_tag`(
+--   'ai_tool_execute_start_pv', from_d, to_d);
+
+-- Web/Fashion 骨架：
+-- FROM `aidata2025.dm.dm_collart_web_user_event_di` e
+-- WHERE e.package_name = 'collart_web'  -- 或 collart_fashion
+--   AND LOWER(e.web_params_info.service_type) = 'img2video'

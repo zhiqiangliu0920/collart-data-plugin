@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""VidArt VIP Users - AI Service Type Deep Dive"""
+import os
+from google.cloud import bigquery
+from google.oauth2 import service_account
+
+os.environ['PYTHONIOENCODING'] = 'utf-8'
+KEY_PATH = r"{LOCAL_PATH}"
+
+creds = service_account.Credentials.from_service_account_file(
+    KEY_PATH, scopes=["https://www.googleapis.com/auth/cloud-platform"],
+)
+client = bigquery.Client(credentials=creds, project="vidart-8b8ca")
+
+# 1. AI service type distribution (VIP users)
+q1 = """
+WITH vip_users AS (
+  SELECT DISTINCT user_pseudo_id
+  FROM `vidart-8b8ca.analytics_528583115.events_*`
+  WHERE event_name = 'vip_subscribe_succeed'
+    AND app_info.install_source <> 'manual_install'
+    AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+)
+SELECT
+  (SELECT p.value.string_value FROM UNNEST(e.event_params) p WHERE p.key = 'service_type') as service_type,
+  (SELECT p.value.string_value FROM UNNEST(e.event_params) p WHERE p.key = 'model_type') as model_type,
+  COUNT(DISTINCT e.user_pseudo_id) as users,
+  COUNT(*) as events,
+  AVG(CAST((SELECT p.value.string_value FROM UNNEST(e.event_params) p WHERE p.key = 'credits') AS FLOAT64)) as avg_credits
+FROM `vidart-8b8ca.analytics_528583115.events_*` e
+JOIN vip_users v ON e.user_pseudo_id = v.user_pseudo_id
+WHERE e.event_name IN ('ai_service_execute_start','ai_service_start')
+  AND e.app_info.install_source <> 'manual_install'
+  AND e._TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+GROUP BY service_type, model_type
+ORDER BY events DESC
+"""
+print("=== AI Service Type Distribution (VIP Users) ===")
+rows = list(client.query(q1).result())
+for r in rows:
+    print(f"  service={r.service_type or 'NULL':20} model={r.model_type or 'NULL':20} users={r.users:3} events={r.events:3} avg_credits={r.avg_credits}")
+
+# 2. What screens did VIP users view?
+q2 = """
+WITH vip_users AS (
+  SELECT DISTINCT user_pseudo_id
+  FROM `vidart-8b8ca.analytics_528583115.events_*`
+  WHERE event_name = 'vip_subscribe_succeed'
+    AND app_info.install_source <> 'manual_install'
+    AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+)
+SELECT
+  (SELECT p.value.string_value FROM UNNEST(e.event_params) p WHERE p.key = 'firebase_screen') as screen,
+  (SELECT p.value.string_value FROM UNNEST(e.event_params) p WHERE p.key = 'firebase_screen_class') as screen_class,
+  COUNT(DISTINCT e.user_pseudo_id) as users,
+  COUNT(*) as views
+FROM `vidart-8b8ca.analytics_528583115.events_*` e
+JOIN vip_users v ON e.user_pseudo_id = v.user_pseudo_id
+WHERE e.event_name = 'screen_view'
+  AND e.app_info.install_source <> 'manual_install'
+  AND e._TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+GROUP BY screen, screen_class
+ORDER BY views DESC
+LIMIT 20
+"""
+print("\n=== Screen Views (VIP Users) ===")
+rows = list(client.query(q2).result())
+for r in rows:
+    print(f"  screen={r.screen or 'NULL':30} class={r.screen_class or 'NULL':30} users={r.users:3} views={r.views:4}")
+
+# 3. is_vip flag before vs after purchase
+q3 = """
+WITH vip_users AS (
+  SELECT DISTINCT user_pseudo_id
+  FROM `vidart-8b8ca.analytics_528583115.events_*`
+  WHERE event_name = 'vip_subscribe_succeed'
+    AND app_info.install_source <> 'manual_install'
+    AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+),
+purchase_time AS (
+  SELECT user_pseudo_id, MIN(event_timestamp) as ts
+  FROM `vidart-8b8ca.analytics_528583115.events_*`
+  WHERE event_name = 'vip_subscribe_succeed'
+    AND app_info.install_source <> 'manual_install'
+    AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+  GROUP BY user_pseudo_id
+)
+SELECT
+  CASE WHEN e.event_timestamp < p.ts THEN 'BEFORE_purchase' ELSE 'AFTER_purchase' END as period,
+  (SELECT p2.value.string_value FROM UNNEST(e.event_params) p2 WHERE p2.key = 'is_vip') as is_vip,
+  COUNT(DISTINCT e.user_pseudo_id) as users,
+  COUNT(*) as events
+FROM `vidart-8b8ca.analytics_528583115.events_*` e
+JOIN vip_users v ON e.user_pseudo_id = v.user_pseudo_id
+JOIN purchase_time p ON e.user_pseudo_id = p.user_pseudo_id
+WHERE e.app_info.install_source <> 'manual_install'
+  AND e._TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+  AND (SELECT p2.value.string_value FROM UNNEST(e.event_params) p2 WHERE p2.key = 'is_vip') IS NOT NULL
+GROUP BY period, is_vip
+ORDER BY period, events DESC
+"""
+print("\n=== is_vip Before/After Purchase ===")
+rows = list(client.query(q3).result())
+for r in rows:
+    print(f"  period={r.period:20} is_vip={r.is_vip or 'NULL':10} users={r.users:3} events={r.events:4}")
+
+# 4. Credits consumption per AI feature
+q4 = """
+WITH vip_users AS (
+  SELECT DISTINCT user_pseudo_id
+  FROM `vidart-8b8ca.analytics_528583115.events_*`
+  WHERE event_name = 'vip_subscribe_succeed'
+    AND app_info.install_source <> 'manual_install'
+    AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+)
+SELECT
+  (SELECT p.value.string_value FROM UNNEST(e.event_params) p WHERE p.key = 'service_type') as service_type,
+  COUNT(*) as executions,
+  AVG(CAST((SELECT p.value.string_value FROM UNNEST(e.event_params) p WHERE p.key = 'credits') AS FLOAT64)) as avg_credits,
+  MIN(CAST((SELECT p.value.string_value FROM UNNEST(e.event_params) p WHERE p.key = 'credits') AS FLOAT64)) as min_credits,
+  MAX(CAST((SELECT p.value.string_value FROM UNNEST(e.event_params) p WHERE p.key = 'credits') AS FLOAT64)) as max_credits
+FROM `vidart-8b8ca.analytics_528583115.events_*` e
+JOIN vip_users v ON e.user_pseudo_id = v.user_pseudo_id
+WHERE e.event_name = 'ai_service_execute_start'
+  AND e.app_info.install_source <> 'manual_install'
+  AND e._TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+GROUP BY service_type
+ORDER BY executions DESC
+"""
+print("\n=== AI Credits Consumption (VIP Users) ===")
+rows = list(client.query(q4).result())
+for r in rows:
+    print(f"  service={r.service_type or 'NULL':20} execs={r.executions:3} avg_credits={r.avg_credits:.2f} range=[{r.min_credits:.0f}-{r.max_credits:.0f}]")
+
+# 5. Success vs fail rate per service
+q5 = """
+WITH vip_users AS (
+  SELECT DISTINCT user_pseudo_id
+  FROM `vidart-8b8ca.analytics_528583115.events_*`
+  WHERE event_name = 'vip_subscribe_succeed'
+    AND app_info.install_source <> 'manual_install'
+    AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+)
+SELECT
+  (SELECT p.value.string_value FROM UNNEST(e.event_params) p WHERE p.key = 'service_type') as service_type,
+  e.event_name,
+  COUNT(*) as events
+FROM `vidart-8b8ca.analytics_528583115.events_*` e
+JOIN vip_users v ON e.user_pseudo_id = v.user_pseudo_id
+WHERE e.event_name IN ('ai_service_execute_success','ai_service_execute_failed','ai_generation_success','ai_generation_failed')
+  AND e.app_info.install_source <> 'manual_install'
+  AND e._TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 90 DAY))
+GROUP BY service_type, e.event_name
+ORDER BY service_type, events DESC
+"""
+print("\n=== AI Success vs Fail Rate ===")
+rows = list(client.query(q5).result())
+for r in rows:
+    print(f"  service={r.service_type or 'NULL':20} event={r.event_name:40} events={r.events:4}")
+
+print("\n=== Done ===")

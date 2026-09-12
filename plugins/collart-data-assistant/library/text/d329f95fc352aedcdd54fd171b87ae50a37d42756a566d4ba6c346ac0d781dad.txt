@@ -1,0 +1,19 @@
+{
+  "latest_date": "2026-08-21",
+  "expected_rows": 144,
+  "actual_rows": 144,
+  "counts_by_level": {
+    "company": 1,
+    "group": 4,
+    "line": 2,
+    "product": 137
+  },
+  "missing_keys": 0,
+  "extra_keys": 0,
+  "metric_mismatch_rows": 0,
+  "max_money_diff": "0.00499999999996",
+  "max_retention_diff": "0",
+  "retention_storage_scale": 4,
+  "max_retention_raw_rounding": "0.00004838693679172",
+  "passed": true
+}

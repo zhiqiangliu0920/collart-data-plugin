@@ -1,0 +1,83 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dim.collart_campaign_name_modify_copy"
+table_cn_name: "投放名称维护表"
+metadata_status: "complete"
+field_status: "available"
+projects: ["ai"]
+project_dirs: ["ai"]
+warehouse_space: "aidata"
+layer: "DIM层"
+subject: "业务数据（维表）"
+secondary_subject: "投放"
+table_type: "维度表"
+grain: "每个traffic_src_name_old一行"
+primary_key: "traffic_src_name_old"
+update_frequency: "手动维护"
+owner: "志强"
+priority: "低"
+core_table: "否"
+query_cost: "低"
+source_record_ids: ["recvgYraKlcR1r"]
+field_count: "3"
+---
+
+# 表名：aidata2025.dim.collart_campaign_name_modify_copy
+
+> 表中文名：投放名称维护表
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：ai；分层：DIM层；表类型：维度表；主题：业务数据（维表）；二级主题：投放；行粒度：每个traffic_src_name_old一行。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | 投放名称维护表 |
+| 项目 | ai |
+| 数仓空间 | aidata |
+| 分层 | DIM层 |
+| 主题 | 业务数据（维表） |
+| 二级主题 | 投放 |
+| 表类型 | 维度表 |
+| 行粒度 | 每个traffic_src_name_old一行 |
+| 主键字段 | traffic_src_name_old |
+| 核心表 | 否 |
+| 更新频率 | 手动维护 |
+| 维护人 | 志强 |
+| 使用优先级 | 低 |
+| 查询成本 | 低 |
+| 数据来源 | 业务信息 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `traffic_src_name_old` | string | 维度 | 否 | 老的渠道名称 |
+| `traffic_src_name_new` | string | 维度 | 否 | 新的渠道名称 |
+| `modify_date` | date | 时间 | 是 | 渠道名称更改日期 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `modify_date` | date | 时间 | 渠道名称更改日期 |
+
+## 5. 典型使用场景
+- 用于维度补充、名称映射、枚举解释或查询条件标准化。
+
+## 6. 查询风险与注意事项
+- 飞书表信息中未提供额外查询限制；仍建议结合日期、项目和主键字段控制扫描范围。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | aidata2025.dim.collart_campaign_name |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | 业务信息 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sdim!3scollart_campaign_name_modify_copy) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/scheduled-queries/locations/us/configs/{RESOURCE_ID}/runs?project=aidata2025) |
+| 看板 | - |
+
+## 8. 待补充项
+- 暂无，后续可补充典型 SQL 和业务口径案例。

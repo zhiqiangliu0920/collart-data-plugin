@@ -1,0 +1,90 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dim.dim_product_info_copy"
+table_cn_name: "产品名称表"
+metadata_status: "complete"
+field_status: "available"
+projects: ["公司"]
+project_dirs: ["1company"]
+warehouse_space: "aidata"
+layer: "DIM层"
+subject: "业务数据（维表）"
+secondary_subject: "产品信息"
+table_type: "维度表"
+grain: "每个产品名一行"
+primary_key: "package_name"
+update_frequency: "手动维护"
+owner: "志强"
+priority: "高"
+core_table: "是"
+query_cost: "低"
+source_record_ids: ["recvgYraKlokJe"]
+field_count: "7"
+---
+
+# 表名：aidata2025.dim.dim_product_info_copy
+
+> 表中文名：产品名称表
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：公司；分层：DIM层；表类型：维度表；主题：业务数据（维表）；二级主题：产品信息；行粒度：每个产品名一行。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | 产品名称表 |
+| 项目 | 公司 |
+| 数仓空间 | aidata |
+| 分层 | DIM层 |
+| 主题 | 业务数据（维表） |
+| 二级主题 | 产品信息 |
+| 表类型 | 维度表 |
+| 行粒度 | 每个产品名一行 |
+| 主键字段 | package_name |
+| 核心表 | 是 |
+| 更新频率 | 手动维护 |
+| 维护人 | 志强 |
+| 使用优先级 | 高 |
+| 查询成本 | 低 |
+| 数据来源 | 业务信息 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `package_name` | string | 主键 | 是 | 包名 |
+| `app_name` | string | 维度 | 是 | 产品名 |
+| `platform` | string | 维度 | 否 | 产品的操作系统平台 |
+| `app_type` | string | 维度 | 否 | 产品类型 |
+| `city` | string | 维度 | 否 | 产品所在城市 |
+| `revenue` | int | 维度 | 否 | 收入 |
+| `team` | string | 维度 | 是 | 项目组 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `package_name` | string | 主键 | 包名 |
+| `app_name` | string | 维度 | 产品名 |
+| `team` | string | 维度 | 项目组 |
+
+## 5. 典型使用场景
+- 用于维度补充、名称映射、枚举解释或查询条件标准化。
+- 该表使用优先级较高，agent 选表时可优先考虑。
+
+## 6. 查询风险与注意事项
+- 飞书表信息中未提供额外查询限制；仍建议结合日期、项目和主键字段控制扫描范围。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | aidata2025.dim.dim_product_info |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | 业务信息 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sdim!3sdim_product_info_copy) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/scheduled-queries/locations/us/configs/{RESOURCE_ID}/runs?project=aidata2025) |
+| 看板 | - |
+
+## 8. 待补充项
+- 暂无，后续可补充典型 SQL 和业务口径案例。

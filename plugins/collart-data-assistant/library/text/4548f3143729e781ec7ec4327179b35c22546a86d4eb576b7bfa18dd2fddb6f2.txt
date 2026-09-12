@@ -1,0 +1,24 @@
+-- Collart Web：Fashion 用户 vs 主站用户划分
+--
+-- 口径（2026-07-22）：
+--   【events 原始表】Fashion：page_location 含 studio 或 fashion（不区分大小写）
+--                     主站：  从未出现上述 page_location
+--   【DWD/ADS 加工表】主站：  package_name = 'collart_web'
+--                     Fashion：package_name = 'collart_fashion'
+--
+-- 文档：collart_web/indicators/fashion_vs_main_site_user.md
+
+CREATE TEMP FUNCTION is_fashion_page(url STRING) AS (
+  REGEXP_CONTAINS(LOWER(COALESCE(url, '')), r'(studio|fashion)')
+);
+
+-- 加工表过滤（推荐，成本低）
+-- WHERE package_name = 'collart_web'       -- 主站
+-- WHERE package_name = 'collart_fashion'   -- 服装带货
+
+-- events 示例：在 CTE 中为用户打标
+-- SELECT
+--   user_pseudo_id,
+--   LOGICAL_OR(is_fashion_page(page_location)) AS is_fashion_user
+-- FROM events_with_page_location
+-- GROUP BY user_pseudo_id

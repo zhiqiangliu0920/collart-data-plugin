@@ -1,0 +1,11 @@
+-- DAU Top 10 国家（5月1日以来累计）
+SELECT
+  country,
+  SUM(dau) AS total_dau,
+  ROUND(AVG(dau), 0) AS avg_daily_dau
+FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di`
+WHERE event_date BETWEEN '2026-05-01' AND '2026-05-13'
+  AND package_name = 'free.ai.photo.generator.collart.ai'
+GROUP BY country
+ORDER BY total_dau DESC
+LIMIT 10;

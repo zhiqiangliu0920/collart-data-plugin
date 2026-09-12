@@ -1,0 +1,114 @@
+# 表文档模板（ai-knowledge canonical）
+
+> 新建表文档时使用。已有文档保持原有结构，只补缺失章节。
+
+## 文件名
+
+```
+{KNOWLEDGE_ROOT}/{project}/tables/{project}.{dataset}.{table}.md
+```
+
+示例：`collart_web/tables/aidata2025.ods.orders.md`
+
+---
+
+## 正文模板
+
+```markdown
+# 表名：{全限定表名}
+
+## 1. 基础信息
+- 表中文名：{用户口述或 Bitable 中文名}
+- 表类型：{事实表 / 维度表 / 汇总表 / 埋点表}
+- 表描述：{一句话}
+- 行粒度：{订单 / 用户-天 / 天 / ...}
+- 主键字段：{可选}
+- 分区字段：{event_date / _TABLE_SUFFIX / ...}
+- 更新频率：{T+1 8:00 / 实时 / ...}
+- 上游来源：{ODS 表名 / 服务端 / events_* / ...}
+- 优先级：{高 / 中 / 低}
+- 成本效率：{高 / 低 — 是否适合 ad-hoc 大扫}
+
+## 2. 核心作用
+本表主要用于以下场景：
+1. {场景 1 — 用户原话}
+2. {场景 2}
+3. {场景 3 — 可选}
+
+## 3. 核心字段
+
+字段名：{field_name}
+- 类型：{STRING / DATE / ...}
+- 字段角色：{维度 / 度量 / 分区 / 用户标识}
+- 业务含义：{含义}
+- 注意：{过滤、空值、单位、枚举 — 可选}
+
+{重复上述块，仅写关键字段；完整字段清单可注明「见 BQ Schema / 飞书 Bitable」}
+
+## 4. {主题} 取值与口径（红线）
+
+> **默认规则**：{必须满足的 WHERE / CASE / JOIN 条件}
+
+\`\`\`sql
+{可复制 SQL 片段}
+\`\`\`
+
+| 取值 | 是否计入 | 说明 |
+|------|---------|------|
+| {enum} | ✅ / ❌ | {说明} |
+
+**与埋点/其他表关系**：
+- {如 orders 严口径 vs vip_subscribe_succeed}
+
+## 5. 关联表（可选）
+
+| 关联表 | 关联字段 | 用途 |
+|--------|---------|------|
+| {table} | {key} | {用途} |
+
+## 6. 数据质量与风险提示
+
+- {常见误用 1}
+- {单位/时区/汇率}
+- {与推荐口径冲突时的优先级 — 链到 indicators/}
+
+## 7. 典型使用场景与示例 SQL
+
+### {场景名}
+\`\`\`sql
+{示例 SQL — 含项目过滤、分区、口径 WHERE}
+\`\`\`
+```
+
+---
+
+## 可选 YAML frontmatter（飞书同步表可保留）
+
+从 `_generated/` 迁移时，可保留 metadata 便于对账：
+
+```yaml
+---
+doc_type: table_knowledge
+table_name: aidata2025.dataset.table
+table_cn_name: 中文名
+projects: ["collart web"]
+metadata_status: complete
+field_status: available
+---
+```
+
+手工维护的新表**可不写** frontmatter，除非需要与 Bitable 对账。
+
+---
+
+## 章节编号说明
+
+现有文档 §5 常省略；§6、§7 沿用历史编号即可，**不要**为统一而批量改旧文档编号。
+
+## 交叉链接约定
+
+- 链指标：`../indicators/{name}.md`
+- 链 SQL preset：`../sql_presets/{name}.sql`
+- 链 playbook：`../analysis_playbooks/{name}.md`
+- 链跨项目：`../../1company/tables/cross_product_tables.md`
+- 链全局口径：`../../0global/MEMORY-CORE.md`

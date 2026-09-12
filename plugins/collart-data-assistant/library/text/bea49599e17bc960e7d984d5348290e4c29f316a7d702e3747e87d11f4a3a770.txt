@@ -1,0 +1,16 @@
+SELECT CURRENT_TIMESTAMP() AS checked_at_utc,'active' AS layer,
+  COUNT(*) AS row_count,COUNTIF(IFNULL(revenue.purchase_revenue,0)!=0) AS nonzero_revenue_rows,
+  SUM(revenue.purchase_revenue) AS purchase_revenue
+FROM `aidata2025.ads_collartweb.ads_oper_user_active_di`
+WHERE event_date=DATE '2026-09-11' AND package_name='collart_web'
+UNION ALL
+SELECT CURRENT_TIMESTAMP(),'daily',COUNT(*),COUNTIF(IFNULL(revenue.purchase_revenue,0)!=0),SUM(revenue.purchase_revenue)
+FROM `aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di`
+WHERE event_date=DATE '2026-09-11' AND package_name='collart_web'
+UNION ALL
+SELECT CURRENT_TIMESTAMP(),'stripe',COUNT(*),COUNTIF(IFNULL(revneue,0)!=0),CAST(SUM(revneue) AS FLOAT64)
+FROM (
+  SELECT transaction_id,revneue FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+  WHERE event_date=DATE '2026-09-11' AND app_name='collart_web'
+  QUALIFY ROW_NUMBER() OVER(PARTITION BY transaction_id ORDER BY event_timestamp DESC,revneue DESC)=1
+);

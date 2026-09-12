@@ -1,0 +1,12 @@
+-- 探索 AI 服务相关数据的 service_type 和错误码
+-- 1. 查看 img2video/img2img 对应的 service_type 值
+SELECT DISTINCT
+  event_name,
+  (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'service_type') AS service_type,
+  COUNT(*) AS cnt
+FROM `storytemplate-10a27.analytics_232977577.events_*`
+WHERE _TABLE_SUFFIX BETWEEN '20260513' AND '20260513'
+  AND app_info.id = 'free.ai.photo.generator.collart.ai'
+  AND event_name IN ('ai_service_submit_start', 'ai_service_submit_success', 'ai_service_submit_failed')
+GROUP BY 1, 2
+ORDER BY cnt DESC;

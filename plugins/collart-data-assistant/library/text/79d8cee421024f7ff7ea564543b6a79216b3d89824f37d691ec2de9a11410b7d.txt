@@ -1,0 +1,23 @@
+[
+  {
+    "checked_at_utc": "2026-09-12 02:38:57.278903+00:00",
+    "layer": "active",
+    "row_count": 12198,
+    "nonzero_revenue_rows": 58,
+    "purchase_revenue": 3147.3184972810895
+  },
+  {
+    "checked_at_utc": "2026-09-12 02:38:57.278903+00:00",
+    "layer": "daily",
+    "row_count": 1,
+    "nonzero_revenue_rows": 1,
+    "purchase_revenue": 3240.468497281089
+  },
+  {
+    "checked_at_utc": "2026-09-12 02:38:57.278903+00:00",
+    "layer": "stripe",
+    "row_count": 106,
+    "nonzero_revenue_rows": 106,
+    "purchase_revenue": 3240.4684972810887
+  }
+]

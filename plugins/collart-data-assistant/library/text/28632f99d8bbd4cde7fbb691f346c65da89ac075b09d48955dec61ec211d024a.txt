@@ -1,0 +1,98 @@
+# Collart AI Fashion Video：产品与业务知识
+
+> 当前产品页：[Fashion Generator](https://collart.ai/en/studio/ai-fashion-video)  
+> 官方营销页：[AI Fashion Video Generator](https://collart.ai/en/ai-fashion-video)  
+> 页面核对时间：2026-08-18
+
+## 产品定位
+
+Collart Fashion 是面向服装带货、穿搭内容和服装电商素材生产的 AI 视频工具。核心价值是把“参考视频动作/场景 + 模特 + 服装商品”组合成短视频，降低真人样品、模特、拍摄与剪辑成本，并支持批量测试不同商品、模特、模板与广告素材。
+
+官方明确覆盖的目标用户与投放/发布场景：
+
+| 用户 | 典型目标 | 平台/场景 |
+|---|---|---|
+| Affiliate / 带货达人 | 批量生产商品带货短视频、扩大佣金 | TikTok Shop、Shopee、Amazon Influencer |
+| 服装电商卖家 | 快速生成更多广告创意、测试爆款 | Shopify、TikTok Ads、Instagram Reels、Facebook Ads |
+| Fashion / Outfit Creator | 稳定跟进穿搭趋势、增长播放和粉丝 | TikTok、Reels 等短视频平台 |
+
+典型内容类型包括 Try-on Videos、Mirror Selfie、Outfit Transitions、Dance Videos、UGC 风格广告、商品展示和服装广告素材。
+
+## 当前 Studio 信息架构
+
+| 页面 | 路由 | 作用 |
+|---|---|---|
+| Explore | `/en/studio` | Inspiration / 模板入口 |
+| Assets | `/en/studio/assets` | 用户资产与历史内容 |
+| Fashion Video | `/en/studio/ai-fashion-video` | 服装视频四步生成器 |
+| AI Model | `/en/studio/ai-model` | AI 模特生成 |
+| Pricing | `/en/studio/subscribe` | 订阅与付费入口 |
+
+## Fashion Video 四步工作流
+
+### Step 1 — Select Reference Video
+
+- 两类来源：Preset Video、Upload Video；埋点表另定义了视频链接 confirm/success。
+- 预设分类：Try-On Videos、Mirror Selfie、Outfit Transitions、Dance Videos。
+- 模板会声明需要的 Outfit 数量；当前页面可见 1 Outfit，也有 5 Outfits 模板。
+- 可选 Prompt fine-tuning，最长 3000 字符；页面提醒提示词不要包含 speech/talking。
+- 可选上传 Custom Scene 图片；页面列出 JPG、PNG、WebP、AVIF、HEIC 等格式。
+
+### Step 2 — Pick a Model
+
+- 三类来源：Preset Model、History Model、Upload Model。
+- 分析时用 `model_source` 区分 upload/preset，用 `model_preset_id` 识别预设模特。
+
+### Step 3 — Add Clothing
+
+- 一个 Outfit 对应一套 look；单个 Outfit 可添加最多 5 件商品/配饰。
+- 可新增最多 5 个 Outfit；模板自身也可能要求多套服装。
+- 支持商品链接导入，当前页面展示 TikTok Shop、Lazada、Shopee。
+- 生成点击快照中的核心字段为 `outfit_count`、`outfit_preset_id`。
+
+### Step 4 — Output Settings
+
+- 可开关 Generate Background Music。
+- 当前分辨率选项：480P、720P、1080P。
+- 当前视频模型：
+  - Seedance 2.0：适合复杂转场、多 Outfit、远景，页面标注 480P–4K。
+  - Seedance 2.0 Mini：偏快速、低成本、近景、单 Outfit，页面标注 480P–1080P。
+  - Seedance 2.0 Fast：适合试穿、镜面自拍、舞蹈、中近景，页面标注 480P–1080P。
+- Generate Video 时一次性记录 `resolution`、`bgm_enabled`、`video_model` 等最终配置。
+
+模型名、分辨率、信用点消耗和模板数量属于动态产品配置；做长期分析时应使用事件参数或当日配置快照，不把本页观察值硬编码为永久枚举。
+
+## 业务漏斗
+
+```text
+Landing / Inspirations
+  → Reference Video
+  → Model
+  → Clothing
+  → Generate Click
+  → AI Service Start / Execute / Success
+  → Download
+  → VIP / Credit Pack
+```
+
+核心业务结果应以实际事件和收入数据为准：
+
+- 生成意图：`fashion_video_generate_click`
+- 生成完成：`ai_service_success` 且 `service_type = 'fashion_video'`
+- 结果消费：`ai_result_download`
+- 订阅转化：`vip_subscribe_succeed` 且 `from = 'fashion_video'`
+- 点数包：`credit_pack_purchase`
+
+## 官网营销口径的使用边界
+
+官方营销页展示了“5–10 分钟生成”“每条视频约 $3.49 对比传统制作 $529”“1,000+ creators & brands”“10,000+ videos”“4x average ROAS increase”“$30M+ GMV influenced”等说法。这些是官网自述的营销口径，不是数仓已验证指标，不能直接作为经营复盘的已实现收入、ROAS 或 GMV；引用时必须标注来源并另行核验定义、样本和时间范围。
+
+## 数据分析映射
+
+- 产品动作与事件字典：[`fashion_tracking_events.md`](fashion_tracking_events.md)
+- 漏斗、转化率与 QA：[`../analysis_playbooks/fashion_video_funnel.md`](../analysis_playbooks/fashion_video_funnel.md)
+- 用户范围：[`../indicators/fashion_vs_main_site_user.md`](../indicators/fashion_vs_main_site_user.md)
+
+---
+
+*记录时间：2026-08-18*

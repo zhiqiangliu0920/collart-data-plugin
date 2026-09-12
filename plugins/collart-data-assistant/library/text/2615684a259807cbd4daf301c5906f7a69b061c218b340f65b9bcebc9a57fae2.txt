@@ -1,0 +1,35 @@
+-- Collart Web 过去7天活跃用户的模板点击率（按天）
+-- 统计口径：template_click UV / DAU
+-- 时间范围：2026-03-24 至 2026-03-30（过去7天）
+
+WITH dau_data AS (
+  -- 从活跃表获取每日活跃用户（Web端）
+  SELECT
+    date AS dt,
+    COUNT(DISTINCT user_id) AS dau
+  FROM `aidata2025.story_web_android.dau_active_table`
+  WHERE _TABLE_SUFFIX BETWEEN '20260324' AND '20260330'
+    AND platform = 'Web'  -- Web端
+  GROUP BY date
+),
+
+template_click_data AS (
+  -- 获取每日模板点击用户数
+  SELECT
+    event_date AS dt,
+    COUNT(DISTINCT user_pseudo_id) AS click_uv
+  FROM `aidata2025.story_web_android.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260324' AND '20260330'
+    AND event_name = 'template_click'
+    AND app_info.id IS NULL  -- Web端特征
+  GROUP BY event_date
+)
+
+SELECT
+  d.dt AS date,
+  d.dau,
+  t.click_uv,
+  ROUND(SAFE_DIVIDE(t.click_uv, d.dau) * 100, 2) AS click_rate_pct
+FROM dau_data d
+LEFT JOIN template_click_data t ON d.dt = t.dt
+ORDER BY d.dt

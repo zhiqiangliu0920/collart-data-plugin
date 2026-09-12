@@ -1,0 +1,81 @@
+# SQL 书写规范与最佳实践
+
+> 记录 SQL 编写技巧、优化方法、常见模式
+> 位置：`knowledge/reference/sql-best-practices.md`
+
+---
+
+## 1. 多事件指标统计技巧（2026-03-25 从强强处学习）
+
+### 场景
+需要统计同一维度下多个事件的 UV（如：点击UV、生成UV）
+
+### 不推荐写法（多次 GROUP BY）
+```sql
+-- 低效：需要多个 CTE，多次 GROUP BY
+WITH click AS (
+  SELECT date, id, COUNT(DISTINCT user) AS click_uv
+  FROM events WHERE event_name = 'click'
+  GROUP BY date, id
+),
+generate AS (
+  SELECT date, id, COUNT(DISTINCT user) AS generate_uv
+  FROM events WHERE event_name = 'generate'
+  GROUP BY date, id
+)
+SELECT * FROM click JOIN generate ...
+```
+
+### 推荐写法（CASE WHEN 条件聚合）
+```sql
+-- 高效：单次 GROUP BY，代码更简洁
+WITH stats AS (
+  SELECT
+    date,
+    id,
+    COUNT(DISTINCT CASE WHEN event_name = 'click' THEN user END) AS click_uv,
+    COUNT(DISTINCT CASE WHEN event_name = 'generate' THEN user END) AS generate_uv
+  FROM events
+  WHERE event_name IN ('click', 'generate')
+  GROUP BY date, id
+)
+SELECT *, ROUND(generate_uv * 100.0 / NULLIF(click_uv, 0), 2) AS rate
+FROM stats;
+```
+
+### 优势
+| 维度 | 条件聚合写法 | 多 CTE 写法 |
+|:---|:---|:---|
+| GROUP BY 次数 | 1次 | 2次+ |
+| CTE 数量 | 更少 | 更多 |
+| 代码行数 | 更简洁 | 较冗长 |
+| 可读性 | ✅ 好 | 一般 |
+| 性能 | ✅ 更优（少扫描数据） | 稍差 |
+
+### 关键点
+- 使用 `COUNT(DISTINCT CASE WHEN condition THEN column END)` 实现条件去重计数
+- 适用于：漏斗分析、多事件对比、留存计算等场景
+- 注意：`NULLIF(divisor, 0)` 防止除零错误
+
+---
+
+## 2. BigQuery 特定技巧
+
+### 2.1 事件参数提取
+```sql
+-- 从 event_params 数组中提取参数值
+(SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'id') AS template_id
+```
+
+### 2.2 日期分区过滤（强制）
+```sql
+-- ✅ 正确：使用 _TABLE_SUFFIX 过滤分区
+WHERE _TABLE_SUFFIX BETWEEN '20260113' AND '20260209'
+
+-- ❌ 错误：仅用 event_date 过滤（全表扫描）
+WHERE event_date BETWEEN '20260113' AND '20260209'
+```
+
+---
+
+*持续更新...*

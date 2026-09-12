@@ -1,0 +1,73 @@
+-- 新用户订阅漏斗转化分析
+-- 日期: 2026-04-09
+-- 过去20天
+
+WITH 
+-- 当日新用户
+new_users AS (
+  SELECT 
+    PARSE_DATE('%Y%m%d', event_date) AS stats_date,
+    user_pseudo_id
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 21 DAY))
+    AND app_info.id IS NULL
+    AND event_name = 'first_visit'
+  GROUP BY stats_date, user_pseudo_id
+),
+-- 订阅页展示的用户
+vip_show_users AS (
+  SELECT 
+    PARSE_DATE('%Y%m%d', event_date) AS stats_date,
+    user_pseudo_id
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 21 DAY))
+    AND app_info.id IS NULL
+    AND event_name = 'vip_show'
+  GROUP BY stats_date, user_pseudo_id
+),
+-- 点击订阅的用户
+vip_subscribe_users AS (
+  SELECT 
+    PARSE_DATE('%Y%m%d', event_date) AS stats_date,
+    user_pseudo_id
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 21 DAY))
+    AND app_info.id IS NULL
+    AND event_name = 'vip_subscribe'
+  GROUP BY stats_date, user_pseudo_id
+),
+-- 订阅成功的用户
+vip_success_users AS (
+  SELECT 
+    PARSE_DATE('%Y%m%d', event_date) AS stats_date,
+    user_pseudo_id
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 21 DAY))
+    AND app_info.id IS NULL
+    AND event_name = 'vip_subscribe_succeed'
+  GROUP BY stats_date, user_pseudo_id
+)
+SELECT 
+  n.stats_date AS date,
+  COUNT(DISTINCT n.user_pseudo_id) AS new_users,
+  COUNT(DISTINCT v.user_pseudo_id) AS vip_show_users,
+  ROUND(SAFE_DIVIDE(
+    COUNT(DISTINCT v.user_pseudo_id),
+    COUNT(DISTINCT n.user_pseudo_id)
+  ) * 100, 2) AS vip_show_rate,
+  COUNT(DISTINCT s.user_pseudo_id) AS vip_subscribe_users,
+  ROUND(SAFE_DIVIDE(
+    COUNT(DISTINCT s.user_pseudo_id),
+    COUNT(DISTINCT v.user_pseudo_id)
+  ) * 100, 2) AS subscribe_click_rate,
+  COUNT(DISTINCT su.user_pseudo_id) AS vip_success_users,
+  ROUND(SAFE_DIVIDE(
+    COUNT(DISTINCT su.user_pseudo_id),
+    COUNT(DISTINCT s.user_pseudo_id)
+  ) * 100, 2) AS subscribe_success_rate
+FROM new_users n
+LEFT JOIN vip_show_users v USING (stats_date, user_pseudo_id)
+LEFT JOIN vip_subscribe_users s USING (stats_date, user_pseudo_id)
+LEFT JOIN vip_success_users su USING (stats_date, user_pseudo_id)
+GROUP BY n.stats_date
+ORDER BY n.stats_date DESC

@@ -1,0 +1,66 @@
+-- ============================================================================
+-- Collart Fashion · bootstrap（执行一次）
+-- ============================================================================
+
+config {
+    type: "operations",
+    tags: ["collart_fashion", "bootstrap"],
+    description: "Create Fashion revenue & daily metric tables"
+}
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di` (
+  event_date                 DATE      NOT NULL OPTIONS(description = "Stripe 收入日期"),
+  package_name               STRING    NOT NULL OPTIONS(description = "collart_fashion"),
+  user_id                    STRING    NOT NULL OPTIONS(description = "Collart 登录用户 ID"),
+  user_pseudo_id             STRING             OPTIONS(description = "匹配支付成功事件的 GA4 用户 ID"),
+  first_fashion_succeed_date DATE      NOT NULL OPTIONS(description = "首次可映射的 Fashion vip_subscribe_succeed 日期"),
+  revenue_usd                FLOAT64            OPTIONS(description = "Stripe 用户当日收入 USD"),
+  pay_cnt                    INT64              OPTIONS(description = "Stripe 去重交易笔数"),
+  etl_time                   TIMESTAMP          OPTIONS(description = "入库时间")
+)
+PARTITION BY event_date
+CLUSTER BY user_id
+OPTIONS (
+  description = "Fashion 用户日 Stripe 收入；每笔 Stripe 交易匹配前后 10 分钟内最近的 Fashion 支付成功事件",
+  require_partition_filter = TRUE
+);
+
+ALTER TABLE `aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`
+ADD COLUMN IF NOT EXISTS user_pseudo_id STRING OPTIONS(description = "匹配支付成功事件的 GA4 用户 ID");
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di` (
+  event_date    DATE      NOT NULL OPTIONS(description = "日期"),
+  package_name  STRING    NOT NULL OPTIONS(description = "collart_fashion"),
+  revenue_usd   FLOAT64            OPTIONS(description = "当日收入 USD 估算"),
+  pay_cnt       INT64              OPTIONS(description = "去重支付笔数"),
+  etl_time      TIMESTAMP          OPTIONS(description = "入库时间")
+)
+PARTITION BY event_date
+OPTIONS (
+  description = "Fashion 每日 Stripe 收入；由用户日收入明细聚合",
+  require_partition_filter = TRUE
+);
+
+ALTER TABLE `aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di`
+SET OPTIONS (description = "Fashion 每日 Stripe 收入；由用户日收入明细聚合");
+
+ALTER TABLE `aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di`
+ALTER COLUMN revenue_usd SET OPTIONS (description = "当日 Stripe 收入 USD");
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collart.ads_oper_basic_metric_collart_fashion_di` (
+  event_date          DATE      NOT NULL OPTIONS(description = "日期"),
+  package_name        STRING    NOT NULL OPTIONS(description = "collart_fashion"),
+  new_users           INT64              OPTIONS(description = "新客数"),
+  retain_2            FLOAT64            OPTIONS(description = "新客次留率"),
+  retain_7            FLOAT64            OPTIONS(description = "新客 7 留率"),
+  new_users_organic   INT64              OPTIONS(description = "自然新客"),
+  active_users        INT64              OPTIONS(description = "DAU"),
+  revenue_usd         FLOAT64            OPTIONS(description = "收入 USD"),
+  pay_cnt             INT64              OPTIONS(description = "支付笔数"),
+  etl_time            TIMESTAMP          OPTIONS(description = "入库时间")
+)
+PARTITION BY event_date
+OPTIONS (
+  description = "Fashion 每日核心指标",
+  require_partition_filter = TRUE
+);

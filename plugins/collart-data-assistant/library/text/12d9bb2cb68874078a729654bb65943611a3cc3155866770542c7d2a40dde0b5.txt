@@ -1,0 +1,30 @@
+-- 【积木：基础属性平铺】
+-- 目标：展平 GA4 event_params 中的高频通用字段
+-- 适用：Collart Android 几乎所有日常分析
+-- 记录时间：2026-04-01 (Q2 第一天)
+
+WITH base_events AS (
+  SELECT
+    event_timestamp,
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    platform,
+    geo.country AS country,
+    -- 1. 展平屏幕与页面属性
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'firebase_screen') AS screen_name,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'firebase_event_origin') AS event_origin,
+    -- 2. 展平渠道归因属性
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'source') AS utm_source,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'medium') AS utm_medium,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'campaign') AS utm_campaign,
+    -- 3. 展平会话与广告标识
+    (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'ga_session_id') AS session_id,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'advertising_id') AS advertising_id,
+    -- 4. 版本信息
+    app_info.version AS app_version
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '{{START_DATE}}' AND '{{END_DATE}}' -- 执行时需替换
+)
+-- 后续逻辑直接 SELECT * FROM base_events ...

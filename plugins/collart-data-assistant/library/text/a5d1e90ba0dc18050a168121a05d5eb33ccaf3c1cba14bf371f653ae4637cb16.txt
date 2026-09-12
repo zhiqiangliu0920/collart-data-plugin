@@ -1,0 +1,217 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dwd.dwd_oper_user_event_di"
+table_cn_name: "ai组原始埋点表（轻汇总）"
+metadata_status: "complete"
+field_status: "available"
+projects: ["ai"]
+project_dirs: ["ai"]
+warehouse_space: "aidata"
+layer: "DWD明细层"
+subject: "firebase埋点通用"
+secondary_subject: "埋点明细"
+table_type: "事实表"
+grain: ""
+primary_key: ""
+update_frequency: "T+1 8:00"
+owner: "恬静"
+priority: "低"
+core_table: "否"
+query_cost: "高"
+source_record_ids: ["recvh3C3rAuIj7"]
+field_count: "105"
+---
+
+# 表名：aidata2025.dwd.dwd_oper_user_event_di
+
+> 表中文名：ai组原始埋点表（轻汇总）
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：ai；分层：DWD明细层；表类型：事实表；主题：firebase埋点通用；二级主题：埋点明细。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | ai组原始埋点表（轻汇总） |
+| 项目 | ai |
+| 数仓空间 | aidata |
+| 分层 | DWD明细层 |
+| 主题 | firebase埋点通用 |
+| 二级主题 | 埋点明细 |
+| 表类型 | 事实表 |
+| 行粒度 | - |
+| 主键字段 | - |
+| 核心表 | 否 |
+| 更新频率 | T+1 8:00 |
+| 维护人 | 恬静 |
+| 使用优先级 | 低 |
+| 查询成本 | 高 |
+| 数据来源 | 客户端埋点 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `app_name` | string | 维度 | 是 | 产品名 |
+| `event_name` | string | 维度 | 是 | 事件名/事件英文名 |
+| `user_pseudo_id` | string | 主键 | 是 | 用户id，firebase分配的唯一id |
+| `user_id` | string | 主键 | 是 | 用户id，内部平台分配的唯一id |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `traffic_src_name` | string | 维度 | 否 | 投放渠道名称 |
+| `event_time` | timestamp | 时间 | 是 | 事件触发时间 |
+| `traffic_src_source` | string | 维度 | 否 | 投放渠道source |
+| `traffic_src_type` | string | 维度 | 否 | 投放渠道类型 |
+| `country` | string | 维度 | 是 | 国家 |
+| `city` | string | 维度 | 否 | 用户所在城市 |
+| `device_language` | string | 维度 | 否 | 设备语言 |
+| `mobile_brand_name` | string | 维度 | 否 | 设备品牌名 |
+| `mobile_model_name` | string | 维度 | 否 | 设备型号 |
+| `app_version` | string | 维度 | 否 | app客户端版本号 |
+| `install_source` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `install_store` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `device_total_ram` | string | 维度 | 否 | 设备内存 |
+| `network_type` | string | 维度 | 否 | 设备网络类型 |
+| `device_id` | string | 主键 | 是 | 设备id |
+| `is_vip` | string | 维度 | 否 | 是否新老用户，true代表付费用户、false代表免费用户 |
+| `is_login` | string | 维度 | 否 | 是否登录用户，true代表登录用户、false代表未登录用户 |
+| `vip_product_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_duration` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `ad_type` | string | 维度 | 否 | 广告类型 |
+| `event_value` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `unit_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_from` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_placement` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `advertising_id` | string | 主键 | 是 | 用户的广告id身份，也是一种唯一id |
+| `event_order_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_product_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_temp_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_service_type` | string | 维度 | 是 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_module_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_module_title` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_module_index` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_feature_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_retouch_feature_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_use_type` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_mode_type` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_is_regenerate` | string | 维度 | 是 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_generate_cnt` | string | 维度 | 是 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_auto_optimization` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_motion_mode` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_ratio` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_model` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_page` | string | 维度 | 否 | 事件发生所在页面 |
+| `atlasv_uid` | string | 维度 | 否 | 技术团队给用户定义的唯一id |
+| `event_model_type` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_credit_count` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `event_service_cost` | float | 指标 | 是 | 成本字段，用于记录投放、服务或业务成本。 |
+| `mobile_marketing_name` | string | 维度 | 否 | 设备型号 |
+| `adjust_id` | string | 主键 | 是 | adjust id |
+| `event_engagement_time_msec` | string | 时间 | 是 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `event_source` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_type` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_param_name` | string | 维度 | 否 | 事件参数 |
+| `event_sort_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_adjust_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_sc_value` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_vfx_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_filter_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_material_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_textfont_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_textemplate_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_textanime_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_transition_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_group_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_clipanime_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_anime_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_category` | string | 维度 | 否 | 事件类型 |
+| `event_project_template` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_unlock_type` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_enter` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_mode` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_modes` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_error_value` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_keyframe` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_mask` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_background` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_chroma_key` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_hsl` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_enhance` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_body_fx` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_time_limit` | string | 时间 | 是 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `event_smooth_slow_motion` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `os_classify` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `os_cpu_info` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `device_operating_system_version` | string | 维度 | 否 | 操作系统版本 |
+| `event_feature` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_space_type` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_design_style` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_space_name` | string | 维度 | 否 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `params_is_vip` | string | 维度 | 否 | 是否新老用户，true代表付费用户、false代表免费用户 |
+| `params_ad_platform` | string | 维度 | 是 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `session_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `keywordID` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `transaction_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `device_category` | string | 维度 | 否 | 设备类型，电脑/平板 |
+| `operating_system` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `browser` | string | 维度 | 否 | 浏览器类型 |
+| `task_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `temp_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `event_date` | date | 时间 | 日期 |
+| `app_name` | string | 维度 | 产品名 |
+| `event_name` | string | 维度 | 事件名/事件英文名 |
+| `user_pseudo_id` | string | 主键 | 用户id，firebase分配的唯一id |
+| `user_id` | string | 主键 | 用户id，内部平台分配的唯一id |
+| `package_name` | string | 主键 | 包名 |
+| `event_time` | timestamp | 时间 | 事件触发时间 |
+| `country` | string | 维度 | 国家 |
+| `device_id` | string | 主键 | 设备id |
+| `vip_product_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `unit_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `advertising_id` | string | 主键 | 用户的广告id身份，也是一种唯一id |
+| `event_order_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_product_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_temp_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_service_type` | string | 维度 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_module_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_feature_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_retouch_feature_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `event_is_regenerate` | string | 维度 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_generate_cnt` | string | 维度 | 事件属性字段，用于标识行为名称、事件分类或事件补充信息。 |
+| `event_credit_count` | int | 指标 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `event_service_cost` | float | 指标 | 成本字段，用于记录投放、服务或业务成本。 |
+| `adjust_id` | string | 主键 | adjust id |
+| `event_engagement_time_msec` | string | 时间 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `event_time_limit` | string | 时间 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `params_ad_platform` | string | 维度 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `session_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `transaction_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `task_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `temp_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+
+## 5. 典型使用场景
+- 用于追溯用户、订单、事件等明细事实，适合做深度诊断或二次聚合。
+
+## 6. 查询风险与注意事项
+- 查询成本标记较高，写 SQL 时应优先限制日期、项目、国家、渠道等过滤条件。
+- 存在 `event_date` 字段，按天查询时建议显式添加日期范围，避免全表扫描。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | storytemplate-10a27.analytics_232977577.events_* |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sdwd!3sdwd_oper_user_event_di) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdwd%2Fdaily%2Fh_dwd_oper_user_event_di.sqlx?project=aidata2025) |
+| 看板 | - |
+
+## 8. 待补充项
+- 补充 `行粒度`。
+- 补充 `主键字段`。

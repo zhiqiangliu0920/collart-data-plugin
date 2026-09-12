@@ -1,0 +1,83 @@
+-- Collart Web：当日 first_visit 在 Fashion 站，且后续访问主站的用户
+--
+-- 站点判定（首次落地页 / page_location）：
+--   Fashion 站：URL 包含 "fashion"（不区分大小写）
+--   主站：     其余 collart.ai 页面（如 explore、soft-allure、ai-video 等）
+--
+-- 参数：
+--   target_date       cohort 日（first_visit 发生日）
+--   follow_end_date  后续主站访问观察截止日
+
+DECLARE target_date DATE DEFAULT DATE '2026-07-21';
+DECLARE follow_end_date DATE DEFAULT DATE '2026-07-28';
+
+CREATE TEMP FUNCTION is_fashion_site(url STRING) AS (
+  REGEXP_CONTAINS(LOWER(COALESCE(url, '')), r'fashion')
+);
+
+CREATE TEMP FUNCTION is_main_site(url STRING) AS (
+  REGEXP_CONTAINS(LOWER(COALESCE(url, '')), r'collart\.ai')
+  AND NOT is_fashion_site(url)
+);
+
+WITH events AS (
+  SELECT
+    user_pseudo_id,
+    NULLIF(user_id, '') AS user_id,
+    event_name,
+    event_timestamp,
+    PARSE_DATE('%Y%m%d', event_date) AS event_date,
+    LOWER((
+      SELECT ep.value.string_value
+      FROM UNNEST(event_params) ep
+      WHERE ep.key = 'page_location'
+    )) AS page_location
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', target_date)
+                          AND FORMAT_DATE('%Y%m%d', follow_end_date)
+    AND app_info.id IS NULL
+),
+
+-- 当日 first_visit 且首次落地页含 fashion
+fashion_first_visit AS (
+  SELECT
+    user_pseudo_id,
+    MIN(event_timestamp) AS first_visit_ts,
+    ARRAY_AGG(page_location IGNORE NULLS ORDER BY event_timestamp LIMIT 1)[OFFSET(0)] AS first_visit_page,
+    ARRAY_AGG(user_id IGNORE NULLS ORDER BY event_timestamp DESC LIMIT 1)[OFFSET(0)] AS user_id
+  FROM events
+  WHERE event_name = 'first_visit'
+    AND event_date = target_date
+    AND is_fashion_site(page_location)
+  GROUP BY user_pseudo_id
+),
+
+-- first_visit 之后，首次主站 page_view
+first_main_after AS (
+  SELECT
+    f.user_pseudo_id,
+    ARRAY_AGG(e.page_location IGNORE NULLS ORDER BY e.event_timestamp LIMIT 1)[OFFSET(0)] AS first_main_page,
+    MIN(e.event_timestamp) AS first_main_ts
+  FROM fashion_first_visit f
+  JOIN events e
+    ON f.user_pseudo_id = e.user_pseudo_id
+   AND e.event_name = 'page_view'
+   AND e.event_timestamp > f.first_visit_ts
+   AND is_main_site(e.page_location)
+  GROUP BY f.user_pseudo_id
+)
+
+SELECT
+  f.user_pseudo_id,
+  f.user_id,
+  target_date AS cohort_date,
+  DATETIME(TIMESTAMP_MICROS(f.first_visit_ts), 'Asia/Shanghai') AS first_visit_time_cn,
+  f.first_visit_page,
+  REGEXP_EXTRACT(f.first_visit_page, r'https?://[^/]+(/[^?#]*)') AS first_visit_path,
+  DATETIME(TIMESTAMP_MICROS(m.first_main_ts), 'Asia/Shanghai') AS first_main_site_time_cn,
+  m.first_main_page,
+  REGEXP_EXTRACT(m.first_main_page, r'https?://[^/]+(/[^?#]*)') AS first_main_site_path,
+  TIMESTAMP_DIFF(TIMESTAMP_MICROS(m.first_main_ts), TIMESTAMP_MICROS(f.first_visit_ts), MINUTE) AS minutes_to_main_site
+FROM fashion_first_visit f
+INNER JOIN first_main_after m USING (user_pseudo_id)
+ORDER BY first_visit_time_cn, f.user_pseudo_id;

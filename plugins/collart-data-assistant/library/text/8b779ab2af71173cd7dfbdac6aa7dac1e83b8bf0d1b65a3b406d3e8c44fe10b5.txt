@@ -1,0 +1,43 @@
+-- Collart Web 顶部 Banner 点击率分析（汇总版）
+-- 时间范围：过去3天（2026-03-23 至 2026-03-25）
+-- 分母：DAU (session_start 去重用户)
+
+WITH dau_base AS (
+  -- DAU 计算：过去3天总活跃用户数（分母）
+  SELECT 
+    COUNT(DISTINCT user_pseudo_id) AS total_dau
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260323' AND '20260325'
+    AND app_info.id IS NULL
+    AND event_name = 'session_start'
+),
+
+banner_click AS (
+  -- Banner 点击数（explore_card_click - 顶部功能卡片点击）
+  SELECT 
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'type') AS banner_type,
+    COUNT(*) AS click_cnt,
+    COUNT(DISTINCT user_pseudo_id) AS click_uv
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260323' AND '20260325'
+    AND app_info.id IS NULL
+    AND event_name = 'explore_card_click'
+  GROUP BY banner_type
+)
+
+-- Banner 点击率汇总结果
+SELECT 
+  CASE 
+    WHEN b.banner_type = 'video' THEN 'AI Video'
+    WHEN b.banner_type = 'image' THEN 'AI Image'
+    WHEN b.banner_type = 'ai_tools' THEN 'AI Tools'
+    ELSE b.banner_type
+  END AS banner_name,
+  b.click_cnt AS total_clicks,
+  b.click_uv AS click_users,
+  d.total_dau AS total_dau,
+  ROUND(b.click_cnt * 100.0 / d.total_dau, 2) AS ctr_by_clicks,
+  ROUND(b.click_uv * 100.0 / d.total_dau, 2) AS ctr_by_users
+FROM banner_click b
+CROSS JOIN dau_base d
+ORDER BY b.click_cnt DESC;

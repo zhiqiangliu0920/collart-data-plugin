@@ -1,0 +1,32 @@
+# collart_android 表文档索引
+
+项目名称：collart android
+
+表数量：24
+
+| 表名 | 中文名 | 分层 | 主题 | 优先级 | 字段数 | 状态 | 文档 |
+|---|---|---|---|---|---:|---|---|
+| `aidata2025.ads.ads_collart_delivery_fb_1d` | collart fb、tt-adjust投放看板底表 | ADS应用层 | 增长主题 | 低 | 20 | `complete/available` | [打开](../tables/aidata2025.ads.ads_collart_delivery_fb_1d.md) |
+| `aidata2025.ads.ads_collart_delivery_revenue_1d` | collart ga、asa投放看板 | ADS应用层 | 增长主题 | 低 | 28 | `complete/available` | [打开](../tables/aidata2025.ads.ads_collart_delivery_revenue_1d.md) |
+| `aidata2025.ads.ads_template_recommend_foru_1d` | collart android模板推荐（FORU) | ADS应用层 | 内容主题 | 低 | 10 | `complete/available` | [打开](../tables/aidata2025.ads.ads_template_recommend_foru_1d.md) |
+| `aidata2025.ads.ads_template_recommend_trending_1d` | collart android模板推荐（Trending) | ADS应用层 | 内容主题 | 低 | 6 | `complete/available` | [打开](../tables/aidata2025.ads.ads_template_recommend_trending_1d.md) |
+| `aidata2025.ads_collart.ads_high_value_user_android_Info` | Collart android高价值用户表 | ADS应用层 | 用户画像主题 | 中 | 0 | `table_info_only/missing` | [打开](../tables/aidata2025.ads_collart.ads_high_value_user_android_Info.md) |
+| `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di` | Collart ios/android基础指标汇总表 | ADS应用层 | firebase埋点通用 | 高 | 27 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_basic_indicator_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di` | collart android指标表 | ADS应用层 | firebase埋点通用 | 高 | 71 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di.md) |
+| `aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di` | collart android分国家指标表 | ADS应用层 | firebase埋点通用 | 高 | 71 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di.md) |
+| `aidata2025.ads_collart.ads_oper_event_param_summary_collart_di` | Collart ios/android事件&参数 uv/pv表 | ADS应用层 | firebase埋点通用 | 高 | 12 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_event_param_summary_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_event_summary_collart_di` | Collart ios/android事件uv/pv表 | ADS应用层 | firebase埋点通用 | 高 | 11 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_event_summary_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_tempalte_data_android` | collart android模板数据表 | ADS应用层 | 内容主题 | 中 | 6 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_tempalte_data_android.md) |
+| `aidata2025.ads_collart.ads_oper_tempalte_data_android BigQuery – AIDATA – Google Cloud 控制台` | collart android模板数据表 | ADS应用层 | 用户画像主题 | 中 | 0 | `table_info_only/missing` | [打开](../tables/aidata2025.ads_collart.ads_oper_tempalte_data_android_BigQuery_%E2%80%93_AIDATA_%E2%80%93_Google_Cloud_%E6%8E%A7%E5%88%B6%E5%8F%B0.md) |
+| `aidata2025.ads_collart.ads_oper_user_event_collart_di` | Collart ios/android用户粒度事件汇总表 | ADS应用层 | firebase埋点通用 | 高 | 29 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_user_event_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_user_event_param_collart_di` | Collart ios/android用户粒度事件参数汇总表 | ADS应用层 | firebase埋点通用 | 高 | 31 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_user_event_param_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_user_new_collart_di` | Collart ios/android每日新增用户id表 | ADS应用层 | firebase埋点通用 | 高 | 44 | `complete/available` | [打开](../tables/aidata2025.ads_collart.ads_oper_user_new_collart_di.md) |
+| `aidata2025.dim.collart_product_price_copy` | 产品商品价格表 | DIM层 | 业务数据（维表） | 低 | 3 | `complete/available` | [打开](../tables/aidata2025.dim.collart_product_price_copy.md) |
+| `aidata2025.dim.dim_ai_service_cost_unit_copy` | ai服务单位成本表 | DIM层 | 业务数据（维表） | 中 | 5 | `complete/available` | [打开](../tables/aidata2025.dim.dim_ai_service_cost_unit_copy.md) |
+| `aidata2025.dim.dim_collart_android_core_event_copy` | collart_android 核心事件映射表 | DIM层 | 业务数据（维表） | 中 | 6 | `complete/available` | [打开](../tables/aidata2025.dim.dim_collart_android_core_event_copy.md) |
+| `aidata2025.dim.dim_module_template_info_android` | collart android模块内模板id表 | DIM层 | 内容主题 | 中 | 11 | `complete/available` | [打开](../tables/aidata2025.dim.dim_module_template_info_android.md) |
+| `aidata2025.dm.dm_user_profile_collart_df` | Collart 用户id映射 | DIM层 | firebase埋点通用 | 中 | 5 | `complete/available` | [打开](../tables/aidata2025.dm.dm_user_profile_collart_df.md) |
+| `aidata2025.dwd.dwd_oper_delivery_collart_di` | adjust数据归因明细表-collart | DWD明细层 | 增长主题 | 低 | 0 | `table_info_only/missing` | [打开](../tables/aidata2025.dwd.dwd_oper_delivery_collart_di.md) |
+| `aidata2025.dwd.dwd_oper_user_collart_di` | Collart ios/android每日活跃用户id表 | DWD明细层 | firebase埋点通用 | 高 | 28 | `complete/available` | [打开](../tables/aidata2025.dwd.dwd_oper_user_collart_di.md) |
+| `aidata2025.dws.dws_oper_delivery_user_collart_1d` | adjust数据归因 用户粒度汇总 | DWS汇总层 | 增长主题 | 低 | 8 | `complete/available` | [打开](../tables/aidata2025.dws.dws_oper_delivery_user_collart_1d.md) |
+| `storytemplate-10a27.analytics_232977577.events_*` | ai组原始埋点表 | ODS原始层 | firebase埋点通用 | 中 | 0 | `table_info_only/missing` | [打开](../tables/storytemplate-10a27.analytics_232977577.events.md) |

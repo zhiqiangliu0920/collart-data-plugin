@@ -1,0 +1,14 @@
+# Collart Fashion 指标口径
+
+## 全局规则
+
+- Web 端过滤：`app_info.id IS NULL`
+- 内部用户过滤：见 [`../analysis_playbooks/internal_user_filter.md`](../analysis_playbooks/internal_user_filter.md)
+- **Fashion / 主站划分**：见 [`fashion_vs_main_site_user.md`](./fashion_vs_main_site_user.md)（Fashion 默认 `package_name = 'collart_fashion'` 或 events 口径）
+
+## 指标文件
+
+| 指标 | 文件 | 说明 |
+|---|---|---|
+| Fashion vs 主站用户 | [fashion_vs_main_site_user.md](./fashion_vs_main_site_user.md) | 默认 `package_name = 'collart_fashion'` |
+| Fashion 收入 | [fashion_revenue.md](./fashion_revenue.md) | Stripe 金额真值 + succeed 用户归属 |

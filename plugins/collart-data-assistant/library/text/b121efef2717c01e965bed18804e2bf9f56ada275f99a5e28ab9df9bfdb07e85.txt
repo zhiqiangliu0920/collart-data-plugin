@@ -1,0 +1,50 @@
+-- Collart iOS / Android 俄罗斯支付累计汇总（只读 Stripe，不要 ods.orders，不要空表 HI）
+-- 12:00、18:00 汇总当天累计；次日 00:00 作为前一日 24:00 全日汇总。
+-- 当天未进 T+1：等次日。vidart → vidart-ios。
+DECLARE run_time DATETIME DEFAULT CURRENT_DATETIME('Asia/Shanghai');
+DECLARE run_hour INT64 DEFAULT EXTRACT(HOUR FROM run_time);
+DECLARE run_date DATE DEFAULT IF(run_hour = 0, DATE_SUB(DATE(run_time), INTERVAL 1 DAY), DATE(run_time));
+DECLARE report_cutoff STRING DEFAULT IF(run_hour = 0, '24:00', FORMAT_DATETIME('%H:%M', run_time));
+
+WITH stripe AS (
+  SELECT
+    CASE
+      WHEN LOWER(IFNULL(s.app_name, '')) IN ('vidart', 'vidart_ios', 'vidart-ios') THEN 'vidart-ios'
+      ELSE REPLACE(IFNULL(s.app_name, ''), '_', '-')
+    END AS app_name,
+    TRIM(CAST(s.user_id AS STRING)) AS user_id,
+    ROUND(IF(UPPER(IFNULL(s.currency, 'USD')) = 'USD', IFNULL(s.amount, s.revneue), s.revneue + IFNULL(s.fee, 0)), 2) AS amount_usd
+  FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di` AS s
+  WHERE s.user_id IS NOT NULL
+    AND TRIM(CAST(s.user_id AS STRING)) <> ''
+    AND s.transaction_id IS NOT NULL
+    AND IFNULL(s.revneue, 0) > 0
+    AND UPPER(s.currency) = 'RUB'
+    AND s.event_date = run_date
+    AND CASE
+      WHEN LOWER(IFNULL(s.app_name, '')) IN ('vidart', 'vidart_ios', 'vidart-ios') THEN 'vidart-ios'
+      ELSE REPLACE(IFNULL(s.app_name, ''), '_', '-')
+    END IN ('vidart-ios', 'collart-android')
+  QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY CAST(s.transaction_id AS STRING)
+    ORDER BY s.event_timestamp DESC, s.revneue DESC
+  ) = 1
+),
+today_orders AS (
+  SELECT * FROM stripe
+)
+SELECT
+  run_date AS pay_date,
+  report_cutoff,
+  COUNT(DISTINCT user_id) AS paid_users,
+  COUNT(*) AS orders,
+  ROUND(COALESCE(SUM(amount_usd), 0), 2) AS amount_usd,
+  COUNT(DISTINCT IF(app_name = 'vidart-ios', user_id, NULL)) AS ios_paid_users,
+  COUNTIF(app_name = 'vidart-ios') AS ios_orders,
+  ROUND(COALESCE(SUM(IF(app_name = 'vidart-ios', amount_usd, 0)), 0), 2) AS ios_amount_usd,
+  STRING_AGG(DISTINCT IF(app_name = 'vidart-ios', user_id, NULL), '\n') AS ios_user_ids,
+  COUNT(DISTINCT IF(app_name = 'collart-android', user_id, NULL)) AS android_paid_users,
+  COUNTIF(app_name = 'collart-android') AS android_orders,
+  ROUND(COALESCE(SUM(IF(app_name = 'collart-android', amount_usd, 0)), 0), 2) AS android_amount_usd,
+  STRING_AGG(DISTINCT IF(app_name = 'collart-android', user_id, NULL), '\n') AS android_user_ids
+FROM today_orders

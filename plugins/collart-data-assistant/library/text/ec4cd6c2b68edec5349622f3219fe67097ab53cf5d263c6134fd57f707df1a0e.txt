@@ -1,0 +1,88 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dm.dm_user_profile_collart_df"
+table_cn_name: "Collart 用户id映射"
+metadata_status: "complete"
+field_status: "available"
+projects: ["collart android", "collart web"]
+project_dirs: ["collart_android", "collart_web"]
+warehouse_space: "aidata"
+layer: "DIM层"
+subject: "firebase埋点通用"
+secondary_subject: "用户属性"
+table_type: "维度表"
+grain: "每个user_pseudo_Id一行"
+primary_key: "user_pseudo_Id"
+update_frequency: "T+1 8:00"
+owner: "恬静"
+priority: "中"
+core_table: "是"
+query_cost: "低"
+source_record_ids: ["recvh3C8YGxnPl"]
+field_count: "5"
+---
+
+# 表名：aidata2025.dm.dm_user_profile_collart_df
+
+> 表中文名：Collart 用户id映射
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：collart android, collart web；分层：DIM层；表类型：维度表；主题：firebase埋点通用；二级主题：用户属性；行粒度：每个user_pseudo_Id一行。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | Collart 用户id映射 |
+| 项目 | collart android, collart web |
+| 数仓空间 | aidata |
+| 分层 | DIM层 |
+| 主题 | firebase埋点通用 |
+| 二级主题 | 用户属性 |
+| 表类型 | 维度表 |
+| 行粒度 | 每个user_pseudo_Id一行 |
+| 主键字段 | user_pseudo_Id |
+| 核心表 | 是 |
+| 更新频率 | T+1 8:00 |
+| 维护人 | 恬静 |
+| 使用优先级 | 中 |
+| 查询成本 | 低 |
+| 数据来源 | 客户端埋点 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `user_pseudo_id` | string | 主键 | 是 | 用户id，firebase分配的唯一id |
+| `user_id` | string | 主键 | 是 | 用户id，内部平台分配的唯一id |
+| `atlasv_uid` | string | 维度 | 否 | 技术团队给用户定义的唯一id |
+| `package_name` | string | 主键 | 是 | 包名 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `event_date` | date | 时间 | 日期 |
+| `user_pseudo_id` | string | 主键 | 用户id，firebase分配的唯一id |
+| `user_id` | string | 主键 | 用户id，内部平台分配的唯一id |
+| `package_name` | string | 主键 | 包名 |
+
+## 5. 典型使用场景
+- 用于维度补充、名称映射、枚举解释或查询条件标准化。
+
+## 6. 查询风险与注意事项
+- 存在 `event_date` 字段，按天查询时建议显式添加日期范围，避免全表扫描。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | aidata2025.dwd.dwd_oper_user_collart_di |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sdm!3sdm_user_profile_collart_df) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdm%2Fdaily%2Fh_dm_user_collart_df.sqlx?project=aidata2025) |
+| 看板 | - |
+
+## 8. 待补充项
+- 暂无，后续可补充典型 SQL 和业务口径案例。

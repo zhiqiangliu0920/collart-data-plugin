@@ -1,0 +1,7 @@
+SELECT event_date, country, COUNT(*) AS paid_user_days,
+  SUM(revenue.purchase_revenue) AS revenue_usd
+FROM `aidata2025.ads_collartfashion.ads_oper_user_active_di`
+WHERE event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08'
+  AND revenue.purchase_revenue > 0
+GROUP BY event_date, country
+ORDER BY event_date, country

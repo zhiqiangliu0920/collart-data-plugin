@@ -1,0 +1,36 @@
+-- 昨日 (2026-04-01) Collart Web FB 投放渠道新增用户分国家付费情况
+-- 修正逻辑：
+-- 1. 流量识别：lower(traffic_source.name) 包含 'fb' 且包含 'collart'
+-- 2. 支付点击：event_name = 'vip_subscribe'
+-- 3. 支付成功：event_name = 'vip_subscribe_succeed'
+-- 记录到: knowledge/collart_web/sql-snippets/web_fb_ads_payment_full_countries_20260401.sql
+
+WITH web_fb_ads_users AS (
+  -- 1. 识别昨日 Web 端 FB 投放的新增用户 (使用 first_visit)
+  SELECT 
+    user_pseudo_id,
+    geo.country AS country
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX = '20260401'
+    AND app_info.id IS NULL -- Web 端过滤红线
+    AND event_name = 'first_visit'
+    AND LOWER(traffic_source.name) LIKE '%fb%' 
+    AND LOWER(traffic_source.name) LIKE '%collart%'
+)
+SELECT 
+  w.country,
+  -- 2. 统计新增投放用户数
+  COUNT(DISTINCT w.user_pseudo_id) AS new_ads_users,
+  -- 3. 统计支付点击 (指定事件: vip_subscribe)
+  COUNT(DISTINCT CASE WHEN e.event_name = 'vip_subscribe' THEN e.user_pseudo_id END) AS purchase_clicks,
+  -- 4. 统计成功付费 (指定事件: vip_subscribe_succeed)
+  COUNT(DISTINCT CASE WHEN e.event_name = 'vip_subscribe_succeed' THEN e.user_pseudo_id END) AS paid_users,
+  -- 5. 计算转化率
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN e.event_name = 'vip_subscribe_succeed' THEN e.user_pseudo_id END), COUNT(DISTINCT w.user_pseudo_id)), 4) AS cvr
+FROM web_fb_ads_users w
+LEFT JOIN `storytemplate-10a27.analytics_232977577.events_*` e 
+  ON w.user_pseudo_id = e.user_pseudo_id 
+  AND e._TABLE_SUFFIX = '20260401'
+  AND e.app_info.id IS NULL
+GROUP BY 1
+ORDER BY new_ads_users DESC;

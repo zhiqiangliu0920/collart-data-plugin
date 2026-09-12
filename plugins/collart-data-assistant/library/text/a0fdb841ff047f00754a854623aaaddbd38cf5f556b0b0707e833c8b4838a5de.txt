@@ -1,0 +1,43 @@
+# 📈 指标档案：README (Android)
+
+## 1. 基本定义与业务口径
+## 指标清单
+
+| 指标 | 说明 | 文档 |
+|------|------|------|
+| DAU | 日活跃用户 | [dau.md](./dau.md) / [dau.sql](./dau.sql) |
+| 留存率 | N日留存 | [retention.md](./retention.md) / [retention.sql](./retention.sql) |
+| 功能使用 | 各功能使用率 | [feature_usage.md](./feature_usage.md) / [feature_usage.sql](./feature_usage.sql) |
+| 事件漏斗（规则表） | 热指标读宽表；冷指标按规则扫 DM | [event_metric_from_rule.md](../../1company/indicators/event_metric_from_rule.md) |
+| 付费转化 | 订阅转化率 | [conversion.md](./conversion.md) / [conversion.sql](./conversion.sql) |
+| 俄罗斯支付播报 | Stripe+HI 成功单整点播报（2026-08-28 停用 orders） | [russia_orders_payment_broadcast.md](./russia_orders_payment_broadcast.md) |
+
+## 快速参考
+
+### 项目过滤
+```sql
+app_info.id = 'free.ai.photo.generator.collart.ai'
+```
+
+### 核心事件
+- `session_start` - 启动/活跃
+- `ai_service_task_create` - 创建生成任务
+- `vip_subscribe_succeed` - 订阅成功
+
+
+## 2. 数据源与计算逻辑 (Lineage)
+*   **推荐表**: [待补]
+*   **明细表**: [待补]
+
+## 3. ⚠️ 异常监控阈值 (Anomaly Thresholds)
+*   **正常波动**: ±5% (参考)
+*   **核心警报**: [待补]
+
+## 4. 🔗 关联积木 (Logic Blocks)
+*   **基础 SQL**: [common_params.sql](../../0global/sql_standards/common_params.sql)
+
+## 5. 常见坑点 (Common Pitfalls)
+*   [待补]
+
+---
+*更新时间: 2026-04-01 (Q2 指标体系升级)*

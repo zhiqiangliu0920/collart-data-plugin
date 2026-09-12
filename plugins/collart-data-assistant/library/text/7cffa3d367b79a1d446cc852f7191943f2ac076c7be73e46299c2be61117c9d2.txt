@@ -1,0 +1,130 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dwd.dwd_oper_sub_order_revenue_df"
+table_cn_name: "安卓账单粒度 订阅收入表"
+metadata_status: "complete"
+field_status: "available"
+projects: ["android"]
+project_dirs: ["android"]
+warehouse_space: "aidata"
+layer: "DWD明细层"
+subject: "收入成本主题"
+secondary_subject: "账单粒度收入"
+table_type: "事实表"
+grain: "每个订单一行"
+primary_key: "order_id"
+update_frequency: "T+1 8:30"
+owner: "恬静"
+priority: "高"
+core_table: "是"
+query_cost: "低"
+source_record_ids: ["recvh8DjCvv3dh"]
+field_count: "30"
+---
+
+# 表名：aidata2025.dwd.dwd_oper_sub_order_revenue_df
+
+> 表中文名：安卓账单粒度 订阅收入表
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：android；分层：DWD明细层；表类型：事实表；主题：收入成本主题；二级主题：账单粒度收入；行粒度：每个订单一行。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | 安卓账单粒度 订阅收入表 |
+| 项目 | android |
+| 数仓空间 | aidata |
+| 分层 | DWD明细层 |
+| 主题 | 收入成本主题 |
+| 二级主题 | 账单粒度收入 |
+| 表类型 | 事实表 |
+| 行粒度 | 每个订单一行 |
+| 主键字段 | order_id |
+| 核心表 | 是 |
+| 更新频率 | T+1 8:30 |
+| 维护人 | 恬静 |
+| 使用优先级 | 高 |
+| 查询成本 | 低 |
+| 数据来源 | 谷歌商店 / 服务端 / 客户端埋点 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `order_date` | date | 时间 | 是 | 订单发生日期 |
+| `event_date` | date | 时间 | 是 | 日期 |
+| `user_pseudo_id` | string | 主键 | 是 | 用户id，firebase分配的唯一id |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `app_name` | string | 维度 | 是 | 产品名 |
+| `order_id` | string | 主键 | 是 | 订单id |
+| `product_title` | string | 维度 | 否 | 商品名称 |
+| `product_type` | string | 维度 | 否 | 商品类型 |
+| `country` | string | 维度 | 是 | 国家 |
+| `financial_status` | string | 维度 | 否 | 交易状态 |
+| `subscribe_type` | string | 维度 | 否 | 订阅类型 |
+| `item_price` | float | 指标 | 是 | 商品价格 |
+| `charged_amount` | float | 指标 | 是 | 商品交易金额 |
+| `taxes_collected` | float | 指标 | 否 | 商品税收金额 |
+| `sku_id` | string | 主键 | 是 | 商品SKUid |
+| `google_fee_rate` | float | 指标 | 是 | google 收税比率 |
+| `rate` | float | 指标 | 是 | 货币汇率 |
+| `charged_amount_usd` | float | 指标 | 是 | 商品交易金额（美元） |
+| `taxes_collected_usd` | float | 指标 | 否 | 汇率计算后的税收金额 |
+| `revenue_without_VAT` | float | 指标 | 是 | 税前订阅收入 |
+| `google_fee` | float | 指标 | 否 | 税后google 收费金额 |
+| `revenue` | float | 指标 | 是 | 订阅收入 |
+| `order_type` | string | 维度 | 否 | 购买产品类型(年/月/日/点数包） |
+| `original_transaction_id` | string | 主键 | 是 | 原始订单号 |
+| `order_num` | int | 指标 | 是 | 续订单数(第几次续订） |
+| `traffic_src_type` | string | 维度 | 否 | 投放渠道类型 |
+| `user_id` | string | 主键 | 是 | 用户id，内部平台分配的唯一id |
+| `expires_date` | date | 时间 | 是 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `subscribe_status` | string | 维度 | 否 | 订阅状态（到期续订、到期未续订、未到期、一次性购买) |
+| `adjust_id` | string | 主键 | 是 | adjust id |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `order_date` | date | 时间 | 订单发生日期 |
+| `event_date` | date | 时间 | 日期 |
+| `user_pseudo_id` | string | 主键 | 用户id，firebase分配的唯一id |
+| `package_name` | string | 主键 | 包名 |
+| `app_name` | string | 维度 | 产品名 |
+| `order_id` | string | 主键 | 订单id |
+| `country` | string | 维度 | 国家 |
+| `item_price` | float | 指标 | 商品价格 |
+| `charged_amount` | float | 指标 | 商品交易金额 |
+| `sku_id` | string | 主键 | 商品SKUid |
+| `google_fee_rate` | float | 指标 | google 收税比率 |
+| `rate` | float | 指标 | 货币汇率 |
+| `charged_amount_usd` | float | 指标 | 商品交易金额（美元） |
+| `revenue_without_VAT` | float | 指标 | 税前订阅收入 |
+| `revenue` | float | 指标 | 订阅收入 |
+| `original_transaction_id` | string | 主键 | 原始订单号 |
+| `order_num` | int | 指标 | 续订单数(第几次续订） |
+| `user_id` | string | 主键 | 用户id，内部平台分配的唯一id |
+| `expires_date` | date | 时间 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `adjust_id` | string | 主键 | adjust id |
+
+## 5. 典型使用场景
+- 用于追溯用户、订单、事件等明细事实，适合做深度诊断或二次聚合。
+- 该表使用优先级较高，agent 选表时可优先考虑。
+
+## 6. 查询风险与注意事项
+- 存在 `event_date` 字段，按天查询时建议显式添加日期范围，避免全表扫描。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | pubdata2025.dwd.dwd_cdct_revenue_google_di,aidata2025.dwd.dwd_oper_user_order_event_di,pubdata2025.ods.ods_woolong_subscription_1d |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 谷歌商店 / 服务端 / 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sdwd!3sdwd_oper_sub_order_revenue_df) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdwd%2Fdaily%2Fh_dwd_oper_sub_order_revenue_df.sqlx?project=aidata2025) |
+| 看板 | 用于查询订单粒度、用户粒度收入数据 |
+
+## 8. 待补充项
+- 暂无，后续可补充典型 SQL 和业务口径案例。

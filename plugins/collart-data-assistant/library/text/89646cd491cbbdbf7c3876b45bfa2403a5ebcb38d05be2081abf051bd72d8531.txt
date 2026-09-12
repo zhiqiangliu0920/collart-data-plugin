@@ -1,0 +1,136 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dws.dws_oper_user_ad_di"
+table_cn_name: "客户端广告明细表 / 用户粒度广告收入表"
+metadata_status: "complete"
+field_status: "available"
+projects: ["ai", "ios"]
+project_dirs: ["ai", "ios"]
+warehouse_space: "aidata"
+layer: "DWS汇总层"
+subject: "收入成本主题"
+secondary_subject: "广告数据 / 用户粒度收入"
+table_type: "汇总表 / 事实表"
+grain: ""
+primary_key: ""
+update_frequency: "T+1 8:00"
+owner: "恬静"
+priority: ""
+core_table: "否 / 是"
+query_cost: ""
+source_record_ids: ["recvh3C8YG4xA3", "recvh8DkL607So"]
+field_count: "36"
+---
+
+# 表名：aidata2025.dws.dws_oper_user_ad_di
+
+> 表中文名：客户端广告明细表 / 用户粒度广告收入表
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：ai, ios；分层：DWS汇总层；表类型：汇总表 / 事实表；主题：收入成本主题；二级主题：广告数据 / 用户粒度收入。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | 客户端广告明细表 / 用户粒度广告收入表 |
+| 项目 | ai, ios |
+| 数仓空间 | aidata |
+| 分层 | DWS汇总层 |
+| 主题 | 收入成本主题 |
+| 二级主题 | 广告数据 / 用户粒度收入 |
+| 表类型 | 汇总表 / 事实表 |
+| 行粒度 | - |
+| 主键字段 | - |
+| 核心表 | 否 / 是 |
+| 更新频率 | T+1 8:00 |
+| 维护人 | 恬静 |
+| 使用优先级 | - |
+| 查询成本 | - |
+| 数据来源 | 客户端埋点 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `user_pseudo_id` | string | 主键 | 是 | 用户id，firebase分配的唯一id |
+| `user_id` | string | 主键 | 是 | 用户id，内部平台分配的唯一id |
+| `atlasv_uid` | string | 维度 | 否 | 技术团队给用户定义的唯一id |
+| `unit_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `placement` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `country` | string | 维度 | 是 | 国家 |
+| `app_name` | string | 维度 | 是 | 产品名 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `traffic_src_name` | string | 维度 | 否 | 投放渠道名称 |
+| `traffic_src_type` | string | 维度 | 否 | 投放渠道类型 |
+| `app_version` | string | 维度 | 否 | app客户端版本号 |
+| `is_new` | boolean | 维度 | 否 | 是否新老用户，true代表新用户、false代表老用户 |
+| `is_active` | boolean | 维度 | 否 | 布尔标记字段，用于表示是/否状态。 |
+| `vip_type` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `ad_type` | string | 维度 | 否 | 广告类型 |
+| `device_language` | string | 维度 | 否 | 设备语言 |
+| `mobile_brand_name` | string | 维度 | 否 | 设备品牌名 |
+| `mobile_model_name` | string | 维度 | 否 | 设备型号 |
+| `device_total_ram` | string | 维度 | 否 | 设备内存 |
+| `ad_sdk_init_cnt` | int | 指标 | 是 | 广告sdk初始化次数 |
+| `ad_load_cnt` | int | 指标 | 是 | 广告加载次数 |
+| `ad_load_success_cnt` | int | 指标 | 是 | 广告加载成功次数 |
+| `ad_load_fail_cnt` | int | 指标 | 是 | 广告加载失败次数 |
+| `ad_load_duration` | float | 指标 | 否 | 广告加载时长 |
+| `ad_start_to_show_cnt` | int | 指标 | 是 | 广告准备展示次数 |
+| `ad_success_to_show_cnt` | int | 指标 | 是 | 广告成功展示次数 |
+| `ad_show_cnt` | int | 指标 | 是 | 广告展示次数 |
+| `ad_impression_cnt` | int | 指标 | 是 | 广告展示次数 |
+| `ad_impression_fail_cnt` | int | 指标 | 是 | 广告展示失败次数 |
+| `ad_click_cnt` | int | 指标 | 是 | 广告点击次数 |
+| `ad_close_cnt` | int | 指标 | 是 | 广告关闭次数 |
+| `ad_duration` | float | 指标 | 否 | 广告时长 |
+| `ad_value` | float | 指标 | 否 | 广告价值，客户端埋点统计 |
+| `adjust_id` | string | 主键 | 是 | adjust id |
+| `advertising_id` | string | 主键 | 是 | 用户的广告id身份，也是一种唯一id |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `event_date` | date | 时间 | 日期 |
+| `user_pseudo_id` | string | 主键 | 用户id，firebase分配的唯一id |
+| `user_id` | string | 主键 | 用户id，内部平台分配的唯一id |
+| `unit_id` | string | 主键 | 用于唯一标识记录或业务实体的关键字段。 |
+| `country` | string | 维度 | 国家 |
+| `app_name` | string | 维度 | 产品名 |
+| `package_name` | string | 主键 | 包名 |
+| `ad_sdk_init_cnt` | int | 指标 | 广告sdk初始化次数 |
+| `ad_load_cnt` | int | 指标 | 广告加载次数 |
+| `ad_load_success_cnt` | int | 指标 | 广告加载成功次数 |
+| `ad_load_fail_cnt` | int | 指标 | 广告加载失败次数 |
+| `ad_start_to_show_cnt` | int | 指标 | 广告准备展示次数 |
+| `ad_success_to_show_cnt` | int | 指标 | 广告成功展示次数 |
+| `ad_show_cnt` | int | 指标 | 广告展示次数 |
+| `ad_impression_cnt` | int | 指标 | 广告展示次数 |
+| `ad_impression_fail_cnt` | int | 指标 | 广告展示失败次数 |
+| `ad_click_cnt` | int | 指标 | 广告点击次数 |
+| `ad_close_cnt` | int | 指标 | 广告关闭次数 |
+| `adjust_id` | string | 主键 | adjust id |
+| `advertising_id` | string | 主键 | 用户的广告id身份，也是一种唯一id |
+
+## 5. 典型使用场景
+- 用于中间层汇总分析，通常比从明细表重算更稳定、更省成本。
+
+## 6. 查询风险与注意事项
+- 存在 `event_date` 字段，按天查询时建议显式添加日期范围，避免全表扫描。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | aidata2025.dwd.dwd_oper_user_event_di |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sdws!3sdws_oper_user_ad_di) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdws%2Fdaily%2Fh_dws_oper_user_ad_di.sqlx?project=aidata2025) |
+| 看板 | - |
+
+## 8. 待补充项
+- 补充 `行粒度`。
+- 补充 `主键字段`。

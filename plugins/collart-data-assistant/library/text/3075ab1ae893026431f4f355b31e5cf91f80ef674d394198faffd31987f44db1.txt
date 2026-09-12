@@ -1,0 +1,18 @@
+WITH a AS (
+ SELECT user_pseudo_id,SUM(revenue.purchase_revenue) AS active_revenue,
+ MAX(IF(is_active,event_date,NULL)) AS last_active_date,
+ COUNTIF(is_active AND event_date BETWEEN DATE '2026-09-02' AND DATE '2026-09-08') AS active_days_7d,
+ COUNTIF(is_active AND event_date BETWEEN DATE '2026-08-26' AND DATE '2026-09-08') AS active_days_14d
+ FROM `aidata2025.ads_collartfashion.ads_oper_user_active_di`
+ WHERE event_date BETWEEN DATE '2026-06-01' AND DATE '2026-09-08' GROUP BY user_pseudo_id
+)
+SELECT COUNT(*) AS profiles_checked,
+ COUNTIF(ABS(IFNULL(p.revenue.purchase_revenue_all,0)-a.active_revenue)>0.00001) AS revenue_mismatch_profiles,
+ SUM(a.active_revenue) AS active_revenue,SUM(p.revenue.purchase_revenue_all) AS profile_revenue,
+ COUNTIF(p.current_active_days.d7 != a.active_days_7d) AS active_days7_mismatch_profiles,
+ COUNTIF(p.current_active_days.d14 != a.active_days_14d) AS active_days14_mismatch_profiles,
+ COUNTIF(a.last_active_date < DATE '2026-09-06' AND p.current_active_days.d7 != a.active_days_7d) AS inactive_user_days7_mismatch,
+ COUNTIF(p.current_is_churn_14d IS DISTINCT FROM (DATE_DIFF(DATE '2026-09-08',a.last_active_date,DAY)>=14)) AS churn14_mismatch_profiles,
+ MIN(p.profile_updated_at) AS earliest_profile_update,
+ MAX(p.profile_updated_at) AS latest_profile_update
+FROM a JOIN `aidata2025.ads_collartfashion.ads_oper_user_profile_df` p USING(user_pseudo_id)

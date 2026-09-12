@@ -1,0 +1,97 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dim.dim_module_template_info_android"
+table_cn_name: "collart android模块内模板id表"
+metadata_status: "complete"
+field_status: "available"
+projects: ["collart android"]
+project_dirs: ["collart_android"]
+warehouse_space: "aidata"
+layer: "DIM层"
+subject: "内容主题"
+secondary_subject: "模板基础信息"
+table_type: "维度表"
+grain: "每个模块每个国家一行"
+primary_key: "module_id+country_code"
+update_frequency: "T+1 8:00"
+owner: "志强"
+priority: "中"
+core_table: "否"
+query_cost: "低"
+source_record_ids: ["recvi6IfMQ0oke"]
+field_count: "11"
+---
+
+# 表名：aidata2025.dim.dim_module_template_info_android
+
+> 表中文名：collart android模块内模板id表
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：collart android；分层：DIM层；表类型：维度表；主题：内容主题；二级主题：模板基础信息；行粒度：每个模块每个国家一行。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | collart android模块内模板id表 |
+| 项目 | collart android |
+| 数仓空间 | aidata |
+| 分层 | DIM层 |
+| 主题 | 内容主题 |
+| 二级主题 | 模板基础信息 |
+| 表类型 | 维度表 |
+| 行粒度 | 每个模块每个国家一行 |
+| 主键字段 | module_id+country_code |
+| 核心表 | 否 |
+| 更新频率 | T+1 8:00 |
+| 维护人 | 志强 |
+| 使用优先级 | 中 |
+| 查询成本 | 低 |
+| 数据来源 | 服务端 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `country_code` | string | 主键 | 是 | 国家 |
+| `module_id` | int | 维度 | 是 | 模块名称 |
+| `module_unique_id` | string | 主键 | 是 | 模块数字id，唯一id |
+| `template_id` | int | - | 是 | 模板名称 |
+| `temp_unique_id` | string | 主键 | 是 | 模板数字id，唯一id |
+| `is_vip` | int | - | 否 | 是否vip |
+| `from_type` | int | - | 否 | from_type |
+| `from_type2` | int | - | 否 | from_type2 |
+| `manual_priority` | int | - | 是 | 模块的手动排序优先级 |
+| `rn_in_group` | int | - | 否 | rn_in_group |
+| `priority` | int | - | 是 | 模块最终优先级 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `country_code` | string | 主键 | 国家 |
+| `module_id` | int | 维度 | 模块名称 |
+| `module_unique_id` | string | 主键 | 模块数字id，唯一id |
+| `template_id` | int | - | 模板名称 |
+| `temp_unique_id` | string | 主键 | 模板数字id，唯一id |
+| `manual_priority` | int | - | 模块的手动排序优先级 |
+| `priority` | int | - | 模块最终优先级 |
+
+## 5. 典型使用场景
+- 用于维度补充、名称映射、枚举解释或查询条件标准化。
+
+## 6. 查询风险与注意事项
+- 飞书表信息中未提供额外查询限制；仍建议结合日期、项目和主键字段控制扫描范围。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | aidata2025.ods.module,aidata2025.ods.template,aidata2025.ods.module_template,aidata2025.dws.dws_template_recommend_score_di |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 服务端 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m10!1m4!4m3!1saidata2025!2sads_collart!3sads_high_value_user_Info!1m4!4m3!1saidata2025!2sdim!3sdim_module_template_info_android) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdim%2Fdim_module_template_info_android.sqlx?project=aidata2025) |
+| 看板 | - |
+
+## 8. 待补充项
+- 暂无，后续可补充典型 SQL 和业务口径案例。

@@ -1,0 +1,68 @@
+-- Collart Android 俄罗斯：免费激励广告次数 10→5（2026-08-14）
+-- 改前 Fri-Mon 2026-08-07~10 vs 改后 2026-08-14~17
+-- 凭证：aidata2025
+
+-- 1) 国家经营（DAU / 广告 / 内购）
+SELECT
+  event_date,
+  SUM(dau) AS dau,
+  SUM(dnu) AS dnu,
+  SUM(revenue.ad_revenue) AS ad_revenue,
+  SUM(revenue.ad_uv) AS ad_uv,
+  SUM(revenue.purchase_revenue) AS purchase_revenue,
+  SUM(revenue.credit_revenue) AS credit_revenue,
+  SUM(revenue.new_subscribe_uv) AS new_subscribe_uv,
+  SUM(revenue.credit_pack_uv) AS credit_pack_uv,
+  SUM(subscription.subscribe_uv) AS sub_uv_client
+FROM `aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di`
+WHERE event_date BETWEEN DATE '2026-08-07' AND DATE '2026-08-17'
+  AND LOWER(country) = 'russia'
+GROUP BY 1
+ORDER BY 1;
+
+-- 2) 激励漏斗（events_* 必须 _TABLE_SUFFIX BETWEEN，单次≤30天）
+SELECT
+  PARSE_DATE('%Y%m%d', event_date) AS dt,
+  COUNTIF(event_name = 'generate_watch_ad') AS ad_click_pv,
+  COUNT(DISTINCT IF(event_name = 'generate_watch_ad', user_pseudo_id, NULL)) AS ad_click_uv,
+  COUNTIF(event_name = 'generate_watch_ad_show') AS ad_show_pv,
+  COUNT(DISTINCT IF(event_name = 'generate_watch_ad_show', user_pseudo_id, NULL)) AS ad_show_uv,
+  COUNTIF(event_name = 'generate_watch_ad_reward_earned') AS ad_reward_pv,
+  COUNTIF(event_name = 'ai_service_task_create') AS task_create_pv,
+  COUNT(DISTINCT IF(event_name = 'Subscription_Page_Show', user_pseudo_id, NULL)) AS vip_show_uv,
+  COUNT(DISTINCT IF(event_name IN ('vip_subscribe', 'Subscription_Page_Subscribe_Button_Click'), user_pseudo_id, NULL)) AS vip_click_uv
+FROM `storytemplate-10a27.analytics_232977577.events_*`
+WHERE _TABLE_SUFFIX BETWEEN '20260807' AND '20260817'
+  AND app_info.id = 'free.ai.photo.generator.collart.ai'
+  AND platform = 'ANDROID'
+  AND geo.country = 'Russia'
+  AND event_name IN (
+    'generate_watch_ad', 'generate_watch_ad_show', 'generate_watch_ad_reward_earned',
+    'ai_service_task_create', 'Subscription_Page_Show',
+    'vip_subscribe', 'Subscription_Page_Subscribe_Button_Click'
+  )
+GROUP BY 1
+ORDER BY 1;
+
+-- 3) 用户×日展示次数（验证 cap）
+SELECT
+  PARSE_DATE('%Y%m%d', event_date) AS dt,
+  COUNT(*) AS watcher_ud,
+  SUM(show_cnt) AS shows,
+  COUNTIF(show_cnt = 5) AS ud_eq5,
+  COUNTIF(show_cnt >= 6) AS ud_ge6,
+  COUNTIF(show_cnt >= 11) AS ud_11plus,
+  ROUND(AVG(show_cnt), 2) AS avg_show,
+  APPROX_QUANTILES(show_cnt, 100)[OFFSET(90)] AS p90
+FROM (
+  SELECT event_date, user_pseudo_id, COUNT(*) AS show_cnt
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260807' AND '20260817'
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND platform = 'ANDROID'
+    AND geo.country = 'Russia'
+    AND event_name = 'generate_watch_ad_show'
+  GROUP BY 1, 2
+)
+GROUP BY 1
+ORDER BY 1;

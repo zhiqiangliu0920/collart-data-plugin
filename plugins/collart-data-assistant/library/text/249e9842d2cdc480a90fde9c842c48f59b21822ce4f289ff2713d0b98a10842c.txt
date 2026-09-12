@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Knowledge Maintain"
+  short_description: "Record table and metric knowledge into ai-knowledge"
+  default_prompt: "Use $ai-knowledge-maintain to record what this table is for into the shared knowledge base."

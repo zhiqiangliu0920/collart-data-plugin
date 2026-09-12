@@ -1,0 +1,12 @@
+# Collart Fashion 分析 Playbook
+
+| 主题 | 文档 |
+|---|---|
+| Fashion Video 四步漏斗、转化率与埋点验收 | [fashion_video_funnel.md](./fashion_video_funnel.md) |
+| 内部用户过滤 | [internal_user_filter.md](./internal_user_filter.md) |
+| Fashion / 主站用户划分 | [../indicators/fashion_vs_main_site_user.md](../indicators/fashion_vs_main_site_user.md) |
+
+产品与事件入口：
+
+- [AI Fashion Video 产品与流程](../product/ai_fashion_video_product.md)
+- [Fashion 埋点字典](../product/fashion_tracking_events.md)

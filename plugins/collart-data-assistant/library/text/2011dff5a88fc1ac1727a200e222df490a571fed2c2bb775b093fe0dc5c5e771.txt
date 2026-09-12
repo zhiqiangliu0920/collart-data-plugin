@@ -1,0 +1,39 @@
+# 📈 指标档案：PAGE_CONVERSION (Web)
+
+## 1. 基本定义与业务口径
+## 口径定义
+
+页面转化率：从页面A进入页面B的用户占比。
+
+## 计算逻辑
+
+| 要素 | 说明 |
+|------|------|
+| 页面A事件 | `page_view` |
+| 页面B事件 | 功能页进入事件 |
+| 关联字段 | `user_pseudo_id` |
+
+## 典型漏斗
+
+```
+首页 → AI Video页 → 创建任务 → 生成成功
+```
+
+## SQL
+
+参见 [page_conversion.sql](./page_conversion.sql)
+
+
+## 2. 数据源与计算逻辑 (Lineage)
+*   **推荐表**: [待补]
+*   **明细表**: [待补]
+
+## 3. ⚠️ 异常监控阈值 (Anomaly Thresholds)
+*   **正常波动**: ±5% (参考)
+*   **核心警报**: [待补]
+
+## 4. 🔗 关联积木 (Logic Blocks)
+*   **基础 SQL**: [common_params.sql](../../0global/sql_standards/common_params.sql)
+
+---
+*更新时间: 2026-04-01 (Q2 指标体系升级)*

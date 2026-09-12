@@ -1,0 +1,23 @@
+-- Fashion 每日核心指标（对齐 Web indicator 汇总）
+-- 表：ads_oper_basic_indicator_collartweb_di + package_name = 'collart_fashion'
+-- 汇总表：ads_oper_basic_metric_collart_fashion_di（Dataform 日刷）
+
+SELECT
+  event_date AS stats_date,
+  'collart_fashion' AS package_name,
+  SUM(CASE WHEN is_new = TRUE THEN dau END) AS new_users,
+  SAFE_DIVIDE(
+    SUM(CASE WHEN is_new = TRUE THEN retain_2 END),
+    SUM(CASE WHEN is_new = TRUE THEN dau END)
+  ) AS retain_2,
+  SAFE_DIVIDE(
+    SUM(CASE WHEN is_new = TRUE THEN retain_7 END),
+    SUM(CASE WHEN is_new = TRUE THEN dau END)
+  ) AS retain_7,
+  SUM(CASE WHEN is_new = TRUE AND traffic_src_type = 'organic' THEN dau END) AS new_users_organic,
+  SUM(dau) AS active_users
+FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di`
+WHERE event_date >= @start_date
+  AND package_name = 'collart_fashion'
+GROUP BY ALL
+ORDER BY stats_date;

@@ -1,0 +1,27 @@
+# Collart Web 核心业务指标
+
+## 产品定位
+
+Collart Web 是 Collart 的 Web 端版本，提供与 App 类似的 AI 图片/视频生成功能。
+
+## 核心功能
+
+| 功能 | 说明 |
+|------|------|
+| 图生视频 | img2video |
+| 文生视频 | text2video |
+| 图生图 | img2img |
+| 文生图 | text2img |
+| AI 编辑 | AI Edit |
+
+## 与 Android 端对比
+
+| 指标 | Web | Android |
+|------|-----|---------|
+| 过滤条件 | `app_info.id IS NULL` | `app_info.id = '...'` |
+| 典型事件 | page_view | screen_view |
+| 设备字段 | browser | operating_system |
+
+## 数据查询
+
+参见 [metrics/](../metrics/) 目录下的 SQL 模板。

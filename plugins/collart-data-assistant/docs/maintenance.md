@@ -1,40 +1,21 @@
 # 知识维护与发布
 
-分析和维护读取同一份 knowledge。日常只更新这套规范正文；provenance 的快照冻结来源，旧版两个独立 skill 不再作为新插件的第二套运行入口。
+原始业务资料在 ai-knowledge、cursor_summary、codex_summary 中维护。通过 library/catalog.json 的 source 与 path 定位来源；安装缓存和插件生成的 library 不是原始维护入口。
 
-## 状态与证据
+## 证据与状态
 
-- draft：提议或冲突未解决，不作已确认口径。
-- documented：有来源依据，未独立查询或负责人确认。本次整理的正常条目均为此状态。
-- verified：记录具体核验范围、负责人、核验人、日期、到期日及本地证据。结构校验不能把条目自动变成 verified。
-- deprecated：保留旧定义与失效范围，用 supersedes 指向被替代的稳定 ID；同一个 ID 的一般修订保留在版本历史。
+统一主题保留 draft / documented / verified / deprecated。verified 必须有负责人、核验人、日期、范围和证据，全文扫描或结构校验不自动授予 verified。
 
-元数据值使用 JSON 字面量的 YAML 子集，例 `sources: ["source-id"]`、`verified_at: null`。来源登记位于 [sources.json](../provenance/sources.json)，每项保留 source_path、source_sha256、captured_at、locator、excerpt、excerpt_sha256。source_path 相对于团队原知识库根，运行时不依赖这些原文件。
+来源资料分别记录 included、historical、duplicate、excluded、pending。完全相同正文共用一份文本并保留所有来源；同名不同内容分开保存。凭证、个人配置、原始用户明细不发布。只针对明确复核的源文件哈希做示例脱敏或聚合资料放行，内容变化后重新复核。
 
-## 操作
+原始 provenance 的 source_path 与哈希保留历史记录；origin_source/origin_path 指向迁移后的逻辑来源。新资料在 library 中完整保存。topic_impacts.json 标明统一主题引用的原文已变化，旧主题检索会提醒 source_review_required。
 
-在作者的插件源码根执行以下 PowerShell 命令；不要在安装缓存中编辑：
+## 维护动作
 
-```powershell
-$pluginRoot = (Get-Location).Path
-python scripts/kb.py --root "$pluginRoot" --authoring new --id sample-rule --project shared --kind metric --title "新规则"
-# 编辑 knowledge 中对应正文，补充来源，再生成索引。
-python scripts/kb.py --root "$pluginRoot" --authoring index
-python scripts/kb.py --root "$pluginRoot" check
-python -B -m unittest discover -s tests -v
-python scripts/kb.py source-check --source-root "<原始 ai-knowledge 根目录>"
-```
+1. 先检索稳定主题 ID、完整资料和待处理项，确认项目、日期和粒度。
+2. 在已授权的原来源修改或添加文档。需要调整统一主题时，在暂存发行目录编辑；保留旧摘录，添加新来源与适用范围。
+3. 冲突不能自动变成已确认口径。保留双方版本并写入待处理清单；可独立发布的无冲突资料继续处理。
+4. 运行 kb.py index/check、受影响脚本测试和来源扫描。文件链接及文本哈希必须一致。
+5. 按仓库 SYNC.md 非强制发布，再通过 Codex CLI 安装并核对全部缓存文件。发布与安装是两个独立状态；不能重置旧基线掩盖差异。
 
-new 只用于新主题；修改已有主题直接编辑原条目。search 从实时正文检索，check 能发现索引未更新。`check --strict` 会对 draft 和到期条目返回非零，适合复核提醒；发布是否允许已标明的 draft 由维护者明确记录。
-
-source-check 只报告变动，不自动覆盖知识；需核实变动与分析结论的关联。若来源不可访问，报告 missing，不宣称已同步。历史摘录变更需说明原因并重新记录哈希，不以改哈希代替事实核验。
-
-## 团队更新
-
-共享主版本为私有仓库 [zhiqiangliu0920/collart-ai-knowledge](https://github.com/zhiqiangliu0920/collart-ai-knowledge) 的 main 分支。每次修改记录变更说明和版本。其他同事提交修改建议或在独立分支修改，避免同时编辑 OneDrive 同一文件。
-
-维护者电脑已配置每 30 分钟检查仓库更新并同步到本地源码和插件缓存，见 [同步说明](https://github.com/zhiqiangliu0920/collart-ai-knowledge/blob/main/SYNC.md)。同步方向为仓库到插件，不自动发布未提交的本地知识。遇到本地修改或检查失败时保留现有文件并通知维护者。提交并合并后记录 Git SHA；本地缓存版本后缀不需要反向提交。其他同事电脑需要各自配置或手动更新。
-
-正式内容更新提升语义版本；仅开发缓存刷新可用 `版本+codex.时间戳`。检查后重新打包 marketplace 根，排除 .git、缓存、依赖目录和私密内容。将新包交给同事后，由同事更新其解压源码，并重新执行根目录 install.ps1，随后开新任务。
-
-推荐在一次分析结束、一个表结构或指标规则改动后更新知识；运行 check 查看到期项。周期同步只分发已提交的知识和插件文件，不查询生产数据、不自行改写业务口径。安装刷新后开启新任务使用新版。
+本机每 30 分钟任务采用上述流程。同事更新安装或自行配置其授权与任务；更新后开启新任务使用新版。插件本身不启动定时器、不运行生产查询、不发送外部消息。

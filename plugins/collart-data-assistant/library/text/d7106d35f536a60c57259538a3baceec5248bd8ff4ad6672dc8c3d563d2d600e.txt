@@ -1,0 +1,45 @@
+# 📈 指标档案：RETENTION (Android)
+
+## 1. 基本定义与业务口径
+## 口径定义（2026-03-23 更新）
+
+N日留存率：首日活跃的用户中，第N日仍活跃的用户占比。
+
+## 计算逻辑
+
+| 方法 | 数据源 | 计算方式 |
+|------|--------|---------|
+| **方法1（推荐）** | `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di` | 直接用算好的留存字段 |
+| **方法2** | `aidata2025.dwd.dwd_oper_user_collart_di` | 重新计算 |
+
+## ⚠️ 重要说明
+
+- **不要**使用 `events_*` 表的 `session_start` 事件计算留存
+- 使用加工好的数据表，数据更准确、查询更快
+- `ads_oper_basic_indicator_collart_di` 表已包含计算好的留存率字段
+
+## SQL
+
+参见 [retention.sql](./retention.sql)
+
+---
+
+*更新时间: 2026-03-23（修正数据源）*
+
+
+## 2. 数据源与计算逻辑 (Lineage)
+*   **推荐表**: [待补]
+*   **明细表**: [待补]
+
+## 3. ⚠️ 异常监控阈值 (Anomaly Thresholds)
+*   **正常波动**: ±5% (参考)
+*   **核心警报**: [待补]
+
+## 4. 🔗 关联积木 (Logic Blocks)
+*   **基础 SQL**: [common_params.sql](../../0global/sql_standards/common_params.sql)
+
+## 5. 常见坑点 (Common Pitfalls)
+*   [待补]
+
+---
+*更新时间: 2026-04-01 (Q2 指标体系升级)*

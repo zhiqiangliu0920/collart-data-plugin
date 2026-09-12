@@ -2,6 +2,56 @@
   "schema_version": 1,
   "entries": [
     {
+      "id": "collart-android-dau-source-selection",
+      "title": "Android 活跃用户与历史 SQL 选择",
+      "project": "collart_android",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "full-b5bb84b662377244",
+        "full-7190043e9eae148f"
+      ],
+      "tags": [
+        "collart_android",
+        "Android 活跃用户与历史 SQL 选择"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_android/dau-source-selection.md",
+      "sha256": "5521c9a3997f008757b5fec1a89eeed0c2cb0721de033f39379bd48f5001f081"
+    },
+    {
+      "id": "collart-fashion-product-funnel",
+      "title": "Fashion 产品步骤、事件与结果",
+      "project": "collart_fashion",
+      "kind": "business",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "full-cc76b025aa572d07",
+        "full-da2c0238684d2dd6"
+      ],
+      "tags": [
+        "collart_fashion",
+        "Fashion 产品步骤、事件与结果"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_fashion/product-funnel.md",
+      "sha256": "9849b355e65f26126219fd9fb1def175fc2330ecbf5240f795d81cb53e506a68"
+    },
+    {
       "id": "collart_fashion-revenue-boundary",
       "title": "Fashion 订单收入与主站边界",
       "project": "collart_fashion",
@@ -33,6 +83,56 @@
       "sha256": "c1662af4932023714a9d1a8eb86b06868b25f77f4b7c67880d07c9967cf752c2"
     },
     {
+      "id": "collart-fashion-warehouse-audit-20260909",
+      "title": "Fashion 2026-09-09 仓库审计的历史证据",
+      "project": "collart_fashion",
+      "kind": "quality",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "full-a7cc6cb8e2b227f3",
+        "full-96da852291e4720b"
+      ],
+      "tags": [
+        "collart_fashion",
+        "Fashion 2026-09-09 仓库审计的历史证据"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_fashion/warehouse-audit-20260909.md",
+      "sha256": "cf0f2e273ef2833249763e5031dc0e68608e29d26151d3a9ff95b8bcfe968eee"
+    },
+    {
+      "id": "collart-ios-asa-history-boundary",
+      "title": "iOS ASA 历史成本与当前口径差异",
+      "project": "collart_ios",
+      "kind": "quality",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "full-873bfac8f8c2b8d2",
+        "full-7190043e9eae148f"
+      ],
+      "tags": [
+        "collart_ios",
+        "iOS ASA 历史成本与当前口径差异"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_ios/asa-history-boundary.md",
+      "sha256": "285c68bb985373b1f77c590bfe267c5bf3332f755d79290933bc86afce794ab0"
+    },
+    {
       "id": "collart_web-identity",
       "title": "Web 设备画像与登录账号映射",
       "project": "collart_web",
@@ -61,6 +161,103 @@
       "verification_evidence": [],
       "path": "knowledge/collart_web/identity.md",
       "sha256": "a1bdcdea6e34659626a29f69c48c32cfa6630d2637adf8345289613c1a6fab71"
+    },
+    {
+      "id": "collart-web-revenue-report-20260912",
+      "title": "Web 2026-09-12 收入报告的复用边界",
+      "project": "collart_web",
+      "kind": "playbook",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "full-e93d64fdcfbfe6ff"
+      ],
+      "tags": [
+        "collart_web",
+        "Web 2026-09-12 收入报告的复用边界"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_web/revenue-report-20260912.md",
+      "sha256": "283e5eb0311ec8164f1670f2d0b45d1d2f1ee91e68cdeca05ab2f51e4bf84340"
+    },
+    {
+      "id": "company-event-rule-contract",
+      "title": "四端事件指标规则与宽表关系",
+      "project": "company",
+      "kind": "event",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "full-2ce0fdb15495c7bc",
+        "full-199b51ce0dcab10c"
+      ],
+      "tags": [
+        "company",
+        "四端事件指标规则与宽表关系"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/company/event-rule-contract.md",
+      "sha256": "1d40c6c757e103a12ec5307b1b3a21d2398e292a5a98f9fc636c9a1be7c8b5c0"
+    },
+    {
+      "id": "company-purchase-union",
+      "title": "订阅与点数包购买人数并集",
+      "project": "company",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "full-1fd6dc1741d54dde"
+      ],
+      "tags": [
+        "company",
+        "订阅与点数包购买人数并集"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/company/purchase-union.md",
+      "sha256": "5c0d8fe030a5014c0a1efb4ee071f6325b323c55f0f685e884e78867e8f504e0"
+    },
+    {
+      "id": "company-report-windows",
+      "title": "经营日报日期与比较窗口",
+      "project": "company",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-12",
+      "verified_at": null,
+      "review_after": "2026-10-12",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "full-eeebc9e82bd76fe2"
+      ],
+      "tags": [
+        "company",
+        "经营日报日期与比较窗口"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/company/report-windows.md",
+      "sha256": "8b8f2c3557d50d888b08261b91365d5e3371830423afefb7bd89a69a1c3bb69e"
     },
     {
       "id": "shared-analysis-playbook",

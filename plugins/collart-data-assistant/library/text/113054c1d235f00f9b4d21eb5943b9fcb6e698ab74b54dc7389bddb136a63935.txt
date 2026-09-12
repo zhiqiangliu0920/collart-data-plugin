@@ -1,0 +1,88 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.dim.dim_country_info"
+table_cn_name: "国家名称表"
+metadata_status: "complete"
+field_status: "available"
+projects: ["公司"]
+project_dirs: ["1company"]
+warehouse_space: "aidata"
+layer: "DIM层"
+subject: "业务数据（维表）"
+secondary_subject: "国家"
+table_type: "维度表"
+grain: "country_name"
+primary_key: "country_name"
+update_frequency: "手动维护"
+owner: "志强"
+priority: "高"
+core_table: "是"
+query_cost: "低"
+source_record_ids: ["recvgYraKlQ6NX"]
+field_count: "6"
+---
+
+# 表名：aidata2025.dim.dim_country_info
+
+> 表中文名：国家名称表
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：公司；分层：DIM层；表类型：维度表；主题：业务数据（维表）；二级主题：国家；行粒度：country_name。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | 国家名称表 |
+| 项目 | 公司 |
+| 数仓空间 | aidata |
+| 分层 | DIM层 |
+| 主题 | 业务数据（维表） |
+| 二级主题 | 国家 |
+| 表类型 | 维度表 |
+| 行粒度 | country_name |
+| 主键字段 | country_name |
+| 核心表 | 是 |
+| 更新频率 | 手动维护 |
+| 维护人 | 志强 |
+| 使用优先级 | 高 |
+| 查询成本 | 低 |
+| 数据来源 | 业务信息 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `country` | string | 维度 | 是 | 国家 |
+| `class` | string | 维度 | 否 | 国家梯级，比如T1/T2/T3 |
+| `country_name` | string | 维度 | 是 | 国家英文名，首字母大写；最常用 |
+| `country_name_2` | string | 维度 | 否 | 国家英文名，字母全部大写 |
+| `country_name_3` | string | 维度 | 否 | 国家英文简称，两个字母，字母全部大写 |
+| `country_name_4` | string | 维度 | 否 | 国家英文简称，三个字母，全部大写 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `country` | string | 维度 | 国家 |
+| `country_name` | string | 维度 | 国家英文名，首字母大写；最常用 |
+
+## 5. 典型使用场景
+- 用于维度补充、名称映射、枚举解释或查询条件标准化。
+- 该表使用优先级较高，agent 选表时可优先考虑。
+
+## 6. 查询风险与注意事项
+- 飞书表信息中未提供额外查询限制；仍建议结合日期、项目和主键字段控制扫描范围。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | - |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | 业务信息 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sdim!3sdim_country_info) |
+| 任务地址 | - |
+| 看板 | - |
+
+## 8. 待补充项
+- 暂无，后续可补充典型 SQL 和业务口径案例。

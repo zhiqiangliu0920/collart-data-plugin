@@ -1,0 +1,147 @@
+config {
+  type: "operations",
+  dependencies: [
+    "h_dm_collart_android_user_event_di",
+    "h_dm_collart_web_user_event_di"
+  ],
+  tags: ["collart_daily", "template_search"]
+}
+
+DECLARE to_date DATE DEFAULT DATE_SUB(CURRENT_DATE('Asia/Shanghai'), INTERVAL 1 DAY);
+DECLARE from_date DATE DEFAULT DATE_SUB(to_date, INTERVAL 9 DAY);
+DECLARE retention_start DATE DEFAULT DATE_SUB(to_date, INTERVAL 29 DAY);
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collart.ads_template_search_user_keyword_di`
+(
+  event_date DATE,
+  app_name STRING,
+  product_name STRING,
+  user_pseudo_id STRING,
+  user_key STRING,
+  search_keyword_raw STRING,
+  search_keyword STRING,
+  country STRING,
+  traffic_src_type STRING,
+  traffic_src_name STRING,
+  search_start_pv INT64,
+  search_success_pv INT64,
+  search_failed_pv INT64,
+  search_click_pv INT64,
+  refreshed_at TIMESTAMP
+)
+PARTITION BY event_date
+CLUSTER BY app_name, search_keyword, country
+OPTIONS (
+  description = 'Collart Android/Web template search user-keyword daily fact; Power BI import source'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collart.ads_template_search_user_keyword_di`
+WHERE event_date < retention_start
+   OR event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.ads_collart.ads_template_search_user_keyword_di`
+WITH source_events AS (
+  SELECT
+    event_date,
+    'collart_android' AS app_name,
+    'Collart Android' AS product_name,
+    user_pseudo_id,
+    params_info.search_keyword AS search_keyword_raw,
+    COALESCE(NULLIF(country, ''), 'unknown') AS country,
+    COALESCE(NULLIF(traffic_src_type, ''), 'unknown') AS traffic_src_type,
+    COALESCE(NULLIF(traffic_src_name, ''), 'unknown') AS traffic_src_name,
+    event_name
+  FROM `aidata2025.dm.dm_collart_android_user_event_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND event_name IN (
+      'action_search_template_start',
+      'action_search_template_succeed',
+      'action_search_template_failed',
+      'action_search_template_click'
+    )
+
+  UNION ALL
+
+  SELECT
+    event_date,
+    'collart_web' AS app_name,
+    'Collart Web' AS product_name,
+    user_pseudo_id,
+    web_params_info.search_keyword AS search_keyword_raw,
+    COALESCE(NULLIF(country, ''), 'unknown') AS country,
+    COALESCE(NULLIF(traffic_src_type, ''), 'unknown') AS traffic_src_type,
+    COALESCE(NULLIF(traffic_src_name, ''), 'unknown') AS traffic_src_name,
+    event_name
+  FROM `aidata2025.dm.dm_collart_web_user_event_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND package_name = 'collart_web'
+    AND (
+      event_name IN ('explore_search_submit', 'explore_search_zero_results')
+      OR (
+        event_name = 'explore_content_click'
+        AND LOWER(COALESCE(web_params_info.list_source, '')) = 'search'
+      )
+    )
+),
+normalized AS (
+  SELECT
+    *,
+    COALESCE(
+      NULLIF(TRIM(NORMALIZE_AND_CASEFOLD(search_keyword_raw, NFKC)), ''),
+      '(搜索词缺失)'
+    ) AS search_keyword
+  FROM source_events
+  WHERE user_pseudo_id IS NOT NULL
+),
+user_keyword AS (
+  SELECT
+    event_date,
+    app_name,
+    product_name,
+    user_pseudo_id,
+    CONCAT(app_name, ':', user_pseudo_id) AS user_key,
+    ARRAY_AGG(search_keyword_raw IGNORE NULLS ORDER BY LENGTH(search_keyword_raw) DESC LIMIT 1)[SAFE_OFFSET(0)] AS search_keyword_raw,
+    search_keyword,
+    country,
+    traffic_src_type,
+    traffic_src_name,
+    COUNTIF(event_name IN ('action_search_template_start', 'explore_search_submit')) AS search_start_pv,
+    COUNTIF(event_name = 'action_search_template_succeed') AS android_success_pv,
+    COUNTIF(event_name IN ('action_search_template_failed', 'explore_search_zero_results')) AS search_failed_pv,
+    COUNTIF(event_name IN ('action_search_template_click', 'explore_content_click')) AS search_click_pv
+  FROM normalized
+  GROUP BY
+    event_date,
+    app_name,
+    product_name,
+    user_pseudo_id,
+    user_key,
+    search_keyword,
+    country,
+    traffic_src_type,
+    traffic_src_name
+)
+SELECT
+  event_date,
+  app_name,
+  product_name,
+  user_pseudo_id,
+  user_key,
+  search_keyword_raw,
+  search_keyword,
+  country,
+  traffic_src_type,
+  traffic_src_name,
+  search_start_pv,
+  CASE
+    WHEN app_name = 'collart_android' THEN android_success_pv
+    ELSE GREATEST(search_start_pv - search_failed_pv, 0)
+  END AS search_success_pv,
+  search_failed_pv,
+  search_click_pv,
+  CURRENT_TIMESTAMP() AS refreshed_at
+FROM user_keyword;
+
+COMMIT;

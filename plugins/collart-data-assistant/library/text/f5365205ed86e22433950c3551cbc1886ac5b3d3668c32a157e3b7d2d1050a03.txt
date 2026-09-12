@@ -1,0 +1,62 @@
+-- Collart Web 过去一周核心指标汇总
+-- 日期范围: 2026-03-04 至 2026-03-10
+-- 创建时间: 2026-03-11
+-- 说明: 包含收入、新增、DAU、留存等核心指标
+
+WITH revenue_data AS (
+  -- 收入数据（来自 Stripe）
+  SELECT 
+    event_date,
+    SUM(CASE WHEN revneue > 0 THEN revneue END) AS revenue,
+    SUM(CASE WHEN description_type = 'Subscription creation' THEN revneue END) AS new_revenue,
+    SUM(CASE WHEN description_type = 'Subscription update' THEN revneue END) AS renew_revenue,
+    SUM(CASE WHEN revneue > 0 AND description_type = 'credit' THEN revneue END) AS pack_revenue
+  FROM (
+    SELECT DISTINCT 
+      event_date,
+      transaction_Id,
+      revneue,
+      description_type
+    FROM pubdata2025.dwd.dwd_cdct_revenue_stripe_di
+    WHERE event_date BETWEEN '2026-03-04' AND '2026-03-10'
+      AND revneue > 0
+  )
+  GROUP BY event_date
+),
+
+user_data AS (
+  -- 用户数据（新增、DAU、留存）
+  SELECT 
+    event_date,
+    -- 新增用户
+    SUM(CASE WHEN is_new = TRUE THEN dau END) AS new_users,
+    -- 自然新增
+    SUM(CASE WHEN is_new = TRUE AND traffic_src_type = 'nature' THEN dau END) AS organic_new_users,
+    -- 投放新增
+    SUM(CASE WHEN is_new = TRUE AND traffic_src_type LIKE '%delivery%' THEN dau END) AS delivery_new_users,
+    -- DAU
+    SUM(dau) AS dau,
+    -- 次日留存分子（新增用户的次日留存）
+    SUM(CASE WHEN is_new = TRUE THEN retain_2 END) AS retain_2_num
+  FROM aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di
+  WHERE event_date BETWEEN '2026-03-04' AND '2026-03-10'
+  GROUP BY event_date
+)
+
+SELECT 
+  u.event_date,
+  -- 收入指标
+  ROUND(r.revenue, 2) AS revenue,
+  ROUND(r.new_revenue, 2) AS new_sub_revenue,
+  ROUND(r.pack_revenue, 2) AS credit_pack_revenue,
+  ROUND(r.renew_revenue, 2) AS renew_revenue,
+  -- 用户指标
+  u.new_users,
+  u.organic_new_users,
+  u.delivery_new_users,
+  u.dau,
+  -- 次日留存率（新增用户的次日留存）
+  ROUND(u.retain_2_num / u.new_users, 4) AS new_user_retention_2d
+FROM user_data u
+LEFT JOIN revenue_data r ON u.event_date = r.event_date
+ORDER BY u.event_date;

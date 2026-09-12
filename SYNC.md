@@ -1,57 +1,46 @@
-# 知识库同步到插件
+# 三来源整合、发布与安装
 
-同步方向为 **本仓库 `main` → 本机插件源码 → Codex 已安装插件缓存**。知识与两个 skill 本来就在同一仓库中；同步后对插件全部文件逐一比较哈希，不能只看安装命令是否成功。
+`ai-knowledge + cursor_summary + codex_summary → 暂存整合 → private GitHub main → 本机插件`
 
-## 已配置的方式
+维护者沿用现有每 30 分钟 Codex heartbeat。原目录继续维护。任务使用已连接 GitHub 访问私有仓库，脚本不持有令牌。电脑离线、Codex 未运行或连接不可用时延后，恢复后重试。新任务使用更新后的插件。
 
-维护者电脑由当前 Codex 任务的周期检查每 30 分钟检查一次 GitHub 提交。使用已连接的 GitHub 插件读取私有仓库，不在脚本中保存令牌，不要求 Git 命令另行登录。只有检查通过的更新才进入本机插件。
+## 本机配置和基线
 
-这是本机配置，不会替同事开启后台任务。电脑离线、Codex 未运行或账号额度/连接不可用时可能延后，恢复后再检查。安装更新后请开启新 Codex 任务使用；正在运行的任务不会强制重启。
+源路径配置放在用户本机 `.codex/collart-knowledge-sync/inputs.json`：sources 指定三个互不重叠的输入根，distribution 指向已安装来源。reviews 按源文件 SHA-256 保存复核决定，内容改变后失效。不把配置和原始审核台账上传。
 
-同事可以克隆本仓库后按 INSTALL.md 更新插件；要自动同步，需要在各自电脑上配置同样的周期检查和各自的 GitHub 访问权限。不要复制维护者的登录态或同步状态目录。
+- state.json：最后成功安装提交、源码与缓存哈希、版本和备份。保留现有同步历史，禁止删除或重置来消除差异。
+- release-proposal.json：本次候选文件、远端基准与冲突。
+- release-status.json：已发布提交、来源指纹、快照位置及独立的 installation 状态。
+- snapshots：GitHub 完整文本快照，可复用 blob SHA 相同的正文。
 
-## 主版本与本地修改
+## 每次运行的顺序
 
-- `main` 是共享发布版本。已验证的知识修改提交到本仓库后，周期检查会分发到本机插件。
-- 本地源码如有未发布修改，自动同步会停止该次更新并保留修改。先审阅并提交或合并，再重新建立与共享版本一致的基线；不得通过删状态、强制覆盖或改哈希绕过冲突。
-- 本流程不自动把原始 ai-knowledge、历史报告或私人配置上传。把分析结果沉淀为知识仍需保留来源、适用窗口和验证状态。
-- 本地安装版本使用 Codex 官方 helper 添加 `+codex.<时间戳>` 缓存后缀。该后缀留在本地，不需要反向提交到共享仓库。
+1. 获取本机互斥运行锁；读取 release-status 与 state。若已发布但未安装，先读取已保存且哈希有效的快照重试安装，成功后记录 installed。网络不可用不阻止使用已验证快照重试安装。
+2. sync_plugin.py status 核对源码与缓存。有未发布本地改动时保留原件，不覆盖，转入三方审查。有缓存故障时保留独立失败状态，不重复发布。
+3. 通过 GitHub 连接读取 main、commit、递归 tree；确认 private、无截断、仅普通文件。变化 blob 必须读取正文并核对 Git blob SHA，未变正文可复用上次快照。不能用代码搜索代替完整树。
+4. 在输入目录之外建立暂存发行目录，以本机上次快照、当前远端和本地修改做三方比较。保留远端新增与修改。碰撞文件保留双方并进入待处理；main 不是旧基线时先纳入远端变更再构建。
+5. 运行 source_pipeline.py --config <inputs.json> --stage <暂存发行目录> --audit <本机审核输出>。完整读取可用文本，排除凭证、个人配置、原始用户明细、临时产物、目录链接及插件/发布/索引输出。生成全文资料、去重映射、日期与来源图，保留旧来源证据。
+6. 阅读新增/变化原文、pending 与 topic_impacts。主题事实改变或互相矛盾时保留旧证据并标记待复核，不能凭更新时间认定新口径正确。无歧义内容自动整合；无独立证据不提升为 verified。必要时改暂存 knowledge，再运行 kb.py index。更新本机目录用 build_local_catalog.py，索引不是输入。
+7. 运行 kb.py check、受影响测试及整包凭证检查。正式主题引用的旧摘录必须保留；全文引用按 source ID 映射解析。待处理项不包含敏感正文。
+8. release_state.py prepare 与最新远端快照比较。没有差异就结束，不制造时间戳或版本提交。冲突影响关联索引/主题时隔离整个关联变更；只有合成结果再次通过完整检查的无冲突部分可以发布。
+9. GitHub create_tree 基于刚读取的远端 tree，仅写实际差异；create_commit 的 parent 为该远端提交。更新 ref 前重新读取 main；若变化则重新三方合并与验证。update_ref 必须 force=false。权限或断网失败保留候选，不推进发布/安装基线。
+10. 重新读取发布树并核对全部 path/blob SHA，保存完整 snapshot。先用 release_state.py published 保存发布成功与 installation=pending，再调用 sync_plugin.py apply；成功后 release_state.py installed。
 
-## 同步工具
+## 命令入口
 
-`scripts/sync_plugin.py` 使用 Python 3.10+ 标准库，要求本机已有 Codex CLI、已安装启用的 `collart-data-assistant@personal` 和官方 plugin-creator helpers。工具不会自动启用已禁用插件或改变 marketplace 来源。
+- `python -B scripts/source_pipeline.py --config <本机配置> --stage <暂存目录> --audit <本机审计.json>`
+- `python -B plugins/collart-data-assistant/scripts/kb.py check`
+- `python -B scripts/release_state.py prepare --state-root <状态目录> --stage <暂存目录> --snapshot <最新远端快照> --fingerprint <来源指纹>`
+- `python -B scripts/release_state.py published --state-root <状态目录> --snapshot <发布后快照> --fingerprint <来源指纹>`
+- `python -B scripts/sync_plugin.py apply --root <发行目录> --snapshot <发布后快照>`
+- `python -B scripts/release_state.py installed --state-root <状态目录>`
 
-维护者先确认已注册的 marketplace 对应工作副本，初始化一次基线：
+sync_plugin.py 使用官方 plugin-creator helper 更新本机缓存后缀，再通过 Codex CLI 安装，最后逐文件核对缓存。失败时恢复旧源码与安装基线并重装旧版。发布状态不回退，因此下次只重试安装同一个已发布版本。
 
-```powershell
-python scripts/sync_plugin.py init --root "<发行目录>"
-python scripts/sync_plugin.py status --root "<发行目录>"
-python scripts/sync_plugin.py apply --root "<发行目录>" --snapshot "<已验证的仓库快照.json>"
-```
+快照格式：`{repository, commit, files:[{path, sha, content}]}`，commit 为 40 位 Git SHA，sha 是 UTF-8 正文对应的 Git blob SHA。没有密钥、登录态或本机路径配置。
 
-同步状态默认保存在当前用户的 `.codex/collart-knowledge-sync`，包括最后成功提交、源码哈希、已安装版本和更新前备份；它不进入仓库。`status` 比较实际源码与基线，同时核对已安装缓存。`apply` 检查本地冲突、快照哈希、基础凭证模式及知识结构，调用官方 helper 刷新缓存版本，通过 Codex CLI 重装，再验证缓存。失败时恢复源码并尝试重装之前的版本；失败详情和备份保留供处理。
+## 通知与验收
 
-快照采用 UTF-8 JSON，结构如下；`files` 必须来自指定提交的完整递归 Git 树，不能用代码搜索结果代替：
+无变化安静结束。仅报告实际更新、故障状态变化和新增待处理事项；同一已知故障或未解决事项不每半小时重复提醒。通知摘要指纹保存在本机，失败后恢复也视为状态变化。
 
-```json
-{
-  "repository": "zhiqiangliu0920/collart-ai-knowledge",
-  "commit": "完整40位提交SHA",
-  "files": [
-    {"path": "仓库内相对路径", "sha": "Git blob SHA", "content": "完整UTF-8正文"}
-  ]
-}
-```
-
-GitHub 连接器负责确认仓库为 private、读取 `refs/heads/main`、该提交的 tree 和全部 blob。仅接受普通文本文件；拒绝截断的树、符号链接和 submodule。可复用本地上次快照中 blob SHA 相同的正文，只读取变化内容。完整校验后将快照交给同步脚本。
-
-无新提交且源码和缓存一致时无需安装。出现本地修改、连接失败、marketplace 变更或检查失败时保留现有可用版本并报告。每次更新完成记录提交 SHA 和安装版本。
-
-## 验证
-
-```sh
-python -B -m unittest discover -s tests -v
-python -B plugins/collart-data-assistant/scripts/kb.py check
-```
-
-本工具的文件名和常见凭证模式检查不是完整保密审查；知识来源和业务正确性仍按维护规范处理。插件更新生效边界参见 [OpenAI 插件文档](https://learn.chatgpt.com/docs/plugins)。
+测试覆盖三个输入新增/修改、幂等、去重、生成目录有效资料、循环拦截、敏感内容、三方冲突、历史保留、独立引用解析、安装失败回滚和状态分离。失败场景使用可控故障注入，不关闭用户真实网络或破坏现有插件。业务正确性仍依赖原日期、证据与实际复核。

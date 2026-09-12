@@ -1,0 +1,27 @@
+# ai 表文档索引
+
+项目名称：ai
+
+表数量：19
+
+| 表名 | 中文名 | 分层 | 主题 | 优先级 | 字段数 | 状态 | 文档 |
+|---|---|---|---|---|---:|---|---|
+| `aidata2025.ads.ads_ad_sub_revenue_1h` | ai组产品分国家收入数据报告 | ADS应用层 | 收入成本主题 | 高 | 10 | `complete/available` | [打开](../tables/aidata2025.ads.ads_ad_sub_revenue_1h.md) |
+| `aidata2025.ads.ads_aidata_retain_di` | ai组基础数据表 | ADS应用层 | firebase埋点通用 | 低 | 38 | `complete/available` | [打开](../tables/aidata2025.ads.ads_aidata_retain_di.md) |
+| `aidata2025.ai_service.ai_cost_data` | 分产品服务器、ai服务成本 | ADS应用层 | 收入成本主题 | 中 | 5 | `complete/available` | [打开](../tables/aidata2025.ai_service.ai_cost_data.md) |
+| `aidata2025.dim.collart_campaign_name_modify_copy` | 投放名称维护表 | DIM层 | 业务数据（维表） | 低 | 3 | `complete/available` | [打开](../tables/aidata2025.dim.collart_campaign_name_modify_copy.md) |
+| `aidata2025.dim.dim_ai_service_model_info_copy` | ai服务模型信息表 | DIM层 | 业务数据（维表） | 中 | 7 | `complete/available` | [打开](../tables/aidata2025.dim.dim_ai_service_model_info_copy.md) |
+| `aidata2025.dim.dim_collart_asa_keyword_info` | ASA投放campagin id与name映射表 | DIM层 | 业务数据（维表） | 低 | 7 | `complete/available` | [打开](../tables/aidata2025.dim.dim_collart_asa_keyword_info.md) |
+| `aidata2025.dim.dim_country_rank_info` | TOP国家分类表 | DIM层 | 业务数据（维表） | 中 | 0 | `table_info_only/missing` | [打开](../tables/aidata2025.dim.dim_country_rank_info.md) |
+| `aidata2025.ai_service.ai_service_record_info_1d` | 用户ai服务使用明细表(服务端） | DWD明细层 | AI服务主题 | 高 | 11 | `complete/available` | [打开](../tables/aidata2025.ai_service.ai_service_record_info_1d.md) |
+| `aidata2025.dwd.dwd_id_convert_di` | id映射表 | DWD明细层 | firebase埋点通用 | 中 | 8 | `complete/available` | [打开](../tables/aidata2025.dwd.dwd_id_convert_di.md) |
+| `aidata2025.dwd.dwd_oper_delivery_adjust_user_di` | adjust数据归因明细表-ai产品 | DWD明细层 | 增长主题 | 低 | 23 | `complete/available` | [打开](../tables/aidata2025.dwd.dwd_oper_delivery_adjust_user_di.md) |
+| `aidata2025.dwd.dwd_oper_user_basic_di` | ai组每日活跃用户id表 | DWD明细层 | firebase埋点通用 | 低 | 29 | `complete/available` | [打开](../tables/aidata2025.dwd.dwd_oper_user_basic_di.md) |
+| `aidata2025.dwd.dwd_oper_user_event_di` | ai组原始埋点表（轻汇总） | DWD明细层 | firebase埋点通用 | 低 | 105 | `complete/available` | [打开](../tables/aidata2025.dwd.dwd_oper_user_event_di.md) |
+| `aidata2025.dwd.dwd_oper_user_properties_di` | ai组用户属性表 | DWD明细层 | firebase埋点通用 | 高 | 6 | `complete/available` | [打开](../tables/aidata2025.dwd.dwd_oper_user_properties_di.md) |
+| `aidata2025.dws.dws_id_convert_df` | id映射表（一个用户一行） | DWS汇总层 | firebase埋点通用 | 中 | 8 | `complete/available` | [打开](../tables/aidata2025.dws.dws_id_convert_df.md) |
+| `aidata2025.dws.dws_new_user_accumlate_subscribe_1d` | N日用户订阅表 | DWS汇总层 | 收入成本主题 | 低 | 96 | `complete/available` | [打开](../tables/aidata2025.dws.dws_new_user_accumlate_subscribe_1d.md) |
+| `aidata2025.dws.dws_oper_basic_aidata_1d` | ai组 新增、活跃、留存基础数据汇总 | DWS汇总层 | firebase埋点通用 | 低 | 13 | `complete/available` | [打开](../tables/aidata2025.dws.dws_oper_basic_aidata_1d.md) |
+| `aidata2025.dws.dws_oper_user_ad_di` | 客户端广告明细表 / 用户粒度广告收入表 | DWS汇总层 | 收入成本主题 | - | 36 | `complete/available` | [打开](../tables/aidata2025.dws.dws_oper_user_ad_di.md) |
+| `aidata2025.dws.dws_oper_user_ad_shotcut_1d` | shotcut广告埋点数据 | DWS汇总层 | 收入成本主题 | - | 34 | `complete/available` | [打开](../tables/aidata2025.dws.dws_oper_user_ad_shotcut_1d.md) |
+| `aidata2025.dim.dim_template_tag` | 模板标签表 | ODS原始层 | 内容主题 | 低 | 14 | `complete/available` | [打开](../tables/aidata2025.dim.dim_template_tag.md) |

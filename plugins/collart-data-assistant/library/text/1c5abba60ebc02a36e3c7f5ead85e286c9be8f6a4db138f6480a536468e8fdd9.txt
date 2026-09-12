@@ -1,0 +1,13 @@
+SELECT 
+  (
+    SELECT ep.value.string_value 
+    FROM UNNEST(event_params) ep 
+    WHERE ep.key = 'type'
+  ) AS video_type,
+  COUNT(DISTINCT user_pseudo_id) AS uv
+FROM `storytemplate-10a27.analytics_232977577.events_*`
+WHERE _TABLE_SUFFIX >= '20260306' AND _TABLE_SUFFIX <= '20260312'
+  AND app_info.id = 'free.ai.photo.generator.collart.ai'
+  AND event_name = 'aivideo_edit_show'
+GROUP BY video_type
+ORDER BY uv DESC

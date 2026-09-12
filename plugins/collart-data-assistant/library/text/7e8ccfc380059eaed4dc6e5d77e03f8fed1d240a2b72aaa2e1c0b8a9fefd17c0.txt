@@ -1,0 +1,262 @@
+-- KOL Web 新用户行为链路分析
+-- 分析目标：为什么很多 KOL 新用户没有有效行为
+-- 创建时间：2026-04-13
+
+-- ===== 第一步：定义 KOL 来源 =====
+-- 假设 KOL 通过 UTM medium 标识，常见值：influencer, kol, referral, affiliate
+-- 需要和业务确认具体标识方式
+
+-- ===== 第二步：定义有效行为 =====
+-- 有效行为层级（由浅到深）：
+-- Level 1: page_view（有页面浏览）
+-- Level 2: explore_page_show（进入探索页）
+-- Level 3: explore_content_click（点击模板）
+-- Level 4: ai_service_start（开始生成）
+-- Level 5: ai_service_success（生成成功）
+-- Level 6: login_success（登录成功）
+-- Level 7: vip_subscribe_succeed（付费成功）
+
+-- ===== 主查询：KOL 新用户行为漏斗 =====
+
+WITH 
+-- 1. 获取 KOL 来源的新用户
+kol_new_users AS (
+  SELECT 
+    user_pseudo_id,
+    event_date,
+    traffic_src_name,
+    traffic_src_source,
+    traffic_src_type,
+    country
+  FROM `aidata2025.ads_collart.ads_oper_user_new_collartweb_di`
+  WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+    -- KOL 标识（需要确认具体值）
+    AND (
+      LOWER(traffic_src_source) LIKE '%kol%'
+      OR LOWER(traffic_src_source) LIKE '%influencer%'
+      OR LOWER(traffic_src_source) LIKE '%referral%'
+      OR LOWER(traffic_src_name) LIKE '%kol%'
+      OR LOWER(traffic_src_name) LIKE '%influencer%'
+      OR LOWER(traffic_src_name) LIKE '%referral%'
+    )
+),
+
+-- 2. 获取这些用户在 events 表中的所有行为
+user_events AS (
+  SELECT 
+    e.user_pseudo_id,
+    e.event_date,
+    e.event_name,
+    -- 提取关键参数
+    (SELECT ep.value.string_value FROM UNNEST(e.event_params) ep WHERE ep.key = 'page_location') AS page_location,
+    (SELECT ep.value.string_value FROM UNNEST(e.event_params) ep WHERE ep.key = 'page_name') AS page_name,
+    (SELECT ep.value.string_value FROM UNNEST(e.event_params) ep WHERE ep.key = 'from') AS from_page,
+    (SELECT ep.value.string_value FROM UNNEST(e.event_params) ep WHERE ep.key = 'template_id') AS template_id,
+    (SELECT ep.value.string_value FROM UNNEST(e.event_params) ep WHERE ep.key = 'service_type') AS service_type
+  FROM `storytemplate-10a27.analytics_232977577.events_*` e
+  INNER JOIN kol_new_users u ON e.user_pseudo_id = u.user_pseudo_id
+  WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+    AND e.app_info.id IS NULL
+),
+
+-- 3. 按用户聚合行为
+user_behavior_summary AS (
+  SELECT 
+    user_pseudo_id,
+    -- 基础行为
+    COUNTIF(event_name = 'first_visit') AS has_first_visit,
+    COUNTIF(event_name = 'page_view') AS page_view_cnt,
+    COUNTIF(event_name = 'session_start') AS session_cnt,
+    -- 探索行为
+    COUNTIF(event_name = 'explore_page_show') AS explore_show_cnt,
+    COUNTIF(event_name = 'explore_content_click') AS explore_click_cnt,
+    -- 生成行为
+    COUNTIF(event_name = 'ai_service_start') AS generate_start_cnt,
+    COUNTIF(event_name = 'ai_service_success') AS generate_success_cnt,
+    COUNTIF(event_name = 'ai_service_failed') AS generate_failed_cnt,
+    -- 登录付费
+    COUNTIF(event_name = 'login_show') AS login_show_cnt,
+    COUNTIF(event_name = 'login_success') AS login_success_cnt,
+    COUNTIF(event_name = 'vip_subscribe') AS subscribe_cnt,
+    COUNTIF(event_name = 'vip_subscribe_succeed') AS subscribe_success_cnt
+  FROM user_events
+  GROUP BY user_pseudo_id
+),
+
+-- 4. 计算漏斗转化
+funnel_analysis AS (
+  SELECT 
+    COUNT(DISTINCT u.user_pseudo_id) AS total_kol_new_users,
+    COUNT(DISTINCT CASE WHEN b.page_view_cnt > 0 THEN u.user_pseudo_id END) AS has_page_view,
+    COUNT(DISTINCT CASE WHEN b.explore_show_cnt > 0 THEN u.user_pseudo_id END) AS has_explore_show,
+    COUNT(DISTINCT CASE WHEN b.explore_click_cnt > 0 THEN u.user_pseudo_id END) AS has_explore_click,
+    COUNT(DISTINCT CASE WHEN b.generate_start_cnt > 0 THEN u.user_pseudo_id END) AS has_generate_start,
+    COUNT(DISTINCT CASE WHEN b.generate_success_cnt > 0 THEN u.user_pseudo_id END) AS has_generate_success,
+    COUNT(DISTINCT CASE WHEN b.login_success_cnt > 0 THEN u.user_pseudo_id END) AS has_login_success,
+    COUNT(DISTINCT CASE WHEN b.subscribe_success_cnt > 0 THEN u.user_pseudo_id END) AS has_subscribe
+  FROM kol_new_users u
+  LEFT JOIN user_behavior_summary b ON u.user_pseudo_id = b.user_pseudo_id
+)
+
+-- 5. 输出结果
+SELECT 
+  total_kol_new_users,
+  has_page_view,
+  ROUND(has_page_view * 100.0 / NULLIF(total_kol_new_users, 0), 2) AS page_view_rate,
+  has_explore_show,
+  ROUND(has_explore_show * 100.0 / NULLIF(total_kol_new_users, 0), 2) AS explore_show_rate,
+  has_explore_click,
+  ROUND(has_explore_click * 100.0 / NULLIF(total_kol_new_users, 0), 2) AS explore_click_rate,
+  has_generate_start,
+  ROUND(has_generate_start * 100.0 / NULLIF(total_kol_new_users, 0), 2) AS generate_start_rate,
+  has_generate_success,
+  ROUND(has_generate_success * 100.0 / NULLIF(total_kol_new_users, 0), 2) AS generate_success_rate,
+  has_login_success,
+  ROUND(has_login_success * 100.0 / NULLIF(total_kol_new_users, 0), 2) AS login_success_rate,
+  has_subscribe,
+  ROUND(has_subscribe * 100.0 / NULLIF(total_kol_new_users, 0), 2) AS subscribe_rate
+FROM funnel_analysis;
+
+
+-- ===== 补充查询1：无有效行为的用户 - 首页行为分析 =====
+-- 分析那些没有生成行为的用户，他们在首页做了什么
+
+WITH 
+kol_new_users AS (
+  SELECT user_pseudo_id
+  FROM `aidata2025.ads_collart.ads_oper_user_new_collartweb_di`
+  WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+    AND (
+      LOWER(traffic_src_source) LIKE '%kol%'
+      OR LOWER(traffic_src_source) LIKE '%influencer%'
+      OR LOWER(traffic_src_name) LIKE '%kol%'
+      OR LOWER(traffic_src_name) LIKE '%influencer%'
+    )
+),
+
+-- 找出没有生成行为的用户
+users_no_generate AS (
+  SELECT 
+    u.user_pseudo_id
+  FROM kol_new_users u
+  LEFT JOIN (
+    SELECT DISTINCT user_pseudo_id
+    FROM `storytemplate-10a27.analytics_232977577.events_*`
+    WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+      AND app_info.id IS NULL
+      AND event_name = 'ai_service_start'
+  ) g ON u.user_pseudo_id = g.user_pseudo_id
+  WHERE g.user_pseudo_id IS NULL
+),
+
+-- 分析这些用户的首页行为
+no_generate_behavior AS (
+  SELECT 
+    e.user_pseudo_id,
+    e.event_name,
+    (SELECT ep.value.string_value FROM UNNEST(e.event_params) ep WHERE ep.key = 'page_name') AS page_name,
+    (SELECT ep.value.string_value FROM UNNEST(e.event_params) ep WHERE ep.key = 'feature') AS feature,
+    (SELECT ep.value.string_value FROM UNNEST(e.event_params) ep WHERE ep.key = 'from') AS from_page
+  FROM `storytemplate-10a27.analytics_232977577.events_*` e
+  INNER JOIN users_no_generate u ON e.user_pseudo_id = u.user_pseudo_id
+  WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+    AND e.app_info.id IS NULL
+)
+
+-- 统计无生成用户的事件分布
+SELECT 
+  event_name,
+  COUNT(DISTINCT user_pseudo_id) AS user_cnt,
+  COUNT(*) AS event_cnt
+FROM no_generate_behavior
+GROUP BY event_name
+ORDER BY user_cnt DESC
+LIMIT 20;
+
+
+-- ===== 补充查询2：用户行为序列分析（找出流失点） =====
+
+WITH 
+kol_new_users AS (
+  SELECT user_pseudo_id, traffic_src_name
+  FROM `aidata2025.ads_collart.ads_oper_user_new_collartweb_di`
+  WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+    AND (
+      LOWER(traffic_src_source) LIKE '%kol%'
+      OR LOWER(traffic_src_source) LIKE '%influencer%'
+      OR LOWER(traffic_src_name) LIKE '%kol%'
+      OR LOWER(traffic_src_name) LIKE '%influencer%'
+    )
+),
+
+-- 获取用户首次访问的落地页
+landing_pages AS (
+  SELECT 
+    e.user_pseudo_id,
+    (SELECT ep.value.string_value FROM UNNEST(e.event_params) ep WHERE ep.key = 'page_location') AS landing_url,
+    (SELECT ep.value.string_value FROM UNNEST(e.event_params) ep WHERE ep.key = 'page_name') AS landing_page,
+    ROW_NUMBER() OVER(PARTITION BY e.user_pseudo_id ORDER BY e.event_timestamp) AS rn
+  FROM `storytemplate-10a27.analytics_232977577.events_*` e
+  INNER JOIN kol_new_users u ON e.user_pseudo_id = u.user_pseudo_id
+  WHERE _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+    AND e.app_info.id IS NULL
+    AND e.event_name = 'page_view'
+)
+
+-- 统计落地页分布
+SELECT 
+  landing_page,
+  COUNT(DISTINCT user_pseudo_id) AS user_cnt,
+  ROUND(COUNT(DISTINCT user_pseudo_id) * 100.0 / SUM(COUNT(DISTINCT user_pseudo_id)) OVER(), 2) AS pct
+FROM landing_pages
+WHERE rn = 1
+GROUP BY landing_page
+ORDER BY user_cnt DESC
+LIMIT 20;
+
+
+-- ===== 补充查询3：按 KOL 来源细分行为差异 =====
+
+WITH 
+kol_new_users AS (
+  SELECT 
+    user_pseudo_id,
+    traffic_src_name,
+    traffic_src_source
+  FROM `aidata2025.ads_collart.ads_oper_user_new_collartweb_di`
+  WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+    AND (
+      LOWER(traffic_src_source) LIKE '%kol%'
+      OR LOWER(traffic_src_source) LIKE '%influencer%'
+      OR LOWER(traffic_src_name) LIKE '%kol%'
+      OR LOWER(traffic_src_name) LIKE '%influencer%'
+    )
+),
+
+user_behavior AS (
+  SELECT 
+    u.traffic_src_name,
+    u.user_pseudo_id,
+    MAX(CASE WHEN e.event_name = 'explore_content_click' THEN 1 END) AS has_click,
+    MAX(CASE WHEN e.event_name = 'ai_service_start' THEN 1 END) AS has_generate,
+    MAX(CASE WHEN e.event_name = 'login_success' THEN 1 END) AS has_login
+  FROM kol_new_users u
+  LEFT JOIN `storytemplate-10a27.analytics_232977577.events_*` e
+    ON u.user_pseudo_id = e.user_pseudo_id
+    AND _TABLE_SUFFIX >= FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+    AND e.app_info.id IS NULL
+  GROUP BY u.traffic_src_name, u.user_pseudo_id
+)
+
+SELECT 
+  traffic_src_name,
+  COUNT(DISTINCT user_pseudo_id) AS new_users,
+  COUNT(DISTINCT CASE WHEN has_click = 1 THEN user_pseudo_id END) AS click_users,
+  ROUND(COUNT(DISTINCT CASE WHEN has_click = 1 THEN user_pseudo_id END) * 100.0 / COUNT(DISTINCT user_pseudo_id), 2) AS click_rate,
+  COUNT(DISTINCT CASE WHEN has_generate = 1 THEN user_pseudo_id END) AS generate_users,
+  ROUND(COUNT(DISTINCT CASE WHEN has_generate = 1 THEN user_pseudo_id END) * 100.0 / COUNT(DISTINCT user_pseudo_id), 2) AS generate_rate,
+  COUNT(DISTINCT CASE WHEN has_login = 1 THEN user_pseudo_id END) AS login_users,
+  ROUND(COUNT(DISTINCT CASE WHEN has_login = 1 THEN user_pseudo_id END) * 100.0 / COUNT(DISTINCT user_pseudo_id), 2) AS login_rate
+FROM user_behavior
+GROUP BY traffic_src_name
+ORDER BY new_users DESC;

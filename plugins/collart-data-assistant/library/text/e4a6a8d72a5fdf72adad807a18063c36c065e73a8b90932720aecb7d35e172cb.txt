@@ -1,0 +1,97 @@
+-- 新用户次留分析（按事件触发情况拆解）
+-- 数据源: fx-editor.analytics_263446298.events_*
+-- package_name: ai.photo.editor.fix.retake.face.app
+-- 时间范围: 2026-04-08 ~ 2026-04-14 (过去7天)
+-- 创建时间: 2026-04-15
+
+WITH 
+-- 1. 基础事件表（过去7天 + package过滤）
+base_events AS (
+  SELECT 
+    user_pseudo_id,
+    event_name,
+    event_timestamp,
+    DATE(TIMESTAMP_MICROS(event_timestamp)) AS event_date
+  FROM `fx-editor.analytics_263446298.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260408' AND '20260415'
+    AND (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'package_name') = 'ai.photo.editor.fix.retake.face.app'
+),
+
+-- 2. 新用户（触发 first_open 且首次日期在过去7天）
+new_users AS (
+  SELECT 
+    user_pseudo_id,
+    MIN(event_date) AS first_open_date
+  FROM base_events
+  WHERE event_name = 'first_open'
+  GROUP BY user_pseudo_id
+  HAVING first_open_date BETWEEN '2026-04-08' AND '2026-04-14'
+),
+
+-- 3. 次日活跃用户（所有日期的活跃记录，用于匹配次日留存）
+daily_active AS (
+  SELECT DISTINCT
+    user_pseudo_id,
+    event_date
+  FROM base_events
+),
+
+-- 4. 新用户次日留存标记
+new_user_retention AS (
+  SELECT 
+    nu.user_pseudo_id,
+    nu.first_open_date,
+    CASE WHEN da.user_pseudo_id IS NOT NULL THEN 1 ELSE 0 END AS is_retained
+  FROM new_users nu
+  LEFT JOIN daily_active da
+    ON nu.user_pseudo_id = da.user_pseudo_id
+    AND da.event_date = DATE_ADD(nu.first_open_date, INTERVAL 1 DAY)
+),
+
+-- 5. 触发特定事件的用户（首次触发日期）
+event_first_trigger AS (
+  SELECT 
+    user_pseudo_id,
+    event_name,
+    MIN(event_date) AS first_event_date
+  FROM base_events
+  WHERE event_name IN ('save_success', 'reward_ad_complete', 'view_paywall', 'free_trial_exhausted')
+  GROUP BY user_pseudo_id, event_name
+),
+
+-- 6. 新用户中触发特定事件的留存情况
+event_retention AS (
+  SELECT 
+    ef.event_name,
+    nr.first_open_date,
+    COUNT(DISTINCT nr.user_pseudo_id) AS event_users,
+    SUM(nr.is_retained) AS retained_users
+  FROM new_user_retention nr
+  INNER JOIN event_first_trigger ef
+    ON nr.user_pseudo_id = ef.user_pseudo_id
+    AND ef.first_event_date <= DATE_ADD(nr.first_open_date, INTERVAL 1 DAY)  -- 事件触发在次日或之前
+  GROUP BY ef.event_name, nr.first_open_date
+)
+
+-- 最终输出：整体留存 + 各事件留存
+SELECT 
+  '整体新用户' AS category,
+  first_open_date,
+  COUNT(DISTINCT user_pseudo_id) AS new_users,
+  SUM(is_retained) AS retained_users,
+  ROUND(SUM(is_retained) / COUNT(DISTINCT user_pseudo_id) * 100, 2) AS retention_rate_pct
+FROM new_user_retention
+GROUP BY first_open_date
+
+UNION ALL
+
+SELECT 
+  CONCAT('触发 ', event_name) AS category,
+  first_open_date,
+  event_users AS new_users,
+  retained_users,
+  ROUND(retained_users / event_users * 100, 2) AS retention_rate_pct
+FROM event_retention
+
+ORDER BY first_open_date, category
+;

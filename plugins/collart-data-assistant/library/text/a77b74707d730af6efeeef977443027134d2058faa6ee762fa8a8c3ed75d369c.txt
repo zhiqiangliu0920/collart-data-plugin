@@ -1,0 +1,153 @@
+# SQL 编码规范与最佳实践
+
+> 记录时间：2026-03-27
+> 来源：强强实战案例提炼
+
+---
+
+## 一、成本优化原则（BigQuery）
+
+### 1.1 减少表扫描次数
+**原则**：同一表需要统计多个事件时，用 `IN` 一次性读取，再用 `CASE WHEN` 分流
+
+```sql
+-- ✅ 推荐：一次扫描，CASE WHEN分流（省成本）
+SELECT
+  COUNTIF(event_name = 'ai_service_start') AS start_cnt,
+  COUNTIF(event_name = 'ai_service_success') AS success_cnt
+FROM `project.dataset.events_*`
+WHERE _TABLE_SUFFIX = '20260326'
+  AND event_name IN ('ai_service_start', 'ai_service_success')
+
+-- ❌ 避免：多次扫描同一表（费成本）
+-- CTE1读一次events，CTE2再读一次events
+```
+
+**成本对比**：
+- 你的写法：扫描 1 次 → 成本低
+- 传统写法：扫描 N 次 → 成本高 N 倍
+
+---
+
+## 二、代码简洁原则
+
+### 2.1 "宽表先行"模式
+**原则**：先在一个CTE里把需要的参数字段都提取成列，后续直接用，避免重复子查询
+
+```sql
+-- ✅ 推荐：先打宽
+WITH base AS (
+  SELECT
+    event_date,
+    event_name,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'service_type') AS service_type,
+    (SELECT ep.value.int_value FROM UNNEST(event_params) ep WHERE ep.key = 'time') AS success_time
+  FROM `project.dataset.events_*`
+  WHERE _TABLE_SUFFIX = '20260326'
+    AND event_name IN ('ai_service_start', 'ai_service_success')
+)
+SELECT
+  service_type,
+  AVG(IF(event_name = 'ai_service_success', success_time, NULL)) AS avg_time
+FROM base
+GROUP BY ALL
+
+-- ❌ 避免：每个聚合都写子查询
+-- AVG((SELECT ep.value.int_value FROM UNNEST(event_params) ep WHERE ep.key = 'time'))
+```
+
+**优点**：
+- 代码可读性高
+- 执行效率更高（子查询只执行一次）
+- 维护成本低
+
+---
+
+### 2.2 使用 COUNTIF 替代 CASE WHEN
+**原则**：BigQuery 支持 `COUNTIF(condition)`，比 `COUNT(CASE WHEN ... END)` 更简洁
+
+```sql
+-- ✅ 推荐
+COUNTIF(event_name = 'ai_service_start') AS start_pv
+
+-- ❌ 避免（虽然功能一样，但冗长）
+COUNT(CASE WHEN event_name = 'ai_service_start' THEN 1 END) AS start_pv
+```
+
+---
+
+### 2.3 使用 GROUP BY ALL
+**原则**：自动按所有非聚合字段分组，减少重复代码
+
+```sql
+-- ✅ 推荐
+SELECT
+  event_date,
+  service_type,
+  COUNT(*) AS cnt
+FROM table
+GROUP BY ALL  -- 自动按 event_date, service_type 分组
+
+-- ❌ 避免
+-- GROUP BY event_date, service_type  -- 字段多的时候容易漏
+```
+
+---
+
+## 三、实战模板：多事件对比分析
+
+**场景**：对比两个相关事件的指标（如启动vs成功）
+
+```sql
+WITH base AS (
+  -- 第一步：宽表先行，提取所有需要的字段
+  SELECT
+    event_date,
+    event_name,
+    (SELECT ep.value.string_value FROM UNNEST(event_params) ep WHERE ep.key = 'service_type') AS service_type,
+    (SELECT ep.value.int_value FROM UNNEST(event_params) ep WHERE ep.key = 'time') AS success_time
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX = '20260326'
+    AND app_info.id IS NULL
+    AND event_name IN ('ai_service_start', 'ai_service_success')
+)
+
+SELECT
+  event_date,
+  service_type,
+  -- 事件计数
+  COUNTIF(event_name = 'ai_service_start') AS start_pv,
+  COUNTIF(event_name = 'ai_service_success') AS success_pv,
+  -- 成功率（注意NULLIF防除0）
+  ROUND(
+    COUNTIF(event_name = 'ai_service_success') * 100.0 
+    / NULLIF(COUNTIF(event_name = 'ai_service_start'), 0), 
+    2
+  ) AS success_rate_pct,
+  -- 平均耗时（只在success事件有值）
+  ROUND(
+    AVG(IF(event_name = 'ai_service_success', success_time, NULL)) / 1000.0, 
+    2
+  ) AS avg_time_sec
+FROM base
+GROUP BY ALL
+ORDER BY start_pv DESC
+```
+
+---
+
+## 四、 checklist
+
+写SQL前自查：
+- [ ] 是否需要从同一表读多次？→ 考虑用 `IN` + `CASE WHEN/COUNTIF` 合并
+- [ ] 是否重复提取event_params？→ 考虑"宽表先行"
+- [ ] 分组字段多？→ 考虑用 `GROUP BY ALL`
+- [ ] 除法计算？→ 记得用 `NULLIF(..., 0)` 防除0错误
+
+---
+
+## 五、版本记录
+
+| 日期 | 更新内容 | 来源 |
+|:---|:---|:---|
+| 2026-03-27 | 初版：成本优化原则、宽表先行模式、COUNTIF、GROUP BY ALL | 强强实战案例 |

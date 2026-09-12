@@ -1,0 +1,33 @@
+WITH s AS (
+  SELECT * FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+  WHERE event_date=DATE '2026-09-07' AND app_name='collart_web'
+    AND revneue>0 AND charge_type!='expired'
+), e AS (
+  SELECT user_id,package_name,TIMESTAMP(event_time) AS succeed_time
+  FROM `aidata2025.dm.dm_collart_web_user_event_di`
+  WHERE event_date BETWEEN DATE '2026-09-06' AND DATE '2026-09-08'
+    AND event_name='vip_subscribe_succeed' AND NULLIF(user_id,'') IS NOT NULL
+), matched AS (
+  SELECT s.transaction_id,s.user_id,s.revneue,e.package_name,
+    ABS(TIMESTAMP_DIFF(e.succeed_time,TIMESTAMP_SECONDS(s.event_timestamp),SECOND)) AS seconds_diff
+  FROM s JOIN e ON s.user_id=e.user_id
+    AND ABS(TIMESTAMP_DIFF(e.succeed_time,TIMESTAMP_SECONDS(s.event_timestamp),SECOND))<=600
+  QUALIFY ROW_NUMBER() OVER (PARTITION BY COALESCE(NULLIF(s.transaction_id,''),CONCAT('missing:',s.user_id,':',CAST(s.event_timestamp AS STRING)))
+    ORDER BY seconds_diff,e.succeed_time)=1
+), f AS (
+ SELECT SUM(revenue_usd) AS fashion_attributed_revenue
+ FROM `aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`
+ WHERE event_date=DATE '2026-09-07'
+), shared AS (
+ SELECT SUM(IF(package_name='collart_web',sub_revenue,0)) AS shared_web_sub_revenue,
+  SUM(IF(package_name='collart_fashion',sub_revenue,0)) AS shared_fashion_sub_revenue,
+  SUM(IF(package_name='collart_fashion' AND country='United States',sub_revenue,0)) AS shared_fashion_us_revenue,
+  SUM(IF(package_name='collart_fashion' AND country!='United States',sub_revenue,0)) AS shared_fashion_other_country_revenue
+ FROM `aidata2025.ads.ads_ad_sub_revenue_1h`
+ WHERE event_date=DATE '2026-09-07' AND package_name IN ('collart_web','collart_fashion')
+)
+SELECT DATE '2026-09-07' AS event_date,
+ (SELECT SUM(revneue) FROM s) AS stripe_web_source_revenue,
+ (SELECT SUM(revneue) FROM matched WHERE package_name='collart_fashion') AS fashion_matched_in_stripe_web,
+ (SELECT COUNT(*) FROM matched WHERE package_name='collart_fashion') AS fashion_matched_transactions,
+ f.*,shared.* FROM f CROSS JOIN shared

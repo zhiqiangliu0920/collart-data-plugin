@@ -1,0 +1,41 @@
+-- 留存率查询（Android）
+-- 更新时间: 2026-03-23
+
+-- 方法1：使用 ads_oper_basic_indicator_collart_di（推荐）
+-- 该表已包含计算好的留存率字段
+SELECT 
+  dt,
+  dau,
+  retention_1d,  -- 次日留存率
+  retention_7d,  -- 7日留存率
+  retention_30d  -- 30日留存率
+FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di`
+WHERE dt >= '2026-03-01' AND dt <= '2026-03-07'
+ORDER BY dt;
+
+-- 方法2：使用 dwd_oper_user_collart_di 重新计算
+WITH user_first_visit AS (
+  SELECT 
+    user_id,
+    MIN(dt) AS first_dt
+  FROM `aidata2025.dwd.dwd_oper_user_collart_di`
+  GROUP BY user_id
+),
+user_retention AS (
+  SELECT 
+    f.first_dt,
+    DATE_DIFF(u.dt, f.first_dt, DAY) AS day_diff,
+    COUNT(DISTINCT u.user_id) AS retained_users
+  FROM user_first_visit f
+  JOIN `aidata2025.dwd.dwd_oper_user_collart_di` u 
+    ON f.user_id = u.user_id
+  WHERE u.dt >= '2026-03-01' AND u.dt <= '2026-03-31'
+  GROUP BY f.first_dt, day_diff
+)
+SELECT 
+  first_dt,
+  day_diff,
+  retained_users,
+  -- 计算留存率（需要关联首日DAU）
+FROM user_retention
+ORDER BY first_dt, day_diff;

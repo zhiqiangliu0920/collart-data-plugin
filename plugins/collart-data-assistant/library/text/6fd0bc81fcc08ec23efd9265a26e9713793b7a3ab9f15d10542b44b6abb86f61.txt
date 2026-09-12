@@ -1,0 +1,262 @@
+-- Collart Web: 近一周端内 FB 投放来源用户付费转化分析
+-- 查询日期: 2026-07-10
+-- Cohort: 2026-07-03 ~ 2026-07-09 端内 FB 投放来源登录用户
+-- 主转化口径: 同窗口内 ods.orders 成功付费 status IN ('active','paid','active_ending')
+-- 辅助口径: 历史成功付费，用于识别老付费用户
+
+DECLARE start_date DATE DEFAULT DATE '2026-07-03';
+DECLARE end_date DATE DEFAULT DATE '2026-07-09';
+
+WITH internal_users AS (
+  SELECT user_id
+  FROM UNNEST([
+    '{INTERNAL_USER_ID_15}',
+    '{INTERNAL_USER_ID_14}',
+    '{INTERNAL_USER_ID_2}',
+    '{INTERNAL_USER_ID_11}',
+    '{INTERNAL_USER_ID_7}',
+    '{INTERNAL_USER_ID_4}',
+    '{INTERNAL_USER_ID_18}',
+    '{INTERNAL_USER_ID_1}',
+    '{INTERNAL_USER_ID_8}',
+    '{INTERNAL_USER_ID_9}',
+    '{INTERNAL_USER_ID_3}',
+    '{INTERNAL_USER_ID_17}',
+    '{INTERNAL_USER_ID_13}',
+    '{INTERNAL_USER_ID_6}',
+    '{INTERNAL_USER_ID_5}',
+    '{INTERNAL_USER_ID_16}',
+    '{INTERNAL_USER_ID_12}',
+    '{INTERNAL_USER_ID_10}'
+  ]) AS user_id
+),
+
+cohort_base AS (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    user_id,
+    country,
+    device_category,
+    traffic_src_source,
+    traffic_src_name,
+    traffic_src_type,
+    is_new,
+    is_login,
+    is_vip
+  FROM `aidata2025.dwd.dwd_oper_user_collartweb_di`
+  WHERE event_date BETWEEN start_date AND end_date
+    AND LOWER(COALESCE(traffic_src_type, '')) = 'delivery'
+    AND (
+      REGEXP_CONTAINS(LOWER(COALESCE(traffic_src_source, '')), r'facebook|(^|[^a-z])fb([^a-z]|$)')
+      OR REGEXP_CONTAINS(LOWER(COALESCE(traffic_src_name, '')), r'facebook|(^|[^a-z])fb([^a-z]|$)')
+    )
+    AND user_id IS NOT NULL
+    AND user_id != ''
+    AND user_id NOT IN (SELECT user_id FROM internal_users)
+),
+
+cohort AS (
+  SELECT
+    user_id,
+    ARRAY_AGG(DISTINCT user_pseudo_id IGNORE NULLS LIMIT 20) AS user_pseudo_ids,
+    MIN(event_date) AS first_seen_date,
+    MAX(event_date) AS last_seen_date,
+    COUNT(DISTINCT event_date) AS active_days,
+    ARRAY_AGG(DISTINCT country IGNORE NULLS LIMIT 10) AS countries,
+    ARRAY_AGG(DISTINCT device_category IGNORE NULLS LIMIT 10) AS device_categories,
+    ARRAY_AGG(DISTINCT traffic_src_source IGNORE NULLS LIMIT 10) AS traffic_sources,
+    ARRAY_AGG(DISTINCT traffic_src_name IGNORE NULLS LIMIT 20) AS traffic_campaigns,
+    ARRAY_AGG(traffic_src_name IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS primary_campaign,
+    ARRAY_AGG(country IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS primary_country,
+    LOGICAL_OR(is_new) AS is_new_in_window,
+    LOGICAL_OR(is_vip) AS is_vip_in_window
+  FROM cohort_base
+  GROUP BY user_id
+),
+
+orders_success AS (
+  SELECT
+    o.user_id,
+    DATE(TIMESTAMP(o.created_at), 'Asia/Shanghai') AS pay_date_cn,
+    DATETIME(TIMESTAMP(o.created_at), 'Asia/Shanghai') AS pay_time_cn,
+    o.product_name,
+    CASE
+      WHEN LOWER(o.product_name) LIKE '%pack%' THEN 'credit_pack'
+      WHEN LOWER(o.product_name) LIKE '%yearly%' THEN 'yearly_subscription'
+      WHEN LOWER(o.product_name) LIKE '%monthly%' THEN 'monthly_subscription'
+      ELSE 'other'
+    END AS product_type,
+    SAFE_DIVIDE(o.total_price, er.rate) / 100 AS revenue_usd
+  FROM `aidata2025.ods.orders` o
+  LEFT JOIN `aidata2025.dim.exchange_rate_days` er
+    ON DATE(o.created_at) = CAST(er.stats_date AS DATE)
+   AND LOWER(o.currency) = LOWER(er.currency)
+  WHERE o.status IN ('active', 'paid', 'active_ending')
+    AND o.user_id IN (SELECT user_id FROM cohort)
+),
+
+window_orders AS (
+  SELECT
+    user_id,
+    COUNT(*) AS paid_order_cnt,
+    ROUND(SUM(revenue_usd), 2) AS revenue_usd,
+    MIN(pay_time_cn) AS first_paid_time_cn,
+    MAX(pay_time_cn) AS last_paid_time_cn,
+    ARRAY_AGG(DISTINCT product_name IGNORE NULLS LIMIT 10) AS products,
+    ARRAY_AGG(DISTINCT product_type IGNORE NULLS LIMIT 10) AS product_types
+  FROM orders_success
+  WHERE pay_date_cn BETWEEN start_date AND end_date
+  GROUP BY user_id
+),
+
+history_orders AS (
+  SELECT
+    user_id,
+    COUNT(*) AS history_order_cnt,
+    ROUND(SUM(revenue_usd), 2) AS history_revenue_usd,
+    MIN(pay_time_cn) AS first_history_paid_time_cn,
+    MAX(pay_time_cn) AS last_history_paid_time_cn
+  FROM orders_success
+  GROUP BY user_id
+),
+
+user_level AS (
+  SELECT
+    c.*,
+    IF(wo.user_id IS NOT NULL, TRUE, FALSE) AS paid_in_window,
+    IF(ho.user_id IS NOT NULL, TRUE, FALSE) AS paid_ever,
+    IFNULL(wo.paid_order_cnt, 0) AS paid_order_cnt,
+    IFNULL(wo.revenue_usd, 0) AS revenue_usd,
+    wo.first_paid_time_cn,
+    wo.last_paid_time_cn,
+    wo.products,
+    wo.product_types,
+    IFNULL(ho.history_order_cnt, 0) AS history_order_cnt,
+    IFNULL(ho.history_revenue_usd, 0) AS history_revenue_usd,
+    ho.first_history_paid_time_cn,
+    ho.last_history_paid_time_cn
+  FROM cohort c
+  LEFT JOIN window_orders wo USING (user_id)
+  LEFT JOIN history_orders ho USING (user_id)
+)
+
+SELECT
+  'overall' AS section,
+  TO_JSON_STRING(STRUCT(
+    COUNT(*) AS cohort_users,
+    COUNTIF(paid_in_window) AS paid_users,
+    ROUND(COUNTIF(paid_in_window) * 100.0 / NULLIF(COUNT(*), 0), 2) AS paid_conversion_rate_pct,
+    SUM(paid_order_cnt) AS paid_orders,
+    ROUND(SUM(revenue_usd), 2) AS revenue_usd,
+    ROUND(SUM(revenue_usd) / NULLIF(COUNT(*), 0), 2) AS arpu_usd,
+    ROUND(SUM(revenue_usd) / NULLIF(COUNTIF(paid_in_window), 0), 2) AS arppu_usd,
+    COUNTIF(paid_ever) AS historical_paid_users,
+    ROUND(COUNTIF(paid_ever) * 100.0 / NULLIF(COUNT(*), 0), 2) AS historical_paid_rate_pct,
+    COUNTIF(paid_ever AND NOT paid_in_window) AS old_paid_no_window_payment_users
+  )) AS payload
+FROM user_level
+
+UNION ALL
+SELECT
+  'new_old',
+  TO_JSON_STRING(ARRAY_AGG(STRUCT(
+    IF(is_new_in_window, 'new_in_window', 'old_in_window') AS segment,
+    users,
+    paid_users,
+    ROUND(paid_users * 100.0 / NULLIF(users, 0), 2) AS paid_conversion_rate_pct,
+    paid_orders,
+    ROUND(revenue_usd, 2) AS revenue_usd,
+    ROUND(revenue_usd / NULLIF(users, 0), 2) AS arpu_usd,
+    ROUND(revenue_usd / NULLIF(paid_users, 0), 2) AS arppu_usd
+  ) ORDER BY IF(is_new_in_window, 'new_in_window', 'old_in_window')))
+FROM (
+  SELECT
+    is_new_in_window,
+    COUNT(*) AS users,
+    COUNTIF(paid_in_window) AS paid_users,
+    SUM(paid_order_cnt) AS paid_orders,
+    SUM(revenue_usd) AS revenue_usd
+  FROM user_level
+  GROUP BY is_new_in_window
+)
+
+UNION ALL
+SELECT
+  'country_top',
+  TO_JSON_STRING(ARRAY_AGG(STRUCT(
+    primary_country,
+    users,
+    paid_users,
+    ROUND(paid_users * 100.0 / NULLIF(users, 0), 2) AS paid_conversion_rate_pct,
+    ROUND(revenue_usd, 2) AS revenue_usd,
+    ROUND(revenue_usd / NULLIF(users, 0), 2) AS arpu_usd
+  ) ORDER BY revenue_usd DESC LIMIT 15))
+FROM (
+  SELECT
+    COALESCE(primary_country, '(unknown)') AS primary_country,
+    COUNT(*) AS users,
+    COUNTIF(paid_in_window) AS paid_users,
+    SUM(revenue_usd) AS revenue_usd
+  FROM user_level
+  GROUP BY primary_country
+)
+
+UNION ALL
+SELECT
+  'campaign_top',
+  TO_JSON_STRING(ARRAY_AGG(STRUCT(
+    primary_campaign,
+    users,
+    paid_users,
+    ROUND(paid_users * 100.0 / NULLIF(users, 0), 2) AS paid_conversion_rate_pct,
+    ROUND(revenue_usd, 2) AS revenue_usd,
+    ROUND(revenue_usd / NULLIF(users, 0), 2) AS arpu_usd
+  ) ORDER BY revenue_usd DESC LIMIT 20))
+FROM (
+  SELECT
+    COALESCE(primary_campaign, '(unknown)') AS primary_campaign,
+    COUNT(*) AS users,
+    COUNTIF(paid_in_window) AS paid_users,
+    SUM(revenue_usd) AS revenue_usd
+  FROM user_level
+  GROUP BY primary_campaign
+)
+
+UNION ALL
+SELECT
+  'product_type',
+  TO_JSON_STRING(ARRAY_AGG(STRUCT(
+    product_type,
+    paid_users,
+    paid_orders,
+    ROUND(revenue_usd, 2) AS revenue_usd
+  ) ORDER BY revenue_usd DESC))
+FROM (
+  SELECT
+    product_type,
+    COUNT(DISTINCT user_id) AS paid_users,
+    COUNT(*) AS paid_orders,
+    SUM(revenue_usd) AS revenue_usd
+  FROM orders_success
+  WHERE pay_date_cn BETWEEN start_date AND end_date
+  GROUP BY product_type
+)
+
+UNION ALL
+SELECT
+  'paid_users',
+  TO_JSON_STRING(ARRAY_AGG(STRUCT(
+    user_id,
+    is_new_in_window,
+    primary_country,
+    primary_campaign,
+    paid_order_cnt,
+    ROUND(revenue_usd, 2) AS revenue_usd,
+    first_paid_time_cn,
+    last_paid_time_cn,
+    products,
+    product_types
+  ) ORDER BY revenue_usd DESC))
+FROM user_level
+WHERE paid_in_window;

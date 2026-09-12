@@ -1,0 +1,100 @@
+-- Collart Web Top 国家模板偏好分析
+-- 查询模板点击和生成数据，按国家分组统计
+
+WITH template_events AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS stats_date,
+    user_pseudo_id,
+    geo.country AS country,
+    event_name,
+    -- 提取模板ID
+    (
+      SELECT ep.value.string_value
+      FROM UNNEST(event_params) ep
+      WHERE ep.key IN ('template_id', 'temp_id')
+    ) AS template_id,
+    -- 提取模板类型
+    (
+      SELECT ep.value.string_value
+      FROM UNNEST(event_params) ep
+      WHERE ep.key = 'type'
+    ) AS template_type,
+    -- 提取模板分类
+    (
+      SELECT ep.value.string_value
+      FROM UNNEST(event_params) ep
+      WHERE ep.key = 'category'
+    ) AS template_category
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY))
+    AND FORMAT_DATE('%Y%m%d', CURRENT_DATE())
+    AND app_info.id IS NULL  -- Collart Web
+    AND event_name IN ('explore_content_click', 'explore_content_generate_click')
+),
+
+-- 按国家统计模板点击和生成次数
+country_template_stats AS (
+  SELECT
+    country,
+    template_id,
+    template_type,
+    template_category,
+    COUNT(DISTINCT CASE WHEN event_name = 'explore_content_click' THEN user_pseudo_id END) AS click_uv,
+    COUNT(CASE WHEN event_name = 'explore_content_click' THEN 1 END) AS click_pv,
+    COUNT(DISTINCT CASE WHEN event_name = 'explore_content_generate_click' THEN user_pseudo_id END) AS generate_uv,
+    COUNT(CASE WHEN event_name = 'explore_content_generate_click' THEN 1 END) AS generate_pv
+  FROM template_events
+  WHERE country IS NOT NULL
+    AND template_id IS NOT NULL
+  GROUP BY country, template_id, template_type, template_category
+),
+
+-- 计算每个国家的总点击量，用于筛选Top国家
+country_total_clicks AS (
+  SELECT
+    country,
+    SUM(click_pv) AS total_clicks
+  FROM country_template_stats
+  GROUP BY country
+),
+
+-- 筛选Top 10国家（按点击量）
+top_countries AS (
+  SELECT country
+  FROM country_total_clicks
+  ORDER BY total_clicks DESC
+  LIMIT 10
+),
+
+-- 计算每个国家内Top 10模板
+top_templates_by_country AS (
+  SELECT
+    cts.country,
+    cts.template_id,
+    cts.template_type,
+    cts.template_category,
+    cts.click_uv,
+    cts.click_pv,
+    cts.generate_uv,
+    cts.generate_pv,
+    ROUND(cts.generate_pv * 100.0 / NULLIF(cts.click_pv, 0), 2) AS generate_rate,
+    ROW_NUMBER() OVER (PARTITION BY cts.country ORDER BY cts.click_pv DESC) AS template_rank
+  FROM country_template_stats cts
+  INNER JOIN top_countries tc ON cts.country = tc.country
+)
+
+-- 最终结果：每个国家Top 10模板
+SELECT
+  country,
+  template_rank,
+  template_id,
+  template_type,
+  template_category,
+  click_uv,
+  click_pv,
+  generate_uv,
+  generate_pv,
+  generate_rate || '%' AS generate_rate_pct
+FROM top_templates_by_country
+WHERE template_rank <= 10
+ORDER BY country, template_rank;

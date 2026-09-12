@@ -1,0 +1,104 @@
+# 数据表血缘关系
+
+## 整体架构
+
+```mermaid
+graph TB
+    subgraph 原始层
+        events[events<br/>事件表]
+    end
+
+    subgraph 中间层
+        dau[dau<br/>日活表]
+        new_users[new_users<br/>新增表]
+        dwd_template[dwd_template_event<br/>模板事件表]
+        dwd_payment[dwd_payment<br/>支付事件表]
+    end
+
+    subgraph 应用层
+        user_profile[user_profile<br/>用户画像表]
+        template_stats[template_stats<br/>模板统计表]
+    end
+
+    subgraph 指标层
+        dau_metric[DAU 指标]
+        ctr_metric[模板点击率]
+        revenue_metric[收入指标]
+    end
+
+    events --> dau
+    events --> new_users
+    events --> dwd_template
+    events --> dwd_payment
+
+    dau --> user_profile
+    new_users --> user_profile
+
+    dau --> dau_metric
+    dwd_template --> template_stats
+    template_stats --> ctr_metric
+    dwd_payment --> revenue_metric
+```
+
+---
+
+## 表说明
+
+| 表名 | 层级 | 用途 | 更新频率 |
+|:---|:---|:---|:---|
+| events | 原始层 | 全量事件记录 | 实时 |
+| dau | 中间层 | 日活用户 | T+1 |
+| new_users | 中间层 | 新增用户 | T+1 |
+| dwd_template_event | 中间层 | 模板相关事件 | T+1 |
+| dwd_payment | 中间层 | 支付事件 | T+1 |
+| user_profile | 应用层 | 用户画像汇总 | T+1 |
+| template_stats | 应用层 | 模板统计汇总 | T+1 |
+
+---
+
+## 字段继承关系
+
+```mermaid
+graph LR
+    events[events<br/>全字段] -->|聚合| dau[dau<br/>user_id + 基础属性]
+    events -->|筛选新增| new_users[new_users<br/>user_id + 来源]
+    events -->|模板事件| dwd_template[dwd_template<br/>user_id + template_id + event_type]
+
+    style events fill:#ff6b6b
+    style dau fill:#4ecdc4
+    style new_users fill:#4ecdc4
+    style dwd_template fill:#4ecdc4
+```
+
+---
+
+## 使用决策树
+
+```mermaid
+graph TD
+    A[需要什么数据?] --> B{是否需要事件明细?}
+    B -->|是| C[查 events 表]
+    B -->|否| D{需要什么用户群体?}
+
+    D -->|活跃用户| E[dau 表]
+    D -->|新用户| F[new_users 表]
+    D -->|模板相关| G[dwd_template_event 表]
+
+    C --> H{需要哪些字段?}
+    H -->|模板ID/事件类型| I[dwd_template_event 更快]
+    H -->|其他原始字段| J[必须用 events]
+
+    style C fill:#ff6b6b
+    style E fill:#4ecdc4
+    style F fill:#4ecdc4
+    style G fill:#4ecdc4
+```
+
+---
+
+## 待补充
+
+- [ ] 补充实际表名
+- [ ] 补充字段详情
+- [ ] 补充更多中间表
+- [ ] 标注数据延迟时间

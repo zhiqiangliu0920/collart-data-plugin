@@ -1,0 +1,246 @@
+-- ============================================================================
+
+-- Collart Fashion · Active 用户收入补齐
+
+-- 顺序：active 行为 → user_event_metric → fashion_user_revenue → 本动作 → profile/attr
+
+-- 目标：将用户日 Stripe 收入写入 active.revenue.purchase_revenue
+
+-- ============================================================================
+
+
+
+config {
+
+    type: "operations",
+
+    tags: ["collart_fashion"],
+
+    description: "Enrich Fashion active rows with user-day Stripe revenue",
+
+    dependencies: [
+
+      "ads_collartfashion_oper_user_active_di",
+
+      "fashion_user_revenue"
+
+    ]
+
+}
+
+
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+
+DECLARE to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+
+
+BEGIN TRANSACTION;
+
+
+
+MERGE `aidata2025.ads_collartfashion.ads_oper_user_active_di` AS t
+
+USING (
+
+  WITH revenue_user_day AS (
+
+    SELECT event_date, user_id, user_pseudo_id, revenue_usd
+
+    FROM `aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`
+
+    WHERE event_date BETWEEN from_date AND to_date
+
+      AND package_name = 'collart_fashion'
+
+  ),
+
+
+
+  direct_target AS (
+
+    SELECT r.event_date, r.user_id, a.user_pseudo_id
+
+    FROM revenue_user_day AS r
+
+    JOIN `aidata2025.ads_collartfashion.ads_oper_user_active_di` AS a
+
+      ON r.event_date = a.event_date
+
+     AND r.user_id = a.user_id
+
+     AND a.is_active
+
+    WHERE a.event_date BETWEEN from_date AND to_date
+
+    QUALIFY ROW_NUMBER() OVER (
+
+      PARTITION BY r.event_date, r.user_id
+
+      ORDER BY a.user_pseudo_id = r.user_pseudo_id DESC, a.user_pseudo_id
+
+    ) = 1
+
+  ),
+
+
+
+  history_target AS (
+
+    SELECT
+
+      r.event_date,
+
+      r.user_id,
+
+      h AS dim
+
+    FROM revenue_user_day AS r
+
+    JOIN `aidata2025.ads_collartfashion.ads_oper_user_active_di` AS h
+
+      ON (r.user_pseudo_id = h.user_pseudo_id OR r.user_id = h.user_id)
+
+     AND h.event_date BETWEEN DATE '2026-06-01' AND DATE_ADD(r.event_date, INTERVAL 1 DAY)
+
+     AND h.is_active
+
+    QUALIFY ROW_NUMBER() OVER (PARTITION BY r.event_date, r.user_id ORDER BY h.event_date DESC, h.user_pseudo_id) = 1
+
+  ),
+
+
+
+  targets AS (
+
+    SELECT
+
+      r.event_date,
+
+      r.user_id,
+
+      r.revenue_usd,
+
+      COALESCE(r.user_pseudo_id, d.user_pseudo_id, h.dim.user_pseudo_id) AS user_pseudo_id,
+
+      h.dim
+
+    FROM revenue_user_day AS r
+
+    LEFT JOIN direct_target AS d USING (event_date, user_id)
+
+    LEFT JOIN history_target AS h USING (event_date, user_id)
+
+  )
+
+
+
+  SELECT
+
+    'collart_fashion' AS package_name,
+
+    'collart_fashion' AS app_name,
+
+    x.event_date,
+
+    x.user_pseudo_id,
+
+    x.user_id,
+
+    x.dim.country,
+
+    x.dim.app_version,
+
+    FALSE AS is_new,
+
+    CAST(NULL AS BOOL) AS is_churn,
+
+    CAST(NULL AS BOOL) AS is_return,
+
+    FALSE AS is_remove,
+
+    COALESCE(x.dim.is_login, TRUE) AS is_login,
+
+    FALSE AS is_active,
+
+    COALESCE(x.dim.is_vip, '0') AS is_vip,
+
+    x.dim.first_open_time,
+
+    x.dim.traffic_src_name,
+
+    x.dim.traffic_src_type,
+
+    x.dim.traffic_src_platform,
+
+    x.dim.identity,
+
+    x.dim.geo,
+
+    x.dim.device,
+
+    x.dim.traffic_src,
+
+    IF(FALSE, x.dim.subscription, NULL) AS subscription,
+
+    STRUCT(
+
+      x.revenue_usd AS purchase_revenue,
+
+      0.0 AS resub_revenue,
+
+      0.0 AS new_revenue,
+
+      0.0 AS credit_revenue,
+
+      0.0 AS ad_revenue
+
+    ) AS revenue,
+
+    IF(FALSE, x.dim.retain, NULL) AS retain,
+
+    IF(FALSE, x.dim.rolling_retain, NULL) AS rolling_retain
+
+  FROM targets AS x
+
+  WHERE x.user_pseudo_id IS NOT NULL
+
+) AS s
+
+ON t.event_date = s.event_date
+
+AND t.user_pseudo_id = s.user_pseudo_id
+
+WHEN MATCHED THEN UPDATE SET
+
+  user_id = COALESCE(t.user_id, s.user_id),
+
+  revenue = s.revenue
+
+WHEN NOT MATCHED THEN INSERT (
+
+  package_name, app_name, event_date, user_pseudo_id, user_id, country, app_version,
+
+  is_new, is_churn, is_return, is_remove, is_login, is_active, is_vip, first_open_time,
+
+  traffic_src_name, traffic_src_type, traffic_src_platform,
+
+  identity, geo, device, traffic_src, subscription, revenue, retain, rolling_retain
+
+) VALUES (
+
+  s.package_name, s.app_name, s.event_date, s.user_pseudo_id, s.user_id, s.country, s.app_version,
+
+  s.is_new, s.is_churn, s.is_return, s.is_remove, s.is_login, s.is_active, s.is_vip, s.first_open_time,
+
+  s.traffic_src_name, s.traffic_src_type, s.traffic_src_platform,
+
+  s.identity, s.geo, s.device, s.traffic_src, s.subscription, s.revenue, s.retain, s.rolling_retain
+
+);
+
+
+
+COMMIT TRANSACTION;
+

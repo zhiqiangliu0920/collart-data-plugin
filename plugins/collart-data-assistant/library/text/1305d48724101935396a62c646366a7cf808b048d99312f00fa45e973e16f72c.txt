@@ -1,0 +1,156 @@
+#!/usr/bin/env python3
+"""
+Collart Android 首订率分析脚本
+执行SQL并输出分析结果
+"""
+
+from google.cloud import bigquery
+from datetime import datetime, timedelta
+import pandas as pd
+
+# 初始化客户端
+client = bigquery.Client(project="storytemplate-10a27")
+
+# SQL 1: 每日首订率趋势（过去30天）
+sql_daily_trend = """
+WITH daily_first_sub AS (
+  SELECT
+    dt,
+    COUNT(DISTINCT user_pseudo_id) as new_users,
+    COUNT(DISTINCT CASE WHEN event_name = 'subscription_first' THEN user_pseudo_id END) as first_sub_users
+  FROM `storytemplate-10a27.analytics_232977577.events_2026*`
+  WHERE _TABLE_SUFFIX BETWEEN '0317' AND '0421'
+    AND event_name IN ('first_open', 'subscription_first')
+    AND platform = 'ANDROID'
+  GROUP BY dt
+)
+SELECT
+  dt,
+  new_users,
+  first_sub_users,
+  ROUND(100.0 * first_sub_users / NULLIF(new_users, 0), 2) as first_sub_rate
+FROM daily_first_sub
+WHERE new_users > 0
+ORDER BY dt DESC
+"""
+
+# SQL 2: 对比分析（下降前后）
+sql_comparison = """
+WITH period_comparison AS (
+  SELECT
+    CASE 
+      WHEN _TABLE_SUFFIX BETWEEN '0324' AND '0406' THEN 'period_before'
+      WHEN _TABLE_SUFFIX BETWEEN '0407' AND '0421' THEN 'period_after'
+    END as period,
+    COUNT(DISTINCT user_pseudo_id) as new_users,
+    COUNT(DISTINCT CASE WHEN event_name = 'subscription_first' THEN user_pseudo_id END) as first_sub_users
+  FROM `storytemplate-10a27.analytics_232977577.events_2026*`
+  WHERE _TABLE_SUFFIX BETWEEN '0324' AND '0421'
+    AND event_name IN ('first_open', 'subscription_first')
+    AND platform = 'ANDROID'
+  GROUP BY period
+)
+SELECT
+  period,
+  new_users,
+  first_sub_users,
+  ROUND(100.0 * first_sub_users / NULLIF(new_users, 0), 2) as first_sub_rate
+FROM period_comparison
+WHERE period IS NOT NULL
+ORDER BY period
+"""
+
+# SQL 3: 分国家首订率（最近2周）
+sql_geo = """
+WITH geo_first_sub AS (
+  SELECT
+    geo.country as country,
+    COUNT(DISTINCT user_pseudo_id) as new_users,
+    COUNT(DISTINCT CASE WHEN event_name = 'subscription_first' THEN user_pseudo_id END) as first_sub_users
+  FROM `storytemplate-10a27.analytics_232977577.events_2026*`
+  WHERE _TABLE_SUFFIX BETWEEN '0408' AND '0421'
+    AND event_name IN ('first_open', 'subscription_first')
+    AND platform = 'ANDROID'
+  GROUP BY geo.country
+)
+SELECT
+  country,
+  new_users,
+  first_sub_users,
+  ROUND(100.0 * first_sub_users / NULLIF(new_users, 0), 2) as first_sub_rate
+FROM geo_first_sub
+WHERE new_users >= 100
+ORDER BY new_users DESC
+LIMIT 15
+"""
+
+def run_analysis():
+    """执行分析并输出结果"""
+    print("=" * 60)
+    print("Collart Android 首订率分析报告")
+    print("数据范围: 2026-03-17 至 2026-04-21")
+    print("=" * 60)
+    print()
+    
+    # 1. 每日趋势
+    print("【1. 每日首订率趋势（最近15天）】")
+    print("-" * 60)
+    try:
+        df_daily = client.query(sql_daily_trend).to_dataframe()
+        if not df_daily.empty:
+            # 格式化输出
+            for _, row in df_daily.head(15).iterrows():
+                print(f"{row['dt']} | 新增: {row['new_users']:>5} | 首订: {row['first_sub_users']:>4} | 首订率: {row['first_sub_rate']:>5.2f}%")
+        else:
+            print("无数据")
+    except Exception as e:
+        print(f"查询失败: {e}")
+    print()
+    
+    # 2. 对比分析
+    print("【2. 下降前后对比】")
+    print("-" * 60)
+    try:
+        df_comp = client.query(sql_comparison).to_dataframe()
+        if not df_comp.empty:
+            for _, row in df_comp.iterrows():
+                period_name = "下降前 (3/24-4/6)" if row['period'] == 'period_before' else "下降后 (4/7-4/21)"
+                print(f"{period_name}")
+                print(f"  新增用户: {row['new_users']:,}")
+                print(f"  首订用户: {row['first_sub_users']:,}")
+                print(f"  首订率: {row['first_sub_rate']:.2f}%")
+                print()
+            # 计算变化
+            if len(df_comp) == 2:
+                before_rate = df_comp[df_comp['period']=='period_before']['first_sub_rate'].values[0]
+                after_rate = df_comp[df_comp['period']=='period_after']['first_sub_rate'].values[0]
+                change = after_rate - before_rate
+                print(f"首订率变化: {change:+.2f}个百分点 ({change/before_rate*100:+.1f}%)")
+        else:
+            print("无数据")
+    except Exception as e:
+        print(f"查询失败: {e}")
+    print()
+    
+    # 3. 分国家分析
+    print("【3. 分国家首订率（最近2周TOP15）】")
+    print("-" * 60)
+    try:
+        df_geo = client.query(sql_geo).to_dataframe()
+        if not df_geo.empty:
+            print(f"{'国家':<15} | {'新增':>8} | {'首订':>6} | {'首订率':>8}")
+            print("-" * 60)
+            for _, row in df_geo.iterrows():
+                print(f"{row['country']:<15} | {row['new_users']:>8} | {row['first_sub_users']:>6} | {row['first_sub_rate']:>7.2f}%")
+        else:
+            print("无数据")
+    except Exception as e:
+        print(f"查询失败: {e}")
+    print()
+    
+    print("=" * 60)
+    print("分析完成")
+    print("=" * 60)
+
+if __name__ == "__main__":
+    run_analysis()

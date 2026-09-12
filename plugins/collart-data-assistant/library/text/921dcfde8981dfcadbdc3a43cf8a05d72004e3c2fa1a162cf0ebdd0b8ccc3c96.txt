@@ -1,0 +1,131 @@
+# 表名：aidata2025.ods.orders
+
+## 1. 基础信息
+- 表中文名：collart web产品用户粒度订单记录表（服务端自建）
+- 表类型：事实表
+- 表描述：每个用户每一笔订单的记录
+- 行粒度：订单粒度（主键 `id`）
+- 分区字段：**无分区**（2026-08-18 核实：表约 3 万行 / 12 MB，全表扫描成本可忽略）
+- ⚠️ 本表**没有** `event_date` 字段，也没有 `order_id` 字段；日期需由 `created_at` 派生，订单号用 `id`
+- 更新频率：每日北京时间8点左右自动更新
+- 上游来源：服务端生成
+- 优先级：高
+- 成本效率：低
+
+## 2. 核心作用
+本表主要用于以下场景：
+1. 关联user_id字段，计算每个用户的价值贡献，对用户进行价值分层
+2. 计算不同场景、设备、国家的用户价值贡献分布
+
+> **2026-08-28 起不再作为用户粒度收入真值**（推荐 vs 历史）：
+> Web 用户粒度收入、以及移动端俄罗斯支付用户粒度收入，一律改用
+> `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`（T+1），或各端 `ads_oper_user_active_di.revenue`。
+> `dwd_cdct_orders_revenue_hi` 是空表，不要当补洞。
+> 本表仅作历史对照或排查，新分析不要再 `JOIN` / 扫 `ods.orders` 算收入。
+> SQL：[sql_presets/user_grain_revenue_from_stripe.sql](../sql_presets/user_grain_revenue_from_stripe.sql)
+
+## 3. 核心字段
+字段名：id
+- 类型：BIGNUMERIC
+- 字段角色：订单主键（对外展示订单号时用 `CAST(id AS STRING)`）
+
+字段名：created_at
+- 类型：TIMESTAMP
+- 字段角色：时间维度
+- 业务含义：订单创建时间（UTC 存储）
+- **时区红线**：与 GA4 `events_*` 关联时必须用 `DATE(created_at, 'Asia/Shanghai')`，因为 GA4 的 `event_date` / `_TABLE_SUFFIX` 走 property 报告时区（北京时间）。误用 `DATE(created_at)`（UTC）会让北京时间 0–8 点的订单整体错到前一天，join 不上（2026-08-18 实测）
+
+字段名：app_name
+- 类型：string
+- 字段角色：产品线
+- 取值（2026-08-18）：`collart-web`（27067 行 / 12500 成功）、`collart-android`（3056 / 51）、`vidart-ios`（471 / 31）
+- ⚠️ **不区分 Fashion 与 Web 主站**：Fashion 订单的 `app_name` 同为 `collart-web`，产品线归属只能靠 GA4 埋点场景（`package_name` + `page_location`）判断
+
+字段名：price_type
+- 类型：string
+- 取值：`one_time`（点数包）/ `recurring`（订阅）
+
+字段名：payment_channel
+- 类型：string
+- 取值：`stripe` / `payinsider` / `enjoypay` / `payermax` 等
+
+字段名：paid_at
+- 类型：BIGNUMERIC
+- 业务含义：支付完成时间戳
+
+字段名：user_id
+- 类型：string
+- 字段角色：用户id
+
+字段名：total_price
+- 类型：bignumeric
+- 字段角色：订单价格
+- 业务含义：订单价格
+- 注意：需要关联汇率表使用
+
+字段名：status
+- 类型：string
+- 字段角色：订单属性
+- 业务含义：订单支付状态。**查 orders 表统计付费用户、收入、付费时间时，必须加成功状态过滤**（见下文 §4）
+
+字段名：product_name
+- 类型：string
+- 字段角色：商品属性
+- 业务含义：购买的商品名称
+- **商品类型识别规则**（2026-03-16更新）：
+  - 含有 `Yearly` → 年包
+  - 含有 `Monthly` → 月包
+  - 含有 `Pack` → 点数包
+- SQL用法：`CASE WHEN LOWER(product_name) LIKE '%yearly%' THEN '年包' ... END`
+
+
+## 4. status 取值与付费成功口径（红线）
+
+> **默认规则**：凡用 `ods.orders` 判断「是否付费」「付费金额」「付费时间」「付费用户数」，**WHERE 必须包含**：
+>
+> ```sql
+> status IN ('active', 'paid', 'active_ending')
+> ```
+>
+> 不加此条件会把 `pending`、`expired` 等未成功订单算进付费，导致名单与金额虚高。
+
+| status | 是否计入付费/收入 | 说明 |
+|--------|------------------|------|
+| `active` | ✅ 是 | 订阅类订单生效中 |
+| `paid` | ✅ 是 | 一次性购买（如点数包）已支付 |
+| `active_ending` | ✅ 是 | 订阅即将到期但仍属有效付费 |
+| `pending` | ❌ 否 | 支付未完成或待确认；**仅有 orders 记录、无 `vip_subscribe_succeed` 时常见** |
+| `expired` | ❌ 否 | 订单已过期/失败 |
+| `canceled` | ❌ 否 | 订单已取消（2026-08-18 补充） |
+| `failed` | ❌ 否 | 支付失败（2026-08-18 补充） |
+
+**与埋点关系**：
+- 严口径付费事件：`vip_subscribe_succeed`（GA4 `events_*`）
+- orders 严口径：`status IN ('active','paid','active_ending')`
+- 宽口径（排查漏报、支付链路问题）才可临时包含 `pending`，**交付结论须标注口径**
+
+**⚠️ 埋点宽于订单（2026-08-18 Fashion 实测）**：近 21 天 Fashion 场景内 `vip_subscribe_succeed` 共 11 条，其中 8 条有 `user_id`，但只有 2 条能关联到当日成功订单；另 5 条当日订单全为 `canceled / expired / failed`。即 **`vip_subscribe_succeed` 会在支付未真正成功时上报**。因此：
+- 统计收入/付费用户以 orders 严口径为准，不要用 succeed 埋点人数推算收入
+- 两者数量不一致属正常，不应互相校验对账
+- `user_id` 为空的 succeed 事件无法关联订单，收入必然丢失
+
+**典型误用**（2026-06-22 复盘）：按 `DATE(created_at)` 取昨日「充值用户」但未过滤 status，会把 pending 年订（如 Yearly Premium $259.99）误计为付费。
+
+## 6. 数据质量与风险提示
+
+- 未过滤 `status` 时，pending 订单数量可能很多（用户多次发起订阅未成功）
+- `total_price` 单位为分，需 `/100` 并关联 `dim.exchange_rate_days` 换算美元
+- 时间字段用 `created_at`（非仅 `event_date`）查精确付费时刻；展示北京时间：`DATETIME(TIMESTAMP(created_at), 'Asia/Shanghai')`
+
+## 7. 典型使用场景与示例 SQL
+
+###1 计算每个用户每天的收入贡献
+select 
+user_id,
+date(created_at) event_Date,
+sum(total_price/b.rate/100) revenue
+from `aidata2025.ods.orders` a 
+left join aidata2025.dim.exchange_rate_days  b on date(created_at) =cast(b.stats_date as date) and lower(a.currency)=lower(b.currency)
+where status in('active','paid','active_ending')
+group by all
+```

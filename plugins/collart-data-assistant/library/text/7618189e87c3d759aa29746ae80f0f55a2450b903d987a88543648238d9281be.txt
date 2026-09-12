@@ -1,0 +1,76 @@
+-- Collart Android 主界面核心按钮点击率分析
+-- 输出：日期、is_new、用户数、各功能点击率
+-- 作者：助手
+-- 日期：2026-04-09
+-- 数据范围：最近 7 天
+
+WITH 
+-- 首页展示用户（分母）：冷启动进入主页
+home_users AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS stats_date,
+    user_pseudo_id
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+    AND FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'home_firstshow'
+),
+
+-- 新用户：当天有 first_open 事件的用户
+new_users AS (
+  SELECT DISTINCT
+    PARSE_DATE('%Y%m%d', event_date) AS stats_date,
+    user_pseudo_id
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+    AND FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'first_open'
+),
+
+-- 各功能按钮点击用户（分子）
+feature_clicks AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS stats_date,
+    user_pseudo_id,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'feature') AS feature
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
+    AND FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+    AND app_info.id = 'free.ai.photo.generator.collart.ai'
+    AND event_name = 'home_feature_click'
+),
+
+-- 汇总
+aggregated AS (
+  SELECT
+    h.stats_date,
+    CASE WHEN nu.user_pseudo_id IS NOT NULL THEN 'new' ELSE 'existing' END AS is_new,
+    COUNT(DISTINCT h.user_pseudo_id) AS total_users,
+    COUNT(DISTINCT CASE WHEN fc.feature = 'aiVideo' THEN h.user_pseudo_id END) AS ai_video_clickers,
+    COUNT(DISTINCT CASE WHEN fc.feature = 'aiImage' THEN h.user_pseudo_id END) AS ai_image_clickers,
+    COUNT(DISTINCT CASE WHEN fc.feature = 'aiEdit' THEN h.user_pseudo_id END) AS ai_edit_clickers,
+    COUNT(DISTINCT CASE WHEN fc.feature = 'aiRemove' THEN h.user_pseudo_id END) AS ai_remove_clickers,
+    COUNT(DISTINCT CASE WHEN fc.feature = 'aiEnhance' THEN h.user_pseudo_id END) AS ai_upscale_clickers,
+    COUNT(DISTINCT CASE WHEN fc.feature = 'motion' THEN h.user_pseudo_id END) AS motion_sync_clickers,
+    COUNT(DISTINCT CASE WHEN fc.feature = 'video_edit' THEN h.user_pseudo_id END) AS img2video_clickers
+  FROM home_users h
+  LEFT JOIN new_users nu ON h.stats_date = nu.stats_date AND h.user_pseudo_id = nu.user_pseudo_id
+  LEFT JOIN feature_clicks fc ON h.stats_date = fc.stats_date AND h.user_pseudo_id = fc.user_pseudo_id
+  GROUP BY h.stats_date, CASE WHEN nu.user_pseudo_id IS NOT NULL THEN 'new' ELSE 'existing' END
+)
+
+SELECT
+  stats_date,
+  is_new,
+  total_users,
+  ROUND(ai_video_clickers / total_users, 4) AS ai_video_ctr,
+  ROUND(ai_image_clickers / total_users, 4) AS ai_image_ctr,
+  ROUND(ai_edit_clickers / total_users, 4) AS ai_edit_ctr,
+  ROUND(ai_remove_clickers / total_users, 4) AS ai_remove_ctr,
+  ROUND(ai_upscale_clickers / total_users, 4) AS ai_upscale_ctr,
+  ROUND(motion_sync_clickers / total_users, 4) AS motion_sync_ctr,
+  ROUND(img2video_clickers / total_users, 4) AS img2video_ctr
+FROM aggregated
+ORDER BY stats_date DESC, is_new

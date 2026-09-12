@@ -1,0 +1,205 @@
+config {
+  type: "operations",
+  name: "ads_collartweb_oper_user_event_metric_di",
+  schema: "ads_collartweb",
+  dependencies: [
+    "h_dm_collart_web_user_event_di",
+    "ads_collartweb_oper_user_active_di"
+  ]
+}
+
+/*
+  Collart Web 第八张表：用户 × 日 事件行为宽表
+  Dataform: definitions/ads/collart/collart_web/ads_oper_user_event_metric_di.sqlx
+  目标表  : aidata2025.ads_collartweb.ads_oper_user_event_metric_di
+
+  口径:
+  - 粒度: event_date × user_pseudo_id；INNER JOIN active 且 is_active=TRUE
+  - 列由 aidata2025.ads_collart.ads_dim_metric_rule is_materialized=true 驱动
+    （本文件由 _scratch/gen_event_metric_sqlx_web.py 产出，勿手改）
+  - *_pv = COUNT 事件（agg_type=count_events，对齐旧 _num）
+  - valid_user_pv = 用户日 OR 近似（explore_content_click / photo_add /
+    login_account_choose / %generate_click%）
+  - event_params 任意 web_params_info key，比较前 LOWER()
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartweb.ads_oper_user_event_metric_di`
+(
+  package_name STRING,
+  app_name STRING,
+  event_date DATE,
+  user_pseudo_id STRING,
+  video_generate_success_pv INT64,
+  video_generate_start_pv INT64,
+  page_view_pv INT64,
+  session_start_pv INT64,
+  first_visit_pv INT64,
+  user_engagement_pv INT64,
+  generate_start_pv INT64,
+  generate_success_pv INT64,
+  framestransition_video_generate_start_pv INT64,
+  explore_page_show_pv INT64,
+  motioncontrol_video_generate_start_pv INT64,
+  text2video_video_generate_start_pv INT64,
+  explore_card_click_pv INT64,
+  explore_content_click_pv INT64,
+  explore_content_generate_click_pv INT64,
+  feature_show_pv INT64,
+  photo_add_pv INT64,
+  photo_add_success_pv INT64,
+  generate_click_pv INT64,
+  framestransition_video_generate_success_pv INT64,
+  login_show_pv INT64,
+  login_account_choose_pv INT64,
+  motioncontrol_video_generate_success_pv INT64,
+  text2video_video_generate_success_pv INT64,
+  login_success_pv INT64,
+  vip_show_pv INT64,
+  vip_subscribe_pv INT64,
+  vip_subscribe_succeed_pv INT64,
+  generate_save_pv INT64,
+  valid_user_pv INT64,
+  img2video_generate_start_pv INT64,
+  img2video_generate_success_pv INT64,
+  img2img_generate_start_pv INT64,
+  img_generate_start_pv INT64,
+  img2img_generate_success_pv INT64,
+  img_generate_success_pv INT64,
+  text2img_generate_start_pv INT64,
+  text2img_generate_success_pv INT64,
+  referencetovideo_generate_start_pv INT64,
+  referencetovideo_generate_success_pv INT64
+)
+PARTITION BY event_date
+CLUSTER BY user_pseudo_id
+OPTIONS (
+  description = 'Collart Web 用户×日事件行为宽表：ads_dim_metric_rule 驱动'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartweb.ads_oper_user_event_metric_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.ads_collartweb.ads_oper_user_event_metric_di`
+(
+  package_name,
+  app_name,
+  event_date,
+  user_pseudo_id,
+  video_generate_success_pv,
+  video_generate_start_pv,
+  page_view_pv,
+  session_start_pv,
+  first_visit_pv,
+  user_engagement_pv,
+  generate_start_pv,
+  generate_success_pv,
+  framestransition_video_generate_start_pv,
+  explore_page_show_pv,
+  motioncontrol_video_generate_start_pv,
+  text2video_video_generate_start_pv,
+  explore_card_click_pv,
+  explore_content_click_pv,
+  explore_content_generate_click_pv,
+  feature_show_pv,
+  photo_add_pv,
+  photo_add_success_pv,
+  generate_click_pv,
+  framestransition_video_generate_success_pv,
+  login_show_pv,
+  login_account_choose_pv,
+  motioncontrol_video_generate_success_pv,
+  text2video_video_generate_success_pv,
+  login_success_pv,
+  vip_show_pv,
+  vip_subscribe_pv,
+  vip_subscribe_succeed_pv,
+  generate_save_pv,
+  valid_user_pv,
+  img2video_generate_start_pv,
+  img2video_generate_success_pv,
+  img2img_generate_start_pv,
+  img_generate_start_pv,
+  img2img_generate_success_pv,
+  img_generate_success_pv,
+  text2img_generate_start_pv,
+  text2img_generate_success_pv,
+  referencetovideo_generate_start_pv,
+  referencetovideo_generate_success_pv
+)
+WITH act AS (
+  SELECT event_date, user_pseudo_id
+  FROM `aidata2025.ads_collartweb.ads_oper_user_active_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND user_pseudo_id IS NOT NULL
+    AND is_active
+),
+
+evt AS (
+  SELECT
+    e.event_date,
+    e.user_pseudo_id,
+    e.event_name,
+    e.web_params_info.task_id AS task_id,
+    LOWER(e.web_params_info.service_type) AS service_type
+  FROM `aidata2025.dm.dm_collart_web_user_event_di` AS e
+  INNER JOIN act AS a
+    USING (event_date, user_pseudo_id)
+  WHERE e.event_date BETWEEN from_date AND to_date
+    AND e.package_name = 'collart_web'
+    AND (e.event_name IN ('ai_result_download', 'ai_service_start', 'ai_service_success', 'explore_card_click', 'explore_content_click', 'explore_content_generate_click', 'explore_page_show', 'first_visit', 'img2img_show', 'img2video_show', 'login_account_choose', 'login_account_success', 'login_show', 'motionSync_show', 'page_view', 'photo_add', 'photo_add_success', 'referenceToVideo_show', 'session_start', 'startEndFrame_show', 'text2img_show', 'text2video_show', 'user_engagement', 'vip_show', 'vip_subscribe', 'vip_subscribe_succeed') OR e.event_name like '%generate_click%')
+)
+
+SELECT
+  'collart_web' AS package_name,
+  'collart_web' AS app_name,
+  event_date,
+  user_pseudo_id,
+  COUNTIF(event_name = 'ai_service_success' AND service_type in( 'text2video', 'startendframe', 'img2video', 'motionsync', 'referencetovideo')) AS video_generate_success_pv,  -- 视频生成·成功
+  COUNTIF(event_name = 'ai_service_start' AND service_type in( 'text2video', 'startendframe', 'img2video', 'motionsync', 'referencetovideo')) AS video_generate_start_pv,  -- 视频生成·开始
+  COUNTIF(event_name = 'page_view') AS page_view_pv,  -- 页面浏览
+  COUNTIF(event_name = 'session_start') AS session_start_pv,  -- 会话开始
+  COUNTIF(event_name = 'first_visit') AS first_visit_pv,  -- 首次访问
+  COUNTIF(event_name = 'user_engagement') AS user_engagement_pv,  -- 用户互动
+  COUNTIF(event_name = 'ai_service_start') AS generate_start_pv,  -- AI 服务开始
+  COUNTIF(event_name = 'ai_service_success') AS generate_success_pv,  -- AI 服务成功
+  COUNTIF(event_name = 'ai_service_start' AND service_type = 'startendframe') AS framestransition_video_generate_start_pv,  -- FramesTransition 视频生成·开始
+  COUNTIF(event_name = 'explore_page_show') AS explore_page_show_pv,  -- Explore 页曝光
+  COUNTIF(event_name = 'ai_service_start' AND service_type = 'motionsync') AS motioncontrol_video_generate_start_pv,  -- MotionControl 视频生成·开始
+  COUNTIF(event_name = 'ai_service_start' AND service_type = 'text2video') AS text2video_video_generate_start_pv,  -- AItext2video 视频生成·开始
+  COUNTIF(event_name = 'explore_card_click') AS explore_card_click_pv,  -- Explore 卡片点击
+  COUNTIF(event_name = 'explore_content_click') AS explore_content_click_pv,  -- Explore 内容点击
+  COUNTIF(event_name = 'explore_content_generate_click') AS explore_content_generate_click_pv,  -- Explore 内容生成点击
+  COUNTIF(event_name in ('img2video_show', 'text2video_show', 'referenceToVideo_show', 'startEndFrame_show', 'motionSync_show', 'img2img_show', 'text2img_show')) AS feature_show_pv,  -- 功能位曝光
+  COUNTIF(event_name = 'photo_add') AS photo_add_pv,  -- 加图
+  COUNTIF(event_name = 'photo_add_success') AS photo_add_success_pv,  -- 加图成功
+  COUNTIF(event_name like '%generate_click%') AS generate_click_pv,  -- 生成点击
+  COUNTIF(event_name = 'ai_service_success' AND service_type = 'startendframe') AS framestransition_video_generate_success_pv,  -- FramesTransition 视频生成·成功
+  COUNTIF(event_name = 'login_show') AS login_show_pv,  -- 登录曝光
+  COUNTIF(event_name = 'login_account_choose') AS login_account_choose_pv,  -- 登录账号选择
+  COUNTIF(event_name = 'ai_service_success' AND service_type = 'motionsync') AS motioncontrol_video_generate_success_pv,  -- MotionControl 视频生成·成功
+  COUNTIF(event_name = 'ai_service_success' AND service_type = 'text2video') AS text2video_video_generate_success_pv,  -- AItext2video 视频生成·成功
+  COUNTIF(event_name = 'login_account_success') AS login_success_pv,  -- 登录成功
+  COUNTIF(event_name = 'vip_show') AS vip_show_pv,  -- VIP 页曝光
+  COUNTIF(event_name = 'vip_subscribe') AS vip_subscribe_pv,  -- VIP 订阅点击
+  COUNTIF(event_name = 'vip_subscribe_succeed') AS vip_subscribe_succeed_pv,  -- VIP 订阅成功
+  COUNTIF(event_name = 'ai_result_download') AS generate_save_pv,  -- 结果下载/保存
+  IF(COUNTIF(event_name IN ('explore_content_click', 'photo_add', 'login_account_choose') OR event_name LIKE '%generate_click%') > 0, 1, 0) AS valid_user_pv,  -- 有效行为用户(OR)
+  COUNTIF(event_name = 'ai_service_start' AND service_type = 'img2video') AS img2video_generate_start_pv,  -- 图生视频 生成开始
+  COUNTIF(event_name = 'ai_service_success' AND service_type = 'img2video') AS img2video_generate_success_pv,  -- 图生视频 生成成功
+  COUNTIF(event_name = 'ai_service_start' AND service_type = 'img2img') AS img2img_generate_start_pv,  -- 图生图·生成开始
+  COUNTIF(event_name = 'ai_service_start' AND service_type in( 'img2img','text2img','texttoimage')) AS img_generate_start_pv,  -- 图片生成·生成开始
+  COUNTIF(event_name = 'ai_service_success' AND service_type = 'img2img') AS img2img_generate_success_pv,  -- 图生图·生成成功
+  COUNTIF(event_name = 'ai_service_success' AND service_type in( 'img2img','text2img','texttoimage')) AS img_generate_success_pv,  -- 图片生成·生成成功
+  COUNTIF(event_name = 'ai_service_start' AND service_type in ('text2img','texttoimage')) AS text2img_generate_start_pv,  -- 文生图·开始
+  COUNTIF(event_name = 'ai_service_success' AND service_type in ('text2img','texttoimage')) AS text2img_generate_success_pv,  -- 文生图·成功
+  COUNTIF(event_name = 'ai_service_start' AND service_type = 'referencetovideo') AS referencetovideo_generate_start_pv,  -- referencetovideo 生成开始
+  COUNTIF(event_name = 'ai_service_success' AND service_type = 'referencetovideo') AS referencetovideo_generate_success_pv  -- referencetovideo 生成成功
+FROM evt
+GROUP BY event_date, user_pseudo_id;
+
+COMMIT TRANSACTION;

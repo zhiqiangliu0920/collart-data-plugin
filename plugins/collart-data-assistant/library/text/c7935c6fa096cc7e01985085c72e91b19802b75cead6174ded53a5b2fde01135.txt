@@ -1,0 +1,62 @@
+config {
+  type: "operations",
+  name: "ads_collartfashion_oper_event_metric_country_di",
+  schema: "ads_collartfashion",
+  dependencies: ["ads_collartfashion_oper_event_metric_attr_di"]
+}
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartfashion.ads_oper_event_metric_country_di`
+(
+  package_name STRING,
+  app_name STRING,
+  event_date DATE,
+  country STRING,
+  welcome_show STRUCT<uv INT64, pv INT64>,
+  page_view STRUCT<uv INT64, pv INT64>,
+  inspiration_template_show STRUCT<uv INT64, pv INT64>,
+  generator_show STRUCT<uv INT64, pv INT64>,
+  video_generate_click STRUCT<uv INT64, pv INT64>,
+  generate_start STRUCT<uv INT64, pv INT64>,
+  generate_success STRUCT<uv INT64, pv INT64>,
+  ai_execute_start STRUCT<uv INT64, pv INT64>,
+  ai_execute_success STRUCT<uv INT64, pv INT64>,
+  fashion_ai_service_start STRUCT<uv INT64, pv INT64>,
+  fashion_ai_service_success STRUCT<uv INT64, pv INT64>,
+  vip_subscribe_succeed STRUCT<uv INT64, pv INT64>
+)
+PARTITION BY event_date CLUSTER BY country
+OPTIONS(description='ads_collartfashion 日×国家事件指标：ads_dim_metric_rule 驱动');
+BEGIN TRANSACTION;
+DELETE FROM `aidata2025.ads_collartfashion.ads_oper_event_metric_country_di` WHERE event_date BETWEEN from_date AND to_date;
+INSERT INTO `aidata2025.ads_collartfashion.ads_oper_event_metric_country_di`
+(package_name, app_name, event_date, country,
+  welcome_show,
+  page_view,
+  inspiration_template_show,
+  generator_show,
+  video_generate_click,
+  generate_start,
+  generate_success,
+  ai_execute_start,
+  ai_execute_success,
+  fashion_ai_service_start,
+  fashion_ai_service_success,
+  vip_subscribe_succeed)
+SELECT 'collart_fashion' AS package_name, 'collart_fashion' AS app_name, event_date, country,
+  STRUCT(COALESCE(SUM(welcome_show.uv),0), COALESCE(SUM(welcome_show.pv),0)) AS welcome_show,  -- 欢迎页曝光
+  STRUCT(COALESCE(SUM(page_view.uv),0), COALESCE(SUM(page_view.pv),0)) AS page_view,  -- 页面浏览
+  STRUCT(COALESCE(SUM(inspiration_template_show.uv),0), COALESCE(SUM(inspiration_template_show.pv),0)) AS inspiration_template_show,  -- 灵感模板曝光
+  STRUCT(COALESCE(SUM(generator_show.uv),0), COALESCE(SUM(generator_show.pv),0)) AS generator_show,  -- 生成器曝光
+  STRUCT(COALESCE(SUM(video_generate_click.uv),0), COALESCE(SUM(video_generate_click.pv),0)) AS video_generate_click,  -- 视频生成点击
+  STRUCT(COALESCE(SUM(generate_start.uv),0), COALESCE(SUM(generate_start.pv),0)) AS generate_start,  -- AI 服务开始
+  STRUCT(COALESCE(SUM(generate_success.uv),0), COALESCE(SUM(generate_success.pv),0)) AS generate_success,  -- AI 服务成功
+  STRUCT(COALESCE(SUM(ai_execute_start.uv),0), COALESCE(SUM(ai_execute_start.pv),0)) AS ai_execute_start,  -- AI 执行开始
+  STRUCT(COALESCE(SUM(ai_execute_success.uv),0), COALESCE(SUM(ai_execute_success.pv),0)) AS ai_execute_success,  -- AI 执行成功
+  STRUCT(COALESCE(SUM(fashion_ai_service_start.uv),0), COALESCE(SUM(fashion_ai_service_start.pv),0)) AS fashion_ai_service_start,  -- Fashion 视频服务开始
+  STRUCT(COALESCE(SUM(fashion_ai_service_success.uv),0), COALESCE(SUM(fashion_ai_service_success.pv),0)) AS fashion_ai_service_success,  -- Fashion 视频服务成功
+  STRUCT(COALESCE(SUM(vip_subscribe_succeed.uv),0), COALESCE(SUM(vip_subscribe_succeed.pv),0)) AS vip_subscribe_succeed  -- VIP 订阅成功
+FROM `aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di`
+WHERE event_date BETWEEN from_date AND to_date AND country IS NOT NULL
+GROUP BY event_date, country;
+COMMIT TRANSACTION;

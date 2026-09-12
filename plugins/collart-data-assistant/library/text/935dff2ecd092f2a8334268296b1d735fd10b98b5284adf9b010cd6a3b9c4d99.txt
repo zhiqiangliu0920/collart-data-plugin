@@ -1,0 +1,172 @@
+# -*- coding: utf-8 -*-
+"""
+Collart Android DAU 平台期诊断
+数据时间: 2026-04-14 ~ 2026-05-13 (30天)
+"""
+import os
+os.environ['PYTHONIOENCODING'] = 'utf-8'
+
+from google.cloud import bigquery
+from google.oauth2 import service_account
+
+KEY_PATH = "knowledge/service-accounts/aidata2025.json"
+credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
+client = bigquery.Client(project="aidata2025", credentials=credentials)
+
+# 新用户质量分国家/渠道拆分
+print("=" * 60)
+print("查询4：新用户获取量 vs D1 留存 - 按国家TOP10")
+print("=" * 60)
+
+query4 = """
+WITH new_users AS (
+  SELECT
+    event_date AS install_date,
+    user_pseudo_id,
+    geo.country AS country,
+    traffic_source.source AS channel
+  FROM `aidata2025.dwd.dwd_oper_user_collart_di`
+  WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY)
+    AND event_date < DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+    AND is_new
+),
+d1_active AS (
+  SELECT DISTINCT
+    DATE_SUB(event_date, INTERVAL 1 DAY) AS install_date,
+    user_pseudo_id
+  FROM `aidata2025.dwd.dwd_oper_user_collart_di`
+  WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 13 DAY)
+    AND event_date < CURRENT_DATE()
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+)
+SELECT
+  n.country,
+  COUNT(DISTINCT n.user_pseudo_id) AS new_users,
+  COUNT(DISTINCT d1.user_pseudo_id) AS d1_returned,
+  ROUND(COUNT(DISTINCT d1.user_pseudo_id) * 100.0 / COUNT(DISTINCT n.user_pseudo_id), 1) AS d1_retention_pct
+FROM new_users n
+LEFT JOIN d1_active d1 ON n.install_date = d1.install_date AND n.user_pseudo_id = d1.user_pseudo_id
+GROUP BY n.country
+HAVING COUNT(DISTINCT n.user_pseudo_id) >= 500
+ORDER BY new_users DESC
+LIMIT 15
+"""
+
+try:
+    rows = list(client.query(query4).result())
+    print("{:<20} {:>10} {:>10} {:>10}".format("国家", "新增用户", "D1回访", "D1留存%"))
+    print("-" * 55)
+    for row in rows:
+        print("{:<20} {:>10,} {:>10,} {:>10.1f}".format(
+            row.country, row.new_users, row.d1_returned, row.d1_retention_pct))
+except Exception as e:
+    print("查询4失败: {}".format(e))
+
+# 留存曲线 D1->D7->D30
+print()
+print("=" * 60)
+print("查询5：留存曲线 (D1/D3/D7/D14/D30)")
+print("=" * 60)
+
+query5 = """
+WITH cohorts AS (
+  SELECT DISTINCT
+    event_date AS install_date,
+    user_pseudo_id
+  FROM `aidata2025.dwd.dwd_oper_user_collart_di`
+  WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 60 DAY)
+    AND event_date < DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+    AND is_new
+),
+retention AS (
+  SELECT
+    c.install_date,
+    DATE_DIFF(d.event_date, c.install_date, DAY) AS day_diff,
+    COUNT(DISTINCT d.user_pseudo_id) AS retained_users
+  FROM cohorts c
+  INNER JOIN `aidata2025.dwd.dwd_oper_user_collart_di` d
+    ON c.user_pseudo_id = d.user_pseudo_id
+  WHERE d.event_date >= c.install_date
+    AND d.event_date <= DATE_ADD(c.install_date, INTERVAL 30 DAY)
+    AND d.package_name = 'free.ai.photo.generator.collart.ai'
+  GROUP BY c.install_date, day_diff
+),
+cohort_size AS (
+  SELECT install_date, COUNT(*) AS total_users
+  FROM cohorts
+  GROUP BY install_date
+)
+SELECT
+  r.day_diff,
+  ROUND(AVG(r.retained_users * 100.0 / cs.total_users), 1) AS avg_retention_pct,
+  ROUND(AVG(r.retained_users), 0) AS avg_retained
+FROM retention r
+JOIN cohort_size cs ON r.install_date = cs.install_date
+GROUP BY r.day_diff
+HAVING r.day_diff IN (0, 1, 3, 7, 14, 30)
+ORDER BY r.day_diff
+"""
+
+try:
+    rows = list(client.query(query5).result())
+    print("{:<8} {:>12} {:>12}".format("天数", "留存率%", "平均留存人数"))
+    print("-" * 35)
+    for row in rows:
+        day_label = {0: "D0(首日)", 1: "D1", 3: "D3", 7: "D7", 14: "D14", 30: "D30"}.get(row.day_diff, "D" + str(row.day_diff))
+        print("{:<8} {:>12.1f} {:>12,.0f}".format(day_label, row.avg_retention_pct, row.avg_retained))
+except Exception as e:
+    print("查询5失败: {}".format(e))
+
+# 渠道拆分
+print()
+print("=" * 60)
+print("查询6：渠道获取量 vs D1 留存")
+print("=" * 60)
+
+query6 = """
+WITH new_users AS (
+  SELECT
+    event_date AS install_date,
+    user_pseudo_id,
+    traffic_source.source AS channel
+  FROM `aidata2025.dwd.dwd_oper_user_collart_di`
+  WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY)
+    AND event_date < DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+    AND is_new
+),
+d1_active AS (
+  SELECT DISTINCT
+    DATE_SUB(event_date, INTERVAL 1 DAY) AS install_date,
+    user_pseudo_id
+  FROM `aidata2025.dwd.dwd_oper_user_collart_di`
+  WHERE event_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 13 DAY)
+    AND event_date < CURRENT_DATE()
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+)
+SELECT
+  COALESCE(NULLIF(n.channel, ''), 'organic/direct') AS channel,
+  COUNT(DISTINCT n.user_pseudo_id) AS new_users,
+  COUNT(DISTINCT d1.user_pseudo_id) AS d1_returned,
+  ROUND(COUNT(DISTINCT d1.user_pseudo_id) * 100.0 / COUNT(DISTINCT n.user_pseudo_id), 1) AS d1_retention_pct
+FROM new_users n
+LEFT JOIN d1_active d1 ON n.install_date = d1.install_date AND n.user_pseudo_id = d1.user_pseudo_id
+GROUP BY n.channel
+HAVING COUNT(DISTINCT n.user_pseudo_id) >= 200
+ORDER BY new_users DESC
+LIMIT 10
+"""
+
+try:
+    rows = list(client.query(query6).result())
+    print("{:<25} {:>10} {:>10} {:>10}".format("渠道", "新增用户", "D1回访", "D1留存%"))
+    print("-" * 60)
+    for row in rows:
+        print("{:<25} {:>10,} {:>10,} {:>10.1f}".format(
+            row.channel, row.new_users, row.d1_returned, row.d1_retention_pct))
+except Exception as e:
+    print("查询6失败: {}".format(e))
+
+print("\n=== 诊断脚本完成 ===")

@@ -1,0 +1,157 @@
+# Feishu 表知识库生成稿
+
+生成时间：2026-05-21T01:15:16+08:00
+
+本目录由飞书 Bitable「数据知识库」全量生成，用于给 agent 选表、理解字段和辅助写 SQL。正文采用 canonical 单表文档，项目目录仅保留索引，避免多项目表重复维护。
+
+## 数据覆盖
+
+| 指标 | 数量 |
+|---|---:|
+| 表信息原始记录 | 112 |
+| 字段明细原始记录 | 1756 |
+| 清洗后表信息唯一表 | 96 |
+| 清洗后字段明细唯一表 | 82 |
+| 生成表文档 | 98 |
+| 表名匹配（含空字段行） | 80 |
+| 有效字段完整匹配 | 79 |
+| 仅有表信息或字段为空 | 17 |
+| 仅有字段明细 | 2 |
+
+## 项目索引
+
+| 项目目录 | 项目名称 | 表数 | 索引 |
+|---|---|---:|---|
+| `1company` | 公司 | 14 | [打开](1company/README.md) |
+| `collart_android` | collart android | 24 | [打开](collart_android/README.md) |
+| `collart_web` | collart web | 11 | [打开](collart_web/README.md) |
+| `ai` | ai | 19 | [打开](ai/README.md) |
+| `collart_ios` | collart ios | 9 | [打开](collart_ios/README.md) |
+| `android` | android | 6 | [打开](android/README.md) |
+| `ios` | ios | 7 | [打开](ios/README.md) |
+| `hangzhou` | 杭州 | 2 | [打开](hangzhou/README.md) |
+| `unassigned` | unassigned | 14 | [打开](unassigned/README.md) |
+
+## 分层统计
+
+| 分层 | 表数 |
+|---|---:|
+| ADS | 2 |
+| ADS应用层 | 38 |
+| DIM | 1 |
+| DIM层 | 13 |
+| DWD明细层 | 18 |
+| DWS汇总层 | 16 |
+| ODS | 3 |
+| ODS原始层 | 7 |
+
+## 状态统计
+
+| 状态 | 表数 |
+|---|---:|
+| `complete/available` | 79 |
+| `table_info_missing/available` | 2 |
+| `table_info_only/missing` | 17 |
+
+## 全部表索引
+
+| 表名 | 中文名 | 项目 | 分层 | 优先级 | 字段数 | 状态 | 文档 |
+|---|---|---|---|---|---:|---|---|
+| `aidata2025.ads.ads_ad_sub_revenue_1h` | ai组产品分国家收入数据报告 | ai | ADS应用层 | 高 | 10 | `complete/available` | [打开](tables/aidata2025.ads.ads_ad_sub_revenue_1h.md) |
+| `aidata2025.ads.ads_aidata_retain_di` | ai组基础数据表 | ai | ADS应用层 | 低 | 38 | `complete/available` | [打开](tables/aidata2025.ads.ads_aidata_retain_di.md) |
+| `aidata2025.ads.ads_collart_delivery_fb_1d` | collart fb、tt-adjust投放看板底表 | collart android | ADS应用层 | 低 | 20 | `complete/available` | [打开](tables/aidata2025.ads.ads_collart_delivery_fb_1d.md) |
+| `aidata2025.ads.ads_collart_delivery_kol_1d` | - | unassigned | ADS | - | 0 | `table_info_only/missing` | [打开](tables/aidata2025.ads.ads_collart_delivery_kol_1d.md) |
+| `aidata2025.ads.ads_collart_delivery_revenue_1d` | collart ga、asa投放看板 | collart android | ADS应用层 | 低 | 28 | `complete/available` | [打开](tables/aidata2025.ads.ads_collart_delivery_revenue_1d.md) |
+| `aidata2025.ads.ads_hangzhou_revenue_country_1d` | 公司分产品、国家、分来源收入 | 公司 | ADS应用层 | 低 | 10 | `complete/available` | [打开](tables/aidata2025.ads.ads_hangzhou_revenue_country_1d.md) |
+| `aidata2025.ads.ads_template_recommend_foru_1d` | collart android模板推荐（FORU) | collart android | ADS应用层 | 低 | 10 | `complete/available` | [打开](tables/aidata2025.ads.ads_template_recommend_foru_1d.md) |
+| `aidata2025.ads.ads_template_recommend_trending_1d` | collart android模板推荐（Trending) | collart android | ADS应用层 | 低 | 6 | `complete/available` | [打开](tables/aidata2025.ads.ads_template_recommend_trending_1d.md) |
+| `aidata2025.ads.ads_user_subscribe_daily_1d` | 分产品分国家分渠道分商品订阅收入 | android | ADS应用层 | 中 | 17 | `complete/available` | [打开](tables/aidata2025.ads.ads_user_subscribe_daily_1d.md) |
+| `aidata2025.ads.ads_user_subscribe_lifecycle_1d` | 安卓侧续订率计算表 | android | ADS应用层 | 中 | 22 | `complete/available` | [打开](tables/aidata2025.ads.ads_user_subscribe_lifecycle_1d.md) |
+| `aidata2025.ads_collart.ads_high_value_user_Info` | Collart iOS高价值用户表 | collart ios | ADS应用层 | 低 | 0 | `table_info_only/missing` | [打开](tables/aidata2025.ads_collart.ads_high_value_user_Info.md) |
+| `aidata2025.ads_collart.ads_high_value_user_android_Info` | Collart android高价值用户表 | collart android | ADS应用层 | 中 | 0 | `table_info_only/missing` | [打开](tables/aidata2025.ads_collart.ads_high_value_user_android_Info.md) |
+| `aidata2025.ads_collart.ads_high_value_user_prompt_info` | Collart iOS高价值用户擦边类型 | collart ios | ADS应用层 | 低 | 0 | `table_info_only/missing` | [打开](tables/aidata2025.ads_collart.ads_high_value_user_prompt_info.md) |
+| `aidata2025.ads_collart.ads_high_value_user_web_info` | Collart web高价值用户表 | collart web | ADS应用层 | 中 | 23 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_high_value_user_web_info.md) |
+| `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di` | Collart ios/android基础指标汇总表 | collart android | ADS应用层 | 高 | 27 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_basic_indicator_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di` | collart web基础指标汇总表 | collart web | ADS应用层 | 高 | 34 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di.md) |
+| `aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di` | collart android指标表 | collart android | ADS应用层 | 高 | 71 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di.md) |
+| `aidata2025.ads_collart.ads_oper_basic_metric_collart_web_di` | collart web分国家指标表 | collart web | ADS应用层 | 高 | 58 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_web_di.md) |
+| `aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di` | collart android分国家指标表 | collart android | ADS应用层 | 高 | 71 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di.md) |
+| `aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di` | collart web指标表 | collart web | ADS应用层 | 高 | 60 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di.md) |
+| `aidata2025.ads_collart.ads_oper_event_param_summary_collart_di` | Collart ios/android事件&参数 uv/pv表 | collart android | ADS应用层 | 高 | 12 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_event_param_summary_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_event_summary_collart_di` | Collart ios/android事件uv/pv表 | collart android | ADS应用层 | 高 | 11 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_event_summary_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_tempalte_data_android` | collart android模板数据表 | collart android | ADS应用层 | 中 | 6 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_tempalte_data_android.md) |
+| `aidata2025.ads_collart.ads_oper_tempalte_data_android BigQuery – AIDATA – Google Cloud 控制台` | collart android模板数据表 | collart android | ADS应用层 | 中 | 0 | `table_info_only/missing` | [打开](tables/aidata2025.ads_collart.ads_oper_tempalte_data_android_BigQuery_%E2%80%93_AIDATA_%E2%80%93_Google_Cloud_%E6%8E%A7%E5%88%B6%E5%8F%B0.md) |
+| `aidata2025.ads_collart.ads_oper_user_event_collart_di` | Collart ios/android用户粒度事件汇总表 | collart android | ADS应用层 | 高 | 29 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_user_event_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_user_event_param_collart_di` | Collart ios/android用户粒度事件参数汇总表 | collart android | ADS应用层 | 高 | 31 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_user_event_param_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_user_new_collart_di` | Collart ios/android每日新增用户id表 | collart android | ADS应用层 | 高 | 44 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_user_new_collart_di.md) |
+| `aidata2025.ads_collart.ads_oper_user_new_collartweb_di` | Collart web每日新增用户id表 | collart web | ADS应用层 | 高 | 37 | `complete/available` | [打开](tables/aidata2025.ads_collart.ads_oper_user_new_collartweb_di.md) |
+| `aidata2025.ai_service.ai_cost_data` | 分产品服务器、ai服务成本 | ai | ADS应用层 | 中 | 5 | `complete/available` | [打开](tables/aidata2025.ai_service.ai_cost_data.md) |
+| `aidata2025.ai_service.ai_service_data` | 用户ai服务使用明细表(客户端） | collart ios | ADS应用层 | - | 0 | `table_info_only/missing` | [打开](tables/aidata2025.ai_service.ai_service_data.md) |
+| `aidata2025.ai_service.ai_service_detail` | 用户ai服务调用次数以及消耗表 | collart ios | ADS应用层 | - | 0 | `table_info_only/missing` | [打开](tables/aidata2025.ai_service.ai_service_detail.md) |
+| `aidata2025.ai_service.ai_service_record_info_1d` | 用户ai服务使用明细表(服务端） | ai | DWD明细层 | 高 | 11 | `complete/available` | [打开](tables/aidata2025.ai_service.ai_service_record_info_1d.md) |
+| `aidata2025.ai_service.collart_core_event_bi` | Collart ios/android ai服务事件的uv、pv | collart ios | ADS应用层 | 中 | 12 | `complete/available` | [打开](tables/aidata2025.ai_service.collart_core_event_bi.md) |
+| `aidata2025.dim.collart_campaign_name_modify_copy` | 投放名称维护表 | ai | DIM层 | 低 | 3 | `complete/available` | [打开](tables/aidata2025.dim.collart_campaign_name_modify_copy.md) |
+| `aidata2025.dim.collart_product_price_copy` | 产品商品价格表 | collart ios, collart android, collart web | DIM层 | 低 | 3 | `complete/available` | [打开](tables/aidata2025.dim.collart_product_price_copy.md) |
+| `aidata2025.dim.dim_ai_service_cost_unit_copy` | ai服务单位成本表 | collart android | DIM层 | 中 | 5 | `complete/available` | [打开](tables/aidata2025.dim.dim_ai_service_cost_unit_copy.md) |
+| `aidata2025.dim.dim_ai_service_model_info_copy` | ai服务模型信息表 | ai | DIM层 | 中 | 7 | `complete/available` | [打开](tables/aidata2025.dim.dim_ai_service_model_info_copy.md) |
+| `aidata2025.dim.dim_collart_android_core_event_copy` | collart_android 核心事件映射表 | collart android | DIM层 | 中 | 6 | `complete/available` | [打开](tables/aidata2025.dim.dim_collart_android_core_event_copy.md) |
+| `aidata2025.dim.dim_collart_asa_keyword_info` | ASA投放campagin id与name映射表 | ai | DIM层 | 低 | 7 | `complete/available` | [打开](tables/aidata2025.dim.dim_collart_asa_keyword_info.md) |
+| `aidata2025.dim.dim_collart_web_core_event_copy` | collart_web 核心事件映射表 | collart web | DIM层 | 中 | 0 | `table_info_only/missing` | [打开](tables/aidata2025.dim.dim_collart_web_core_event_copy.md) |
+| `aidata2025.dim.dim_country_info` | 国家名称表 | 公司 | DIM层 | 高 | 6 | `complete/available` | [打开](tables/aidata2025.dim.dim_country_info.md) |
+| `aidata2025.dim.dim_country_rank_info` | TOP国家分类表 | ai | DIM层 | 中 | 0 | `table_info_only/missing` | [打开](tables/aidata2025.dim.dim_country_rank_info.md) |
+| `aidata2025.dim.dim_module_template_info_android` | collart android模块内模板id表 | collart android | DIM层 | 中 | 11 | `complete/available` | [打开](tables/aidata2025.dim.dim_module_template_info_android.md) |
+| `aidata2025.dim.dim_product_info` | - | unassigned | DIM | - | 7 | `table_info_missing/available` | [打开](tables/aidata2025.dim.dim_product_info.md) |
+| `aidata2025.dim.dim_product_info_copy` | 产品名称表 | 公司 | DIM层 | 高 | 7 | `complete/available` | [打开](tables/aidata2025.dim.dim_product_info_copy.md) |
+| `aidata2025.dim.dim_template_tag` | 模板标签表 | ai | ODS原始层 | 低 | 14 | `complete/available` | [打开](tables/aidata2025.dim.dim_template_tag.md) |
+| `aidata2025.dim.exchange_rate_days` | 国家汇率转换表 | 公司 | DIM层 | 低 | 3 | `complete/available` | [打开](tables/aidata2025.dim.exchange_rate_days.md) |
+| `aidata2025.dm.dm_user_profile_collart_df` | Collart 用户id映射 | collart android, collart web | DIM层 | 中 | 5 | `complete/available` | [打开](tables/aidata2025.dm.dm_user_profile_collart_df.md) |
+| `aidata2025.dwd.dwd_apple_user_subscribtion_di` | iOS账单粒度 账单表 | android | DWD明细层 | 中 | 18 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_apple_user_subscribtion_di.md) |
+| `aidata2025.dwd.dwd_cdct_delivery_cost_di` | 全公司分产品分campaign投放花费明细数据 | 杭州 | DWD明细层 | 高 | 18 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_cdct_delivery_cost_di.md) |
+| `aidata2025.dwd.dwd_cdct_woolong_request_di` | woolong表 | 公司 | DWD明细层 | - | 20 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_cdct_woolong_request_di.md) |
+| `aidata2025.dwd.dwd_id_convert_di` | id映射表 | ai | DWD明细层 | 中 | 8 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_id_convert_di.md) |
+| `aidata2025.dwd.dwd_oper_delivery_adjust_user_di` | adjust数据归因明细表-ai产品 | ai | DWD明细层 | 低 | 23 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_oper_delivery_adjust_user_di.md) |
+| `aidata2025.dwd.dwd_oper_delivery_collart_di` | adjust数据归因明细表-collart | collart ios, collart android | DWD明细层 | 低 | 0 | `table_info_only/missing` | [打开](tables/aidata2025.dwd.dwd_oper_delivery_collart_di.md) |
+| `aidata2025.dwd.dwd_oper_sub_order_revenue_df` | 安卓账单粒度 订阅收入表 | android | DWD明细层 | 高 | 30 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_oper_sub_order_revenue_df.md) |
+| `aidata2025.dwd.dwd_oper_user_aitask_di` | 分产品、用户ai服务点数以及成本 | unassigned | DWD明细层 | - | 0 | `table_info_only/missing` | [打开](tables/aidata2025.dwd.dwd_oper_user_aitask_di.md) |
+| `aidata2025.dwd.dwd_oper_user_basic_di` | ai组每日活跃用户id表 | ai | DWD明细层 | 低 | 29 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_oper_user_basic_di.md) |
+| `aidata2025.dwd.dwd_oper_user_collart_di` | Collart ios/android每日活跃用户id表 | collart android | DWD明细层 | 高 | 28 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_oper_user_collart_di.md) |
+| `aidata2025.dwd.dwd_oper_user_collartweb_di` | Collart web每日活跃用户id表 | collart web | ADS应用层 | 高 | 19 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_oper_user_collartweb_di.md) |
+| `aidata2025.dwd.dwd_oper_user_event_di` | ai组原始埋点表（轻汇总） | ai | DWD明细层 | 低 | 105 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_oper_user_event_di.md) |
+| `aidata2025.dwd.dwd_oper_user_order_event_di` | 客户端统计用户粒度订单表 | android | DWD明细层 | 中 | 8 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_oper_user_order_event_di.md) |
+| `aidata2025.dwd.dwd_oper_user_properties_di` | ai组用户属性表 | ai | DWD明细层 | 高 | 6 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_oper_user_properties_di.md) |
+| `aidata2025.dwd.dwd_oper_user_transaction_di` | iOS账单粒度 账单表（原始表） | ios | DWD明细层 | 低 | 28 | `complete/available` | [打开](tables/aidata2025.dwd.dwd_oper_user_transaction_di.md) |
+| `aidata2025.dws.dws_id_convert_df` | id映射表（一个用户一行） | ai | DWS汇总层 | 中 | 8 | `complete/available` | [打开](tables/aidata2025.dws.dws_id_convert_df.md) |
+| `aidata2025.dws.dws_new_user_accumlate_subscribe_1d` | N日用户订阅表 | ai | DWS汇总层 | 低 | 96 | `complete/available` | [打开](tables/aidata2025.dws.dws_new_user_accumlate_subscribe_1d.md) |
+| `aidata2025.dws.dws_oper_asa_collart_1d` | asa投放平台数据（cam粒度） | 公司 | DWS汇总层 | - | 23 | `complete/available` | [打开](tables/aidata2025.dws.dws_oper_asa_collart_1d.md) |
+| `aidata2025.dws.dws_oper_asa_keyword_collart_1d` | asa投放平台数据（keyid映射） | 公司 | DWS汇总层 | - | 24 | `complete/available` | [打开](tables/aidata2025.dws.dws_oper_asa_keyword_collart_1d.md) |
+| `aidata2025.dws.dws_oper_basic_aidata_1d` | ai组 新增、活跃、留存基础数据汇总 | ai | DWS汇总层 | 低 | 13 | `complete/available` | [打开](tables/aidata2025.dws.dws_oper_basic_aidata_1d.md) |
+| `aidata2025.dws.dws_oper_delivery_collart_1d` | adjust跟踪数据（渠道、国家粒度）用处不大 | unassigned | DWS汇总层 | - | 8 | `complete/available` | [打开](tables/aidata2025.dws.dws_oper_delivery_collart_1d.md) |
+| `aidata2025.dws.dws_oper_delivery_user_collart_1d` | adjust数据归因 用户粒度汇总 | collart ios, collart android | DWS汇总层 | 低 | 8 | `complete/available` | [打开](tables/aidata2025.dws.dws_oper_delivery_user_collart_1d.md) |
+| `aidata2025.dws.dws_oper_fb_delivery_1d` | fb投放平台安装花费数据 | 公司 | DWS汇总层 | 中 | 10 | `complete/available` | [打开](tables/aidata2025.dws.dws_oper_fb_delivery_1d.md) |
+| `aidata2025.dws.dws_oper_newuser_lifecycle_1d` | 安卓用户粒度 每日收入表 | unassigned | DWS汇总层 | - | 0 | `table_info_only/missing` | [打开](tables/aidata2025.dws.dws_oper_newuser_lifecycle_1d.md) |
+| `aidata2025.dws.dws_oper_tiktok_ad_1d` | tt投放平台花费安装数据 | 公司 | DWS汇总层 | - | 9 | `complete/available` | [打开](tables/aidata2025.dws.dws_oper_tiktok_ad_1d.md) |
+| `aidata2025.dws.dws_oper_user_ad_di` | 客户端广告明细表 / 用户粒度广告收入表 | ai, ios | DWS汇总层 | - | 36 | `complete/available` | [打开](tables/aidata2025.dws.dws_oper_user_ad_di.md) |
+| `aidata2025.dws.dws_oper_user_ad_shotcut_1d` | shotcut广告埋点数据 | ai | DWS汇总层 | - | 34 | `complete/available` | [打开](tables/aidata2025.dws.dws_oper_user_ad_shotcut_1d.md) |
+| `aidata2025.dws.dws_oper_user_sub_revenue_df` | 安卓用户粒度 收入表 | unassigned | DWS汇总层 | - | 27 | `complete/available` | [打开](tables/aidata2025.dws.dws_oper_user_sub_revenue_df.md) |
+| `aidata2025.ods.ods_ai_request_info_new_1d` | 用户ai服务 输入输出明细表（提示词） | unassigned | ODS原始层 | - | 0 | `table_info_only/missing` | [打开](tables/aidata2025.ods.ods_ai_request_info_new_1d.md) |
+| `aidata2025.revenue.vip_event_data_ios` | 苹果商店收入与订阅事件报告清洗 | ios | ADS应用层 | - | 10 | `complete/available` | [打开](tables/aidata2025.revenue.vip_event_data_ios.md) |
+| `hzdw2024.ods.ai_base_record_store` | 用户id粒度 服务调用记录 | unassigned | ODS | - | 0 | `table_info_only/missing` | [打开](tables/hzdw2024.ods.ai_base_record_store.md) |
+| `hzdw2024.ods.ods_ai_record_info` | 用户id粒度 服务调用记录 | unassigned | ODS | - | 0 | `table_info_only/missing` | [打开](tables/hzdw2024.ods.ods_ai_record_info.md) |
+| `pubdata2025.ads.ads_atlasv_basic_data_daily_1h` | 公司分产品收入等基础数据 | 公司 | ADS应用层 | - | 23 | `complete/available` | [打开](tables/pubdata2025.ads.ads_atlasv_basic_data_daily_1h.md) |
+| `pubdata2025.ads.ads_atlasv_basic_data_daily_2024` | - | unassigned | ADS | - | 14 | `table_info_missing/available` | [打开](tables/pubdata2025.ads.ads_atlasv_basic_data_daily_2024.md) |
+| `pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h` | 公司分产品、分来源的收入与成本 | 公司 | ADS应用层 | - | 12 | `complete/available` | [打开](tables/pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h.md) |
+| `pubdata2025.ads.ads_atlasv_deliver_cost_daily` | 全公司分产品投放花费数据 | unassigned | ADS应用层 | - | 3 | `complete/available` | [打开](tables/pubdata2025.ads.ads_atlasv_deliver_cost_daily.md) |
+| `pubdata2025.ads.ads_cdct_service_cost_1d` | 分产品服务器成本 | unassigned | ADS应用层 | - | 11 | `complete/available` | [打开](tables/pubdata2025.ads.ads_cdct_service_cost_1d.md) |
+| `pubdata2025.ads.ads_data_report_1d` | 待定 | 杭州 | ADS应用层 | - | 11 | `complete/available` | [打开](tables/pubdata2025.ads.ads_data_report_1d.md) |
+| `pubdata2025.dwd.dwd_cdct_revenue_adplatform_di` | 广告平台明细汇总表 | 公司 | DWD明细层 | - | 16 | `complete/available` | [打开](tables/pubdata2025.dwd.dwd_cdct_revenue_adplatform_di.md) |
+| `pubdata2025.dwd.dwd_cdct_revenue_google_di` | google商店订单明细 | android | DWD明细层 | - | 24 | `complete/available` | [打开](tables/pubdata2025.dwd.dwd_cdct_revenue_google_di.md) |
+| `pubdata2025.dwd.dwd_cdct_revenue_stripe_di` | collart web收入表 | collart web | DWD明细层 | - | 23 | `complete/available` | [打开](tables/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md) |
+| `pubdata2025.dws.dws_cdct_cost_google_1h` | ga投放平台花费 | 公司 | DWS汇总层 | 中 | 16 | `complete/available` | [打开](tables/pubdata2025.dws.dws_cdct_cost_google_1h.md) |
+| `pubdata2025.dws.dws_cdct_log_ai_record_1d` | 分产品ai服务成本 | unassigned | DWS汇总层 | - | 0 | `table_info_only/missing` | [打开](tables/pubdata2025.dws.dws_cdct_log_ai_record_1d.md) |
+| `pubdata2025.dws.dws_cdct_revenue_country_1d` | 分产品、国家、广告平台的广告收入 | 公司 | DWS汇总层 | - | 14 | `complete/available` | [打开](tables/pubdata2025.dws.dws_cdct_revenue_country_1d.md) |
+| `pubdata2025.ods.ods_apple_sales_1d` | 苹果商店收入与订阅事件报告 | ios | ODS原始层 | - | 33 | `complete/available` | [打开](tables/pubdata2025.ods.ods_apple_sales_1d.md) |
+| `pubdata2025.ods.ods_apple_subscriber_1d` | 苹果商店收入与订阅事件报告3 | ios | ODS原始层 | - | 30 | `complete/available` | [打开](tables/pubdata2025.ods.ods_apple_subscriber_1d.md) |
+| `pubdata2025.ods.ods_apple_subscription_1d` | 苹果商店收入与订阅事件报告2 | ios | ODS原始层 | - | 36 | `complete/available` | [打开](tables/pubdata2025.ods.ods_apple_subscription_1d.md) |
+| `pubdata2025.ods.ods_apple_subscription_event_1d` | 苹果商店收入与订阅事件报告4 | ios | ODS原始层 | - | 32 | `complete/available` | [打开](tables/pubdata2025.ods.ods_apple_subscription_event_1d.md) |
+| `pubdata2025.ods.ods_woolong_subscription_1d` | - | unassigned | ODS | - | 17 | `complete/available` | [打开](tables/pubdata2025.ods.ods_woolong_subscription_1d.md) |
+| `storytemplate-10a27.analytics_232977577.events_*` | ai组原始埋点表 | collart ios, collart android, collart web | ODS原始层 | 中 | 0 | `table_info_only/missing` | [打开](tables/storytemplate-10a27.analytics_232977577.events.md) |

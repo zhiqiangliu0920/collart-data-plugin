@@ -1,0 +1,48 @@
+# 事件分析 SQL 模板库
+
+## 记录时间
+2026-03-16
+
+## 1. 查询事件参数列表
+
+**用途**：查看某个事件有哪些参数（key）
+
+`sql
+SELECT 
+  param.key AS param_key,
+  COUNT(*) AS event_count
+FROM storytemplate-10a27.analytics_232977577.events_*,
+UNNEST(event_params) AS param
+WHERE event_name = '事件名'
+  AND _TABLE_SUFFIX = FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+GROUP BY 1
+ORDER BY event_count DESC
+`
+
+## 2. 查询事件参数值分布
+
+**用途**：查看某个参数的值分布
+
+`sql
+SELECT 
+  param.value.string_value AS param_value,
+  COUNT(*) AS event_count
+FROM storytemplate-10a27.analytics_232977577.events_*,
+UNNEST(event_params) AS param
+WHERE event_name = '事件名'
+  AND param.key = '参数名'
+  AND _TABLE_SUFFIX = FORMAT_DATE('%Y%m%d', DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))
+GROUP BY 1
+ORDER BY event_count DESC
+LIMIT 100
+`
+
+## 3. 常用事件清单
+
+| 事件名 | 说明 | 关键参数 |
+|:---|:---|:---|
+| ai_service_start | AI服务开始 | task_id, service_type, credit_cost |
+
+---
+
+*用于快速查询事件参数和值分布*

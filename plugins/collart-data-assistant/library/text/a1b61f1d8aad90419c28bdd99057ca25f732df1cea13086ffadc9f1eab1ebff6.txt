@@ -1,0 +1,61 @@
+# Playbook：规则表 → 查热/冷事件指标
+
+何时用：业务要的漏斗列不在 `ads_oper_user_event_metric_di` / attr / country / daily；或要核对宽表口径。
+
+## 决策
+
+```
+要查的指标
+  ├─ 在规则表且 is_materialized=TRUE → 读宽表（UEM / attr / country / daily）
+  ├─ 在规则表且 is_enabled 但 is_materialized=FALSE → 冷指标，按规则扫 DM
+  │     Android 优先 CALL sp_query_event_metric_by_tag
+  ├─ 规则表没有 → 先在 Sheet 登记，再决定热/冷；临时探查才扫 events_*
+  └─ 宽表有列但和 Sheet 不一致 → 跑 collart-event-metric-sync，不要只改 SQLX
+```
+
+## 1. 读规则
+
+```sql
+SELECT metric_name, metric_chinese_name, event_name, event_params, agg_type,
+       is_enabled, is_materialized
+FROM `aidata2025.ads_collart.ads_dim_metric_rule`
+WHERE app_name = 'collart_android'  -- vidart_ios / collart_web / collart_fashion
+  AND metric_name = 'ai_tool_execute_start_pv';
+```
+
+读外表需 Drive scope。凭证默认 `aidata2025`。
+
+## 2. 热指标（宽表）
+
+- 用户×日：`ads_oper_user_event_metric_di.<metric_name>`
+- 渠道/新老：`ads_oper_event_metric_attr_di.<base>` → `.uv` / `.pv`
+- 国家 / 日报：country / daily 同名 STRUCT
+- `base` = `metric_name` 去掉 `_pv`
+- UEM 稀疏：无命中不出行；算渗透率分母用 active
+
+## 3. 冷指标（Android SP）
+
+```sql
+CALL `aidata2025.ads_collartandroid.sp_query_event_metric_by_tag`(
+  'ai_tool_execute_start_pv',
+  DATE '2026-08-26',
+  DATE '2026-08-26'
+);
+```
+
+单次最多 30 天；与 active `is_active` INNER JOIN，口径对齐热指标。  
+iOS / Web / Fashion **没有**对应过程。
+
+## 4. 冷指标 / 未物化：扫 DM
+
+Android/iOS 用 `params_info`，Web/Fashion 用 `web_params_info`。必须加日期分区。示例见 [query_metric_from_rule.sql](../sql_presets/query_metric_from_rule.sql)。
+
+## 5. 再下钻 GA4
+
+仅当 DM 没有该 `event_name` / 参数。遵守 `events_*` ≤30 天、`_TABLE_SUFFIX BETWEEN`、端过滤。见 collart-biz-analysis `raw-events.md`。
+
+## 6. 想变成热指标
+
+1. Sheet 设 `is_enabled=TRUE`、`is_materialized=TRUE`，表达式纯文本。
+2. 调用 skill `collart-event-metric-sync`（生成 SQLX + ALTER + Dataform push + 默认回补 14 天）。
+3. 不要只手改 SQLX。

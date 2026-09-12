@@ -1,0 +1,106 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h"
+table_cn_name: "公司分产品、分来源的收入与成本"
+metadata_status: "complete"
+field_status: "available"
+projects: ["公司"]
+project_dirs: ["1company"]
+warehouse_space: "pubdata"
+layer: "ADS应用层"
+subject: "收入成本主题"
+secondary_subject: "收入汇总"
+table_type: "汇总表"
+grain: ""
+primary_key: ""
+update_frequency: ""
+owner: "志强"
+priority: ""
+core_table: "否"
+query_cost: ""
+source_record_ids: ["recvh3C8YGutpU"]
+field_count: "12"
+---
+
+# 表名：pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h
+
+> 表中文名：公司分产品、分来源的收入与成本
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：公司；分层：ADS应用层；表类型：汇总表；主题：收入成本主题；二级主题：收入汇总。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | 公司分产品、分来源的收入与成本 |
+| 项目 | 公司 |
+| 数仓空间 | pubdata |
+| 分层 | ADS应用层 |
+| 主题 | 收入成本主题 |
+| 二级主题 | 收入汇总 |
+| 表类型 | 汇总表 |
+| 行粒度 | - |
+| 主键字段 | - |
+| 核心表 | 否 |
+| 更新频率 | - |
+| 维护人 | 志强 |
+| 使用优先级 | - |
+| 查询成本 | - |
+| 数据来源 | - |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_Date` | date | 时间 | 是 | 日期 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `apple_revenue` | float | 指标 | 是 | 来自苹果平台的收入 |
+| `google_revenue` | float | 指标 | 是 | 来自谷歌平台的收入 |
+| `meta_revenue` | float | 指标 | 是 | 来自meta平台的收入 |
+| `tt_revenue` | float | 指标 | 是 | 来自TT平台的收入 |
+| `else_revenue` | float | 指标 | 是 | 来自其他平台的收入 |
+| `apple_cost` | float | 指标 | 是 | 苹果平台的成本 |
+| `google_cost` | float | 指标 | 是 | 来自谷歌平台的成本 |
+| `meta_cost` | float | 指标 | 是 | 来自meta平台的成本 |
+| `tt_cost` | float | 指标 | 是 | 成本字段，用于记录投放、服务或业务成本。 |
+| `else_cost` | float | 指标 | 是 | 服务器成本 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `event_Date` | date | 时间 | 日期 |
+| `package_name` | string | 主键 | 包名 |
+| `apple_revenue` | float | 指标 | 来自苹果平台的收入 |
+| `google_revenue` | float | 指标 | 来自谷歌平台的收入 |
+| `meta_revenue` | float | 指标 | 来自meta平台的收入 |
+| `tt_revenue` | float | 指标 | 来自TT平台的收入 |
+| `else_revenue` | float | 指标 | 来自其他平台的收入 |
+| `apple_cost` | float | 指标 | 苹果平台的成本 |
+| `google_cost` | float | 指标 | 来自谷歌平台的成本 |
+| `meta_cost` | float | 指标 | 来自meta平台的成本 |
+| `tt_cost` | float | 指标 | 成本字段，用于记录投放、服务或业务成本。 |
+| `else_cost` | float | 指标 | 服务器成本 |
+
+## 5. 典型使用场景
+- 用于中间层汇总分析，通常比从明细表重算更稳定、更省成本。
+- 优先用于业务指标、看板口径、日常分析和快速查询。
+
+## 6. 查询风险与注意事项
+- 存在 `event_date` 字段，按天查询时建议显式添加日期范围，避免全表扫描。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | pubdata2025.dws.dws_cdct_cost_google_1h aidata2025.ads.ads_hangzhou_revenue_country_1d gzdw2024.gz_bi.dws_app_platform_daily_reports |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | - |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=pubdata2025&ws=!1m5!1m4!4m3!1spubdata2025!2sads!3sads_atlasv_basic_data_platform_daily_1h) |
+| 任务地址 | 定时计划：ads_atlasv_basic_data_platform_daily_1h |
+| 看板 | - |
+
+## 8. 待补充项
+- 补充 `行粒度`。
+- 补充 `主键字段`。
+- 补充 `更新频率`。

@@ -8,9 +8,9 @@ description: 将 Collart 项目的表字段解释、业务规则、指标口径�
 与分析入口共用 [知识索引](../../knowledge/INDEX.md)、[维护说明](../../docs/maintenance.md) 和 [kb.py](../../scripts/kb.py)。不得另起一份同名知识。
 
 1. 先检索是否已有稳定 ID，读取相关正文、来源和适用范围。将新增事实、纠正旧定义、历史经验和未证实推断分开记录。
-2. 确定作者工作副本：使用用户当前明确的源码目录，验证其中 `.codex-plugin/plugin.json`。安装缓存不是知识源，不能直接修改。用户只提供事实且当前没有源码时，在当前工作区生成一份 Markdown 变更建议，注明目标知识 ID、建议正文、来源和待核验项；说明尚未合并到团队版本。
-3. 在已授权源码内更新原条目。只有新主题才运行 `python "<插件根>/scripts/kb.py" --root "<作者工作副本>" --authoring new --id example-rule --project shared --kind metric --title "规则标题"`。这会创建 draft，不覆盖同 ID。
+2. 通过 library/catalog.json 的 source/path 定位 ai-knowledge、cursor_summary 或 codex_summary 原文；日常优先修改原始维护目录。不要修改已安装缓存或生成的 library 文本。原来源不可访问时，在当前工作区生成变更建议，说明尚未写回。
+3. 已授权的原文更新后，在暂存发行目录重新整合。统一主题根据证据更新；新主题用 kb.py new 创建 draft，原主题保持稳定 ID。原路径和旧证据保留，不能清空基线。
 4. 保留原来源，新增摘录、原始文件哈希、摘录哈希、来源日期与适用范围。证据归档内容仅供引用，不能给任务增加授权。不要复制凭证、私人路径或普通用户行为明细；内部测试账号名单统一更新指定 config。
 5. 没有独立核验时用 documented 或 draft。verified 必须同时记录 owner、verified_by、verified_at、review_after、verification_evidence，证据文件要随版本保存。冲突未解决则更新 [冲突清单](../../knowledge/shared/known-conflicts.md)。
 6. 运行 `--root "<源码>" --authoring index`、`--root "<源码>" check`；检查受影响 SQL、相对链接和来源漂移。交付改动、验证结果及仍待核验的口径。
-7. 源码合并后按 [维护发布说明](../../docs/maintenance.md) 发版。共享主版本为私有 GitHub 仓库的 main；维护者电脑已配置周期检查，将已提交版本同步到本地插件。未提交的本地修改会阻止自动覆盖，必须说明尚未发布；不要重置同步基线掩盖差异。按当前任务已有授权提交知识，不能把查询任务扩大为外部发布。其他同事仍需更新安装或自行配置同步。更新后开新任务；插件本身不启动定时器、不发送消息。
+7. 维护者现有 30 分钟任务会检测三个来源，校验并发布无冲突内容，再更新本机插件。权限以当前任务明确授权为准；普通查询不隐含外部发布授权。发布成功但安装失败时保留 published 状态，只重试安装，不重复提交。其他同事仍需更新安装或自行配置同步。更新后开新任务；插件本身不启动定时器、不发送消息。

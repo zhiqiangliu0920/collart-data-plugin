@@ -1,0 +1,198 @@
+---
+doc_type: "table_knowledge"
+source: "feishu_bitable"
+generated_at: "2026-05-21T01:15:16+08:00"
+table_name: "aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di"
+table_cn_name: "collart web指标表"
+metadata_status: "complete"
+field_status: "available"
+projects: ["collart web"]
+project_dirs: ["collart_web"]
+warehouse_space: "aidata"
+layer: "ADS应用层"
+subject: "firebase埋点通用"
+secondary_subject: "指标汇总"
+table_type: "汇总表"
+grain: "每天一行"
+primary_key: "日期"
+update_frequency: "T+1 8:30"
+owner: "志强"
+priority: "高"
+core_table: "是"
+query_cost: "低"
+source_record_ids: ["recvh3C8YG0NLX"]
+field_count: "60"
+---
+
+# 表名：aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di
+
+> 表中文名：collart web指标表
+> 生成来源：飞书 Bitable「数据知识库」；状态：`complete` / `available`。
+
+## 1. 表定位
+项目：collart web；分层：ADS应用层；表类型：汇总表；主题：firebase埋点通用；二级主题：指标汇总；行粒度：每天一行。
+
+## 2. 基础信息
+| 属性 | 值 |
+|---|---|
+| 表中文名 | collart web指标表 |
+| 项目 | collart web |
+| 数仓空间 | aidata |
+| 分层 | ADS应用层 |
+| 主题 | firebase埋点通用 |
+| 二级主题 | 指标汇总 |
+| 表类型 | 汇总表 |
+| 行粒度 | 每天一行 |
+| 主键字段 | 日期 |
+| 核心表 | 是 |
+| 更新频率 | T+1 8:30 |
+| 维护人 | 志强 |
+| 使用优先级 | 高 |
+| 查询成本 | 低 |
+| 数据来源 | 客户端埋点 |
+
+## 3. 字段字典
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `month` | string | 时间 | 是 | 月份 |
+| `week_start` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `week_end` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `week_range` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `country` | string | 维度 | 是 | 国家 |
+| `country_type` | string | 维度 | 是 | 国家 |
+| `new_user` | int | 指标 | 是 | 新增用户数 |
+| `organic_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `delivery_new_user` | int | 指标 | 是 | 投放新增用户 |
+| `inhouse_new_user` | int | 指标 | 是 | 内部带量新增用户数 |
+| `vip_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `free_new_user` | int | 指标 | 是 | 免费新用户 |
+| `login_new_user` | int | 指标 | 是 | 登录新用户 |
+| `retain2_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `retain2_organic_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `retain2_delivery_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `retain2_vip_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `retain2_login_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `dau` | int | 指标 | 是 | dau |
+| `vip_dau` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `login_dau` | int | 指标 | 是 | 登录dau |
+| `vip_user_0` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `vip_pack_user_0` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `vip_pack_user_old` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `vip_pack_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `total_revenue` | float | 指标 | 是 | 收入 |
+| `new_revenue` | float | 指标 | 是 | 首次订阅收入 |
+| `renew_revenue` | float | 指标 | 是 | 续订算收入 |
+| `pack_revenue` | float | 指标 | 是 | 点数包收入 |
+| `new_valid_user` | int | 指标 | 是 | 有效新增用户数 |
+| `new_explore_page_show_user` | int | 指标 | 是 | 进入模板探索页的新用户数 |
+| `new_explore_card_click_user` | int | 指标 | 是 | 点击explore卡片的新用户数 |
+| `new_explore_content_click_user` | int | 指标 | 是 | 点击模板的新用户数 |
+| `new_explore_content_generate_click_user` | int | 指标 | 是 | 从模板开始生成的新用户数 |
+| `new_feature_show_user` | int | 指标 | 是 | 进入功能页的新用户数 |
+| `new_photo_add_user` | int | 指标 | 是 | 添加照片的新用户数 |
+| `new_photo_add_success_user` | int | 指标 | 是 | 添加照片成功的新用户数 |
+| `new_generate_click_user` | int | 指标 | 是 | 点击开始生成的新用户数 |
+| `new_login_show_user` | int | 指标 | 是 | 进入登录页的新用户数 |
+| `new_login_account_choose_user` | int | 指标 | 是 | 点击开始登录的新用户数 |
+| `new_login_success_user` | int | 指标 | 是 | 登陆成功的新用户数 |
+| `new_ai_service_start_user` | int | 指标 | 是 | 开始ai服务的新用户数 |
+| `new_ai_service_success_user` | int | 指标 | 是 | ai服务生成成功的新用户数 |
+| `new_generate_save_user` | int | 指标 | 是 | 保存生成结果的新用户数 |
+| `img2video_ai_service_start_user` | int | 指标 | 是 | 图生视频开始生成人数 |
+| `img2img_ai_service_start_user` | int | 指标 | 是 | 图生图开始生成人数 |
+| `text2img_ai_service_start_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `text2video_ai_service_start_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `ai_service_start_num` | int | 指标 | 是 | 开始生成次数 |
+| `ai_service_success_num` | int | 指标 | 是 | 生成成功次数 |
+| `img2video_ai_service_start_num` | int | 指标 | 是 | 图生视频开始生成次数 |
+| `img2video_ai_service_success_num` | int | 指标 | 是 | 图生视频生成成功次数 |
+| `img2img_ai_service_start_num` | int | 指标 | 是 | 图生图开始生成次数 |
+| `img2img_ai_service_success_num` | int | 指标 | 是 | 图生图生成成功次数 |
+| `text2img_ai_service_start_num` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `text2img_ai_service_success_num` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `text2video_ai_service_start_num` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `text2video_ai_service_success_num` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+
+## 4. 核心字段
+| 字段名 | 类型 | 字段角色 | 说明 |
+|---|---|---|---|
+| `event_date` | date | 时间 | 日期 |
+| `month` | string | 时间 | 月份 |
+| `package_name` | string | 主键 | 包名 |
+| `country` | string | 维度 | 国家 |
+| `country_type` | string | 维度 | 国家 |
+| `new_user` | int | 指标 | 新增用户数 |
+| `organic_new_user` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `delivery_new_user` | int | 指标 | 投放新增用户 |
+| `inhouse_new_user` | int | 指标 | 内部带量新增用户数 |
+| `vip_new_user` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `free_new_user` | int | 指标 | 免费新用户 |
+| `login_new_user` | int | 指标 | 登录新用户 |
+| `retain2_new_user` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `retain2_organic_new_user` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `retain2_delivery_new_user` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `retain2_vip_new_user` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `retain2_login_new_user` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `dau` | int | 指标 | dau |
+| `vip_dau` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `login_dau` | int | 指标 | 登录dau |
+| `vip_user_0` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `vip_pack_user_0` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `vip_pack_user_old` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `vip_pack_user` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `total_revenue` | float | 指标 | 收入 |
+| `new_revenue` | float | 指标 | 首次订阅收入 |
+| `renew_revenue` | float | 指标 | 续订算收入 |
+| `pack_revenue` | float | 指标 | 点数包收入 |
+| `new_valid_user` | int | 指标 | 有效新增用户数 |
+| `new_explore_page_show_user` | int | 指标 | 进入模板探索页的新用户数 |
+| `new_explore_card_click_user` | int | 指标 | 点击explore卡片的新用户数 |
+| `new_explore_content_click_user` | int | 指标 | 点击模板的新用户数 |
+| `new_explore_content_generate_click_user` | int | 指标 | 从模板开始生成的新用户数 |
+| `new_feature_show_user` | int | 指标 | 进入功能页的新用户数 |
+| `new_photo_add_user` | int | 指标 | 添加照片的新用户数 |
+| `new_photo_add_success_user` | int | 指标 | 添加照片成功的新用户数 |
+| `new_generate_click_user` | int | 指标 | 点击开始生成的新用户数 |
+| `new_login_show_user` | int | 指标 | 进入登录页的新用户数 |
+| `new_login_account_choose_user` | int | 指标 | 点击开始登录的新用户数 |
+| `new_login_success_user` | int | 指标 | 登陆成功的新用户数 |
+| `new_ai_service_start_user` | int | 指标 | 开始ai服务的新用户数 |
+| `new_ai_service_success_user` | int | 指标 | ai服务生成成功的新用户数 |
+| `new_generate_save_user` | int | 指标 | 保存生成结果的新用户数 |
+| `img2video_ai_service_start_user` | int | 指标 | 图生视频开始生成人数 |
+| `img2img_ai_service_start_user` | int | 指标 | 图生图开始生成人数 |
+| `text2img_ai_service_start_user` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `text2video_ai_service_start_user` | int | 指标 | 整型指标字段，用于统计数量、金额或次数。 |
+| `ai_service_start_num` | int | 指标 | 开始生成次数 |
+| `ai_service_success_num` | int | 指标 | 生成成功次数 |
+| `img2video_ai_service_start_num` | int | 指标 | 图生视频开始生成次数 |
+| `img2video_ai_service_success_num` | int | 指标 | 图生视频生成成功次数 |
+| `img2img_ai_service_start_num` | int | 指标 | 图生图开始生成次数 |
+| `img2img_ai_service_success_num` | int | 指标 | 图生图生成成功次数 |
+| `text2img_ai_service_start_num` | int | 指标 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `text2img_ai_service_success_num` | int | 指标 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `text2video_ai_service_start_num` | int | 指标 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `text2video_ai_service_success_num` | int | 指标 | 计数指标字段，用于统计人数、次数或记录量。 |
+
+## 5. 典型使用场景
+- 用于中间层汇总分析，通常比从明细表重算更稳定、更省成本。
+- 优先用于业务指标、看板口径、日常分析和快速查询。
+- 该表使用优先级较高，agent 选表时可优先考虑。
+
+## 6. 查询风险与注意事项
+- 存在 `event_date` 字段，按天查询时建议显式添加日期范围，避免全表扫描。
+
+## 7. 血缘和关联
+| 项目 | 内容 |
+|---|---|
+| 上层表 | 埋点表 aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di aidata2025.dwd.dwd_oper_user_collartweb_di pubdata2025.dwd.dwd_cdct_revenue_stripe_di |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sads_collart!3sads_oper_basic_metric_country_collart_web_di) |
+| 任务地址 | ads_oper_b…b_di.sqlx – Code – Dataform – BigQuery – AIDATA – Google Cloud 控制台 |
+| 看板 | collart web周报分析用 |
+
+## 8. 待补充项
+- 暂无，后续可补充典型 SQL 和业务口径案例。
