@@ -43,7 +43,7 @@
           "target": "./ai-knowledge-maintain/SKILL.md",
           "exists": true,
           "source_id": "ai-knowledge:0global/skills/ai-knowledge-maintain/SKILL.md",
-          "material": "library/text/dc5d8fbe530d62b463a82a49529bba8307a2f7df28ad844a753e710536b79228.txt",
+          "material": "library/text/67172b0c1530da386b28e8f979b769c25d9901e8f4c9b9b4967de09590071e2f.txt",
           "status": "included"
         },
         {
@@ -55,7 +55,9 @@
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 10,
@@ -67,8 +69,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "22a9d2231a3486b78176f2f223d1758bb99578e0edf21efbbd278afbbbd46c75",
-      "material": "library/text/22a9d2231a3486b78176f2f223d1758bb99578e0edf21efbbd278afbbbd46c75.txt"
+      "content_sha256": "e33d92f6d3aac828601d1e13b0b4256c9b5f6541396c2e92bf5de63e322c5556",
+      "material": "library/text/e33d92f6d3aac828601d1e13b0b4256c9b5f6541396c2e92bf5de63e322c5556.txt"
     },
     {
       "id": "ai-knowledge:0global/skills/ai-knowledge-maintain/SKILL.md",
@@ -109,40 +111,42 @@
           "target": "routing.md",
           "exists": true,
           "source_id": "ai-knowledge:0global/skills/ai-knowledge-maintain/routing.md",
-          "material": "library/text/ef8909c216952d7c26f185e3da10fda52a541ff59ea20c6a31d1e0bfdf0fc5db.txt",
+          "material": "library/text/501931279252e6b898134e358bd8522c09556dc7f7ef88c1b840e52a46ebf93a.txt",
           "status": "included"
         },
         {
           "target": "table-template.md",
           "exists": true,
           "source_id": "ai-knowledge:0global/skills/ai-knowledge-maintain/table-template.md",
-          "material": "library/text/68569914af4b6636000f94d7ad9896d9144b49c4ebdca7db3743353192cafa72.txt",
+          "material": "library/text/31d8e0f3e761cc10d35ae6e4fd18211add04d68111ec0d78736df2426d2cd83b.txt",
           "status": "included"
         },
         {
           "target": "routing.md",
           "exists": true,
           "source_id": "ai-knowledge:0global/skills/ai-knowledge-maintain/routing.md",
-          "material": "library/text/ef8909c216952d7c26f185e3da10fda52a541ff59ea20c6a31d1e0bfdf0fc5db.txt",
+          "material": "library/text/501931279252e6b898134e358bd8522c09556dc7f7ef88c1b840e52a46ebf93a.txt",
           "status": "included"
         },
         {
           "target": "table-template.md",
           "exists": true,
           "source_id": "ai-knowledge:0global/skills/ai-knowledge-maintain/table-template.md",
-          "material": "library/text/68569914af4b6636000f94d7ad9896d9144b49c4ebdca7db3743353192cafa72.txt",
+          "material": "library/text/31d8e0f3e761cc10d35ae6e4fd18211add04d68111ec0d78736df2426d2cd83b.txt",
           "status": "included"
         },
         {
           "target": "../README.md",
           "exists": true,
           "source_id": "ai-knowledge:0global/skills/README.md",
-          "material": "library/text/22a9d2231a3486b78176f2f223d1758bb99578e0edf21efbbd278afbbbd46c75.txt",
+          "material": "library/text/e33d92f6d3aac828601d1e13b0b4256c9b5f6541396c2e92bf5de63e322c5556.txt",
           "status": "included"
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 168,
@@ -154,8 +158,8 @@
         "missing_sections": 1,
         "execution_side_effects": false
       },
-      "content_sha256": "dc5d8fbe530d62b463a82a49529bba8307a2f7df28ad844a753e710536b79228",
-      "material": "library/text/dc5d8fbe530d62b463a82a49529bba8307a2f7df28ad844a753e710536b79228.txt"
+      "content_sha256": "67172b0c1530da386b28e8f979b769c25d9901e8f4c9b9b4967de09590071e2f",
+      "material": "library/text/67172b0c1530da386b28e8f979b769c25d9901e8f4c9b9b4967de09590071e2f.txt"
     },
     {
       "id": "ai-knowledge:0global/skills/ai-knowledge-maintain/agents/openai.yaml",
@@ -174,7 +178,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 4,
@@ -186,8 +192,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "249e9842d2cdc480a90fde9c842c48f59b21822ce4f289ff2713d0b98a10842c",
-      "material": "library/text/249e9842d2cdc480a90fde9c842c48f59b21822ce4f289ff2713d0b98a10842c.txt"
+      "content_sha256": "cb2a0bbf05029debbc7b4787deed4db7e8d79106351f09031c2e74aaa7a8c771",
+      "material": "library/text/cb2a0bbf05029debbc7b4787deed4db7e8d79106351f09031c2e74aaa7a8c771.txt"
     },
     {
       "id": "ai-knowledge:0global/skills/ai-knowledge-maintain/routing.md",
@@ -218,7 +224,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 59,
@@ -230,8 +238,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "ef8909c216952d7c26f185e3da10fda52a541ff59ea20c6a31d1e0bfdf0fc5db",
-      "material": "library/text/ef8909c216952d7c26f185e3da10fda52a541ff59ea20c6a31d1e0bfdf0fc5db.txt"
+      "content_sha256": "501931279252e6b898134e358bd8522c09556dc7f7ef88c1b840e52a46ebf93a",
+      "material": "library/text/501931279252e6b898134e358bd8522c09556dc7f7ef88c1b840e52a46ebf93a.txt"
     },
     {
       "id": "ai-knowledge:0global/skills/ai-knowledge-maintain/table-template.md",
@@ -269,7 +277,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 114,
@@ -281,8 +291,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "68569914af4b6636000f94d7ad9896d9144b49c4ebdca7db3743353192cafa72",
-      "material": "library/text/68569914af4b6636000f94d7ad9896d9144b49c4ebdca7db3743353192cafa72.txt"
+      "content_sha256": "31d8e0f3e761cc10d35ae6e4fd18211add04d68111ec0d78736df2426d2cd83b",
+      "material": "library/text/31d8e0f3e761cc10d35ae6e4fd18211add04d68111ec0d78736df2426d2cd83b.txt"
     },
     {
       "id": "ai-knowledge:0global/skills/collart-event-metric-sync/SKILL.md",
@@ -370,14 +380,14 @@
           "target": "./sql_best_practices.md",
           "exists": true,
           "source_id": "ai-knowledge:0global/sql_standards/sql_best_practices.md",
-          "material": "library/text/19f3c6ccd057a61988467bdafc6aefccfe1833c618b41f46e7d4af7fc15e8dbb.txt",
+          "material": "library/text/cc77956d280c96b9c7c0b759f47b69ec83c0b4e221ac49b4dad05a8c3ff6ce5f.txt",
           "status": "included"
         },
         {
           "target": "sql_best_practices.md",
           "exists": true,
           "source_id": "ai-knowledge:0global/sql_standards/sql_best_practices.md",
-          "material": "library/text/19f3c6ccd057a61988467bdafc6aefccfe1833c618b41f46e7d4af7fc15e8dbb.txt",
+          "material": "library/text/cc77956d280c96b9c7c0b759f47b69ec83c0b4e221ac49b4dad05a8c3ff6ce5f.txt",
           "status": "included"
         },
         {
@@ -697,7 +707,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 183,
@@ -709,8 +721,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "19f3c6ccd057a61988467bdafc6aefccfe1833c618b41f46e7d4af7fc15e8dbb",
-      "material": "library/text/19f3c6ccd057a61988467bdafc6aefccfe1833c618b41f46e7d4af7fc15e8dbb.txt"
+      "content_sha256": "cc77956d280c96b9c7c0b759f47b69ec83c0b4e221ac49b4dad05a8c3ff6ce5f",
+      "material": "library/text/cc77956d280c96b9c7c0b759f47b69ec83c0b4e221ac49b4dad05a8c3ff6ce5f.txt"
     },
     {
       "id": "ai-knowledge:1company/README.md",
@@ -1094,7 +1106,8 @@
       "links": [],
       "issues": [],
       "transforms": [
-        "个人绝对路径替换为 {LOCAL_PATH}"
+        "个人绝对路径替换为 {LOCAL_PATH}",
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
       ],
       "encoding": "utf-8",
       "content_analysis": {
@@ -1107,8 +1120,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "07c7a5b4612617ccd0fe673cf6c3f5e824a41710704b09745c409fe2f35306b3",
-      "material": "library/text/07c7a5b4612617ccd0fe673cf6c3f5e824a41710704b09745c409fe2f35306b3.txt"
+      "content_sha256": "7992cb70c65e5313bccc7b68f3018b59d7c28a467329fc5e44f97674e62aa50a",
+      "material": "library/text/7992cb70c65e5313bccc7b68f3018b59d7c28a467329fc5e44f97674e62aa50a.txt"
     },
     {
       "id": "ai-knowledge:1company/indicators/collart_daily_report_date_windows.md",
@@ -1135,7 +1148,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 71,
@@ -1147,8 +1162,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "b3cc071adc1c86669cb3155d6a78f4216706c260bcca47015eb12a786779edd1",
-      "material": "library/text/b3cc071adc1c86669cb3155d6a78f4216706c260bcca47015eb12a786779edd1.txt"
+      "content_sha256": "f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637",
+      "material": "library/text/f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637.txt"
     },
     {
       "id": "ai-knowledge:1company/indicators/event_metric_from_rule.md",
@@ -1336,7 +1351,7 @@
           "target": "./ads_dim_metric_rule_catalog.md",
           "exists": true,
           "source_id": "ai-knowledge:1company/tables/ads_dim_metric_rule_catalog.md",
-          "material": "library/text/9c7e351aaa01eed6079ae5f6a563ea582731e3e47fb252b53b94fe10d027006e.txt",
+          "material": "library/text/c47ce979b5e774aeb9cde26f45fc35806c351589dfde7b595a4cc8a87c126f0e.txt",
           "status": "included"
         }
       ],
@@ -1391,7 +1406,9 @@
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 126,
@@ -1403,8 +1420,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "9c7e351aaa01eed6079ae5f6a563ea582731e3e47fb252b53b94fe10d027006e",
-      "material": "library/text/9c7e351aaa01eed6079ae5f6a563ea582731e3e47fb252b53b94fe10d027006e.txt"
+      "content_sha256": "c47ce979b5e774aeb9cde26f45fc35806c351589dfde7b595a4cc8a87c126f0e",
+      "material": "library/text/c47ce979b5e774aeb9cde26f45fc35806c351589dfde7b595a4cc8a87c126f0e.txt"
     },
     {
       "id": "ai-knowledge:1company/tables/aidata2025.ads_collart.ads_dim_metric_rule.md",
@@ -1902,7 +1919,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 11484,
@@ -2013,7 +2032,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 19,
@@ -2025,8 +2046,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "d329f95fc352aedcdd54fd171b87ae50a37d42756a566d4ba6c346ac0d781dad",
-      "material": "library/text/d329f95fc352aedcdd54fd171b87ae50a37d42756a566d4ba6c346ac0d781dad.txt"
+      "content_sha256": "cd72d5b90555fcebe7ee9a39e7f2bfa4287bc361ab80849c3a56d197c08c343d",
+      "material": "library/text/cd72d5b90555fcebe7ee9a39e7f2bfa4287bc361ab80849c3a56d197c08c343d.txt"
     },
     {
       "id": "ai-knowledge:_generated/company_dashboard_backfill/source_qa.json",
@@ -2050,7 +2071,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 24,
@@ -2062,8 +2085,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "facf093309989e8e38112f92ed21416cf42a7c6b18ad22dc70bfbf515e6d5711",
-      "material": "library/text/facf093309989e8e38112f92ed21416cf42a7c6b18ad22dc70bfbf515e6d5711.txt"
+      "content_sha256": "8dc5724a4b0dc19487eedff18df7eddf64397e098736881cc13925e18342ab2a",
+      "material": "library/text/8dc5724a4b0dc19487eedff18df7eddf64397e098736881cc13925e18342ab2a.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/additional_sources.json",
@@ -2106,7 +2129,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 32,
@@ -2172,7 +2197,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 31,
@@ -2241,7 +2268,8 @@
       "links": [],
       "issues": [],
       "transforms": [
-        "内部测试用户 ID 引用统一 config/internal-user-ids.json"
+        "内部测试用户 ID 引用统一 config/internal-user-ids.json",
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
       ],
       "encoding": "utf-8",
       "content_analysis": {
@@ -3042,7 +3070,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 147,
@@ -3063,8 +3093,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "220e8a771cee95f30ce961f5600c07bbe2d708f7c39d98bdb4ff68a2f31aee68",
-      "material": "library/text/220e8a771cee95f30ce961f5600c07bbe2d708f7c39d98bdb4ff68a2f31aee68.txt"
+      "content_sha256": "557d0982aa32c4c031c93c10017eeb9b0867c93270960625ae95d46190837508",
+      "material": "library/text/557d0982aa32c4c031c93c10017eeb9b0867c93270960625ae95d46190837508.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_attr_di.sqlx",
@@ -3086,7 +3116,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 331,
@@ -3107,8 +3139,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "869efc1dce86715a89daa919ccee061313c734d0fff3d6b7f17900666b93fd22",
-      "material": "library/text/869efc1dce86715a89daa919ccee061313c734d0fff3d6b7f17900666b93fd22.txt"
+      "content_sha256": "4ab000c478eb9f18abd3eeda805dd4627225d40b72a3782c338f5d2a71ed6eb9",
+      "material": "library/text/4ab000c478eb9f18abd3eeda805dd4627225d40b72a3782c338f5d2a71ed6eb9.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_country_di.sqlx",
@@ -3130,7 +3162,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 268,
@@ -3150,8 +3184,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "1da3b1970f92bc6d9254ea5b32e7e30f23d264ee983958ff160ad578fd2bd8fa",
-      "material": "library/text/1da3b1970f92bc6d9254ea5b32e7e30f23d264ee983958ff160ad578fd2bd8fa.txt"
+      "content_sha256": "aa9195c66f5ae920653b7c5a114a7dd0c163aea3a6031f29c85f00d24e788c27",
+      "material": "library/text/aa9195c66f5ae920653b7c5a114a7dd0c163aea3a6031f29c85f00d24e788c27.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_daily_compare_di.sqlx",
@@ -3176,7 +3210,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 369,
@@ -3193,8 +3229,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "adac1ded0607af30dd4bc4fa5444447946bab7cc5ff844c5de44361bd1d2395f",
-      "material": "library/text/adac1ded0607af30dd4bc4fa5444447946bab7cc5ff844c5de44361bd1d2395f.txt"
+      "content_sha256": "17463965c87ac818428c2a9d2ae6ede3fe6a2d4ae69b7f11edde746cae93b8e1",
+      "material": "library/text/17463965c87ac818428c2a9d2ae6ede3fe6a2d4ae69b7f11edde746cae93b8e1.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_daily_di.sqlx",
@@ -3219,7 +3255,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 414,
@@ -3239,8 +3277,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "6dbb9de968d32658fda6f6a17965438a50f063c2f0818f7ef5e7ebbd81529704",
-      "material": "library/text/6dbb9de968d32658fda6f6a17965438a50f063c2f0818f7ef5e7ebbd81529704.txt"
+      "content_sha256": "bc2be0c5966551ad5e280a05318d8e1b6956a9438950839855704e0c9ea65fad",
+      "material": "library/text/bc2be0c5966551ad5e280a05318d8e1b6956a9438950839855704e0c9ea65fad.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_event_metric_attr_di.sqlx",
@@ -3263,7 +3301,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 82,
@@ -3283,8 +3323,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "6d0e3cbc828dceb5538fb268548b98e5a73991cdeec6b3abadcd7d3fe614fd67",
-      "material": "library/text/6d0e3cbc828dceb5538fb268548b98e5a73991cdeec6b3abadcd7d3fe614fd67.txt"
+      "content_sha256": "44562e1c18b0e7018cfb7ae8e26941341e2be7aed5daeb7f4b19a7930c72e4cc",
+      "material": "library/text/44562e1c18b0e7018cfb7ae8e26941341e2be7aed5daeb7f4b19a7930c72e4cc.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_event_metric_country_di.sqlx",
@@ -3306,7 +3346,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 62,
@@ -3326,8 +3368,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "c7935c6fa096cc7e01985085c72e91b19802b75cead6174ded53a5b2fde01135",
-      "material": "library/text/c7935c6fa096cc7e01985085c72e91b19802b75cead6174ded53a5b2fde01135.txt"
+      "content_sha256": "02b193c7af567bb0bab56b6a52e16756e8361cd502a27843014273c322934c12",
+      "material": "library/text/02b193c7af567bb0bab56b6a52e16756e8361cd502a27843014273c322934c12.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_user_active_di.sqlx",
@@ -3353,7 +3395,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 718,
@@ -3374,8 +3418,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "4e0d30e520783505be86ccf29e5deaf1ee86274876c0d1edc45f62e6a2effce1",
-      "material": "library/text/4e0d30e520783505be86ccf29e5deaf1ee86274876c0d1edc45f62e6a2effce1.txt"
+      "content_sha256": "1d62410fb5a7e5f538015be5405a62d1b96e12256c65fa70b4f5f90af0b01f6c",
+      "material": "library/text/1d62410fb5a7e5f538015be5405a62d1b96e12256c65fa70b4f5f90af0b01f6c.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_user_event_metric_di.sqlx",
@@ -3399,7 +3443,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 102,
@@ -3419,8 +3465,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "47bea6fc6c2862490ef08a4370cf52fbbcb5401c46f7d97bfb2eab67feaa6d9a",
-      "material": "library/text/47bea6fc6c2862490ef08a4370cf52fbbcb5401c46f7d97bfb2eab67feaa6d9a.txt"
+      "content_sha256": "041e8c489b60a56f91421dc2868c56f8269c0fa23df231edce00e73856ca4423",
+      "material": "library/text/041e8c489b60a56f91421dc2868c56f8269c0fa23df231edce00e73856ca4423.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_user_profile_df.sqlx",
@@ -3445,7 +3491,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 489,
@@ -3466,8 +3514,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "fbe71011d850e29a944925b47d93e288f456c39dbc314fa4999aa8dbbf0ad106",
-      "material": "library/text/fbe71011d850e29a944925b47d93e288f456c39dbc314fa4999aa8dbbf0ad106.txt"
+      "content_sha256": "10dd58b1498f4146abbb3f1ae4af29dfcd42de9d74a461fbb84aa78fbf2bee98",
+      "material": "library/text/10dd58b1498f4146abbb3f1ae4af29dfcd42de9d74a461fbb84aa78fbf2bee98.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/create_fashion_tables.sqlx",
@@ -3490,7 +3538,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 66,
@@ -3504,8 +3554,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "37ca244ac358d8fc3a865fac2830670a59b0660ce1f19787dd332317b46874da",
-      "material": "library/text/37ca244ac358d8fc3a865fac2830670a59b0660ce1f19787dd332317b46874da.txt"
+      "content_sha256": "7210d68b8358fe946ac9665d24da21fa5680da0317ad76230512027b2ef54aaf",
+      "material": "library/text/7210d68b8358fe946ac9665d24da21fa5680da0317ad76230512027b2ef54aaf.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/fashion_active_revenue_enrichment.sqlx",
@@ -3529,7 +3579,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 246,
@@ -3549,8 +3601,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "ff187e3385dcf419ecaba4ce7b690e044b87ccf795d362b224521c18b39ad693",
-      "material": "library/text/ff187e3385dcf419ecaba4ce7b690e044b87ccf795d362b224521c18b39ad693.txt"
+      "content_sha256": "5e4016b9fa329da5145ced922e26369e64a613399bf4fc85815c340bcb8060c8",
+      "material": "library/text/5e4016b9fa329da5145ced922e26369e64a613399bf4fc85815c340bcb8060c8.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/fashion_daily_metric.sqlx",
@@ -3573,7 +3625,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 52,
@@ -3592,8 +3646,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "d869454f5e7f2be2a249361ebfa409b161ae3fe6539b19237444f02528c43d82",
-      "material": "library/text/d869454f5e7f2be2a249361ebfa409b161ae3fe6539b19237444f02528c43d82.txt"
+      "content_sha256": "876d3c1a1c5cf851175243ee3aca851f796cf5a5e68e00180a476897a76dd21a",
+      "material": "library/text/876d3c1a1c5cf851175243ee3aca851f796cf5a5e68e00180a476897a76dd21a.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/fashion_revenue.sqlx",
@@ -3615,7 +3669,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 35,
@@ -3634,8 +3690,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "d3f71e671a89fb81c841ad8f62dedb03f5e2e690f0a60bc045089144577b61d1",
-      "material": "library/text/d3f71e671a89fb81c841ad8f62dedb03f5e2e690f0a60bc045089144577b61d1.txt"
+      "content_sha256": "848af9a531d47b8a6eca82a75d87aad3e6282eed91eda2936716c10f4fefd04f",
+      "material": "library/text/848af9a531d47b8a6eca82a75d87aad3e6282eed91eda2936716c10f4fefd04f.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/fashion_user_revenue.sqlx",
@@ -3658,7 +3714,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 256,
@@ -3677,8 +3735,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "a80ecfb7c6a729e49b8bb2723c3e185e9275fb348a4f1ac1e8719213310ceb3d",
-      "material": "library/text/a80ecfb7c6a729e49b8bb2723c3e185e9275fb348a4f1ac1e8719213310ceb3d.txt"
+      "content_sha256": "0b32a317589931d53b36a6d667215ac64a9ced9dac8924f0a144688d39f1a875",
+      "material": "library/text/0b32a317589931d53b36a6d667215ac64a9ced9dac8924f0a144688d39f1a875.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_web/ads_oper_basic_indicator_daily_di.sqlx",
@@ -3703,7 +3761,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 633,
@@ -3723,8 +3783,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "3f224bd82c28ed148da6e2bb92b9102f84566ad29704191ad245804804f39aa3",
-      "material": "library/text/3f224bd82c28ed148da6e2bb92b9102f84566ad29704191ad245804804f39aa3.txt"
+      "content_sha256": "947b2962d90cdd234f12dfe0eb62c95c77d516c2f443e1c7c75ad3c18ebad866",
+      "material": "library/text/947b2962d90cdd234f12dfe0eb62c95c77d516c2f443e1c7c75ad3c18ebad866.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_web/ads_oper_user_active_di.sqlx",
@@ -3750,7 +3810,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 752,
@@ -3772,8 +3834,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "4271aaf4a26f2c853d4a7541ed409c7c4df0ea0355730c4740d94a6b07dc7658",
-      "material": "library/text/4271aaf4a26f2c853d4a7541ed409c7c4df0ea0355730c4740d94a6b07dc7658.txt"
+      "content_sha256": "98930437c99c88698b1c7d2f51f7baeef9e1439fbcf10e49f264a3ae38f13aaa",
+      "material": "library/text/98930437c99c88698b1c7d2f51f7baeef9e1439fbcf10e49f264a3ae38f13aaa.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_web/ads_oper_user_event_metric_di.sqlx",
@@ -3797,7 +3859,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 205,
@@ -3817,8 +3881,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "c44c47fe739d38541ffee060558df6a4dbb29e7c462b90f59166108e26d50ed3",
-      "material": "library/text/c44c47fe739d38541ffee060558df6a4dbb29e7c462b90f59166108e26d50ed3.txt"
+      "content_sha256": "6ca5960f4da7190b5712bf11c19893080277ac21aaa824bbc88dcdf1f303dfd3",
+      "material": "library/text/6ca5960f4da7190b5712bf11c19893080277ac21aaa824bbc88dcdf1f303dfd3.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/revenue/h_ads_ad_sub_revenue_1h.sqlx",
@@ -3850,7 +3914,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 523,
@@ -3869,8 +3935,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "9b2ba6ed639f0cf3b232e5a135d97eea31e0c87a7847ccbaa2bdf170d9f15d0d",
-      "material": "library/text/9b2ba6ed639f0cf3b232e5a135d97eea31e0c87a7847ccbaa2bdf170d9f15d0d.txt"
+      "content_sha256": "867192af7b39a6508a5dfc12b99c88f2c1d55f6ea0ae0b1b85f4e83e21a62a39",
+      "material": "library/text/867192af7b39a6508a5dfc12b99c88f2c1d55f6ea0ae0b1b85f4e83e21a62a39.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/dm/daily/h_dm_collart_web_user_event_di.sqlx",
@@ -3892,7 +3958,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 411,
@@ -3911,8 +3979,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "c173a65a961a55461e734b6b057927e1df6272b7a5c01a2c9a39398c94288654",
-      "material": "library/text/c173a65a961a55461e734b6b057927e1df6272b7a5c01a2c9a39398c94288654.txt"
+      "content_sha256": "e4184921343786327d3d84841421265f4e7ce8b8b1c76509cc46588c1dbd8cf0",
+      "material": "library/text/e4184921343786327d3d84841421265f4e7ce8b8b1c76509cc46588c1dbd8cf0.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/dwd/daily/h_dwd_cdct_delivery_cost_di.sqlx",
@@ -3938,7 +4006,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 173,
@@ -3957,8 +4027,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "2e3082ef003560e0dc19da6316713a1a9e11168b516005e0f12d86f90fe2bdcb",
-      "material": "library/text/2e3082ef003560e0dc19da6316713a1a9e11168b516005e0f12d86f90fe2bdcb.txt"
+      "content_sha256": "08d1ecb7cd50ac6e36558b4cf91e92e2f06e46e3ddf13d5febb1747d7b0aa2cc",
+      "material": "library/text/08d1ecb7cd50ac6e36558b4cf91e92e2f06e46e3ddf13d5febb1747d7b0aa2cc.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/summarize_jobs.py",
@@ -4024,7 +4094,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 4138,
@@ -4036,8 +4108,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "1044771332d41366c8995666160ac7ba862a5d940588e03dbd326d845ea9d6ba",
-      "material": "library/text/1044771332d41366c8995666160ac7ba862a5d940588e03dbd326d845ea9d6ba.txt"
+      "content_sha256": "540c6d21b14b548ce8a4c16d4c9ae7f2f7fba012687d6e78316becbec467d726",
+      "material": "library/text/540c6d21b14b548ce8a4c16d4c9ae7f2f7fba012687d6e78316becbec467d726.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/task_catalog.json",
@@ -4091,7 +4163,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 470,
@@ -4188,7 +4262,8 @@
       "links": [],
       "issues": [],
       "transforms": [
-        "个人绝对路径替换为 {LOCAL_PATH}"
+        "个人绝对路径替换为 {LOCAL_PATH}",
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
       ],
       "encoding": "utf-8",
       "content_analysis": {
@@ -4208,8 +4283,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "c8996273cde6d5a6dc8cf03d369cdd68af635fb125362a65aca8460a005531be",
-      "material": "library/text/c8996273cde6d5a6dc8cf03d369cdd68af635fb125362a65aca8460a005531be.txt"
+      "content_sha256": "58d8723e1faebc3da60f4fbc05a56ce74d253039df4c49af9ef67e82fc0f4742",
+      "material": "library/text/58d8723e1faebc3da60f4fbc05a56ce74d253039df4c49af9ef67e82fc0f4742.txt"
     },
     {
       "id": "ai-knowledge:_generated/fashion_warehouse_audit_20260909/trigger_trace.json",
@@ -4625,7 +4700,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 167,
@@ -4682,7 +4759,8 @@
       "links": [],
       "issues": [],
       "transforms": [
-        "内部测试用户 ID 引用统一 config/internal-user-ids.json"
+        "内部测试用户 ID 引用统一 config/internal-user-ids.json",
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
       ],
       "encoding": "utf-8",
       "content_analysis": {
@@ -12172,7 +12250,7 @@
           "target": "stripe_analysis.json",
           "exists": true,
           "source_id": "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_analysis.json",
-          "material": "library/text/a5522b565a49c121b5af9fa5281356156a37514181f7e42444bb710409dbb1d1.txt",
+          "material": "library/text/3c9477f35e670bb843b0f10bfd956ba9c3b0c7767d002d31073dac7f923fc0e8.txt",
           "status": "historical"
         },
         {
@@ -12186,68 +12264,70 @@
           "target": "qa.json",
           "exists": true,
           "source_id": "ai-knowledge:_generated/web_revenue_7d_20260912/qa.json",
-          "material": "library/text/c0ce04fe58c3ca033bf5408a8c2c6c458cb6e098f7f8ae7a1301808de60db4c6.txt",
+          "material": "library/text/698ae9a91f5d7f2e392f508ee37d2038045d4c9a71ff0acdd93b3cb9b218cc99.txt",
           "status": "historical"
         },
         {
           "target": "freshness.json",
           "exists": true,
           "source_id": "ai-knowledge:_generated/web_revenue_7d_20260912/freshness.json",
-          "material": "library/text/85fc8c78544702f1d8b1116686cb510e71c5cb5298c7b6e1f67acf60ce5720d2.txt",
+          "material": "library/text/bb0d8605c0f3d9b8481f51f5d45f7be6b0cb7bba1898ddb7e028473fb310edad.txt",
           "status": "historical"
         },
         {
           "target": "reconciliation.csv",
           "exists": true,
           "source_id": "ai-knowledge:_generated/web_revenue_7d_20260912/reconciliation.csv",
-          "material": "library/text/d46e87b7b6e14bf42f7cc0f7b515d629ad34861b01cf3103048561bdd152e624.txt",
+          "material": "library/text/2b72162541bf6316a0bce4141c043eabf9091ba9d59ca434eb65f1e1b0a032d4.txt",
           "status": "historical"
         },
         {
           "target": "daily_revenue.csv",
           "exists": true,
           "source_id": "ai-knowledge:_generated/web_revenue_7d_20260912/daily_revenue.csv",
-          "material": "library/text/86c80bd4eea8a819f0dc59310cae4d3ea15d10e6137bf5295136ef79786bf4f3.txt",
+          "material": "library/text/db258ba1b73532450b33a8c7a6ae0cfd57ccf476e4b9cedf9adc8872ad048162.txt",
           "status": "historical"
         },
         {
           "target": "revenue_type_changes.csv",
           "exists": true,
           "source_id": "ai-knowledge:_generated/web_revenue_7d_20260912/revenue_type_changes.csv",
-          "material": "library/text/c84f5a4fff7225548ed545a82f85bce100630fd994f59fa81a7c8bbd3f9303b2.txt",
+          "material": "library/text/c16961813db8601d31aa2c04d8d956b0367195dc4a6fe1bf29a76d654d3e0a0e.txt",
           "status": "historical"
         },
         {
           "target": "country_changes.csv",
           "exists": true,
           "source_id": "ai-knowledge:_generated/web_revenue_7d_20260912/country_changes.csv",
-          "material": "library/text/fa848009916436743e922a9aa8e6dcbdc9338dbf45eb862b8232a28cb1c18972.txt",
+          "material": "library/text/47ec07be81656e41f6762366439087d98190b39da3a2b032f9d1ed90fac3d49b.txt",
           "status": "historical"
         },
         {
           "target": "product_changes.csv",
           "exists": true,
           "source_id": "ai-knowledge:_generated/web_revenue_7d_20260912/product_changes.csv",
-          "material": "library/text/bfaf52248ef6cbeedc6e97ee7d86861c975f1f4c6ec8ed75098d02cc29eb77d2.txt",
+          "material": "library/text/5ec92ede03c876ea8be7786900a14d2d92a2d726e66174e377ac46901e340d47.txt",
           "status": "historical"
         },
         {
           "target": "summary.json",
           "exists": true,
           "source_id": "ai-knowledge:_generated/web_revenue_7d_20260912/summary.json",
-          "material": "library/text/a8a1f7487f0a99e1f664a8159b53cbac2e40d8ed73ce65a378a0b3b4cc6c84ec.txt",
+          "material": "library/text/b512a273b5291280335d43864b9ca23d92bdce0da38aeb689b652341b317907c.txt",
           "status": "historical"
         },
         {
           "target": "schemas.json",
           "exists": true,
           "source_id": "ai-knowledge:_generated/web_revenue_7d_20260912/schemas.json",
-          "material": "library/text/915acc9c2eec98dcf5b4d7a44dc1c3fb50a1b971dccc66ccb2ff6e3b7dd119f4.txt",
+          "material": "library/text/93f618c34d6530e75389f53619920c6daa4265d8b3249cb42434016ec51f6484.txt",
           "status": "historical"
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 89,
@@ -12259,8 +12339,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "00178f19b3fad07f6cfb47b767b1966f23dc713fb51f967464e70390525a5292",
-      "material": "library/text/00178f19b3fad07f6cfb47b767b1966f23dc713fb51f967464e70390525a5292.txt"
+      "content_sha256": "6f52d844765c687ecdfb7b5e6ab4e9c628bb47ed508e45f8a25d1df94a64013c",
+      "material": "library/text/6f52d844765c687ecdfb7b5e6ab4e9c628bb47ed508e45f8a25d1df94a64013c.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/active_revenue_history.json",
@@ -12296,7 +12376,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 74,
@@ -12308,8 +12390,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "72fee6f9b7b7f089d562d0f714373ba0927a460cc3be619c2e0347e915bc82e8",
-      "material": "library/text/72fee6f9b7b7f089d562d0f714373ba0927a460cc3be619c2e0347e915bc82e8.txt"
+      "content_sha256": "0beaee5059e2961d34195b7674595dca5900d3bdd645e779bcfea3efd35a822e",
+      "material": "library/text/0beaee5059e2961d34195b7674595dca5900d3bdd645e779bcfea3efd35a822e.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/active_revenue_history.sql",
@@ -12405,7 +12487,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 184,
@@ -12417,8 +12501,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "f8956bd41d42afa16f7a22164eaa05475c707de48e6683debd692e394f155d06",
-      "material": "library/text/f8956bd41d42afa16f7a22164eaa05475c707de48e6683debd692e394f155d06.txt"
+      "content_sha256": "0d50e5f118f7fbc1c8a61f66c8aa284b730d1ee6296886dff482b3e157ac1aeb",
+      "material": "library/text/0d50e5f118f7fbc1c8a61f66c8aa284b730d1ee6296886dff482b3e157ac1aeb.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/ads_daily.sql",
@@ -12512,7 +12596,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 122,
@@ -12549,7 +12635,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 45,
@@ -12561,8 +12649,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "fa848009916436743e922a9aa8e6dcbdc9338dbf45eb862b8232a28cb1c18972",
-      "material": "library/text/fa848009916436743e922a9aa8e6dcbdc9338dbf45eb862b8232a28cb1c18972.txt"
+      "content_sha256": "47ec07be81656e41f6762366439087d98190b39da3a2b032f9d1ed90fac3d49b",
+      "material": "library/text/47ec07be81656e41f6762366439087d98190b39da3a2b032f9d1ed90fac3d49b.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/daily_revenue.csv",
@@ -12596,7 +12684,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 15,
@@ -12608,8 +12698,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "86c80bd4eea8a819f0dc59310cae4d3ea15d10e6137bf5295136ef79786bf4f3",
-      "material": "library/text/86c80bd4eea8a819f0dc59310cae4d3ea15d10e6137bf5295136ef79786bf4f3.txt"
+      "content_sha256": "db258ba1b73532450b33a8c7a6ae0cfd57ccf476e4b9cedf9adc8872ad048162",
+      "material": "library/text/db258ba1b73532450b33a8c7a6ae0cfd57ccf476e4b9cedf9adc8872ad048162.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/freshness.json",
@@ -12643,7 +12733,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 658,
@@ -12655,8 +12747,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "85fc8c78544702f1d8b1116686cb510e71c5cb5298c7b6e1f67acf60ce5720d2",
-      "material": "library/text/85fc8c78544702f1d8b1116686cb510e71c5cb5298c7b6e1f67acf60ce5720d2.txt"
+      "content_sha256": "bb0d8605c0f3d9b8481f51f5d45f7be6b0cb7bba1898ddb7e028473fb310edad",
+      "material": "library/text/bb0d8605c0f3d9b8481f51f5d45f7be6b0cb7bba1898ddb7e028473fb310edad.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/freshness.sql",
@@ -12774,7 +12866,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 18,
@@ -12786,8 +12880,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "bfaf52248ef6cbeedc6e97ee7d86861c975f1f4c6ec8ed75098d02cc29eb77d2",
-      "material": "library/text/bfaf52248ef6cbeedc6e97ee7d86861c975f1f4c6ec8ed75098d02cc29eb77d2.txt"
+      "content_sha256": "5ec92ede03c876ea8be7786900a14d2d92a2d726e66174e377ac46901e340d47",
+      "material": "library/text/5ec92ede03c876ea8be7786900a14d2d92a2d726e66174e377ac46901e340d47.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/qa.json",
@@ -12809,7 +12903,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 30,
@@ -12821,8 +12917,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "c0ce04fe58c3ca033bf5408a8c2c6c458cb6e098f7f8ae7a1301808de60db4c6",
-      "material": "library/text/c0ce04fe58c3ca033bf5408a8c2c6c458cb6e098f7f8ae7a1301808de60db4c6.txt"
+      "content_sha256": "698ae9a91f5d7f2e392f508ee37d2038045d4c9a71ff0acdd93b3cb9b218cc99",
+      "material": "library/text/698ae9a91f5d7f2e392f508ee37d2038045d4c9a71ff0acdd93b3cb9b218cc99.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/qa.sql",
@@ -12949,7 +13045,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 23,
@@ -12961,8 +13059,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "79d8cee421024f7ff7ea564543b6a79216b3d89824f37d691ec2de9a11410b7d",
-      "material": "library/text/79d8cee421024f7ff7ea564543b6a79216b3d89824f37d691ec2de9a11410b7d.txt"
+      "content_sha256": "cc73cf0457ff50e52c1eb743a324d7d96eb2a17a4b0949099202cfeadead79ec",
+      "material": "library/text/cc73cf0457ff50e52c1eb743a324d7d96eb2a17a4b0949099202cfeadead79ec.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/recheck_0911.sql",
@@ -13058,7 +13156,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 15,
@@ -13070,8 +13170,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "d46e87b7b6e14bf42f7cc0f7b515d629ad34861b01cf3103048561bdd152e624",
-      "material": "library/text/d46e87b7b6e14bf42f7cc0f7b515d629ad34861b01cf3103048561bdd152e624.txt"
+      "content_sha256": "2b72162541bf6316a0bce4141c043eabf9091ba9d59ca434eb65f1e1b0a032d4",
+      "material": "library/text/2b72162541bf6316a0bce4141c043eabf9091ba9d59ca434eb65f1e1b0a032d4.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/revenue_type_changes.csv",
@@ -13090,7 +13190,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 5,
@@ -13102,8 +13204,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "c84f5a4fff7225548ed545a82f85bce100630fd994f59fa81a7c8bbd3f9303b2",
-      "material": "library/text/c84f5a4fff7225548ed545a82f85bce100630fd994f59fa81a7c8bbd3f9303b2.txt"
+      "content_sha256": "c16961813db8601d31aa2c04d8d956b0367195dc4a6fe1bf29a76d654d3e0a0e",
+      "material": "library/text/c16961813db8601d31aa2c04d8d956b0367195dc4a6fe1bf29a76d654d3e0a0e.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/schemas.json",
@@ -13131,7 +13233,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 3770,
@@ -13143,8 +13247,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "915acc9c2eec98dcf5b4d7a44dc1c3fb50a1b971dccc66ccb2ff6e3b7dd119f4",
-      "material": "library/text/915acc9c2eec98dcf5b4d7a44dc1c3fb50a1b971dccc66ccb2ff6e3b7dd119f4.txt"
+      "content_sha256": "93f618c34d6530e75389f53619920c6daa4265d8b3249cb42434016ec51f6484",
+      "material": "library/text/93f618c34d6530e75389f53619920c6daa4265d8b3249cb42434016ec51f6484.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_analysis.json",
@@ -13178,7 +13282,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 2480,
@@ -13190,8 +13296,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "a5522b565a49c121b5af9fa5281356156a37514181f7e42444bb710409dbb1d1",
-      "material": "library/text/a5522b565a49c121b5af9fa5281356156a37514181f7e42444bb710409dbb1d1.txt"
+      "content_sha256": "3c9477f35e670bb843b0f10bfd956ba9c3b0c7767d002d31073dac7f923fc0e8",
+      "material": "library/text/3c9477f35e670bb843b0f10bfd956ba9c3b0c7767d002d31073dac7f923fc0e8.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_analysis.sql",
@@ -13275,7 +13381,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 242,
@@ -13287,8 +13395,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "b26ca4b1d17a1ae38aacd86dcc4fd89aa6db53629894db63dc05893e5cee1419",
-      "material": "library/text/b26ca4b1d17a1ae38aacd86dcc4fd89aa6db53629894db63dc05893e5cee1419.txt"
+      "content_sha256": "162eb86b660e83d4ff08bf5c08c955a3c9aadcb7ff57595c7f6356cc24b2bba2",
+      "material": "library/text/162eb86b660e83d4ff08bf5c08c955a3c9aadcb7ff57595c7f6356cc24b2bba2.txt"
     },
     {
       "id": "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_probe.sql",
@@ -13375,7 +13483,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 114,
@@ -13387,8 +13497,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "a8a1f7487f0a99e1f664a8159b53cbac2e40d8ed73ce65a378a0b3b4cc6c84ec",
-      "material": "library/text/a8a1f7487f0a99e1f664a8159b53cbac2e40d8ed73ce65a378a0b3b4cc6c84ec.txt"
+      "content_sha256": "b512a273b5291280335d43864b9ca23d92bdce0da38aeb689b652341b317907c",
+      "material": "library/text/b512a273b5291280335d43864b9ca23d92bdce0da38aeb689b652341b317907c.txt"
     },
     {
       "id": "ai-knowledge:collart_android/README.md",
@@ -13506,7 +13616,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 71,
@@ -13518,8 +13630,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "de73f81c8cbfee96ccf322f741f4146f35732d2ecc68a47b3b9fabeefa0ce712",
-      "material": "library/text/de73f81c8cbfee96ccf322f741f4146f35732d2ecc68a47b3b9fabeefa0ce712.txt"
+      "content_sha256": "ca090718b17efd4a39d570a878a84047a694c7ca3cc6b8291dadfe3cb56412e6",
+      "material": "library/text/ca090718b17efd4a39d570a878a84047a694c7ca3cc6b8291dadfe3cb56412e6.txt"
     },
     {
       "id": "ai-knowledge:collart_android/analysis_playbooks/template_analysis_daily.py",
@@ -13690,7 +13802,7 @@
           "target": "./russia_orders_payment_broadcast.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_android/indicators/russia_orders_payment_broadcast.md",
-          "material": "library/text/942af99f96e94b2eff09fc302a9b0c40f1374b8077e082fe82d9b8f1d580da3a.txt",
+          "material": "library/text/531735647df564410791cc096fc1cae9ef3d8360a03a27f92f888b6dca228667.txt",
           "status": "included"
         },
         {
@@ -14464,12 +14576,14 @@
           "target": "../../collart_ios/indicators/russia_orders_payment.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_ios/indicators/russia_orders_payment.md",
-          "material": "library/text/475eea38c39c2451d2f757f4f15501a66a6ce9cbbedc7a486ac9d09759f5ad2b.txt",
+          "material": "library/text/ac46edbdcb57a55ff05b6f2c51186ae840c92380c4b806ecfb07897fefca5f09.txt",
           "status": "included"
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 20,
@@ -14481,8 +14595,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "942af99f96e94b2eff09fc302a9b0c40f1374b8077e082fe82d9b8f1d580da3a",
-      "material": "library/text/942af99f96e94b2eff09fc302a9b0c40f1374b8077e082fe82d9b8f1d580da3a.txt"
+      "content_sha256": "531735647df564410791cc096fc1cae9ef3d8360a03a27f92f888b6dca228667",
+      "material": "library/text/531735647df564410791cc096fc1cae9ef3d8360a03a27f92f888b6dca228667.txt"
     },
     {
       "id": "ai-knowledge:collart_android/indicators/search_uv.sql",
@@ -15016,7 +15130,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 63,
@@ -15030,8 +15146,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "a8333dfb03684730abb771967772f32f55ae2ffe326f335309f3b8c52efeffc9",
-      "material": "library/text/a8333dfb03684730abb771967772f32f55ae2ffe326f335309f3b8c52efeffc9.txt"
+      "content_sha256": "8730fe5543c8c950c16b36a133eb114a6f23dfd9b53379f55bb482f3a4bd8f4e",
+      "material": "library/text/8730fe5543c8c950c16b36a133eb114a6f23dfd9b53379f55bb482f3a4bd8f4e.txt"
     },
     {
       "id": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/ai_service_start_daily.sql",
@@ -16392,7 +16508,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 43,
@@ -16406,8 +16524,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "a7f64087afd07cf69e11e279945dff091c109d6f6c2d11b5d53031fb80313ac2",
-      "material": "library/text/a7f64087afd07cf69e11e279945dff091c109d6f6c2d11b5d53031fb80313ac2.txt"
+      "content_sha256": "ee2b243fb28e719d54b86a593c8092743023ba2bcf56094f6a69b2a4d93a2e11",
+      "material": "library/text/ee2b243fb28e719d54b86a593c8092743023ba2bcf56094f6a69b2a4d93a2e11.txt"
     },
     {
       "id": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_click_rate_gt1000_20260403.sql",
@@ -17249,7 +17367,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 68,
@@ -17263,8 +17383,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "402683a9884ff2af9464cd30b35627e77dd33319c28d985f70cffca4be74ac6c",
-      "material": "library/text/402683a9884ff2af9464cd30b35627e77dd33319c28d985f70cffca4be74ac6c.txt"
+      "content_sha256": "02088c2133cd359f8afb32ed1052dca0aae9b0bda85fdc97c1b9099932543717",
+      "material": "library/text/02088c2133cd359f8afb32ed1052dca0aae9b0bda85fdc97c1b9099932543717.txt"
     },
     {
       "id": "ai-knowledge:collart_android/sql-snippets/russia_dau_ad_success_dist.sql",
@@ -17289,7 +17409,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 41,
@@ -17303,8 +17425,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "1a8b58490b3954af2fe3e7c62f3177d13d2afd6e7c3d1c86d9489758bb792480",
-      "material": "library/text/1a8b58490b3954af2fe3e7c62f3177d13d2afd6e7c3d1c86d9489758bb792480.txt"
+      "content_sha256": "a15a1eb25f57bc887c1697bd3a6676e5758675d49ad7d66f9c5ec7526fea9764",
+      "material": "library/text/a15a1eb25f57bc887c1697bd3a6676e5758675d49ad7d66f9c5ec7526fea9764.txt"
     },
     {
       "id": "ai-knowledge:collart_android/sql-snippets/russia_home_temp_show_failed_diagnosis_20260727.sql",
@@ -17615,7 +17737,7 @@
           "target": "./aidata2025.ads_collartandroid.ads_oper_user_event_metric_di.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_android/tables/aidata2025.ads_collartandroid.ads_oper_user_event_metric_di.md",
-          "material": "library/text/6413fe0be54e50cbab87d9cc925a081ffc2f2f7cc8b3a3457e273816da63bc90.txt",
+          "material": "library/text/fc01c6c222a28698fe467ec5cd5fea0e9ee2341fa7e96ea47d2e73e8d3552823.txt",
           "status": "included"
         },
         {
@@ -17731,7 +17853,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 34,
@@ -17743,8 +17867,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "c5fd2f14b6a12d2c3fc2c6b166a6548408f158028d3569c8163922ea4927f393",
-      "material": "library/text/c5fd2f14b6a12d2c3fc2c6b166a6548408f158028d3569c8163922ea4927f393.txt"
+      "content_sha256": "b9d630d7ee82b8b10ef42d34ce3ff55c5d7df9998a54d6cddeea0239f5d88df3",
+      "material": "library/text/b9d630d7ee82b8b10ef42d34ce3ff55c5d7df9998a54d6cddeea0239f5d88df3.txt"
     },
     {
       "id": "ai-knowledge:collart_android/tables/aidata2025.ads_collart.big_r_realtime_alert_log.md",
@@ -17771,7 +17895,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 31,
@@ -17783,8 +17909,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "55395a3cbde9439c710a8ee1d40814ff511aeb7a37981f20204692e70c82d458",
-      "material": "library/text/55395a3cbde9439c710a8ee1d40814ff511aeb7a37981f20204692e70c82d458.txt"
+      "content_sha256": "d3a5174cab891439863757a0e16fb66bb20509f6f0b2ebfe06bff6a1efb32647",
+      "material": "library/text/d3a5174cab891439863757a0e16fb66bb20509f6f0b2ebfe06bff6a1efb32647.txt"
     },
     {
       "id": "ai-knowledge:collart_android/tables/aidata2025.ads_collart.big_r_realtime_today_income.md",
@@ -17811,7 +17937,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 30,
@@ -17823,8 +17951,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "03630b032c1fbf8ad689675d444d53ad0d41ea7b4b35ccb7b5853bf003a737c7",
-      "material": "library/text/03630b032c1fbf8ad689675d444d53ad0d41ea7b4b35ccb7b5853bf003a737c7.txt"
+      "content_sha256": "7d9f22a1906ca309a08e4b2b8a32baf4d5b4933061d3f6636fd85b091a4475f5",
+      "material": "library/text/7d9f22a1906ca309a08e4b2b8a32baf4d5b4933061d3f6636fd85b091a4475f5.txt"
     },
     {
       "id": "ai-knowledge:collart_android/tables/aidata2025.ads_collart.big_r_user_value_state.md",
@@ -17853,7 +17981,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 36,
@@ -17865,8 +17995,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "ac1e823e768102b6c9637ad8b4b16a2f82e6f457a82472865c02ee3eb6950a01",
-      "material": "library/text/ac1e823e768102b6c9637ad8b4b16a2f82e6f457a82472865c02ee3eb6950a01.txt"
+      "content_sha256": "e3c9f0985b81dd2e82b81dc8137524506c9b4722d44cdcdd5800528dbf2e4978",
+      "material": "library/text/e3c9f0985b81dd2e82b81dc8137524506c9b4722d44cdcdd5800528dbf2e4978.txt"
     },
     {
       "id": "ai-knowledge:collart_android/tables/aidata2025.ads_collartandroid.ads_dim_event_tag.md",
@@ -17907,7 +18037,9 @@
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 7,
@@ -17919,8 +18051,8 @@
         "missing_sections": 0,
         "execution_side_effects": true
       },
-      "content_sha256": "3e45c991f1397134e048daa180074f14e7418a3d3f5ec877f6ac4a04e2b9d06e",
-      "material": "library/text/3e45c991f1397134e048daa180074f14e7418a3d3f5ec877f6ac4a04e2b9d06e.txt"
+      "content_sha256": "dcb43e2ea9bd8e400a3748475ade92ca48467a1504d0021e352ac907f0bd9eed",
+      "material": "library/text/dcb43e2ea9bd8e400a3748475ade92ca48467a1504d0021e352ac907f0bd9eed.txt"
     },
     {
       "id": "ai-knowledge:collart_android/tables/aidata2025.ads_collartandroid.ads_dim_metric_rule.md",
@@ -18000,7 +18132,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 33,
@@ -18012,8 +18146,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "e4a2cd1a46c6b8fea4ef710ce49164ddd13e6a6be53dd83cb92d1e8f5e8db69e",
-      "material": "library/text/e4a2cd1a46c6b8fea4ef710ce49164ddd13e6a6be53dd83cb92d1e8f5e8db69e.txt"
+      "content_sha256": "e645b8227d0caf95268781852ab123652a861a548a0b50faff627c6404703cdc",
+      "material": "library/text/e645b8227d0caf95268781852ab123652a861a548a0b50faff627c6404703cdc.txt"
     },
     {
       "id": "ai-knowledge:collart_android/tables/aidata2025.ads_collartandroid.ads_oper_event_metric_country_di.md",
@@ -18042,7 +18176,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 24,
@@ -18054,8 +18190,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "6c6ee1d03d588baa0685c03a78f53adcd19d22fbf048932a33be0fd5921fe9fd",
-      "material": "library/text/6c6ee1d03d588baa0685c03a78f53adcd19d22fbf048932a33be0fd5921fe9fd.txt"
+      "content_sha256": "a9fb3c8613429683c2c15bcaac9e701ac2fa9362e1e9946725f5ceef090da393",
+      "material": "library/text/a9fb3c8613429683c2c15bcaac9e701ac2fa9362e1e9946725f5ceef090da393.txt"
     },
     {
       "id": "ai-knowledge:collart_android/tables/aidata2025.ads_collartandroid.ads_oper_user_event_metric_di.md",
@@ -18087,7 +18223,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 44,
@@ -18099,8 +18237,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "6413fe0be54e50cbab87d9cc925a081ffc2f2f7cc8b3a3457e273816da63bc90",
-      "material": "library/text/6413fe0be54e50cbab87d9cc925a081ffc2f2f7cc8b3a3457e273816da63bc90.txt"
+      "content_sha256": "fc01c6c222a28698fe467ec5cd5fea0e9ee2341fa7e96ea47d2e73e8d3552823",
+      "material": "library/text/fc01c6c222a28698fe467ec5cd5fea0e9ee2341fa7e96ea47d2e73e8d3552823.txt"
     },
     {
       "id": "ai-knowledge:collart_android/tables/dwd_oper_user_collart_di.md",
@@ -18779,12 +18917,14 @@
           "target": "./fashion_revenue.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_fashion/indicators/fashion_revenue.md",
-          "material": "library/text/855927a0685fa3fd48f7110d7f6fce8eef90ed8d0d9e79a45ccec478c845cca8.txt",
+          "material": "library/text/9f577042b3ec55deea8a965fcb5915f822c7c03b26f8f698db099cc288039305.txt",
           "status": "included"
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 14,
@@ -18796,8 +18936,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "64c3703b57691035aec21e48a845ebc9aa3fb83af0403cb1db757eb952c4c3ca",
-      "material": "library/text/64c3703b57691035aec21e48a845ebc9aa3fb83af0403cb1db757eb952c4c3ca.txt"
+      "content_sha256": "794c061cdee8890913d070c172d7a5ef917e55d26472c7915f29cb51f5a48fd7",
+      "material": "library/text/794c061cdee8890913d070c172d7a5ef917e55d26472c7915f29cb51f5a48fd7.txt"
     },
     {
       "id": "ai-knowledge:collart_fashion/indicators/fashion_new_user.md",
@@ -18839,7 +18979,7 @@
           "target": "../sql_presets/fashion_new_user_orders.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_fashion/sql_presets/fashion_new_user_orders.sql",
-          "material": "library/text/c88f91e9b1d91de0f1f3a6f2f7193387bd0bd3ee4261dcfc3fa0494cd4eb632e.txt",
+          "material": "library/text/c6d5004b0577f54056823c55ccacf21158170bff4ac89686bc8d8d19c94926f8.txt",
           "status": "included"
         },
         {
@@ -18860,12 +19000,14 @@
           "target": "../../collart_web/indicators/new_user_pseudo_id.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/indicators/new_user_pseudo_id.md",
-          "material": "library/text/a41aa23e1b9e7dda4da630400d23e2828856a12fa7bb7537da44f1711f84c9e6.txt",
+          "material": "library/text/c57c522b0316ac6bcc922068c6c5c3a15ea3b09d1015245c79a500eac36e4b83.txt",
           "status": "included"
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 69,
@@ -18880,8 +19022,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "4b6ac3b7da94e479d42217d4d57e7f2b83d7e3d52508f692a3764a6a2cdb7da9",
-      "material": "library/text/4b6ac3b7da94e479d42217d4d57e7f2b83d7e3d52508f692a3764a6a2cdb7da9.txt"
+      "content_sha256": "c1eb58c84b766c0830e835bf270c41ce5fddccafd739782a22791fdf820f2e02",
+      "material": "library/text/c1eb58c84b766c0830e835bf270c41ce5fddccafd739782a22791fdf820f2e02.txt"
     },
     {
       "id": "ai-knowledge:collart_fashion/indicators/fashion_revenue.md",
@@ -18915,7 +19057,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 44,
@@ -18927,8 +19071,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "855927a0685fa3fd48f7110d7f6fce8eef90ed8d0d9e79a45ccec478c845cca8",
-      "material": "library/text/855927a0685fa3fd48f7110d7f6fce8eef90ed8d0d9e79a45ccec478c845cca8.txt"
+      "content_sha256": "9f577042b3ec55deea8a965fcb5915f822c7c03b26f8f698db099cc288039305",
+      "material": "library/text/9f577042b3ec55deea8a965fcb5915f822c7c03b26f8f698db099cc288039305.txt"
     },
     {
       "id": "ai-knowledge:collart_fashion/indicators/fashion_vs_main_site_user.md",
@@ -18965,7 +19109,7 @@
           "target": "./fashion_new_user.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_fashion/indicators/fashion_new_user.md",
-          "material": "library/text/4b6ac3b7da94e479d42217d4d57e7f2b83d7e3d52508f692a3764a6a2cdb7da9.txt",
+          "material": "library/text/c1eb58c84b766c0830e835bf270c41ce5fddccafd739782a22791fdf820f2e02.txt",
           "status": "included"
         },
         {
@@ -18979,7 +19123,7 @@
           "target": "../../collart_web/sql_presets/fashion_vs_main_site_user.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/sql_presets/fashion_vs_main_site_user.sql",
-          "material": "library/text/4548f3143729e781ec7ec4327179b35c22546a86d4eb576b7bfa18dd2fddb6f2.txt",
+          "material": "library/text/5f16972aa17adb03ab7addf3e836fae7cb744f327ce5709dcd8a09e9c073b289.txt",
           "status": "included"
         },
         {
@@ -19307,7 +19451,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 66,
@@ -19327,8 +19473,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "c88f91e9b1d91de0f1f3a6f2f7193387bd0bd3ee4261dcfc3fa0494cd4eb632e",
-      "material": "library/text/c88f91e9b1d91de0f1f3a6f2f7193387bd0bd3ee4261dcfc3fa0494cd4eb632e.txt"
+      "content_sha256": "c6d5004b0577f54056823c55ccacf21158170bff4ac89686bc8d8d19c94926f8",
+      "material": "library/text/c6d5004b0577f54056823c55ccacf21158170bff4ac89686bc8d8d19c94926f8.txt"
     },
     {
       "id": "ai-knowledge:collart_fashion/sql_presets/fashion_pbi_dashboard.sql",
@@ -19355,7 +19501,8 @@
       "links": [],
       "issues": [],
       "transforms": [
-        "内部测试用户 ID 引用统一 config/internal-user-ids.json"
+        "内部测试用户 ID 引用统一 config/internal-user-ids.json",
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
       ],
       "encoding": "utf-8",
       "content_analysis": {
@@ -19373,8 +19520,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "7f51e7e71f620afc35cdfe6e4b603be042694187201b6ecef291855d78c4d284",
-      "material": "library/text/7f51e7e71f620afc35cdfe6e4b603be042694187201b6ecef291855d78c4d284.txt"
+      "content_sha256": "55ad11353f72b429cca31a8bf2b4b58b17b1553ba896e7a52fdce10aa7344ff6",
+      "material": "library/text/55ad11353f72b429cca31a8bf2b4b58b17b1553ba896e7a52fdce10aa7344ff6.txt"
     },
     {
       "id": "ai-knowledge:collart_fashion/tables/README.md",
@@ -19414,21 +19561,21 @@
           "target": "aidata2025.ads_collartfashion.ads_oper_user_active_di.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_active_di.md",
-          "material": "library/text/40bc20a433501b49c0200222b71177f5a137a4943b23e9e60618c7c0d349fbb2.txt",
+          "material": "library/text/82f2569629f7e0374399665814d95d08b9e7034b44416ec7a680eb287fffbe0b.txt",
           "status": "included"
         },
         {
           "target": "aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di.md",
-          "material": "library/text/2ad23380954771c47a6baccb7f856145786b814d157a0d45b767159dce36d1db.txt",
+          "material": "library/text/7bbef130e8345b7529ce965e5ae590069779ca2db750c03b51b19b12d7b78b5f.txt",
           "status": "included"
         },
         {
           "target": "aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di.md",
-          "material": "library/text/74fde5884015b16b5564b2f847ca4a4002566f1f40891aceae1e6c2cd8f54245.txt",
+          "material": "library/text/4a9f2fb81a2d84d611f0a8a762c1744a5851def8a5a792e7200c9f033826c78d.txt",
           "status": "included"
         },
         {
@@ -19442,12 +19589,14 @@
           "target": "aidata2025.ads_collartfashion.ads_oper_user_event_metric_di.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_event_metric_di.md",
-          "material": "library/text/f4e5b44bbeed00a1bc0c4a1a460cd5750008903e4226d374932419ea4ba6cdb2.txt",
+          "material": "library/text/56c9f5c620ceda337a3565d5dc26cca45463137d97c7dd6e53560358bfda6c55.txt",
           "status": "included"
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 13,
@@ -19459,8 +19608,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "d3fc3de4d64760d7f563a3693de889e4f58b26c1151ff4be45fb03ab0a17f516",
-      "material": "library/text/d3fc3de4d64760d7f563a3693de889e4f58b26c1151ff4be45fb03ab0a17f516.txt"
+      "content_sha256": "84e676b209cf79d7d2dac1b932d9fa7099a4d8fb5eda0392c8697f047167e5c0",
+      "material": "library/text/84e676b209cf79d7d2dac1b932d9fa7099a4d8fb5eda0392c8697f047167e5c0.txt"
     },
     {
       "id": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di.md",
@@ -19543,12 +19692,14 @@
           "target": "aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di.md",
-          "material": "library/text/2ad23380954771c47a6baccb7f856145786b814d157a0d45b767159dce36d1db.txt",
+          "material": "library/text/7bbef130e8345b7529ce965e5ae590069779ca2db750c03b51b19b12d7b78b5f.txt",
           "status": "included"
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 51,
@@ -19560,8 +19711,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "74fde5884015b16b5564b2f847ca4a4002566f1f40891aceae1e6c2cd8f54245",
-      "material": "library/text/74fde5884015b16b5564b2f847ca4a4002566f1f40891aceae1e6c2cd8f54245.txt"
+      "content_sha256": "4a9f2fb81a2d84d611f0a8a762c1744a5851def8a5a792e7200c9f033826c78d",
+      "material": "library/text/4a9f2fb81a2d84d611f0a8a762c1744a5851def8a5a792e7200c9f033826c78d.txt"
     },
     {
       "id": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_user_collartweb_di.md",
@@ -19642,28 +19793,28 @@
           "target": "../indicators/fashion_new_user.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_fashion/indicators/fashion_new_user.md",
-          "material": "library/text/4b6ac3b7da94e479d42217d4d57e7f2b83d7e3d52508f692a3764a6a2cdb7da9.txt",
+          "material": "library/text/c1eb58c84b766c0830e835bf270c41ce5fddccafd739782a22791fdf820f2e02.txt",
           "status": "included"
         },
         {
           "target": "../indicators/fashion_new_user.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_fashion/indicators/fashion_new_user.md",
-          "material": "library/text/4b6ac3b7da94e479d42217d4d57e7f2b83d7e3d52508f692a3764a6a2cdb7da9.txt",
+          "material": "library/text/c1eb58c84b766c0830e835bf270c41ce5fddccafd739782a22791fdf820f2e02.txt",
           "status": "included"
         },
         {
           "target": "../../collart_web/indicators/new_user_pseudo_id.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/indicators/new_user_pseudo_id.md",
-          "material": "library/text/a41aa23e1b9e7dda4da630400d23e2828856a12fa7bb7537da44f1711f84c9e6.txt",
+          "material": "library/text/c57c522b0316ac6bcc922068c6c5c3a15ea3b09d1015245c79a500eac36e4b83.txt",
           "status": "included"
         },
         {
           "target": "../../collart_web/sql_presets/new_user_by_pseudo_id.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/sql_presets/new_user_by_pseudo_id.sql",
-          "material": "library/text/c49fb258c6dbefe0b9a2267c444b73f1604337246b270334b9cebaa1f66a62e6.txt",
+          "material": "library/text/d796bcb7774dccd13b8d3edcea2abe588572865eb6c0b18d9c3e2a683c8a0197.txt",
           "status": "included"
         }
       ],
@@ -19719,7 +19870,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 71,
@@ -19731,8 +19884,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "2ad23380954771c47a6baccb7f856145786b814d157a0d45b767159dce36d1db",
-      "material": "library/text/2ad23380954771c47a6baccb7f856145786b814d157a0d45b767159dce36d1db.txt"
+      "content_sha256": "7bbef130e8345b7529ce965e5ae590069779ca2db750c03b51b19b12d7b78b5f",
+      "material": "library/text/7bbef130e8345b7529ce965e5ae590069779ca2db750c03b51b19b12d7b78b5f.txt"
     },
     {
       "id": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collartfashion.ads_dim_metric_rule.md",
@@ -19814,7 +19967,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 49,
@@ -19826,8 +19981,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "40bc20a433501b49c0200222b71177f5a137a4943b23e9e60618c7c0d349fbb2",
-      "material": "library/text/40bc20a433501b49c0200222b71177f5a137a4943b23e9e60618c7c0d349fbb2.txt"
+      "content_sha256": "82f2569629f7e0374399665814d95d08b9e7034b44416ec7a680eb287fffbe0b",
+      "material": "library/text/82f2569629f7e0374399665814d95d08b9e7034b44416ec7a680eb287fffbe0b.txt"
     },
     {
       "id": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_event_metric_di.md",
@@ -19861,7 +20016,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 42,
@@ -19873,8 +20030,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "f4e5b44bbeed00a1bc0c4a1a460cd5750008903e4226d374932419ea4ba6cdb2",
-      "material": "library/text/f4e5b44bbeed00a1bc0c4a1a460cd5750008903e4226d374932419ea4ba6cdb2.txt"
+      "content_sha256": "56c9f5c620ceda337a3565d5dc26cca45463137d97c7dd6e53560358bfda6c55",
+      "material": "library/text/56c9f5c620ceda337a3565d5dc26cca45463137d97c7dd6e53560358bfda6c55.txt"
     },
     {
       "id": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md",
@@ -20200,21 +20357,21 @@
           "target": "indicators/russia_orders_payment.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_ios/indicators/russia_orders_payment.md",
-          "material": "library/text/475eea38c39c2451d2f757f4f15501a66a6ce9cbbedc7a486ac9d09759f5ad2b.txt",
+          "material": "library/text/ac46edbdcb57a55ff05b6f2c51186ae840c92380c4b806ecfb07897fefca5f09.txt",
           "status": "included"
         },
         {
           "target": "sql_presets/asa_delivery_1d.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_ios/sql_presets/asa_delivery_1d.sql",
-          "material": "library/text/0268e845697f87fc6fbb4c49c5d54afdabe374ce5cd9281516eb39094a4aa9af.txt",
+          "material": "library/text/c247478dc717486132d3710e893ca108a0f0d6f39c916276082826f1a5e8f813.txt",
           "status": "included"
         },
         {
           "target": "sql_presets/russia_payment_broadcast.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_ios/sql_presets/russia_payment_broadcast.sql",
-          "material": "library/text/b121efef2717c01e965bed18804e2bf9f56ada275f99a5e28ab9df9bfdb07e85.txt",
+          "material": "library/text/051bfd5dc7aea23a71964f7fb83732e5127587aff78a66a1f090bed3b627b515.txt",
           "status": "included"
         },
         {
@@ -20565,12 +20722,14 @@
           "target": "../sql_presets/russia_payment_broadcast.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_ios/sql_presets/russia_payment_broadcast.sql",
-          "material": "library/text/b121efef2717c01e965bed18804e2bf9f56ada275f99a5e28ab9df9bfdb07e85.txt",
+          "material": "library/text/051bfd5dc7aea23a71964f7fb83732e5127587aff78a66a1f090bed3b627b515.txt",
           "status": "included"
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 45,
@@ -20582,8 +20741,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "475eea38c39c2451d2f757f4f15501a66a6ce9cbbedc7a486ac9d09759f5ad2b",
-      "material": "library/text/475eea38c39c2451d2f757f4f15501a66a6ce9cbbedc7a486ac9d09759f5ad2b.txt"
+      "content_sha256": "ac46edbdcb57a55ff05b6f2c51186ae840c92380c4b806ecfb07897fefca5f09",
+      "material": "library/text/ac46edbdcb57a55ff05b6f2c51186ae840c92380c4b806ecfb07897fefca5f09.txt"
     },
     {
       "id": "ai-knowledge:collart_ios/sql_presets/asa_daily_cost.sql",
@@ -20608,7 +20767,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 59,
@@ -20622,8 +20783,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "7b00696e7e7ce19d3b9c5964412d7c14382bc5bbc93815963c9304f5ef0b860b",
-      "material": "library/text/7b00696e7e7ce19d3b9c5964412d7c14382bc5bbc93815963c9304f5ef0b860b.txt"
+      "content_sha256": "2bd8f672e7649e9f6e3f4d69bdd3cda9f6a56fc6b8d65a01fb28150c1fa8dfde",
+      "material": "library/text/2bd8f672e7649e9f6e3f4d69bdd3cda9f6a56fc6b8d65a01fb28150c1fa8dfde.txt"
     },
     {
       "id": "ai-knowledge:collart_ios/sql_presets/asa_delivery_1d.sql",
@@ -20656,7 +20817,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 473,
@@ -20670,8 +20833,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "0268e845697f87fc6fbb4c49c5d54afdabe374ce5cd9281516eb39094a4aa9af",
-      "material": "library/text/0268e845697f87fc6fbb4c49c5d54afdabe374ce5cd9281516eb39094a4aa9af.txt"
+      "content_sha256": "c247478dc717486132d3710e893ca108a0f0d6f39c916276082826f1a5e8f813",
+      "material": "library/text/c247478dc717486132d3710e893ca108a0f0d6f39c916276082826f1a5e8f813.txt"
     },
     {
       "id": "ai-knowledge:collart_ios/sql_presets/asa_delivery_revenue_v2.sql",
@@ -20699,7 +20862,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 228,
@@ -20713,8 +20878,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "ebace89abfb4aef71a8f270fcbca133f542988c0e8edd35dc80945c2b5e8315e",
-      "material": "library/text/ebace89abfb4aef71a8f270fcbca133f542988c0e8edd35dc80945c2b5e8315e.txt"
+      "content_sha256": "4c71e926fec75aff05cef8b0df1a2362e5dcba3da2bf780a8747701a033e209c",
+      "material": "library/text/4c71e926fec75aff05cef8b0df1a2362e5dcba3da2bf780a8747701a033e209c.txt"
     },
     {
       "id": "ai-knowledge:collart_ios/sql_presets/russia_payment_broadcast.sql",
@@ -20735,7 +20900,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 50,
@@ -20754,8 +20921,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "b121efef2717c01e965bed18804e2bf9f56ada275f99a5e28ab9df9bfdb07e85",
-      "material": "library/text/b121efef2717c01e965bed18804e2bf9f56ada275f99a5e28ab9df9bfdb07e85.txt"
+      "content_sha256": "051bfd5dc7aea23a71964f7fb83732e5127587aff78a66a1f090bed3b627b515",
+      "material": "library/text/051bfd5dc7aea23a71964f7fb83732e5127587aff78a66a1f090bed3b627b515.txt"
     },
     {
       "id": "ai-knowledge:collart_ios/tables/aidata2025.ads_collartios.ads_dim_metric_rule.md",
@@ -20834,7 +21001,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 37,
@@ -20846,8 +21015,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "5dbf58079183562d1fbde18ed7418eadb7ce8189d328539e8e3a750139081641",
-      "material": "library/text/5dbf58079183562d1fbde18ed7418eadb7ce8189d328539e8e3a750139081641.txt"
+      "content_sha256": "dacbf093801669e4faa1bee0b1adca04ce23b15d7ea47b3f9846d0ab1a1f9448",
+      "material": "library/text/dacbf093801669e4faa1bee0b1adca04ce23b15d7ea47b3f9846d0ab1a1f9448.txt"
     },
     {
       "id": "ai-knowledge:collart_web/README.md",
@@ -20933,7 +21102,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 1,
@@ -21040,7 +21211,7 @@
           "target": "./new_user_pseudo_id.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/indicators/new_user_pseudo_id.md",
-          "material": "library/text/a41aa23e1b9e7dda4da630400d23e2828856a12fa7bb7537da44f1711f84c9e6.txt",
+          "material": "library/text/c57c522b0316ac6bcc922068c6c5c3a15ea3b09d1015245c79a500eac36e4b83.txt",
           "status": "included"
         },
         {
@@ -21366,21 +21537,21 @@
           "target": "./new_user_pseudo_id.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/indicators/new_user_pseudo_id.md",
-          "material": "library/text/a41aa23e1b9e7dda4da630400d23e2828856a12fa7bb7537da44f1711f84c9e6.txt",
+          "material": "library/text/c57c522b0316ac6bcc922068c6c5c3a15ea3b09d1015245c79a500eac36e4b83.txt",
           "status": "included"
         },
         {
           "target": "../sql_presets/fashion_vs_main_site_user.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/sql_presets/fashion_vs_main_site_user.sql",
-          "material": "library/text/4548f3143729e781ec7ec4327179b35c22546a86d4eb576b7bfa18dd2fddb6f2.txt",
+          "material": "library/text/5f16972aa17adb03ab7addf3e836fae7cb744f327ce5709dcd8a09e9c073b289.txt",
           "status": "included"
         },
         {
           "target": "../sql-snippets/fashion_first_then_main_site_users.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/sql-snippets/fashion_first_then_main_site_users.sql",
-          "material": "library/text/d07744dda8e6dcd05f150fb73e3e6f21ed0d85ddafc37b121c014cb36ae1aaa2.txt",
+          "material": "library/text/9f4fada2aa9b01ae471c753a3c341c67d776c90f573468e0484776be8b05e1fa.txt",
           "status": "historical"
         },
         {
@@ -21445,12 +21616,14 @@
           "target": "../sql_presets/new_user_by_pseudo_id.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/sql_presets/new_user_by_pseudo_id.sql",
-          "material": "library/text/c49fb258c6dbefe0b9a2267c444b73f1604337246b270334b9cebaa1f66a62e6.txt",
+          "material": "library/text/d796bcb7774dccd13b8d3edcea2abe588572865eb6c0b18d9c3e2a683c8a0197.txt",
           "status": "included"
         }
       ],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 101,
@@ -21466,8 +21639,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "a41aa23e1b9e7dda4da630400d23e2828856a12fa7bb7537da44f1711f84c9e6",
-      "material": "library/text/a41aa23e1b9e7dda4da630400d23e2828856a12fa7bb7537da44f1711f84c9e6.txt"
+      "content_sha256": "c57c522b0316ac6bcc922068c6c5c3a15ea3b09d1015245c79a500eac36e4b83",
+      "material": "library/text/c57c522b0316ac6bcc922068c6c5c3a15ea3b09d1015245c79a500eac36e4b83.txt"
     },
     {
       "id": "ai-knowledge:collart_web/indicators/page_conversion.md",
@@ -21790,7 +21963,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 1,
@@ -21868,7 +22043,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 1,
@@ -22020,7 +22197,7 @@
           "target": "../sql_presets/fashion_vs_main_site_user.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/sql_presets/fashion_vs_main_site_user.sql",
-          "material": "library/text/4548f3143729e781ec7ec4327179b35c22546a86d4eb576b7bfa18dd2fddb6f2.txt",
+          "material": "library/text/5f16972aa17adb03ab7addf3e836fae7cb744f327ce5709dcd8a09e9c073b289.txt",
           "status": "included"
         }
       ],
@@ -22697,7 +22874,9 @@
       ],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 153,
@@ -22709,8 +22888,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "a77b74707d730af6efeeef977443027134d2058faa6ee762fa8a8c3ed75d369c",
-      "material": "library/text/a77b74707d730af6efeeef977443027134d2058faa6ee762fa8a8c3ed75d369c.txt"
+      "content_sha256": "2e3de28320e26a5f0d111b74abd430ebc871d8f9fa65cc18f8ef0c21f2841f73",
+      "material": "library/text/2e3de28320e26a5f0d111b74abd430ebc871d8f9fa65cc18f8ef0c21f2841f73.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/archive/2026-05/traffic_overview_7days_20260311.sql",
@@ -23116,7 +23295,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 83,
@@ -23134,8 +23315,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "d07744dda8e6dcd05f150fb73e3e6f21ed0d85ddafc37b121c014cb36ae1aaa2",
-      "material": "library/text/d07744dda8e6dcd05f150fb73e3e6f21ed0d85ddafc37b121c014cb36ae1aaa2.txt"
+      "content_sha256": "9f4fada2aa9b01ae471c753a3c341c67d776c90f573468e0484776be8b05e1fa",
+      "material": "library/text/9f4fada2aa9b01ae471c753a3c341c67d776c90f573468e0484776be8b05e1fa.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/fb_delivery_payment_conversion_20260710.sql",
@@ -23163,7 +23344,8 @@
       "links": [],
       "issues": [],
       "transforms": [
-        "内部测试用户 ID 引用统一 config/internal-user-ids.json"
+        "内部测试用户 ID 引用统一 config/internal-user-ids.json",
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
       ],
       "encoding": "utf-8",
       "content_analysis": {
@@ -23181,8 +23363,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "6fd0bc81fcc08ec23efd9265a26e9713793b7a3ab9f15d10542b44b6abb86f61",
-      "material": "library/text/6fd0bc81fcc08ec23efd9265a26e9713793b7a3ab9f15d10542b44b6abb86f61.txt"
+      "content_sha256": "b571f6282dfe5ee030efdd645d4430649e8949565e8731275ab2a57e88461f86",
+      "material": "library/text/b571f6282dfe5ee030efdd645d4430649e8949565e8731275ab2a57e88461f86.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/fb_delivery_user_ids_20260710.sql",
@@ -23208,7 +23390,8 @@
       "links": [],
       "issues": [],
       "transforms": [
-        "内部测试用户 ID 引用统一 config/internal-user-ids.json"
+        "内部测试用户 ID 引用统一 config/internal-user-ids.json",
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
       ],
       "encoding": "utf-8",
       "content_analysis": {
@@ -23226,8 +23409,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "07c3ffb21b7a7e21bfbabb1e5b86b055d268ae47f9c377b4aa2fdb8e4e985114",
-      "material": "library/text/07c3ffb21b7a7e21bfbabb1e5b86b055d268ae47f9c377b4aa2fdb8e4e985114.txt"
+      "content_sha256": "c311641d9beba6d23fcf9968914eceb5dfee7d3b1bcbb6ac5f3e217c6a834d1f",
+      "material": "library/text/c311641d9beba6d23fcf9968914eceb5dfee7d3b1bcbb6ac5f3e217c6a834d1f.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/igdrama_recent_7d_20260617.sql",
@@ -23303,7 +23486,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 233,
@@ -23323,8 +23508,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "8dc94281bb93953d7087fba693b054392f9caa3413e8823616a4b036668029c9",
-      "material": "library/text/8dc94281bb93953d7087fba693b054392f9caa3413e8823616a4b036668029c9.txt"
+      "content_sha256": "d3db426b906f1e32d14ad9ff84fd4c108bb398505b17f606dd6a2d07f27cd893",
+      "material": "library/text/d3db426b906f1e32d14ad9ff84fd4c108bb398505b17f606dd6a2d07f27cd893.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/seo_pages_paid_users_20260630.sql",
@@ -23355,7 +23540,8 @@
       "links": [],
       "issues": [],
       "transforms": [
-        "内部测试用户 ID 引用统一 config/internal-user-ids.json"
+        "内部测试用户 ID 引用统一 config/internal-user-ids.json",
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
       ],
       "encoding": "utf-8",
       "content_analysis": {
@@ -23373,8 +23559,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "98a0b79ac3e8a53c8c357f0c1e8b8ba58b5658bb9ac081bb25d1a253b830f41c",
-      "material": "library/text/98a0b79ac3e8a53c8c357f0c1e8b8ba58b5658bb9ac081bb25d1a253b830f41c.txt"
+      "content_sha256": "def6db2fcb4ee57213adf7a5a78a3d24eae808f8ef2f688f38cc835d169a32a8",
+      "material": "library/text/def6db2fcb4ee57213adf7a5a78a3d24eae808f8ef2f688f38cc835d169a32a8.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/soft_allure_paid_users_20260626.sql",
@@ -23401,7 +23587,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 130,
@@ -23418,8 +23606,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "b91d23fc1f74e9621f9f5ce3c738c2f2258dfb7c0317465e637045b7e80125e0",
-      "material": "library/text/b91d23fc1f74e9621f9f5ce3c738c2f2258dfb7c0317465e637045b7e80125e0.txt"
+      "content_sha256": "31b7535fec5d372d535c75d0f85a6bd24d2a8866bcf6308d3ae75baaf63d6eea",
+      "material": "library/text/31b7535fec5d372d535c75d0f85a6bd24d2a8866bcf6308d3ae75baaf63d6eea.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/soft_allure_paid_users_diagnostic_20260626.sql",
@@ -23445,7 +23633,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 115,
@@ -23462,8 +23652,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "fec0358a9a531bb8c044efb3346806e7ae8e61c52573265c7b583d8af286c508",
-      "material": "library/text/fec0358a9a531bb8c044efb3346806e7ae8e61c52573265c7b583d8af286c508.txt"
+      "content_sha256": "a6471ca4054870efb1c8ed66d7408f03433fb213d97015c82c2e2ff3a81eb2b7",
+      "material": "library/text/a6471ca4054870efb1c8ed66d7408f03433fb213d97015c82c2e2ff3a81eb2b7.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/user_basic_info_C28B8ACB_20260623.sql",
@@ -23592,7 +23782,8 @@
       "links": [],
       "issues": [],
       "transforms": [
-        "内部测试用户 ID 引用统一 config/internal-user-ids.json"
+        "内部测试用户 ID 引用统一 config/internal-user-ids.json",
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
       ],
       "encoding": "utf-8",
       "content_analysis": {
@@ -23610,8 +23801,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "e3ed204c55bba600690691c1ca86e1403904d79f626b57e97cc45d0b7ea16317",
-      "material": "library/text/e3ed204c55bba600690691c1ca86e1403904d79f626b57e97cc45d0b7ea16317.txt"
+      "content_sha256": "1a50ac7d330c4a0c11328d5221126e359848264102e39ae113b3ba35e709e1f1",
+      "material": "library/text/1a50ac7d330c4a0c11328d5221126e359848264102e39ae113b3ba35e709e1f1.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/weekend_fashion_generate_new_old_20260629.sql",
@@ -23638,7 +23829,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 111,
@@ -23656,8 +23849,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "98cbd6d73ed241df1d3d3cfc1e5c9a0b2f24db68aab54842641662ef499c1637",
-      "material": "library/text/98cbd6d73ed241df1d3d3cfc1e5c9a0b2f24db68aab54842641662ef499c1637.txt"
+      "content_sha256": "206b02de452d97d1f34c31541c11324f5fd539c4944668c27d182bd1cbe644f9",
+      "material": "library/text/206b02de452d97d1f34c31541c11324f5fd539c4944668c27d182bd1cbe644f9.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/weekend_fashion_video_generate_click_new_old_20260629.sql",
@@ -23684,7 +23877,8 @@
       "links": [],
       "issues": [],
       "transforms": [
-        "内部测试用户 ID 引用统一 config/internal-user-ids.json"
+        "内部测试用户 ID 引用统一 config/internal-user-ids.json",
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
       ],
       "encoding": "utf-8",
       "content_analysis": {
@@ -23703,8 +23897,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "5f5b9593d441238862551fc08a21ffebe24004017e32ba6e1695556f1a4134b0",
-      "material": "library/text/5f5b9593d441238862551fc08a21ffebe24004017e32ba6e1695556f1a4134b0.txt"
+      "content_sha256": "d915c33879d710033f92316e18697988c632a82123028920e3b54a3029fec80f",
+      "material": "library/text/d915c33879d710033f92316e18697988c632a82123028920e3b54a3029fec80f.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/weekend_sea_fashion_real_generate_new_old_20260629.sql",
@@ -23731,7 +23925,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 140,
@@ -23749,8 +23945,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "c76fd1ab70f5e8270cb05a1a6fb93fbf653f714ced186dae2e73e8622395529d",
-      "material": "library/text/c76fd1ab70f5e8270cb05a1a6fb93fbf653f714ced186dae2e73e8622395529d.txt"
+      "content_sha256": "dc993c39649e38ca529759a09a9f0f2f402076976f3c91bd46781d184208851f",
+      "material": "library/text/dc993c39649e38ca529759a09a9f0f2f402076976f3c91bd46781d184208851f.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql-snippets/weekly_core_metrics_20260702.sql",
@@ -23776,7 +23972,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 73,
@@ -23791,8 +23989,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "168d0f107800a559d1ec5de87e9c41dc4118b7f4f73b70943b3eaa1a5d02edd1",
-      "material": "library/text/168d0f107800a559d1ec5de87e9c41dc4118b7f4f73b70943b3eaa1a5d02edd1.txt"
+      "content_sha256": "6bb1b29f7ab6bf0c8d25dcdf4b7f4068f80413baf23dcea51d8072b88cf1f971",
+      "material": "library/text/6bb1b29f7ab6bf0c8d25dcdf4b7f4068f80413baf23dcea51d8072b88cf1f971.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql_presets/fashion_vs_main_site_user.sql",
@@ -23813,7 +24011,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 24,
@@ -23828,8 +24028,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "4548f3143729e781ec7ec4327179b35c22546a86d4eb576b7bfa18dd2fddb6f2",
-      "material": "library/text/4548f3143729e781ec7ec4327179b35c22546a86d4eb576b7bfa18dd2fddb6f2.txt"
+      "content_sha256": "5f16972aa17adb03ab7addf3e836fae7cb744f327ce5709dcd8a09e9c073b289",
+      "material": "library/text/5f16972aa17adb03ab7addf3e836fae7cb744f327ce5709dcd8a09e9c073b289.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql_presets/internal_user_filter.sql",
@@ -23893,7 +24093,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 164,
@@ -23911,8 +24113,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "c49fb258c6dbefe0b9a2267c444b73f1604337246b270334b9cebaa1f66a62e6",
-      "material": "library/text/c49fb258c6dbefe0b9a2267c444b73f1604337246b270334b9cebaa1f66a62e6.txt"
+      "content_sha256": "d796bcb7774dccd13b8d3edcea2abe588572865eb6c0b18d9c3e2a683c8a0197",
+      "material": "library/text/d796bcb7774dccd13b8d3edcea2abe588572865eb6c0b18d9c3e2a683c8a0197.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql_presets/profile_lookup_by_user_id.sql",
@@ -23936,6 +24138,7 @@
       "links": [],
       "issues": [],
       "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变",
         "已按原文件哈希复核；示例标识与邮箱替换为占位符"
       ],
       "encoding": "utf-8",
@@ -23955,8 +24158,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "4d264aa34833c3f4bc8a25b24e79f5e96dce60ccb73a3c6a0bf1008f709f3f77",
-      "material": "library/text/4d264aa34833c3f4bc8a25b24e79f5e96dce60ccb73a3c6a0bf1008f709f3f77.txt"
+      "content_sha256": "8bd5492613a163fc64adc48c590c46286ccce06088d3085477617328a9513d0d",
+      "material": "library/text/8bd5492613a163fc64adc48c590c46286ccce06088d3085477617328a9513d0d.txt"
     },
     {
       "id": "ai-knowledge:collart_web/sql_presets/user_grain_revenue_from_stripe.sql",
@@ -23977,7 +24180,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 23,
@@ -23991,8 +24196,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "9eeea6682ec009e38f9403d13768de498baf5ba3115c3cd01cda9701ded6ba92",
-      "material": "library/text/9eeea6682ec009e38f9403d13768de498baf5ba3115c3cd01cda9701ded6ba92.txt"
+      "content_sha256": "6f41c47d8635efe73b3e6cd58c41266465a0f9159aad18c1012fb4dca6a17926",
+      "material": "library/text/6f41c47d8635efe73b3e6cd58c41266465a0f9159aad18c1012fb4dca6a17926.txt"
     },
     {
       "id": "ai-knowledge:collart_web/tables/README.md",
@@ -24011,7 +24216,9 @@
       "headings": [],
       "links": [],
       "issues": [],
-      "transforms": [],
+      "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变"
+      ],
       "encoding": "utf-8",
       "content_analysis": {
         "lines": 1,
@@ -24156,14 +24363,14 @@
           "target": "../indicators/new_user_pseudo_id.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/indicators/new_user_pseudo_id.md",
-          "material": "library/text/a41aa23e1b9e7dda4da630400d23e2828856a12fa7bb7537da44f1711f84c9e6.txt",
+          "material": "library/text/c57c522b0316ac6bcc922068c6c5c3a15ea3b09d1015245c79a500eac36e4b83.txt",
           "status": "included"
         },
         {
           "target": "../sql_presets/new_user_by_pseudo_id.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/sql_presets/new_user_by_pseudo_id.sql",
-          "material": "library/text/c49fb258c6dbefe0b9a2267c444b73f1604337246b270334b9cebaa1f66a62e6.txt",
+          "material": "library/text/d796bcb7774dccd13b8d3edcea2abe588572865eb6c0b18d9c3e2a683c8a0197.txt",
           "status": "included"
         }
       ],
@@ -24263,26 +24470,27 @@
           "target": "../sql_presets/profile_lookup_by_user_id.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/sql_presets/profile_lookup_by_user_id.sql",
-          "material": "library/text/4d264aa34833c3f4bc8a25b24e79f5e96dce60ccb73a3c6a0bf1008f709f3f77.txt",
+          "material": "library/text/8bd5492613a163fc64adc48c590c46286ccce06088d3085477617328a9513d0d.txt",
           "status": "included"
         },
         {
           "target": "../indicators/new_user_pseudo_id.md",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/indicators/new_user_pseudo_id.md",
-          "material": "library/text/a41aa23e1b9e7dda4da630400d23e2828856a12fa7bb7537da44f1711f84c9e6.txt",
+          "material": "library/text/c57c522b0316ac6bcc922068c6c5c3a15ea3b09d1015245c79a500eac36e4b83.txt",
           "status": "included"
         },
         {
           "target": "../sql_presets/profile_lookup_by_user_id.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/sql_presets/profile_lookup_by_user_id.sql",
-          "material": "library/text/4d264aa34833c3f4bc8a25b24e79f5e96dce60ccb73a3c6a0bf1008f709f3f77.txt",
+          "material": "library/text/8bd5492613a163fc64adc48c590c46286ccce06088d3085477617328a9513d0d.txt",
           "status": "included"
         }
       ],
       "issues": [],
       "transforms": [
+        "发布文本换行规范化为 LF；原文件哈希保持不变",
         "已按原文件哈希复核；示例标识与邮箱替换为占位符"
       ],
       "encoding": "utf-8",
@@ -24296,8 +24504,8 @@
         "missing_sections": 0,
         "execution_side_effects": false
       },
-      "content_sha256": "73702fc3b2211500e766e87e0d96876058bd6955a77c97e6d4728a4c5f020f41",
-      "material": "library/text/73702fc3b2211500e766e87e0d96876058bd6955a77c97e6d4728a4c5f020f41.txt"
+      "content_sha256": "f6549b2603ffe26f0dc3bb3dfeb23888cd040d8647e3daedeb6a1163245f903c",
+      "material": "library/text/f6549b2603ffe26f0dc3bb3dfeb23888cd040d8647e3daedeb6a1163245f903c.txt"
     },
     {
       "id": "ai-knowledge:collart_web/tables/aidata2025.ods.orders.md",
@@ -24335,7 +24543,7 @@
           "target": "../sql_presets/user_grain_revenue_from_stripe.sql",
           "exists": true,
           "source_id": "ai-knowledge:collart_web/sql_presets/user_grain_revenue_from_stripe.sql",
-          "material": "library/text/9eeea6682ec009e38f9403d13768de498baf5ba3115c3cd01cda9701ded6ba92.txt",
+          "material": "library/text/6f41c47d8635efe73b3e6cd58c41266465a0f9159aad18c1012fb4dca6a17926.txt",
           "status": "included"
         }
       ],

@@ -29,6 +29,6 @@ verification_evidence: []
 
 ## 来源与状态
 
-- [1company/indicators/collart_daily_report_date_windows.md](../../library/text/b3cc071adc1c86669cb3155d6a78f4216706c260bcca47015eb12a786779edd1.txt)
+- [1company/indicators/collart_daily_report_date_windows.md](../../library/text/f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。

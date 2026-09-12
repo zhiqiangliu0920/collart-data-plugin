@@ -4,11 +4,11 @@
 
 | 来源 | 项目 | 类型 | 原日期 | 状态 | 文档 |
 |---|---|---|---|---|---|
-| ai-knowledge | shared | guide | 原文未标日期 | included | [三 Agent 共享 Skills](../library/text/22a9d2231a3486b78176f2f223d1758bb99578e0edf21efbbd278afbbbd46c75.txt) |
-| ai-knowledge | shared | guide | 原文未标日期 | included | [ai-knowledge 持续维护](../library/text/dc5d8fbe530d62b463a82a49529bba8307a2f7df28ad844a753e710536b79228.txt) |
-| ai-knowledge | shared | guide | 原文未标日期 | included | [openai.yaml](../library/text/249e9842d2cdc480a90fde9c842c48f59b21822ce4f289ff2713d0b98a10842c.txt) |
-| ai-knowledge | shared | guide | 原文未标日期 | included | [表名 → 项目路由](../library/text/ef8909c216952d7c26f185e3da10fda52a541ff59ea20c6a31d1e0bfdf0fc5db.txt) |
-| ai-knowledge | shared | guide | 原文未标日期 | included | [表文档模板（ai-knowledge canonical）](../library/text/68569914af4b6636000f94d7ad9896d9144b49c4ebdca7db3743353192cafa72.txt) |
+| ai-knowledge | shared | guide | 原文未标日期 | included | [三 Agent 共享 Skills](../library/text/e33d92f6d3aac828601d1e13b0b4256c9b5f6541396c2e92bf5de63e322c5556.txt) |
+| ai-knowledge | shared | guide | 原文未标日期 | included | [ai-knowledge 持续维护](../library/text/67172b0c1530da386b28e8f979b769c25d9901e8f4c9b9b4967de09590071e2f.txt) |
+| ai-knowledge | shared | guide | 原文未标日期 | included | [openai.yaml](../library/text/cb2a0bbf05029debbc7b4787deed4db7e8d79106351f09031c2e74aaa7a8c771.txt) |
+| ai-knowledge | shared | guide | 原文未标日期 | included | [表名 → 项目路由](../library/text/501931279252e6b898134e358bd8522c09556dc7f7ef88c1b840e52a46ebf93a.txt) |
+| ai-knowledge | shared | guide | 原文未标日期 | included | [表文档模板（ai-knowledge canonical）](../library/text/31d8e0f3e761cc10d35ae6e4fd18211add04d68111ec0d78736df2426d2cd83b.txt) |
 | ai-knowledge | shared | guide | 原文未标日期 | included | [Collart 事件指标规则同步](../library/text/48cabd7b2a9cb0022fbdd21f75a1690c5831bb59516e02c5d5ebae9d8767af6f.txt) |
 | ai-knowledge | shared | method | 2026-03-25, 2026-09-12 | included | [SQL 规范（全局）](../library/text/d4f965072f160547008bfce1d621d19de2d2ba007b4faca1c4ecd2461447b817.txt) |
 | ai-knowledge | shared | method | 2026-03-31 | included | [全局分析规范（适用于所有项目）](../library/text/1a50599e254dd14eb6f1f19dc40abba7493c6b25e663eedcbff5b27773ce30c8.txt) |
@@ -16,25 +16,25 @@
 | ai-knowledge | shared | method | 2026-04-10, 2026-04-30, 2026-12-31 | included | [BigQuery SQL 高级技巧 (43条)](../library/text/38851e1854b27dd0d430d5c4dee9dbf5ab002d27e21169ce31c8d2afd4eeaded.txt) |
 | ai-knowledge | shared | sql | 2026-04-01 | included | [【积木：基础属性平铺】](../library/text/12d9bb2cb68874078a729654bb65943611a3cc3155866770542c7d2a40dde0b5.txt) |
 | ai-knowledge | shared | method | 2026-03-25 | included | [SQL 书写规范与最佳实践](../library/text/88a523f6dcbe517f4de935539957b6547e66bed9233ab3a38f889f1e6ced7556.txt) |
-| ai-knowledge | shared | method | 2026-03-27 | included | [SQL 最佳实践与编码规范](../library/text/19f3c6ccd057a61988467bdafc6aefccfe1833c618b41f46e7d4af7fc15e8dbb.txt) |
+| ai-knowledge | shared | method | 2026-03-27 | included | [SQL 最佳实践与编码规范](../library/text/cc77956d280c96b9c7c0b759f47b69ec83c0b4e221ac49b4dad05a8c3ff6ce5f.txt) |
 | ai-knowledge | company | guide | 原文未标日期 | included | [1company 表文档索引](../library/text/db96060014a6f4be2d0ac5b292d04d97b4cf61d60407dd09d6dc4274ca5e3f52.txt) |
 | ai-knowledge | company | method | 2026-09-07 | included | [Collart ADS 现网红线（2026-09-07）](../library/text/0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104.txt) |
 | ai-knowledge | company | method | 2026-08-08 | included | [公司收入监控图片播报](../library/text/1905fb437b3c3d2db929c50d27ddbfc92943031cf4c3a42cba39bd5b8b8a5135.txt) |
 | ai-knowledge | company | method | 原文未标日期 | included | [Data Analysis Skill 参考手册](../library/text/3c90bfdd6b1420d84d357e5a62c1ecd7b4f65dcca98db1f0b1bf562373be35c1.txt) |
 | ai-knowledge | company | method | 2026-08-26 | included | [Playbook：规则表 → 查热/冷事件指标](../library/text/a1b61f1d8aad90419c28bdd99057ca25f732df1cea13086ffadc9f1eab1ebff6.txt) |
-| ai-knowledge | company | method | 2026-09-07 | included | [周会总结：来源核对与审核交付](../library/text/07c7a5b4612617ccd0fe673cf6c3f5e824a41710704b09745c409fe2f35306b3.txt) |
-| ai-knowledge | company | metric | 2026-08-06 | included | [Collart 项目经营日报日期窗口口径](../library/text/b3cc071adc1c86669cb3155d6a78f4216706c260bcca47015eb12a786779edd1.txt) |
+| ai-knowledge | company | method | 2026-09-07 | included | [周会总结：来源核对与审核交付](../library/text/7992cb70c65e5313bccc7b68f3018b59d7c28a467329fc5e44f97674e62aa50a.txt) |
+| ai-knowledge | company | metric | 2026-08-06 | included | [Collart 项目经营日报日期窗口口径](../library/text/f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637.txt) |
 | ai-knowledge | company | metric | 原文未标日期 | included | [指标：事件漏斗（规则表驱动）](../library/text/e1250b414f9b2d4476679d8b16f8d3edb3ca1717a23eb63930f495050c21976f.txt) |
 | ai-knowledge | company | metric | 2026-06-24, 2026-08-23, 2026-08-24 | included | [Subscription Purchase（四端）](../library/text/06f8ed14451fd932afccaab126e4ae18fed2f0d64d51dd6843753925ee2a3302.txt) |
 | ai-knowledge | company | sql | 2026-08-20, 2026-08-26 | included | [按 ads_dim_metric_rule 从 DM 算冷/未物化指标（Android 示例）](../library/text/c24d38f3cbbecc4aa076af7964a68ea0f3256cd783862f336185237e3375d808.txt) |
 | ai-knowledge | company | table | 2026-09-01, 2026-09-02 | included | [表名：四端 `ads_dim_metric_rule`（事件指标规则）](../library/text/b104829732baa11e181babc0e45e2a11ec4cf1374bfcad810cd55e726eb34a1b.txt) |
-| ai-knowledge | company | table | 2026-09-02 | included | [四端 ads_dim_metric_rule 行清单（2026-09-02 晚间回补后快照）](../library/text/9c7e351aaa01eed6079ae5f6a563ea582731e3e47fb252b53b94fe10d027006e.txt) |
+| ai-knowledge | company | table | 2026-09-02 | included | [四端 ads_dim_metric_rule 行清单（2026-09-02 晚间回补后快照）](../library/text/c47ce979b5e774aeb9cde26f45fc35806c351589dfde7b595a4cc8a87c126f0e.txt) |
 | ai-knowledge | company | table | 2026-09-02 | included | [表名：`aidata2025.ads_collart.ads_dim_metric_rule`](../library/text/d9dfd4bef6b250a1123b60b5145659a93b91a3e3d33d63869309d2a7b7b0f732.txt) |
 | ai-knowledge | company | table | 2026-09-07, 2026-09-08 | included | [aidata2025.ods.ods_ai_request_info_new_1d](../library/text/629ff2d1231321e31f0faf3b62829fc769e3f9ec9db17dca4744193329d5f74a.txt) |
 | ai-knowledge | company | table | 2026-08-28, 2026-09-07 | included | [跨项目数据表](../library/text/d83e455e5a5190f66862a47b191b740893b0e454a5cba122caa182bda30af0d7.txt) |
 | ai-knowledge | shared | guide | 2026-09-12 | included | [Collart 数据知识库](../library/text/c3b62018df3b88f6aa2925fed8904324953a231a8d26fee1fb039d99aa9a31ad.txt) |
-| ai-knowledge | company | data | 2026-08-21 | historical | [{](../library/text/d329f95fc352aedcdd54fd171b87ae50a37d42756a566d4ba6c346ac0d781dad.txt) |
-| ai-knowledge | company | data | 2026-05-23, 2026-08-21 | historical | [{](../library/text/facf093309989e8e38112f92ed21416cf42a7c6b18ad22dc70bfbf515e6d5711.txt) |
+| ai-knowledge | company | data | 2026-08-21 | historical | [{](../library/text/cd72d5b90555fcebe7ee9a39e7f2bfa4287bc361ab80849c3a56d197c08c343d.txt) |
+| ai-knowledge | company | data | 2026-05-23, 2026-08-21 | historical | [{](../library/text/8dc5724a4b0dc19487eedff18df7eddf64397e098736881cc13925e18342ab2a.txt) |
 | ai-knowledge | shared | sql | 2026-09-06, 2026-09-08 | historical | [WITH internal_users AS (](../library/text/4a78632b39686509717dcd48997b30bb0668b8bc5f2d756461451694e295dfdb.txt) |
 | ai-knowledge | shared | report | 2026-09-06, 2026-09-08, 2026-09-09 | historical | [Collart Fashion 数仓任务审查与优化建议](../library/text/30963c0d69f6b26d466c87f3e2ec4d574379ffa128300f3ea1b8baacded7b6c8.txt) |
 | ai-knowledge | shared | sql | 2026-09-06, 2026-09-10 | historical | [SELECT job_id, parent_job_id, creation_time, start_time, end_time, statement_type, state,](../library/text/5019f20f5a93bb7d536ed2cc2600656f18f0dc8c770ee1d35df4b05339b9af00.txt) |
@@ -43,29 +43,29 @@
 | ai-knowledge | shared | sql | 2026-09-06, 2026-09-08 | historical | [WITH a AS (](../library/text/ddf3433ba7873847e6d2167e438cc5814b42b68f52e08ac056839912997d0417.txt) |
 | ai-knowledge | shared | sql | 2026-09-06, 2026-09-08 | historical | [SELECT event_date, country, COUNT(*) AS paid_user_days,](../library/text/4e54b41f6c5e65df0b72a6ba13d158a065627ae9dcd4be09683a160c7b85c553.txt) |
 | ai-knowledge | shared | sql | 2026-09-06, 2026-09-07, 2026-09-08 | historical | [WITH s AS (](../library/text/868f7e486fe42cbf994796160726e3accd9c8a094f3e921285ad1f8fc7835255.txt) |
-| ai-knowledge | shared | lineage | 原文未标日期 | historical | [config {](../library/text/220e8a771cee95f30ce961f5600c07bbe2d708f7c39d98bdb4ff68a2f31aee68.txt) |
-| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/869efc1dce86715a89daa919ccee061313c734d0fff3d6b7f17900666b93fd22.txt) |
-| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/1da3b1970f92bc6d9254ea5b32e7e30f23d264ee983958ff160ad578fd2bd8fa.txt) |
-| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/adac1ded0607af30dd4bc4fa5444447946bab7cc5ff844c5de44361bd1d2395f.txt) |
-| ai-knowledge | collart_fashion | lineage | 2026-08-11 | historical | [config {](../library/text/6dbb9de968d32658fda6f6a17965438a50f063c2f0818f7ef5e7ebbd81529704.txt) |
-| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/6d0e3cbc828dceb5538fb268548b98e5a73991cdeec6b3abadcd7d3fe614fd67.txt) |
-| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/c7935c6fa096cc7e01985085c72e91b19802b75cead6174ded53a5b2fde01135.txt) |
-| ai-knowledge | collart_fashion | lineage | 2026-06-01, 2026-08-11 | historical | [config {](../library/text/4e0d30e520783505be86ccf29e5deaf1ee86274876c0d1edc45f62e6a2effce1.txt) |
-| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/47bea6fc6c2862490ef08a4370cf52fbbcb5401c46f7d97bfb2eab67feaa6d9a.txt) |
-| ai-knowledge | collart_fashion | lineage | 2026-08-11 | historical | [config {](../library/text/fbe71011d850e29a944925b47d93e288f456c39dbc314fa4999aa8dbbf0ad106.txt) |
-| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [============================================================================](../library/text/37ca244ac358d8fc3a865fac2830670a59b0660ce1f19787dd332317b46874da.txt) |
-| ai-knowledge | collart_fashion | lineage | 2026-06-01 | historical | [============================================================================](../library/text/ff187e3385dcf419ecaba4ce7b690e044b87ccf795d362b224521c18b39ad693.txt) |
-| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [============================================================================](../library/text/d869454f5e7f2be2a249361ebfa409b161ae3fe6539b19237444f02528c43d82.txt) |
-| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [============================================================================](../library/text/d3f71e671a89fb81c841ad8f62dedb03f5e2e690f0a60bc045089144577b61d1.txt) |
-| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [============================================================================](../library/text/a80ecfb7c6a729e49b8bb2723c3e185e9275fb348a4f1ac1e8719213310ceb3d.txt) |
-| ai-knowledge | collart_web | lineage | 2026-08-11 | historical | [config {](../library/text/3f224bd82c28ed148da6e2bb92b9102f84566ad29704191ad245804804f39aa3.txt) |
-| ai-knowledge | collart_web | lineage | 2026-08-11 | historical | [config {](../library/text/4271aaf4a26f2c853d4a7541ed409c7c4df0ea0355730c4740d94a6b07dc7658.txt) |
-| ai-knowledge | collart_web | lineage | 原文未标日期 | historical | [config {](../library/text/c44c47fe739d38541ffee060558df6a4dbb29e7c462b90f59166108e26d50ed3.txt) |
-| ai-knowledge | shared | lineage | 2025-01-01 | historical | [config {](../library/text/9b2ba6ed639f0cf3b232e5a135d97eea31e0c87a7847ccbaa2bdf170d9f15d0d.txt) |
-| ai-knowledge | collart_web | lineage | 原文未标日期 | historical | [config {](../library/text/c173a65a961a55461e734b6b057927e1df6272b7a5c01a2c9a39398c94288654.txt) |
-| ai-knowledge | shared | lineage | 2025-01-01 | historical | [config {](../library/text/2e3082ef003560e0dc19da6316713a1a9e11168b516005e0f12d86f90fe2bdcb.txt) |
-| ai-knowledge | shared | data | 2026-09-09 | historical | [](../library/text/1044771332d41366c8995666160ac7ba862a5d940588e03dbd326d845ea9d6ba.txt) |
-| ai-knowledge | shared | report | 2025-01-01, 2026-09-09 | historical | [Fashion 任务目录（2026-09-09 只读快照）](../library/text/c8996273cde6d5a6dc8cf03d369cdd68af635fb125362a65aca8460a005531be.txt) |
+| ai-knowledge | shared | lineage | 原文未标日期 | historical | [config {](../library/text/557d0982aa32c4c031c93c10017eeb9b0867c93270960625ae95d46190837508.txt) |
+| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/4ab000c478eb9f18abd3eeda805dd4627225d40b72a3782c338f5d2a71ed6eb9.txt) |
+| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/aa9195c66f5ae920653b7c5a114a7dd0c163aea3a6031f29c85f00d24e788c27.txt) |
+| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/17463965c87ac818428c2a9d2ae6ede3fe6a2d4ae69b7f11edde746cae93b8e1.txt) |
+| ai-knowledge | collart_fashion | lineage | 2026-08-11 | historical | [config {](../library/text/bc2be0c5966551ad5e280a05318d8e1b6956a9438950839855704e0c9ea65fad.txt) |
+| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/44562e1c18b0e7018cfb7ae8e26941341e2be7aed5daeb7f4b19a7930c72e4cc.txt) |
+| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/02b193c7af567bb0bab56b6a52e16756e8361cd502a27843014273c322934c12.txt) |
+| ai-knowledge | collart_fashion | lineage | 2026-06-01, 2026-08-11 | historical | [config {](../library/text/1d62410fb5a7e5f538015be5405a62d1b96e12256c65fa70b4f5f90af0b01f6c.txt) |
+| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [config {](../library/text/041e8c489b60a56f91421dc2868c56f8269c0fa23df231edce00e73856ca4423.txt) |
+| ai-knowledge | collart_fashion | lineage | 2026-08-11 | historical | [config {](../library/text/10dd58b1498f4146abbb3f1ae4af29dfcd42de9d74a461fbb84aa78fbf2bee98.txt) |
+| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [============================================================================](../library/text/7210d68b8358fe946ac9665d24da21fa5680da0317ad76230512027b2ef54aaf.txt) |
+| ai-knowledge | collart_fashion | lineage | 2026-06-01 | historical | [============================================================================](../library/text/5e4016b9fa329da5145ced922e26369e64a613399bf4fc85815c340bcb8060c8.txt) |
+| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [============================================================================](../library/text/876d3c1a1c5cf851175243ee3aca851f796cf5a5e68e00180a476897a76dd21a.txt) |
+| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [============================================================================](../library/text/848af9a531d47b8a6eca82a75d87aad3e6282eed91eda2936716c10f4fefd04f.txt) |
+| ai-knowledge | collart_fashion | lineage | 原文未标日期 | historical | [============================================================================](../library/text/0b32a317589931d53b36a6d667215ac64a9ced9dac8924f0a144688d39f1a875.txt) |
+| ai-knowledge | collart_web | lineage | 2026-08-11 | historical | [config {](../library/text/947b2962d90cdd234f12dfe0eb62c95c77d516c2f443e1c7c75ad3c18ebad866.txt) |
+| ai-knowledge | collart_web | lineage | 2026-08-11 | historical | [config {](../library/text/98930437c99c88698b1c7d2f51f7baeef9e1439fbcf10e49f264a3ae38f13aaa.txt) |
+| ai-knowledge | collart_web | lineage | 原文未标日期 | historical | [config {](../library/text/6ca5960f4da7190b5712bf11c19893080277ac21aaa824bbc88dcdf1f303dfd3.txt) |
+| ai-knowledge | shared | lineage | 2025-01-01 | historical | [config {](../library/text/867192af7b39a6508a5dfc12b99c88f2c1d55f6ea0ae0b1b85f4e83e21a62a39.txt) |
+| ai-knowledge | collart_web | lineage | 原文未标日期 | historical | [config {](../library/text/e4184921343786327d3d84841421265f4e7ce8b8b1c76509cc46588c1dbd8cf0.txt) |
+| ai-knowledge | shared | lineage | 2025-01-01 | historical | [config {](../library/text/08d1ecb7cd50ac6e36558b4cf91e92e2f06e46e3ddf13d5febb1747d7b0aa2cc.txt) |
+| ai-knowledge | shared | data | 2026-09-09 | historical | [](../library/text/540c6d21b14b548ce8a4c16d4c9ae7f2f7fba012687d6e78316becbec467d726.txt) |
+| ai-knowledge | shared | report | 2025-01-01, 2026-09-09 | historical | [Fashion 任务目录（2026-09-09 只读快照）](../library/text/58d8723e1faebc3da60f4fbc05a56ce74d253039df4c49af9ef67e82fc0f4742.txt) |
 | ai-knowledge | company | report | 原文未标日期 | historical | [1company 表文档索引](../library/text/113852b26b9d1c8f049d16aa23a7782e982f4b53dbde6e22bb10ea5ff92ccd15.txt) |
 | ai-knowledge | shared | report | 原文未标日期 | historical | [Feishu 表知识库生成稿](../library/text/9bb46bfbc1499729e6edb072ae6d0027953c45faa90b4ee1fad752b7a4ef22dc.txt) |
 | ai-knowledge | shared | report | 原文未标日期 | historical | [ai 表文档索引](../library/text/31a1fd598dccd6de456f99d928472fac24dd4bc84aefecd6d13187e5100acc10.txt) |
@@ -175,30 +175,30 @@
 | ai-knowledge | shared | table | 原文未标日期 | historical | [表名：pubdata2025.ods.ods_woolong_subscription_1d](../library/text/221c6b9b1d7ac699e78d2faf5fd978409ce845d186256cf3f71130cd870bd1eb.txt) |
 | ai-knowledge | shared | table | 原文未标日期 | historical | [表名：storytemplate-10a27.analytics_232977577.events_*](../library/text/73619ca1232df7ab0de31f51729caca956f40b593a3d8e3f1326f287bfc95f11.txt) |
 | ai-knowledge | shared | report | 原文未标日期 | historical | [unassigned 表文档索引](../library/text/5423c044fbad80e66235bceff6bf2ba5845228b99b3c1e87f6226219ea5368b2.txt) |
-| ai-knowledge | shared | report | 2026-09-09, 2026-09-10, 2026-09-12 | historical | [Collart Web 最近 7 个可用完整收入日分析](../library/text/00178f19b3fad07f6cfb47b767b1966f23dc713fb51f967464e70390525a5292.txt) |
-| ai-knowledge | shared | data | 2026-09-09, 2026-09-10, 2026-09-11 | historical | [](../library/text/72fee6f9b7b7f089d562d0f714373ba0927a460cc3be619c2e0347e915bc82e8.txt) |
+| ai-knowledge | shared | report | 2026-09-09, 2026-09-10, 2026-09-12 | historical | [Collart Web 最近 7 个可用完整收入日分析](../library/text/6f52d844765c687ecdfb7b5e6ab4e9c628bb47ed508e45f8a25d1df94a64013c.txt) |
+| ai-knowledge | shared | data | 2026-09-09, 2026-09-10, 2026-09-11 | historical | [](../library/text/0beaee5059e2961d34195b7674595dca5900d3bdd645e779bcfea3efd35a822e.txt) |
 | ai-knowledge | shared | sql | 2000-01-01, 2026-09-01, 2026-09-12 | historical | [Current stored business-date coverage, not the historical deployment timestamp.](../library/text/4e74fbf3f4dc507405c2022c243dae498ffd5998b02456e3ba93a3b89ac19b1f.txt) |
-| ai-knowledge | shared | data | 2026-09-08, 2026-09-09, 2026-09-10 | historical | [](../library/text/f8956bd41d42afa16f7a22164eaa05475c707de48e6683debd692e394f155d06.txt) |
+| ai-knowledge | shared | data | 2026-09-08, 2026-09-09, 2026-09-10 | historical | [](../library/text/0d50e5f118f7fbc1c8a61f66c8aa284b730d1ee6296886dff482b3e157ac1aeb.txt) |
 | ai-knowledge | shared | sql | 2026-08-28, 2026-09-10 | historical | [SELECT event_date,package_name,dau,dnu,revenue.purchase_revenue,revenue.new_revenue,](../library/text/eb3654c464ac73d33c4c68efd194051efc95f199fd7103e8c73e13510377262e.txt) |
-| ai-knowledge | shared | data | 原文未标日期 | historical | [name,previous,current,delta](../library/text/fa848009916436743e922a9aa8e6dcbdc9338dbf45eb862b8232a28cb1c18972.txt) |
-| ai-knowledge | shared | data | 2026-09-08, 2026-09-09, 2026-09-10 | historical | [period,dimension,value,transactions,payers,net_revenue,gross_usd,largest_transaction,high_](../library/text/86c80bd4eea8a819f0dc59310cae4d3ea15d10e6137bf5295136ef79786bf4f3.txt) |
-| ai-knowledge | shared | data | 2026-09-08, 2026-09-09, 2026-09-10 | historical | [](../library/text/85fc8c78544702f1d8b1116686cb510e71c5cb5298c7b6e1f67acf60ce5720d2.txt) |
+| ai-knowledge | shared | data | 原文未标日期 | historical | [name,previous,current,delta](../library/text/47ec07be81656e41f6762366439087d98190b39da3a2b032f9d1ed90fac3d49b.txt) |
+| ai-knowledge | shared | data | 2026-09-08, 2026-09-09, 2026-09-10 | historical | [period,dimension,value,transactions,payers,net_revenue,gross_usd,largest_transaction,high_](../library/text/db258ba1b73532450b33a8c7a6ae0cfd57ccf476e4b9cedf9adc8872ad048162.txt) |
+| ai-knowledge | shared | data | 2026-09-08, 2026-09-09, 2026-09-10 | historical | [](../library/text/bb0d8605c0f3d9b8481f51f5d45f7be6b0cb7bba1898ddb7e028473fb310edad.txt) |
 | ai-knowledge | shared | sql | 2026-08-28, 2026-09-11 | historical | [SELECT 'daily' AS layer, event_date, package_name, COUNT(*) AS row_count, SUM(revenue.purc](../library/text/bfcacba934db32d95696c61632ab37df6526efe5b2cfdcc2a67f80c814565c92.txt) |
-| ai-knowledge | shared | data | 原文未标日期 | historical | [name,previous,current,delta](../library/text/bfaf52248ef6cbeedc6e97ee7d86861c975f1f4c6ec8ed75098d02cc29eb77d2.txt) |
-| ai-knowledge | shared | data | 2026-08-28, 2026-09-10 | historical | [](../library/text/c0ce04fe58c3ca033bf5408a8c2c6c458cb6e098f7f8ae7a1301808de60db4c6.txt) |
+| ai-knowledge | shared | data | 原文未标日期 | historical | [name,previous,current,delta](../library/text/5ec92ede03c876ea8be7786900a14d2d92a2d726e66174e377ac46901e340d47.txt) |
+| ai-knowledge | shared | data | 2026-08-28, 2026-09-10 | historical | [](../library/text/698ae9a91f5d7f2e392f508ee37d2038045d4c9a71ff0acdd93b3cb9b218cc99.txt) |
 | ai-knowledge | shared | sql | 2026-08-28, 2026-09-10 | historical | [WITH s AS (](../library/text/f777930d4aac012f79b15a0744b0bad830daed74af00751b4181e2377cf6d521.txt) |
-| ai-knowledge | shared | data | 2026-09-12 | historical | [](../library/text/79d8cee421024f7ff7ea564543b6a79216b3d89824f37d691ec2de9a11410b7d.txt) |
+| ai-knowledge | shared | data | 2026-09-12 | historical | [](../library/text/cc73cf0457ff50e52c1eb743a324d7d96eb2a17a4b0949099202cfeadead79ec.txt) |
 | ai-knowledge | shared | sql | 2026-09-11 | historical | [SELECT CURRENT_TIMESTAMP() AS checked_at_utc,'active' AS layer,](../library/text/bea49599e17bc960e7d984d5348290e4c29f316a7d702e3747e87d11f4a3a770.txt) |
-| ai-knowledge | shared | data | 2026-09-08, 2026-09-09, 2026-09-10 | historical | [date,stripe,ads,difference](../library/text/d46e87b7b6e14bf42f7cc0f7b515d629ad34861b01cf3103048561bdd152e624.txt) |
-| ai-knowledge | shared | data | 原文未标日期 | historical | [type,previous,current,delta,change,contribution,previous_transactions,current_transactions](../library/text/c84f5a4fff7225548ed545a82f85bce100630fd994f59fa81a7c8bbd3f9303b2.txt) |
-| ai-knowledge | shared | data | 2026-09-11 | historical | [{](../library/text/915acc9c2eec98dcf5b4d7a44dc1c3fb50a1b971dccc66ccb2ff6e3b7dd119f4.txt) |
-| ai-knowledge | shared | data | 2026-09-08, 2026-09-09, 2026-09-10 | historical | [](../library/text/a5522b565a49c121b5af9fa5281356156a37514181f7e42444bb710409dbb1d1.txt) |
+| ai-knowledge | shared | data | 2026-09-08, 2026-09-09, 2026-09-10 | historical | [date,stripe,ads,difference](../library/text/2b72162541bf6316a0bce4141c043eabf9091ba9d59ca434eb65f1e1b0a032d4.txt) |
+| ai-knowledge | shared | data | 原文未标日期 | historical | [type,previous,current,delta,change,contribution,previous_transactions,current_transactions](../library/text/c16961813db8601d31aa2c04d8d956b0367195dc4a6fe1bf29a76d654d3e0a0e.txt) |
+| ai-knowledge | shared | data | 2026-09-11 | historical | [{](../library/text/93f618c34d6530e75389f53619920c6daa4265d8b3249cb42434016ec51f6484.txt) |
+| ai-knowledge | shared | data | 2026-09-08, 2026-09-09, 2026-09-10 | historical | [](../library/text/3c9477f35e670bb843b0f10bfd956ba9c3b0c7767d002d31073dac7f923fc0e8.txt) |
 | ai-knowledge | shared | sql | 2026-08-28, 2026-09-04, 2026-09-10 | historical | [WITH raw AS (](../library/text/fcad3247fcb4f434e89475b24bd5c3a945eb107749395d8840ac1710a9a42de9.txt) |
-| ai-knowledge | shared | data | 原文未标日期 | historical | [](../library/text/b26ca4b1d17a1ae38aacd86dcc4fd89aa6db53629894db63dc05893e5cee1419.txt) |
+| ai-knowledge | shared | data | 原文未标日期 | historical | [](../library/text/162eb86b660e83d4ff08bf5c08c955a3c9aadcb7ff57595c7f6356cc24b2bba2.txt) |
 | ai-knowledge | shared | sql | 2026-09-09, 2026-09-11 | historical | [SELECT app_name, charge_type, order_status, subscription_status, currency, description_typ](../library/text/0b212b025d77a62377c872a9e18dd2d3370fc9ac0087e56e2dc4eddf9c8ea09c.txt) |
-| ai-knowledge | shared | data | 2026-09-05, 2026-09-10, 2026-09-11 | historical | [{](../library/text/a8a1f7487f0a99e1f664a8159b53cbac2e40d8ed73ce65a378a0b3b4cc6c84ec.txt) |
+| ai-knowledge | shared | data | 2026-09-05, 2026-09-10, 2026-09-11 | historical | [{](../library/text/b512a273b5291280335d43864b9ca23d92bdce0da38aeb689b652341b317907c.txt) |
 | ai-knowledge | collart_android | guide | 原文未标日期 | included | [Collart Android 业务知识](../library/text/3df4a42863b797bcf0ffe484bc0a35d91912883d6ae8214b3adacbc713b0e245.txt) |
-| ai-knowledge | collart_android | method | 2026-08-20, 2026-09-09 | included | [Collart 大R准实时播报](../library/text/de73f81c8cbfee96ccf322f741f4146f35732d2ecc68a47b3b9fabeefa0ce712.txt) |
+| ai-knowledge | collart_android | method | 2026-08-20, 2026-09-09 | included | [Collart 大R准实时播报](../library/text/ca090718b17efd4a39d570a878a84047a694c7ca3cc6b8291dadfe3cb56412e6.txt) |
 | ai-knowledge | other_projects | method | 2026-05-14 | included | [Vibedance 新产品上线数据诊断框架](../library/text/b385408294e674bcbb8c4f5b9b3690d7cab413f095c2d9d944926cd3533d11e0.txt) |
 | ai-knowledge | collart_android | metric | 2026-04-01, 2026-08-28 | included | [📈 指标档案：README (Android)](../library/text/a0fdb841ff047f00754a854623aaaddbd38cf5f556b0b0707e833c8b4838a5de.txt) |
 | ai-knowledge | collart_android | sql | 原文未标日期 | included | [WITH aiedit_base AS (](../library/text/c9c1f49f8f82e5d5246ca5954d2f2dc02dee8b48048bc66e59ffe80b2bc6d2e3.txt) |
@@ -217,7 +217,7 @@
 | ai-knowledge | collart_android | sql | 原文未标日期 | included | [WITH module_show AS (](../library/text/6e1f3ad2c38f62faa089f10dbcab366918d17c1ccd5de9922687a2d16ab169ad.txt) |
 | ai-knowledge | collart_android | metric | 2026-03-23, 2026-04-01 | included | [📈 指标档案：RETENTION (Android)](../library/text/d7106d35f536a60c57259538a3baceec5248bd8ff4ad6672dc8c3d563d2d600e.txt) |
 | ai-knowledge | collart_android | sql | 2026-03-07, 2026-03-23, 2026-03-31 | included | [留存率查询（Android）](../library/text/f4a0ab0f345143862692e2cd8e5451f480200bfd5712d10c2ac7f4a60a9cda7d.txt) |
-| ai-knowledge | collart_android | metric | 2026-08-07, 2026-09-07 | included | [Collart Android 俄罗斯支付播报](../library/text/942af99f96e94b2eff09fc302a9b0c40f1374b8077e082fe82d9b8f1d580da3a.txt) |
+| ai-knowledge | collart_android | metric | 2026-08-07, 2026-09-07 | included | [Collart Android 俄罗斯支付播报](../library/text/531735647df564410791cc096fc1cae9ef3d8360a03a27f92f888b6dca228667.txt) |
 | ai-knowledge | collart_android | sql | 原文未标日期 | included | [SELECT](../library/text/442906d4c3a109f5e22a15ae80c035c5cb758024afaaed48c941d438f0916797.txt) |
 | ai-knowledge | collart_android | sql | 原文未标日期 | included | [SELECT](../library/text/08d72aa2165ebafd9dd6893d70a8cd1cdeb78de49ae78a90c89ad77c5c2e6b01.txt) |
 | ai-knowledge | collart_android | sql | 原文未标日期 | included | [SELECT](../library/text/1c5abba60ebc02a36e3c7f5ead85e286c9be8f6a4db138f6480a536468e8fdd9.txt) |
@@ -231,7 +231,7 @@
 | ai-knowledge | collart_android | sql | 原文未标日期 | historical | [探索 AI 服务相关数据的 service_type 和错误码](../library/text/01cb5c17124c26dc39b4332f8eeae77d3ff7c81dbd22779aca00e31b09a259a8.txt) |
 | ai-knowledge | collart_android | sql | 原文未标日期 | historical | [img2video 与 img2img 服务成功率趋势（5月1日-5月13日，分国家 Top10）](../library/text/2b15ef4c75965a92af921e6c9e58c587af80349a5541daec7f08342dad18b58b.txt) |
 | ai-knowledge | collart_android | script | 2026-05-13 | historical | [读取数据](../library/text/e6ae17d7ac7146acbb0f83a007e3717af4ff7b6602c596b998413d2c161e14af.txt) |
-| ai-knowledge | collart_android | sql | 2026-07-28, 2026-08-01, 2026-08-19 | historical | [Collart Android：非订阅直接买点数（novip + 行为口径）](../library/text/a8333dfb03684730abb771967772f32f55ae2ffe326f335309f3b8c52efeffc9.txt) |
+| ai-knowledge | collart_android | sql | 2026-07-28, 2026-08-01, 2026-08-19 | historical | [Collart Android：非订阅直接买点数（novip + 行为口径）](../library/text/8730fe5543c8c950c16b36a133eb114a6f23dfd9b53379f55bb482f3a4bd8f4e.txt) |
 | ai-knowledge | collart_android | sql | 原文未标日期 | historical | [每天触发 ai_service_start 的次数（Android 端）](../library/text/d0aaae9ae3e9bfaca8566dd97d2f1a0d888c90fb48ba6a92aabbaab673576504.txt) |
 | ai-knowledge | collart_android | sql | 原文未标日期 | historical | [Collart Android ai_service_start 事件 function_type 分布](../library/text/65229bccd08345d473e697c781e88d0f8f9e31648d1dd93a77fcfacf49bb2165.txt) |
 | ai-knowledge | collart_android | sql | 原文未标日期 | historical | [查询 ai_service_start 事件的 key_value 参数分布](../library/text/21fbaccd48006459bf126389fa53e20461a49ed1ef874dcac07f25128cc8071c.txt) |
@@ -255,7 +255,7 @@
 | ai-knowledge | collart_android | sql | 2026-04-02, 2026-04-03 | historical | [Collart Android TOP 10 点击率模板分析 (2026-04-02)](../library/text/1e7b20cbd287e8efcd272f61bc766f0e94b53a5d660dfa01d7a746aa52ea105a.txt) |
 | ai-knowledge | collart_android | sql | 2026-04-06, 2026-04-07 | historical | [Collart Android 模板分析报告 - TOP 10 点击率](../library/text/955e76c98da0249227cb065856a70532363b8149f4dcb94b41420d4c8ce75142.txt) |
 | ai-knowledge | collart_android | sql | 2026-04-04, 2026-04-05 | historical | [模板分析 TOP 10 点击率 (2026-04-04)](../library/text/2e5f918b26e3ccef260689b1d4c1200086ee6807a0f9343a1f5890c88a5a277e.txt) |
-| ai-knowledge | collart_android | sql | 2026-04-02, 2026-04-03 | historical | [Collart Android TOP 10 点击率模板分析 (2026-04-02)](../library/text/a7f64087afd07cf69e11e279945dff091c109d6f6c2d11b5d53031fb80313ac2.txt) |
+| ai-knowledge | collart_android | sql | 2026-04-02, 2026-04-03 | historical | [Collart Android TOP 10 点击率模板分析 (2026-04-02)](../library/text/ee2b243fb28e719d54b86a593c8092743023ba2bcf56094f6a69b2a4d93a2e11.txt) |
 | ai-knowledge | collart_android | sql | 2026-04-03, 2026-04-04 | historical | [Collart Android 模板分析报告 - TOP 10 点击率](../library/text/a2ac2931a6e9e8ce9269e86f48f7dddce4c30083205f7a92a584ea4464e6aa7d.txt) |
 | ai-knowledge | collart_android | sql | 2026-04-04, 2026-04-05 | historical | [模板分析 TOP 10 点击率 (2026-04-04)](../library/text/f92204aa7dec9b899b20824fb2eec739aa50761994cbc8f3077167c7e8340257.txt) |
 | ai-knowledge | collart_android | sql | 2026-04-07 | historical | [Collart Android 模板分析报告 - TOP 10 点击率 (2026-04-07)](../library/text/6e26d028606f87d339d0c8c7500d1ca7c4f5368ac4286f052135b8c1a645ac19.txt) |
@@ -277,8 +277,8 @@
 | ai-knowledge | collart_android | script | 原文未标日期 | historical | [from google.cloud import bigquery](../library/text/d0418e072132af79c1d54a9aba077da04b23f4e13d2241821bdbbef5621fe1eb.txt) |
 | ai-knowledge | collart_android | script | 2026-03-17, 2026-04-21 | historical | [初始化客户端](../library/text/1305d48724101935396a62c646366a7cf808b048d99312f00fa45e973e16f72c.txt) |
 | ai-knowledge | collart_android | script | 原文未标日期 | historical | [检查 subscription_first 事件](../library/text/2668a41be0d8ecf944a3a2df090d8f550f56bb3379778c773541b0f71b1b10eb.txt) |
-| ai-knowledge | collart_android | sql | 2026-08-07, 2026-08-14, 2026-08-17 | historical | [Collart Android 俄罗斯：免费激励广告次数 10→5（2026-08-14）](../library/text/402683a9884ff2af9464cd30b35627e77dd33319c28d985f70cffca4be74ac6c.txt) |
-| ai-knowledge | collart_android | sql | 2026-08-01, 2026-08-20 | historical | [俄罗斯 DAU：激励展示次数 / 生成成功次数分布（含 0）](../library/text/1a8b58490b3954af2fe3e7c62f3177d13d2afd6e7c3d1c86d9489758bb792480.txt) |
+| ai-knowledge | collart_android | sql | 2026-08-07, 2026-08-14, 2026-08-17 | historical | [Collart Android 俄罗斯：免费激励广告次数 10→5（2026-08-14）](../library/text/02088c2133cd359f8afb32ed1052dca0aae9b0bda85fdc97c1b9099932543717.txt) |
+| ai-knowledge | collart_android | sql | 2026-08-01, 2026-08-20 | historical | [俄罗斯 DAU：激励展示次数 / 生成成功次数分布（含 0）](../library/text/a15a1eb25f57bc887c1697bd3a6676e5758675d49ad7d66f9c5ec7526fea9764.txt) |
 | ai-knowledge | collart_android | sql | 2026-07-24, 2026-07-26, 2026-07-27 | historical | [Collart Android: Russia home template load failure diagnosis](../library/text/01f4f885cb0a9c3ef24a6e66c283633910374d7f5f685d60be2bf3a2268f8954.txt) |
 | ai-knowledge | collart_android | sql | 2026-05-24, 2026-05-25, 2026-05-26 | historical | [============================================================](../library/text/a12be3c482f7899417f87d5ec9d5d356add569fd2c5659d40f2e063bc947eef0.txt) |
 | ai-knowledge | collart_android | sql | 原文未标日期 | historical | [============================================](../library/text/7f78d4b33fa1cb476df8253da26503a74813773d7a3ecce4cbfb39dd13bbf472.txt) |
@@ -288,15 +288,15 @@
 | ai-knowledge | collart_android | sql | 2026-05-08, 2026-05-28 | historical | [查询: Collart Android 违规警告弹窗埋点 PV/UV（2026-05-08 以来）](../library/text/173138ea95acd60abd5f8876f1908b8add59e5e74ec3bf2ac0ed957a182ca28c.txt) |
 | ai-knowledge | collart_android | table | 原文未标日期 | included | [Collart Android 数据表](../library/text/a16298faa2f68a9cc2523da9b93a0846b98f4897a99038f75a093e4b4b3644db.txt) |
 | ai-knowledge | collart_android | table | 原文未标日期 | included | [1 表说明](../library/text/d17946d86a41f81ae1979cf05b73dc7f70843ef3ec7f2ac74500685e8471393e.txt) |
-| ai-knowledge | collart_android | table | 原文未标日期 | included | [表名：aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy](../library/text/c5fd2f14b6a12d2c3fc2c6b166a6548408f158028d3569c8163922ea4927f393.txt) |
-| ai-knowledge | collart_android | table | 原文未标日期 | included | [表名：aidata2025.ads_collart.big_r_realtime_alert_log](../library/text/55395a3cbde9439c710a8ee1d40814ff511aeb7a37981f20204692e70c82d458.txt) |
-| ai-knowledge | collart_android | table | 原文未标日期 | included | [表名：aidata2025.ads_collart.big_r_realtime_today_income](../library/text/03630b032c1fbf8ad689675d444d53ad0d41ea7b4b35ccb7b5853bf003a737c7.txt) |
-| ai-knowledge | collart_android | table | 2026-09-09 | included | [表名：aidata2025.ads_collart.big_r_user_value_state](../library/text/ac1e823e768102b6c9637ad8b4b16a2f82e6f457a82472865c02ee3eb6950a01.txt) |
-| ai-knowledge | collart_android | table | 2026-09-02 | included | [`aidata2025.ads_collartandroid.ads_dim_event_tag`（已废弃）](../library/text/3e45c991f1397134e048daa180074f14e7418a3d3f5ec877f6ac4a04e2b9d06e.txt) |
+| ai-knowledge | collart_android | table | 原文未标日期 | included | [表名：aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy](../library/text/b9d630d7ee82b8b10ef42d34ce3ff55c5d7df9998a54d6cddeea0239f5d88df3.txt) |
+| ai-knowledge | collart_android | table | 原文未标日期 | included | [表名：aidata2025.ads_collart.big_r_realtime_alert_log](../library/text/d3a5174cab891439863757a0e16fb66bb20509f6f0b2ebfe06bff6a1efb32647.txt) |
+| ai-knowledge | collart_android | table | 原文未标日期 | included | [表名：aidata2025.ads_collart.big_r_realtime_today_income](../library/text/7d9f22a1906ca309a08e4b2b8a32baf4d5b4933061d3f6636fd85b091a4475f5.txt) |
+| ai-knowledge | collart_android | table | 2026-09-09 | included | [表名：aidata2025.ads_collart.big_r_user_value_state](../library/text/e3c9f0985b81dd2e82b81dc8137524506c9b4722d44cdcdd5800528dbf2e4978.txt) |
+| ai-knowledge | collart_android | table | 2026-09-02 | included | [`aidata2025.ads_collartandroid.ads_dim_event_tag`（已废弃）](../library/text/dcb43e2ea9bd8e400a3748475ade92ca48467a1504d0021e352ac907f0bd9eed.txt) |
 | ai-knowledge | collart_android | table | 2026-08-26, 2026-09-02 | included | [表名：`aidata2025.ads_collartandroid.ads_dim_metric_rule`](../library/text/5a94c57b6b9d1fb18f4c580bd69be29261453f48f4e758fb350efe30f1933123.txt) |
-| ai-knowledge | collart_android | table | 2026-08-26, 2026-09-02 | included | [`aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di`](../library/text/e4a2cd1a46c6b8fea4ef710ce49164ddd13e6a6be53dd83cb92d1e8f5e8db69e.txt) |
-| ai-knowledge | collart_android | table | 2026-08-26 | included | [`aidata2025.ads_collartandroid.ads_oper_event_metric_country_di`](../library/text/6c6ee1d03d588baa0685c03a78f53adcd19d22fbf048932a33be0fd5921fe9fd.txt) |
-| ai-knowledge | collart_android | table | 2026-09-02 | included | [`aidata2025.ads_collartandroid.ads_oper_user_event_metric_di`](../library/text/6413fe0be54e50cbab87d9cc925a081ffc2f2f7cc8b3a3457e273816da63bc90.txt) |
+| ai-knowledge | collart_android | table | 2026-08-26, 2026-09-02 | included | [`aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di`](../library/text/e645b8227d0caf95268781852ab123652a861a548a0b50faff627c6404703cdc.txt) |
+| ai-knowledge | collart_android | table | 2026-08-26 | included | [`aidata2025.ads_collartandroid.ads_oper_event_metric_country_di`](../library/text/a9fb3c8613429683c2c15bcaac9e701ac2fa9362e1e9946725f5ceef090da393.txt) |
+| ai-knowledge | collart_android | table | 2026-09-02 | included | [`aidata2025.ads_collartandroid.ads_oper_user_event_metric_di`](../library/text/fc01c6c222a28698fe467ec5cd5fea0e9ee2341fa7e96ea47d2e73e8d3552823.txt) |
 | ai-knowledge | collart_android | table | 2026-04-09 | included | [dwd_oper_user_collart_di](../library/text/913ad7ff33bb54f3a728991795953d9f87e0dd6147ca1e80643869370af3e711.txt) |
 | ai-knowledge | collart_android | table | 原文未标日期 | included | [1 表说明](../library/text/5055efdd216e7e711a3ffb8a6edf299529c2eb79b6432864861c17bba9798c25.txt) |
 | ai-knowledge | collart_android | table | 原文未标日期 | included | [{](../library/text/3d8d2f5b4ce8f00bfdba88e16b4a5bbb4638e6b74d4912eca8dadf4833d6c53a.txt) |
@@ -305,24 +305,24 @@
 | ai-knowledge | collart_fashion | method | 2026-08-18 | included | [Collart Fashion Video 漏斗分析 Playbook](../library/text/32cbf8fcc38f12c806a8f3439792f3a68ba9ca440c64f397f2cbcc3e10fbaee7.txt) |
 | ai-knowledge | collart_fashion | method | 2026-06-23 | included | [Collart Web 内部用户过滤规则](../library/text/3040ccb3ae7a6eef13b22f45b8eeda1928866ff80ea2ff36d812f90359a2e0be.txt) |
 | ai-knowledge | collart_fashion | table | 2026-07-11, 2026-09-08, 2026-09-09 | historical | [`aidata2025.ads_collartfashion.ads_oper_user_revenue_di`](../library/text/3f310aca04554c4a135f23dee07f3e9d565a84575f425f45359e101f7828a94b.txt) |
-| ai-knowledge | collart_fashion | metric | 原文未标日期 | included | [Collart Fashion 指标口径](../library/text/64c3703b57691035aec21e48a845ebc9aa3fb83af0403cb1db757eb952c4c3ca.txt) |
-| ai-knowledge | collart_fashion | metric | 2026-07-23 | included | [指标：Fashion 新用户](../library/text/4b6ac3b7da94e479d42217d4d57e7f2b83d7e3d52508f692a3764a6a2cdb7da9.txt) |
-| ai-knowledge | collart_fashion | metric | 2026-08-27, 2026-09-09 | included | [Fashion 收入](../library/text/855927a0685fa3fd48f7110d7f6fce8eef90ed8d0d9e79a45ccec478c845cca8.txt) |
+| ai-knowledge | collart_fashion | metric | 原文未标日期 | included | [Collart Fashion 指标口径](../library/text/794c061cdee8890913d070c172d7a5ef917e55d26472c7915f29cb51f5a48fd7.txt) |
+| ai-knowledge | collart_fashion | metric | 2026-07-23 | included | [指标：Fashion 新用户](../library/text/c1eb58c84b766c0830e835bf270c41ce5fddccafd739782a22791fdf820f2e02.txt) |
+| ai-knowledge | collart_fashion | metric | 2026-08-27, 2026-09-09 | included | [Fashion 收入](../library/text/9f577042b3ec55deea8a965fcb5915f822c7c03b26f8f698db099cc288039305.txt) |
 | ai-knowledge | collart_fashion | metric | 2026-07-22, 2026-07-23 | included | [指标：Fashion 用户 vs 主站用户](../library/text/99120989aab2e31a0cd7839b60e21036464245b7237598f528bea93d9cf91558.txt) |
 | ai-knowledge | collart_fashion | product | 2026-08-18 | included | [Collart AI Fashion Video：产品与业务知识](../library/text/28632f99d8bbd4cde7fbb691f346c65da89ac075b09d48955dec61ec211d024a.txt) |
 | ai-knowledge | collart_fashion | product | 2026-07-22, 2026-08-18 | included | [Collart Fashion 服装带货埋点](../library/text/96256f0a175bef62b5dfe0fdd5f4e0f7ffe6291c74f02ce3fe2acae3d6f100e5.txt) |
 | ai-knowledge | collart_fashion | product | 2026-08-18 | included | [Collart Fashion 项目配置](../library/text/6338184d33f13903bd6e144e5c5fbbc89b9da9b02f39217f5f55f1f903dc2f33.txt) |
 | ai-knowledge | collart_fashion | sql | 原文未标日期 | included | [Fashion 每日核心指标（对齐 Web indicator 汇总）](../library/text/75a046c2fc1fd3e65712eab4ec2b2415771187b83976b012d381a804e8501e6b.txt) |
-| ai-knowledge | collart_fashion | sql | 原文未标日期 | included | [Fashion 新用户 cohort + orders（宽口径，含 pending/expired）](../library/text/c88f91e9b1d91de0f1f3a6f2f7193387bd0bd3ee4261dcfc3fa0494cd4eb632e.txt) |
-| ai-knowledge | collart_fashion | sql | 2026-07-01, 2026-07-21 | included | [Collart Fashion Power BI 看板数据源（与 cursor-sync 同步）](../library/text/7f51e7e71f620afc35cdfe6e4b603be042694187201b6ecef291855d78c4d284.txt) |
-| ai-knowledge | collart_fashion | table | 原文未标日期 | included | [Collart Fashion 表索引](../library/text/d3fc3de4d64760d7f563a3693de889e4f58b26c1151ff4be45fb03ab0a17f516.txt) |
+| ai-knowledge | collart_fashion | sql | 原文未标日期 | included | [Fashion 新用户 cohort + orders（宽口径，含 pending/expired）](../library/text/c6d5004b0577f54056823c55ccacf21158170bff4ac89686bc8d8d19c94926f8.txt) |
+| ai-knowledge | collart_fashion | sql | 2026-07-01, 2026-07-21 | included | [Collart Fashion Power BI 看板数据源（与 cursor-sync 同步）](../library/text/55ad11353f72b429cca31a8bf2b4b58b17b1553ba896e7a52fdce10aa7344ff6.txt) |
+| ai-knowledge | collart_fashion | table | 原文未标日期 | included | [Collart Fashion 表索引](../library/text/84e676b209cf79d7d2dac1b932d9fa7099a4d8fb5eda0392c8697f047167e5c0.txt) |
 | ai-knowledge | collart_fashion | table | 2026-01-01, 2026-01-18 | included | [表名：aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di](../library/text/d6c8960f1a83cb56345f3c4486489693d382e347c0337758922546b95aadd2e0.txt) |
-| ai-knowledge | collart_fashion | table | 2026-08-26, 2026-08-27, 2026-09-09 | included | [`aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di`](../library/text/74fde5884015b16b5564b2f847ca4a4002566f1f40891aceae1e6c2cd8f54245.txt) |
+| ai-knowledge | collart_fashion | table | 2026-08-26, 2026-08-27, 2026-09-09 | included | [`aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di`](../library/text/4a9f2fb81a2d84d611f0a8a762c1744a5851def8a5a792e7200c9f033826c78d.txt) |
 | ai-knowledge | collart_fashion | table | 原文未标日期 | included | [表名：aidata2025.ads_collart.ads_oper_user_new_collartweb_di](../library/text/09e78ffc78facaa7d44161fa33b5ce7bc21ce97cdda9d24d046293dc264ae786.txt) |
-| ai-knowledge | collart_fashion | table | 2026-08-27, 2026-08-28, 2026-09-09 | included | [`aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`](../library/text/2ad23380954771c47a6baccb7f856145786b814d157a0d45b767159dce36d1db.txt) |
+| ai-knowledge | collart_fashion | table | 2026-08-27, 2026-08-28, 2026-09-09 | included | [`aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di`](../library/text/7bbef130e8345b7529ce965e5ae590069779ca2db750c03b51b19b12d7b78b5f.txt) |
 | ai-knowledge | collart_fashion | table | 2026-09-02 | included | [表名：`aidata2025.ads_collartfashion.ads_dim_metric_rule`](../library/text/63bf61efeacd271709b1951c3a797f8f6c9b82ca4b561e454cd902f2ade0ce09.txt) |
-| ai-knowledge | collart_fashion | table | 2026-07-11, 2026-08-27, 2026-09-08 | included | [`aidata2025.ads_collartfashion.ads_oper_user_active_di`](../library/text/40bc20a433501b49c0200222b71177f5a137a4943b23e9e60618c7c0d349fbb2.txt) |
-| ai-knowledge | collart_fashion | table | 2026-08-13, 2026-08-26 | included | [`aidata2025.ads_collartfashion.ads_oper_user_event_metric_di`](../library/text/f4e5b44bbeed00a1bc0c4a1a460cd5750008903e4226d374932419ea4ba6cdb2.txt) |
+| ai-knowledge | collart_fashion | table | 2026-07-11, 2026-08-27, 2026-09-08 | included | [`aidata2025.ads_collartfashion.ads_oper_user_active_di`](../library/text/82f2569629f7e0374399665814d95d08b9e7034b44416ec7a680eb287fffbe0b.txt) |
+| ai-knowledge | collart_fashion | table | 2026-08-13, 2026-08-26 | included | [`aidata2025.ads_collartfashion.ads_oper_user_event_metric_di`](../library/text/56c9f5c620ceda337a3565d5dc26cca45463137d97c7dd6e53560358bfda6c55.txt) |
 | ai-knowledge | collart_fashion | table | 2026-06-01 | included | [表名：aidata2025.ads_collartfashion.ads_oper_user_revenue_di](../library/text/b44e3d7a2111b1b8db778432c5ec8d703c518e8815df4bec5334c5d9c8cf4ea0.txt) |
 | ai-knowledge | collart_fashion | table | 2026-06-22 | included | [表名：aidata2025.ods.orders](../library/text/f75f16ece62742a1798be643dc702817ba5939ac3df82ba63b14e84079f9823d.txt) |
 | ai-knowledge | collart_fashion | table | 2026-08-27 | included | [表名：pubdata2025.dwd.dwd_cdct_revenue_stripe_di](../library/text/ae072713969e8cea3ed59d627d548c6cb458ccc589b4adc60ce40ebecfd7c93b.txt) |
@@ -334,13 +334,13 @@
 | ai-knowledge | collart_ios | script | 原文未标日期 | historical | [1. AI service type distribution (VIP users)](../library/text/b849648198746682818d0d5b90260424f7ed8a95dfb41bfa464550273dffb891.txt) |
 | ai-knowledge | collart_ios | script | 原文未标日期 | historical | [ALL event names in the entire dataset (to understand available events)](../library/text/4304826d5d09f46829efb375d22c35b6a8bbbd6a25025d5f33097bf7ef66c725.txt) |
 | ai-knowledge | collart_ios | metric | 2026-07-29, 2026-08-07, 2026-08-12 | included | [Collart iOS（VidArt）ASA 投放口径](../library/text/3a61af64a5c953792839f90c4743d5ef08aae790b2f2654aa9f1da6c3a2b684d.txt) |
-| ai-knowledge | collart_ios | metric | 2026-07-31, 2026-08-28, 2026-09-07 | included | [Collart iOS / Android 俄罗斯支付播报口径](../library/text/475eea38c39c2451d2f757f4f15501a66a6ce9cbbedc7a486ac9d09759f5ad2b.txt) |
-| ai-knowledge | collart_ios | sql | 2026-05-19, 2026-07-01, 2026-07-18 | included | [============================================================================](../library/text/7b00696e7e7ce19d3b9c5964412d7c14382bc5bbc93815963c9304f5ef0b860b.txt) |
-| ai-knowledge | collart_ios | sql | 2026-05-18, 2026-05-29, 2026-07-20 | included | [============================================================================](../library/text/0268e845697f87fc6fbb4c49c5d54afdabe374ce5cd9281516eb39094a4aa9af.txt) |
-| ai-knowledge | collart_ios | sql | 2026-07-01, 2026-07-10, 2026-07-20 | included | [============================================================================](../library/text/ebace89abfb4aef71a8f270fcbca133f542988c0e8edd35dc80945c2b5e8315e.txt) |
-| ai-knowledge | collart_ios | sql | 原文未标日期 | included | [Collart iOS / Android 俄罗斯支付累计汇总（只读 Stripe，不要 ods.orders，不要空表 HI）](../library/text/b121efef2717c01e965bed18804e2bf9f56ada275f99a5e28ab9df9bfdb07e85.txt) |
+| ai-knowledge | collart_ios | metric | 2026-07-31, 2026-08-28, 2026-09-07 | included | [Collart iOS / Android 俄罗斯支付播报口径](../library/text/ac46edbdcb57a55ff05b6f2c51186ae840c92380c4b806ecfb07897fefca5f09.txt) |
+| ai-knowledge | collart_ios | sql | 2026-05-19, 2026-07-01, 2026-07-18 | included | [============================================================================](../library/text/2bd8f672e7649e9f6e3f4d69bdd3cda9f6a56fc6b8d65a01fb28150c1fa8dfde.txt) |
+| ai-knowledge | collart_ios | sql | 2026-05-18, 2026-05-29, 2026-07-20 | included | [============================================================================](../library/text/c247478dc717486132d3710e893ca108a0f0d6f39c916276082826f1a5e8f813.txt) |
+| ai-knowledge | collart_ios | sql | 2026-07-01, 2026-07-10, 2026-07-20 | included | [============================================================================](../library/text/4c71e926fec75aff05cef8b0df1a2362e5dcba3da2bf780a8747701a033e209c.txt) |
+| ai-knowledge | collart_ios | sql | 原文未标日期 | included | [Collart iOS / Android 俄罗斯支付累计汇总（只读 Stripe，不要 ods.orders，不要空表 HI）](../library/text/051bfd5dc7aea23a71964f7fb83732e5127587aff78a66a1f090bed3b627b515.txt) |
 | ai-knowledge | collart_ios | table | 2026-09-02 | included | [表名：`aidata2025.ads_collartios.ads_dim_metric_rule`](../library/text/8384830dcbc63d1bebbd0df66bdfd705cde0de943c8ac2c7b405c404d1d5a664.txt) |
-| ai-knowledge | collart_ios | table | 2026-08-07, 2026-08-09 | included | [`aidata2025.dm.dm_collart_ios_user_event_di`](../library/text/5dbf58079183562d1fbde18ed7418eadb7ce8189d328539e8e3a750139081641.txt) |
+| ai-knowledge | collart_ios | table | 2026-08-07, 2026-08-09 | included | [`aidata2025.dm.dm_collart_ios_user_event_di`](../library/text/dacbf093801669e4faa1bee0b1adca04ce23b15d7ea47b3f9846d0ab1a1f9448.txt) |
 | ai-knowledge | collart_web | guide | 原文未标日期 | included | [Collart Web 业务知识](../library/text/270c4d87532efe770841a0d66e5b6b151e99ed1d099dbbfeb484957d032d8aa5.txt) |
 | ai-knowledge | collart_web | method | 2026-06-23 | included | [Collart Web 内部用户过滤规则](../library/text/d621c6d4094e52dad21e3131be20d7a38ca6a64f836628041516a34a09b69727.txt) |
 | ai-knowledge | collart_web | metric | 原文未标日期 | included | [Collart Web 指标口径](../library/text/80aa49d53f02f946c8022b6221352b29629eb5093d44ea1b8309630832c41dfc.txt) |
@@ -350,7 +350,7 @@
 | ai-knowledge | collart_web | metric | 2026-04-01 | included | [📈 指标档案：DAU (Web)](../library/text/7a947ea8f54f039c34fe13fa430452abe50d95db665cc18aade46521e5e87169.txt) |
 | ai-knowledge | collart_web | sql | 原文未标日期 | included | [Web DAU计算](../library/text/24d55affa7442f39680671b68499411311ad088ed181a5b0572ee37c224675ea.txt) |
 | ai-knowledge | collart_web | metric | 2026-07-22 | included | [指标：Fashion 用户 vs 主站用户（Collart Web 站内划分）](../library/text/33a73519b3a277b36a059b9759d47b9444b7b81216d267afbeb8da5de1519b0a.txt) |
-| ai-knowledge | collart_web | metric | 2026-07-01, 2026-07-20, 2026-07-22 | included | [指标：Collart Web 新用户（user_pseudo_id 首次发现）](../library/text/a41aa23e1b9e7dda4da630400d23e2828856a12fa7bb7537da44f1711f84c9e6.txt) |
+| ai-knowledge | collart_web | metric | 2026-07-01, 2026-07-20, 2026-07-22 | included | [指标：Collart Web 新用户（user_pseudo_id 首次发现）](../library/text/c57c522b0316ac6bcc922068c6c5c3a15ea3b09d1015245c79a500eac36e4b83.txt) |
 | ai-knowledge | collart_web | metric | 2026-04-01 | included | [📈 指标档案：PAGE_CONVERSION (Web)](../library/text/2011dff5a88fc1ac1727a200e222df490a571fed2c2bb775b093fe0dc5c5e771.txt) |
 | ai-knowledge | collart_web | sql | 原文未标日期 | included | [Web页面转化分析](../library/text/c75b332b7646e64827dbbe3c3cefe3858337aa205084d50477723584a477dc09.txt) |
 | ai-knowledge | collart_web | metric | 2026-04-01 | included | [📈 指标档案：RETENTION (Web)](../library/text/49e78bf9616df9ba4d621948e987ce01614ec3c5008353be455c9da055976410.txt) |
@@ -377,7 +377,7 @@
 | ai-knowledge | collart_web | sql | 原文未标日期 | historical | [新老用户触发 explore 转化率分析](../library/text/c13d4bf9ee2522a6196b5835aa4dd1f37a16c010a1fa9867c3ebf2fa4ecbc778.txt) |
 | ai-knowledge | collart_web | sql | 2026-04-09 | historical | [新用户订阅漏斗转化分析](../library/text/90f2531535be5587bbacbda5888a2393735e0f9b90df09943b7335a6fcb0598d.txt) |
 | ai-knowledge | collart_web | sql | 原文未标日期 | historical | [Web 端过去7天按国家累计新增分布](../library/text/8dafe076c20af0011e7377b35a445d7106c9b684ea4225ec1ba5439af8909bec.txt) |
-| ai-knowledge | collart_web | report | 2026-03-27 | historical | [SQL 编码规范与最佳实践](../library/text/a77b74707d730af6efeeef977443027134d2058faa6ee762fa8a8c3ed75d369c.txt) |
+| ai-knowledge | collart_web | report | 2026-03-27 | historical | [SQL 编码规范与最佳实践](../library/text/2e3de28320e26a5f0d111b74abd430ebc871d8f9fa65cc18f8ef0c21f2841f73.txt) |
 | ai-knowledge | collart_web | sql | 2026-03-04, 2026-03-10, 2026-03-11 | historical | [阶段一 1.1：流量概览](../library/text/4971ba92ced7faf5ad6a78390d7472f2f2af7d537a62eb554a626ac2b08d2841.txt) |
 | ai-knowledge | collart_web | sql | 2026-04-01 | historical | [昨日 (2026-04-01) Collart Web FB 投放渠道新增用户分国家付费情况](../library/text/d55155dc88e6ebf7bb3a19c89cfcba688f947359e785c101d8520a35a757b9fb.txt) |
 | ai-knowledge | collart_web | sql | 2026-04-01 | historical | [昨日 (2026-04-01) Collart Web FB 投放渠道新增用户分国家付费情况](../library/text/a427c9bb54e7677f612318a4342d82c4fc98cdea09bb01a43576251c045723a1.txt) |
@@ -386,30 +386,30 @@
 | ai-knowledge | collart_web | sql | 2026-03-24, 2026-03-30 | historical | [Collart Web 过去7天活跃用户的模板点击率（按天）](../library/text/2615684a259807cbd4daf301c5906f7a69b061c218b340f65b9bcebc9a57fae2.txt) |
 | ai-knowledge | collart_web | sql | 2026-03-24, 2026-03-30 | historical | [验证口径：分别查看 DAU 和 template_click 的原始数据](../library/text/11158990bd82717980b50b163f63ed285ef2b40c21dfc254cb6a0c2314e112fc.txt) |
 | ai-knowledge | collart_web | sql | 2026-03-04, 2026-03-10, 2026-03-11 | historical | [Collart Web 过去一周核心指标汇总](../library/text/f5365205ed86e22433950c3551cbc1886ac5b3d3668c32a157e3b7d2d1050a03.txt) |
-| ai-knowledge | collart_web | sql | 2026-07-21, 2026-07-28 | historical | [Collart Web：当日 first_visit 在 Fashion 站，且后续访问主站的用户](../library/text/d07744dda8e6dcd05f150fb73e3e6f21ed0d85ddafc37b121c014cb36ae1aaa2.txt) |
-| ai-knowledge | collart_web | sql | 2026-07-03, 2026-07-09, 2026-07-10 | historical | [Collart Web: 近一周端内 FB 投放来源用户付费转化分析](../library/text/6fd0bc81fcc08ec23efd9265a26e9713793b7a3ab9f15d10542b44b6abb86f61.txt) |
-| ai-knowledge | collart_web | sql | 2026-07-03, 2026-07-09, 2026-07-10 | historical | [Collart Web: 近一周端内 FB 投放来源用户 ID](../library/text/07c3ffb21b7a7e21bfbabb1e5b86b055d268ae47f9c377b4aa2fdb8e4e985114.txt) |
+| ai-knowledge | collart_web | sql | 2026-07-21, 2026-07-28 | historical | [Collart Web：当日 first_visit 在 Fashion 站，且后续访问主站的用户](../library/text/9f4fada2aa9b01ae471c753a3c341c67d776c90f573468e0484776be8b05e1fa.txt) |
+| ai-knowledge | collart_web | sql | 2026-07-03, 2026-07-09, 2026-07-10 | historical | [Collart Web: 近一周端内 FB 投放来源用户付费转化分析](../library/text/b571f6282dfe5ee030efdd645d4430649e8949565e8731275ab2a57e88461f86.txt) |
+| ai-knowledge | collart_web | sql | 2026-07-03, 2026-07-09, 2026-07-10 | historical | [Collart Web: 近一周端内 FB 投放来源用户 ID](../library/text/c311641d9beba6d23fcf9968914eceb5dfee7d3b1bcbb6ac5f3e217c6a834d1f.txt) |
 | ai-knowledge | collart_web | sql | 2026-06-10, 2026-06-16 | historical | [DECLARE start_date DATE DEFAULT DATE '2026-06-10';](../library/text/2640e40ad8bd242f28c2a7615a2a8bf621d3a77227112a3258eadd0a99c63d19.txt) |
-| ai-knowledge | collart_web | sql | 2026-07-08, 2026-07-14, 2026-07-15 | historical | [Collart Web: 韩国新增用户增长来源 + 行为 + 付费转化](../library/text/8dc94281bb93953d7087fba693b054392f9caa3413e8823616a4b036668029c9.txt) |
-| ai-knowledge | collart_web | sql | 2026-06-23, 2026-06-29, 2026-06-30 | historical | [Collart Web: 过去一周访问服装带货 SEO 页 / 男性向页且同周有成功付费的用户信息](../library/text/98a0b79ac3e8a53c8c357f0c1e8b8ba58b5658bb9ac081bb25d1a253b830f41c.txt) |
-| ai-knowledge | collart_web | sql | 2026-06-19, 2026-06-25, 2026-06-26 | historical | [Collart Web: 过去一周进入 /soft-allure 且同窗口有成功付费的用户](../library/text/b91d23fc1f74e9621f9f5ce3c738c2f2258dfb7c0317465e637045b7e80125e0.txt) |
-| ai-knowledge | collart_web | sql | 2026-06-19, 2026-06-25, 2026-06-26 | historical | [Collart Web: /soft-allure 访问与付费交集诊断](../library/text/fec0358a9a531bb8c044efb3346806e7ae8e61c52573265c7b583d8af286c508.txt) |
+| ai-knowledge | collart_web | sql | 2026-07-08, 2026-07-14, 2026-07-15 | historical | [Collart Web: 韩国新增用户增长来源 + 行为 + 付费转化](../library/text/d3db426b906f1e32d14ad9ff84fd4c108bb398505b17f606dd6a2d07f27cd893.txt) |
+| ai-knowledge | collart_web | sql | 2026-06-23, 2026-06-29, 2026-06-30 | historical | [Collart Web: 过去一周访问服装带货 SEO 页 / 男性向页且同周有成功付费的用户信息](../library/text/def6db2fcb4ee57213adf7a5a78a3d24eae808f8ef2f688f38cc835d169a32a8.txt) |
+| ai-knowledge | collart_web | sql | 2026-06-19, 2026-06-25, 2026-06-26 | historical | [Collart Web: 过去一周进入 /soft-allure 且同窗口有成功付费的用户](../library/text/31b7535fec5d372d535c75d0f85a6bd24d2a8866bcf6308d3ae75baaf63d6eea.txt) |
+| ai-knowledge | collart_web | sql | 2026-06-19, 2026-06-25, 2026-06-26 | historical | [Collart Web: /soft-allure 访问与付费交集诊断](../library/text/a6471ca4054870efb1c8ed66d7408f03433fb213d97015c82c2e2ff3a81eb2b7.txt) |
 | ai-knowledge | collart_web | sql | 2026-04-15, 2026-04-21, 2026-04-22 | historical | [Collart Web 过去一周 DAU 用户机型分布](../library/text/39489fcd671344d3d1f8f4957b772b9919fc2b95bb16db990b9ff20e2cc0117a.txt) |
 | ai-knowledge | collart_web | sql | 2026-05-12, 2026-05-13 | historical | [查询日期: 2026-05-13](../library/text/28da6e66f3a45b5ebdc2c903d6460a2afc14bb8f45df710fc965b3f92155491e.txt) |
-| ai-knowledge | collart_web | sql | 2026-06-27, 2026-06-28, 2026-06-29 | historical | [Collart Web: 周末 fashion_video_generate_click 用户中真实使用 fashion_video 的人数](../library/text/e3ed204c55bba600690691c1ca86e1403904d79f626b57e97cc45d0b7ea16317.txt) |
-| ai-knowledge | collart_web | sql | 2026-06-27, 2026-06-28, 2026-06-29 | historical | [Collart Web: 周末穿搭带货场景生成用户新老判定](../library/text/98cbd6d73ed241df1d3d3cfc1e5c9a0b2f24db68aab54842641662ef499c1637.txt) |
-| ai-knowledge | collart_web | sql | 2026-06-27, 2026-06-28, 2026-06-29 | historical | [Collart Web: 周末 fashion_video_generate_click 用户新老判定](../library/text/5f5b9593d441238862551fc08a21ffebe24004017e32ba6e1695556f1a4134b0.txt) |
-| ai-knowledge | collart_web | sql | 2026-06-27, 2026-06-28, 2026-06-29 | historical | [Collart Web: 周末 SEA 穿搭带货真实生成用户新老判定](../library/text/c76fd1ab70f5e8270cb05a1a6fb93fbf653f714ced186dae2e73e8622395529d.txt) |
-| ai-knowledge | collart_web | sql | 2026-06-25, 2026-07-01, 2026-07-02 | historical | [Collart Web 过去一周核心数据](../library/text/168d0f107800a559d1ec5de87e9c41dc4118b7f4f73b70943b3eaa1a5d02edd1.txt) |
-| ai-knowledge | collart_web | sql | 2026-07-22 | included | [Collart Web：Fashion 用户 vs 主站用户划分](../library/text/4548f3143729e781ec7ec4327179b35c22546a86d4eb576b7bfa18dd2fddb6f2.txt) |
+| ai-knowledge | collart_web | sql | 2026-06-27, 2026-06-28, 2026-06-29 | historical | [Collart Web: 周末 fashion_video_generate_click 用户中真实使用 fashion_video 的人数](../library/text/1a50ac7d330c4a0c11328d5221126e359848264102e39ae113b3ba35e709e1f1.txt) |
+| ai-knowledge | collart_web | sql | 2026-06-27, 2026-06-28, 2026-06-29 | historical | [Collart Web: 周末穿搭带货场景生成用户新老判定](../library/text/206b02de452d97d1f34c31541c11324f5fd539c4944668c27d182bd1cbe644f9.txt) |
+| ai-knowledge | collart_web | sql | 2026-06-27, 2026-06-28, 2026-06-29 | historical | [Collart Web: 周末 fashion_video_generate_click 用户新老判定](../library/text/d915c33879d710033f92316e18697988c632a82123028920e3b54a3029fec80f.txt) |
+| ai-knowledge | collart_web | sql | 2026-06-27, 2026-06-28, 2026-06-29 | historical | [Collart Web: 周末 SEA 穿搭带货真实生成用户新老判定](../library/text/dc993c39649e38ca529759a09a9f0f2f402076976f3c91bd46781d184208851f.txt) |
+| ai-knowledge | collart_web | sql | 2026-06-25, 2026-07-01, 2026-07-02 | historical | [Collart Web 过去一周核心数据](../library/text/6bb1b29f7ab6bf0c8d25dcdf4b7f4068f80413baf23dcea51d8072b88cf1f971.txt) |
+| ai-knowledge | collart_web | sql | 2026-07-22 | included | [Collart Web：Fashion 用户 vs 主站用户划分](../library/text/5f16972aa17adb03ab7addf3e836fae7cb744f327ce5709dcd8a09e9c073b289.txt) |
 | ai-knowledge | collart_web | sql | 2026-06-23 | included | [Collart Web internal users to exclude from statistical analysis.](../library/text/c051a25c86d1578c9722d58c2da15ab3e53fdc51d14990e08c7c421221a341c8.txt) |
-| ai-knowledge | collart_web | sql | 2026-01-01, 2026-07-01, 2026-07-20 | included | [Collart Web 新用户标准口径：user_pseudo_id 首次发现 + 首次落地页](../library/text/c49fb258c6dbefe0b9a2267c444b73f1604337246b270334b9cebaa1f66a62e6.txt) |
-| ai-knowledge | collart_web | sql | 2026-09-07 | included | [Web 按登录 UUID 查画像（一行一台设备）](../library/text/4d264aa34833c3f4bc8a25b24e79f5e96dce60ccb73a3c6a0bf1008f709f3f77.txt) |
-| ai-knowledge | collart_web | sql | 原文未标日期 | included | [用户粒度收入：只读 Stripe T+1（不要 ods.orders，不要空表 HI）](../library/text/9eeea6682ec009e38f9403d13768de498baf5ba3115c3cd01cda9701ded6ba92.txt) |
+| ai-knowledge | collart_web | sql | 2026-01-01, 2026-07-01, 2026-07-20 | included | [Collart Web 新用户标准口径：user_pseudo_id 首次发现 + 首次落地页](../library/text/d796bcb7774dccd13b8d3edcea2abe588572865eb6c0b18d9c3e2a683c8a0197.txt) |
+| ai-knowledge | collart_web | sql | 2026-09-07 | included | [Web 按登录 UUID 查画像（一行一台设备）](../library/text/8bd5492613a163fc64adc48c590c46286ccce06088d3085477617328a9513d0d.txt) |
+| ai-knowledge | collart_web | sql | 原文未标日期 | included | [用户粒度收入：只读 Stripe T+1（不要 ods.orders，不要空表 HI）](../library/text/6f41c47d8635efe73b3e6cd58c41266465a0f9159aad18c1012fb4dca6a17926.txt) |
 | ai-knowledge | collart_web | table | 2026-01-01, 2026-01-18 | duplicate | [表名：aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di](../library/text/d6c8960f1a83cb56345f3c4486489693d382e347c0337758922546b95aadd2e0.txt) |
 | ai-knowledge | collart_web | table | 原文未标日期 | included | [表名：aidata2025.ads_collart.ads_oper_user_new_collartweb_di](../library/text/260dae06a3eba6c071625d394558e44712a372cdce0f6aacc1f2971439ee2c0c.txt) |
 | ai-knowledge | collart_web | table | 2026-09-02 | included | [表名：`aidata2025.ads_collartweb.ads_dim_metric_rule`](../library/text/c7d71b6ff6126f03779bd96bdbb9d02fd4406579fb0571fa92bb72b409334233.txt) |
-| ai-knowledge | collart_web | table | 2026-09-07 | included | [表名：aidata2025.ads_collartweb.ads_oper_user_profile_df](../library/text/73702fc3b2211500e766e87e0d96876058bd6955a77c97e6d4728a4c5f020f41.txt) |
+| ai-knowledge | collart_web | table | 2026-09-07 | included | [表名：aidata2025.ads_collartweb.ads_oper_user_profile_df](../library/text/f6549b2603ffe26f0dc3bb3dfeb23888cd040d8647e3daedeb6a1163245f903c.txt) |
 | ai-knowledge | collart_web | table | 2026-06-22, 2026-08-18, 2026-08-28 | included | [表名：aidata2025.ods.orders](../library/text/921dcfde8981dfcadbdc3a43cf8a05d72004e3c2fa1a162cf0ebdd0b8ccc3c96.txt) |
 | ai-knowledge | collart_web | table | 2026-08-28, 2026-09-06, 2026-09-07 | included | [表名：pubdata2025.dwd.dwd_cdct_revenue_stripe_di](../library/text/b8f11bbb75bbb271f8178577258f3977bbcbac14aef8728ebf455f21d04f60a3.txt) |
 | ai-knowledge | collart_web | table | 原文未标日期 | included | [1 表说明](../library/text/3ea176e99870f7302d581dfbd3c0413cba50c49adb9b1f6e7853c7d829b17ea2.txt) |

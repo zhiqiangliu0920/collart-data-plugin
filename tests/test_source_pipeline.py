@@ -43,6 +43,15 @@ class SourceTests(unittest.TestCase):
         self.source('ai-knowledge','_generated/table_docs_20260521/tables/example.md','# Historical dictionary\n2026-05-21\nfield: event_date')
         self.source('ai-knowledge','_generated/review_20260909/report.md','# Formal report\n2026-09-09')
         rows,_=pipe.scan(self.cfg);self.assertTrue(all(x['status']=='historical' for x in rows))
+    def test_crlf_source_survives_github_text_roundtrip(self):
+        p=self.source('ai-knowledge','topic.md','# Windows document\nLine two\n')
+        p.write_bytes(b'# Windows document\r\nLine two\r\n')
+        result,rows=pipe.build(self.cfg,self.stage);row=rows[0]
+        published=(self.plugin/row['material']).read_text(encoding='utf-8')
+        self.assertNotIn('\r',published)
+        self.assertEqual(pipe.sha(published),row['content_sha256'])
+        self.assertEqual(pipe.sha((self.plugin/row['material']).read_bytes()),row['content_sha256'])
+        self.assertNotEqual(row['sha256'],row['content_sha256'])
     def test_identical_text_deduplicates_without_losing_provenance(self):
         for s in self.cfg['sources']:self.source(s,'topic.md','# Same business text')
         result,rows=pipe.build(self.cfg,self.stage);self.assertEqual(result['texts'],1);self.assertEqual(len(rows),3);self.assertEqual(sum(r['status']=='duplicate' for r in rows),2)

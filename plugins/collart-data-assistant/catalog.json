@@ -24,7 +24,7 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/collart_android/dau-source-selection.md",
-      "sha256": "5521c9a3997f008757b5fec1a89eeed0c2cb0721de033f39379bd48f5001f081"
+      "sha256": "58ba28135a86450723a247b9f6ca689d292246188d7165aef1ae23fb6cbc3152"
     },
     {
       "id": "collart-fashion-product-funnel",
@@ -49,7 +49,7 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/collart_fashion/product-funnel.md",
-      "sha256": "9849b355e65f26126219fd9fb1def175fc2330ecbf5240f795d81cb53e506a68"
+      "sha256": "c7213b2b6c494b3edc07adaff300d19ffecac89d99652ff77838c5a2ad9fedd1"
     },
     {
       "id": "collart_fashion-revenue-boundary",
@@ -105,7 +105,7 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/collart_fashion/warehouse-audit-20260909.md",
-      "sha256": "cf0f2e273ef2833249763e5031dc0e68608e29d26151d3a9ff95b8bcfe968eee"
+      "sha256": "0eedbe435c90d8349c9fef807685a02dee4cab655c551ca5317db249650627ed"
     },
     {
       "id": "collart-ios-asa-history-boundary",
@@ -130,7 +130,7 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/collart_ios/asa-history-boundary.md",
-      "sha256": "285c68bb985373b1f77c590bfe267c5bf3332f755d79290933bc86afce794ab0"
+      "sha256": "a814ba95bca2e2afbe6564211872e53528a5767ec58dbb732b0990ff64972c62"
     },
     {
       "id": "collart_web-identity",
@@ -184,7 +184,7 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/collart_web/revenue-report-20260912.md",
-      "sha256": "283e5eb0311ec8164f1670f2d0b45d1d2f1ee91e68cdeca05ab2f51e4bf84340"
+      "sha256": "a4ffa8a5b2d0eb2274f475db8eaebd8725a8e09a1a89c808e12b1797b25157f1"
     },
     {
       "id": "company-event-rule-contract",
@@ -209,7 +209,7 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/company/event-rule-contract.md",
-      "sha256": "1d40c6c757e103a12ec5307b1b3a21d2398e292a5a98f9fc636c9a1be7c8b5c0"
+      "sha256": "82670af1e687e9d1174aaa7f14ad47b8fc33a411820efaf9df4f2e8ec5046215"
     },
     {
       "id": "company-purchase-union",
@@ -233,7 +233,7 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/company/purchase-union.md",
-      "sha256": "5c0d8fe030a5014c0a1efb4ee071f6325b323c55f0f685e884e78867e8f504e0"
+      "sha256": "c4ffd11f1247cab788a4325543e14cd40420677f8d8ff727ce52caf41ee4002a"
     },
     {
       "id": "company-report-windows",
@@ -257,7 +257,7 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/company/report-windows.md",
-      "sha256": "8b8f2c3557d50d888b08261b91365d5e3371830423afefb7bd89a69a1c3bb69e"
+      "sha256": "f535e00fcd3b697b8717b92730ad090af7c3140ff331d6cf1af8200866121e55"
     },
     {
       "id": "shared-analysis-playbook",

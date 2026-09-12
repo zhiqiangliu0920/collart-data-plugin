@@ -8,6 +8,12 @@ def prepare(state_root,stage,remote_snapshot,fingerprint):
     state=json.loads((state_root/'state.json').read_text(encoding='utf-8'))
     remote_commit,remote=load_snapshot(remote_snapshot)
     baseline=state.get('remote_files',state['files'])
+    publication=state_root/'release-status.json'
+    if publication.exists():
+        release=json.loads(publication.read_text(encoding='utf-8'))
+        if release['published_commit']!=state.get('commit'):
+            _,published_files=load_snapshot(Path(release['snapshot']))
+            baseline={p:hashlib.sha256(t.encode()).hexdigest() for p,t in published_files.items()}
     local=inventory(stage)
     # The installed cache suffix is local state, never a reason to publish.
     manifest='plugins/collart-data-assistant/.codex-plugin/plugin.json'

@@ -108,7 +108,9 @@ def inspect_text(rel,text,allowed_ids=()):
             transforms.append('内部测试用户 ID 引用统一 config/internal-user-ids.json')
     replaced=re.sub(r'[A-Za-z]:[\\/]+Users[\\/]+[^\s`"\x27|<>，。；)]+','{LOCAL_PATH}',text)
     if replaced != text: transforms.append('个人绝对路径替换为 {LOCAL_PATH}')
-    return replaced,issues,sorted(set(transforms))
+    normalized=replaced.replace('\r\n','\n').replace('\r','\n')
+    if normalized!=replaced:transforms.append('发布文本换行规范化为 LF；原文件哈希保持不变')
+    return normalized,issues,sorted(set(transforms))
 
 def scan(config, allowed_ids=()):
     rows=[]; contents={}

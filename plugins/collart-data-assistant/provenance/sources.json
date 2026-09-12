@@ -621,8 +621,8 @@
       "source_declared_date": null,
       "captured_at": "2026-09-12",
       "locator": "完整正文；原文日期见资料",
-      "excerpt": "library/text/b3cc071adc1c86669cb3155d6a78f4216706c260bcca47015eb12a786779edd1.txt",
-      "excerpt_sha256": "b3cc071adc1c86669cb3155d6a78f4216706c260bcca47015eb12a786779edd1",
+      "excerpt": "library/text/f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637.txt",
+      "excerpt_sha256": "f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637",
       "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
     },
     {
@@ -725,8 +725,8 @@
       "source_declared_date": null,
       "captured_at": "2026-09-12",
       "locator": "完整正文；原文日期见资料",
-      "excerpt": "library/text/00178f19b3fad07f6cfb47b767b1966f23dc713fb51f967464e70390525a5292.txt",
-      "excerpt_sha256": "00178f19b3fad07f6cfb47b767b1966f23dc713fb51f967464e70390525a5292",
+      "excerpt": "library/text/6f52d844765c687ecdfb7b5e6ab4e9c628bb47ed508e45f8a25d1df94a64013c.txt",
+      "excerpt_sha256": "6f52d844765c687ecdfb7b5e6ab4e9c628bb47ed508e45f8a25d1df94a64013c",
       "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
     },
     {
