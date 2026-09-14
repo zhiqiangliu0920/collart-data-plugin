@@ -22,7 +22,7 @@
 3. 通过 GitHub 连接读取 main、commit、递归 tree；确认目标仓库身份、已授权的可见性、无截断、仅普通文件。2026-09-14 维护者确认直接同步到当前 Public 仓库。变化 blob 必须读取正文并核对 Git blob SHA，未变正文可复用上次快照。不能用代码搜索代替完整树。
 4. 在输入目录之外建立暂存发行目录，以本机上次快照、当前远端和本地修改做三方比较。保留远端新增与修改。碰撞文件保留双方并进入待处理；main 不是旧基线时先纳入远端变更再构建。
 5. 运行 source_pipeline.py --config <inputs.json> --stage <暂存发行目录> --audit <本机审核输出>。完整读取可用文本，排除凭证、个人配置、原始用户明细、临时产物、目录链接及插件/发布/索引输出。生成全文资料、去重映射、日期与来源图，保留旧来源证据。
-6. 阅读新增/变化原文、pending 与 topic_impacts。主题事实改变或互相矛盾时保留旧证据并标记待复核，不能凭更新时间认定新口径正确。无歧义内容自动整合；无独立证据不提升为 verified。必要时改暂存 knowledge，再运行 kb.py index。更新本机目录用 build_local_catalog.py，索引不是输入。
+6. 阅读新增/变化原文、pending 与 topic_impacts。主题事实改变或互相矛盾时保留旧证据并标记待复核，不能凭更新时间认定新口径正确。无歧义内容自动整合；无独立证据不提升为 verified。必要时改暂存 knowledge；每次构建后运行 kb.py index，更新主题索引和 search-index.json。更新本机目录用 build_local_catalog.py，索引不是输入。
 7. 运行 kb.py check、受影响测试及整包凭证检查。正式主题引用的旧摘录必须保留；全文引用按 source ID 映射解析。待处理项不包含敏感正文。
 8. release_state.py prepare 与最新远端快照比较。没有差异就结束，不制造时间戳或版本提交。冲突影响关联索引/主题时隔离整个关联变更；只有合成结果再次通过完整检查的无冲突部分可以发布。
 9. GitHub create_tree 基于刚读取的远端 tree，仅写实际差异；create_commit 的 parent 为该远端提交。更新 ref 前重新读取 main；若变化则重新三方合并与验证。update_ref 必须 force=false。权限或断网失败保留候选，不推进发布/安装基线。
@@ -51,7 +51,7 @@ sync_plugin.py 使用官方 plugin-creator helper 更新本机缓存后缀，再
 
 ai-knowledge 的正式正文按公司/四端维护，0global/knowledge_registry.json 记录持久 ID、旧路径别名及精确正文哈希。两个历史包的标识表由 inputs.source_registries 指向本机状态文件。纯迁移更新 path/aliases 并保留 id；内容变化必须审阅差异后更新记录，禁止只重设哈希。
 
-收录 status、业务 business_status、复核 review_status 分开。默认 search 返回正式主题和 documented + reviewed_static 全文；--include-history 包含历史、废弃与待核对资料；--business-status 可精确筛选。read 接受持久 ID 和新旧路径别名，返回来源状态与完整正文。旧档案按带内容哈希的版本 ID 读取，不能冒充当前版本。
+收录 status、业务 business_status、复核 review_status 分开。默认 search 返回正式主题和 documented + reviewed_static 全文；--include-history 包含历史、废弃与待核对资料；--business-status 可精确筛选。read 接受持久 ID 和新旧路径别名，默认返回来源状态与有界片段，整份证据用 --full。旧档案按带内容哈希的版本 ID 读取，不能冒充当前版本。
 
 主题来源重新捕获时新增 source ID 和摘录，旧证据记录 tracking_status=historical 并保留哈希。它们不参与当前来源漂移报警，但仍接受包内证据完整性校验。新日期仅为整理/捕获日，不是业务生效日。
 

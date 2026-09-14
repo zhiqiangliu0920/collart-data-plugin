@@ -2,10 +2,11 @@
 
 所有模板遵守 [数据访问约定](../docs/data-access-policy.md)：只读数据、原始埋点仅最近 30 天，禁止更早历史分批查询。原始事件模板按执行时的北京时间校验最近 30 个完整日，不能用回拨 as_of_date 绕过。
 
-7 个 BigQuery GoogleSQL 模板和 1 个时点过滤片段，使用命名参数，不内嵌原作者日期或凭证。含 ASSERT 的文件须作为 GoogleSQL script 执行。整合时仅做离线检查，首次运行需核对现网 schema、来源覆盖与业务日；生产查询不是安装步骤。
+8 个 BigQuery GoogleSQL 模板和 1 个时点过滤片段，使用命名参数，不内嵌原作者日期或凭证。含 ASSERT 的文件须作为 GoogleSQL script 执行。整合时仅做离线检查，首次运行需核对现网 schema、来源覆盖与业务日；生产查询不是安装步骤。
 
 | 模板 | 参数 | 用途 / 限制 |
 |---|---|---|
+| [android_revenue_change.sql](android_revenue_change.sql) | DATE end_date | Android 本期/前期各 7 日收入分项；日期缺失或 NULL 时不生成完整窗口金额，不预设两类金额可合并 |
 | [country_metrics.sql](country_metrics.sql) | DATE start_date/end_date/as_of_date | Web 国家指标；全部新增次留；首购订阅人数不等于新访客付费人数 |
 | [four_platform_daily.sql](four_platform_daily.sql) | DATE start_date/end_date | 四端分行比较，不输出重叠收入之和 |
 | [probe_event_names.sql](probe_event_names.sql) | DATE start_date/end_date | Android 原始事件探查，仅最近 30 个完整日 |

@@ -26,3 +26,7 @@ ai-knowledge 的正式正文按公司/四端维护，0global/knowledge_registry.
 
 主题来源重新捕获时新增 source ID 和摘录，旧证据记录 tracking_status=historical 并保留哈希。它们不参与当前来源漂移报警，但仍接受包内证据完整性校验。新日期仅为整理/捕获日，不是业务生效日。
 
+
+## 检索与读取（0.4.0）
+
+默认 search 优先查主题并排序，覆盖不足再查资料；--scope all 显式同时检索，历史用 --include-history。read 默认有界正文，按章节/行或 offset 续读，整篇证据需 --full。维护者更新后运行 index 和 check；详见[检索与测量](docs/analysis-performance.md)。

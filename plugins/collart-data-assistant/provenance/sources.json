@@ -1470,6 +1470,17 @@
       "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
       "origin_source": "ai-knowledge",
       "origin_path": "1company/analysis_playbooks/internal_user_filter.md"
+    },
+    {
+      "id": "review-20260914-android-ad-events",
+      "source_path": "collart_android/tables/storytemplate-10a27.analytics_232977577.events_.md",
+      "source_sha256": "ccc1f71feb3728e07810e2cf40b8f9fe3c1a5e78abc3910cfe91dea6e08ba177",
+      "excerpt": "library/text/ccc1f71feb3728e07810e2cf40b8f9fe3c1a5e78abc3910cfe91dea6e08ba177.txt",
+      "excerpt_sha256": "ccc1f71feb3728e07810e2cf40b8f9fe3c1a5e78abc3910cfe91dea6e08ba177",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_android/tables/storytemplate-10a27.analytics_232977577.events_.md",
+      "captured_at": "2026-09-14",
+      "tracking_status": "current"
     }
   ]
 }

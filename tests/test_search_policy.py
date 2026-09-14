@@ -15,7 +15,7 @@ class SearchPolicyTests(unittest.TestCase):
   env={**os.environ,'PYTHONIOENCODING':'utf-8'}
   return json.loads(subprocess.check_output([sys.executable,'-B',str(KB),'--root',str(self.root),*args],env=env).decode('utf-8'))
  def test_default_hides_deprecated_and_unreviewed(self):
-  r=self.run_kb('search','SearchNeedle');self.assertEqual([x['title'] for x in r['results']],['current']);self.assertEqual(r['historical_or_unreviewed_matches'],2)
+  r=self.run_kb('search','SearchNeedle');self.assertEqual([x['title'] for x in r['results']],['current']);self.assertIsNone(r['historical_or_unreviewed_matches']);self.assertEqual(r['excluded_records'],2)
  def test_history_and_specific_status_are_available(self):
   self.assertEqual(self.run_kb('search','SearchNeedle','--include-history')['matches'],3)
   self.assertEqual(self.run_kb('search','SearchNeedle','--business-status','deprecated')['results'][0]['title'],'deprecated')

@@ -81,7 +81,7 @@ class SourceTests(unittest.TestCase):
         shutil.copytree(self.stage,Path(self.cfg['distribution']))
         read_bytes=Path.read_bytes
         def unavailable(path):
-            if path==original:raise OSError('cloud file temporarily unavailable')
+            if path.resolve()==original.resolve():raise OSError('cloud file temporarily unavailable')
             return read_bytes(path)
         with patch.object(Path,'read_bytes',unavailable):
             result,rows=pipe.build(self.cfg,self.stage)
