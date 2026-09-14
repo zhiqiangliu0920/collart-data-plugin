@@ -2,6 +2,65 @@
   "schema_version": 1,
   "entries": [
     {
+      "id": "android-revenue-trend",
+      "title": "Android 近七日收入变化：来源与取数",
+      "project": "collart_android",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "ads-routing",
+        "revenue",
+        "review-20260914-ca27ec86b3b2"
+      ],
+      "tags": [
+        "收入",
+        "营收",
+        "revenue",
+        "Android",
+        "近七日"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_android/android-revenue-trend.md",
+      "sha256": "77358b255ee88b3b691854fdfe6739e91f1c3876d59b163b42bdc8e0e521cf97"
+    },
+    {
+      "id": "android-reward-ad-click",
+      "title": "Android 免费看广告按钮：事件候选与点击率边界",
+      "project": "collart_android",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "review-20260914-android-ad-events",
+        "cursor-raw-events-md",
+        "maintainer-data-access-20260914"
+      ],
+      "tags": [
+        "免费看广告",
+        "广告按钮",
+        "广告 按钮",
+        "点击率",
+        "激励广告",
+        "generate_watch_ad"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_android/android-reward-ad-click.md",
+      "sha256": "728dc451cf38f7df42420e2b04d3e0807f53ebd97d0d606580a94d1613992d4a"
+    },
+    {
       "id": "collart-android-dau-source-selection",
       "title": "Android 活跃用户与历史 SQL 选择",
       "project": "collart_android",

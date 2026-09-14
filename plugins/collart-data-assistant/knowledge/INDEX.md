@@ -4,6 +4,8 @@
 
 | 项目 | 类型 | 知识 | 状态 | 最后核验 | 下次复核 |
 |---|---|---|---|---|---|
+| collart_android | metric | [Android 近七日收入变化：来源与取数](collart_android/android-revenue-trend.md) | documented | 未核验 | 2026-10-14 |
+| collart_android | metric | [Android 免费看广告按钮：事件候选与点击率边界](collart_android/android-reward-ad-click.md) | documented | 未核验 | 2026-10-14 |
 | collart_android | metric | [Android 活跃用户与历史 SQL 选择](collart_android/dau-source-selection.md) | documented | 未核验 | 2026-10-12 |
 | collart_android | playbook | [Android 新增 cohort 与首付诊断](collart_android/first-subscription-diagnosis.md) | documented | 未核验 | 2026-10-14 |
 | collart_android | playbook | [Android 模板覆盖与任务成功率](collart_android/template-coverage-diagnosis.md) | documented | 未核验 | 2026-10-14 |

@@ -47,7 +47,8 @@ class KnowledgeTests(unittest.TestCase):
 
     def test_new_draft_found_without_reindex_then_check_detects_stale_catalog(self):
         self.run_cli("new", "--id", "new-rule", "--project", "sample", "--kind", "metric", "--title", "独有检索词")
-        self.assertEqual(self.run_cli("search", "独有检索词")["matches"], 1)
+        self.assertEqual(self.run_cli("search", "独有检索词")["matches"], 0)
+        self.assertEqual(self.run_cli("search", "独有检索词", "--status", "draft")["matches"], 1)
         self.assertTrue(any("stale index" in x for x in self.run_cli("check", code=1)["errors"]))
         self.run_cli("index")
         self.assertFalse(self.run_cli("check")["errors"])

@@ -19,4 +19,4 @@ description: 将 Collart 项目的表字段解释、业务规则、指标口径�
 6. 运行 `--root "<源码>" --authoring index`、`--root "<源码>" check`；检查受影响 SQL、相对链接和来源漂移。交付改动、验证结果及仍待核验的口径。
 7. 发布和安装需根据实际配置显式执行，不能假定每 30 分钟自动同步已启用。2026-09-13 来源维护约定记载同步暂停；本插件不能确认当前调度运行状态。权限以当前任务明确授权为准；普通查询不隐含外部发布授权。发布成功但安装失败时保留 published 状态，只重试安装，不重复提交。其他同事仍需更新安装或自行配置同步。更新后开新任务；插件本身不启动定时器、不发送消息。
 
-8. 更新原文或移动文件时维护持久 ID、path/aliases 与独立业务状态；正文变化先审阅再更新 reviewed_sha256，隐私批准不得跨哈希沿用。查询历史用 --include-history 或 read 原 ID；源文档 review_status 不等于业务已 verified。
+8. 更新原文或移动文件时维护持久 ID、path/aliases 与独立业务状态；正文变化先审阅再更新 reviewed_sha256，隐私批准不得跨哈希沿用。查询历史用 --include-history 或 read 原 ID --full；源文档 review_status 不等于业务已 verified。
