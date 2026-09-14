@@ -1,0 +1,62 @@
+# aidata2025.dws.dws_oper_asa_keyword_collart_1d · asa投放平台数据（keyid映射）
+
+> 业务状态：historical；复核：reviewed_static。以下完整字段定义来自 2026-05-21 导出，未经本次生产验证。
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvju0jqQ5yOo`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['公司']
+- 原登记粒度：未填写
+- 原登记主键：未填写
+- 更新频率：T+1 12:00
+- 原登记层级：DWS汇总层
+- 主题：增长主题
+- 子主题：投放平台
+- 负责人：恬静
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `adgroup_id` | string | 主键 | 是 | 广告组id |
+| `adgroup_name` | string | 维度 | 否 | 投放广告组 |
+| `keyword_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `keyword` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `country_region` | string | 维度 | 是 | 国家所在洲 |
+| `impressions` | int | 指标 | 否 | 投放广告展示次数 |
+| `taps` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `ttr` | float | 指标 | 否 | 浮点型指标字段，用于统计金额、比率或均值。 |
+| `avg_cpt` | float | 指标 | 否 | 浮点型指标字段，用于统计金额、比率或均值。 |
+| `local_spend` | float | 指标 | 否 | 浮点型指标字段，用于统计金额、比率或均值。 |
+| `total_installs` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `total_new_downloads` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `total_redownloads` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `view_installs` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `tap_installs` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `tap_new_downloads` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `tap_redownloads` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `view_new_downloads` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `view_redownloads` | int | 指标 | 否 | 整型指标字段，用于统计数量、金额或次数。 |
+| `total_avg_cpi` | float | 指标 | 否 | 浮点型指标字段，用于统计金额、比率或均值。 |
+| `total_install_rate` | float | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `tap_install_cpi` | float | 指标 | 否 | 浮点型指标字段，用于统计金额、比率或均值。 |
+| `tap_install_rate` | float | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | pubdata2025.ods.ods_apple_keyword_reports_1d |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | 投放后台 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m20!1m4!4m3!1saidata2025!2sdwd!3sdwd_id_convert_di!1m4!4m3!1saidata2025!2sdim!3sdim_country_info!1m4!1m3!1saidata2025!2sbquxjob_678dbd5d_19e1bb53b6c!3sUS!1m4!4m3!1saidata2025!2sdws!3sdws_oper_asa_keyword_collart_1d) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdws%2Fdaily%2Fh_dws_oper_asa_keyword_collart_1d.sqlx?project=aidata2025) |
+| 看板 | - |
+
+### 使用限制
+
+- 行粒度未填写；聚合前需确认唯一键及重复记录处理。
+- 主键未填写；字段角色中的“主键”不等于已验证唯一约束。
+- 部分字段说明为导出模板的通用解释，不是已确认业务口径；金额单位、去重键、观察窗口仍需业务证据。

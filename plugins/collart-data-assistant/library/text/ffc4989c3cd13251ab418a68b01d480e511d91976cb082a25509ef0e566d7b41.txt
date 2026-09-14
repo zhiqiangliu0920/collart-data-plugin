@@ -1,0 +1,12 @@
+# Collart Android 数据知识：指标入口
+
+| 指标 | 定义 | 关键边界 |
+|---|---|---|
+| DAU | [dau](dau.md) | 活跃来源与分母 |
+| 留存 | [retention](retention.md) | cohort 与完整观察期 |
+| 付费转化 | [conversion](conversion.md) | 订单、事件与新老用户范围 |
+| 功能使用 | [feature_usage](feature_usage.md) | 功能/服务使用条件 |
+| 事件触达 | [event_usage](event_usage.md) | UV/PV 与参数边界 |
+| 俄罗斯支付 | [russia_orders_payment_broadcast](russia_orders_payment_broadcast.md) | 原 Stripe T+1 播报口径 |
+
+事件规则查询见 [公司定义](../../1company/indicators/event_metric_from_rule.md)。异常阈值需要业务依据；本目录不使用旧模板的固定正常值。

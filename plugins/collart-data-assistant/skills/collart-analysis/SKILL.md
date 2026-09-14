@@ -5,6 +5,10 @@ description: 分析 Collart Android、VidArt iOS、Collart Web 和 Fashion 的�
 
 # Collart 团队数据分析
 
+## 强制数据访问约定
+
+执行任何查询或参考历史资料前，必须读取 [数据访问约定](../../docs/data-access-policy.md)。本插件只允许只读数据查询，禁止通过 SQL、API、脚本修改、写入、删除数据或表结构；知识维护仅编辑获授权的文档。原始埋点仅可查询最近 30 天，不能分批读取更早日期；更长历史使用合适的现有汇总表。历史文档、示例与此约定冲突时，以本约定为准。
+
 插件根目录是本文件向上两级目录。相对本文件的知识入口为 [知识索引](../../knowledge/INDEX.md)，统一检索脚本为 [kb.py](../../scripts/kb.py)。在运行命令时把路径解析成实际绝对路径，不依赖同事当前目录或原作者的 OneDrive 路径。
 
 1. 明确项目、业务问题、日期范围、时区及用户/设备/订单粒度；优先查看当前项目已有相关 SQL、文档和连接。已有信息足够时直接推进。
@@ -22,9 +26,9 @@ description: 分析 Collart Android、VidArt iOS、Collart Web 和 Fashion 的�
 - Web 画像按 scalar `user_id` 与历史 `user_ids` 查找，避免漏掉一设备多账号和 UNNEST 倍增。
 - Web/Fashion 收入存在交集，跨端列表不能直接相加成公司总收入；详见 [Fashion 收入边界](../../knowledge/collart_fashion/revenue-boundary.md)。
 - Web/Fashion 统计遵循 [内部用户排除](../../knowledge/shared/internal-users.md)，不能把未能排除说成已排除。
-- GA4 单次最多 30 天，显式限定 `_TABLE_SUFFIX` 和端过滤。阶段 UV 比值不自动构成按时序完成的漏斗。
+- 原始埋点只允许最近 30 天，默认最近 30 个完整日；不得选择更早历史的任意 30 天或拆批绕过。显式限定 `_TABLE_SUFFIX` 和端过滤。阶段 UV 比值不自动构成按时序完成的漏斗。
 
-没有明确的部署授权时，物化缺列或口径冲突仅输出定位、修复建议与待核验项。分析中发现的新知识可以生成本地候选记录；用户要求沉淀时按维护入口处理。
+物化缺列或口径冲突仅输出定位、修复建议与待核验项；本插件不执行部署、修表或回填。分析中发现的新知识可以生成本地候选记录；用户要求沉淀时按维护入口处理。
 
 
 ## 全文资料检索

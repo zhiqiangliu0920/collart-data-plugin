@@ -1,0 +1,36 @@
+# 表名：aidata2025.ads_collart.big_r_user_value_state
+
+## 1. 基础信息
+
+- 表中文名：Collart 大R 用户累计水位
+- 表类型：汇总表
+- 行粒度：`app_name + user_id` 一行
+- 主键字段：`app_name, user_id`
+- 更新频率：每 10 分钟，由 scheduled query 跑 `06_scheduled_merge_and_rebuild.sql` 整表重建
+- 上游来源：`big_r_payment_event_ledger`；属性来自画像 / 端侧 profile / 近 2 日 ods sexual
+- 优先级：高（准实时播报读本表）
+
+## 2. 核心作用
+
+1. 准实时大R的累计价值（`lifetime_value`），不再拼画像 history + 当天收入
+2. 国家 / sexual 分 / 调用次数 / is_r / 渠道 / 首活与最近活跃也落在本表，播报 SQL 不再现查画像和 ods
+
+## 3. 核心字段
+
+| 字段 | 含义 |
+|---|---|
+| `lifetime_value` | 确认+退款金额合计（USD） |
+| `country` | 画像 → 端侧 `ads_oper_user_profile_df` → 近 2 日 `ods_ai_request_info_new_1d.country` |
+| `sexual_score` | 近 2 个北京日 ods sexual 最新分 → 画像 |
+| `task_num` | 同上窗口的 distinct task 数 → 画像 |
+| `is_r` | 来自 `ads_vip_user_info_all`，空按 0 |
+| `traffic_src_name` | 同上画像 |
+| `first_open_date` / `last_active_date` | 同上画像 |
+| `first_paid_at` / `last_paid_at` | 北京墙钟 |
+| `cross_50_at` | 累计首次跨 $50 的支付时刻 |
+
+## 4. 口径红线
+
+- 本表不筛 `lifetime_value >= 50`（`cross_50_at` 的 >=50 只算跨线时刻）。播报阈值在 n8n 05
+- `CREATE OR REPLACE` 整表重建：改字段必须同步改定时计划里的 06，否则下一轮会丢掉新列
+- 准实时 `is_r` 读本表；活跃门槛为 `last_active_date` 近 14 日 **或** `last_paid_at` 北京当天（05 SQL，2026-09-09）

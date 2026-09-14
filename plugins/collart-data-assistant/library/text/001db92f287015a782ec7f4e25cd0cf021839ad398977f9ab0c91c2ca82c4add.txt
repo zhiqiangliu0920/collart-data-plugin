@@ -1,0 +1,21 @@
+# 公司看板聚合与对账方法
+
+来源：`backfill_snapshot.py`、`reconcile_snapshot.py`、`source_qa.json`、`reconciliation_qa.json`。原快照覆盖 2026-05-23～08-21；此处保留可复用方法和历史验收摘要，不执行历史回填。
+
+## 输入与聚合
+
+源表 `pubdata2025.ads.ads_atlasv_basic_data_daily_1h` 按 stats_date × team × app_name 聚合。四组为 downloader、ai_photo、guangzhou_tool、guangzhou_game；广州游戏按 TTG_ / FBG_ 分线。其他团队与不属于两线的游戏产品先报错，不静默漏掉。
+
+产品/组/线分别汇总 revenue、cost、else_cost、active_users、new_users。公司公共费用来自 `(team='guangzhou', app_name='gz')` 与 `(team='hangzhou', app_name='hz')`，仅在公司层加一次，不能在多层总计中重复相加。净收入 = 收入 − 投放花费 − 其他花费。
+
+次留按有效 `retan_2` 的新增人数加权：分子 `SUM(retan_2 * new_users)`，分母只纳入 retan_2 非空行的 new_users。空留存不是 0，不能把已缺失 cohort 加入分母。
+
+## 目标与检查
+
+目标 `daily_metric` 唯一键为日期 × level × group_name × line_name × product_name × data_mode。原脚本会生成事务中的 INSERT ... ON CONFLICT UPDATE，并记录 sync_run；它只是生成 SQL，写入目标仍是独立变更，不能因为本页存在就执行。
+
+对账比较缺失键、额外键和同键字段差异：金额允许 0.01，人数要求相等；留存先按 ROUND_HALF_UP 到 4 位，再比较，区分存储舍入与计算差异。原目标查询 LIMIT 500，在产品数变多时可能截断；改用完整分页/全量键检查。原 expected/actual 字典构建可能覆盖重复键，应先检验唯一性。
+
+历史 QA：源 11,380 行（公司 91、组 364、线 182、产品 10,743）；2026-08-21 对账 144 行（1/4/2/137），缺失、额外和差异行均为 0，最大金额差约 0.005。这是原 JSON 记录，不是本次重新通过的生产对账。
+
+原约 1.97 MB 的 backfill.sql 是该窗口的批量 INSERT 数值载荷，不是可复用知识；与 pyc、旧运行壳一起退出知识目录，原件可由整理备份恢复。

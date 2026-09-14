@@ -1,8 +1,10 @@
 # 三来源整合、发布与安装
 
-`ai-knowledge + cursor_summary + codex_summary → 暂存整合 → private GitHub main → 本机插件`
+当前仓库：[zhiqiangliu0920/collart-data-plugin](https://github.com/zhiqiangliu0920/collart-data-plugin)。仓库于 2026-09-14 更名；新的发布和下载统一使用此地址。旧名称只保留在既有本机快照的兼容校验中，插件内部标识仍为 collart-data-assistant。
 
-维护者沿用现有每 30 分钟 Codex heartbeat。原目录继续维护。任务使用已连接 GitHub 访问私有仓库，脚本不持有令牌。电脑离线、Codex 未运行或连接不可用时延后，恢复后重试。新任务使用更新后的插件。
+`ai-knowledge + cursor_summary + codex_summary → 暂存整合 → GitHub main → 本机插件`
+
+原设计使用每 30 分钟 Codex heartbeat；2026-09-13 来源维护约定记载该任务已暂停。本说明仅定义流程，不表示任务当前启用。原目录继续维护。任务使用已连接 GitHub 访问仓库，脚本不持有令牌。电脑离线、Codex 未运行或连接不可用时延后，恢复后重试。新任务使用更新后的插件。
 
 ## 本机配置和基线
 
@@ -17,7 +19,7 @@
 
 1. 获取本机互斥运行锁；读取 release-status 与 state。若已发布但未安装，先读取已保存且哈希有效的快照重试安装，成功后记录 installed。网络不可用不阻止使用已验证快照重试安装。
 2. sync_plugin.py status 核对源码与缓存。有未发布本地改动时保留原件，不覆盖，转入三方审查。有缓存故障时保留独立失败状态，不重复发布。
-3. 通过 GitHub 连接读取 main、commit、递归 tree；确认 private、无截断、仅普通文件。变化 blob 必须读取正文并核对 Git blob SHA，未变正文可复用上次快照。不能用代码搜索代替完整树。
+3. 通过 GitHub 连接读取 main、commit、递归 tree；确认目标仓库身份、已授权的可见性、无截断、仅普通文件。2026-09-14 维护者确认直接同步到当前 Public 仓库。变化 blob 必须读取正文并核对 Git blob SHA，未变正文可复用上次快照。不能用代码搜索代替完整树。
 4. 在输入目录之外建立暂存发行目录，以本机上次快照、当前远端和本地修改做三方比较。保留远端新增与修改。碰撞文件保留双方并进入待处理；main 不是旧基线时先纳入远端变更再构建。
 5. 运行 source_pipeline.py --config <inputs.json> --stage <暂存发行目录> --audit <本机审核输出>。完整读取可用文本，排除凭证、个人配置、原始用户明细、临时产物、目录链接及插件/发布/索引输出。生成全文资料、去重映射、日期与来源图，保留旧来源证据。
 6. 阅读新增/变化原文、pending 与 topic_impacts。主题事实改变或互相矛盾时保留旧证据并标记待复核，不能凭更新时间认定新口径正确。无歧义内容自动整合；无独立证据不提升为 verified。必要时改暂存 knowledge，再运行 kb.py index。更新本机目录用 build_local_catalog.py，索引不是输入。

@@ -1,0 +1,12 @@
+# 仓库加工来源与依赖
+
+依据：2026-05-21 字典导出的显式上游。缺省项目的二段表名保持原样；未声明的依赖不推断。以下边仅表示历史登记关系，是否仍在调度需核对。当前口径入口见各表正文。
+
+| 下游 | 原登记上游 | 加工任务 |
+|---|---|---|
+| [aidata2025.ads_collart.ads_high_value_user_web_info](../tables/aidata2025.ads_collart.ads_high_value_user_web_info.md) | storytemplate-10a27.analytics_232977577.events_*,aidata2025.dwd.dwd_oper_user_collartweb_di,aidata2025.ods.orders | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fads%2Fcollart%2Fads_high_value_user_web_info.sqlx?project=aidata2025) |
+| [aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di](../tables/aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di.md) | aidata2025.dwd.dwd_oper_user_collartweb_di | ads_oper_b…b_di.sqlx – Code – Dataform – BigQuery – AIDATA – Google Cloud 控制台 |
+| [aidata2025.ads_collart.ads_oper_basic_metric_collart_web_di](../tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_web_di.md) | storytemplate-10a27.analytics_232977577.events_*，aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di，aidata2025.dwd.dwd_oper_user_collartweb_di，pubdata2025.dwd.dwd_cdct_revenue_stripe_di | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fads%2Fcollart%2Fads_oper_basic_metric_collart_web_di.sqlx?project=aidata2025) |
+| [aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di](../tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di.md) | 埋点表 aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di aidata2025.dwd.dwd_oper_user_collartweb_di pubdata2025.dwd.dwd_cdct_revenue_stripe_di | ads_oper_b…b_di.sqlx – Code – Dataform – BigQuery – AIDATA – Google Cloud 控制台 |
+| [aidata2025.ads_collart.ads_oper_user_new_collartweb_di](../tables/aidata2025.ads_collart.ads_oper_user_new_collartweb_di.md) | aidata2025.dwd.dwd_oper_user_collartweb_di | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fads%2Fcollart%2Fads_oper_user_new_collartweb_di.sqlx?project=aidata2025) |
+| [aidata2025.dwd.dwd_oper_user_collartweb_di](../tables/dwd_oper_user_collartweb_di.md) | dwd.dwd_oper_user_event_di,dwd.dwd_oper_user_properties_di | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdwd%2Fdaily%2Fh_dwd_oper_user_collartweb_di.sqlx?project=aidata2025) |

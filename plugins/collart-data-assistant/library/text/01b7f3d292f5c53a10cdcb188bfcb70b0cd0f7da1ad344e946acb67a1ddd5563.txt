@@ -1,0 +1,16 @@
+# Fashion 收入归属与旧表替代
+
+业务演进依据：2026-08-27、08-28、09-09 的原文；整理不改变这些日期。
+
+当前文档链路为 Stripe 订单 → 按同一 user_id、付款时间前后 600 秒最近的 `vip_subscribe_succeed` 判业务归属 → [Fashion 订单表](../tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md) → 用户日 active / 汇总。保留 Stripe event_date；收入字段为 `revneue`，按 transaction_id 去重。
+
+| 旧入口 | 原状态日期 | 变化与当前替代 |
+|---|---|---|
+| `ads_collart.ads_oper_revenue_collart_fashion_di` | 2026-09-09 删除 | 原为 event_date 日汇总，字段 event_date、package_name、revenue_usd、pay_cnt、etl_time；从当前订单表按日汇总 |
+| `ads_collart.ads_oper_user_revenue_collart_fashion_di` | 2026-09-09 停写 | 原为 event_date × user_id，event_date 分区、user_id 聚簇；订单与 active 承接 |
+
+原用户日字段另有 user_pseudo_id、first_fashion_succeed_date、revenue_usd、pay_cnt、etl_time。2026-08-27 的“首次 Fashion 成功后全部 Web 收入归 Fashion”已被 08-28 的最近支付事件归属替代；仅日期相等也不是最终规则。不能把这些旧字段或用户日粒度套到当前订单表。
+
+旧版回验记录：2026-08-14～08-27 为 10 个付费用户、16 个用户日、17 笔交易、392.44 美元，未在本次重算。09-09 订单定义的生效日与数据回填覆盖（06-01 起）分别记录。
+
+最近事件相同距离的优先级、迟到事件重算规则未在旧文档中充分定义。已停用 DWD 用户表不能继续作为当前归属补全源；其他替代源需按现有 active/profile 与仓库任务确认。完整金额和业务红线见 [收入指标](../indicators/fashion_revenue.md)。

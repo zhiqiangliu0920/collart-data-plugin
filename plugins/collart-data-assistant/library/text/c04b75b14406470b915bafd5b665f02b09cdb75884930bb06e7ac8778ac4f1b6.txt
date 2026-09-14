@@ -1,0 +1,11 @@
+# 事件参数的发现与使用边界
+
+来源：`check_template_params.py` 与三份 VidArt 付费分析脚本，原业务日期未提供。
+
+先在指定完整日期窗口内枚举实际 event_name 与 `UNNEST(event_params)` 的 key，再按事件核对参数类型和覆盖率。`template_id`、`template_name`、`material_id`、`service_type`、`model_type`、`credits`、`firebase_screen`、`firebase_screen_class`、`is_vip` 均是旧脚本的排查候选，不是本次证实已上报的字段。
+
+参数可能存于 string/int/double/float value；只读 string_value 会误报缺失。参数 key 不存在、某一事件不带值、SQL 类型选错与权限不足需分别记录。用 template/temp/material 或 select/choose/apply/use 做名称搜索，只能发现候选；材料 ID 是否就是模板 ID 要有产品或事件证据。
+
+`ga_session_id` 一般需从参数中读取；旧 SQL 使用顶层 `e.ga_session_id`，须按实际 schema 核查。通用 GA4 参数不能当作本产品自定义业务埋点。
+
+配套 `event_parameter_inventory.sql` 已转存 Codex 的 `vidart` 项目。参数结构检查只统计事件 × key × 类型的覆盖，不导出个人参数值；上述方法可独立使用，查询片段属于项目产物。

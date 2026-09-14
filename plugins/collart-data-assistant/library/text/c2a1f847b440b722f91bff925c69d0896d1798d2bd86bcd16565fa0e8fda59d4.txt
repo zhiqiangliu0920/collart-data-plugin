@@ -1,0 +1,21 @@
+# Web 付费转化：支付、事件与分母
+
+> 文档依据与历史范围如下；本轮为正文静态整理，未重跑指标查询。
+
+## 指标分别定义
+
+| 指标 | 分子 | 分母与限制 |
+|---|---|---|
+| 订阅成功事件转化 | cohort 内触发 vip_subscribe_succeed 的用户 | 同一窗口、同一产品 cohort；仅事件口径 |
+| 成功支付转化 | cohort 内当窗有成功订单的用户 | 区分新/老用户，明确观察窗，订单需去重 |
+| 购买事件 UV | 订阅与点数包购买用户去重并集 | 见公司 purchase 定义；不是两个 UV 简单相加 |
+
+活跃分母按 [DAU](dau.md) 定义；窗口内支付者需与分母 cohort 相交。历史已付费状态、当窗付款、首次付款与当前 VIP 身份分开。
+
+## 来源和旧方法
+
+订单真值、四端收入差异见 [公司 ADS 红线](../../1company/analysis_playbooks/collart_ads_redlines.md)，购买并集见 [公司 purchase](../../1company/indicators/subscription_purchase.md)。Web 用户收入的本地口径自 2026-08-28 指向 Stripe 实收 `revneue`、transaction_id 去重；pending/available 打款状态不能与 orders 的 pending/expired 支付状态混为一谈。
+
+2026-03 的旧 SQL 用成功事件 UV 除以 session_start UV，没有同 cohort 交集，也不含完整购买并集；它只保留为方法边界，不再作为默认查询。旧页的“正常波动 ±5%”只是无来源模板值，不作为当前规则。
+
+Web 与 Fashion 在埋点和 Stripe 包名上可能共享入口，必须在进入 cohort 前明确业务归属。

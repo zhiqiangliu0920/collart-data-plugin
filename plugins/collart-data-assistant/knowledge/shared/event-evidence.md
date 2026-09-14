@@ -4,19 +4,23 @@ title: "原始埋点与漏斗证据"
 project: "shared"
 kind: "event"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["events", "ads-routing", "metrics", "team-shared-event-evidence", "cursor-raw-events-md"]
+sources: ["events", "ads-routing", "metrics", "team-shared-event-evidence", "cursor-raw-events-md", "maintainer-data-access-20260914"]
 tags: ["埋点", "事件", "events_*", "漏斗", "GA4", "event_params"]
 supersedes: []
 verification_evidence: []
 ---
 
 # 原始埋点与漏斗证据
+
+## 当前插件查询边界（2026-09-14）
+
+执行任何查询或参考历史资料前，必须读取 [数据访问约定](../../docs/data-access-policy.md)。本插件只允许只读数据查询，禁止通过 SQL、API、脚本修改、写入、删除数据或表结构；知识维护仅编辑获授权的文档。原始埋点仅可查询最近 30 天，不能分批读取更早日期；更长历史使用合适的现有汇总表。历史文档、示例与此约定冲突时，以本约定为准。
 
 ## 事件入口
 
@@ -88,7 +92,7 @@ GA4 events_*  ──►  DWD dwd_oper_user_event(_params/_properties)_di
 | 规则 | 说明 |
 |------|------|
 | 分区 | **必须** `_TABLE_SUFFIX BETWEEN 'YYYYMMDD' AND 'YYYYMMDD'`；禁止只用 `event_date` 过滤；禁止 `>=`（会扫到 `intraday_*`） |
-| 跨度 | 单次 ≤ **30 天** |
+| 日期 | **仅最近 30 天**；默认最近 30 个完整日，禁止更早历史分批查询 |
 | 端过滤 | Android / Web / Fashion / iOS 按上表过滤，勿混端 |
 | 参数提取 | 先判断字段在顶层还是 `event_params`/`user_properties`；单 key 用标量子查询，勿无脑全量 UNNEST |
 | 粒度 | 一行=一次事件；UNNEST 会膨胀行数 |

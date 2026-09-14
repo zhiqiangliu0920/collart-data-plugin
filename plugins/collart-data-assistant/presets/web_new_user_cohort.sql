@@ -2,6 +2,7 @@
 -- DATE start_date/end_date/as_of_date; ARRAY<STRING> internal_user_ids from config.
 -- as_of_date must be the last complete and refreshed active partition date.
 -- Validate profile uniqueness and coverage; use the maintained new-user source for full historical cohorts.
+-- Opt-in conservative whole-device exclusion, NOT default event-time internal-user filtering.
 ASSERT @start_date <= @end_date AND @end_date <= @as_of_date AS 'Invalid cohort window';
 ASSERT ARRAY_LENGTH(@internal_user_ids) > 0 AS 'Internal-account exclusion configuration is required';
 WITH cohort AS (

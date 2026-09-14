@@ -4,7 +4,7 @@ title: "Web 2026-09-12 收入报告的复用边界"
 project: "collart_web"
 kind: "playbook"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
@@ -29,3 +29,5 @@ verification_evidence: []
 - [_generated/web_revenue_7d_20260912/Web最近7日收入分析.md](../../library/text/6f52d844765c687ecdfb7b5e6ab4e9c628bb47ed508e45f8a25d1df94a64013c.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。
+
+2026-09-14 维护说明：该原报告已移出知识库输入；这里保留原日期的历史证据与方法，未重新执行或验证其中数据。

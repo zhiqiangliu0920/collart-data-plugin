@@ -757,7 +757,8 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/6f52d844765c687ecdfb7b5e6ab4e9c628bb47ed508e45f8a25d1df94a64013c.txt",
       "excerpt_sha256": "6f52d844765c687ecdfb7b5e6ab4e9c628bb47ed508e45f8a25d1df94a64013c",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json 2026-09-14：原报告已移出知识输入，本包保留历史证据，不当作当前生产结论。",
+      "tracking_status": "historical"
     },
     {
       "id": "full-a7cc6cb8e2b227f3",
@@ -770,7 +771,8 @@
       "locator": "完整正文；原文日期见资料",
       "excerpt": "library/text/30963c0d69f6b26d466c87f3e2ec4d574379ffa128300f3ea1b8baacded7b6c8.txt",
       "excerpt_sha256": "30963c0d69f6b26d466c87f3e2ec4d574379ffa128300f3ea1b8baacded7b6c8",
-      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json"
+      "note": "静态资料整合，没有本次生产复验；脱敏转换见 library/catalog.json 2026-09-14：原报告已移出知识输入，本包保留历史证据，不当作当前生产结论。",
+      "tracking_status": "historical"
     },
     {
       "id": "full-96da852291e4720b",
@@ -799,7 +801,8 @@
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
       "origin_source": "ai-knowledge",
       "origin_path": "1company/analysis_playbooks/collart_ads_redlines.md",
-      "previous_source_id": "ads-redlines"
+      "previous_source_id": "ads-redlines",
+      "tracking_status": "historical"
     },
     {
       "id": "web-profile-review-be4e210655",
@@ -813,7 +816,8 @@
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
       "origin_source": "ai-knowledge",
       "origin_path": "collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md",
-      "previous_source_id": "web-profile"
+      "previous_source_id": "web-profile",
+      "tracking_status": "historical"
     },
     {
       "id": "web-channel-review-7003847ee3",
@@ -827,7 +831,8 @@
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
       "origin_source": "ai-knowledge",
       "origin_path": "collart_web/indicators/channel_attribution.md",
-      "previous_source_id": "web-channel"
+      "previous_source_id": "web-channel",
+      "tracking_status": "historical"
     },
     {
       "id": "legacy-ios-review-7873df86c6",
@@ -841,7 +846,8 @@
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
       "origin_source": "ai-knowledge",
       "origin_path": "collart_ios/README.md",
-      "previous_source_id": "legacy-ios"
+      "previous_source_id": "legacy-ios",
+      "tracking_status": "historical"
     },
     {
       "id": "legacy-conversion-review-95f777f166",
@@ -855,7 +861,8 @@
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
       "origin_source": "ai-knowledge",
       "origin_path": "collart_web/indicators/conversion.md",
-      "previous_source_id": "legacy-conversion"
+      "previous_source_id": "legacy-conversion",
+      "tracking_status": "historical"
     },
     {
       "id": "fashion-orders-review-7afb4b3f3b",
@@ -869,7 +876,8 @@
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
       "origin_source": "ai-knowledge",
       "origin_path": "collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md",
-      "previous_source_id": "fashion-orders"
+      "previous_source_id": "fashion-orders",
+      "tracking_status": "historical"
     },
     {
       "id": "full-1fd6dc1741d54dde-review-1afb72cc7d",
@@ -883,7 +891,8 @@
       "excerpt": "library/text/1afb72cc7dfbf5c6f188b8e1e4e26b3c8d1d1504c5a55644708add2c041bb83a.txt",
       "excerpt_sha256": "1afb72cc7dfbf5c6f188b8e1e4e26b3c8d1d1504c5a55644708add2c041bb83a",
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
-      "previous_source_id": "full-1fd6dc1741d54dde"
+      "previous_source_id": "full-1fd6dc1741d54dde",
+      "tracking_status": "historical"
     },
     {
       "id": "full-eeebc9e82bd76fe2-review-ddff0eff3b",
@@ -897,7 +906,8 @@
       "excerpt": "library/text/ddff0eff3b96808dab82e55c3457eab63bf57896b7d980a8fd88c1beea878a87.txt",
       "excerpt_sha256": "ddff0eff3b96808dab82e55c3457eab63bf57896b7d980a8fd88c1beea878a87",
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
-      "previous_source_id": "full-eeebc9e82bd76fe2"
+      "previous_source_id": "full-eeebc9e82bd76fe2",
+      "tracking_status": "historical"
     },
     {
       "id": "full-2ce0fdb15495c7bc-review-00d8e8ef02",
@@ -911,7 +921,8 @@
       "excerpt": "library/text/cf2e1ab194e209ff9a1f349aa9ce58310dbdc8ca4315162417692541d431a90e.txt",
       "excerpt_sha256": "cf2e1ab194e209ff9a1f349aa9ce58310dbdc8ca4315162417692541d431a90e",
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
-      "previous_source_id": "full-2ce0fdb15495c7bc"
+      "previous_source_id": "full-2ce0fdb15495c7bc",
+      "tracking_status": "historical"
     },
     {
       "id": "full-199b51ce0dcab10c-review-d5bb4ac56d",
@@ -925,7 +936,8 @@
       "excerpt": "library/text/d5bb4ac56d7af15a3ec8287fbcffd730e92d761566d7645b61da747c74e0159a.txt",
       "excerpt_sha256": "d5bb4ac56d7af15a3ec8287fbcffd730e92d761566d7645b61da747c74e0159a",
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
-      "previous_source_id": "full-199b51ce0dcab10c"
+      "previous_source_id": "full-199b51ce0dcab10c",
+      "tracking_status": "historical"
     },
     {
       "id": "full-b5bb84b662377244-review-ec7e5e69e4",
@@ -939,7 +951,8 @@
       "excerpt": "library/text/ec7e5e69e41a23c131dfd5b6e803e3643646548c2c1f1c4ad52243632f9f60f3.txt",
       "excerpt_sha256": "ec7e5e69e41a23c131dfd5b6e803e3643646548c2c1f1c4ad52243632f9f60f3",
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
-      "previous_source_id": "full-b5bb84b662377244"
+      "previous_source_id": "full-b5bb84b662377244",
+      "tracking_status": "historical"
     },
     {
       "id": "full-873bfac8f8c2b8d2-review-2648364e66",
@@ -953,7 +966,8 @@
       "excerpt": "library/text/2648364e66543d2d89cfb09c750d551278e4b7a4c3b5093035b2e74b2f028fca.txt",
       "excerpt_sha256": "2648364e66543d2d89cfb09c750d551278e4b7a4c3b5093035b2e74b2f028fca",
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
-      "previous_source_id": "full-873bfac8f8c2b8d2"
+      "previous_source_id": "full-873bfac8f8c2b8d2",
+      "tracking_status": "historical"
     },
     {
       "id": "full-7190043e9eae148f-review-954bdf4e17",
@@ -967,7 +981,8 @@
       "excerpt": "library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt",
       "excerpt_sha256": "954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0",
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
-      "previous_source_id": "full-7190043e9eae148f"
+      "previous_source_id": "full-7190043e9eae148f",
+      "tracking_status": "historical"
     },
     {
       "id": "full-cc76b025aa572d07-review-dae7423731",
@@ -981,7 +996,8 @@
       "excerpt": "library/text/dae7423731dae6fd291cd8ba8d9380802111a36f1ea07bb8f9f14a9b6213e1ce.txt",
       "excerpt_sha256": "dae7423731dae6fd291cd8ba8d9380802111a36f1ea07bb8f9f14a9b6213e1ce",
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
-      "previous_source_id": "full-cc76b025aa572d07"
+      "previous_source_id": "full-cc76b025aa572d07",
+      "tracking_status": "historical"
     },
     {
       "id": "full-da2c0238684d2dd6-review-061a38c432",
@@ -995,7 +1011,8 @@
       "excerpt": "library/text/061a38c43258460ec5728701bb0ee32a81d20dd85b37f969b5793b5d0ef1aeb4.txt",
       "excerpt_sha256": "061a38c43258460ec5728701bb0ee32a81d20dd85b37f969b5793b5d0ef1aeb4",
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
-      "previous_source_id": "full-da2c0238684d2dd6"
+      "previous_source_id": "full-da2c0238684d2dd6",
+      "tracking_status": "historical"
     },
     {
       "id": "full-96da852291e4720b-review-7afb4b3f3b",
@@ -1009,7 +1026,8 @@
       "excerpt": "library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt",
       "excerpt_sha256": "7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb",
       "note": "本次比较全文与旧证据后重新捕获；原业务日期保留，未查询生产。",
-      "previous_source_id": "full-96da852291e4720b"
+      "previous_source_id": "full-96da852291e4720b",
+      "tracking_status": "historical"
     },
     {
       "id": "review-e4b31288e0a4a0ad",
@@ -1022,7 +1040,8 @@
       "excerpt_sha256": "947f56e7da0a743ed6c7940ea59ea07f0952cb7437d98621fa4e9bb160156e96",
       "origin_source": "ai-knowledge",
       "origin_path": "collart_android/tables/aidata2025.ads_collart.big_r_user_value_state.md",
-      "note": "本次跨文档校正证据；未执行生产查询。"
+      "note": "本次跨文档校正证据；未执行生产查询。",
+      "tracking_status": "historical"
     },
     {
       "id": "review-979740ccfe320f48",
@@ -1035,7 +1054,422 @@
       "excerpt_sha256": "46dea22014119ee3fe10b47a69e0e06102e3d8b4b59a7f5efcf631e206de5e19",
       "origin_source": "ai-knowledge",
       "origin_path": "collart_fashion/indicators/fashion_revenue.md",
-      "note": "本次跨文档校正证据；未执行生产查询。"
+      "note": "本次跨文档校正证据；未执行生产查询。",
+      "tracking_status": "historical"
+    },
+    {
+      "id": "maintainer-data-access-20260914",
+      "source_path": "maintainer-instructions/data-access-20260914.txt",
+      "source_sha256": "d565a1931e4c47ded1c99b83ce3481e34fb8ba8b5a8e44485c85ea3e57272cf7",
+      "source_declared_date": "2026-09-14",
+      "captured_at": "2026-09-14",
+      "locator": "当前任务维护者原始要求",
+      "excerpt": "provenance/excerpts/maintainer-data-access-20260914.txt",
+      "excerpt_sha256": "d565a1931e4c47ded1c99b83ce3481e34fb8ba8b5a8e44485c85ea3e57272cf7",
+      "note": "维护者明确的插件使用约束；不代表数据库权限已配置。"
+    },
+    {
+      "id": "review-20260914-ca27ec86b3b2",
+      "source_path": "1company/analysis_playbooks/collart_ads_redlines.md",
+      "source_sha256": "0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104.txt",
+      "excerpt_sha256": "0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/analysis_playbooks/collart_ads_redlines.md"
+    },
+    {
+      "id": "review-20260914-af2e0602c86f",
+      "source_path": "collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md",
+      "source_sha256": "f6eec2435b8e252431253e1ec9a866ddff8d33f1cb3514e0f3d0c279afe9fbd3",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/f6eec2435b8e252431253e1ec9a866ddff8d33f1cb3514e0f3d0c279afe9fbd3.txt",
+      "excerpt_sha256": "f6eec2435b8e252431253e1ec9a866ddff8d33f1cb3514e0f3d0c279afe9fbd3",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md"
+    },
+    {
+      "id": "review-20260914-8660ef0aef7c",
+      "source_path": "collart_web/indicators/channel_attribution.md",
+      "source_sha256": "94a42fe141cb07d9e0695384e100311b4a15a8249e399549207f2ac15da25029",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/94a42fe141cb07d9e0695384e100311b4a15a8249e399549207f2ac15da25029.txt",
+      "excerpt_sha256": "94a42fe141cb07d9e0695384e100311b4a15a8249e399549207f2ac15da25029",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_web/indicators/channel_attribution.md"
+    },
+    {
+      "id": "review-20260914-278206cde726",
+      "source_path": "collart_ios/README.md",
+      "source_sha256": "fab62e50840f3bbd656cf03fde66dc8307e59b64ce87804bb9c94f5c8af8a7a5",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/fab62e50840f3bbd656cf03fde66dc8307e59b64ce87804bb9c94f5c8af8a7a5.txt",
+      "excerpt_sha256": "fab62e50840f3bbd656cf03fde66dc8307e59b64ce87804bb9c94f5c8af8a7a5",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_ios/README.md"
+    },
+    {
+      "id": "review-20260914-c52206ae2ac1",
+      "source_path": "collart_web/indicators/conversion.md",
+      "source_sha256": "030c7f6ecab962f7ea41751fd7a1f92df330d1770f8a7878a2be2d677f9e581d",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/c2a1f847b440b722f91bff925c69d0896d1798d2bd86bcd16565fa0e8fda59d4.txt",
+      "excerpt_sha256": "c2a1f847b440b722f91bff925c69d0896d1798d2bd86bcd16565fa0e8fda59d4",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_web/indicators/conversion.md"
+    },
+    {
+      "id": "review-20260914-626470cd87d2",
+      "source_path": "collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md",
+      "source_sha256": "1a7862e647a0bfca563564f79432fb2282f01e4bdf214f763575a9cd8816637f",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/1a7862e647a0bfca563564f79432fb2282f01e4bdf214f763575a9cd8816637f.txt",
+      "excerpt_sha256": "1a7862e647a0bfca563564f79432fb2282f01e4bdf214f763575a9cd8816637f",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md"
+    },
+    {
+      "id": "review-20260914-83b3b2c6343a",
+      "source_path": "1company/indicators/subscription_purchase.md",
+      "source_sha256": "06f8ed14451fd932afccaab126e4ae18fed2f0d64d51dd6843753925ee2a3302",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/06f8ed14451fd932afccaab126e4ae18fed2f0d64d51dd6843753925ee2a3302.txt",
+      "excerpt_sha256": "06f8ed14451fd932afccaab126e4ae18fed2f0d64d51dd6843753925ee2a3302",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/indicators/subscription_purchase.md"
+    },
+    {
+      "id": "review-20260914-c4033e7e94c5",
+      "source_path": "1company/indicators/collart_daily_report_date_windows.md",
+      "source_sha256": "f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637.txt",
+      "excerpt_sha256": "f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/indicators/collart_daily_report_date_windows.md"
+    },
+    {
+      "id": "review-20260914-2cd993415a48",
+      "source_path": "1company/tables/ads_dim_metric_rule.md",
+      "source_sha256": "03cfb2415f96f3c904e9c1893f499bcabc69380895671a072acfa584722a869f",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/0e25237cb6cc34df9058cdc123c8a520eb6247f4ce4f0d0250f18c5bcc401e3f.txt",
+      "excerpt_sha256": "0e25237cb6cc34df9058cdc123c8a520eb6247f4ce4f0d0250f18c5bcc401e3f",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/tables/ads_dim_metric_rule.md"
+    },
+    {
+      "id": "review-20260914-77dd0384efff",
+      "source_path": "1company/analysis_playbooks/event_metric_from_rule.md",
+      "source_sha256": "b28a72492625b0be076c71fabed4e9f212e7677ed6630f9adb9485ea28e55195",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/b28a72492625b0be076c71fabed4e9f212e7677ed6630f9adb9485ea28e55195.txt",
+      "excerpt_sha256": "b28a72492625b0be076c71fabed4e9f212e7677ed6630f9adb9485ea28e55195",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/analysis_playbooks/event_metric_from_rule.md"
+    },
+    {
+      "id": "review-20260914-3dd331efb6c6",
+      "source_path": "collart_android/indicators/dau.md",
+      "source_sha256": "d83d2aba3ce9c9f4038e603489294ccbd724f907496b06169213ba5444e1e072",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/5126e2275883955da33ab341e7f2e3a86de550334d2dc4644a6394211a7d7ccb.txt",
+      "excerpt_sha256": "5126e2275883955da33ab341e7f2e3a86de550334d2dc4644a6394211a7d7ccb",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_android/indicators/dau.md"
+    },
+    {
+      "id": "review-20260914-400d1258ecd1",
+      "source_path": "collart_ios/indicators/asa_delivery.md",
+      "source_sha256": "d7c01983f8bbc118c65d5cd041002cff413a8e95bd0453260a84eb2bdf8239a7",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/d7c01983f8bbc118c65d5cd041002cff413a8e95bd0453260a84eb2bdf8239a7.txt",
+      "excerpt_sha256": "d7c01983f8bbc118c65d5cd041002cff413a8e95bd0453260a84eb2bdf8239a7",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_ios/indicators/asa_delivery.md"
+    },
+    {
+      "id": "review-20260914-d581789d37f0",
+      "source_path": "collart_fashion/product/ai_fashion_video_product.md",
+      "source_sha256": "28632f99d8bbd4cde7fbb691f346c65da89ac075b09d48955dec61ec211d024a",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/28632f99d8bbd4cde7fbb691f346c65da89ac075b09d48955dec61ec211d024a.txt",
+      "excerpt_sha256": "28632f99d8bbd4cde7fbb691f346c65da89ac075b09d48955dec61ec211d024a",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_fashion/product/ai_fashion_video_product.md"
+    },
+    {
+      "id": "review-20260914-a96d05736afe",
+      "source_path": "collart_fashion/analysis_playbooks/fashion_video_funnel.md",
+      "source_sha256": "b33f50c5d4d616a873f69dbd6f83d3842b8864393e33c6acbeed9395ff2741e8",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/b33f50c5d4d616a873f69dbd6f83d3842b8864393e33c6acbeed9395ff2741e8.txt",
+      "excerpt_sha256": "b33f50c5d4d616a873f69dbd6f83d3842b8864393e33c6acbeed9395ff2741e8",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_fashion/analysis_playbooks/fashion_video_funnel.md"
+    },
+    {
+      "id": "review-20260914-ec2c2ccaf2c5",
+      "source_path": "collart_android/tables/aidata2025.ads_collart.big_r_user_value_state.md",
+      "source_sha256": "e3c9f0985b81dd2e82b81dc8137524506c9b4722d44cdcdd5800528dbf2e4978",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/e3c9f0985b81dd2e82b81dc8137524506c9b4722d44cdcdd5800528dbf2e4978.txt",
+      "excerpt_sha256": "e3c9f0985b81dd2e82b81dc8137524506c9b4722d44cdcdd5800528dbf2e4978",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_android/tables/aidata2025.ads_collart.big_r_user_value_state.md"
+    },
+    {
+      "id": "review-20260914-86810c962658",
+      "source_path": "collart_fashion/indicators/fashion_revenue.md",
+      "source_sha256": "1cd6ff9d10fe944b7f8544972e612b457313c97c694360a47075e0a753c04f30",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/44105210e9257fd2cd1fe584833b5d7ce8d6b799f8e81250bcebf0f2ef089d46.txt",
+      "excerpt_sha256": "44105210e9257fd2cd1fe584833b5d7ce8d6b799f8e81250bcebf0f2ef089d46",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_fashion/indicators/fashion_revenue.md"
+    },
+    {
+      "id": "review-20260914-41b25158a11f",
+      "source_path": "collart_web/indicators/user_value_tier.md",
+      "source_sha256": "558ff526b1e848b25dac184100fa8ebb84aede15aa8615731193ab3f1b281e1b",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/0c2685cfa8e32c90ab56b90f8cf22cb5c2f4d4369567f927f2e705130879dbf2.txt",
+      "excerpt_sha256": "0c2685cfa8e32c90ab56b90f8cf22cb5c2f4d4369567f927f2e705130879dbf2",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_web/indicators/user_value_tier.md"
+    },
+    {
+      "id": "review-20260914-f1777a02415b",
+      "source_path": "collart_web/analysis_playbooks/session_funnel_diagnosis.md",
+      "source_sha256": "e85677fafd5639bb91197a0b173cd49c6ed255fa6e53e42904a08aa4e102e498",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/05fce5b2d65ad2b2ee09120cd9270dcc63dc01a9bc2cf9f03c7f99b836058313.txt",
+      "excerpt_sha256": "05fce5b2d65ad2b2ee09120cd9270dcc63dc01a9bc2cf9f03c7f99b836058313",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_web/analysis_playbooks/session_funnel_diagnosis.md"
+    },
+    {
+      "id": "review-20260914-4497c62de285",
+      "source_path": "collart_android/analysis_playbooks/first_subscription_diagnosis.md",
+      "source_sha256": "6b1c1edd0c37a6e3588cc98cc89df36bb9db6efb19c01dbcd065f5670820c339",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/3723c246375a7f31ed36a537fd16fb60cebccac38412894914eac272889bbc6c.txt",
+      "excerpt_sha256": "3723c246375a7f31ed36a537fd16fb60cebccac38412894914eac272889bbc6c",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_android/analysis_playbooks/first_subscription_diagnosis.md"
+    },
+    {
+      "id": "review-20260914-1dc20cad9661",
+      "source_path": "collart_android/analysis_playbooks/template_coverage_diagnosis.md",
+      "source_sha256": "568819d319d2ae89be1993ad668acb40bd7d1314d1db428c3e2e9a94807f6072",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/568819d319d2ae89be1993ad668acb40bd7d1314d1db428c3e2e9a94807f6072.txt",
+      "excerpt_sha256": "568819d319d2ae89be1993ad668acb40bd7d1314d1db428c3e2e9a94807f6072",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_android/analysis_playbooks/template_coverage_diagnosis.md"
+    },
+    {
+      "id": "review-20260914-363a700114de",
+      "source_path": "collart_fashion/analysis_playbooks/cohort_dashboard_analysis.md",
+      "source_sha256": "8d6fb0ed84fef4fa3fb070ba284af50df4c070952e687c39f1ce9acb9146a577",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/a00ffd851751c3c75e7494c85450664582bc6025f7f352ff1709478a4ec850f9.txt",
+      "excerpt_sha256": "a00ffd851751c3c75e7494c85450664582bc6025f7f352ff1709478a4ec850f9",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_fashion/analysis_playbooks/cohort_dashboard_analysis.md"
+    },
+    {
+      "id": "review-20260914-8dfb0b7e3a2a",
+      "source_path": "1company/analysis_playbooks/ga4_new_product_discovery.md",
+      "source_sha256": "1b3c0101426b1757cbaa9e2f0fec60380b77bb1650ffe2a33f1847a4220ea84d",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/1b3c0101426b1757cbaa9e2f0fec60380b77bb1650ffe2a33f1847a4220ea84d.txt",
+      "excerpt_sha256": "1b3c0101426b1757cbaa9e2f0fec60380b77bb1650ffe2a33f1847a4220ea84d",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/analysis_playbooks/ga4_new_product_discovery.md"
+    },
+    {
+      "id": "review-20260914-538c697a64e8",
+      "source_path": "1company/lineage/dashboard_pipeline.md",
+      "source_sha256": "6f54f9e686c9e045a1e710b3fb317ec67523ef6ba080926da4366453945d6a59",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/cd0889b6ee8b78f9a63519ed3d481d86339912a2229dd0acbb5f0ba80f92c212.txt",
+      "excerpt_sha256": "cd0889b6ee8b78f9a63519ed3d481d86339912a2229dd0acbb5f0ba80f92c212",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/lineage/dashboard_pipeline.md"
+    },
+    {
+      "id": "review-20260914-3e325ef95b0e",
+      "source_path": "1company/lineage/warehouse_sources.md",
+      "source_sha256": "5a2e27fbce49bd815513d6a449fb5e72d86daf8df5e6dbf96e576f6537848bee",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/60b1b4269ed67e442a40ae428e9bd582bc0708b15204182636d63bc298f03d8e.txt",
+      "excerpt_sha256": "60b1b4269ed67e442a40ae428e9bd582bc0708b15204182636d63bc298f03d8e",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/lineage/warehouse_sources.md"
+    },
+    {
+      "id": "review-20260914-f1c2cc9a24d3",
+      "source_path": "collart_android/lineage/warehouse_sources.md",
+      "source_sha256": "5cf66243ce0a24590f9caf78de02aa5ce4326b03b7aa54629829d03e302831ff",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/0f4124de0ed893d232d583fed3e1078933922da2beaddd694b198388c75be4de.txt",
+      "excerpt_sha256": "0f4124de0ed893d232d583fed3e1078933922da2beaddd694b198388c75be4de",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_android/lineage/warehouse_sources.md"
+    },
+    {
+      "id": "review-20260914-6acb9bd4c056",
+      "source_path": "collart_ios/lineage/warehouse_sources.md",
+      "source_sha256": "0d7c212977279f5a37e4db07bdc31c1e42f1594623e4900be5bfe0797290e7df",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/7efe570fe1392a1427fdbbb6bfdaeeb4f6b4ceedd02d239559d60aecab960e12.txt",
+      "excerpt_sha256": "7efe570fe1392a1427fdbbb6bfdaeeb4f6b4ceedd02d239559d60aecab960e12",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_ios/lineage/warehouse_sources.md"
+    },
+    {
+      "id": "review-20260914-d827082c2233",
+      "source_path": "collart_web/lineage/warehouse_sources.md",
+      "source_sha256": "1dad07c7b91135bcfc9bad7ad727be4b09f235d148a254323ef5e70757df21ca",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/83471c22d9ea913d755581b25a322d92c198c42a9f98505344e220d9751138c4.txt",
+      "excerpt_sha256": "83471c22d9ea913d755581b25a322d92c198c42a9f98505344e220d9751138c4",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_web/lineage/warehouse_sources.md"
+    },
+    {
+      "id": "review-20260914-c862ce5dbfc5",
+      "source_path": "collart_ios/tables/README.md",
+      "source_sha256": "524a00cb75dfe6ffb8476b2743f56bf420ccfb215adc021de2f4d4a58c5dc799",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/524a00cb75dfe6ffb8476b2743f56bf420ccfb215adc021de2f4d4a58c5dc799.txt",
+      "excerpt_sha256": "524a00cb75dfe6ffb8476b2743f56bf420ccfb215adc021de2f4d4a58c5dc799",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_ios/tables/README.md"
+    },
+    {
+      "id": "review-20260914-2ec5522ed31b",
+      "source_path": "collart_web/tables/README.md",
+      "source_sha256": "08ff43b677473c97c75baba271aa9ea0b879230d71c961c7d0e13707e684a90e",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/08ff43b677473c97c75baba271aa9ea0b879230d71c961c7d0e13707e684a90e.txt",
+      "excerpt_sha256": "08ff43b677473c97c75baba271aa9ea0b879230d71c961c7d0e13707e684a90e",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "collart_web/tables/README.md"
+    },
+    {
+      "id": "review-20260914-17fea906079e",
+      "source_path": "0global/KNOWLEDGE_MAINTENANCE.md",
+      "source_sha256": "c9ce5c3d08ce5301677cfb9e479b55a7cad5f0c8fc979528251b8071edb2b83d",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/c9ce5c3d08ce5301677cfb9e479b55a7cad5f0c8fc979528251b8071edb2b83d.txt",
+      "excerpt_sha256": "c9ce5c3d08ce5301677cfb9e479b55a7cad5f0c8fc979528251b8071edb2b83d",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "0global/KNOWLEDGE_MAINTENANCE.md"
+    },
+    {
+      "id": "review-20260914-7552f1c9b18c",
+      "source_path": "1company/analysis_playbooks/internal_user_filter.md",
+      "source_sha256": "caa37c80bb7cb697b26799d050b2d4c91826197db6905e4e136745e360987807",
+      "source_declared_date": null,
+      "captured_at": "2026-09-14",
+      "locator": "完整当前正文；业务日期见原文",
+      "excerpt": "library/text/caa37c80bb7cb697b26799d050b2d4c91826197db6905e4e136745e360987807.txt",
+      "excerpt_sha256": "caa37c80bb7cb697b26799d050b2d4c91826197db6905e4e136745e360987807",
+      "note": "依据最新 ai-knowledge 静态复核；保留原业务适用范围，不表示本次执行生产查询。",
+      "origin_source": "ai-knowledge",
+      "origin_path": "1company/analysis_playbooks/internal_user_filter.md"
     }
   ]
 }

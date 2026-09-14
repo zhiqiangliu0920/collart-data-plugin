@@ -1,0 +1,121 @@
+---
+doc_type: table_knowledge
+table_name: aidata2025.ads_collart.ads_oper_basic_indicator_collart_di
+table_cn_name: Collart Android 运营基础指标表
+project: aidata2025
+table_type: 指标汇总表
+grain: 按日期、国家、包名等维度汇总
+partition_field: event_date
+update_frequency: 日更
+data_freshness: 高
+source_type: 数据仓库汇总表
+priority: 高
+cost_efficiency: 高
+---
+
+# 1 表说明
+
+## 表定位
+Collart Android 的运营基础指标汇总表，包含 DAU、新增、收入等核心指标。
+
+## 关键字段
+
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| event_date | DATE | 日期（分区字段） |
+| package_name | STRING | 应用包名，Android 端固定为 `free.ai.photo.generator.collart.ai` |
+| country | STRING | 国家/地区代码 |
+| dau | INT64 | 日活跃用户数 |
+| new_user | INT64 | 新增用户数 |
+| ... | ... | 其他运营指标 |
+
+## 使用注意
+
+- **必须过滤 package_name**：Android 端使用 `package_name = 'free.ai.photo.generator.collart.ai'`
+- 日期字段直接使用 `event_date`，无需转换
+- 该表已预计算好 DAU，比从原始事件表计算更高效
+
+## 典型查询示例
+
+### 查询某日期范围的 DAU
+```sql
+SELECT
+  event_date,
+  country,
+  dau
+FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di`
+WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) AND DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+  AND package_name = 'free.ai.photo.generator.collart.ai'
+ORDER BY event_date, dau DESC;
+```
+
+### 按国家汇总 DAU
+```sql
+SELECT
+  country,
+  AVG(dau) AS avg_dau
+FROM `aidata2025.ads_collart.ads_oper_basic_indicator_collart_di`
+WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) AND DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+  AND package_name = 'free.ai.photo.generator.collart.ai'
+GROUP BY country;
+```
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvh3C8YGkNBR`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['collart android']
+- 原登记粒度：日期+产品+版本+是否新用户+是否vip+国家+渠道
+- 原登记主键：日期+产品+版本+是否新用户+是否vip+国家+渠道
+- 更新频率：T+1 8:00
+- 原登记层级：ADS应用层
+- 主题：firebase埋点通用
+- 子主题：指标汇总
+- 负责人：志强
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `dau` | int | 指标 | 是 | dau |
+| `retain_2` | int | 指标 | 否 | 次日留存用户数，计算新用户次留需要过滤is_new=true时用retain_2/dau计算； |
+| `retain_3` | int | 指标 | 否 | 该字段表示用户的3日留存情况，即某一特定时间节点新增的用户在3天后仍然活跃的数量，数据类型为整数。 |
+| `retain_4` | int | 指标 | 否 | 该字段表示用户的4日留存情况，即某一特定时间节点新增的用户在4天后仍然活跃的数量，数据类型为整数。 |
+| `retain_5` | int | 指标 | 否 | 该字段表示用户的5日留存情况，即某一特定时间节点新增的用户在5天后仍然活跃的数量，数据类型为整数。 |
+| `retain_6` | int | 指标 | 否 | 该字段表示用户的6日留存情况，即某一特定时间节点新增的用户在6天后仍然活跃的数量，数据类型为整数。 |
+| `retain_7` | int | 指标 | 否 | 该字段表示用户的7日留存情况，即某一特定时间节点新增的用户在7天后仍然活跃的数量，数据类型为整数。 |
+| `retain_14` | int | 指标 | 否 | 该字段表示用户的14日留存情况，即某一特定时间节点新增的用户在14天后仍然活跃的数量，数据类型为整数。 |
+| `retain_21` | int | 指标 | 否 | 该字段表示用户的21日留存情况，即某一特定时间节点新增的用户在21天后仍然活跃的数量，数据类型为整数。 |
+| `retain_30` | int | 指标 | 否 | 该字段表示用户的30日留存情况，即某一特定时间节点新增的用户在30天后仍然活跃的数量，数据类型为整数。 |
+| `rolling_retain_2` | int | 指标 | 否 | 滚动留存指标 |
+| `rolling_retain_3` | int | 指标 | 否 | 滚动留存指标 |
+| `rolling_retain_4` | int | 指标 | 否 | 滚动留存指标 |
+| `rolling_retain_5` | int | 指标 | 否 | 滚动留存指标 |
+| `rolling_retain_6` | int | 指标 | 否 | 滚动留存指标 |
+| `rolling_retain_7` | int | 指标 | 否 | 滚动留存指标 |
+| `rolling_retain_14` | int | 指标 | 否 | 滚动留存指标 |
+| `rolling_retain_21` | int | 指标 | 否 | 滚动留存指标 |
+| `rolling_retain_30` | int | 指标 | 否 | 滚动留存指标 |
+| `is_new` | boolean | 维度 | 否 | 是否新老用户，true代表新用户、false代表老用户 |
+| `is_vip` | boolean | 维度 | 否 | 是否付费用户，true代表付费用户、false代表免费用户 |
+| `country` | string | 维度 | 是 | 国家 |
+| `traffic_src_type` | string | 维度 | 否 | 投放渠道类型，nature代表自然流量、delivery代表投放流量、inhouse代表内部带量 |
+| `traffic_src_name` | string | 维度 | 否 | 投放渠道名称 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `app_version` | string | 维度 | 否 | app客户端版本号 |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | aidata2025.dwd.dwd_oper_user_collart_di |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sads_collart!3sads_oper_basic_indicator_collart_di) |
+| 任务地址 | ads_oper_b…t_di.sqlx – Code – Dataform – BigQuery – AIDATA – Google Cloud 控制台ads_oper_b…t_di.sqlx – Code – Dataform – BigQuery – AIDATA – Google Cloud 控制台 |
+| 看板 | - |
+
+### 使用限制
+
+- retain_2 的历史说明为次日；其他 retain_N 的自动解释可能偏移一天，不能按字段后缀直接认定 Dn。

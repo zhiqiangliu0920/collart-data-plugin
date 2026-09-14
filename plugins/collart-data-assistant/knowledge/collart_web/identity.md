@@ -4,17 +4,17 @@ title: "Web 设备画像与登录账号映射"
 project: "collart_web"
 kind: "table"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: "2026-09-07"
-sources: ["web-profile-review-be4e210655", "ads-redlines-review-954bdf4e17", "team-collart_web-identity"]
+sources: ["review-20260914-af2e0602c86f", "review-20260914-ca27ec86b3b2", "team-collart_web-identity"]
 tags: ["user_ids", "user_id", "user_pseudo_id", "身份", "UUID", "ads_oper_user_profile_df"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["web-profile", "ads-redlines"]
+historical_sources: ["web-profile", "ads-redlines", "ads-redlines-review-954bdf4e17", "web-profile-review-be4e210655"]
 ---
 
 # Web 设备画像与登录账号映射
@@ -48,4 +48,4 @@ WHERE @login_user_id IN UNNEST(user_ids)
 
 ## 来源与状态
 
-来源摘录：[web-profile](../../library/text/89103e23f6e453c60ca981f572a9f9dfe9c4454db375035a9efe1a5490493d78.txt)、[ads-redlines](../../library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[web-profile](../../library/text/f6eec2435b8e252431253e1ec9a866ddff8d33f1cb3514e0f3d0c279afe9fbd3.txt)、[ads-redlines](../../library/text/0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。

@@ -4,24 +4,28 @@ title: "SQL 查询范围与验证约定"
 project: "shared"
 kind: "sql"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["events", "ads-routing", "ads-redlines-review-954bdf4e17", "team-shared-sql-practice", "cursor-sql-standards-md"]
+sources: ["events", "ads-routing", "review-20260914-ca27ec86b3b2", "team-shared-sql-practice", "cursor-sql-standards-md", "maintainer-data-access-20260914"]
 tags: ["SQL", "BigQuery", "分区", "_TABLE_SUFFIX", "30天", "时区"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["ads-redlines"]
+historical_sources: ["ads-redlines", "ads-redlines-review-954bdf4e17"]
 ---
 
 # SQL 查询范围与验证约定
 
+## 当前插件查询边界（2026-09-14）
+
+执行任何查询或参考历史资料前，必须读取 [数据访问约定](../../docs/data-access-policy.md)。本插件只允许只读数据查询，禁止通过 SQL、API、脚本修改、写入、删除数据或表结构；知识维护仅编辑获授权的文档。原始埋点仅可查询最近 30 天，不能分批读取更早日期；更长历史使用合适的现有汇总表。历史文档、示例与此约定冲突时，以本约定为准。
+
 ## 当前资料中的执行约定
 
-- 经营指标先选加工层；下钻 `events_*` 时每次查询不超过 30 个日期分片，并显式使用有上下界的 `_TABLE_SUFFIX`，区分 finalized 与 intraday。
+- 经营指标先选加工层；下钻 `events_*` 时只查询最近 30 天内的数据、单次不超过 30 个日期分片，并显式使用有上下界的 `_TABLE_SUFFIX`，区分 finalized 与 intraday。
 - 根据项目附加 app/package 与产品归属过滤；仅有日期条件不能防止混端。
 - 使用全限定表名，参数化开始/结束日期与用户标识；日期和业务时区由本次问题确定，不固定写某一年。
 - 先核对字段类型与所在层，嵌套参数提取需防止 UNNEST 膨胀；去重与收入合计需要关注 JOIN 基数。
@@ -29,21 +33,13 @@ historical_sources: ["ads-redlines"]
 
 ## 参数化示例
 
-```sql
--- 参数 @start_suffix / @end_suffix 为 YYYYMMDD，含首尾最多 30 天。
--- 示例是 Web 事件分布，主站/Fashion 还需相应产品归属条件。
-SELECT event_name, COUNT(*) AS pv, COUNT(DISTINCT user_pseudo_id) AS uv
-FROM `storytemplate-10a27.analytics_232977577.events_*`
-WHERE _TABLE_SUFFIX BETWEEN @start_suffix AND @end_suffix
-  AND app_info.id IS NULL
-GROUP BY event_name
-```
+使用[事件探查模板](../../presets/probe_event_names.sql)或[参数提取模板](../../presets/extract_event_param.sql)，保留完整的执行日期 ASSERT 和分片上下界。模板为 Android 范围，改为 Web 时需使用 app_info.id IS NULL，并补充主站/Fashion 产品归属和相应内部账号过滤。
 
-这段只说明查询结构，本次没有执行。GA4 分片日期与北京时间日期不是当然相同，按北京时间统计时需核对事件时间戳转换和边界覆盖。例子不应直接拿来计算经营 DAU 或实际付款人数。
+本次没有执行生产查询。GA4 分片日期与北京时间日期不是当然相同，按北京时间统计时需核对事件时间戳转换和边界覆盖；不能为补边界访问允许窗口以外的旧埋点。示例不能直接作为经营 DAU 或实际付款人数。
 
 ## 来源与状态
 
-来源摘录：[events](../../provenance/excerpts/events.txt)、[ads-routing](../../provenance/excerpts/ads-routing.txt)、[ads-redlines](../../library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[events](../../provenance/excerpts/events.txt)、[ads-routing](../../provenance/excerpts/ads-routing.txt)、[ads-redlines](../../library/text/0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
 
 ## 合并的业务细节
 
@@ -56,10 +52,10 @@ GROUP BY event_name
 | 规则 | 说明 |
 |------|------|
 | 年份确认 | 显式确认请求年份、起止日和业务时区，不把示例年份当默认值 |
-| 30 天限制 | `events_*` 表单次查询**绝对不超过 30 天** |
+| 30 天限制 | 原始埋点仅最近 30 天，默认最近 30 个完整日；禁止分批访问更早数据 |
 | 分区过滤 | `events_*` 必须显式 `_TABLE_SUFFIX BETWEEN 'YYYYMMDD' AND 'YYYYMMDD'`；**禁止** `>=`（会扫 intraday） |
 | Web 过滤 | Web 端 events 查询必须带 `app_info.id IS NULL` |
-| 单次跨度 | 大范围复盘按月切；单查询建议 ≤6 个月（受 30 天/query 约束的非 events 聚合表也别一次拉太宽） |
+| 单次跨度 | 更长历史复盘仅使用定义和粒度合适的既有 ADS/汇总表，不得按月切分绕过原始埋点最近 30 天限制 |
 | 投放花费 | 只读 `aidata2025.dwd.dwd_cdct_delivery_cost_di`，或已经从它上卷的 `country.delivery` / `daily.delivery`。**不要**扫 `ods_facebook_delivery_*` / `dws_oper_fb_delivery_1d` |
 | Web 包名 | ADS / cdct 用 `collart_web`。ODS 的 `collart-web` 是别人的层，分析侧不要跟 |
 

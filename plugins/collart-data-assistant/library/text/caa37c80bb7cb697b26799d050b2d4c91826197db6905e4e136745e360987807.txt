@@ -1,0 +1,27 @@
+# Web / Fashion 内部用户过滤
+
+适用范围：Collart Web 与 Collart Fashion 的用户、行为、收入、转化、留存、渠道及生成功能分析。依据：两项目原过滤文档均记录于 2026-06-23；本次核对清单一致。该范围不能自动扩展到 Android 或 iOS。
+
+## 清单与身份
+
+内部用户清单统一维护在 [internal_user_filter.sql](../../collart_web/sql_presets/internal_user_filter.sql) 的 `internal_users` CTE 中，本文与各项目不再复制名单。当前保留原有 18 个 ID；新增或移除成员需有业务依据。
+
+按 `user_id` 排除。若只有 `user_pseudo_id`，先按对应表的身份映射规则关联；无法可靠映射的部分需说明覆盖限制，不擅自排除所有匿名用户。
+
+## 两类统计范围
+
+允许匿名的事件指标保留 NULL 用户键：
+
+```sql
+AND (user_id IS NULL OR user_id NOT IN (SELECT user_id FROM internal_users))
+```
+
+只统计登录用户或需要映射到用户的付费分析：
+
+```sql
+AND user_id NOT IN (SELECT user_id FROM internal_users)
+```
+
+内部名单应保持非空、无 NULL、无重复。该排除仅定义内部用户边界，仍需分别应用 Web/Fashion 产品归属、订单成功状态、去重和观察窗口规则；不能仅因用户到访 Fashion 就将其所有支付归入 Fashion。
+
+项目差异分别见 [Web 项目配置](../../collart_web/product/project_config.md) 与 [Fashion 项目配置](../../collart_fashion/product/project_config.md)。原两份全文及名单核对证据保留在外部整理记录中。

@@ -1,0 +1,21 @@
+# 表定义与适用状态
+
+先按用途与状态选表。维护中的文档、历史字典和已废弃来源分别列出；文件修改日期不证明数据新鲜或生产有效。
+
+## 维护中的定义
+
+| 定义 | 使用边界 |
+|---|---|
+| [aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di](aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di.md) | 按正文范围使用；不代表本次已验生产 |
+| [aidata2025.ads_collart.ads_oper_user_new_collartweb_di](aidata2025.ads_collart.ads_oper_user_new_collartweb_di.md) | 按正文范围使用；不代表本次已验生产 |
+| [aidata2025.ads_collartfashion.ads_oper_user_active_di](aidata2025.ads_collartfashion.ads_oper_user_active_di.md) | 按正文范围使用；不代表本次已验生产 |
+| [aidata2025.ads_collartfashion.ads_oper_user_event_metric_di](aidata2025.ads_collartfashion.ads_oper_user_event_metric_di.md) | 按正文范围使用；不代表本次已验生产 |
+| [aidata2025.ads_collartfashion.ads_oper_user_revenue_di](aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md) | 按正文范围使用；不代表本次已验生产 |
+| [pubdata2025.dwd.dwd_cdct_revenue_stripe_di](pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md) | 按正文范围使用；不代表本次已验生产 |
+| [storytemplate-10a27.analytics_232977577.events_](storytemplate-10a27.analytics_232977577.events_.md) | 按正文范围使用；不代表本次已验生产 |
+
+## 历史字典与待复核来源
+
+| 定义 | 使用边界 |
+|---|---|
+| [aidata2025.ods.orders](aidata2025.ods.orders.md) | 口径或证据仍需复核 |

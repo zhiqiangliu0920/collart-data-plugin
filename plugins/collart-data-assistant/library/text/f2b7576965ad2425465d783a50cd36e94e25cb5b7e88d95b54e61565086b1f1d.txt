@@ -1,0 +1,51 @@
+# pubdata2025.dws.dws_cdct_revenue_country_1d · 分产品、国家、广告平台的广告收入
+
+> 业务状态：historical；复核：reviewed_static。以下完整字段定义来自 2026-05-21 导出，未经本次生产验证。
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvh3C8YGRoEg`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['公司']
+- 原登记粒度：未填写
+- 原登记主键：未填写
+- 更新频率：未填写
+- 原登记层级：DWS汇总层
+- 主题：收入成本主题
+- 子主题：广告数据
+- 负责人：恬静
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `country` | string | 维度 | 是 | 国家 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `ad_admob_revenue` | float | 指标 | 是 | admob广告收入 |
+| `ad_admob_revenue_gst` | float | 指标 | 是 | admob广告收入GST |
+| `ad_admob_revenue_remove` | float | 指标 | 是 | admob广告收入重复统计部分 |
+| `ad_topon_revenue` | float | 指标 | 是 | topon广告收入 |
+| `ad_tradplus_revenue` | float | 指标 | 是 | tradplus广告收入 |
+| `ad_applovin_revenue` | float | 指标 | 是 | applovin广告收入 |
+| `ad_appodeal_revenue` | float | 指标 | 是 | appodeal广告收入 |
+| `ad_topon_revenue_remove` | float | 指标 | 是 | topon广告收入重复部分 |
+| `ad_tradplus_revenue_remove` | float | 指标 | 是 | tradplus广告收入重复部分 |
+| `ad_applovin_revenue_remove` | float | 指标 | 是 | applovin广告收入重复部分 |
+| `ad_okspin_revenue` | float | 指标 | 是 | 广告收入 |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | pubdata2025.dwd.dwd_cdct_revenue_adplatform_di |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 广告平台 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=pubdata2025&ws=!1m5!1m4!4m3!1spubdata2025!2sdws!3sdws_cdct_revenue_country_1d) |
+| 任务地址 | dws/revenue/h_dws_cdct_revenue_country_1d.sqlx |
+| 看板 | - |
+
+### 使用限制
+
+- 行粒度未填写；聚合前需确认唯一键及重复记录处理。
+- 主键未填写；字段角色中的“主键”不等于已验证唯一约束。

@@ -1,0 +1,29 @@
+# 表定义与适用状态
+
+先按用途与状态选表。维护中的文档、历史字典和已废弃来源分别列出；文件修改日期不证明数据新鲜或生产有效。
+
+## 维护中的定义
+
+| 定义 | 使用边界 |
+|---|---|
+| [aidata2025.ads_collartweb.ads_oper_user_profile_df](aidata2025.ads_collartweb.ads_oper_user_profile_df.md) | 按正文范围使用；不代表本次已验生产 |
+| [aidata2025.ods.orders](aidata2025.ods.orders.md) | 按正文范围使用；不代表本次已验生产 |
+| [storytemplate-10a27.analytics_232977577.events_](storytemplate-10a27.analytics_232977577.events_.md) | 按正文范围使用；不代表本次已验生产 |
+
+## 历史字典与待复核来源
+
+| 定义 | 使用边界 |
+|---|---|
+| [aidata2025.ads_collart.ads_high_value_user_web_info](aidata2025.ads_collart.ads_high_value_user_web_info.md) | 2026-05-21 历史登记；当前状态需核对 |
+| [aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di](aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di.md) | 2026-05-21 历史登记；当前状态需核对 |
+| [aidata2025.ads_collart.ads_oper_basic_metric_collart_web_di](aidata2025.ads_collart.ads_oper_basic_metric_collart_web_di.md) | 2026-05-21 历史登记；当前状态需核对 |
+| [aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di](aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di.md) | 2026-05-21 历史登记；当前状态需核对 |
+| [aidata2025.ads_collart.ads_oper_user_new_collartweb_di](aidata2025.ads_collart.ads_oper_user_new_collartweb_di.md) | 2026-05-21 历史登记；当前状态需核对 |
+| [pubdata2025.dwd.dwd_cdct_revenue_stripe_di](pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md) | 2026-05-21 历史登记；当前状态需核对 |
+| [warehouse_metadata_gaps](warehouse_metadata_gaps.md) | 缺少字段/粒度，不可据此直接编写查询 |
+
+## 已废弃来源
+
+| 定义 | 使用边界 |
+|---|---|
+| [dwd_oper_user_collartweb_di](dwd_oper_user_collartweb_di.md) | 历史识别用途，禁止作为当前来源 |

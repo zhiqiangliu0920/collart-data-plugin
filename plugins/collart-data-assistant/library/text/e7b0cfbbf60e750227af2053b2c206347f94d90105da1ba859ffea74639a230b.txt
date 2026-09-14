@@ -1,0 +1,22 @@
+# 公司共用数据知识
+
+先按问题进入正文。目录整理和静态审阅不代表生产验证；具体业务日期、来源和限制以正文为准。
+
+| 常见问题 | 正文入口 |
+|---|---|
+| 经营指标与选表 | [collart_ads_redlines](analysis_playbooks/collart_ads_redlines.md) |
+| 事件指标定义 | [event_metric_from_rule](indicators/event_metric_from_rule.md) |
+| 跨产品表关系 | [cross_product_tables](tables/cross_product_tables.md) |
+| Web/Fashion 内部用户过滤 | [internal_user_filter](analysis_playbooks/internal_user_filter.md) |
+| 新产品数据摸底 | [ga4_new_product_discovery](analysis_playbooks/ga4_new_product_discovery.md) |
+
+## 按职责维护
+
+| 目录 | 内容 |
+|---|---|
+| [tables](tables/) | 表字段、粒度、关联及有效状态 |
+| [indicators](indicators/) | 指标定义、统计人群与过滤 |
+| [analysis_playbooks](analysis_playbooks/) | 分析方法、核对步骤和限制 |
+| [lineage](lineage/) | 加工来源及上下游关系 |
+
+SQL 草稿、报告和结果放对应 Codex/Cursor 项目；共用规范与存放边界见 [维护约定](../0global/KNOWLEDGE_MAINTENANCE.md)。

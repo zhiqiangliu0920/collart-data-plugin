@@ -1,0 +1,44 @@
+# aidata2025.dwd.dwd_oper_user_order_event_di · 客户端统计用户粒度订单表
+
+> 业务状态：historical；复核：reviewed_static。以下完整字段定义来自 2026-05-21 导出，未经本次生产验证。
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvjweQ0w4FuM`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['android']
+- 原登记粒度：每个账单id一行
+- 原登记主键：evnet_order_id
+- 更新频率：T+1 8:00
+- 原登记层级：DWD明细层
+- 主题：收入成本主题
+- 子主题：客户端订阅数据
+- 负责人：恬静
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期分区 |
+| `event_order_id` | string | 主键 | 是 | 订单id |
+| `user_id` | string | 维度 | 是 | 用户id |
+| `user_pseudo_id` | string | 维度 | 是 | 用户id |
+| `traffic_src_type` | string | 维度 | 否 | 渠道类型 |
+| `app_name` | string | 维度 | 否 | app名称 |
+| `package_name` | string | 维度 | 否 | 包名 |
+| `adjust_id` | string | 维度 | 否 | adjust_id |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | aidata2025.dwd.dwd_oper_user_event_di |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdwd%2Fdaily%2Fh_dwd_oper_user_order_event_di.sqlx?project=aidata2025) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m10!1m4!4m3!1saidata2025!2sdwd!3sdwd_oper_delivery_adjust_user_di!1m4!4m3!1saidata2025!2sdwd!3sdwd_oper_user_order_event_di) |
+| 看板 | - |
+
+### 使用限制
+
+- 仅有历史字典依据；当前表存在性、分区、写入状态与字段变更尚未重新验证。

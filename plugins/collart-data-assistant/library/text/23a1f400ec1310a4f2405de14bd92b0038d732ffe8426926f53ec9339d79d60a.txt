@@ -1,0 +1,9 @@
+# Android 功能使用：任务量与使用率
+
+> 文档依据与历史范围如下；本轮为正文静态整理，未重跑指标查询。
+
+功能使用率指指定活跃 cohort 内使用某功能的人数 / cohort 活跃人数。现有历史 SQL 仅输出 ai_service_task_create 按 service_type 的事件数和用户数，没有活跃分母，因此只定义为任务创建量/创建用户数。
+
+旧枚举 img2video（图生视频）、text2video（文生视频）、img2img（图生图）、text2img（文生图）、video_edit（视频编辑）来源于 2026-04-01 文档，不视为当前完整功能清单。任务重试、事件重复与 task_id 去重需核对；创建不等于执行成功。
+
+其他曝光、点击、编辑事件和 SQL 统一见 [事件使用定义](event_usage.md)；活跃分母见 [DAU](dau.md)。

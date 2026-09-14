@@ -1,0 +1,54 @@
+# aidata2025.dwd.dwd_cdct_delivery_cost_di · 全公司分产品分campaign投放花费明细数据
+
+> 业务状态：historical；复核：reviewed_static。以下完整字段定义来自 2026-05-21 导出，未经本次生产验证。
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvh3C8YG7Acf`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['杭州']
+- 原登记粒度：每天，每个产品每个campagin每个广告组一行
+- 原登记主键：event_Date+ adgroup_id
+- 更新频率：T+1 8:30
+- 原登记层级：DWD明细层
+- 主题：增长主题
+- 子主题：投放安装与花费汇总
+- 负责人：恬静
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `delivery_type` | string | 维度 | 否 | 投放平台 |
+| `app_name` | string | 维度 | 是 | 产品名 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `country` | string | 维度 | 是 | 国家 |
+| `campaign_id` | string | 主键 | 是 | 投放campaign id |
+| `campaign_name` | string | 维度 | 否 | 投放campaign名称 |
+| `adgroup_id` | string | 主键 | 是 | 广告组id |
+| `adgroup_name` | string | 维度 | 否 | 投放广告组 |
+| `ad_id` | string | 主键 | 是 | 广告id |
+| `ad_name` | string | 维度 | 否 | 广告名称 |
+| `keyword` | string | 维度 | 否 | 关键词 |
+| `impressions` | int | 指标 | 否 | 投放广告展示次数 |
+| `clicks` | int | 指标 | 否 | 点击次数 |
+| `cost` | float | 指标 | 是 | 投放花费 |
+| `installs` | int | 指标 | 否 | 安装量 |
+| `conversions` | int | 指标 | 否 | 转化次数 |
+| `actions` | record | 维度 | 否 | 复杂结构字段，通常包含嵌套对象或数组信息。 |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | pubdata2025.dws.dws_cdct_cost_google_1h,aidata2025.dws.dws_oper_tiktok_ad_1d,aidata2025.dws.dws_oper_fb_delivery_1d,aidata2025.dws.dws_oper_asa_keyword_collart_1d |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 投放后台 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sdwd!3sdwd_cdct_delivery_cost_di) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdwd%2Fdaily%2Fh_dwd_cdct_delivery_cost_di.sqlx?project=aidata2025) |
+| 看板 | - |
+
+### 使用限制
+
+- 仅有历史字典依据；当前表存在性、分区、写入状态与字段变更尚未重新验证。

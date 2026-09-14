@@ -1,0 +1,62 @@
+# 跨项目数据表
+
+## Collart AI 请求与成功率过滤
+
+请求评分、任务关联、旧用户ID映射及大R分组规则见 [ods_ai_request_info_new_1d](./aidata2025.ods.ods_ai_request_info_new_1d.md)。适用于 Collart Android/Web 全部国家；非大R排除 sexual > 0.6，缺少评分默认按低于0.6纳入；大R不按该分数过滤。
+
+## 事件指标规则（四端同构）
+
+四端共用 `aidata2025.ads_collart.ads_dim_metric_rule`（Google Sheet 外表），以 `app_name` 区分；旧分端表已于 2026-09-02 删除。热指标进各端 UEM / attr / country / daily；冷指标按规则扫 DM。canonical：[ads_dim_metric_rule.md](./ads_dim_metric_rule.md)。
+
+## 说明
+
+以下数据表包含多个产品的数据，需要按具体表的产品字段过滤；Stripe 用户收入按 `app_name`，不能把商品 `product_id` 当作端过滤主键。
+
+## 收入表
+
+### pubdata2025.dwd.dwd_cdct_revenue_stripe_di
+
+| 字段         | 类型     | 说明                                       |
+| ---------- | ------ | ---------------------------------------- |
+| app_name   | STRING | `collart_web` / `collart_android` / `vidart`（输出写成 `vidart-ios`） |
+| product_id | STRING | 商品/产品标识，不要当端过滤主键 |
+| platform   | STRING | 平台：android / web / ios                   |
+| revneue    | FLOAT  | 实收美元（字段名拼写如此） |
+| user_id    | STRING | 用户ID                                     |
+| event_date | DATE   | 北京订单日 |
+
+**2026-08-28 红线**：Web 用户粒度收入、移动端俄罗斯支付（`currency='RUB'`）用户粒度收入都用本表（T+1），**不要再用 `ods.orders`**。不限 `app_name='collart_web'`。
+
+**2026-09-07**：`dwd_cdct_orders_revenue_hi` 是空表，不要当补洞。投放花费用 `aidata2025.dwd.dwd_cdct_delivery_cost_di`（Web 包名 `collart_web`），不要扫 ODS facebook / 旧 `dws_oper_fb_delivery_1d`。
+
+### 按项目过滤
+
+```sql
+-- Collart Web 收入（不要写死，除非只要主站）
+SELECT * FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+WHERE app_name = 'collart_web';
+
+-- 移动端俄罗斯支付
+SELECT * FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+WHERE UPPER(currency) = 'RUB'
+  AND app_name IN ('collart_android', 'vidart', 'vidart_ios');
+```
+
+## 用户表
+
+### pubdata2025.dim.dim_user_info
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| user_id | STRING | 用户ID |
+| product | STRING | 来源产品 |
+| first_visit_date | DATE | 首次访问日期 |
+| platform | STRING | 平台 |
+
+### 按项目过滤
+
+```sql
+-- Collart Android 用户
+SELECT * FROM dim_user_info
+WHERE product = 'collart_android';
+```

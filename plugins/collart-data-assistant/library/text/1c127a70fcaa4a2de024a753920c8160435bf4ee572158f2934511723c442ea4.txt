@@ -1,0 +1,228 @@
+-- ============================================================================
+-- Collart iOS（VidArt）ASA 投放 × 回收  v2：成本侧改为直读数仓新表
+--
+-- 粒度：首开日 × campaign × keyword × 国家
+-- 成本源：aidata2025.dws.dws_oper_asa_delivery_di（definitions/dws/daily/h_dws_oper_asa_delivery_di.sqlx）
+-- 收入源：aidata2025.dwd.dwd_apple_user_subscribtion_di（Apple 净收入）
+--
+-- 相对 v1 删掉的 CTE（新表已内置这些口径，实测与 Apple campaign 报表 diff = 0）：
+--   kw_map / adgroup_map / campaign_map      → 新表自带 campaign_name / adgroup_name / keyword
+--   rate_cny / rate_fallback                 → 新表自带 cost_usd 与 cost_cny
+--   cost_keyword / cost_campaign             → 新表已整行去重
+--   cost_kw_rollup / cost_residual           → 新表用 is_keyword_attributed = FALSE 表达无关键词残差
+--   多产品混表过滤                            → 新表有 package_name / app_name
+--
+-- 用户归因与骨架的关键约束如下；本文件收入读取 Apple 净收入，与 v1 的 GA4 收入法不同：
+--   1. 归因属性按「用户」取单值，不按天展开（否则归因用户双算，收入虚高 32%）
+--   2. GA4 _TABLE_SUFFIX 加上限，排除 events_intraday_*
+--   3. 骨架用「成本 ∪ 用户」UNION，保住无花费行的归因用户与收入
+--
+-- ⚠ 三个已知边界：
+--   · ROI 只在 event_date >= 2026-07-20 之后有意义（用户级归因起点）
+--   · dwd_apple_user_subscribtion_di 的 VidArt 数据从 2026-07-10 才有，
+--     7/01~7/09 首开用户 revenue_* 偏低；要覆盖那段需改用 GA4 in_app_purchase
+--   · 新表 2026-07-01~07-06 有 18 行关键词花费缺 keyword_id，会被归到 '(no_keyword)'
+--     桶里（不会重复计数，只是那 6 天丢关键词粒度）；07-07 起正常
+-- ============================================================================
+
+WITH
+-- ---------------------------------------------------------------------------
+-- 0. 成本：直读数仓新表（原 v1 的 5 个 CTE 压缩成这 1 个）
+-- ---------------------------------------------------------------------------
+asa_cost AS (
+  SELECT
+    event_date,
+    campaign_id,
+    IFNULL(NULLIF(keyword_id, ''), '(no_keyword)') AS keyword_id,  -- NULL 无法参与 join
+    country AS country_code,
+    SUM(cost_usd)    AS cost,        -- 美元
+    SUM(cost_cny)    AS cost_cny,    -- 账户原币（人民币）
+    SUM(impressions) AS impression,
+    SUM(clicks)      AS clicks,
+    SUM(installs)    AS install
+  FROM `aidata2025.dws.dws_oper_asa_delivery_di`
+  WHERE event_date >= DATE '2026-07-01'
+    AND package_name = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+  GROUP BY 1,2,3,4
+),
+
+-- 名称维表也直接从新表取，不再依赖 dim + ODS
+-- （骨架里只有用户侧、没有花费行的键，靠这两张表补名称）
+campaign_map AS (
+  SELECT campaign_id, campaign_name
+  FROM `aidata2025.dws.dws_oper_asa_delivery_di`
+  WHERE package_name = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+  QUALIFY ROW_NUMBER() OVER (PARTITION BY campaign_id ORDER BY event_date DESC) = 1
+),
+
+kw_map AS (
+  SELECT keyword_id, keyword, adgroup_name
+  FROM `aidata2025.dws.dws_oper_asa_delivery_di`
+  WHERE package_name = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+    AND keyword_id IS NOT NULL AND keyword_id <> ''
+  QUALIFY ROW_NUMBER() OVER (PARTITION BY keyword_id ORDER BY event_date DESC) = 1
+),
+
+country_map AS (                                -- 两位码 → 国家名（'' 是脏数据，34 行，必须排掉）
+  SELECT country_name_3 AS country_code, ANY_VALUE(country_name) AS country_name
+  FROM `aidata2025.dim.dim_country_info`
+  WHERE country_name_3 IS NOT NULL AND country_name_3 <> ''
+  GROUP BY 1
+),
+
+country_by_name AS (                            -- GA4 geo.country（英文全称）→ 两位码
+  SELECT country_name, ANY_VALUE(country_name_3) AS country_code
+  FROM `aidata2025.dim.dim_country_info`
+  WHERE country_name IS NOT NULL AND country_name <> ''
+  GROUP BY 1
+),
+
+-- ---------------------------------------------------------------------------
+-- 1. GA4 基表（_TABLE_SUFFIX 加上限，排除 events_intraday_*）
+-- ---------------------------------------------------------------------------
+ga4 AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', event_date) AS event_date,
+    user_pseudo_id,
+    event_name,
+    geo.country AS geo_country,
+    user_properties
+  FROM `vidart-8b8ca.analytics_528583115.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260701' AND FORMAT_DATE('%Y%m%d', CURRENT_DATE('UTC'))
+    AND app_info.id = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+    AND app_info.install_source <> 'manual_install'   -- 排除内测手动安装
+),
+
+-- 1.1 归因：一个用户一行
+--     ASA 归因回传晚于首开，属性不挂在 first_open 上，必须对全生命周期取值
+attribution AS (
+  SELECT user_pseudo_id, campaign_id, keyword_id, up_country_code
+  FROM (
+    SELECT
+      user_pseudo_id,
+      MAX((SELECT value.string_value FROM UNNEST(user_properties) WHERE key='campaignID'))      AS campaign_id,
+      MAX((SELECT value.string_value FROM UNNEST(user_properties) WHERE key='keywordID'))       AS keyword_id,
+      MAX((SELECT value.string_value FROM UNNEST(user_properties) WHERE key='countryOrRegion')) AS up_country_code
+    FROM ga4
+    GROUP BY 1
+  )
+  WHERE campaign_id IS NOT NULL
+    AND campaign_id NOT IN ('0', '1234567890')   -- 自然量 / 测试占位值
+),
+
+new_user AS (
+  SELECT user_pseudo_id, MIN(event_date) AS install_date,
+         ANY_VALUE(geo_country) AS geo_country
+  FROM ga4
+  WHERE event_name = 'first_open'
+  GROUP BY 1
+),
+
+asa_new_user_info AS (
+  SELECT
+    n.install_date AS event_date,
+    n.user_pseudo_id,
+    a.campaign_id,
+    IFNULL(NULLIF(a.keyword_id, ''), '(no_keyword)') AS keyword_id,
+    COALESCE(NULLIF(a.up_country_code, ''), cbn.country_code, 'unknown') AS country_code
+  FROM new_user n
+  JOIN attribution a USING (user_pseudo_id)
+  LEFT JOIN country_by_name cbn ON n.geo_country = cbn.country_name
+),
+
+-- ---------------------------------------------------------------------------
+-- 2. 收入（Apple 净收入）
+-- ---------------------------------------------------------------------------
+user_vip_info AS (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    SUM(IF(sub_type = 'Consumable',                  revenue_apple, 0)) AS pack_revenue,
+    SUM(IF(sub_type = 'Auto-Renewable Subscription', revenue_apple, 0)) AS subscribe_revenue,
+    SUM(revenue_apple) AS revenue
+  FROM `aidata2025.dwd.dwd_apple_user_subscribtion_di`
+  WHERE event_date >= DATE '2026-07-01'
+    AND package_name = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+  GROUP BY 1,2
+),
+
+-- ---------------------------------------------------------------------------
+-- 3. 用户侧 / 收入侧汇总到 ASA 维度
+-- ---------------------------------------------------------------------------
+asa_user_info AS (
+  SELECT event_date, campaign_id, keyword_id, country_code,
+         COUNT(DISTINCT user_pseudo_id) AS firebase_insall_user
+  FROM asa_new_user_info
+  GROUP BY 1,2,3,4
+),
+
+asa_vip_info AS (
+  SELECT
+    u.event_date, u.campaign_id, u.keyword_id, u.country_code,
+    COUNT(DISTINCT IF(b.revenue > 0, u.user_pseudo_id, NULL)) AS vip_user,
+    SUM(b.revenue)           AS revenue,
+    SUM(b.subscribe_revenue) AS subscribe_revenue,
+    SUM(b.pack_revenue)      AS pack_revenue,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 0,  b.revenue, 0)) AS revenue_0,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 1,  b.revenue, 0)) AS revenue_1,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 2,  b.revenue, 0)) AS revenue_2,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 3,  b.revenue, 0)) AS revenue_3,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 4,  b.revenue, 0)) AS revenue_4,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 5,  b.revenue, 0)) AS revenue_5,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 6,  b.revenue, 0)) AS revenue_6,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 7,  b.revenue, 0)) AS revenue_7,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 14, b.revenue, 0)) AS revenue_14,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 21, b.revenue, 0)) AS revenue_21,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 30, b.revenue, 0)) AS revenue_30,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 40, b.revenue, 0)) AS revenue_40,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 50, b.revenue, 0)) AS revenue_50,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 60, b.revenue, 0)) AS revenue_60,
+    SUM(IF(DATE_DIFF(b.event_date, u.event_date, DAY) <= 90, b.revenue, 0)) AS revenue_90
+  FROM asa_new_user_info u
+  JOIN user_vip_info b ON u.user_pseudo_id = b.user_pseudo_id
+  GROUP BY 1,2,3,4
+),
+
+-- ---------------------------------------------------------------------------
+-- 4. 骨架：成本 ∪ 用户
+-- ---------------------------------------------------------------------------
+spine AS (
+  SELECT event_date, campaign_id, keyword_id, country_code FROM asa_cost
+  UNION DISTINCT
+  SELECT event_date, campaign_id, keyword_id, country_code FROM asa_user_info
+)
+
+SELECT
+  s.event_date,
+  s.campaign_id,
+  cm.campaign_name,
+  COALESCE(km.adgroup_name, '(no_adgroup)') AS adgroup_name,
+  s.keyword_id,
+  COALESCE(km.keyword, '(no_keyword)')      AS keyword,
+  s.country_code,
+  ctm.country_name AS country,
+
+  ROUND(c.cost, 4)     AS cost,          -- 美元
+  ROUND(c.cost_cny, 4) AS cost_cny,      -- 账户原币（人民币）
+  c.impression,
+  c.clicks,
+  c.install,
+
+  v.revenue_0, v.revenue_1, v.revenue_2, v.revenue_3, v.revenue_4,
+  v.revenue_5, v.revenue_6, v.revenue_7, v.revenue_14, v.revenue_21,
+  v.revenue_30, v.revenue_40, v.revenue_50, v.revenue_60, v.revenue_90,
+  v.vip_user,
+  v.revenue,
+  v.subscribe_revenue,
+  v.pack_revenue,
+  SAFE_DIVIDE(v.revenue, c.cost) AS roi,
+
+  u.firebase_insall_user                 -- 沿用原字段名（拼写 insall 未改，避免下游断）
+FROM spine s
+LEFT JOIN asa_cost      c USING (event_date, campaign_id, keyword_id, country_code)
+LEFT JOIN asa_user_info u USING (event_date, campaign_id, keyword_id, country_code)
+LEFT JOIN asa_vip_info  v USING (event_date, campaign_id, keyword_id, country_code)
+LEFT JOIN campaign_map cm  ON s.campaign_id  = cm.campaign_id
+LEFT JOIN kw_map       km  ON s.keyword_id   = km.keyword_id
+LEFT JOIN country_map  ctm ON s.country_code = ctm.country_code
+ORDER BY s.event_date DESC, c.cost DESC

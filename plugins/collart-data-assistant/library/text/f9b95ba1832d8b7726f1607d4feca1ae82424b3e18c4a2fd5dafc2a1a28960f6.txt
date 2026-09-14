@@ -1,0 +1,39 @@
+# 待补全的表定义
+
+这些表只留下名称、用途或加工来源，尚不足以成为当前查询入口。保留原记录，避免把“没有字段说明”误当作不存在或已停用。
+
+## aidata2025.ads_collart.ads_high_value_user_android_Info
+
+Collart android高价值用户表
+
+### 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvhOzh3sTh3x`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['collart android']
+- 原登记粒度：每个用户一行
+- 原登记主键：user_id
+- 更新频率：T+1 8:00
+- 原登记层级：ADS应用层
+- 主题：用户画像主题
+- 子主题：用户价值分层
+- 负责人：志强
+
+#### 字段字典（原日期）
+
+字段明细待补充：飞书字段明细表中未找到该表对应字段。
+
+#### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | 埋点表 aidata2025.ads_collart.ads_oper_user_new_collart_di aidata2025.dwd.dwd_oper_sub_order_revenue_df `hzdw2024.revenue.woolong_entitlement` |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | 服务端 / 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m10!1m4!4m3!1saidata2025!2sads_collart!3sads_high_value_user_Info!1m4!4m3!1saidata2025!2sads_collart!3sads_high_value_user_android_Info) |
+| 任务地址 | ads_high_v…info.sqlx – Code – Dataform – BigQuery – AIDATA – Google Cloud 控制台 |
+| 看板 | - |
+
+#### 使用限制
+
+- 导出没有字段明细，不能据此编写字段查询。

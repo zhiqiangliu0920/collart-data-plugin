@@ -1,0 +1,39 @@
+# aidata2025.dim.collart_campaign_name_modify_copy · 投放名称维护表
+
+> 业务状态：historical；复核：reviewed_static。以下完整字段定义来自 2026-05-21 导出，未经本次生产验证。
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvgYraKlcR1r`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['ai']
+- 原登记粒度：每个traffic_src_name_old一行
+- 原登记主键：traffic_src_name_old
+- 更新频率：手动维护
+- 原登记层级：DIM层
+- 主题：业务数据（维表）
+- 子主题：投放
+- 负责人：志强
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `traffic_src_name_old` | string | 维度 | 否 | 老的渠道名称 |
+| `traffic_src_name_new` | string | 维度 | 否 | 新的渠道名称 |
+| `modify_date` | date | 时间 | 是 | 渠道名称更改日期 |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | aidata2025.dim.collart_campaign_name |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | 业务信息 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sdim!3scollart_campaign_name_modify_copy) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/scheduled-queries/locations/us/configs/{RESOURCE_ID}/runs?project=aidata2025) |
+| 看板 | - |
+
+### 使用限制
+
+- 仅有历史字典依据；当前表存在性、分区、写入状态与字段变更尚未重新验证。

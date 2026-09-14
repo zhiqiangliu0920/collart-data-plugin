@@ -2,11 +2,12 @@
 
 [维护的 SQL 模板](../presets/README.md) · [全部资料](INDEX.md)
 
-历史 SQL 按原日期与项目使用；SQLX 可能包含生产写入，仅供血缘阅读，不能自动运行。
+历史 SQL 仅供原日期与项目的证据追溯；SQLX 可能包含生产写入，仅供血缘阅读，不能运行写入步骤。
+复用查询必须遵循[只读与最近 30 天约定](../docs/data-access-policy.md)：旧原始事件窗口不得直接重跑或拆批绕过。
 
-- [0global/sql_standards/common_params.sql](../library/text/12d9bb2cb68874078a729654bb65943611a3cc3155866770542c7d2a40dde0b5.txt) — shared；included；2026-04-01
-- [1company/sql_presets/query_metric_from_rule.sql](../library/text/c24d38f3cbbecc4aa076af7964a68ea0f3256cd783862f336185237e3375d808.txt) — company；included；2026-08-20, 2026-08-26
-- [1company/history/undated/dashboard_snapshot/backfill.sql](../library/text/87899667b706fb29bfca8e051b9f583ad9d1ec1b8cc1553841b931c732abe8cc.txt) — company；historical；2026-08-19, 2026-08-20, 2026-08-21
+- [1company/lineage/dashboard_pipeline.md](../library/text/cd0889b6ee8b78f9a63519ed3d481d86339912a2229dd0acbb5f0ba80f92c212.txt) — shared；included；2026-05-23
+- [1company/lineage/warehouse_sources.md](../library/text/60b1b4269ed67e442a40ae428e9bd582bc0708b15204182636d63bc298f03d8e.txt) — shared；included；2026-05-21
+- [1company/sql_presets/query_metric_from_rule.sql](../library/text/c24d38f3cbbecc4aa076af7964a68ea0f3256cd783862f336185237e3375d808.txt) — company；historical；2026-08-20, 2026-08-26
 - [collart_fashion/reports/2026-09-09/warehouse_audit/dm_quality.sql](../library/text/4a78632b39686509717dcd48997b30bb0668b8bc5f2d756461451694e295dfdb.txt) — shared；historical；2026-09-06, 2026-09-08
 - [collart_fashion/reports/2026-09-09/warehouse_audit/jobs.sql](../library/text/5019f20f5a93bb7d536ed2cc2600656f18f0dc8c770ee1d35df4b05339b9af00.txt) — shared；historical；2026-09-06, 2026-09-10
 - [collart_fashion/reports/2026-09-09/warehouse_audit/profile_consistency.sql](../library/text/3075ab1ae893026431f4f355b31e5cf91f80ef674d394198faffd31987f44db1.txt) — shared；historical；2026-09-02, 2026-09-06, 2026-09-08
@@ -42,22 +43,8 @@
 - [collart_web/reports/2026-09-12/revenue_7d/recheck_0911.sql](../library/text/bea49599e17bc960e7d984d5348290e4c29f316a7d702e3747e87d11f4a3a770.txt) — shared；historical；2026-09-11
 - [collart_web/reports/2026-09-12/revenue_7d/stripe_analysis.sql](../library/text/fcad3247fcb4f434e89475b24bd5c3a945eb107749395d8840ac1710a9a42de9.txt) — shared；historical；2026-08-28, 2026-09-04, 2026-09-10
 - [collart_web/reports/2026-09-12/revenue_7d/stripe_probe.sql](../library/text/0b212b025d77a62377c872a9e18dd2d3370fc9ac0087e56e2dc4eddf9c8ea09c.txt) — shared；historical；2026-09-09, 2026-09-11
-- [collart_android/history/undated/indicator_sql/aiedit_funnel.sql](../library/text/c9c1f49f8f82e5d5246ca5954d2f2dc02dee8b48048bc66e59ffe80b2bc6d2e3.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/banner_ctr.sql](../library/text/35ddd6191a792712e72a6522f87c4a5a5863dd673c0ada0c67fe2a515f20467d.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/category_ctr.sql](../library/text/f80b0a00b1bafc49609b4c7616740791256f9f884878bf466eed1b42e666b673.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/conversion.sql](../library/text/19be7f0f7b303e65ba5936373094b696b42d69b54a472424352158c968475b36.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/core_ctr.sql](../library/text/706c9e7eacdc634637ebe895201c127ba6a8593a5a869cabb050912a478beb3b.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/dau.sql](../library/text/1925d47832fcf919e9956b37eaabd813ea236e8a298015a6fa967a8ab8110b75.txt) — collart_android；historical；2026-03-01, 2026-03-07, 2026-03-23
-- [collart_android/history/undated/indicator_sql/feature_ctr.sql](../library/text/f61d3cbfba96546c07e9eb90bd14c9e0515e53c9a066bbf97c3e7fd75bc74a9b.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/feature_usage.sql](../library/text/4a4704e7cebff6f9ad2819a997bb65000d5a1ae9163d09fe88a753758088f7f8.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/image_show.sql](../library/text/919ef2d6a472ffa0f2fd04efe886d352ae44ab02e4b6f6ee715cacc0f138f06f.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/module_ctr.sql](../library/text/6e1f3ad2c38f62faa089f10dbcab366918d17c1ccd5de9922687a2d16ab169ad.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/retention.sql](../library/text/f4a0ab0f345143862692e2cd8e5451f480200bfd5712d10c2ac7f4a60a9cda7d.txt) — collart_android；historical；2026-03-07, 2026-03-23, 2026-03-31
-- [collart_android/history/undated/indicator_sql/search_uv.sql](../library/text/442906d4c3a109f5e22a15ae80c035c5cb758024afaaed48c941d438f0916797.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/service_type.sql](../library/text/08d72aa2165ebafd9dd6893d70a8cd1cdeb78de49ae78a90c89ad77c5c2e6b01.txt) — collart_android；historical；未标日期
-- [collart_android/history/undated/indicator_sql/video_show.sql](../library/text/1c5abba60ebc02a36e3c7f5ead85e286c9be8f6a4db138f6480a536468e8fdd9.txt) — collart_android；historical；未标日期
-- [collart_android/lineage/lineage.md](../library/text/d363b2ec7fa2d7d2b9a196eb0a8f33938240b8c5fa1124168b285abd10b483f5.txt) — collart_android；included；2026-08-11, 2026-09-12
-- [collart_android/lineage/table_lineage.md](../library/text/79dbcf1e10183b60b97770d37ec32b78ea450a695dce6dcb6c1d7e6108a36685.txt) — collart_android；included；2026-09-12
+- [collart_android/lineage/lineage.md](../library/text/73789ca222a50690716df356b95eb2bd8116b748c6affb66b2f902ffca403af5.txt) — collart_android；included；2026-05-21, 2026-08-11
+- [collart_android/lineage/warehouse_sources.md](../library/text/0f4124de0ed893d232d583fed3e1078933922da2beaddd694b198388c75be4de.txt) — collart_android；included；2026-05-21
 - [collart_android/sql-snippets/ai_analysis_comprehensive.sql](../library/text/10f9dd9bcd410d415f7211df43d03ce5b3a68b508db25bd58866ee5d8e4bba77.txt) — collart_android；historical；2026-05-01, 2026-05-13
 - [collart_android/sql-snippets/ai_error_code_trend.sql](../library/text/4793a166aa644a8bcbd980d4aeb776f6367df4b457466b7de0559b30f06759d4.txt) — collart_android；historical；未标日期
 - [collart_android/sql-snippets/ai_error_explore.sql](../library/text/451dd3ffb2757aae91a0fed5caec39779ee04b697fde9cdb76d7bcb96ae29d60.txt) — collart_android；historical；未标日期
@@ -112,18 +99,14 @@
 - [collart_android/sql-snippets/vibedance_core_analysis.sql](../library/text/f89cbf2763b126b42f8fa69a227098b9323422625b523898e93f39f4c6626543.txt) — other_projects；historical；未标日期
 - [collart_android/sql-snippets/vibedance_exploration.sql](../library/text/5e745065033cf7a62f47f14e1b7157498537a45f952f8e79227b64a865fc2add.txt) — other_projects；historical；未标日期
 - [collart_android/sql-snippets/violation_guard_dialog_stats.sql](../library/text/173138ea95acd60abd5f8876f1908b8add59e5e74ec3bf2ac0ed957a182ca28c.txt) — collart_android；historical；2026-05-08, 2026-05-28
-- [collart_fashion/history/undated/sql/fashion_daily_core_metrics.sql](../library/text/75a046c2fc1fd3e65712eab4ec2b2415771187b83976b012d381a804e8501e6b.txt) — collart_fashion；historical；未标日期
-- [collart_fashion/history/undated/sql/fashion_new_user_orders.sql](../library/text/c6d5004b0577f54056823c55ccacf21158170bff4ac89686bc8d8d19c94926f8.txt) — collart_fashion；historical；未标日期
-- [collart_fashion/history/undated/sql/fashion_pbi_dashboard.sql](../library/text/55ad11353f72b429cca31a8bf2b4b58b17b1553ba896e7a52fdce10aa7344ff6.txt) — collart_fashion；historical；2026-07-01, 2026-07-21
+- [collart_fashion/lineage/revenue_pipeline.md](../library/text/01b7f3d292f5c53a10cdcb188bfcb70b0cd0f7da1ad344e946acb67a1ddd5563.txt) — collart_fashion；included；2026-08-14, 2026-08-27, 2026-09-09
+- [collart_ios/lineage/warehouse_sources.md](../library/text/7efe570fe1392a1427fdbbb6bfdaeeb4f6b4ceedd02d239559d60aecab960e12.txt) — collart_ios；included；2026-05-21
 - [collart_ios/sql_presets/asa_daily_cost.sql](../library/text/2bd8f672e7649e9f6e3f4d69bdd3cda9f6a56fc6b8d65a01fb28150c1fa8dfde.txt) — collart_ios；included；2026-05-19, 2026-07-01, 2026-07-18
-- [collart_ios/sql_presets/asa_delivery_1d.sql](../library/text/c247478dc717486132d3710e893ca108a0f0d6f39c916276082826f1a5e8f813.txt) — collart_ios；included；2026-05-18, 2026-05-29, 2026-07-20
-- [collart_ios/sql_presets/asa_delivery_revenue_v2.sql](../library/text/4c71e926fec75aff05cef8b0df1a2362e5dcba3da2bf780a8747701a033e209c.txt) — collart_ios；included；2026-07-01, 2026-07-10, 2026-07-20
+- [collart_ios/sql_presets/asa_delivery_1d.sql](../library/text/647e8389f12562d78968e102adcbb5201884a44d1cb421e5949d47c82f06f96e.txt) — collart_ios；included；2026-05-18, 2026-05-29, 2026-07-20
+- [collart_ios/sql_presets/asa_delivery_revenue_v2.sql](../library/text/1c127a70fcaa4a2de024a753920c8160435bf4ee572158f2934511723c442ea4.txt) — collart_ios；included；2026-07-01, 2026-07-10, 2026-07-20
 - [collart_ios/sql_presets/russia_payment_broadcast.sql](../library/text/051bfd5dc7aea23a71964f7fb83732e5127587aff78a66a1f090bed3b627b515.txt) — collart_ios；included；未标日期
-- [collart_web/history/undated/indicator_sql/conversion.sql](../library/text/c0f20f50cab294241b6bf1bae9595c61e9de82e18085bf580bdc494a11b5f452.txt) — collart_web；historical；未标日期
-- [collart_web/history/undated/indicator_sql/dau.sql](../library/text/24d55affa7442f39680671b68499411311ad088ed181a5b0572ee37c224675ea.txt) — collart_web；historical；未标日期
-- [collart_web/history/undated/indicator_sql/page_conversion.sql](../library/text/c75b332b7646e64827dbbe3c3cefe3858337aa205084d50477723584a477dc09.txt) — collart_web；historical；未标日期
-- [collart_web/history/undated/indicator_sql/retention.sql](../library/text/1216632377973186dd60f60566a245fa36e07834ecf74ecfb83bc44d5485ea79.txt) — collart_web；historical；未标日期
-- [collart_web/lineage/lineage.md](../library/text/95b9c47c1ed5d0b6d84db94e146468bcccc4dbdb6101fe8c21f2cec631f48b79.txt) — collart_web；included；2026-09-12
+- [collart_web/lineage/lineage.md](../library/text/4a088d3502b3391c78a658f858668e6b9cfdd7aee3bb36a284bbe395a3700881.txt) — collart_web；included；未标日期
+- [collart_web/lineage/warehouse_sources.md](../library/text/83471c22d9ea913d755581b25a322d92c198c42a9f98505344e220d9751138c4.txt) — collart_web；included；2026-05-21
 - [collart_web/sql-snippets/archive/2026-05/ai_service_start_daily.sql](../library/text/31bd448c74668df80bb61de17592e5b3a5f2b5c5233f240e16c2528d8c4fd92b.txt) — collart_web；historical；未标日期
 - [collart_web/sql-snippets/archive/2026-05/ai_service_start_key_values_web.sql](../library/text/29ff634bc3743b0daae6408cc89d4ccaaaaf8333e7ce3c74da5c4b762667cb03.txt) — collart_web；historical；未标日期
 - [collart_web/sql-snippets/archive/2026-05/banner_ctr_3days_20260326.sql](../library/text/e0fa2a899ee1fd7f78764da7c339a133b6b2fc14e260bf95636ca20073ac2539.txt) — collart_web；historical；2026-03-23, 2026-03-25
@@ -161,10 +144,10 @@
 - [collart_web/sql-snippets/weekend_fashion_video_generate_click_new_old_20260629.sql](../library/text/d915c33879d710033f92316e18697988c632a82123028920e3b54a3029fec80f.txt) — collart_web；historical；2026-06-27, 2026-06-28, 2026-06-29
 - [collart_web/sql-snippets/weekend_sea_fashion_real_generate_new_old_20260629.sql](../library/text/dc993c39649e38ca529759a09a9f0f2f402076976f3c91bd46781d184208851f.txt) — collart_web；historical；2026-06-27, 2026-06-28, 2026-06-29
 - [collart_web/sql-snippets/weekly_core_metrics_20260702.sql](../library/text/6bb1b29f7ab6bf0c8d25dcdf4b7f4068f80413baf23dcea51d8072b88cf1f971.txt) — collart_web；historical；2026-06-25, 2026-07-01, 2026-07-02
-- [collart_web/sql_presets/fashion_vs_main_site_user.sql](../library/text/5f16972aa17adb03ab7addf3e836fae7cb744f327ce5709dcd8a09e9c073b289.txt) — collart_web；included；2026-07-22
-- [collart_web/sql_presets/internal_user_filter.sql](../library/text/c051a25c86d1578c9722d58c2da15ab3e53fdc51d14990e08c7c421221a341c8.txt) — collart_web；included；2026-06-23
+- [collart_web/sql_presets/fashion_vs_main_site_user.sql](../library/text/e58aeba6b0a372e6840e8c7918c4581989069e2a9dbacb27ff743965f9d9df9d.txt) — collart_web；included；2026-07-22
+- [collart_web/sql_presets/internal_user_filter.sql](../library/text/273c84e731dd157710119947865a10c90c8b8ab429f2d41854f186c9a0a6e62c.txt) — collart_web；included；2026-06-23
 - [collart_web/sql_presets/new_user_by_pseudo_id.sql](../library/text/d796bcb7774dccd13b8d3edcea2abe588572865eb6c0b18d9c3e2a683c8a0197.txt) — collart_web；included；2026-01-01, 2026-07-01, 2026-07-20
-- [collart_web/sql_presets/profile_lookup_by_user_id.sql](../library/text/8bd5492613a163fc64adc48c590c46286ccce06088d3085477617328a9513d0d.txt) — collart_web；included；2026-09-07
+- [collart_web/sql_presets/profile_lookup_by_user_id.sql](../library/text/8bd5492613a163fc64adc48c590c46286ccce06088d3085477617328a9513d0d.txt) — collart_web；historical；2026-09-07
 - [collart_web/sql_presets/user_grain_revenue_from_stripe.sql](../library/text/6f41c47d8635efe73b3e6cd58c41266465a0f9159aad18c1012fb4dca6a17926.txt) — collart_web；included；未标日期
 - [presets/country_metrics.sql](../library/text/18efe27ebc1f0180f8779bcb672adf97adaaae07601f7ac59ff37cd069720717.txt) — shared；historical；未标日期
 - [presets/extract_event_param.sql](../library/text/44b46e48b22a18f2715d09fae947d8411d2f24f54da6dc3ac0b0fb6ef3fa4566.txt) — shared；historical；未标日期

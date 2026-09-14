@@ -1,0 +1,23 @@
+# Collart Fashion 数据知识
+
+先按问题进入正文。目录整理和静态审阅不代表生产验证；具体业务日期、来源和限制以正文为准。
+
+| 常见问题 | 正文入口 |
+|---|---|
+| 产品与默认范围 | [project_config](product/project_config.md) |
+| 功能流程 | [ai_fashion_video_product](product/ai_fashion_video_product.md) |
+| 埋点字典 | [fashion_tracking_events](product/fashion_tracking_events.md) |
+| 新人、收入与站点范围 | [README](indicators/README.md) |
+| 视频漏斗 | [fashion_video_funnel](analysis_playbooks/fashion_video_funnel.md) |
+
+## 按职责维护
+
+| 目录 | 内容 |
+|---|---|
+| [tables](tables/) | 表字段、粒度、关联及有效状态 |
+| [product](product/) | 产品流程、范围和事件含义 |
+| [indicators](indicators/) | 指标定义、统计人群与过滤 |
+| [analysis_playbooks](analysis_playbooks/) | 分析方法、核对步骤和限制 |
+| [lineage](lineage/) | 加工来源及上下游关系 |
+
+SQL 草稿、报告和结果放对应 Codex/Cursor 项目；共用规范与存放边界见 [维护约定](../0global/KNOWLEDGE_MAINTENANCE.md)。

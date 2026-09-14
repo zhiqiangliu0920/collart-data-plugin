@@ -4,17 +4,17 @@ title: "四端渠道归因：Web、Android、iOS 与 Fashion"
 project: "shared"
 kind: "metric"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: "2026-09-05"
-sources: ["web-channel-review-7003847ee3", "ads-redlines-review-954bdf4e17", "team-collart_web-channel-attribution", "cursor-channels-attribution-md"]
+sources: ["review-20260914-8660ef0aef7c", "review-20260914-ca27ec86b3b2", "team-collart_web-channel-attribution", "cursor-channels-attribution-md"]
 tags: ["ASA", "Android", "DeepClick", "Facebook", "Instagram", "X", "fb_delivery", "iOS", "traffic_src_platform", "x_delivery", "归因", "渠道"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["web-channel", "ads-redlines"]
+historical_sources: ["web-channel", "ads-redlines", "ads-redlines-review-954bdf4e17", "web-channel-review-7003847ee3"]
 ---
 
 # Web 渠道层级与 X、Meta 归因
@@ -34,7 +34,7 @@ Web `traffic_src_type` 是性质，主要为 `delivery / nature / inhouse / kol`
 
 ## 来源与状态
 
-来源摘录：[web-channel](../../library/text/7003847ee3571b56821e6c6a1df55b36d64edbfbe087fbf66ee737f90aaae32a.txt)、[ads-redlines](../../library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[web-channel](../../library/text/94a42fe141cb07d9e0695384e100311b4a15a8249e399549207f2ac15da25029.txt)、[ads-redlines](../../library/text/0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
 
 ## 合并的业务细节
 

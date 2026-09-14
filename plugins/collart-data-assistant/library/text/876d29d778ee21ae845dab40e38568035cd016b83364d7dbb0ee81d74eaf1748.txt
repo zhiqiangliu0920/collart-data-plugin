@@ -1,0 +1,109 @@
+# aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di · collart android分国家指标表
+
+> 业务状态：historical；复核：reviewed_static。以下完整字段定义来自 2026-05-21 导出，未经本次生产验证。
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvh8KDyOdb9L`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['collart android']
+- 原登记粒度：每天一行
+- 原登记主键：日期
+- 更新频率：T+1 8:30
+- 原登记层级：ADS应用层
+- 主题：firebase埋点通用
+- 子主题：指标汇总
+- 负责人：志强
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `month` | string | 时间 | 是 | 月份 |
+| `week_start` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `week_end` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `week_range` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `country` | string | 维度 | 是 | 国家 |
+| `country_type` | string | 维度 | 是 | 国家 |
+| `new_user` | int | 指标 | 是 | 新增用户数 |
+| `organic_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `delivery_new_user` | int | 指标 | 是 | 投放新增用户 |
+| `retain2_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `organic_retain2_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `delivery_retain2_new_user` | int | 指标 | 是 | 投放新增用户在次日仍然活跃的用户数 |
+| `vip_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `free_new_user` | int | 指标 | 是 | 免费新用户 |
+| `retain2_vip_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `retain2_free_new_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `rolling_retain_7_new_user` | int | 指标 | 是 | 滚动留存指标 |
+| `rolling_retain_7_vip_new_user` | int | 指标 | 是 | 滚动留存指标 |
+| `rolling_retain_7_free_new_user` | int | 指标 | 是 | 滚动留存指标 |
+| `dau` | int | 指标 | 是 | dau |
+| `vip_dau` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `vip_user_0` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `first_7_vip_user` | int | 指标 | 是 | 前7日订阅用户数 |
+| `vip_pack_user_0` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `first_7_vip_pack_user` | int | 指标 | 是 | 前7日购买点数包用户数 |
+| `vip_pack_user_old` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `vip_pack_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+| `vip_pack_num` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `vip_pack_credit_count` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `total_revenue` | float | 指标 | 是 | 收入 |
+| `vip_revenue` | float | 指标 | 是 | 订阅收入 |
+| `new_revenue` | float | 指标 | 是 | 首次订阅收入 |
+| `renew_revenue` | float | 指标 | 是 | 续订算收入 |
+| `pack_revenue` | float | 指标 | 是 | 点数包收入 |
+| `ad_revenue` | float | 指标 | 是 | 广告收入 |
+| `mau` | int | 指标 | 是 | 月活 |
+| `new_home_show_user` | int | 指标 | 是 | 进入主页的新用户数 |
+| `new_Home_Template_Click_user` | int | 指标 | 是 | 点击模板的新用户数 |
+| `new_album_show_user` | int | 指标 | 是 | 进入相册页的新用户数 |
+| `new_generate_ready_user` | int | 指标 | 是 | 准备开始生成的新用户数 |
+| `new_generate_save_user` | int | 指标 | 是 | 保存生成结果的新用户数 |
+| `generate_start_user` | int | 指标 | 是 | 开始生成人数 |
+| `new_generate_start_user` | int | 指标 | 是 | 开始生成的新用户数 |
+| `old_generate_start_user` | int | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `free_generate_start_user` | int | 指标 | 是 | 免费ai服务开始使用人数 |
+| `vip_generate_start_user` | int | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `video_generate_start_user` | int | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `headshot_generate_start_user` | int | 指标 | 是 | headshot开始生成人数 |
+| `text2image_generate_start_user` | int | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `aiGeneral_generate_start_user` | int | 指标 | 是 | 图生图开始生成人数 |
+| `generate_start_num` | int | 指标 | 是 | 开始生成次数 |
+| `video_generate_start_num` | int | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `headshot_generate_start_num` | int | 指标 | 是 | headshot开始生成次数 |
+| `text2image_generate_start_num` | int | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `aiGeneral_generate_start_num` | int | 指标 | 是 | 图生图开始生成次数 |
+| `new_generate_success_user` | int | 指标 | 是 | 生成成功的新用户数 |
+| `generate_success_num` | int | 指标 | 是 | 生成成功次数 |
+| `new_generate_success_num` | int | 指标 | 是 | 新用户数生成成功次数 |
+| `vip_generate_success_num` | int | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `free_generate_success_num` | int | 指标 | 是 | 免费ai服务生成成功次数 |
+| `video_generate_success_num` | int | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `headshot_generate_success_num` | int | 指标 | 是 | headshot生成成功次数 |
+| `text2image_generate_success_num` | int | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `aiGeneral_generate_success_num` | int | 指标 | 是 | 图生图生成成功次数 |
+| `video_save_num` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `headshot_save_num` | int | 指标 | 是 | headshot保存次数 |
+| `text2image_save_num` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `aiGeneral_save_num` | int | 指标 | 是 | 图生图保存次数 |
+| `temp_content_click_user` | int | 指标 | 是 | 整型指标字段，用于统计数量、金额或次数。 |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | storytemplate-10a27.analytics_232977577.events_*,aidata2025.ads_collart.ads_oper_basic_indicator_collart_di,pubdata2025.ods.ods_apple_sales_1d,aidata2025.dwd.dwd_oper_user_basic_di,aidata2025.ai_service.ai_cost_data,aidata2025.dws.dws_oper_fb_delivery_1d,aidata2025.dws.dws_oper_asa_keyword_collart_1d |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sads_collart!3sads_oper_basic_metric_country_collart_android_di) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fads%2Fcollart%2Fads_oper_basic_metric_collart_di.sqlx?project=aidata2025&supportedpurview=project) |
+| 看板 | collart android周报分析用 |
+
+### 使用限制
+
+- 表名包含 country，但登记粒度仅写“每天一行”；国家维度是否参与唯一键需核对。
+- retain_2 的历史说明为次日；其他 retain_N 的自动解释可能偏移一天，不能按字段后缀直接认定 Dn。
+- 部分字段说明为导出模板的通用解释，不是已确认业务口径；金额单位、去重键、观察窗口仍需业务证据。

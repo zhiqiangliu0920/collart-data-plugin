@@ -1,5 +1,7 @@
 # Collart 团队数据知识助手
 
+使用约定：只读数据，禁止写入/修改/删除表；原始埋点仅查询最近 30 天。安装前阅读 [数据访问约定](docs/data-access-policy.md)，连接账号的数据库只读权限需另行配置。
+
 两个入口：分析用 collart-analysis，沉淀用 collart-knowledge-maintain。
 
 [统一主题](knowledge/INDEX.md) · [完整资料](library/INDEX.md) · [SQL](library/SQL.md) · [待处理](library/pending.json) · [维护](docs/maintenance.md)

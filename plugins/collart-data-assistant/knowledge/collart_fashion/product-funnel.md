@@ -4,17 +4,17 @@ title: "Fashion 产品步骤、事件与结果"
 project: "collart_fashion"
 kind: "business"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["full-cc76b025aa572d07-review-dae7423731", "full-da2c0238684d2dd6-review-061a38c432"]
+sources: ["review-20260914-d581789d37f0", "review-20260914-a96d05736afe"]
 tags: ["collart_fashion", "Fashion 产品步骤、事件与结果"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["full-cc76b025aa572d07", "full-da2c0238684d2dd6"]
+historical_sources: ["full-cc76b025aa572d07", "full-da2c0238684d2dd6", "full-cc76b025aa572d07-review-dae7423731", "full-da2c0238684d2dd6-review-061a38c432"]
 ---
 
 # Fashion 产品步骤、事件与结果
@@ -27,7 +27,7 @@ historical_sources: ["full-cc76b025aa572d07", "full-da2c0238684d2dd6"]
 
 ## 来源与状态
 
-- [collart_fashion/product/ai_fashion_video_product.md](../../library/text/dae7423731dae6fd291cd8ba8d9380802111a36f1ea07bb8f9f14a9b6213e1ce.txt)
-- [collart_fashion/analysis_playbooks/fashion_video_funnel.md](../../library/text/061a38c43258460ec5728701bb0ee32a81d20dd85b37f969b5793b5d0ef1aeb4.txt)
+- [collart_fashion/product/ai_fashion_video_product.md](../../library/text/28632f99d8bbd4cde7fbb691f346c65da89ac075b09d48955dec61ec211d024a.txt)
+- [collart_fashion/analysis_playbooks/fashion_video_funnel.md](../../library/text/b33f50c5d4d616a873f69dbd6f83d3842b8864393e33c6acbeed9395ff2741e8.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。

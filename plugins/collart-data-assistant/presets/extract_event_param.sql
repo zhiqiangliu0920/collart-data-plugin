@@ -1,5 +1,8 @@
 -- DATE start_date/end_date, STRING event_name/param_key. Android example, not an ordered funnel.
 ASSERT DATE_DIFF(@end_date, @start_date, DAY) BETWEEN 0 AND 29 AS 'events query must cover 1 to 30 days';
+-- Default: last 30 complete business dates, evaluated at execution time.
+ASSERT @start_date >= DATE_SUB(CURRENT_DATE('Asia/Shanghai'), INTERVAL 30 DAY) AS 'raw events older than the past 30 days are forbidden';
+ASSERT @end_date < CURRENT_DATE('Asia/Shanghai') AS 'this template only reads complete past dates';
 WITH extracted AS (
   SELECT
     (SELECT AS STRUCT ep.value.string_value, ep.value.int_value, ep.value.float_value, ep.value.double_value

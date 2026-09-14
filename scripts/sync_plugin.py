@@ -17,7 +17,9 @@ import subprocess
 import sys
 import tempfile
 
-REPOSITORY = 'zhiqiangliu0920/collart-ai-knowledge'
+REPOSITORY = 'zhiqiangliu0920/collart-data-plugin'
+# Preserve verification of pre-rename local snapshots; fetch new snapshots from REPOSITORY.
+SNAPSHOT_REPOSITORIES = {REPOSITORY, 'zhiqiangliu0920/collart-ai-knowledge'}
 PLUGIN = 'plugins/collart-data-assistant/'
 MANIFEST = PLUGIN + '.codex-plugin/plugin.json'
 SKIP = {'.git', '__pycache__', 'node_modules', '.venv'}
@@ -63,7 +65,7 @@ def changes(expected, actual):
 
 def load_snapshot(path):
     data = json.loads(path.read_text(encoding='utf-8'))
-    if data.get('repository') != REPOSITORY or not re.fullmatch(r'[0-9a-f]{40}', data.get('commit', '')):
+    if data.get('repository') not in SNAPSHOT_REPOSITORIES or not re.fullmatch(r'[0-9a-f]{40}', data.get('commit', '')):
         raise ValueError('Unexpected repository or commit')
     files = {}
     for item in data['files']:

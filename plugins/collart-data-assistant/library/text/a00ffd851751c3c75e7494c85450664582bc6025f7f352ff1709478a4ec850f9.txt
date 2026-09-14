@@ -1,0 +1,13 @@
+# Fashion 新人订单与分维度看板
+
+来源：`fashion_daily_core_metrics.sql`、`fashion_new_user_orders.sql`、`fashion_pbi_dashboard.sql`。原 SQL 分别是日核心指标、含 pending/expired 的宽口径订单诊断、2026-07-01～07-21 看板；不能混用为成功付费口径。
+
+新人 cohort 按 cohort_date × user_pseudo_id 构建，订单按 user_id 关联；同窗订单未要求订单时间晚于 cohort，也没有成功状态过滤。因此旧订单输出只能回答“这些新人关联到哪些订单”，不能回答新人支付转化率。旧 DWD 补 user_id 源已由用户确认废弃，后续身份回补需明确可用来源与截至时间，防止利用未来登录映射改变历史 cohort。
+
+看板先在日期 × user_pseudo_id 粒度合成 is_new、渠道、国家和行为 flags，再汇总日期 × is_new × traffic_source_type × country。模板点击和 welcome 点击分别保留 UV/PV；服务开始、成功、失败限定 service_type=fashion_video/ai_model。ANY_VALUE 的渠道和国家缺少确定性选择，不应无条件视为稳定归因。
+
+历史 SEO 新人规则包含 ai-fashion-video 的 page_location 或 fashion_welcome_page_show；当前域名和路径需规范化后对照 [产品定义](../product/)。登录、模板、生成、下载、VIP 展示与支付事件都是同日触达 flags，没有步骤先后约束。旧 event_from 为空亦放行的支付筛选只属于原版本，当前实付用 [收入指标](../indicators/fashion_revenue.md)。
+
+日核心 SQL 的 SUM(retain_2)/SUM(dau) 只对 is_new=true cohort 计算；retain_7 的具体日序与完整观察窗需核对，缺失值不能被当 0。旧查询仅设置 start_date 没有 end_date。日期、渠道枚举和停写表状态必须先核查。
+
+原看板 SQL 内硬编码的内部用户列表未复制进新的业务正文，含名单原件仍保留且不作为构建输入；内部用户过滤由当前维护入口提供，不能固化历史名单。旧 SQL 不再作为直接运行模板。

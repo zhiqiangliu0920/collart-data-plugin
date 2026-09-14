@@ -1,19 +1,30 @@
 """Local navigation and complete before/after ledger; excluded bodies are not read."""
-import argparse,collections,csv,hashlib,json,re,zipfile
+import argparse,collections,csv,hashlib,json,re,zipfile,tempfile,shutil
 from pathlib import Path
 from urllib.parse import quote
 import knowledge_registry
+import catalog_layout
 
 def read(path,default):return json.loads(path.read_text(encoding='utf-8')) if path.exists() else default
 def clean(s):return str(s or '').replace('|',' / ').replace('\n',' ').replace('\r',' ')
 def token(ident):return hashlib.sha256(ident.encode()).hexdigest()[:20]
-def build(root,audit,evidence=None):
-    root=root.resolve();rows=read(audit,{})['files'];out=root/'catalog';out.mkdir(exist_ok=True)
+def _build_legacy(root,audit,evidence,out):
+    root=root.resolve();rows=read(audit,{})['files'];out.mkdir(exist_ok=True)
     if evidence is None:
         saved=read(out/'evidence-location.json',{})
         if saved.get('path'):evidence=Path(saved['path'])
     if evidence:(out/'evidence-location.json').write_text(json.dumps({'path':str(evidence.resolve())}),encoding='utf-8',newline='\n')
     registry,_=knowledge_registry.load(root);byid={r['id']:r for r in registry.values()}
+    source_aliases={alias.removeprefix('ai-knowledge:'):r['path'] for r in registry.values() for alias in [r['id'],*r.get('aliases',[])]}
+    source_aliases.update(read(root/'0global/catalog/layout.json',{}).get('aliases',{}))
+    for rec in registry.values():
+        backup=evidence/'backup'/rec.get('original_path',rec['path']) if evidence else None
+        if not (root/rec['path']).exists() and backup and backup.is_file():
+            for alias in [rec['id'],*rec.get('aliases',[])]:source_aliases[alias.removeprefix('ai-knowledge:')]=str(backup.resolve())
+    link_problems=[];missing_sources=[]
+    def prose(value,row,output):
+        rec={**byid.get(row['id'],{}),**row}
+        return catalog_layout.evidence_text(str(value or ''),root,rec,output,source_aliases,link_problems)
     before=read(evidence/'baseline/files.json',[]) if evidence else []
     mapping=read(evidence/'migration-map.json',{}) if evidence else {}
     moves=mapping.get('moves',{});merges=mapping.get('merges',{})
@@ -23,7 +34,14 @@ def build(root,audit,evidence=None):
     def save(name,body):
         p=out/name;p.parent.mkdir(parents=True,exist_ok=True);body=body.rstrip()+'\n'
         if not p.exists() or p.read_text(encoding='utf-8')!=body:p.write_text(body,encoding='utf-8',newline='\n')
-    def link(r,depth=1):return '['+clean(r['path']).replace('[','').replace(']','')+']('+quote('../'*depth+r['path'],safe='/._-')+')'
+    def link(r,depth=1):
+        label=clean(r['path']).replace('[','').replace(']','')
+        if not (root/r['path']).is_file():
+            rec=byid.get(r['id'],{})
+            backup=evidence/'backup'/rec.get('original_path',r['path']) if evidence else None
+            if backup and backup.is_file():return '['+label+'（原文件缺失，查看整理前备份）](<'+backup.as_posix()+'>)'
+            return label+'（原文件缺失；保留审阅记录）'
+        return '['+label+']('+quote('../'*depth+r['path'],safe='/._-')+')'
     def states(r):return ' / '.join([r.get('status','excluded'),r.get('business_status','未评定'),r.get('review_status','boundary_only')])
     business=[r for r in rows if r['source']=='ai-knowledge' and r.get('sha256')]
     existing={r['id'] for r in business}
@@ -31,9 +49,14 @@ def build(root,audit,evidence=None):
         if rec['id'] not in existing:
             row={**local.get(path,{}),**rec};row.update(source='ai-knowledge',project=rec['scope'],sha256=rec['reviewed_sha256']);business.append(row)
     business.sort(key=lambda r:r['id'])
+    for row in business:
+        if not (root/row['path']).is_file():
+            missing_sources.append({'id':row['id'],'path':row['path'],'reason':'原文件目前缺失；保留旧审阅及已存在备份，不恢复或重建原目录'})
+            row['sha256']=None
+            row['issues']=list(dict.fromkeys(row.get('issues',[])+['原文件目前缺失；审阅哈希仅代表历史原件']))
     def table(items,depth=1):
         lines=['| 文件 | 收录 / 业务 / 复核 | 内容与结论 | 审阅 |','|---|---|---|---|']
-        for r in items:lines.append('| '+' | '.join([link(r,depth),states(r),clean(r.get('summary') or r.get('reason')),'[详情]('+('../'*(depth-1))+'reviews/'+token(r['id'])+'.md)'])+' |')
+        for r in items:lines.append('| '+' | '.join([link(r,depth),states(r),clean(prose(r.get('summary') or r.get('reason'),r,'catalog/'+('projects/index.md' if depth==2 else 'FILE_REGISTER.md'))),'[详情]('+('../'*(depth-1))+'reviews/'+token(r['id'])+'.md)'])+' |')
         return '\n'.join(lines)
     def group(items,depth=1):
         current=lambda r:r.get('business_status')=='documented' and r.get('review_status')=='reviewed_static'
@@ -52,7 +75,7 @@ def build(root,audit,evidence=None):
           '- 方法：'+rec.get('review_method',profile.get('review_method','boundary_inventory'))+'；未执行源码、未查询生产。',
           '- 当前 SHA-256：`'+str(row.get('sha256'))+'`',
           '- 审阅绑定 SHA-256：`'+str(rec.get('reviewed_sha256'))+'`','',
-          '## 核心知识、用途与结论','',row.get('summary') or rec.get('summary') or row.get('reason',''),'',
+          '## 核心知识、用途与结论','',prose(row.get('summary') or rec.get('summary') or row.get('reason',''),row,'catalog/reviews/'+token(row['id'])+'.md'),'',
           '## 处置依据与限制','']
         lines+=['- '+n for n in dict.fromkeys(rec.get('review_notes',[]))] or ['- 保留原日期和适用范围，文档依据不能替代现网验证。']
         if issues:lines+=['','## 待处理','']+['- '+clean(n) for n in issues]
@@ -64,7 +87,7 @@ def build(root,audit,evidence=None):
             a=profile['analysis'];lines+=['','## 全文静态审阅证据','',f"原文件共 {profile.get('whole_file_lines','未记录')} 行。以下按全部章节、SQL、AST 或完整数据结构记录证据；不是生产运行结果。",'']
             if 'sections' in a:
                 facts=collections.defaultdict(list)
-                for f in a.get('facts',[]):facts[f['section']].append(f['evidence'])
+                for f in a.get('facts',[]):facts[f['section']].append(prose(f['evidence'],row,'catalog/reviews/'+token(row['id'])+'.md'))
                 for section in a['sections']:
                     lines+=['### '+section['heading'],'']+(facts.get(section['heading']) or ['本节为导航、背景或一般说明，原文从文件链接读取。'])+['']
                 if a.get('sql_blocks'):lines+=['### 全部 SQL 的输入、输出、过滤和副作用','', '```json',json.dumps(a['sql_blocks'],ensure_ascii=False,indent=2),'```']
@@ -86,7 +109,13 @@ def build(root,audit,evidence=None):
     problems=[r for r in business if r.get('review_status')=='needs_review' or r.get('issues') or byid.get(r['id'],{}).get('open_issues')]
     broken=[{'source':r['id'],'path':r['path'],'target':ref['target']} for r in business for ref in r.get('links',[]) if not ref['exists']]
     save('REVIEW.md','# 待处理清单\n\n本清单是文件审阅结果，未重新查询生产。编码损坏、表身份和业务冲突均保留原件；不补造字段、金额或生效日期。\n\n'+table(problems)+'\n\n## 未找到的引用\n\n'+'\n'.join('- `'+r['path']+'` → `'+r['target']+'`；原证据未找到。' for r in broken))
-    save('pending.json',json.dumps({'items':[{'id':r['id'],'path':r['path'],'summary':r.get('summary'),'reason':r.get('reason'),'issues':list(dict.fromkeys(r.get('issues',[])+byid.get(r['id'],{}).get('open_issues',[])))} for r in problems],'broken_references':broken},ensure_ascii=False,indent=2))
+    unique_problems=list({json.dumps(p,sort_keys=True,ensure_ascii=False):p for p in link_problems}.values())
+    save('catalog-link-review.json',json.dumps({'copied_evidence_reference_issues':unique_problems,'missing_sources':missing_sources},ensure_ascii=False,indent=2))
+    if unique_problems or missing_sources:
+        extra='\n\n## 索引引用与原文存在性\n\n旧卡片摘录中的相对链接已按原文位置重新解析；不能定位的引用保留为文字并记录原因。详见 [逐项引用记录](catalog-link-review.json)。\n\n'
+        extra+='\n'.join('- `'+r['path']+'`：'+r['reason'] for r in missing_sources)
+        save('REVIEW.md',(out/'REVIEW.md').read_text(encoding='utf-8')+extra)
+    save('pending.json',json.dumps({'items':[{'id':r['id'],'path':r['path'],'summary':r.get('summary'),'reason':r.get('reason'),'issues':list(dict.fromkeys(r.get('issues',[])+byid.get(r['id'],{}).get('open_issues',[])))} for r in problems],'broken_references':broken,'missing_sources':missing_sources,'catalog_reference_issues':unique_problems},ensure_ascii=False,indent=2))
     complete=[]
     for b in before:
         old=b['path'];target=moves.get(old,merges.get(old,old));r=local.get(target,{});rec=registry.get(target,{})
@@ -112,5 +141,31 @@ def build(root,audit,evidence=None):
     save('coverage.json',json.dumps(stats,ensure_ascii=False,indent=2))
     save('README.md','# 知识库结构化总目录\n\n公司与四端顶层目录保留。正式定义、历史报告、旧字典、SQL 和运行边界分别维护；全文静态审阅不表示本次验证了生产状态。\n\n[逐文件审阅](FILE_REGISTER.md) · [全文件清单](files.csv) · [迁移映射](MIGRATIONS.md) · [主题](TOPICS.md) · [表与版本](TABLES.md) · [SQL](SQL.md) · [待处理](REVIEW.md)\n\n## 项目\n\n'+'\n'.join('- ['+p+'](projects/'+p+'.md)' for p in projects)+'\n\n## 维护\n\n正式正文在原项目维护；表 tables、指标 indicators、产品 product、加工 lineage、方法 analysis_playbooks、模板 sql_presets。报告 reports/原日期/主题 与 SQL/证据一起保留；旧资料 history/原日期，日期未知为 undated。\n\n持久标识及别名见 0global/knowledge_registry.json。内容变化后旧复核失效；收录、业务有效性、复核分开。凭证、个人偏好、原始用户明细及输出目录不进入插件。')
     return stats
+def build(root,audit,evidence=None):
+    """Write audit views outside knowledge sources; never recreate business catalogs."""
+    root=root.resolve(); audit=audit.resolve()
+    out=audit.parent/'local-catalog'
+    sources=(root,root.parent/'ai-project/collart-agent-skills/cursor_summary',root.parent/'ai-project/collart-agent-skills/codex_summary',root.parent/'ai-project/collart-agent-skills/collart-data-plugin')
+    if any(out.is_relative_to(p.resolve()) for p in sources):
+        out=root.parent/'ai-project/collart-agent-skills/history/local-catalog'
+    if any(out.resolve().is_relative_to(p.resolve()) for p in sources):
+        raise ValueError('Audit output must stay outside every knowledge source and plugin output')
+    rows=read(audit,{})['files']; registry,_=knowledge_registry.load(root)
+    out.mkdir(parents=True,exist_ok=True)
+    def save(name,text):
+        path=out/name
+        if not path.exists() or path.read_text(encoding='utf-8')!=text:path.write_text(text,encoding='utf-8',newline='\n')
+    safe=[{key:r.get(key) for key in ('id','source','path','sha256','status','business_status','review_status','reason','issues','aliases')} for r in rows]
+    save('files.json',json.dumps(safe,ensure_ascii=False,indent=2)+'\n')
+    lines=['# 本机知识审阅台账','','业务正文在公司及项目的功能目录维护。本目录是输入之外的派生审阅输出；原历史证据不覆盖、不清空。','','| 来源 | 路径 | 收录 | 业务 / 复核 |','|---|---|---|---|']
+    for r in safe:
+        path=r.get('path','');label=clean(path)
+        if r.get('source')=='ai-knowledge' and (root/path).is_file():label='['+label+'](<'+(root/path).as_posix()+'>)'
+        lines.append('| '+clean(r.get('source'))+' | '+label+' | '+clean(r.get('status'))+' | '+clean(r.get('business_status'))+' / '+clean(r.get('review_status'))+' |')
+    save('README.md','\n'.join(lines)+'\n')
+    stats={'inventory_files':len(rows),'registered_bodies':len(registry),'output_directory':str(out),'catalogs_in_business_directories':0,'source_counts':dict(collections.Counter(r['source'] for r in rows))}
+    save('coverage.json',json.dumps(stats,ensure_ascii=False,indent=2)+'\n')
+    return stats
+
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--audit',type=Path,required=True);p.add_argument('--evidence',type=Path);a=p.parse_args();print(json.dumps(build(a.root,a.audit,a.evidence),ensure_ascii=False,indent=2))

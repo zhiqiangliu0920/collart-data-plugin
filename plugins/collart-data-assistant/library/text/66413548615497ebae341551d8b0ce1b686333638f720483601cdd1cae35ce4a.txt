@@ -1,0 +1,69 @@
+# pubdata2025.ods.ods_apple_subscriber_1d · 苹果商店收入与订阅事件报告3
+
+> 业务状态：historical；复核：reviewed_static。以下完整字段定义来自 2026-05-21 导出，未经本次生产验证。
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvh8LX79cxOO`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['ios']
+- 原登记粒度：未填写
+- 原登记主键：未填写
+- 更新频率：未填写
+- 原登记层级：ODS原始层
+- 主题：收入成本主题
+- 子主题：ios订阅收入
+- 负责人：恬静
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `stats_date` | date | 时间 | 是 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `event_date` | date | 时间 | 是 | 日期 |
+| `app_name` | string | 维度 | 是 | 产品名 |
+| `app_apple_id` | string | 主键 | 是 | 苹果商店给app 应用定义的唯一id |
+| `subscription_name` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `subscription_apple_id` | int | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `subscription_group_id` | int | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `standard_subscription_duration` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `subscription_offer_name` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `promotional_offer_id` | string | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `subscription_offer_type` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `subscription_offer_duration` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `marketing_opt_in_duration` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `customer_price` | float | 指标 | 是 | 订阅价格 |
+| `customer_currency` | string | 维度 | 否 | 汇率 |
+| `developer_proceeds` | float | 指标 | 否 | 收入 |
+| `proceeds_currency` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `preserved_pricing` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `proceeds_reason` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `client` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `device` | string | 维度 | 否 | 设备 |
+| `country` | string | 维度 | 是 | 国家 |
+| `subscriber_id` | int | 主键 | 是 | 用于唯一标识记录或业务实体的关键字段。 |
+| `subscriber_id_reset` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `refund` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `purchase_date` | date | 时间 | 是 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `units` | float | 指标 | 否 | 浮点型指标字段，用于统计金额、比率或均值。 |
+| `region` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `project` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | - |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | - |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=pubdata2025&ws=!1m5!1m4!4m3!1spubdata2025!2sods!3sods_apple_subscriber_1d) |
+| 任务地址 | - |
+| 看板 | - |
+
+### 使用限制
+
+- 行粒度未填写；聚合前需确认唯一键及重复记录处理。
+- 主键未填写；字段角色中的“主键”不等于已验证唯一约束。
+- 部分字段说明为导出模板的通用解释，不是已确认业务口径；金额单位、去重键、观察窗口仍需业务证据。
+- 旧说明把币种字段写作“汇率”；币种代码与换算比率应分别确认，不直接用该列作除数。

@@ -1,0 +1,305 @@
+# BigQuery SQL 写法与技巧
+
+适用：GoogleSQL。原材料日期为 2026-03-25、03-27 和 04-02；2026-09-13 按主题整合并核对官方技术文档。执行边界、30 天团队规则、产品过滤及交付要求统一见 [执行与分析规范](README.md)。
+
+示例用于说明写法，不是已验证的生产查询。`base`、`events`、`daily_revenue` 等示例关系应是已按任务限定日期、产品和字段的输入。示例中的列、身份键、日期和单位都需要与实际表核对。
+
+## 1. 条件聚合、PV 与 UV
+
+同一范围内的多事件统计可以合并成一个聚合，减少重复 SQL。PV 计行，UV 按指定身份去重，两者不能互换。
+
+```sql
+SELECT
+  event_date,
+  COUNTIF(event_name = 'click') AS click_pv,
+  COUNTIF(event_name = 'generate') AS generate_pv,
+  COUNT(DISTINCT IF(event_name = 'click', user_pseudo_id, NULL)) AS click_uv,
+  COUNT(DISTINCT IF(event_name = 'generate', user_pseudo_id, NULL)) AS generate_uv
+FROM base
+WHERE event_name IN ('click', 'generate')
+GROUP BY event_date;
+```
+
+`COUNT(CASE WHEN condition THEN 1 END)` 与条件行计数语义相符；如果 CASE 的 ELSE 也是非空值，COUNT 会把这些行一起统计。条件去重也可写成 `COUNT(DISTINCT CASE WHEN condition THEN identity END)`。
+
+比值可用 `SAFE_DIVIDE(generate_uv, click_uv)`；分母为零得到 NULL，要解释其含义。分别统计两个事件的 UV 不保证后一事件用户属于前一事件用户，不能直接作为严格漏斗。
+
+## 2. 提取事件参数并保持行粒度
+
+优先在中间层把所需参数提取为列，后面复用列名。标量子查询不会因数组长度直接扩展事件行，但同一事件存在重复 key 时可能返回多行并报错；应先检查或明确重复值处理规则。
+
+```sql
+WITH base AS (
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    (SELECT ep.value.string_value
+     FROM UNNEST(event_params) AS ep
+     WHERE ep.key = 'service_type') AS service_type,
+    (SELECT ep.value.int_value
+     FROM UNNEST(event_params) AS ep
+     WHERE ep.key = 'time') AS success_time
+  FROM `project.dataset.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '20260901' AND '20260907'
+    AND app_info.id IS NULL  -- 此示例按 Web 范围；不区分 Web/Fashion 业务归属
+    AND event_name IN ('ai_service_start', 'ai_service_success')
+)
+SELECT
+  event_date,
+  service_type,
+  COUNTIF(event_name = 'ai_service_start') AS start_pv,
+  COUNTIF(event_name = 'ai_service_success') AS success_pv,
+  SAFE_DIVIDE(
+    COUNTIF(event_name = 'ai_service_success'),
+    COUNTIF(event_name = 'ai_service_start')
+  ) AS success_to_start_pv_ratio,
+  AVG(IF(event_name = 'ai_service_success', success_time, NULL)) AS avg_success_time_raw
+FROM base
+GROUP BY event_date, service_type;
+```
+
+这里的日期、事件名、参数和参数类型仅沿用示例形式。`time` 的业务含义及单位未由本文验证，不直接除以 1000 后命名为秒；有事件字典证据后再转换。该 PV 比值也不是按任务关联得到的成功率。
+
+需要展开数组分析时可以 `UNNEST`，但必须说明展开后的行粒度、空数组处理和再聚合方式。不要把展开后的行数误当原始事件数。
+
+确需重复提取时可封装临时 UDF，明确类型与重复 key 规则；不要默认把所有字符串转小写，以免改变区分大小写的 ID 或原始值。
+
+```sql
+CREATE TEMP FUNCTION get_string_param(params ANY TYPE, param_key STRING)
+AS ((SELECT ep.value.string_value
+     FROM UNNEST(params) AS ep
+     WHERE ep.key = param_key));
+
+SELECT get_string_param(event_params, 'service_type') AS service_type
+FROM base;
+```
+
+这是会创建临时函数的多语句示例；`base` 需由当前查询补齐。[SQL UDF](https://docs.cloud.google.com/bigquery/docs/user-defined-functions)
+
+## 3. 查询组织与性能
+
+| 方法 | 适用条件和限制 |
+|---|---|
+| 条件聚合 | 输入范围和粒度一致时集中统计；不能为合并而改变各指标筛选条件 |
+| CTE / 参数提取层 | 改善结构和复用表达；不保证物化或只执行一次 |
+| 指定列和提前过滤 | 缩小输入；实际成本取决于计费模式、列和扫描范围 |
+| 分区与聚簇 | 按真实分区列和有选择性的聚簇条件裁剪；不存在通用“节省 90%”保证 |
+| 临时表 | 多步确需复用中间结果时评估；创建、后续读取和存储可能有成本 |
+| `APPROX_COUNT_DISTINCT`、`APPROX_TOP_COUNT`、`APPROX_QUANTILES` | 接受近似误差时才用，注明近似；不用于要求精确核对的数值，不承诺固定速度或误差上限 |
+| BI Engine | 评估项目、区域、支持范围和容量费用；不是一条 SQL 即可保证免费的加速功能 |
+
+先比较语义和结果，再比较执行计划与扫描量；原文中的 N 倍成本、10 倍加速、固定免费额度均不作为现行配置依据。[CTE 与查询优化](https://docs.cloud.google.com/bigquery/docs/best-practices-performance-compute) · [近似聚合](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/approximate_aggregate_functions) · [BI Engine 容量](https://docs.cloud.google.com/bigquery/docs/bi-engine-reserve-capacity)
+
+## 4. 分组、列选择与不确定取值
+
+| 写法 | 使用说明 |
+|---|---|
+| `GROUP BY a, b` | 显式固定粒度，适合需要稳定口径的查询 |
+| `GROUP BY ALL` | 从 SELECT 项推导分组键；调整 SELECT 时需重新检查粒度，不要求用它替代所有显式分组 |
+| `SELECT * EXCEPT(a, b)` | 排除列；共享或正式输出仍应检查实际输出字段，不能把它当成完整脱敏机制 |
+| `SELECT * REPLACE(expr AS a)` | 替换已有列的表达式 |
+| `ANY_VALUE(x)` | 任取某行的值，结果是不确定的，不是随机抽样；不能用于取最新、最早或保证多列来自同一行 |
+
+要确定某行，使用完整排序键的窗口函数或有序数组；时间戳并列时补充可靠的平局处理字段。[查询语法](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax) · [ANY_VALUE](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions#any_value)
+
+## 5. 窗口、排名和序列
+
+`QUALIFY` 过滤窗口结果。例如每位用户取最近三行：
+
+```sql
+SELECT user_id, event_timestamp, event_name
+FROM events
+QUALIFY ROW_NUMBER() OVER (
+  PARTITION BY user_id ORDER BY event_timestamp DESC, event_order DESC
+) <= 3;
+```
+
+`event_order` 是示意的稳定次序列，真实输入需具备相应字段。缺少平局依据时不能声称排序完全确定。
+
+| 技巧 | 使用说明 |
+|---|---|
+| `ROW_NUMBER` | 行编号；并列排序值之间需补充排序依据 |
+| `RANK` / `DENSE_RANK` | 并列分别跳号/不跳号；用 RANK 截前 N 名时，结果行数可能超过 N |
+| `LEAD` / `LAG` | 同一分组中下一行/上一行；不等同于找全部未来事件的自连接 |
+| `FIRST_VALUE` / `LAST_VALUE` | 核对窗口范围；取整个分组最后值时显式覆盖到 `UNBOUNDED FOLLOWING` |
+| `PERCENTILE_CONT(x, p) OVER (...)` | 连续分位数；与近似分位数和分桶不是同一统计 |
+| `NTILE(n)` | 尽量均分行数的分桶；不是按金额大小设置固定阈值 |
+
+```sql
+SELECT
+  stats_date,
+  revenue,
+  SUM(revenue) OVER (
+    ORDER BY stats_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+  ) AS cumulative_revenue,
+  AVG(revenue) OVER (
+    ORDER BY stats_date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+  ) AS trailing_7_rows_avg
+FROM daily_revenue;
+```
+
+`ROWS 6 PRECEDING` 是最近 7 行。只有一日一行且日期连续时，才等于最近 7 天；缺失日先按业务定义补齐。涉及多个产品或国家时，补上相应 `PARTITION BY`。[窗口函数](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/window-function-calls)
+
+## 6. 行列转换和数组结果
+
+| 技巧 | 说明 |
+|---|---|
+| `PIVOT` | 把指定分类值聚合为列；先限定输入列，确认隐式分组维度 |
+| `UNPIVOT` | 宽表指标列转行；确认是否要保留 NULL，不能把省略 NULL 的结果当作完整覆盖 |
+| `STRUCT` | 把多个字段组合成结构化结果，字段名称与粒度仍需说明 |
+| `ARRAY_AGG(x ORDER BY ts DESC LIMIT n)` | 每组有序 Top N 数组；确定空值与并列次序 |
+| `ARRAY_CONCAT_AGG(arr)` | 合并数组；没有完整排序约定时，不把结果当稳定的用户行为序列 |
+
+示例：
+
+```sql
+SELECT user_id,
+  ARRAY_AGG(event_name IGNORE NULLS ORDER BY event_timestamp DESC LIMIT 10) AS recent_events
+FROM events
+GROUP BY user_id;
+```
+
+这里保留至多 10 个非空事件名，时间戳并列的相对顺序未定义。[聚合函数](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/aggregate_functions)
+
+## 7. 日期、时间和补齐日期
+
+| 函数或类型 | 说明 |
+|---|---|
+| `DATE_ADD` / `DATE_SUB` / `DATE_DIFF` 与 `INTERVAL` | 日期偏移与边界差；按需指定单位 |
+| `LAST_DAY` | 所在月份或指定周期的最后一天 |
+| `FORMAT_DATE` / `PARSE_DATE` | DATE 与指定格式字符串转换；格式与真实输入匹配 |
+| `DATE_TRUNC` | 按周期截断；周口径明确 `WEEK(SUNDAY)`、`WEEK(MONDAY)` 或 ISO 周 |
+| `EXTRACT` | 提取日期时间部分；周编号注意年度交界和周定义 |
+| `TIMESTAMP` | 绝对时间点，本身不保存某个时区；展示和转日期时指定时区 |
+| `DATETIME` | 不附带时区的民用日期时间；只有业务日期时使用 DATE |
+
+```sql
+SELECT
+  DATE(TIMESTAMP_MICROS(event_timestamp), 'Asia/Shanghai') AS beijing_date,
+  DATETIME(TIMESTAMP_MICROS(event_timestamp), 'Asia/Shanghai') AS beijing_datetime
+FROM events;
+```
+
+该示例假定 `event_timestamp` 为 GA4 微秒整数；实际类型先检查。[日期函数](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/date_functions) · [数据类型与时间语义](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/data-types#timestamp_type)
+
+```sql
+WITH calendar AS (
+  SELECT stats_date
+  FROM UNNEST(GENERATE_DATE_ARRAY(DATE '2026-09-01', DATE '2026-09-07')) AS stats_date
+)
+SELECT c.stats_date, r.revenue
+FROM calendar AS c
+LEFT JOIN daily_revenue AS r USING (stats_date)
+ORDER BY c.stats_date;
+```
+
+这个结果保留缺失值。仅当缺失代表“确实为零”时再填 0。整数序列使用 `GENERATE_ARRAY`；数组展开列别名直接写 `AS stats_date`，不沿用旧例的 `AS d(date)`。
+
+## 8. NULL、安全计算和函数参数
+
+| 写法 | 语义与限制 |
+|---|---|
+| `SAFE_DIVIDE(a, b)` | 除法出错时返回 NULL；与仅处理零分母的 `a / NULLIF(b, 0)` 不应笼统视为所有异常下完全等价 |
+| `SAFE_ADD(a, b)` | 加法溢出返回 NULL；原 `SAFE.ADD` 示例改用此函数 |
+| `SAFE_CAST(x AS INT64)` | 无效转换返回 NULL，但不能消除所有静态类型错误 |
+| `NULLIF(x, 0)` | x 为 0 时返回 NULL |
+| `COALESCE(a, b, c)` / `IFNULL(a, b)` | 分别取首个非 NULL 值；补默认值前先判断缺失的业务含义 |
+| `func(name => value)` | 仅在该函数支持对应命名参数时使用；位置参数放在命名参数之前 |
+
+示例采用已知位置签名 `SUBSTR('hello', 1, 3)`，不沿用未经验证的 `pos =>` 命名形式。[数学函数](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/mathematical_functions#safe_add) · [转换函数](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/conversion_functions#safe_casting) · [函数调用](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/functions-reference)
+
+## 9. 会话与递归
+
+旧例 `SESSION_WINDOW(event_timestamp, INTERVAL 30 MINUTE)` 未找到对应的 GoogleSQL 函数签名，不能作为可运行模板。若任务定义为“同一用户相邻事件间隔严格大于 30 分钟时开始新会话”，可用 LAG 标记边界，再累计边界标记：
+
+```sql
+WITH ordered AS (
+  SELECT *, LAG(event_time) OVER (
+    PARTITION BY user_id ORDER BY event_time, event_order
+  ) AS previous_time
+  FROM events
+), boundaries AS (
+  SELECT *, IF(
+    previous_time IS NULL OR event_time > TIMESTAMP_ADD(previous_time, INTERVAL 30 MINUTE),
+    1, 0
+  ) AS starts_new_session
+  FROM ordered
+)
+SELECT *, SUM(starts_new_session) OVER (
+  PARTITION BY user_id ORDER BY event_time, event_order
+  ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+) AS session_number
+FROM boundaries;
+```
+
+输入示例假定 event_time 是非空 TIMESTAMP，event_order 能确定并列次序。窗口第一条会话可能在查询起点之前开始；需按任务说明边界截断。真实 GA4 会话识别优先查项目定义，不能由此例替换。
+
+官方 `RANGE_SESSIONIZE` 接收含 RANGE 列的表及分组列，用于区间会话化，不能直接把旧函数名替换后套用时间戳参数。[区间函数](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/range-functions#range_sessionize)
+
+`WITH RECURSIVE` 适合层级和图遍历；明确终止条件、环和重复节点处理。不要在未核对迭代限制及数据规模前将递归模板用于生产。[递归 CTE](https://docs.cloud.google.com/bigquery/docs/recursive-ctes)
+
+## 10. 写入、恢复和克隆
+
+这些是按任务授权使用的功能说明，不是可以直接执行的维护计划：
+
+| 功能 | 使用条件 |
+|---|---|
+| `MERGE` | 先确认目标粒度、源键唯一性、匹配条件、分区范围和重跑行为；会更改数据 |
+| `FOR SYSTEM_TIME AS OF` | 按实际 time travel 窗口访问历史数据；不适用于所有表类型 |
+| 恢复到新表 | 涉及建表、权限、命名和存储成本；需要对应授权 |
+| `CREATE TABLE ... CLONE ...` | 创建可写克隆；不同于只读快照。初始共享存储不代表后续永远零成本 |
+
+官方 time travel 窗口可配置为 2–7 天，默认 7 天；不能保证每个数据集都有 7 天。计费还受存储计费模式影响。克隆或源表后续数据变化也可能产生额外存储费用。[Time travel](https://docs.cloud.google.com/bigquery/docs/time-travel) · [表克隆](https://docs.cloud.google.com/bigquery/docs/table-clones-intro)
+
+## 11. 合并时的修正记录
+
+- 保留条件聚合、条件 UV 和参数提取；去掉“CTE 必然只执行一次”及固定节省倍数。
+- `GROUP BY ALL` 改为可选写法，保留显式粒度；`ANY_VALUE` 改为不确定取值。
+- 区分分片表后缀、实际分区列和摄入分区伪列。
+- 移动平均明确“7 行”与“7 天”；下一条事件不同于全部未来事件。
+- 修正时间类型、SAFE_ADD、生成日期别名；原 SESSION_WINDOW 例和未核实命名参数不作为可执行模板。
+- 保留近似函数、BI Engine、time travel 和 CLONE 的用途，移除统一免费和固定性能保证。
+- UDF 不再强制小写字符串，参数类型与重复 key 明确说明。
+- 原 `common_params.sql` 的内容完整保存在下方历史附录，独立文件不再保留；本次未执行或验证其生产表及事件参数。
+
+原 43 条编号技巧及末尾 UDF 补充共 44 项均有本地逐项处置记录；重复知识按上面的主题合并。技术文档核对日期为 2026-09-13，生产口径和运行效果仍按实际任务另行验证。
+
+<a id="legacy-common-params"></a>
+
+## 12. 历史参数提取片段（原 common_params.sql）
+
+原记录日期：2026-04-01。以下原 SQL 与注释完整保留用于追溯；固定表名、参数键、Android 适用范围和参数类型均不是本次生产验证结论。该片段仅定义 CTE，缺少最终 SELECT，日期占位符尚未替换，不能直接执行。新查询优先参考第 2 节并核对项目表与事件字典。
+
+```sql
+-- 【积木：基础属性平铺】
+-- 目标：展平 GA4 event_params 中的高频通用字段
+-- 适用：Collart Android 几乎所有日常分析
+-- 记录时间：2026-04-01 (Q2 第一天)
+
+WITH base_events AS (
+  SELECT
+    event_timestamp,
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    platform,
+    geo.country AS country,
+    -- 1. 展平屏幕与页面属性
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'firebase_screen') AS screen_name,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'firebase_event_origin') AS event_origin,
+    -- 2. 展平渠道归因属性
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'source') AS utm_source,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'medium') AS utm_medium,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'campaign') AS utm_campaign,
+    -- 3. 展平会话与广告标识
+    (SELECT value.int_value FROM UNNEST(event_params) WHERE key = 'ga_session_id') AS session_id,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'advertising_id') AS advertising_id,
+    -- 4. 版本信息
+    app_info.version AS app_version
+  FROM `storytemplate-10a27.analytics_232977577.events_*`
+  WHERE _TABLE_SUFFIX BETWEEN '{{START_DATE}}' AND '{{END_DATE}}' -- 执行时需替换
+)
+-- 后续逻辑直接 SELECT * FROM base_events ...
+```

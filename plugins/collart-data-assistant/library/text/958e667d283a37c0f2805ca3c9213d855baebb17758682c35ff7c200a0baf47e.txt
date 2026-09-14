@@ -1,0 +1,18 @@
+# Fashion 用户范围与共用站点划分
+
+## 默认分析范围
+
+Fashion 项目默认只统计 Fashion；需要对比主站或整个 Web 时由分析任务明确指定。加工表按该表实际 `package_name`，Fashion 值为 `collart_fashion`。
+
+## 共用判定与版本
+
+完整定义统一维护在 [Web / Fashion 站点划分](../../collart_web/indicators/fashion_vs_main_site_user.md)：原始事件的历史到访标签、加工表当日产品行以及首次落地 cohort 是不同范围，不能互相替代。旧共享表主站值 `collartweb` 与新 ADS/cdct 的 `collart_web` 必须按表版本选择。
+
+## Fashion 特有口径
+
+- 新用户 cohort 见 [Fashion 新用户](fashion_new_user.md)，保留原 2026-07-23 适用范围与未解决差异。
+- 收入归属见 [Fashion 收入](fashion_revenue.md)，不能仅凭到访过 Fashion 将全站历史支付全部归入 Fashion。
+- 内部用户排除见 [过滤规则](../../1company/analysis_playbooks/internal_user_filter.md)。
+- 共用 SQL 片段见 [站点划分](../../collart_web/sql_presets/fashion_vs_main_site_user.sql)。
+
+原记录日期：2026-07-22；cohort 补充日期：2026-07-23。2026-09-12 仅合并重复说明，未重新核验生产数据。

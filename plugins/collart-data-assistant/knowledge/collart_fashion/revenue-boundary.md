@@ -4,17 +4,17 @@ title: "Fashion 订单收入与主站边界"
 project: "collart_fashion"
 kind: "table"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["fashion-orders-review-7afb4b3f3b", "revenue", "ads-redlines-review-954bdf4e17", "team-collart_fashion-revenue-boundary", "review-979740ccfe320f48"]
+sources: ["review-20260914-626470cd87d2", "revenue", "review-20260914-ca27ec86b3b2", "team-collart_fashion-revenue-boundary", "review-20260914-86810c962658"]
 tags: ["Fashion", "收入", "Web", "去重", "transaction_id", "ads_oper_user_revenue_di"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["fashion-orders", "ads-redlines"]
+historical_sources: ["fashion-orders", "ads-redlines", "ads-redlines-review-954bdf4e17", "fashion-orders-review-7afb4b3f3b", "review-979740ccfe320f48"]
 ---
 
 # Fashion 订单收入与主站边界
@@ -35,6 +35,12 @@ historical_sources: ["fashion-orders", "ads-redlines"]
 
 ## 来源与状态
 
-来源摘录：[fashion-orders](../../library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt)、[revenue](../../provenance/excerpts/revenue.txt)、[ads-redlines](../../library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[fashion-orders](../../library/text/1a7862e647a0bfca563564f79432fb2282f01e4bdf214f763575a9cd8816637f.txt)、[revenue](../../provenance/excerpts/revenue.txt)、[ads-redlines](../../library/text/0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
 
-本次校正依据：[collart_fashion/indicators/fashion_revenue.md](../../library/text/46dea22014119ee3fe10b47a69e0e06102e3d8b4b59a7f5efcf631e206de5e19.txt)。
+本次校正依据：[collart_fashion/indicators/fashion_revenue.md](../../library/text/44105210e9257fd2cd1fe584833b5d7ce8d6b799f8e81250bcebf0f2ef089d46.txt)。
+
+文档适用日期与数据覆盖分开：订单表口径记录于 2026-09-09，历史数据回填起点为 2026-06-01；不能把回填起点解释为该文档的业务确认日期。保持每单前后 600 秒最近事件的项目归属规则。
+
+## 2026-09-14 对齐依据
+
+- [collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md](../../library/text/1a7862e647a0bfca563564f79432fb2282f01e4bdf214f763575a9cd8816637f.txt)

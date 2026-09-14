@@ -1,0 +1,49 @@
+# pubdata2025.ads.ads_cdct_service_cost_1d · 分产品服务器成本
+
+> 业务状态：historical；复核：reviewed_static。以下完整字段定义来自 2026-05-21 导出，未经本次生产验证。
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvh3C8YG2fCy`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['unassigned']
+- 原登记粒度：未填写
+- 原登记主键：未填写
+- 更新频率：未填写
+- 原登记层级：ADS应用层
+- 主题：收入成本主题
+- 子主题：成本
+- 负责人：恬静
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `event_date` | date | 时间 | 是 | 日期 |
+| `billing_month` | date | 维度 | 否 | 账单月份呢 |
+| `region` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `billing_from` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `resource_type` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `billing_type` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `atlasv_app_name` | string | 维度 | 是 | 应用或产品相关属性字段，用于产品识别、分类或归属分析。 |
+| `allocate_rate` | float | 指标 | 是 | 比率指标字段，用于表示转化率、留存率或占比。 |
+| `allocate_from` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `cost` | float | 指标 | 是 | 投放花费 |
+| `project_name` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | pubdata2025.ods.ods_billing_aws_cost_1d pubdata2025.ods.ods_billing_azure_cost_1d pubdata2025.ods.ods_billing_gcs_cost_1d pubdata2025.ods.ods_log_aws_cdn_1d pubdata2025.ods.ods_billing_third_cost_1d pubdata2025.dwd.dwd_cdct_cost_aws_billing_di pubdata2025.dwd.dwd_cdct_cost_azure_billing_di... pubdata2025.dwd.dwd_cdct_cost_gcp_billing_di pubdata2025.dwd.dwd_cdct_log_aws_cdn_di pubdata2025.dwd.dwd_cdct_cost_third_billing_di pubdata2025.dws.dws_cdct_cost_billing_1d pubdata2025.dws.dws_cdct_log_aws_cdn_1d pubdata2025.dws.dws_cdct_log_ai_record_1d hzdw2024.ods.ai_base_record_store pubdata2025.ads.ads_cdct_service_cost_1d aidata2025.dim.dim_ai_service_cost_unit |
+| 是否需要展示血缘 | 是 |
+| 数据来源 | - |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=pubdata2025&ws=!1m5!1m4!4m3!1spubdata2025!2sads!3sads_cdct_service_cost_1d) |
+| 任务地址 | - |
+| 看板 | - |
+
+### 使用限制
+
+- 行粒度未填写；聚合前需确认唯一键及重复记录处理。
+- 主键未填写；字段角色中的“主键”不等于已验证唯一约束。
+- 部分字段说明为导出模板的通用解释，不是已确认业务口径；金额单位、去重键、观察窗口仍需业务证据。

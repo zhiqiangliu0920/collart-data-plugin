@@ -4,17 +4,17 @@ title: "Fashion 2026-09-09 仓库审计的历史证据"
 project: "collart_fashion"
 kind: "quality"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["full-a7cc6cb8e2b227f3", "full-96da852291e4720b-review-7afb4b3f3b"]
+sources: ["full-a7cc6cb8e2b227f3", "review-20260914-626470cd87d2"]
 tags: ["collart_fashion", "Fashion 2026-09-09 仓库审计的历史证据"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["full-96da852291e4720b"]
+historical_sources: ["full-96da852291e4720b", "full-96da852291e4720b-review-7afb4b3f3b"]
 ---
 
 # Fashion 2026-09-09 仓库审计的历史证据
@@ -28,6 +28,8 @@ historical_sources: ["full-96da852291e4720b"]
 ## 来源与状态
 
 - [_generated/fashion_warehouse_audit_20260909/fashion_warehouse_review.md](../../library/text/30963c0d69f6b26d466c87f3e2ec4d574379ffa128300f3ea1b8baacded7b6c8.txt)
-- [collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md](../../library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt)
+- [collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md](../../library/text/1a7862e647a0bfca563564f79432fb2282f01e4bdf214f763575a9cd8816637f.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。
+
+2026-09-14 维护说明：该原报告已移出知识库输入；这里保留原日期的历史证据与方法，未重新执行或验证其中数据。

@@ -4,17 +4,17 @@ title: "项目范围与四端标识"
 project: "shared"
 kind: "business"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["ads-routing", "events", "fashion-orders-review-7afb4b3f3b", "team-shared-project-overview", "cursor-platforms-md", "review-e4b31288e0a4a0ad"]
+sources: ["ads-routing", "events", "review-20260914-626470cd87d2", "team-shared-project-overview", "cursor-platforms-md", "review-20260914-ec2c2ccaf2c5", "review-20260914-3dd331efb6c6", "review-20260914-ca27ec86b3b2"]
 tags: ["业务", "项目", "Android", "iOS", "VidArt", "Web", "Fashion"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["fashion-orders"]
+historical_sources: ["fashion-orders", "fashion-orders-review-7afb4b3f3b", "review-e4b31288e0a4a0ad"]
 ---
 
 # 项目范围与四端标识
@@ -42,7 +42,7 @@ ODS、旧 DWD、DM 和 ADS 可能使用不同 app_name / package_name，不能�
 
 ## 来源与状态
 
-来源摘录：[ads-routing](../../provenance/excerpts/ads-routing.txt)、[events](../../provenance/excerpts/events.txt)、[fashion-orders](../../library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[ads-routing](../../provenance/excerpts/ads-routing.txt)、[events](../../provenance/excerpts/events.txt)、[fashion-orders](../../library/text/1a7862e647a0bfca563564f79432fb2282f01e4bdf214f763575a9cd8816637f.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
 
 ## 合并的业务细节
 
@@ -58,7 +58,7 @@ ODS、旧 DWD、DM 和 ADS 可能使用不同 app_name / package_name，不能�
 
 ### Android（`collart_android`）
 
-- **DAU 基线**：约 5–8 万为正常区间；异常时看国家/新老结构健康度。
+- **DAU 判断**：2026-09-13 已删除全部固定 DAU 阈值；按一致口径的趋势、新老及国家结构诊断，不采用旧规模或百分比作为告警。
 - **结构特征**：高 churn，新用户常占 DAU >45%；ARPU 波动来自投放缩量 + 点数包大单。
 - **核心功能梯队**：img2video 等生成功能为主；功能渗透率/漏斗用 event_metric 三层。
 - **投放**：ga_delivery / fb_delivery 留存弱于自然量；巴西常见无效流量拖累。
@@ -71,7 +71,7 @@ ODS、旧 DWD、DM 和 ADS 可能使用不同 app_name / package_name，不能�
 - **标识**：bundle `ai.photo.video.generator.fotos.ai.image.picture.editor.app.free`；app_name `vidart_ios`；DM 另滤 `LOWER(app_name)='vidart'`。
 - **覆盖**：ADS 自 2026-05-24；更早无包数据。
 - **结构**：放量期新增/DAU 大涨但 D1 偏低（如约 3.3%）；收入靠点数包大单；美国依赖高、巴西无效流量高（约 44%）。
-- **ASA**：成本首选 DWS 新表；归因三级兜底；active delivery/ASA 快照优先（见 [channels-attribution.md](channel-attribution.md)）。
+- **ASA**：经营成本按 cdct / 已上卷 delivery；历史关键词 DWS 方法仅在相应粒度复核后使用，见 [ASA 边界](../collart_ios/asa-history-boundary.md)。
 - **收入**：用户粒度 = Apple IAP + Stripe RUB；country 层无 new/resub/trial 拆分；`ad_revenue=0`。
 - **周环比**：与 Android 对齐 sort_id/metric_name 矩阵。
 
@@ -81,7 +81,7 @@ ODS、旧 DWD、DM 和 ADS 可能使用不同 app_name / package_name，不能�
 - **覆盖**：行为层自 2026-02-12。
 - **结构**：2 月起量、5 月变现峰值、6 月量额双降；D2 留存走弱（约 6.7%→4.5%）；商业化转向点数包 + 高 ARPU 老用户。
 - **付费结构**：iOS 端 ARPPU 最高；订单偏月包 Standard，收入偏年包 Premium（约 82.9% 收入来自年包）。
-- **ROAS**：delivery 3 月首日 ROAS 约 9.4%，实操回本下限约 20%；缺完整 D180 delivery cohort 时标注模型假设。
+- **ROAS**：delivery 3 月首日 ROAS 约 9.4%，旧材料的约 20% 回本下限缺少当前依据，不作默认目标；缺完整 D180 delivery cohort 时标注模型假设。
 - **DeepClick**：投放识别分三层，不可混算（见 channels-attribution.md）。
 - **Fashion 划分**：加工表用 `package_name`；events 用 `page_location` 含 studio/fashion。
 
@@ -106,4 +106,9 @@ ODS、旧 DWD、DM 和 ADS 可能使用不同 app_name / package_name，不能�
 
 来源快照：[cursor-platforms-md](../../provenance/excerpts/cursor-platforms-md.txt)。
 
-本次校正依据：[collart_android/tables/aidata2025.ads_collart.big_r_user_value_state.md](../../library/text/947f56e7da0a743ed6c7940ea59ea07f0952cb7437d98621fa4e9bb160156e96.txt)。
+本次校正依据：[collart_android/tables/aidata2025.ads_collart.big_r_user_value_state.md](../../library/text/e3c9f0985b81dd2e82b81dc8137524506c9b4722d44cdcdd5800528dbf2e4978.txt)。
+
+## 2026-09-14 对齐依据
+
+- [collart_android/indicators/dau.md](../../library/text/5126e2275883955da33ab341e7f2e3a86de550334d2dc4644a6394211a7d7ccb.txt)
+- [1company/analysis_playbooks/collart_ads_redlines.md](../../library/text/0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104.txt)

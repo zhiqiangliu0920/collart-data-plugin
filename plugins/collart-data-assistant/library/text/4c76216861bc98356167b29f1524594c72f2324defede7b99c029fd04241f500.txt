@@ -1,0 +1,26 @@
+# Collart 数据知识库
+
+这里维护可长期复用的业务知识。先选择公司或产品，再按表、指标、产品流程和分析方法进入正文；实际数据验证日期与文档整理日期分别记录。
+
+| 范围 | 入口 |
+|---|---|
+| 全局 SQL 规范与维护边界 | [SQL 规范](0global/sql_standards/README.md) · [维护约定](0global/KNOWLEDGE_MAINTENANCE.md) |
+| 公司共用规则与跨产品关系 | [1company](1company/README.md) |
+| Collart Android | [collart_android](collart_android/README.md) |
+| Collart iOS / VidArt | [collart_ios](collart_ios/README.md) |
+| Collart Web | [collart_web](collart_web/README.md) |
+| Collart Fashion | [collart_fashion](collart_fashion/README.md) |
+
+## 目录职责
+
+`tables/` 解释表与字段；`product/` 解释产品和事件；`indicators/` 定义指标；`lineage/` 记录加工关系；`analysis_playbooks/` 记录分析方法；`sql_presets/` 存放可复用查询。按需建目录，不为统一形式保留空目录。
+
+SQL 草稿、一次性脚本、报告和结果保存在对应 Codex/Cursor 项目。业务知识只保留一个正文入口，共用定义集中维护，项目记录自身范围和差异。
+
+`catalog/` 卡片、重复历史副本和整理回执不作为业务入口。文件标识、旧路径与合并去向由来源登记维护，清理状态见维护约定，历史证据保存在知识输入之外。
+
+## 统一插件
+
+三个来源为本知识库、[cursor_summary](../ai-project/collart-agent-skills/cursor_summary)、[codex_summary](../ai-project/collart-agent-skills/codex_summary)，用于构建 [collart-data-plugin](../ai-project/collart-agent-skills/collart-data-plugin/README.md)。原始凭证、个人运行配置、用户明细和项目产物不进入知识输入。同步、发布和安装状态独立维护。
+
+[维护约定](0global/KNOWLEDGE_MAINTENANCE.md) · [路径约定](0global/PATHS.md) · [变更记录](CHANGELOG.md)

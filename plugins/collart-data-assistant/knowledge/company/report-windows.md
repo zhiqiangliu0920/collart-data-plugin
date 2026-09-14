@@ -4,17 +4,17 @@ title: "经营日报日期与比较窗口"
 project: "company"
 kind: "metric"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["full-eeebc9e82bd76fe2-review-ddff0eff3b"]
+sources: ["review-20260914-c4033e7e94c5"]
 tags: ["company", "经营日报日期与比较窗口"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["full-eeebc9e82bd76fe2"]
+historical_sources: ["full-eeebc9e82bd76fe2", "full-eeebc9e82bd76fe2-review-ddff0eff3b"]
 ---
 
 # 经营日报日期与比较窗口
@@ -30,6 +30,6 @@ historical_sources: ["full-eeebc9e82bd76fe2"]
 
 ## 来源与状态
 
-- [1company/indicators/collart_daily_report_date_windows.md](../../library/text/ddff0eff3b96808dab82e55c3457eab63bf57896b7d980a8fd88c1beea878a87.txt)
+- [1company/indicators/collart_daily_report_date_windows.md](../../library/text/f63929df07ab124375ecb9ce3b494780798d90193c6df2600f0daecf04f44637.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。

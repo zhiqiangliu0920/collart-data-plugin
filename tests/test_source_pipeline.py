@@ -4,6 +4,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 import source_pipeline as pipe
 import release_state as release
+from unittest.mock import patch
 
 class SourceTests(unittest.TestCase):
     def setUp(self):
@@ -74,6 +75,21 @@ class SourceTests(unittest.TestCase):
         manifest=json.loads((self.plugin/'library/catalog.json').read_text(encoding='utf-8'))
         row=manifest['sources'][0];self.assertEqual(row['status'],'historical')
         self.assertIn('standalone phrase',(self.plugin/row['material']).read_text(encoding='utf-8'))
+    def test_temporarily_unreadable_source_preserves_prior_evidence_as_history(self):
+        original=self.source('ai-knowledge','topic.md','# Readable prior evidence')
+        pipe.build(self.cfg,self.stage)
+        shutil.copytree(self.stage,Path(self.cfg['distribution']))
+        read_bytes=Path.read_bytes
+        def unavailable(path):
+            if path==original:raise OSError('cloud file temporarily unavailable')
+            return read_bytes(path)
+        with patch.object(Path,'read_bytes',unavailable):
+            result,rows=pipe.build(self.cfg,self.stage)
+        self.assertEqual(rows[0]['status'],'pending')
+        self.assertIsNone(rows[0]['sha256'])
+        manifest=json.loads((self.plugin/'library/catalog.json').read_text(encoding='utf-8'))
+        retained=next(r for r in manifest['sources'] if r['status']=='historical')
+        self.assertIn('prior evidence',(self.plugin/retained['material']).read_text(encoding='utf-8'))
     def test_relative_links_resolve_to_bundled_evidence(self):
         self.source('ai-knowledge','report.md','# Report\n[Query](queries/example.sql)')
         self.source('ai-knowledge','queries/example.sql','SELECT 1')

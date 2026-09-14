@@ -69,6 +69,19 @@ class SyncTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'hash mismatch'):
             sync.load_snapshot(path)
 
+    def test_renamed_repository_keeps_old_snapshots_and_rejects_unrelated_repos(self):
+        path=self.snapshot()
+        value=json.loads(path.read_text())
+        self.assertEqual(value['repository'],'zhiqiangliu0920/collart-data-plugin')
+        sync.load_snapshot(path)
+        value['repository']='zhiqiangliu0920/collart-ai-knowledge'
+        sync.write_json(path,value)
+        sync.load_snapshot(path)
+        value['repository']='another-owner/collart-data-plugin'
+        sync.write_json(path,value)
+        with self.assertRaisesRegex(ValueError,'Unexpected repository'):
+            sync.load_snapshot(path)
+
     def test_local_edits_block_update_without_touching_content(self):
         path=self.root/(sync.PLUGIN+'knowledge/INDEX.md')
         path.write_text('unpublished work')

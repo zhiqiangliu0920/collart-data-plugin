@@ -1,0 +1,44 @@
+# 飞书手动加入大R
+
+更新日期：2026-08-12
+
+## 适用工作流
+
+- n8n：`飞书大R审核后自动写入`
+- 工作流 ID：`CinmK6RkXhmYoNto`
+- 目标群：`{LOCAL_MESSAGING_CONTEXT}`
+
+## 输入格式
+
+手动文本添加必须同时包含平台和标准 UUID：
+
+```text
+collart-android {USER_ID} @Data AI
+collart_android {USER_ID} @Data AI
+collart android {USER_ID} @Data AI
+vidart-ios {USER_ID} @Data AI
+collart-web {USER_ID} @Data AI
+```
+
+仅接受以下平台：
+
+- `collart-android`
+- `vidart-ios`
+- `collart-web`
+
+平台名兼容连字符、下划线和空格写法，并统一转换为以上标准值。例如
+`collart_android`、`collart android` 均转换为 `collart-android`。
+
+UUID 必须满足 `8-4-4-4-12` 的十六进制格式。格式无效时静默结束，不写 Sheet、
+不调用 Cloud Run。
+
+## 执行逻辑
+
+1. 手动文本分支不查询 Android、iOS、Web 高价值用户表。
+2. 读取大R主 Sheet，按 `user_id` 去重。
+3. 新用户直接写入大R主 Sheet，缺失画像字段留空，`user_level=manual`。
+4. Sheet 写入成功后调用 Cloud Run，来源标记为 `feishu_manual_big_r`。
+5. Cloud Run 成功后在飞书群回复处理结果。
+6. 已存在的 ID 不重复写入，也不重复调用 Cloud Run。
+
+飞书互动卡片的“加入大R / 忽略”仍沿用原高价值表查询流程，不受该手动分支影响。

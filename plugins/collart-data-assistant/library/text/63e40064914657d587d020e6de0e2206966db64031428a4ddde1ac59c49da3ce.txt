@@ -1,0 +1,65 @@
+# aidata2025.dws.dws_oper_user_sub_revenue_df · 安卓用户粒度 收入表
+
+> 业务状态：historical；复核：reviewed_static。以下完整字段定义来自 2026-05-21 导出，未经本次生产验证。
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvhv4t7KBsLB`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['unassigned']
+- 原登记粒度：未填写
+- 原登记主键：未填写
+- 更新频率：T+1 8:30
+- 原登记层级：DWS汇总层
+- 主题：收入成本主题
+- 子主题：用户粒度收入
+- 负责人：恬静
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `order_date` | date | 时间 | 是 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `event_date` | date | 时间 | 是 | 日期 |
+| `user_pseudo_id` | string | 主键 | 是 | 用户id，firebase分配的唯一id |
+| `app_name` | string | 维度 | 是 | 产品名 |
+| `package_name` | string | 主键 | 是 | 包名 |
+| `country` | string | 维度 | 是 | 国家 |
+| `last_subscribe_type` | string | 维度 | 否 | 文本属性字段，用于补充业务描述、分类或标签信息。 |
+| `order_num` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `first_subscribe_date` | date | 时间 | 是 | 用于记录事件发生、数据生成或分区时间的时间字段。 |
+| `last_subscribe_date` | date | 时间 | 是 | 最近订阅日期 |
+| `user_id` | string | 主键 | 是 | 用户id，内部平台分配的唯一id |
+| `is_new` | boolean | 维度 | 否 | 是否新老用户，true代表新用户、false代表老用户 |
+| `is_active` | boolean | 维度 | 否 | 布尔标记字段，用于表示是/否状态。 |
+| `traffic_src_type` | string | 维度 | 否 | 投放渠道类型 |
+| `app_version` | string | 维度 | 否 | app客户端版本号 |
+| `total_revenue_today` | float | 指标 | 是 | 收入数值字段。 |
+| `resub_revenue_today` | float | 指标 | 是 | 收入数值字段。 |
+| `new_revenue_today` | float | 指标 | 是 | 首次订阅收入 |
+| `trial_conver_revenue_today` | float | 指标 | 是 | 收入数值字段。 |
+| `total_revenue_all` | float | 指标 | 是 | 收入数值字段。 |
+| `resub_revenue_all` | float | 指标 | 是 | 收入数值字段。 |
+| `new_revenue_all` | float | 指标 | 是 | 首次订阅收入 |
+| `trial_conver_revenue_all` | float | 指标 | 是 | 收入数值字段。 |
+| `new_order_num` | int | 指标 | 是 | 首次订阅订单数 |
+| `renew_order_num` | int | 指标 | 是 | 计数指标字段，用于统计人数、次数或记录量。 |
+| `credit_revenue_today` | float | 指标 | 是 | 点数包收入 |
+| `credit_revenue_all` | float | 指标 | 是 | 点数包收入 |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | aidata2025.dwd.dwd_oper_sub_order_revenue_df |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | 谷歌商店 / 服务端 / 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m10!1m4!4m3!1saidata2025!2sdwd!3sdwd_oper_delivery_adjust_user_di!1m4!4m3!1saidata2025!2sdws!3sdws_oper_user_sub_revenue_df) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fdws%2Fdaily%2Fh_dws_oper_user_sub_revenue_df.sqlx?project=aidata2025) |
+| 看板 | - |
+
+### 使用限制
+
+- 行粒度未填写；聚合前需确认唯一键及重复记录处理。
+- 主键未填写；字段角色中的“主键”不等于已验证唯一约束。
+- 部分字段说明为导出模板的通用解释，不是已确认业务口径；金额单位、去重键、观察窗口仍需业务证据。

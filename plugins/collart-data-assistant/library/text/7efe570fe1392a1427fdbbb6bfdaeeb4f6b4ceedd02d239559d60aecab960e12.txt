@@ -1,0 +1,8 @@
+# 仓库加工来源与依赖
+
+依据：2026-05-21 字典导出的显式上游。缺省项目的二段表名保持原样；未声明的依赖不推断。以下边仅表示历史登记关系，是否仍在调度需核对。当前口径入口见各表正文。
+
+| 下游 | 原登记上游 | 加工任务 |
+|---|---|---|
+| [aidata2025.ads_collart.ads_high_value_user_Info](../tables/warehouse_metadata_gaps.md) | 埋点表 aidata2025.dwd.dwd_oper_user_collart_di aidata2025.ai_service.collart_template_data aidata2025.ai_service.ai_service_detail aidata2025.ods.ods_ai_request_info_1d | ads_high_v…info.sqlx – Code – Dataform – BigQuery – AIDATA – Google Cloud 控制台 |
+| [aidata2025.ads_collart.ads_high_value_user_prompt_info](../tables/warehouse_metadata_gaps.md) | aidata2025.ads_collart.ads_high_value_user_Info aidata2025.ods.ods_ai_request_info_1d_with_id | ads_high_v…info.sqlx – Code – Dataform – BigQuery – AIDATA – Google Cloud 控制台 |

@@ -1,0 +1,46 @@
+# aidata2025.ads.ads_template_recommend_foru_1d · collart android模板推荐（FORU)
+
+> 业务状态：historical；复核：reviewed_static。以下完整字段定义来自 2026-05-21 导出，未经本次生产验证。
+
+## 2026-05-21 字典依据
+
+来源：飞书多维表格导出；生成时间 `2026-05-21T01:15:16+08:00`；记录标识 `recvh8DkL6sq7W`。这是原始元数据日期，不是当前生效日期。
+
+- 原产品标记：['collart android']
+- 原登记粒度：每个用户一行
+- 原登记主键：user_pseudo_Id
+- 更新频率：T+1 8:00
+- 原登记层级：ADS应用层
+- 主题：内容主题
+- 子主题：模板推荐
+- 负责人：恬静
+
+### 字段字典（原日期）
+
+| 字段名 | 类型 | 字段角色 | 是否核心字段 | 说明 |
+|---|---|---|---|---|
+| `user_pseudo_id` | string | 主键 | 否 | 用户id，firebase分配的唯一id |
+| `user_tag` | string | 维度 | 否 | 用户tag |
+| `display_name` | string | 维度 | 否 | 模板显示名 |
+| `template_type` | string | 维度 | 否 | 模板类型 |
+| `country_code` | string | 维度 | 否 | 国家代码 |
+| `templates` | string | 维度 | 否 | 推荐的模板id列表 |
+| `modules` | string | 维度 | 否 | 推荐的模块id列表 |
+| `template_names` | string | 维度 | 否 | 推荐的模板名称列表 |
+| `module_names` | string | 维度 | 否 | 推荐的模块名称列表 |
+| `platform` | string | 维度 | 否 | 产品名 |
+
+### 上游与来源
+
+| 项目 | 内容 |
+|---|---|
+| 上层表 | - |
+| 是否需要展示血缘 | 否 |
+| 数据来源 | 客户端埋点 |
+| 数据表地址 | [BigQuery](https://console.cloud.google.com/bigquery?project=aidata2025&ws=!1m5!1m4!4m3!1saidata2025!2sads!3sads_template_recommend_foru_1d) |
+| 任务地址 | [任务](https://console.cloud.google.com/bigquery/dataform/locations/us-east1/repositories/aidata/workspaces/script/files/definitions%2Fads%2Fdaily%2Fh_ads_template_recommend_foru_1d.sqlx?project=aidata2025) |
+| 看板 | collart android模板推荐 |
+
+### 使用限制
+
+- 仅有历史字典依据；当前表存在性、分区、写入状态与字段变更尚未重新验证。

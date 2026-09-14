@@ -4,17 +4,17 @@ title: "付费转化与收入口径"
 project: "shared"
 kind: "metric"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["metrics", "revenue", "ads-redlines-review-954bdf4e17", "fashion-orders-review-7afb4b3f3b", "team-shared-payment-evidence", "cursor-revenue-subscription-md"]
+sources: ["metrics", "revenue", "review-20260914-ca27ec86b3b2", "review-20260914-626470cd87d2", "team-shared-payment-evidence", "cursor-revenue-subscription-md", "review-20260914-41b25158a11f"]
 tags: ["付费", "订阅", "收入", "conversion", "Stripe", "purchase_revenue", "ROAS"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["ads-redlines", "fashion-orders"]
+historical_sources: ["ads-redlines", "fashion-orders", "ads-redlines-review-954bdf4e17", "fashion-orders-review-7afb4b3f3b"]
 ---
 
 # 付费转化与收入口径
@@ -44,7 +44,7 @@ Web/Fashion 和移动端俄罗斯支付资料推荐 Stripe 或 active.revenue；
 
 ## 来源与状态
 
-来源摘录：[metrics](../../provenance/excerpts/metrics.txt)、[revenue](../../provenance/excerpts/revenue.txt)、[ads-redlines](../../library/text/954bdf4e178b2f0cb89369eeeed99c2f3c2ac468f427db24fe151ee596c242a0.txt)、[fashion-orders](../../library/text/7afb4b3f3b384566d72fcd095e7ae0ed518420afe66f3c8027447141d8ffe1bb.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
+来源摘录：[metrics](../../provenance/excerpts/metrics.txt)、[revenue](../../provenance/excerpts/revenue.txt)、[ads-redlines](../../library/text/0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104.txt)、[fashion-orders](../../library/text/1a7862e647a0bfca563564f79432fb2282f01e4bdf214f763575a9cd8816637f.txt)。原始路径、定位和哈希见 [来源清单](../../provenance/sources.json)。本条是 2026-09-12 的资料整理，未进行本次生产查询或业务负责人确认；当前可用性与未明确的细节需继续核验。
 
 ## 合并的业务细节
 
@@ -69,9 +69,9 @@ Web 用户收入可从 `pubdata2025.dwd.dwd_cdct_revenue_stripe_di` 核对；不
 
 既有资料曾记录 `dwd_cdct_orders_revenue_hi` 为 0 行；这不是本次实时检查，不能假定它可补当天数据。
 
-落表：Android/iOS `ads_oper_user_active_di.revenue.purchase_revenue` 与 `credit_revenue` 叠加 RUB；**四端 profile 终身收入都是 `SUM(active.revenue)`**，不再回扫 DWS、不再 orphan 二次叠加。country/daily 仍读 `ads_ad_sub`（用户粒度与国家层允许对不齐）。
+落表：Android/iOS `ads_oper_user_active_di.revenue.purchase_revenue` 与 `credit_revenue` 叠加 RUB；**四端 profile 终身收入都是 `SUM(active.revenue)`**，不再回扫 DWS、不再 orphan 二次叠加。常规 country/daily 按 ADS 红线读 `ads_ad_sub`；Fashion 的订单 → active → attr → country/daily 为项目专属链路，不能用通用说明覆盖。用户粒度与国家层允许存在差异。
 
-金额：Stripe 用户侧美元（USD=`amount`，非 USD=`revneue+fee`）。`revneue` 是实收；`pending` 的含义依赖具体支付源和状态机，不能仅凭该字符串判断付款成功或失败。
+金额：下列为历史用户侧毛额换算（USD=`amount`，非 USD=`revneue+fee`），不能覆盖所有分析。当前 Web 用户价值分层采用累计实收美元 `revneue`，见[分层定义](../collart_web/user-value-tiers.md)。`revneue` 是实收；`pending` 的含义依赖具体支付源和状态机，不能仅凭该字符串判断付款成功或失败。
 
 ### 订单表 status 口径（历史）
 
@@ -84,9 +84,11 @@ Web 用户收入可从 `pubdata2025.dwd.dwd_cdct_revenue_stripe_di` 核对；不
 - `purchase_revenue = new + resub + trial_conver + credit`；**勿 purchase+credit 双计**。
 - 服务端分类人数可读 `revenue.*_uv`；类别可能重叠，实际总付费人数须按窗口内成功支付用户去重；埋点转化人数用 `subscription.*`。
 
-### country 收入 vs ads_ad_sub_revenue_1h
+### country 收入差异（历史样本）
 
-- country 层订阅三类（new/resub/credit）来自 **DWS**，不是 `ads_ad_sub_revenue_1h`。
+以下 DWS 来源说法与现有 ADS 红线冲突，只保留为旧样本背景，不是当前默认选表。当前按产品、层级和生效范围选择来源，Fashion 单独按专属链路；复现旧报告才核对其原 SQL。
+
+- 旧资料将 country 订阅三类标为 DWS 来源；不能泛化到当前四端 country。
 - 原历史样本中，国家×日仅约 15% 键与 `ads_ad_sub_revenue_1h` 完全对齐；日级 `new_revenue` 可对齐，国家拆分不完全等价。
 - 2026-08-10 起 ADS 层 `new_revenue` 已扣点数包，可与旧表直比。
 
@@ -119,3 +121,8 @@ Web 用户收入可从 `pubdata2025.dwd.dwd_cdct_revenue_stripe_di` 核对；不
 
 
 来源快照：[cursor-revenue-subscription-md](../../provenance/excerpts/cursor-revenue-subscription-md.txt)。
+
+## 2026-09-14 对齐依据
+
+- [1company/analysis_playbooks/collart_ads_redlines.md](../../library/text/0b81b22d1f69db06c82072ba3fd281d4a0c50d057038b6543cf9c82aa1ba6104.txt)
+- [collart_web/indicators/user_value_tier.md](../../library/text/0c2685cfa8e32c90ab56b90f8cf22cb5c2f4d4369567f927f2e705130879dbf2.txt)

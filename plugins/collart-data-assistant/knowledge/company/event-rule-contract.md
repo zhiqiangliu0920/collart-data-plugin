@@ -4,17 +4,17 @@ title: "四端事件指标规则与宽表关系"
 project: "company"
 kind: "event"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["full-2ce0fdb15495c7bc-review-00d8e8ef02", "full-199b51ce0dcab10c-review-d5bb4ac56d"]
+sources: ["review-20260914-2cd993415a48", "review-20260914-77dd0384efff"]
 tags: ["company", "四端事件指标规则与宽表关系"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["full-2ce0fdb15495c7bc", "full-199b51ce0dcab10c"]
+historical_sources: ["full-2ce0fdb15495c7bc", "full-199b51ce0dcab10c", "full-2ce0fdb15495c7bc-review-00d8e8ef02", "full-199b51ce0dcab10c-review-d5bb4ac56d"]
 ---
 
 # 四端事件指标规则与宽表关系
@@ -25,7 +25,7 @@ historical_sources: ["full-2ce0fdb15495c7bc", "full-199b51ce0dcab10c"]
 
 ## 来源与状态
 
-- [1company/tables/ads_dim_metric_rule.md](../../library/text/cf2e1ab194e209ff9a1f349aa9ce58310dbdc8ca4315162417692541d431a90e.txt)
-- [1company/analysis_playbooks/event_metric_from_rule.md](../../library/text/d5bb4ac56d7af15a3ec8287fbcffd730e92d761566d7645b61da747c74e0159a.txt)
+- [1company/tables/ads_dim_metric_rule.md](../../library/text/0e25237cb6cc34df9058cdc123c8a520eb6247f4ce4f0d0250f18c5bcc401e3f.txt)
+- [1company/analysis_playbooks/event_metric_from_rule.md](../../library/text/b28a72492625b0be076c71fabed4e9f212e7677ed6630f9adb9485ea28e55195.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。

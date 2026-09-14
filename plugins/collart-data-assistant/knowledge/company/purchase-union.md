@@ -4,17 +4,17 @@ title: "订阅与点数包购买人数并集"
 project: "company"
 kind: "metric"
 status: "documented"
-updated_at: "2026-09-12"
+updated_at: "2026-09-14"
 verified_at: null
 review_after: "2026-10-12"
 owner: null
 verified_by: null
 effective_from: null
-sources: ["full-1fd6dc1741d54dde-review-1afb72cc7d"]
+sources: ["review-20260914-83b3b2c6343a"]
 tags: ["company", "订阅与点数包购买人数并集"]
 supersedes: []
 verification_evidence: []
-historical_sources: ["full-1fd6dc1741d54dde"]
+historical_sources: ["full-1fd6dc1741d54dde", "full-1fd6dc1741d54dde-review-1afb72cc7d"]
 ---
 
 # 订阅与点数包购买人数并集
@@ -25,6 +25,6 @@ Android、iOS、Web、Fashion 的来源不同。资料说明俄罗斯 RUB Stripe
 
 ## 来源与状态
 
-- [1company/indicators/subscription_purchase.md](../../library/text/1afb72cc7dfbf5c6f188b8e1e4e26b3c8d1d1504c5a55644708add2c041bb83a.txt)
+- [1company/indicators/subscription_purchase.md](../../library/text/06f8ed14451fd932afccaab126e4ae18fed2f0d64d51dd6843753925ee2a3302.txt)
 
 以上是原文整理，documented 不表示已验证当前业务事实。

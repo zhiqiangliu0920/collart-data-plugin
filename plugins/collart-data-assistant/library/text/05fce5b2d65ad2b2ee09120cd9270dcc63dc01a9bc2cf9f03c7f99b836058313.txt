@@ -1,0 +1,19 @@
+# 会话无交互率与渠道漏斗诊断
+
+来源：误放在 Android 历史目录中的 `bounce_analysis.py`、`bounce_analysis_v2.py`、`bounce_india.py`、`compare_countries.py`、`compare_all_countries.py`、`temp_query.py`。这些查询使用 Web `app_info.id IS NULL`，原固定数据日为 2026-03-31。
+
+## 会话无交互率
+
+会话键是 `user_pseudo_id × ga_session_id`。旧版 v1 定义“1 次 page_view 且没有 click/generate/vip_show”；v2 定义“不出现明确核心交互”，允许多次浏览。两者指标不同，统一称自定义会话无交互率，不宣称等同 GA4 跳出率。
+
+核心交互候选包括 `explore_content_click`、`feature_content_click`、`login_success`、`vip_show`、`vip_subscribe`、`vip_subscribe_succeed`、`credit_pack_purchase` 及 `*generate_click`。这是历史事件集，新增功能上线后应核对事件字典；缺少 session_id 的事件单独统计，不能全部归成同一会话。
+
+## 渠道和国家比较
+
+旧脚本按 `LOWER(traffic_source.name) LIKE '%fb-%'` 选 FB，并比较 Turkey / Türkiye、India、United States。此命名匹配只是历史取样，正式渠道口径见 [渠道归因](../indicators/channel_attribution.md)。Web/Fashion 共用埋点时还需按当前业务归属过滤，`app_info.id IS NULL` 不足以独立识别 Web 主站。
+
+先在用户/会话粒度形成登录、模板点击、生成点击、VIP 展示、成功事件标记，再汇总国家分布。原脚本只计算同窗出现人数；模板 → 生成、生成 → VIP 的人数比值没有时间顺序与人群交集约束，不能称严格漏斗转化。
+
+严格路径必须同一用户/会话按事件时间依次满足。支付按钮和购买事件用于行为诊断，实付要与订单真值核对。未登录不能等同低质量流量，某国转化低也不能仅凭该结果做因果归因。
+
+原执行壳会激活 gcloud 身份、写/删临时 query.sql，已停止作为业务知识输入；物理原件仍保留，整理不执行这些操作。

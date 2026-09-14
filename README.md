@@ -1,6 +1,10 @@
-# Collart AI 分析知识库
+# Collart Data Plugin
 
-公司内部的知识与 Codex 插件，仓库保持 Private。原始资料继续在各自目录维护：
+GitHub 分发地址：[zhiqiangliu0920/collart-data-plugin](https://github.com/zhiqiangliu0920/collart-data-plugin)。同事从该仓库下载或更新完整插件；安装入口见 [INSTALL.md](INSTALL.md)。
+
+使用约定：只读数据，禁止写入/修改/删除表；原始埋点仅查询最近 30 天。安装前阅读 [数据访问约定](plugins/collart-data-assistant/docs/data-access-policy.md)，连接账号的数据库只读权限需另行配置。
+
+面向 Collart 团队的知识与 Codex 插件。维护者于 2026-09-14 确认直接同步到当前 Public 仓库；仓库公开不授予任何数据库访问权限。原始资料继续在各自目录维护：
 
 `ai-knowledge + cursor_summary + codex_summary → collart-data-plugin`
 

@@ -1,59 +1,9 @@
 [
   {
-    "source": "ai-knowledge:0global/skills/collart-event-metric-sync/SKILL.md",
-    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
-    "issues": [
-      "存在失效相对链接"
-    ]
-  },
-  {
-    "source": "ai-knowledge:0global/sql_standards/bq_advanced_tips.md",
-    "reason": "保留历史资料；按原日期和适用范围使用，不能视为当前口径",
-    "issues": [
-      "学习摘记中的固定加速倍数、免费额度、时间旅行保留期与函数示例未独立核验；作为 2026-04-02 历史学习资料。"
-    ]
-  },
-  {
-    "source": "ai-knowledge:CHANGELOG.md",
-    "reason": "编码或表身份需人工确认",
-    "issues": [
-      "正文存在替换字符，待核对编码原件"
-    ]
-  },
-  {
-    "source": "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_tempalte_data_android_BigQuery_–_AIDATA_–_Google_Cloud_控制台.md",
-    "reason": "编码或表身份需人工确认",
-    "issues": [
-      "文件名与标题中的表名不一致：不自动合并口径"
-    ]
-  },
-  {
     "source": "ai-knowledge:collart_android/analysis_playbooks/big_r_manual_entry.md",
-    "reason": "含个人标识或邮箱：整份待脱敏",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
     "issues": [
       "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/analysis_playbooks/template_analysis_daily.py",
-    "reason": "疑似凭证内容：整份隔离",
-    "issues": [
-      "疑似凭证内容：整份隔离",
-      "脚本包含疑似凭证与飞书发送调用；保留本机原文，仅登记用途/副作用，禁止发布或执行。"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/indicators/conversion.md",
-    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
-    "issues": [
-      "订阅事件转化不能代表 purchase 并集；旧 session_start 分母与本项目 DAU 文档冲突，30 点赠送为无生效日期旧描述。"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/indicators/dau.md",
-    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
-    "issues": [
-      "正文是 2026-03 旧 ADS/DWD 方法，虽已反对 session_start，但关联 SQL 日期写死且与新 ADS 路由不同；保留历史方法，当前入口指向新 ADS 与 is_active。"
     ]
   },
   {
@@ -64,102 +14,18 @@
     ]
   },
   {
-    "source": "ai-knowledge:collart_android/indicators/retention.md",
-    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
-    "issues": [
-      "旧示例只有 retained_users 且缺少完整首日分母；首日活跃与新增 cohort 未区分，不直接作为现网 N 日留存公式。"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bounce_analysis.py",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bounce_analysis_v2.py",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bounce_india.py",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bq_check_missing_temp.py",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/check_missing_temp_v2.py",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/check_missing_temp_v3.py",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/compare_all_countries.py",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/compare_countries.py",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/daily_missing_temp_analysis.py",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/sql-snippets/archive/2026-05/temp_query.py",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_android/tables/storytemplate-10a27.analytics_232977577.events_.md",
-    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
-    "issues": [
-      "存在失效相对链接"
-    ]
-  },
-  {
     "source": "ai-knowledge:collart_fashion/indicators/fashion_new_user.md",
     "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
     "issues": [
+      "存在失效相对链接",
       "保留 2026-07-23 新人 cohort 定义；orders 关联只作旧诊断示例，不作为当前收入/成功付费来源，不能跨产品回溯归属。"
     ]
   },
   {
-    "source": "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_user_collartweb_di.md",
-    "reason": "编码或表身份需人工确认",
+    "source": "ai-knowledge:collart_fashion/tables/README.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
     "issues": [
-      "文件名与标题中的表名不一致：不自动合并口径",
-      "文件名指向 ADS，但正文标题和上游描述指向 DWD；不能确定是错名还是错正文，保留原件，禁止自动合并成一张表。"
+      "存在失效相对链接"
     ]
   },
   {
@@ -177,17 +43,17 @@
     ]
   },
   {
-    "source": "ai-knowledge:collart_web/indicators/conversion.md",
-    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
-    "issues": [
-      "正文混合订阅事件、Stripe 付费与 session_start 分母；须区分同窗支付转化、首日购买并集和事件漏斗。"
-    ]
-  },
-  {
     "source": "ai-knowledge:collart_web/indicators/dau.md",
     "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
     "issues": [
-      "session_start UV 为历史事件指标；新 active 可有仅收入骨架行，当前 DAU 需要 is_active 与产品范围，旧定义不能直接替代。"
+      "存在失效相对链接"
+    ]
+  },
+  {
+    "source": "ai-knowledge:collart_web/indicators/fashion_vs_main_site_user.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
+    "issues": [
+      "存在失效相对链接"
     ]
   },
   {
@@ -205,61 +71,10 @@
     ]
   },
   {
-    "source": "ai-knowledge:collart_web/indicators/retention.md",
-    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
-    "issues": [
-      "旧 session_start 活跃回访口径未区分新增留存和活跃留存；示例窗口有限，不保证 cohort 首次发现或完整 N 日观察。"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_web/indicators/user_segmentation.md",
-    "reason": "保留历史资料；按原日期和适用范围使用，不能视为当前口径",
-    "issues": [
-      "正文含异常控制字符，保留原文待找回来源",
-      "金额阈值丢失且含控制字符；与 user_value_tier 的历史阈值不一致，不从残留 SQL 推断当前大R标准。"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_web/indicators/user_value_tier.md",
-    "reason": "保留历史资料；按原日期和适用范围使用，不能视为当前口径",
-    "issues": [
-      "正文含异常控制字符，保留原文待找回来源",
-      "头部收入源已改 Stripe，但公式和末尾仍要求 orders；金额阈值损坏，不能继续作为当前分层定义。"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_web/product/core_metrics.md",
+    "source": "ai-knowledge:collart_web/lineage/warehouse_sources.md",
     "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
     "issues": [
       "存在失效相对链接"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_web/sql-snippets/archive/2026-05/user_ai_service_start_full.sql",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_web/sql-snippets/archive/2026-05/user_ai_service_success_full.sql",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_web/sql-snippets/archive/2026-05/user_ai_service_success_test.sql",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_web/sql-snippets/user_basic_info_C28B8ACB_20260623.sql",
-    "reason": "含个人标识或邮箱：整份待脱敏",
-    "issues": [
-      "含个人标识或邮箱：整份待脱敏"
     ]
   },
   {
@@ -270,6 +85,13 @@
     ]
   },
   {
+    "source": "ai-knowledge:collart_web/sql_presets/profile_lookup_by_user_id.sql",
+    "reason": "含个人标识或邮箱：整份待脱敏",
+    "issues": [
+      "含个人标识或邮箱：整份待脱敏"
+    ]
+  },
+  {
     "source": "ai-knowledge:collart_web/sql_presets/user_grain_revenue_from_stripe.sql",
     "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
     "issues": [
@@ -277,18 +99,10 @@
     ]
   },
   {
-    "source": "ai-knowledge:collart_web/tables/aidata2025.ads_collart.ads_oper_user_collartweb_di.md",
-    "reason": "编码或表身份需人工确认",
+    "source": "ai-knowledge:collart_web/tables/README.md",
+    "reason": "完整正文收录；静态文档证据，未重新验证业务事实",
     "issues": [
-      "文件名与标题中的表名不一致：不自动合并口径",
-      "文件名指向 ADS，但正文标题和上游描述指向 DWD；不能确定是错名还是错正文，保留原件，禁止自动合并成一张表。"
-    ]
-  },
-  {
-    "source": "ai-knowledge:collart_web/tables/dwd_oper_user_collartweb_di.md",
-    "reason": "编码或表身份需人工确认",
-    "issues": [
-      "正文存在替换字符，待核对编码原件"
+      "存在失效相对链接"
     ]
   }
 ]

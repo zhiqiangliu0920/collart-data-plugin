@@ -1,0 +1,5 @@
+# 公司看板数据流
+
+`pubdata2025.ads.ads_atlasv_basic_data_daily_1h` → 日期/团队/产品聚合 → product/group/line/company 四层 → `daily_metric` → 看板。
+
+公共费用只在 company 层附加；源留存以新增人数加权。`sync_run` 记录写入批次，不是业务事实表。对账从同一源聚合生成预期，按同一业务键比较目标；原脚本只查 dev 环境和最新日期。见 [聚合与对账方法](../analysis_playbooks/dashboard_reconciliation.md)。来源窗口：2026-05-23～08-21。

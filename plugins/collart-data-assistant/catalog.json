@@ -7,15 +7,15 @@
       "project": "collart_android",
       "kind": "metric",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-b5bb84b662377244-review-ec7e5e69e4",
-        "full-7190043e9eae148f-review-954bdf4e17"
+        "review-20260914-3dd331efb6c6",
+        "review-20260914-ca27ec86b3b2"
       ],
       "tags": [
         "collart_android",
@@ -25,10 +25,90 @@
       "verification_evidence": [],
       "historical_sources": [
         "full-b5bb84b662377244",
-        "full-7190043e9eae148f"
+        "full-7190043e9eae148f",
+        "full-b5bb84b662377244-review-ec7e5e69e4",
+        "full-7190043e9eae148f-review-954bdf4e17"
       ],
       "path": "knowledge/collart_android/dau-source-selection.md",
-      "sha256": "6a4f33032734357d75f01c0c694af854c0995ced453731ca44128b69a9cab74a"
+      "sha256": "a4bac4df9b738c2acdd272588e28cb6d7d5762e26bedb56b4d37dd8b78e5d857"
+    },
+    {
+      "id": "collart-android-first-subscription-diagnosis",
+      "title": "Android 新增 cohort 与首付诊断",
+      "project": "collart_android",
+      "kind": "playbook",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "review-20260914-4497c62de285"
+      ],
+      "tags": [
+        "首订",
+        "首付",
+        "新增",
+        "cohort"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_android/first-subscription-diagnosis.md",
+      "sha256": "59673dd46797921d093c6560feb065f626056d20b944192bdc140ab6fe06fc7f"
+    },
+    {
+      "id": "collart-android-template-coverage-diagnosis",
+      "title": "Android 模板覆盖与任务成功率",
+      "project": "collart_android",
+      "kind": "playbook",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "review-20260914-1dc20cad9661"
+      ],
+      "tags": [
+        "模板",
+        "覆盖率",
+        "任务",
+        "成功率"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_android/template-coverage-diagnosis.md",
+      "sha256": "1c7fd6b52c16de67fc70f08fe793f01d58a0c2f7031c98c7a51a1b9dd24c09c8"
+    },
+    {
+      "id": "collart-fashion-cohort-dashboard-analysis",
+      "title": "Fashion 新人订单与看板粒度",
+      "project": "collart_fashion",
+      "kind": "playbook",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "review-20260914-363a700114de"
+      ],
+      "tags": [
+        "Fashion",
+        "cohort",
+        "看板",
+        "支付"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_fashion/cohort-dashboard-analysis.md",
+      "sha256": "8431dd401bb2dacbfbfdf0fb3e13f6245bf2e4926ed2805b3e4f65fd27593e3a"
     },
     {
       "id": "collart-fashion-product-funnel",
@@ -36,15 +116,15 @@
       "project": "collart_fashion",
       "kind": "business",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-cc76b025aa572d07-review-dae7423731",
-        "full-da2c0238684d2dd6-review-061a38c432"
+        "review-20260914-d581789d37f0",
+        "review-20260914-a96d05736afe"
       ],
       "tags": [
         "collart_fashion",
@@ -54,10 +134,12 @@
       "verification_evidence": [],
       "historical_sources": [
         "full-cc76b025aa572d07",
-        "full-da2c0238684d2dd6"
+        "full-da2c0238684d2dd6",
+        "full-cc76b025aa572d07-review-dae7423731",
+        "full-da2c0238684d2dd6-review-061a38c432"
       ],
       "path": "knowledge/collart_fashion/product-funnel.md",
-      "sha256": "42feb7218268fdcab2503cc3a96da0c98fb815626ce65847c6af076e1f9d1ad6"
+      "sha256": "47fc4baa57529734a88431937f58fae4a10e99e497b7214937f15d847b4a16a7"
     },
     {
       "id": "collart_fashion-revenue-boundary",
@@ -65,18 +147,18 @@
       "project": "collart_fashion",
       "kind": "table",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "fashion-orders-review-7afb4b3f3b",
+        "review-20260914-626470cd87d2",
         "revenue",
-        "ads-redlines-review-954bdf4e17",
+        "review-20260914-ca27ec86b3b2",
         "team-collart_fashion-revenue-boundary",
-        "review-979740ccfe320f48"
+        "review-20260914-86810c962658"
       ],
       "tags": [
         "Fashion",
@@ -90,10 +172,13 @@
       "verification_evidence": [],
       "historical_sources": [
         "fashion-orders",
-        "ads-redlines"
+        "ads-redlines",
+        "ads-redlines-review-954bdf4e17",
+        "fashion-orders-review-7afb4b3f3b",
+        "review-979740ccfe320f48"
       ],
       "path": "knowledge/collart_fashion/revenue-boundary.md",
-      "sha256": "9a683d042fa9a7d205c74e2ee6c412710002da642583bb6bb9e6f0b972679bba"
+      "sha256": "36bff1b9882cd735935a5c4dee1849164fe7c2af7b74d94b4ba76f47a0e8f74b"
     },
     {
       "id": "collart-fashion-warehouse-audit-20260909",
@@ -101,7 +186,7 @@
       "project": "collart_fashion",
       "kind": "quality",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
@@ -109,7 +194,7 @@
       "effective_from": null,
       "sources": [
         "full-a7cc6cb8e2b227f3",
-        "full-96da852291e4720b-review-7afb4b3f3b"
+        "review-20260914-626470cd87d2"
       ],
       "tags": [
         "collart_fashion",
@@ -118,10 +203,11 @@
       "supersedes": [],
       "verification_evidence": [],
       "historical_sources": [
-        "full-96da852291e4720b"
+        "full-96da852291e4720b",
+        "full-96da852291e4720b-review-7afb4b3f3b"
       ],
       "path": "knowledge/collart_fashion/warehouse-audit-20260909.md",
-      "sha256": "fbe72a6dc3508b18eedbe71b94be2f77ec7e6f1828c431aad91bd0dc673377c4"
+      "sha256": "0c1b6d2c59ad6f47d3f199fbc16e9050aefdcd0d8cbc324ab179008120c30cce"
     },
     {
       "id": "collart-ios-asa-history-boundary",
@@ -129,15 +215,15 @@
       "project": "collart_ios",
       "kind": "quality",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-873bfac8f8c2b8d2-review-2648364e66",
-        "full-7190043e9eae148f-review-954bdf4e17"
+        "review-20260914-400d1258ecd1",
+        "review-20260914-ca27ec86b3b2"
       ],
       "tags": [
         "collart_ios",
@@ -147,10 +233,12 @@
       "verification_evidence": [],
       "historical_sources": [
         "full-873bfac8f8c2b8d2",
-        "full-7190043e9eae148f"
+        "full-7190043e9eae148f",
+        "full-873bfac8f8c2b8d2-review-2648364e66",
+        "full-7190043e9eae148f-review-954bdf4e17"
       ],
       "path": "knowledge/collart_ios/asa-history-boundary.md",
-      "sha256": "0dabfb56f7ad5e1492b323f3ceb6daba505b58820f4b0c82ad8b123ac8955976"
+      "sha256": "618b792eff5e45ae08ff79cdc3d7a588f96f679fc2635ff042cbe5b058a43205"
     },
     {
       "id": "collart_web-identity",
@@ -158,15 +246,15 @@
       "project": "collart_web",
       "kind": "table",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
       "verified_by": null,
       "effective_from": "2026-09-07",
       "sources": [
-        "web-profile-review-be4e210655",
-        "ads-redlines-review-954bdf4e17",
+        "review-20260914-af2e0602c86f",
+        "review-20260914-ca27ec86b3b2",
         "team-collart_web-identity"
       ],
       "tags": [
@@ -181,10 +269,12 @@
       "verification_evidence": [],
       "historical_sources": [
         "web-profile",
-        "ads-redlines"
+        "ads-redlines",
+        "ads-redlines-review-954bdf4e17",
+        "web-profile-review-be4e210655"
       ],
       "path": "knowledge/collart_web/identity.md",
-      "sha256": "333b9d77ae240015c7c43000fd0fd968a817ff0bec8809a2cf759b1812c2613d"
+      "sha256": "eca356d5d50b14ce6ee7f0f8152d195d41f48301a698323f85097100e4d1cd0c"
     },
     {
       "id": "collart-web-revenue-report-20260912",
@@ -192,7 +282,7 @@
       "project": "collart_web",
       "kind": "playbook",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
@@ -208,7 +298,87 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/collart_web/revenue-report-20260912.md",
-      "sha256": "a4ffa8a5b2d0eb2274f475db8eaebd8725a8e09a1a89c808e12b1797b25157f1"
+      "sha256": "603c8a4e92802dc2dc65b3bf8ccd287559473e092d8f6b5acbdc7d1b0e161f5a"
+    },
+    {
+      "id": "collart-web-session-funnel-diagnosis",
+      "title": "Web 会话无交互率与严格漏斗",
+      "project": "collart_web",
+      "kind": "playbook",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "review-20260914-f1777a02415b"
+      ],
+      "tags": [
+        "会话",
+        "漏斗",
+        "跳出率"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_web/session-funnel-diagnosis.md",
+      "sha256": "ca982ce4e90f5011c0aa1ef1dbebca9f4c76c97c44a142ac0d7bb5113748f679"
+    },
+    {
+      "id": "collart-web-user-value-tiers",
+      "title": "Web 累计实收用户价值分层",
+      "project": "collart_web",
+      "kind": "metric",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": "2026-09-13",
+      "sources": [
+        "review-20260914-41b25158a11f"
+      ],
+      "tags": [
+        "用户分层",
+        "大R",
+        "lifetime",
+        "净收入",
+        "500",
+        "100",
+        "50"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/collart_web/user-value-tiers.md",
+      "sha256": "3518f26e7c574e3565d072388591b68b216ee9d5cd168d2aa0ddc3307759611a"
+    },
+    {
+      "id": "company-dashboard-pipeline",
+      "title": "公司看板数据流与对账边界",
+      "project": "company",
+      "kind": "lineage",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "review-20260914-538c697a64e8"
+      ],
+      "tags": [
+        "公司看板",
+        "血缘",
+        "加权",
+        "对账"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/company/dashboard-pipeline.md",
+      "sha256": "a4f71b5669da6ff29fc3413274eb1422d5c6c5f3472a6737fc4f6b8cef891ecf"
     },
     {
       "id": "company-event-rule-contract",
@@ -216,15 +386,15 @@
       "project": "company",
       "kind": "event",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-2ce0fdb15495c7bc-review-00d8e8ef02",
-        "full-199b51ce0dcab10c-review-d5bb4ac56d"
+        "review-20260914-2cd993415a48",
+        "review-20260914-77dd0384efff"
       ],
       "tags": [
         "company",
@@ -234,10 +404,38 @@
       "verification_evidence": [],
       "historical_sources": [
         "full-2ce0fdb15495c7bc",
-        "full-199b51ce0dcab10c"
+        "full-199b51ce0dcab10c",
+        "full-2ce0fdb15495c7bc-review-00d8e8ef02",
+        "full-199b51ce0dcab10c-review-d5bb4ac56d"
       ],
       "path": "knowledge/company/event-rule-contract.md",
-      "sha256": "c74ef4d16a58c0d419939cda7091c947f6607dc09050b41614c3d4f8524c2118"
+      "sha256": "d25ebe71861eac9ced6be1eae586e8e47583898bec58c78f178e00b81d1f2c38"
+    },
+    {
+      "id": "company-ga4-product-discovery",
+      "title": "新产品 GA4 摸底与诊断边界",
+      "project": "company",
+      "kind": "playbook",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "review-20260914-8dfb0b7e3a2a"
+      ],
+      "tags": [
+        "新产品",
+        "GA4",
+        "Vibedance",
+        "数据质量"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/company/ga4-product-discovery.md",
+      "sha256": "bb243b2f68dce67885e1b41c96470548b8577ea9f4ada35f2738a3db9a5c2c3a"
     },
     {
       "id": "company-purchase-union",
@@ -245,14 +443,14 @@
       "project": "company",
       "kind": "metric",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-1fd6dc1741d54dde-review-1afb72cc7d"
+        "review-20260914-83b3b2c6343a"
       ],
       "tags": [
         "company",
@@ -261,10 +459,11 @@
       "supersedes": [],
       "verification_evidence": [],
       "historical_sources": [
-        "full-1fd6dc1741d54dde"
+        "full-1fd6dc1741d54dde",
+        "full-1fd6dc1741d54dde-review-1afb72cc7d"
       ],
       "path": "knowledge/company/purchase-union.md",
-      "sha256": "1dbe9ea8651b7115416c320593258ae26ab3d8ba71fca8ba8573ae9920215070"
+      "sha256": "d92890cbe11d6530cd49114f6a3099c2c5cb942fd96e196a8e5666002ae9a66c"
     },
     {
       "id": "company-report-windows",
@@ -272,14 +471,14 @@
       "project": "company",
       "kind": "metric",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "full-eeebc9e82bd76fe2-review-ddff0eff3b"
+        "review-20260914-c4033e7e94c5"
       ],
       "tags": [
         "company",
@@ -288,10 +487,11 @@
       "supersedes": [],
       "verification_evidence": [],
       "historical_sources": [
-        "full-eeebc9e82bd76fe2"
+        "full-eeebc9e82bd76fe2",
+        "full-eeebc9e82bd76fe2-review-ddff0eff3b"
       ],
       "path": "knowledge/company/report-windows.md",
-      "sha256": "8bf636b9578823785af2149febf5db8b59f2a7abbfd60fef48e8815ce122dce6"
+      "sha256": "050c26b024dd4479ed418031c93a6fbdd2d4abee599c2c3c8e472e5044a98232"
     },
     {
       "id": "shared-analysis-playbook",
@@ -355,15 +555,15 @@
       "project": "shared",
       "kind": "metric",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
       "verified_by": null,
       "effective_from": "2026-09-05",
       "sources": [
-        "web-channel-review-7003847ee3",
-        "ads-redlines-review-954bdf4e17",
+        "review-20260914-8660ef0aef7c",
+        "review-20260914-ca27ec86b3b2",
         "team-collart_web-channel-attribution",
         "cursor-channels-attribution-md"
       ],
@@ -385,10 +585,12 @@
       "verification_evidence": [],
       "historical_sources": [
         "web-channel",
-        "ads-redlines"
+        "ads-redlines",
+        "ads-redlines-review-954bdf4e17",
+        "web-channel-review-7003847ee3"
       ],
       "path": "knowledge/shared/channel-attribution.md",
-      "sha256": "36557f24449409867b43f8031294066c5858381f032e876909fedfd9bc92f7a3"
+      "sha256": "d7d4c1c392cae5fab327a8b5eae28e45cada8df355b7302c5283e54b40c96d39"
     },
     {
       "id": "shared-core-metrics",
@@ -396,7 +598,7 @@
       "project": "shared",
       "kind": "metric",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
@@ -405,7 +607,7 @@
       "sources": [
         "metrics",
         "retention",
-        "legacy-conversion-review-95f777f166",
+        "review-20260914-c52206ae2ac1",
         "team-shared-core-metrics",
         "cursor-metric-glossary-md"
       ],
@@ -421,10 +623,38 @@
       "supersedes": [],
       "verification_evidence": [],
       "historical_sources": [
-        "legacy-conversion"
+        "legacy-conversion",
+        "legacy-conversion-review-95f777f166"
       ],
       "path": "knowledge/shared/core-metrics.md",
-      "sha256": "9782d548abeb7c1d2f0e2d13067210c53242f808a71fcad3566cde1820a7f71c"
+      "sha256": "7fa4794a0fe5a397b3ecfc8834e950cb3804bbb782c41d914b77f2321d5a2d17"
+    },
+    {
+      "id": "shared-data-access-policy",
+      "title": "只读查询与原始埋点最近30天限制",
+      "project": "shared",
+      "kind": "sql",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": null,
+      "owner": null,
+      "verified_by": null,
+      "effective_from": "2026-09-14",
+      "sources": [
+        "maintainer-data-access-20260914"
+      ],
+      "tags": [
+        "只读",
+        "禁止写入",
+        "禁止删表",
+        "原始埋点",
+        "最近30天"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/data-access-policy.md",
+      "sha256": "396f1e800c8d20f7786bd4676cbc4acc0225d12986cc6afdb5d87998db3d1fe9"
     },
     {
       "id": "shared-data-caveats",
@@ -456,7 +686,7 @@
       "project": "shared",
       "kind": "event",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
@@ -467,7 +697,8 @@
         "ads-routing",
         "metrics",
         "team-shared-event-evidence",
-        "cursor-raw-events-md"
+        "cursor-raw-events-md",
+        "maintainer-data-access-20260914"
       ],
       "tags": [
         "埋点",
@@ -480,7 +711,7 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/shared/event-evidence.md",
-      "sha256": "2e10b0d211f18f8b2cb052343ae81ee65b81c0f11019f4ebe02861a024df47a8"
+      "sha256": "d7fcebf5e7887ba0553f59eb1182e4f55aa7d4eaf957985660899adc7dea0dc1"
     },
     {
       "id": "shared-internal-users",
@@ -488,14 +719,15 @@
       "project": "shared",
       "kind": "metric",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "cursor-internal-users-md"
+        "cursor-internal-users-md",
+        "review-20260914-7552f1c9b18c"
       ],
       "tags": [
         "internal-users",
@@ -504,7 +736,33 @@
       "supersedes": [],
       "verification_evidence": [],
       "path": "knowledge/shared/internal-users.md",
-      "sha256": "db874cc108c6332362e923a91173c97cbe773c1cc2fbc5ae3e621803a51e53d8"
+      "sha256": "cbd37279bff9d119359535ecbaa6aed09845560ff01ea39221147b3aedd312fa"
+    },
+    {
+      "id": "shared-knowledge-maintenance-boundary",
+      "title": "知识维护、项目产物与同步状态",
+      "project": "shared",
+      "kind": "playbook",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "review-20260914-17fea906079e"
+      ],
+      "tags": [
+        "知识维护",
+        "同步",
+        "报告",
+        "SQL"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/knowledge-maintenance-boundary.md",
+      "sha256": "ca620c583bafb694c41e4b423e3df0b73d1851dc2294296f3cf5462077778889"
     },
     {
       "id": "shared-known-conflicts",
@@ -512,23 +770,26 @@
       "project": "shared",
       "kind": "quality",
       "status": "draft",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-09-26",
       "owner": null,
       "verified_by": null,
       "effective_from": null,
       "sources": [
-        "legacy-ios-review-7873df86c6",
+        "review-20260914-278206cde726",
         "ads-routing",
-        "legacy-conversion-review-95f777f166",
+        "review-20260914-c52206ae2ac1",
         "metrics",
         "revenue",
-        "ads-redlines-review-954bdf4e17",
-        "web-profile-review-be4e210655",
+        "review-20260914-ca27ec86b3b2",
+        "review-20260914-af2e0602c86f",
         "team-shared-known-conflicts",
-        "review-e4b31288e0a4a0ad",
-        "review-979740ccfe320f48"
+        "review-20260914-ec2c2ccaf2c5",
+        "review-20260914-86810c962658",
+        "review-20260914-41b25158a11f",
+        "review-20260914-3dd331efb6c6",
+        "review-20260914-7552f1c9b18c"
       ],
       "tags": [
         "冲突",
@@ -545,10 +806,16 @@
         "legacy-ios",
         "legacy-conversion",
         "ads-redlines",
-        "web-profile"
+        "web-profile",
+        "ads-redlines-review-954bdf4e17",
+        "web-profile-review-be4e210655",
+        "legacy-ios-review-7873df86c6",
+        "legacy-conversion-review-95f777f166",
+        "review-e4b31288e0a4a0ad",
+        "review-979740ccfe320f48"
       ],
       "path": "knowledge/shared/known-conflicts.md",
-      "sha256": "bfbe0575cfeb99c639c67b6ba32300e58f6c397c951e6858cb91ce1cd4f5e106"
+      "sha256": "92913b3c619b5b002c733b589ed3d3de3b3e4e0e26c9e7bae8d5a7f49d8c72ca"
     },
     {
       "id": "shared-metric-upgrades",
@@ -580,7 +847,7 @@
       "project": "shared",
       "kind": "metric",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
@@ -589,10 +856,11 @@
       "sources": [
         "metrics",
         "revenue",
-        "ads-redlines-review-954bdf4e17",
-        "fashion-orders-review-7afb4b3f3b",
+        "review-20260914-ca27ec86b3b2",
+        "review-20260914-626470cd87d2",
         "team-shared-payment-evidence",
-        "cursor-revenue-subscription-md"
+        "cursor-revenue-subscription-md",
+        "review-20260914-41b25158a11f"
       ],
       "tags": [
         "付费",
@@ -607,10 +875,12 @@
       "verification_evidence": [],
       "historical_sources": [
         "ads-redlines",
-        "fashion-orders"
+        "fashion-orders",
+        "ads-redlines-review-954bdf4e17",
+        "fashion-orders-review-7afb4b3f3b"
       ],
       "path": "knowledge/shared/payment-evidence.md",
-      "sha256": "55de80456c87f3957ff3d8f88198583dec07891f6f74643a4a6f6156429937c8"
+      "sha256": "730981646a69f3164a2cd48ade24a19188d770723a3aa937fe80088206d4a327"
     },
     {
       "id": "shared-project-overview",
@@ -618,7 +888,7 @@
       "project": "shared",
       "kind": "business",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
@@ -627,10 +897,12 @@
       "sources": [
         "ads-routing",
         "events",
-        "fashion-orders-review-7afb4b3f3b",
+        "review-20260914-626470cd87d2",
         "team-shared-project-overview",
         "cursor-platforms-md",
-        "review-e4b31288e0a4a0ad"
+        "review-20260914-ec2c2ccaf2c5",
+        "review-20260914-3dd331efb6c6",
+        "review-20260914-ca27ec86b3b2"
       ],
       "tags": [
         "业务",
@@ -644,10 +916,12 @@
       "supersedes": [],
       "verification_evidence": [],
       "historical_sources": [
-        "fashion-orders"
+        "fashion-orders",
+        "fashion-orders-review-7afb4b3f3b",
+        "review-e4b31288e0a4a0ad"
       ],
       "path": "knowledge/shared/project-overview.md",
-      "sha256": "a2b24a28d0573dbdeec9bf77839288614141d58612b4d3cb9f04d5fb94a4d402"
+      "sha256": "9102b5435678542b955df08234dc3b92af17b1e146d85b7118dc3dcb89fe3475"
     },
     {
       "id": "shared-retention-newuser",
@@ -679,7 +953,7 @@
       "project": "shared",
       "kind": "sql",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
@@ -688,9 +962,10 @@
       "sources": [
         "events",
         "ads-routing",
-        "ads-redlines-review-954bdf4e17",
+        "review-20260914-ca27ec86b3b2",
         "team-shared-sql-practice",
-        "cursor-sql-standards-md"
+        "cursor-sql-standards-md",
+        "maintainer-data-access-20260914"
       ],
       "tags": [
         "SQL",
@@ -703,10 +978,11 @@
       "supersedes": [],
       "verification_evidence": [],
       "historical_sources": [
-        "ads-redlines"
+        "ads-redlines",
+        "ads-redlines-review-954bdf4e17"
       ],
       "path": "knowledge/shared/sql-practice.md",
-      "sha256": "a9d79e3fa2dddd49b2ca68ab18ed3d730f512834767890c67d31608d3c63afa9"
+      "sha256": "53c180f0db3e4a1df25ab1a98d8fa4f04e0a3e2b343d5e4f22a02fcc22dab788"
     },
     {
       "id": "shared-table-routing",
@@ -714,7 +990,7 @@
       "project": "shared",
       "kind": "table",
       "status": "documented",
-      "updated_at": "2026-09-12",
+      "updated_at": "2026-09-14",
       "verified_at": null,
       "review_after": "2026-10-12",
       "owner": null,
@@ -722,7 +998,7 @@
       "effective_from": null,
       "sources": [
         "ads-routing",
-        "ads-redlines-review-954bdf4e17",
+        "review-20260914-ca27ec86b3b2",
         "team-shared-table-routing",
         "cursor-table-routing-md"
       ],
@@ -738,10 +1014,42 @@
       "supersedes": [],
       "verification_evidence": [],
       "historical_sources": [
-        "ads-redlines"
+        "ads-redlines",
+        "ads-redlines-review-954bdf4e17"
       ],
       "path": "knowledge/shared/table-routing.md",
-      "sha256": "6001ce8e45388d0bf015ea2de2495a2136d4e85f685007d8da4e66b49a208f15"
+      "sha256": "4e026346019a2096618244e4612773e1f2b6a7281097855506838dd40faf0cd7"
+    },
+    {
+      "id": "shared-warehouse-history-boundary",
+      "title": "仓库历史依赖与当前选表",
+      "project": "shared",
+      "kind": "lineage",
+      "status": "documented",
+      "updated_at": "2026-09-14",
+      "verified_at": null,
+      "review_after": "2026-10-14",
+      "owner": null,
+      "verified_by": null,
+      "effective_from": null,
+      "sources": [
+        "review-20260914-3e325ef95b0e",
+        "review-20260914-f1c2cc9a24d3",
+        "review-20260914-6acb9bd4c056",
+        "review-20260914-d827082c2233",
+        "review-20260914-c862ce5dbfc5",
+        "review-20260914-2ec5522ed31b"
+      ],
+      "tags": [
+        "血缘",
+        "仓库",
+        "历史字典",
+        "schema"
+      ],
+      "supersedes": [],
+      "verification_evidence": [],
+      "path": "knowledge/shared/warehouse-history-boundary.md",
+      "sha256": "0eb7b516a633d33ab75e2a3dcc96ace293a300b3513462fea786651f1b9dbb55"
     },
     {
       "id": "shared-warehouse-lineage",
