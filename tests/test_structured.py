@@ -105,6 +105,13 @@ class QueryBoundaryTests(unittest.TestCase):
         for p in (P/'knowledge').rglob('*.sql'):query.read_only(p.read_text(encoding='utf-8'))
 
 class BuildTests(unittest.TestCase):
+    def test_release_inventory_order_is_portable(self):
+        with tempfile.TemporaryDirectory() as t:
+            root=Path(t);(root/'maintainer').mkdir()
+            expected=['CHANGELOG.md','README.md','install.ps1','maintainer/A.md','maintainer/z.md']
+            for name in reversed(expected):(root/name).write_text('fixture',encoding='utf-8')
+            self.assertEqual([r['path'] for r in build.release_files(root)],expected)
+
     def test_complete_fields_and_shared_multi_output_sources(self):
         self.assertEqual(build.validate(ROOT)['errors'],[])
         tables=kb.load(P,'_meta/catalog.json')['entries'];self.assertEqual(len({r['tables'][0] for r in tables if r['kind']=='table'}),sum(r['kind']=='table' for r in tables))

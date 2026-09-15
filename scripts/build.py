@@ -13,7 +13,9 @@ def module(name,path):
 def release_files(root):
     files=[]
     allowed={'.agents','.github','maintainer','plugins','scripts','tests','.gitattributes','.gitignore','README.md','INSTALL.md','SYNC.md','CHANGELOG.md','install.ps1'}
-    for p in sorted(root.rglob('*')):
+    # Path ordering differs on Windows (case-insensitive) and Linux. Release
+    # inventories use the same case-sensitive POSIX relative-path order everywhere.
+    for p in sorted(root.rglob('*'),key=lambda p:p.relative_to(root).as_posix()):
         rel=p.relative_to(root)
         if not p.is_file() or any(x in SKIP for x in rel.parts) or p.suffix=='.pyc':continue
         if rel.parts[0] not in allowed:raise ValueError('Unapproved release entry: '+rel.as_posix())

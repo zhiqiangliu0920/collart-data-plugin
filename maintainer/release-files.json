@@ -19,15 +19,43 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "3c214e34e6cf8f95c77673a192a101dbfc68820d9978255d457ab62917c7c1f3"
+      "sha256": "5490f831417e1c6c8ca2e1ce5dd07403564307c872db384134953aa9160d5b28"
     },
     {
       "path": "INSTALL.md",
       "sha256": "1065d5034b0f554c786d6dc2fc7248dcd651057fef9000aa88e0dcab35984f48"
     },
     {
+      "path": "README.md",
+      "sha256": "42e5ac5dfba6fe4ea6eb582435c7e6e4854b53d1a4107f82d84f738f5f41b34d"
+    },
+    {
+      "path": "SYNC.md",
+      "sha256": "35bfcc7a82b6fa99d808dea43c78d39de6e9bed2a7d816aa7d29777dd78b4e42"
+    },
+    {
       "path": "install.ps1",
       "sha256": "6bd67628432aab7639887c6c25d029374241101cbd416d7f572d156c32702550"
+    },
+    {
+      "path": "maintainer/KNOWLEDGE-GAPS.md",
+      "sha256": "9e17f39fe7fc5a9af318b4e40828e8c12defb0d64ac16bca5a9ed3f18b7dd6c1"
+    },
+    {
+      "path": "maintainer/MAINTENANCE.md",
+      "sha256": "3d2dd5ff07b8c6acdf4d3704f0ab700036260a6048ae1698800e0b1f859ec9cc"
+    },
+    {
+      "path": "maintainer/MIGRATION.md",
+      "sha256": "1f9eb9f3941cd296d790a784b694c8b4eb3b8096b4a4c9449a955d25af29a272"
+    },
+    {
+      "path": "maintainer/STRUCTURE.md",
+      "sha256": "299661d6d34921383b36a20ff105bd6ccb0cbd91b09a4aac8cf6af9abd784685"
+    },
+    {
+      "path": "maintainer/VALIDATION.md",
+      "sha256": "4c934e864549b34b52159f6eae48eb42ab3d69e98594922a2a19e92fe350ae3b"
     },
     {
       "path": "maintainer/benchmark.json",
@@ -54,40 +82,24 @@
       "sha256": "f8d3425d2b68c1b683a7be910fa7ddd01c7ca03022e64bd8801d3b49b5a0d48e"
     },
     {
-      "path": "maintainer/KNOWLEDGE-GAPS.md",
-      "sha256": "9e17f39fe7fc5a9af318b4e40828e8c12defb0d64ac16bca5a9ed3f18b7dd6c1"
-    },
-    {
-      "path": "maintainer/MAINTENANCE.md",
-      "sha256": "3d2dd5ff07b8c6acdf4d3704f0ab700036260a6048ae1698800e0b1f859ec9cc"
-    },
-    {
       "path": "maintainer/migration.json",
       "sha256": "c9a320f1664ba4eb8c1d6b723cca4bb5c48492df1b5842930c31b008c5afec01"
-    },
-    {
-      "path": "maintainer/MIGRATION.md",
-      "sha256": "1f9eb9f3941cd296d790a784b694c8b4eb3b8096b4a4c9449a955d25af29a272"
     },
     {
       "path": "maintainer/source-inputs.json",
       "sha256": "1c7d0af6b97603d85ee11e7b1404ba7a9a3861c50793e0811dc5c01e9009aa16"
     },
     {
-      "path": "maintainer/STRUCTURE.md",
-      "sha256": "299661d6d34921383b36a20ff105bd6ccb0cbd91b09a4aac8cf6af9abd784685"
-    },
-    {
       "path": "maintainer/table-coverage.json",
       "sha256": "aff9e726d8cd3b8df33b03206c604097a6fd926250675b11e6ff08bacf39245f"
     },
     {
-      "path": "maintainer/VALIDATION.md",
-      "sha256": "19a196f5cbf817361a0259c411f37624b8c9461a1f8037ee72fd93b82d25e071"
-    },
-    {
       "path": "plugins/collart-data-assistant/.codex-plugin/plugin.json",
       "sha256": "9b6c3a7bc7405c55049190961dd37eceda55c6acb1985d233de638054e6729b6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/README.md",
+      "sha256": "844efd61a57a70a5f7307ff0abf02f0b72468ef7f7f650400414c681cfc02582"
     },
     {
       "path": "plugins/collart-data-assistant/_meta/aliases.json",
@@ -106,24 +118,36 @@
       "sha256": "91049d6cd9b666c146c6d178d7af858dcd4124c49e13ece2d30442b3e40f4005"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_android/analysis/acquisition.md",
-      "sha256": "c867a7ecad576fcaf20e0a4d7d7cf95243cf802feb9fd5f40ecb43c0bb0df572"
+      "path": "plugins/collart-data-assistant/knowledge/INDEX.md",
+      "sha256": "cd82260208b5b5d0ec858aeb4df4662607ffd16d0a4257c57535a275146b02e0"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/README.md",
+      "sha256": "9d3d54000b5f6e46f859bbcaf892c31cfe83c43e55430b8cf262ac816c534b37"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_android/analysis/README.md",
       "sha256": "df2e66e800b11c1b02953f9f816c6575848a462fc0f4de5a444fd36a2b401646"
     },
     {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/analysis/acquisition.md",
+      "sha256": "c867a7ecad576fcaf20e0a4d7d7cf95243cf802feb9fd5f40ecb43c0bb0df572"
+    },
+    {
       "path": "plugins/collart-data-assistant/knowledge/collart_android/analysis/templates.md",
       "sha256": "c3bef28e075dbd06e02f3ae1fc8a560ef5e81126600bfd65caaa4b2fd04e86c9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/business/README.md",
+      "sha256": "6f5b78db32bc4ca38dbc13f37910fffbec40663c4782730b524df4683b211bcd"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_android/business/product.md",
       "sha256": "7cf9f0884107488e500c54d98ae0ba6528c4f05c58ea82ee8a90993324ec5ca2"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_android/business/README.md",
-      "sha256": "6f5b78db32bc4ca38dbc13f37910fffbec40663c4782730b524df4683b211bcd"
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/events/README.md",
+      "sha256": "f8c171c2a9fa912b170044f7ad30e15c3bc1ed0f7b9e403756cb2e35a8488c30"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_android/events/ads.md",
@@ -134,8 +158,8 @@
       "sha256": "32704a2b5319cf7c9b11d5b49a14cb82ffcebccd502dae31879af3dbfb4960be"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_android/events/README.md",
-      "sha256": "f8c171c2a9fa912b170044f7ad30e15c3bc1ed0f7b9e403756cb2e35a8488c30"
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/metrics/README.md",
+      "sha256": "b67eb1c0fe2efbb08eb795fee77eeafcf89c3ae78c3c902748e6fb6b1f9243a2"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_android/metrics/activity.md",
@@ -146,20 +170,16 @@
       "sha256": "03e576258670a731c852a9ed1524b6e469fc594871eb2468caba25675e7299f3"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_android/metrics/README.md",
-      "sha256": "b67eb1c0fe2efbb08eb795fee77eeafcf89c3ae78c3c902748e6fb6b1f9243a2"
-    },
-    {
       "path": "plugins/collart-data-assistant/knowledge/collart_android/metrics/revenue.md",
       "sha256": "841fbd85cf9d76caf703c576020eef4f2d867719ef31420f4f363a9aa9967b1c"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_android/README.md",
-      "sha256": "9d3d54000b5f6e46f859bbcaf892c31cfe83c43e55430b8cf262ac816c534b37"
-    },
-    {
       "path": "plugins/collart-data-assistant/knowledge/collart_android/sql/android-revenue.sql",
       "sha256": "bd0647e39dec52d4ab5bf82f498b075b32b0bc69ee4ee873d3c3529075e64ccf"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/README.md",
+      "sha256": "bf003435cbcb245f8ca44ba8fc10b812971e7af75989618a94e11139a7d5f17d"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy.md",
@@ -226,48 +246,48 @@
       "sha256": "2ce05e664d6e3ad8493350dc5596f89a339396d1e5d7da19368379d8a52a24b9"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/README.md",
-      "sha256": "bf003435cbcb245f8ca44ba8fc10b812971e7af75989618a94e11139a7d5f17d"
-    },
-    {
-      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/analysis/funnel.md",
-      "sha256": "e13d5b98fa239e541e3ecfc07262154a5b60f11a8f16b38c73cd9d24c2a30b38"
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/README.md",
+      "sha256": "fa1c29553b35aded6f3ef008deeb45d23a18174ed26b7bf56e1499d77aab6a5e"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_fashion/analysis/README.md",
       "sha256": "8dc9bd0daca468a5181695d0f9a10e4e8f41cbf89380e5d85dd50ad13769d491"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/business/product.md",
-      "sha256": "0a67eb0999384978f73f8f3f25b4fa174f03b17b104815b1e246b5043c9f1765"
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/analysis/funnel.md",
+      "sha256": "e13d5b98fa239e541e3ecfc07262154a5b60f11a8f16b38c73cd9d24c2a30b38"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_fashion/business/README.md",
       "sha256": "0a37e9fac49fb66d12c6a55db7b7a41d0dfaaf12dec8fb120b77f281b04dd7be"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/events/events.md",
-      "sha256": "a2dbafc3741457972ca62a9f77603d55eb521db96f6a6c98b9c63de6f02815db"
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/business/product.md",
+      "sha256": "0a67eb0999384978f73f8f3f25b4fa174f03b17b104815b1e246b5043c9f1765"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_fashion/events/README.md",
       "sha256": "a164f3b46321a7e078ceb375eb04749610e79e1ea6ad4ab7a562cc6e8bfdf018"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/metrics/activity.md",
-      "sha256": "da410d99f1cd31dd2550a79c92327c77429fff3bc6d9208cc9291308f68c434c"
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/events/events.md",
+      "sha256": "a2dbafc3741457972ca62a9f77603d55eb521db96f6a6c98b9c63de6f02815db"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_fashion/metrics/README.md",
       "sha256": "2f33034c334b04165017111a41467a0f66b0b87e38575006e7711cf4d0ccf55c"
     },
     {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/metrics/activity.md",
+      "sha256": "da410d99f1cd31dd2550a79c92327c77429fff3bc6d9208cc9291308f68c434c"
+    },
+    {
       "path": "plugins/collart-data-assistant/knowledge/collart_fashion/metrics/revenue.md",
       "sha256": "2f2b0d4e8b93b84d431338dbf645d4669e31ec212da835c23d0d27fa992f9be8"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/README.md",
-      "sha256": "fa1c29553b35aded6f3ef008deeb45d23a18174ed26b7bf56e1499d77aab6a5e"
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/README.md",
+      "sha256": "96d92798a6b183868ff4feaeef4b0365bebca92d9481d53717733dd9773837f8"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_dim_metric_rule.md",
@@ -314,32 +334,36 @@
       "sha256": "bb5602a0bddc03242a581cfcfcee4ef9f5c4eb6b4d3a310a316868f64fb36848"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/README.md",
-      "sha256": "96d92798a6b183868ff4feaeef4b0365bebca92d9481d53717733dd9773837f8"
-    },
-    {
-      "path": "plugins/collart-data-assistant/knowledge/collart_ios/analysis/paid-users.md",
-      "sha256": "33d3dd8649ab04083f1d659124b3981038e584d497ea2b8f7d5f15fb50d6d9bd"
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/README.md",
+      "sha256": "162a4b02e537d66bf6de5cbf3e383286a2842c0af7abc96fe3251700ceb3fbbe"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_ios/analysis/README.md",
       "sha256": "24ae31defed90ace070cac085cfaffd466e86a94b3d1856b430e9a344d663e5f"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_ios/business/product.md",
-      "sha256": "0d1586c39e7d1b3a6a7d808ef68dce29a07bf89e17368c205d52b88b6d9ee46a"
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/analysis/paid-users.md",
+      "sha256": "33d3dd8649ab04083f1d659124b3981038e584d497ea2b8f7d5f15fb50d6d9bd"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_ios/business/README.md",
       "sha256": "6c0681c03729a0f55cb3448a64217faeab9de3935bf39200676984631d5cdd6b"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_ios/events/events.md",
-      "sha256": "249d89bb6b2854086dce455ed0d817061bc63572a87e3be895b80c61e3a87644"
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/business/product.md",
+      "sha256": "0d1586c39e7d1b3a6a7d808ef68dce29a07bf89e17368c205d52b88b6d9ee46a"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_ios/events/README.md",
       "sha256": "f1116ea4847ca1762f3be3dfb7a966a7d35532e8ba66d32b2ccd79b7c3f49c7c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/events/events.md",
+      "sha256": "249d89bb6b2854086dce455ed0d817061bc63572a87e3be895b80c61e3a87644"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/metrics/README.md",
+      "sha256": "7d7211fd43cceb2e3220b5c5b3c572f203bc9b74585e11496227e3a07a6776e9"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_ios/metrics/activity.md",
@@ -350,16 +374,12 @@
       "sha256": "ffe657e01941d654d98f996bb33b4a15ec560540a03dc4ba36f32edd00dadc26"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_ios/metrics/README.md",
-      "sha256": "7d7211fd43cceb2e3220b5c5b3c572f203bc9b74585e11496227e3a07a6776e9"
-    },
-    {
-      "path": "plugins/collart-data-assistant/knowledge/collart_ios/README.md",
-      "sha256": "162a4b02e537d66bf6de5cbf3e383286a2842c0af7abc96fe3251700ceb3fbbe"
-    },
-    {
       "path": "plugins/collart-data-assistant/knowledge/collart_ios/sql/asa-cost.sql",
       "sha256": "172c5ea8b894ab37beb184faaec05a431e52386d7fac7dca0dd015e5c2f8bebb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/README.md",
+      "sha256": "595e78ccbf85ec986348406bf397eb5883bd4620a0e81d4ee1f776c25cb87378"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di.md",
@@ -422,20 +442,24 @@
       "sha256": "708a18d1e35b43b18a0cf11293cf5a89e4101dbf716126b3b135d9cb8af0c656"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/README.md",
-      "sha256": "595e78ccbf85ec986348406bf397eb5883bd4620a0e81d4ee1f776c25cb87378"
-    },
-    {
       "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/vidart-8b8ca.analytics_528583115.events_wildcard.md",
       "sha256": "9fc5c374c96dbd53b7d143bfb13751698b87728cee570b052eb6b9dbcf57b7d3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/README.md",
+      "sha256": "ea7d12bb2b463b94da62693d0b8292ab20709ed2bd2adabfca696220ad9c2d40"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/analysis/README.md",
+      "sha256": "938935a5790be006a54c18735094b71a81a6aaa558f9b7cf9e0ddc90dc7ead6f"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_web/analysis/funnel.md",
       "sha256": "d12080e8bc6317337e253f48589fadc29a51b1fa7bf8349dcc70baf2ce7be077"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_web/analysis/README.md",
-      "sha256": "938935a5790be006a54c18735094b71a81a6aaa558f9b7cf9e0ddc90dc7ead6f"
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/business/README.md",
+      "sha256": "8ceaaa5e4d5c7cb62b077b29d2852e7f0ce42661f060b5e75b99fab830b7e50b"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_web/business/identity.md",
@@ -446,16 +470,16 @@
       "sha256": "52809b7eb95adfd922f431d53bd5545882ed4e61f4da7ae30513fb82dba57921"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_web/business/README.md",
-      "sha256": "8ceaaa5e4d5c7cb62b077b29d2852e7f0ce42661f060b5e75b99fab830b7e50b"
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/events/README.md",
+      "sha256": "8e934b800ef5c56f0103171c449bb2672a3a6f784ce68e345fedb9fcea5931d6"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_web/events/events.md",
       "sha256": "17d444ac823d563e07daee93ea26a5bec7479c778191b346903658305a82f413"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_web/events/README.md",
-      "sha256": "8e934b800ef5c56f0103171c449bb2672a3a6f784ce68e345fedb9fcea5931d6"
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/metrics/README.md",
+      "sha256": "ba0cdef71cfc9f6ca4839e9bd9da6eba81e1f42b648bf487a87f0ffdc9e4e10a"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_web/metrics/activity.md",
@@ -470,10 +494,6 @@
       "sha256": "2e7ab7e8edca5a79a8790fdc0ef0f8af7cce1201395f25bc6dffd077cf40bd99"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_web/metrics/README.md",
-      "sha256": "ba0cdef71cfc9f6ca4839e9bd9da6eba81e1f42b648bf487a87f0ffdc9e4e10a"
-    },
-    {
       "path": "plugins/collart-data-assistant/knowledge/collart_web/metrics/revenue.md",
       "sha256": "c206433e0af2f853272476db38ff7c24857e35f9143e94a0e8883de518fe13c7"
     },
@@ -482,16 +502,16 @@
       "sha256": "b02fb8b2403e2c17b3e308de5bedbd49c918c4fce48fa0cea5c98f30f1dd64ac"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_web/README.md",
-      "sha256": "ea7d12bb2b463b94da62693d0b8292ab20709ed2bd2adabfca696220ad9c2d40"
-    },
-    {
       "path": "plugins/collart-data-assistant/knowledge/collart_web/sql/web-cohort.sql",
       "sha256": "a83ee50350d8002d538619ebf93e213a6dfdb8d1f2d7fb5762c3fcc368dc69e2"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_web/sql/web-profile.sql",
       "sha256": "ae31c4ea7df701353f0ab0fec3b9e3f6fc5f5511f77e1e9e4d45bef0e8a5c47f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/README.md",
+      "sha256": "b45429fcd8e73be1433a9f283b68ddd3e9c2773fdb9f91568dce2f1b33c143e6"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_dim_metric_rule.md",
@@ -534,16 +554,16 @@
       "sha256": "cb8ad165f523ffb8dde022a81f4f2633dae1825e5b674a8c7588f3993fd7df03"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/README.md",
-      "sha256": "b45429fcd8e73be1433a9f283b68ddd3e9c2773fdb9f91568dce2f1b33c143e6"
-    },
-    {
-      "path": "plugins/collart-data-assistant/knowledge/company/analysis/dashboard.md",
-      "sha256": "f7f656ddd9960288b90115a9942f8dcc65d916c95d2f4e093727faffba609e21"
+      "path": "plugins/collart-data-assistant/knowledge/company/README.md",
+      "sha256": "a3cfd254f18dd4ef30d06644b2dfe5d3b0eb7c393658e7fb38a7fc3f5e38bdce"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/company/analysis/README.md",
       "sha256": "b85543582aa55deda0bcab2ae1e4508815fefb9492152b38232788bb6a717240"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/analysis/dashboard.md",
+      "sha256": "f7f656ddd9960288b90115a9942f8dcc65d916c95d2f4e093727faffba609e21"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/company/business/README.md",
@@ -558,8 +578,8 @@
       "sha256": "14a865f20c427881fd966bf83cbe1e958704a1015c386acf650bbabacfed4b3b"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/company/README.md",
-      "sha256": "a3cfd254f18dd4ef30d06644b2dfe5d3b0eb7c393658e7fb38a7fc3f5e38bdce"
+      "path": "plugins/collart-data-assistant/knowledge/company/tables/README.md",
+      "sha256": "cd552af9d9ca825cade19cde3541095ce6391ca58006026847f9b7a8ea532d26"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/company/tables/pubdata2025.ads.ads_atlasv_basic_data_daily_1h.md",
@@ -578,48 +598,44 @@
       "sha256": "0ffefa8578e2a4bf7dd3256cf2f3093fb499d835637e7cc9339ffa26688e436d"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/company/tables/README.md",
-      "sha256": "cd552af9d9ca825cade19cde3541095ce6391ca58006026847f9b7a8ea532d26"
-    },
-    {
-      "path": "plugins/collart-data-assistant/knowledge/INDEX.md",
-      "sha256": "cd82260208b5b5d0ec858aeb4df4662607ffd16d0a4257c57535a275146b02e0"
-    },
-    {
-      "path": "plugins/collart-data-assistant/knowledge/shared/analysis/diagnosis.md",
-      "sha256": "264d6432282135f8167617ea4e6f8faae958a23badc634977a9a61b8b48cfc70"
+      "path": "plugins/collart-data-assistant/knowledge/shared/README.md",
+      "sha256": "b81f2f35aaa162034ffbe6653385a7c2076f7386f25ab3418bb08b2daf90b120"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/shared/analysis/README.md",
       "sha256": "1dd56fa187f8929f5af9ab1502757bf8307fe5d028ffe80fa31076b75713d929"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/shared/business/access.md",
-      "sha256": "f859ba6cd2daa618a8d16cd21f6159121541652c232497319c28fe73729bf46d"
+      "path": "plugins/collart-data-assistant/knowledge/shared/analysis/diagnosis.md",
+      "sha256": "264d6432282135f8167617ea4e6f8faae958a23badc634977a9a61b8b48cfc70"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/shared/business/README.md",
       "sha256": "6de4021ebf016d076668df1c32da5608e0a11dbe3974174fc8f17dd20c18ba99"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/shared/business/routing.md",
-      "sha256": "60ec2d7616727a4846439049961aeec42961839c345546af67f49b92376ccd23"
+      "path": "plugins/collart-data-assistant/knowledge/shared/business/access.md",
+      "sha256": "f859ba6cd2daa618a8d16cd21f6159121541652c232497319c28fe73729bf46d"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/shared/events/event-rules.md",
-      "sha256": "a6ebb8e44f54d797f80b6240827adc007b209a7ef714d377c0da6374ab5d47b2"
+      "path": "plugins/collart-data-assistant/knowledge/shared/business/routing.md",
+      "sha256": "60ec2d7616727a4846439049961aeec42961839c345546af67f49b92376ccd23"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/shared/events/README.md",
       "sha256": "13648c45974aa97e5ffc440e14d1c49caa9e614ea3f01b3fda2abff00f0c049c"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/shared/metrics/activity.md",
-      "sha256": "8c171645775368022ac8e5ecd61a1fa7ae147290369e8732ea81383991028cbd"
+      "path": "plugins/collart-data-assistant/knowledge/shared/events/event-rules.md",
+      "sha256": "a6ebb8e44f54d797f80b6240827adc007b209a7ef714d377c0da6374ab5d47b2"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/shared/metrics/README.md",
       "sha256": "606a77c7a644e57cf27e9b34a658fde065e30a868a51562713155ead76ee379b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/metrics/activity.md",
+      "sha256": "8c171645775368022ac8e5ecd61a1fa7ae147290369e8732ea81383991028cbd"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/shared/metrics/report-windows.md",
@@ -630,16 +646,16 @@
       "sha256": "f43ac5e9d30e2fe1f9805b2b8e76d8dfea3937bdeef94dc02b880fcf5bcaca13"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/shared/README.md",
-      "sha256": "b81f2f35aaa162034ffbe6653385a7c2076f7386f25ab3418bb08b2daf90b120"
-    },
-    {
       "path": "plugins/collart-data-assistant/knowledge/shared/sql/country-metrics.sql",
       "sha256": "0b8641e2ca427a1015996b0e32bab9b6b5f4cb7c206133c8dbdf63a2ee7e457b"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/shared/sql/four-platform-daily.sql",
       "sha256": "f039a9e861e8c8ef19da9ab438ea3b2bd02487acfafa3bc2dcb38df3a5013963"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/README.md",
+      "sha256": "adaf7eddb1c944a4d7016c3d2c593a6d4d5564374694e3accde1f653651c7f43"
     },
     {
       "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads.ads_ad_sub_revenue_1h.md",
@@ -994,40 +1010,32 @@
       "sha256": "a9f3dfc0a672bdd55375dafa4f8774a3e03c637cfe3eba8d7ddb2bbdc6e2affd"
     },
     {
-      "path": "plugins/collart-data-assistant/knowledge/shared/tables/README.md",
-      "sha256": "adaf7eddb1c944a4d7016c3d2c593a6d4d5564374694e3accde1f653651c7f43"
-    },
-    {
       "path": "plugins/collart-data-assistant/knowledge/shared/tables/storytemplate-10a27.analytics_232977577.events_wildcard.md",
       "sha256": "ec5ee937233b00640bd5b1e87030f5d56b098ebefb4a37cd24cca5822594e5eb"
     },
     {
-      "path": "plugins/collart-data-assistant/README.md",
-      "sha256": "844efd61a57a70a5f7307ff0abf02f0b72468ef7f7f650400414c681cfc02582"
-    },
-    {
       "path": "plugins/collart-data-assistant/scripts/kb.py",
-      "sha256": "245a763d294c221bd3ed0b9878949d7d120defe5970f80d4d3b1da36bafff761"
+      "sha256": "f36d6f65998afaf69f9848261fca52e641edb07be68298902f902700840e722d"
     },
     {
       "path": "plugins/collart-data-assistant/scripts/query.py",
       "sha256": "407f7227dd8ea53012c7fbe8e181d8e94bc9e35b6ad0a154e410834884e90c42"
     },
     {
-      "path": "plugins/collart-data-assistant/skills/collart-analysis/agents/openai.yaml",
-      "sha256": "960f27796f0434ce0426c5be05d639b8347af5c2ad437bb84b6ddeb72ff4af72"
-    },
-    {
       "path": "plugins/collart-data-assistant/skills/collart-analysis/SKILL.md",
       "sha256": "cc162a5c4e41908f3262a294320ec56184a93309b4fb2d6235175c0fb712d4d3"
     },
     {
-      "path": "plugins/collart-data-assistant/skills/collart-knowledge-maintain/agents/openai.yaml",
-      "sha256": "be102b157eb615484a3b311889f92ae2af42b286ee5c5398ed1da92bec0a1af9"
+      "path": "plugins/collart-data-assistant/skills/collart-analysis/agents/openai.yaml",
+      "sha256": "960f27796f0434ce0426c5be05d639b8347af5c2ad437bb84b6ddeb72ff4af72"
     },
     {
       "path": "plugins/collart-data-assistant/skills/collart-knowledge-maintain/SKILL.md",
       "sha256": "30819850b2c2314b0176c461a462738d3039fbf9084e41911f16ac0e9266b369"
+    },
+    {
+      "path": "plugins/collart-data-assistant/skills/collart-knowledge-maintain/agents/openai.yaml",
+      "sha256": "be102b157eb615484a3b311889f92ae2af42b286ee5c5398ed1da92bec0a1af9"
     },
     {
       "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/ai_service/ai_cost_data_1h.sqlx",
@@ -2466,16 +2474,12 @@
       "sha256": "5251171c85f42561c0c95e33815e129dd32bc679fef7355cf5368c2745a98a9d"
     },
     {
-      "path": "README.md",
-      "sha256": "42e5ac5dfba6fe4ea6eb582435c7e6e4854b53d1a4107f82d84f738f5f41b34d"
-    },
-    {
       "path": "scripts/benchmark.py",
       "sha256": "a688fa02d4df2de98112791da6b31c6ed1808c08bdf4123bb5f66f6f43964444"
     },
     {
       "path": "scripts/build.py",
-      "sha256": "87f12d6ff6e1192a71055e0677c5ccec8e3f4e2fa4bce1b871c7c099cf5a7547"
+      "sha256": "baaba3888fed12cc1e604d2752f78e3df44e6fcb31fefcf3c9fadab8b939b10a"
     },
     {
       "path": "scripts/source_review.py",
@@ -2486,12 +2490,8 @@
       "sha256": "321094c6b4f4e9de56681df8887b9bea44e1e7bbb70134c4b3c39a889a9cc70c"
     },
     {
-      "path": "SYNC.md",
-      "sha256": "35bfcc7a82b6fa99d808dea43c78d39de6e9bed2a7d816aa7d29777dd78b4e42"
-    },
-    {
       "path": "tests/test_structured.py",
-      "sha256": "f3927b74fcf979ca7baca3e14166a1c9ee706c624e236fb32f5f82aa9478865c"
+      "sha256": "b40b43eff00fee7abd361e86ba42cbe5bd72cd7ae4a05600424e60a1a7e4b467"
     },
     {
       "path": "tests/test_sync_plugin.py",

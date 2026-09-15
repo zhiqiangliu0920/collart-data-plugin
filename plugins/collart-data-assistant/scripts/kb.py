@@ -26,7 +26,7 @@ def parse(p):
             m[k]=json.loads(v)
     return m,parts[2].strip()
 def encode(m,b):return '---\n'+'\n'.join(k+': '+json.dumps(v,ensure_ascii=False) for k,v in m.items())+'\n---\n\n'+b.strip()+'\n'
-def paths(root):return sorted(p for p in (root/'knowledge').rglob('*.md') if p.name not in {'README.md','INDEX.md'})
+def paths(root):return sorted((p for p in (root/'knowledge').rglob('*.md') if p.name not in {'README.md','INDEX.md'}),key=lambda p:p.relative_to(root).as_posix())
 def documents(root):
     for p in paths(root):
         inside(root,p.relative_to(root));m,b=parse(p)
