@@ -1,0 +1,520 @@
+{
+  "table": "aidata2025.dm.dm_collart_android_user_event_di",
+  "captured_at": "2026-09-14T13:19:06.842960+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "event_time",
+        "type": "DATETIME"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING"
+      },
+      {
+        "name": "ga_session_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "ga_session_number",
+        "type": "INTEGER"
+      },
+      {
+        "name": "first_open_time",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "is_login",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "is_vip",
+        "type": "STRING"
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "product_id",
+            "type": "STRING"
+          },
+          {
+            "name": "price",
+            "type": "STRING"
+          },
+          {
+            "name": "quantity",
+            "type": "INTEGER"
+          },
+          {
+            "name": "currency",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "identity",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "atlasv_uid",
+            "type": "STRING"
+          },
+          {
+            "name": "android_id",
+            "type": "STRING"
+          },
+          {
+            "name": "adjust_id",
+            "type": "STRING"
+          },
+          {
+            "name": "advertising_id",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "geo",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "city",
+            "type": "STRING"
+          },
+          {
+            "name": "continent",
+            "type": "STRING"
+          },
+          {
+            "name": "sub_continent",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "device",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "category",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_brand_name",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_model_name",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system_version",
+            "type": "STRING"
+          },
+          {
+            "name": "os_sdk_version",
+            "type": "STRING"
+          },
+          {
+            "name": "vendor_id",
+            "type": "STRING"
+          },
+          {
+            "name": "language",
+            "type": "STRING"
+          },
+          {
+            "name": "installer_package_name",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "traffic_src",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "medium",
+            "type": "STRING"
+          },
+          {
+            "name": "source",
+            "type": "STRING"
+          },
+          {
+            "name": "fb_campaign",
+            "type": "STRING"
+          },
+          {
+            "name": "adjust_network",
+            "type": "STRING"
+          },
+          {
+            "name": "adjust_tracker_name",
+            "type": "STRING"
+          },
+          {
+            "name": "adjust_campaign_name",
+            "type": "STRING"
+          },
+          {
+            "name": "adjust_adgroup",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign_info_source",
+            "type": "STRING"
+          },
+          {
+            "name": "install_referer_url",
+            "type": "STRING"
+          },
+          {
+            "name": "gclid",
+            "type": "STRING"
+          },
+          {
+            "name": "gad_source",
+            "type": "STRING"
+          },
+          {
+            "name": "gad_campaign_id",
+            "type": "STRING"
+          },
+          {
+            "name": "utm_source",
+            "type": "STRING"
+          },
+          {
+            "name": "utm_medium",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "ad",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "ad_platform",
+            "type": "STRING"
+          },
+          {
+            "name": "ad_type",
+            "type": "STRING"
+          },
+          {
+            "name": "ad_source",
+            "type": "STRING"
+          },
+          {
+            "name": "unit_id",
+            "type": "STRING"
+          },
+          {
+            "name": "placement",
+            "type": "STRING"
+          },
+          {
+            "name": "segment_id",
+            "type": "STRING"
+          },
+          {
+            "name": "ad_unit_code",
+            "type": "STRING"
+          },
+          {
+            "name": "reward_type",
+            "type": "STRING"
+          },
+          {
+            "name": "reward_value",
+            "type": "INTEGER"
+          },
+          {
+            "name": "ad_value",
+            "type": "STRING"
+          },
+          {
+            "name": "currency",
+            "type": "STRING"
+          },
+          {
+            "name": "is_retry",
+            "type": "STRING"
+          },
+          {
+            "name": "ab_test_id",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "template",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "temp_id",
+            "type": "STRING"
+          },
+          {
+            "name": "module_id",
+            "type": "STRING"
+          },
+          {
+            "name": "module_title",
+            "type": "STRING"
+          },
+          {
+            "name": "module_index",
+            "type": "STRING"
+          },
+          {
+            "name": "category_name",
+            "type": "STRING"
+          },
+          {
+            "name": "template_name",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "params_info",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "service_type",
+            "type": "STRING"
+          },
+          {
+            "name": "function_type",
+            "type": "STRING"
+          },
+          {
+            "name": "task_id",
+            "type": "STRING"
+          },
+          {
+            "name": "gen_id",
+            "type": "STRING"
+          },
+          {
+            "name": "biz_session_id",
+            "type": "STRING"
+          },
+          {
+            "name": "model",
+            "type": "STRING"
+          },
+          {
+            "name": "resolution",
+            "type": "STRING"
+          },
+          {
+            "name": "aspect_ratio",
+            "type": "STRING"
+          },
+          {
+            "name": "ratio",
+            "type": "STRING"
+          },
+          {
+            "name": "feature",
+            "type": "STRING"
+          },
+          {
+            "name": "event_from",
+            "type": "STRING"
+          },
+          {
+            "name": "event_source",
+            "type": "STRING"
+          },
+          {
+            "name": "content_type",
+            "type": "STRING"
+          },
+          {
+            "name": "page",
+            "type": "STRING"
+          },
+          {
+            "name": "tab_type",
+            "type": "STRING"
+          },
+          {
+            "name": "credit_cost",
+            "type": "STRING"
+          },
+          {
+            "name": "generate_count",
+            "type": "STRING"
+          },
+          {
+            "name": "duration",
+            "type": "STRING"
+          },
+          {
+            "name": "elapsed",
+            "type": "STRING"
+          },
+          {
+            "name": "engagement_time_msec",
+            "type": "INTEGER"
+          },
+          {
+            "name": "is_valid",
+            "type": "STRING"
+          },
+          {
+            "name": "is_free",
+            "type": "STRING"
+          },
+          {
+            "name": "is_frame",
+            "type": "STRING"
+          },
+          {
+            "name": "is_regenerate",
+            "type": "STRING"
+          },
+          {
+            "name": "chance_from",
+            "type": "STRING"
+          },
+          {
+            "name": "image_num",
+            "type": "STRING"
+          },
+          {
+            "name": "style_id",
+            "type": "STRING"
+          },
+          {
+            "name": "reference_type",
+            "type": "STRING"
+          },
+          {
+            "name": "change_type",
+            "type": "STRING"
+          },
+          {
+            "name": "error_code",
+            "type": "STRING"
+          },
+          {
+            "name": "service_code",
+            "type": "STRING"
+          },
+          {
+            "name": "error_msg",
+            "type": "STRING"
+          },
+          {
+            "name": "error_value",
+            "type": "STRING"
+          },
+          {
+            "name": "fail_reason",
+            "type": "STRING"
+          },
+          {
+            "name": "page_type",
+            "type": "STRING"
+          },
+          {
+            "name": "transaction_id",
+            "type": "STRING"
+          },
+          {
+            "name": "credit_count",
+            "type": "STRING"
+          },
+          {
+            "name": "purchase_content_mode",
+            "type": "STRING"
+          },
+          {
+            "name": "network_type",
+            "type": "STRING"
+          },
+          {
+            "name": "first_launch",
+            "type": "STRING"
+          },
+          {
+            "name": "search_keyword",
+            "type": "STRING",
+            "mode": "NULLABLE",
+            "description": "Canonical template-search term extracted from end-specific event params"
+          }
+        ]
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dm",
+    "tableId": "dm_collart_android_user_event_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "event_name",
+      "user_pseudo_id",
+      "country"
+    ]
+  },
+  "description": "Collart Android 用户事件语义明细：DWD 事件 + 高频参数 STRUCT；渠道字段按当日用户回填",
+  "type": "TABLE"
+}

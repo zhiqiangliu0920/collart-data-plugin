@@ -1,0 +1,169 @@
+{
+  "table": "aidata2025.ads.ads_collart_delivery_revenue_1d",
+  "captured_at": "2026-09-14T13:19:02.335527+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "campaign_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "installs",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_total",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_revenue_total",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "sub_revenue_total",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "pack_revenue_total",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_revenue_total",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "firebase_install_user",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_user",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "pack_user",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_0",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_1",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_2",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_3",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_4",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_5",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_6",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_7",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_14",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_21",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_30",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_45",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_60",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dnu",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retain_2",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads",
+    "tableId": "ads_collart_delivery_revenue_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "campaign_name",
+      "country"
+    ]
+  },
+  "type": "TABLE"
+}

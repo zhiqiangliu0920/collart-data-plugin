@@ -1,0 +1,147 @@
+config {
+  type: "operations",
+  name: "ads_collartios_oper_user_event_metric_di",
+  schema: "ads_collartios",
+  dependencies: [
+    "h_dm_collart_ios_user_event_di",
+    "ads_collartios_oper_user_active_di"
+  ]
+}
+
+/*
+  Collart iOS 第八张表：用户 × 日 事件行为宽表
+  Dataform: definitions/ads/collart/collart_ios/ads_oper_user_event_metric_di.sqlx
+  目标表  : aidata2025.ads_collartios.ads_oper_user_event_metric_di
+
+  口径:
+  - 粒度: event_date × user_pseudo_id；INNER JOIN active 且 is_active=TRUE，仅活跃用户
+    （active 表含「付费-only」行 is_active=FALSE，这类行不产生事件行为指标）
+  - 列由规则表 aidata2025.ads_collart.ads_dim_metric_rule 中 is_materialized=true 的规则驱动生成
+    （本文件由 _scratch/gen_event_metric_sqlx_ios.py 产出，勿手改）
+  - 用户×日只存次数列，列名=metric_name（一律 *_pv）
+  - event_params 任意 params_info key，比较前 LOWER()
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartios.ads_oper_user_event_metric_di`
+(
+  event_date DATE,
+  user_pseudo_id STRING,
+  img2video_generate_start_pv INT64,
+  home_show_pv INT64,
+  home_template_click_pv INT64,
+  album_show_pv INT64,
+  generate_ready_pv INT64,
+  generate_save_pv INT64,
+  generate_start_pv INT64,
+  generate_success_pv INT64,
+  video_generate_start_pv INT64,
+  text2video_video_generate_start_pv INT64,
+  referencetovideo_video_generate_start_pv INT64,
+  img2img_generate_start_pv INT64,
+  img_generate_start_pv INT64,
+  text2img_generate_start_pv INT64,
+  video_generate_success_pv INT64,
+  text2video_video_generate_success_pv INT64,
+  referencetovideo_video_generate_success_pv INT64,
+  img2img_generate_success_pv INT64,
+  img_generate_success_pv INT64,
+  text2img_generate_success_pv INT64,
+  video_save_pv INT64,
+  image_save_pv INT64
+)
+PARTITION BY event_date
+CLUSTER BY user_pseudo_id
+OPTIONS (
+  description = 'Collart iOS 用户×日事件行为宽表：ads_dim_metric_rule 驱动'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartios.ads_oper_user_event_metric_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.ads_collartios.ads_oper_user_event_metric_di`
+(
+  event_date,
+  user_pseudo_id,
+  img2video_generate_start_pv,
+  home_show_pv,
+  home_template_click_pv,
+  album_show_pv,
+  generate_ready_pv,
+  generate_save_pv,
+  generate_start_pv,
+  generate_success_pv,
+  video_generate_start_pv,
+  text2video_video_generate_start_pv,
+  referencetovideo_video_generate_start_pv,
+  img2img_generate_start_pv,
+  img_generate_start_pv,
+  text2img_generate_start_pv,
+  video_generate_success_pv,
+  text2video_video_generate_success_pv,
+  referencetovideo_video_generate_success_pv,
+  img2img_generate_success_pv,
+  img_generate_success_pv,
+  text2img_generate_success_pv,
+  video_save_pv,
+  image_save_pv
+)
+WITH act AS (
+  SELECT event_date, user_pseudo_id
+  FROM `aidata2025.ads_collartios.ads_oper_user_active_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND user_pseudo_id IS NOT NULL
+    AND is_active
+),
+
+evt AS (
+  SELECT
+    e.event_date,
+    e.user_pseudo_id,
+    e.event_name,
+    COALESCE(
+      e.params_info.task_id,
+      e.params_info.result_task_id,
+      e.params_info.result_generation_id
+    ) AS task_id,
+    LOWER(e.params_info.service_type) AS service_type
+  FROM `aidata2025.dm.dm_collart_ios_user_event_di` AS e
+  INNER JOIN act AS a
+    USING (event_date, user_pseudo_id)
+  WHERE e.event_date BETWEEN from_date AND to_date
+    AND e.event_name IN ('ai_service_download_success', 'ai_service_start', 'ai_service_success', 'album_show', 'create_generate_click', 'home_show', 'temp_click')
+)
+
+SELECT
+  event_date,
+  user_pseudo_id,
+  COUNT(DISTINCT IF(event_name = 'ai_service_start' AND service_type = 'aivideoi2v', task_id, NULL)) AS img2video_generate_start_pv,  -- 图生视频 生成开始
+  COUNTIF(event_name = 'home_show') AS home_show_pv,  -- 首页曝光
+  COUNTIF(event_name = 'temp_click') AS home_template_click_pv,  -- 首页模板点击
+  COUNTIF(event_name = 'album_show') AS album_show_pv,  -- 相册曝光
+  COUNTIF(event_name = 'create_generate_click') AS generate_ready_pv,  -- 生成准备
+  COUNTIF(event_name = 'ai_service_download_success') AS generate_save_pv,  -- 生成保存
+  COUNTIF(event_name = 'ai_service_start') AS generate_start_pv,  -- 服务调用开始
+  COUNTIF(event_name = 'ai_service_success') AS generate_success_pv,  -- 服务调用成功
+  COUNT(DISTINCT IF(event_name = 'ai_service_start' AND service_type like '%aivideo%', task_id, NULL)) AS video_generate_start_pv,  -- 视频生成·开始
+  COUNT(DISTINCT IF(event_name = 'ai_service_start' AND service_type = 'aivideot2v', task_id, NULL)) AS text2video_video_generate_start_pv,  -- AItext2video 视频生成·开始
+  COUNT(DISTINCT IF(event_name = 'ai_service_start' AND service_type = 'aivideor2v', task_id, NULL)) AS referencetovideo_video_generate_start_pv,  -- referencetovideo 生成开始
+  COUNT(DISTINCT IF(event_name = 'ai_service_start' AND service_type in ('aigeneral','img2img','ai_generation'), task_id, NULL)) AS img2img_generate_start_pv,  -- 图生图·生成开始
+  COUNT(DISTINCT IF(event_name = 'ai_service_start' AND service_type in ('aigeneral','img2img','text2img','texttoimage','ai_generation'), task_id, NULL)) AS img_generate_start_pv,  -- 图片生成·生成开始
+  COUNT(DISTINCT IF(event_name = 'ai_service_start' AND service_type in ('text2img','texttoimage'), task_id, NULL)) AS text2img_generate_start_pv,  -- 文生图·开始
+  COUNT(DISTINCT IF(event_name = 'ai_service_success' AND service_type like '%aivideo%', task_id, NULL)) AS video_generate_success_pv,  -- 视频生成·成功
+  COUNT(DISTINCT IF(event_name = 'ai_service_success' AND service_type = 'aivideot2v', task_id, NULL)) AS text2video_video_generate_success_pv,  -- AItext2video 视频生成·成功
+  COUNT(DISTINCT IF(event_name = 'ai_service_success' AND service_type = 'aivideor2v', task_id, NULL)) AS referencetovideo_video_generate_success_pv,  -- referencetovideo 生成成功
+  COUNT(DISTINCT IF(event_name = 'ai_service_success' AND service_type in ('aigeneral','img2img','ai_generation'), task_id, NULL)) AS img2img_generate_success_pv,  -- 图生图·生成成功
+  COUNT(DISTINCT IF(event_name = 'ai_service_success' AND service_type in ('aigeneral','img2img','text2img','texttoimage','ai_generation'), task_id, NULL)) AS img_generate_success_pv,  -- 图片生成·生成成功
+  COUNT(DISTINCT IF(event_name = 'ai_service_success' AND service_type in ('text2img','texttoimage'), task_id, NULL)) AS text2img_generate_success_pv,  -- 文生图·成功
+  COUNT(DISTINCT IF(event_name = 'ai_service_download_success' AND service_type like '%aivideo%', task_id, NULL)) AS video_save_pv,  -- 视频保存
+  COUNT(DISTINCT IF(event_name = 'ai_service_download_success' AND service_type in ('aigeneral','img2img','text2img','texttoimage','ai_generation'), task_id, NULL)) AS image_save_pv  -- 生图保存
+FROM evt
+GROUP BY event_date, user_pseudo_id;
+
+COMMIT TRANSACTION;

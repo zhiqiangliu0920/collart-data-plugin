@@ -1,0 +1,49 @@
+{
+  "table": "aidata2025.dim.dim_ai_service_model_info_copy",
+  "captured_at": "2026-09-14T13:19:06.326313+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "ai_service_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "provider",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "model_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "description",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "datasource",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_service_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "remark",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dim",
+    "tableId": "dim_ai_service_model_info_copy"
+  },
+  "type": "TABLE"
+}

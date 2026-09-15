@@ -1,0 +1,150 @@
+-- ============================================================================
+-- Collart Fashion · Stripe 订单收入
+-- Dataform: definitions/ads/collart/collart_fashion/ads_oper_user_revenue_di.sqlx
+-- 目标表  : aidata2025.ads_collartfashion.ads_oper_user_revenue_di
+-- 粒度    : 1 笔 Stripe 订单 1 行（transaction_id 去重）
+-- 归属    : 每笔交易匹配前后 10 分钟内最近的 vip_subscribe_succeed，
+--           且该事件 package_name = collart_fashion
+-- Stripe 字段原样落下；另加 Fashion 归属列
+-- ============================================================================
+
+config {
+  type: "operations",
+  name: "ads_oper_user_revenue_di",
+  schema: "ads_collartfashion",
+  tags: ["collart_fashion"],
+  description: "Fashion order-grain Stripe revenue with Fashion attribution",
+  dependencies: ["h_dm_collart_web_user_event_di"]
+}
+
+js {
+  const cfg = require("../../../../includes/collart_fashion/constants");
+}
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - ${cfg.REVENUE_BACKFILL_DAYS};
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartfashion.ads_oper_user_revenue_di` (
+  event_date DATE OPTIONS(description = "Stripe 收入日期"),
+  event_timestamp INT64 OPTIONS(description = "Stripe 事件 unix 秒"),
+  transaction_id STRING OPTIONS(description = "Stripe 交易 ID"),
+  app_name STRING OPTIONS(description = "Stripe app_name，Fashion 订单一般为 collart_web"),
+  charge_type STRING,
+  country STRING,
+  currency STRING,
+  stripe_customer_id STRING,
+  amount FLOAT64,
+  fee FLOAT64,
+  revneue FLOAT64 OPTIONS(description = "实收美元，字段名与上游一致"),
+  description_type STRING,
+  order_status STRING,
+  product_id STRING,
+  product_name STRING,
+  subscription_id STRING,
+  subscription_status STRING,
+  user_id STRING,
+  payment_channel STRING,
+  package_name STRING OPTIONS(description = "Fashion 归属包名 collart_fashion"),
+  user_pseudo_id STRING OPTIONS(description = "匹配支付成功事件的 GA4 用户 ID"),
+  first_fashion_succeed_date DATE OPTIONS(description = "该 user_id 窗口内首次 Fashion 支付成功日"),
+  succeed_date DATE OPTIONS(description = "匹配到的 vip_subscribe_succeed 日期"),
+  match_diff_seconds INT64 OPTIONS(description = "Stripe 与支付成功事件的秒差绝对值"),
+  etl_time TIMESTAMP
+)
+PARTITION BY event_date
+CLUSTER BY user_id, transaction_id
+OPTIONS (
+  description = "Fashion Stripe 订单明细；10 分钟内最近 Fashion vip_subscribe_succeed 归属",
+  require_partition_filter = TRUE
+);
+
+DELETE FROM `aidata2025.ads_collartfashion.ads_oper_user_revenue_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.ads_collartfashion.ads_oper_user_revenue_di` (
+  event_date, event_timestamp, transaction_id, app_name, charge_type, country, currency,
+  stripe_customer_id, amount, fee, revneue, description_type, order_status,
+  product_id, product_name, subscription_id, subscription_status, user_id, payment_channel,
+  package_name, user_pseudo_id, first_fashion_succeed_date, succeed_date, match_diff_seconds, etl_time
+)
+
+WITH internal_users AS (
+  SELECT user_id
+  FROM UNNEST(${JSON.stringify(cfg.INTERNAL_USER_IDS)}) AS user_id
+),
+
+payment_events AS (
+  SELECT
+    NULLIF(user_id, "") AS user_id,
+    user_pseudo_id,
+    event_date AS succeed_date,
+    TIMESTAMP(event_time) AS succeed_time,
+    package_name
+  FROM `aidata2025.dm.dm_collart_web_user_event_di`
+  WHERE event_date BETWEEN DATE_SUB(from_date, INTERVAL 1 DAY) AND DATE_ADD(to_date, INTERVAL 1 DAY)
+    AND event_name = "vip_subscribe_succeed"
+    AND NULLIF(user_id, "") IS NOT NULL
+    AND user_id NOT IN (SELECT user_id FROM internal_users)
+),
+
+stripe_deduplicated AS (
+  SELECT
+    event_date, event_timestamp, transaction_id, app_name, charge_type, country, currency,
+    stripe_customer_id, amount, fee, revneue, description_type, order_status,
+    product_id, product_name, subscription_id, subscription_status, user_id, payment_channel
+  FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND app_name = "collart_web"
+    AND revneue > 0
+    AND NULLIF(user_id, "") IS NOT NULL
+  QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY COALESCE(
+      NULLIF(transaction_id, ""),
+      CONCAT("missing:", user_id, ":", CAST(event_timestamp AS STRING))
+    )
+    ORDER BY event_timestamp DESC
+  ) = 1
+),
+
+nearest_payment_event AS (
+  SELECT
+    s.event_date, s.event_timestamp, s.transaction_id, s.app_name, s.charge_type, s.country, s.currency,
+    s.stripe_customer_id, s.amount, s.fee, s.revneue, s.description_type, s.order_status,
+    s.product_id, s.product_name, s.subscription_id, s.subscription_status, s.user_id, s.payment_channel,
+    e.user_pseudo_id,
+    e.succeed_date,
+    e.package_name,
+    ABS(TIMESTAMP_DIFF(e.succeed_time, TIMESTAMP_SECONDS(s.event_timestamp), SECOND)) AS match_diff_seconds
+  FROM stripe_deduplicated AS s
+  JOIN payment_events AS e
+    ON s.user_id = e.user_id
+   AND ABS(TIMESTAMP_DIFF(e.succeed_time, TIMESTAMP_SECONDS(s.event_timestamp), SECOND)) <= 600
+  QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY COALESCE(
+      NULLIF(s.transaction_id, ""),
+      CONCAT("missing:", s.user_id, ":", CAST(s.event_timestamp AS STRING))
+    )
+    ORDER BY match_diff_seconds, e.succeed_time
+  ) = 1
+),
+
+fashion_first_succeed AS (
+  SELECT user_id, MIN(succeed_date) AS first_fashion_succeed_date
+  FROM payment_events
+  WHERE package_name = "${cfg.PACKAGE_NAME}"
+  GROUP BY user_id
+)
+
+SELECT
+  n.event_date, n.event_timestamp, n.transaction_id, n.app_name, n.charge_type, n.country, n.currency,
+  n.stripe_customer_id, n.amount, n.fee, n.revneue, n.description_type, n.order_status,
+  n.product_id, n.product_name, n.subscription_id, n.subscription_status, n.user_id, n.payment_channel,
+  "${cfg.PACKAGE_NAME}" AS package_name,
+  n.user_pseudo_id,
+  f.first_fashion_succeed_date,
+  n.succeed_date,
+  n.match_diff_seconds,
+  CURRENT_TIMESTAMP() AS etl_time
+FROM nearest_payment_event AS n
+JOIN fashion_first_succeed AS f USING (user_id)
+WHERE n.package_name = "${cfg.PACKAGE_NAME}";

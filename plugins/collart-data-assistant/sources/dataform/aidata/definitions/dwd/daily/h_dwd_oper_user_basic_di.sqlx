@@ -1,0 +1,151 @@
+config {
+    type: "operations",
+    dependencies: ["h_dwd_oper_user_event_di"]
+}
+
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date}-2;
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  dwd.dwd_oper_user_basic_di
+WHERE
+  event_date BETWEEN from_date
+  AND to_date;
+INSERT INTO
+  dwd.dwd_oper_user_basic_di
+
+with basic_tab as (
+SELECT
+  event_date,
+  app_name,
+  user_pseudo_id,
+  MAX_by(user_id,event_time) AS user_id,
+  MAX(adjust_id) AS adjust_id,
+  MAX(atlasv_uid) AS atlasv_uid,
+  MAX(package_name) AS package_name,
+  max_by(traffic_src_type,event_time) AS traffic_src_type,
+  max_by(traffic_src_name,event_time) AS traffic_src_name,
+  MAX(country) as country,
+  0 AS country_level,
+  MAX(city) AS city,
+  MAX(device_language) AS device_language,
+  MAX(device_total_ram) AS device_total_ram,
+  MAX(mobile_brand_name) AS mobile_brand_name,
+  MAX(mobile_model_name) AS mobile_model_name,
+  MAX(app_version) AS app_version,
+  MAX(network_type) AS network_type,
+  ----------------------------------------基本行为----------------------------------------
+  COUNTIF(event_name='first_open')>0 AS is_new,
+  COUNTIF(event_name IN ('user_engagement',
+      'screen_view',
+      'app_exception',
+      'first_open'))>0 AS is_active,
+  MAX(CASE
+      WHEN event_name='first_open' AND rk=1 THEN event_time
+  END
+    ) AS register_time,
+  MAX(mobile_marketing_name) AS mobile_marketing_name,
+  MAX(is_vip) AS vip_type,
+  MAX(CASE
+      WHEN event_name='vip_subscribe_succeed' AND event_product_id NOT LIKE '%pack%' THEN event_time
+  END
+    ) AS subscribe_time,
+  MAX(CASE
+      WHEN event_name='vip_subscribe_succeed' AND event_product_id NOT LIKE '%pack%' THEN event_product_id
+  END
+    ) AS subscribe_product_id,
+  MAX(os_classify) AS os_classify,
+  MAX(os_cpu_info) AS os_cpu_info,
+
+  array_agg(IF(
+    event_name='vip_subscribe_succeed' AND event_product_id NOT LIKE '%pack%',
+    struct(event_product_id as product_id, event_time as sub_time),
+    null
+  ) Ignore nulls order by event_time) as subscriptions,
+  max(` advertising_id`) as advertising_id,
+FROM (
+  SELECT
+    ROW_NUMBER() OVER (PARTITION BY user_pseudo_id, event_name, app_name ORDER BY event_time DESC) AS rk,
+    a.*
+  FROM
+    dwd.dwd_oper_user_event_di a
+  WHERE
+    event_date BETWEEN from_date
+    AND to_date) a
+GROUP BY
+  event_date,
+  user_pseudo_id,
+  app_name 
+),
+adjust_tab as (
+  select
+    package_name,
+    app_name,
+    adid,
+    max(CASE 
+        WHEN campaign_name LIKE '%GA%' OR campaign_name LIKE '%FB%' THEN trim(split(campaign_name,'(')[0])
+      END) AS traffic_src_name,
+    max(CASE 
+        WHEN campaign_name LIKE '%GA%' OR campaign_name LIKE '%FB%' THEN 'delivery'
+      END) AS traffic_src_type
+  from dwd.dwd_oper_delivery_adjust_user_di 
+  where event_date between from_date-29 and to_date
+  -- and app_name = 'muselab'
+  -- and activity_kind = 'install'
+  group by all
+)
+-- 最终数据写入
+-- muselab的渠道先用adjust，如果adjust判断为nature event判断为delivery且有traffic_src_name，则取event
+select
+  u.event_date,
+  u.app_name,
+  u.user_pseudo_id,
+  u.user_id,
+  u.adjust_id,
+  u.atlasv_uid,
+  u.package_name,
+  CASE 
+    WHEN u.app_name = 'muselab' THEN COALESCE(b.traffic_src_type, if(u.traffic_src_name!= 'undefined',u.traffic_src_type,'nature'))
+    when b.traffic_src_name LIKE '%FB%' then b.traffic_src_type
+    ELSE u.traffic_src_type 
+  END AS traffic_src_type,
+  CASE 
+    WHEN u.app_name = 'muselab' THEN COALESCE(b.traffic_src_name, if(u.traffic_src_name!= 'undefined',u.traffic_src_name,'organic'))
+    when b.traffic_src_name LIKE '%FB%' then b.traffic_src_name
+    ELSE u.traffic_src_name 
+  END AS traffic_src_name,
+  u.country,
+  u.country_level,
+  u.city,
+  u.device_language,
+  u.device_total_ram,
+  u.mobile_brand_name,
+  u.mobile_model_name,
+  u.app_version,
+  u.network_type,
+  u.is_new,
+  u.is_active,
+  u.register_time,
+  u.mobile_marketing_name,
+  u.vip_type,
+  u.subscribe_time,
+  u.subscribe_product_id,
+  u.os_classify,
+  u.os_cpu_info,
+  u.subscriptions,
+  u.advertising_id
+from basic_tab u
+left join adjust_tab b 
+  on u.adjust_id = b.adid
+  and u.package_name = b.package_name
+  and u.app_name = b.app_name
+;
+  -- 如果所有操作都成功，提交事务
+COMMIT
+  ;
+ 

@@ -1,0 +1,125 @@
+config {
+  type: "operations",
+  name: "ads_collartfashion_oper_event_metric_attr_di",
+  schema: "ads_collartfashion",
+  dependencies: ["ads_collartfashion_oper_user_event_metric_di", "ads_collartfashion_oper_user_active_di"]
+}
+
+/*
+  Collart Fashion 日×维度事件指标
+  Dataform: definitions/ads/collart/collart_fashion/ads_oper_event_metric_attr_di.sqlx
+  列对齐 ads_dim_metric_rule；STRUCT<uv,pv>
+  is_new = 上游 is_studio_new；对齐 UEM，不再按 is_active / is_studio_active 过滤
+  （本文件先按 Sheet 手改，确认后再回写生成器）
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di`
+(
+  event_date DATE, is_new BOOL, is_vip BOOL, country STRING,
+  traffic_src_type STRING, traffic_src_platform STRING, traffic_src_name STRING, app_version STRING,
+  seo_show STRUCT<uv INT64, pv INT64>,
+  seo_click STRUCT<uv INT64, pv INT64>,
+  valid_action STRUCT<uv INT64, pv INT64>,
+  inspiration_show STRUCT<uv INT64, pv INT64>,
+  inspiration_template_click STRUCT<uv INT64, pv INT64>,
+  fashion_generate_show STRUCT<uv INT64, pv INT64>,
+  fashion_generate_step2_show STRUCT<uv INT64, pv INT64>,
+  fashion_generate_step3_show STRUCT<uv INT64, pv INT64>,
+  fashion_generate_step4_show STRUCT<uv INT64, pv INT64>,
+  fashion_generate_click STRUCT<uv INT64, pv INT64>,
+  fashion_generate_start STRUCT<uv INT64, pv INT64>,
+  fashion_download_success STRUCT<uv INT64, pv INT64>,
+  fashion_generate_success STRUCT<uv INT64, pv INT64>,
+  aimodel_generate_click STRUCT<uv INT64, pv INT64>,
+  aimodel_generate_show STRUCT<uv INT64, pv INT64>,
+  aimodel_generate_start STRUCT<uv INT64, pv INT64>,
+  aimodel_generate_success STRUCT<uv INT64, pv INT64>,
+  aimodel_download_success STRUCT<uv INT64, pv INT64>,
+  vip_show STRUCT<uv INT64, pv INT64>,
+  credit_pack_purchase STRUCT<uv INT64, pv INT64>,
+  vip_subscribe_succeed STRUCT<uv INT64, pv INT64>,
+  login_show STRUCT<uv INT64, pv INT64>,
+  login_success STRUCT<uv INT64, pv INT64>
+)
+PARTITION BY event_date CLUSTER BY country, is_new
+OPTIONS(description='ads_collartfashion 日×维度事件指标：ads_dim_metric_rule 驱动');
+BEGIN TRANSACTION;
+DELETE FROM `aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di` WHERE event_date BETWEEN from_date AND to_date;
+INSERT INTO `aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di`
+(event_date, is_new, is_vip, country, traffic_src_type, traffic_src_platform, traffic_src_name, app_version,
+  seo_show,
+  seo_click,
+  valid_action,
+  inspiration_show,
+  inspiration_template_click,
+  fashion_generate_show,
+  fashion_generate_step2_show,
+  fashion_generate_step3_show,
+  fashion_generate_step4_show,
+  fashion_generate_click,
+  fashion_generate_start,
+  fashion_download_success,
+  fashion_generate_success,
+  aimodel_generate_click,
+  aimodel_generate_show,
+  aimodel_generate_start,
+  aimodel_generate_success,
+  aimodel_download_success,
+  vip_show,
+  credit_pack_purchase,
+  vip_subscribe_succeed,
+  login_show,
+  login_success)
+WITH active_base AS (
+  SELECT event_date, user_pseudo_id, IFNULL(is_studio_new, FALSE) AS is_new, (is_vip IN ('1','2')) AS is_vip, country,
+    traffic_src_type, traffic_src_platform, traffic_src_name, app_version
+  FROM `aidata2025.ads_collartfashion.ads_oper_user_active_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND user_pseudo_id IS NOT NULL
+),
+top_version AS (
+  SELECT event_date, app_version FROM (
+    SELECT event_date, app_version, ROW_NUMBER() OVER (
+      PARTITION BY event_date ORDER BY COUNT(DISTINCT user_pseudo_id) DESC, app_version
+    ) rn
+    FROM active_base GROUP BY 1,2
+  ) WHERE rn <= 5
+),
+joined AS (
+  SELECT m.event_date, a.is_new, a.is_vip, a.country, a.traffic_src_type, a.traffic_src_platform,
+    a.traffic_src_name, IF(tv.app_version IS NULL, 'other', a.app_version) AS app_version,
+    m.* EXCEPT(event_date, user_pseudo_id, package_name, app_name)
+  FROM `aidata2025.ads_collartfashion.ads_oper_user_event_metric_di` m
+  JOIN active_base a USING (event_date, user_pseudo_id)
+  LEFT JOIN top_version tv ON a.event_date=tv.event_date AND a.app_version=tv.app_version
+  WHERE m.event_date BETWEEN from_date AND to_date
+)
+SELECT event_date, is_new, is_vip, country, traffic_src_type, traffic_src_platform, traffic_src_name, app_version,
+  STRUCT(COUNTIF(seo_show_pv>0), COALESCE(SUM(seo_show_pv),0)) AS seo_show,  -- SEO页面曝光
+  STRUCT(COUNTIF(seo_click_pv>0), COALESCE(SUM(seo_click_pv),0)) AS seo_click,  -- SEO页面点击
+  STRUCT(COUNTIF(valid_action_pv>0), COALESCE(SUM(valid_action_pv),0)) AS valid_action,  -- 有效用户
+  STRUCT(COUNTIF(inspiration_show_pv>0), COALESCE(SUM(inspiration_show_pv),0)) AS inspiration_show,  -- 灵感页_进入灵感页
+  STRUCT(COUNTIF(inspiration_template_click_pv>0), COALESCE(SUM(inspiration_template_click_pv),0)) AS inspiration_template_click,  -- 灵感页_点击模板
+  STRUCT(COUNTIF(fashion_generate_show_pv>0), COALESCE(SUM(fashion_generate_show_pv),0)) AS fashion_generate_show,  -- fashion_进入功能页
+  STRUCT(COUNTIF(fashion_generate_step2_show_pv>0), COALESCE(SUM(fashion_generate_step2_show_pv),0)) AS fashion_generate_step2_show,  -- fashion_进入功能页_step2
+  STRUCT(COUNTIF(fashion_generate_step3_show_pv>0), COALESCE(SUM(fashion_generate_step3_show_pv),0)) AS fashion_generate_step3_show,  -- fashion_进入功能页_step3
+  STRUCT(COUNTIF(fashion_generate_step4_show_pv>0), COALESCE(SUM(fashion_generate_step4_show_pv),0)) AS fashion_generate_step4_show,  -- fashion_进入功能页_step4
+  STRUCT(COUNTIF(fashion_generate_click_pv>0), COALESCE(SUM(fashion_generate_click_pv),0)) AS fashion_generate_click,  -- fashion_点击generate
+  STRUCT(COUNTIF(fashion_generate_start_pv>0), COALESCE(SUM(fashion_generate_start_pv),0)) AS fashion_generate_start,  -- fashion_开始生成
+  STRUCT(COUNTIF(fashion_download_success_pv>0), COALESCE(SUM(fashion_download_success_pv),0)) AS fashion_download_success,  -- fashion_下载成功
+  STRUCT(COUNTIF(fashion_generate_success_pv>0), COALESCE(SUM(fashion_generate_success_pv),0)) AS fashion_generate_success,  -- fashion_生成成功
+  STRUCT(COUNTIF(aimodel_generate_click_pv>0), COALESCE(SUM(aimodel_generate_click_pv),0)) AS aimodel_generate_click,  -- aimodel_点击generate
+  STRUCT(COUNTIF(aimodel_generate_show_pv>0), COALESCE(SUM(aimodel_generate_show_pv),0)) AS aimodel_generate_show,  -- aimodel_进入功能页
+  STRUCT(COUNTIF(aimodel_generate_start_pv>0), COALESCE(SUM(aimodel_generate_start_pv),0)) AS aimodel_generate_start,  -- aimodel_开始生成
+  STRUCT(COUNTIF(aimodel_generate_success_pv>0), COALESCE(SUM(aimodel_generate_success_pv),0)) AS aimodel_generate_success,  -- aimodel_生成成功
+  STRUCT(COUNTIF(aimodel_download_success_pv>0), COALESCE(SUM(aimodel_download_success_pv),0)) AS aimodel_download_success,  -- aimodel_下载成功
+  STRUCT(COUNTIF(vip_show_pv>0), COALESCE(SUM(vip_show_pv),0)) AS vip_show,  -- 付费页_进入付费页
+  STRUCT(COUNTIF(credit_pack_purchase_pv>0), COALESCE(SUM(credit_pack_purchase_pv),0)) AS credit_pack_purchase,  -- 付费页_点击付费
+  STRUCT(COUNTIF(vip_subscribe_succeed_pv>0), COALESCE(SUM(vip_subscribe_succeed_pv),0)) AS vip_subscribe_succeed,  -- 付费页_付费成功
+  STRUCT(COUNTIF(login_show_pv>0), COALESCE(SUM(login_show_pv),0)) AS login_show,  -- 登录页_进入登录页面人数
+  STRUCT(COUNTIF(login_success_pv>0), COALESCE(SUM(login_success_pv),0)) AS login_success  -- 登录页_登录成功人数
+FROM joined
+GROUP BY 1,2,3,4,5,6,7,8;
+COMMIT TRANSACTION;

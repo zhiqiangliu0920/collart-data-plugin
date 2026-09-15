@@ -1,0 +1,136 @@
+{
+  "table": "aidata2025.ads_collartfashion.ads_oper_user_revenue_di",
+  "captured_at": "2026-09-14T13:19:04.976694+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "description": "Stripe 收入日期"
+      },
+      {
+        "name": "event_timestamp",
+        "type": "INTEGER",
+        "description": "Stripe 事件 unix 秒"
+      },
+      {
+        "name": "transaction_id",
+        "type": "STRING",
+        "description": "Stripe 交易 ID"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "description": "Stripe app_name，Fashion 订单一般为 collart_web"
+      },
+      {
+        "name": "charge_type",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "currency",
+        "type": "STRING"
+      },
+      {
+        "name": "stripe_customer_id",
+        "type": "STRING"
+      },
+      {
+        "name": "amount",
+        "type": "FLOAT"
+      },
+      {
+        "name": "fee",
+        "type": "FLOAT"
+      },
+      {
+        "name": "revneue",
+        "type": "FLOAT",
+        "description": "实收美元，字段名与上游一致"
+      },
+      {
+        "name": "description_type",
+        "type": "STRING"
+      },
+      {
+        "name": "order_status",
+        "type": "STRING"
+      },
+      {
+        "name": "product_id",
+        "type": "STRING"
+      },
+      {
+        "name": "product_name",
+        "type": "STRING"
+      },
+      {
+        "name": "subscription_id",
+        "type": "STRING"
+      },
+      {
+        "name": "subscription_status",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "payment_channel",
+        "type": "STRING"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "description": "Fashion 归属包名 collart_fashion"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "description": "匹配支付成功事件的 GA4 用户 ID"
+      },
+      {
+        "name": "first_fashion_succeed_date",
+        "type": "DATE",
+        "description": "该 user_id 窗口内首次 Fashion 支付成功日"
+      },
+      {
+        "name": "succeed_date",
+        "type": "DATE",
+        "description": "匹配到的 vip_subscribe_succeed 日期"
+      },
+      {
+        "name": "match_diff_seconds",
+        "type": "INTEGER",
+        "description": "Stripe 与支付成功事件的秒差绝对值"
+      },
+      {
+        "name": "etl_time",
+        "type": "TIMESTAMP"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collartfashion",
+    "tableId": "ads_oper_user_revenue_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date",
+    "requirePartitionFilter": true
+  },
+  "clustering": {
+    "fields": [
+      "user_id",
+      "transaction_id"
+    ]
+  },
+  "description": "Fashion Stripe 订单明细；10 分钟内最近 Fashion vip_subscribe_succeed 归属",
+  "type": "TABLE"
+}

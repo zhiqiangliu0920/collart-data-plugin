@@ -1,0 +1,93 @@
+config {
+    type : "operations"
+}
+
+
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `aidata2025.ods.ods_apple_subscription_vidart_df`
+WHERE
+  event_date BETWEEN from_date
+  AND to_date;
+  -----------------------插入分区中数据----------------------------
+INSERT INTO
+   `aidata2025.ods.ods_apple_subscription_vidart_df`
+
+SELECT
+  -- 顶层
+  to_date as event_date,
+  JSON_VALUE(`data`, '$.version') AS version,
+  JSON_VALUE(`data`, '$.notificationType') AS notificationType,
+  JSON_VALUE(`data`, '$.bundleId') AS bundleId,
+  JSON_VALUE(`data`, '$.appAppleId') AS appAppleId,
+  JSON_VALUE(`data`, '$.environment') AS environment,
+  JSON_VALUE(`data`, '$.status') AS status,
+  JSON_VALUE(`data`, '$.notificationUUID') AS notificationUUID,
+  JSON_VALUE(`data`, '$.signedDate') AS signedDate,
+  JSON_VALUE(`data`, '$.bundleVersion') AS bundleVersion,
+
+  -- renewalInfo
+  JSON_VALUE(`data`, '$.renewalInfo.autoRenewProductId') AS ri_autoRenewProductId,
+  JSON_VALUE(`data`, '$.renewalInfo.autoRenewStatus') AS ri_autoRenewStatus,
+  JSON_VALUE(`data`, '$.renewalInfo.originalTransactionId') AS ri_originalTransactionId,
+  JSON_VALUE(`data`, '$.renewalInfo.productId') AS ri_productId,
+  JSON_VALUE(`data`, '$.renewalInfo.renewalDate') AS ri_renewalDate,
+  JSON_VALUE(`data`, '$.renewalInfo.signedDate') AS ri_signedDate,
+  JSON_VALUE(`data`, '$.renewalInfo.environment') AS ri_environment,
+  JSON_VALUE(`data`, '$.renewalInfo.recentSubscriptionStartDate') AS ri_recentSubscriptionStartDate,
+
+  -- transactionInfo
+  JSON_VALUE(`data`, '$.transactionInfo.originalTransactionId') AS ti_originalTransactionId,
+  JSON_VALUE(`data`, '$.transactionInfo.transactionId') AS ti_transactionId,
+  JSON_VALUE(`data`, '$.transactionInfo.productId') AS ti_productId,
+  JSON_VALUE(`data`, '$.transactionInfo.purchaseDate') AS ti_purchaseDate,
+  JSON_VALUE(`data`, '$.transactionInfo.originalPurchaseDate') AS ti_originalPurchaseDate,
+  JSON_VALUE(`data`, '$.transactionInfo.expiresDate') AS ti_expiresDate,
+  JSON_VALUE(`data`, '$.transactionInfo.quantity') AS ti_quantity, 
+  JSON_VALUE(`data`, '$.transactionInfo.type') AS ti_type,
+  JSON_VALUE(`data`, '$.transactionInfo.inAppOwnershipType') AS ti_inAppOwnershipType,
+  JSON_VALUE(`data`, '$.transactionInfo.signedDate') AS ti_signedDate,
+  JSON_VALUE(`data`, '$.transactionInfo.environment') AS ti_environment,
+  JSON_VALUE(`data`, '$.transactionInfo.bundleId') AS ti_bundleId,
+  JSON_VALUE(`data`, '$.transactionInfo.subscriptionGroupIdentifier') AS ti_subscriptionGroupIdentifier,
+  JSON_VALUE(`data`, '$.transactionInfo.webOrderLineItemId') AS ti_webOrderLineItemId,
+  JSON_VALUE(`data`, '$.transactionInfo.appAccountToken') AS ti_appAccountToken,
+  JSON_VALUE(`data`, '$.transactionInfo.storefront') AS ti_storefront,
+  JSON_VALUE(`data`, '$.transactionInfo.storefrontId') AS ti_storefrontId,
+  JSON_VALUE(`data`, '$.transactionInfo.currency') AS ti_currency,
+  JSON_VALUE(`data`, '$.transactionInfo.transactionReason') AS ti_transactionReason,
+  JSON_VALUE(`data`, '$.transactionInfo.price') AS ti_price,
+
+  -- rawData
+  JSON_VALUE(`data`, '$.rawData.appAppleId') AS rd_appAppleId,
+  JSON_VALUE(`data`, '$.rawData.bundleId') AS rd_bundleId,
+  JSON_VALUE(`data`, '$.rawData.bundleVersion') AS rd_bundleVersion,
+  JSON_VALUE(`data`, '$.rawData.environment') AS rd_environment,
+  JSON_VALUE(`data`, '$.rawData.status') AS rd_status,
+
+  -- rawSummary
+  JSON_VALUE(`data`, '$.rawSummary.requestIdentifier') AS rs_requestIdentifier,
+  JSON_VALUE(`data`, '$.rawSummary.environment') AS rs_environment,
+  JSON_VALUE(`data`, '$.rawSummary.appAppleId') AS rs_appAppleId,
+  JSON_VALUE(`data`, '$.rawSummary.bundleId') AS rs_bundleId,
+  JSON_VALUE(`data`, '$.rawSummary.productId') AS rs_productId,
+  JSON_VALUE(`data`, '$.rawSummary.storefrontCountryCodes') AS rs_storefrontCountryCodes,
+  JSON_VALUE(`data`, '$.rawSummary.failedCount') AS rs_failedCount,
+  JSON_VALUE(`data`, '$.rawSummary.succeededCount') AS rs_succeededCount
+
+FROM `vidart-8b8ca.analytics_528583115.apple-store-buy-records-daily`
+where date(_PARTITIONTIME) = to_date
+;
+
+commit;
+
+
+
+

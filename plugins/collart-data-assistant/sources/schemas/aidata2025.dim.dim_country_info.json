@@ -1,0 +1,38 @@
+{
+  "table": "aidata2025.dim.dim_country_info",
+  "captured_at": "2026-09-14T13:19:06.496938+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "class",
+        "type": "STRING"
+      },
+      {
+        "name": "country_name",
+        "type": "STRING"
+      },
+      {
+        "name": "country_name_2",
+        "type": "STRING"
+      },
+      {
+        "name": "country_name_3",
+        "type": "STRING"
+      },
+      {
+        "name": "country_name_4",
+        "type": "STRING"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dim",
+    "tableId": "dim_country_info"
+  },
+  "type": "TABLE"
+}

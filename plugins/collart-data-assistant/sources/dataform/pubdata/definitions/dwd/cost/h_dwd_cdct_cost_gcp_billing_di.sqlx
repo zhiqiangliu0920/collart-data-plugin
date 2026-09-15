@@ -1,0 +1,47 @@
+config {
+    type: "operations"
+}
+
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `dwd.dwd_cdct_cost_gcp_billing_di`
+WHERE
+  event_date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY);
+  --插入分区数据--
+INSERT INTO
+  dwd.dwd_cdct_cost_gcp_billing_di
+SELECT
+  a.event_date,
+  NULL AS atlasv_app_name,
+  NULL AS atlasv_team,
+  google_project_id,
+  google_project_name,
+  sku_description,
+  sku_id,
+  service_description,
+  service_id,
+  cost_type,
+  usage_amount,
+  usage_unit,
+  original_total
+FROM
+  pubdata2025.ods.ods_billing_gcs_cost_1d a
+INNER JOIN (
+  SELECT
+    event_date,
+    MAX(intotime) AS intotime
+  FROM
+    pubdata2025.ods.ods_billing_gcs_cost_1d
+  WHERE
+    event_date >= DATE_SUB(CURRENT_DATE, INTERVAL 15 DAY)
+  GROUP BY
+    event_date ) b
+ON
+  a.event_date=b.event_date
+  AND a.intotime=b.intotime;
+  --如果所有操作都成功，提交事务
+COMMIT
+  ;

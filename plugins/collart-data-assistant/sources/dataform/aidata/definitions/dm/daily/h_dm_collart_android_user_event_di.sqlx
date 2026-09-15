@@ -1,0 +1,604 @@
+config {
+  type: "operations",
+  dependencies: [
+    "h_dwd_oper_user_event_di",
+    "h_dwd_oper_user_event_params_di",
+    "h_dwd_oper_user_properties_di"
+  ]
+}
+
+/*
+  Collart Android 第一张事件语义明细表
+  Dataform: definitions/dm/daily/h_dm_collart_android_user_event_di.sqlx
+  目标表: aidata2025.dm.dm_collart_android_user_event_di
+
+  口径:
+  - 与 iOS DM 表保持同一加工骨架：DWD event + params + properties
+  - Android 包名: free.ai.photo.generator.collart.ai
+  - Android 端不存在 device_id 埋点；advertising_id 来自 GA4 原生 device.advertising_id
+    （DWD 列名带前导空格 ` advertising_id`，填充率约 99.9%），随 android_id 一并入 identity
+  - atlasv_uid 优先取 DWD 事件表同名列，user properties 兜底，并在「当日 × 用户」内广播；
+    旧 DWD 用户日表也是从事件表 MAX(atlasv_uid) 得到，二者口径保持一致
+  - 渠道字段在「当日 × 用户」维度回填：归因参数只挂在极少数事件上，直接取会几乎全空
+  - 渠道两层：traffic_src_type 只表达渠道性质（delivery / inhouse / kol / nature），
+    traffic_src_platform 表达具体投放平台（ga_delivery / fb_delivery /
+    x_delivery / tt_delivery / other_delivery；非投放沿用 type）。
+    Instagram 属于 Meta，IG campaign / source 含 instagram 一律 fb_delivery。
+    sptt- / tt_official 等达人命名保持 kol，只有付费 TikTok 才叫 tt_delivery。
+  - subscription 存订阅/购点商品快照；Android 广告参数单开 ad STRUCT
+  - 金额权威口径不在本表，仍以收入/订单链路为准
+  - 后台技术事件（gp_billing_setup / ad_sdk_init / sync_model_info_*）保留在明细层，
+    是否算活跃由下游 active 表按「有前台事件」判定
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 2;
+DECLARE to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+DECLARE vip_tech_events ARRAY<STRING> DEFAULT [
+  'vip_get_all_history_ids',
+  'vip_entitlement_changed',
+  'vip_query_entitlements',
+  'vip_query_entitlements_result',
+  'vip_update_db',
+  'vip_read_from_db',
+  'vip_perform_process',
+  'vip_perform_process_result'
+];
+
+CREATE TABLE IF NOT EXISTS `aidata2025.dm.dm_collart_android_user_event_di`
+(
+  event_date DATE,
+  event_time DATETIME,
+  user_pseudo_id STRING,
+  user_id STRING,
+  country STRING,
+  traffic_src_name STRING,
+  traffic_src_type STRING,
+  traffic_src_platform STRING,
+  app_version STRING,
+  ga_session_id INT64,
+  ga_session_number INT64,
+  first_open_time TIMESTAMP,
+  is_login BOOL,
+  is_vip STRING,
+  subscription STRUCT<
+    product_id STRING,
+    price STRING,
+    quantity INT64,
+    currency STRING
+  >,
+  identity STRUCT<
+    atlasv_uid STRING,
+    android_id STRING,
+    adjust_id STRING,
+    advertising_id STRING
+  >,
+  geo STRUCT<
+    city STRING,
+    continent STRING,
+    sub_continent STRING
+  >,
+  device STRUCT<
+    category STRING,
+    mobile_brand_name STRING,
+    mobile_model_name STRING,
+    operating_system STRING,
+    operating_system_version STRING,
+    os_sdk_version STRING,
+    vendor_id STRING,
+    language STRING,
+    installer_package_name STRING
+  >,
+  traffic_src STRUCT<
+    medium STRING,
+    source STRING,
+    fb_campaign STRING,
+    adjust_network STRING,
+    adjust_tracker_name STRING,
+    adjust_campaign_name STRING,
+    adjust_adgroup STRING,
+    campaign_info_source STRING,
+    install_referer_url STRING,
+    gclid STRING,
+    gad_source STRING,
+    gad_campaign_id STRING,
+    utm_source STRING,
+    utm_medium STRING
+  >,
+  ad STRUCT<
+    ad_platform STRING,
+    ad_type STRING,
+    ad_source STRING,
+    unit_id STRING,
+    placement STRING,
+    segment_id STRING,
+    ad_unit_code STRING,
+    reward_type STRING,
+    reward_value INT64,
+    ad_value STRING,
+    currency STRING,
+    is_retry STRING,
+    ab_test_id STRING
+  >,
+  template STRUCT<
+    temp_id STRING,
+    module_id STRING,
+    module_title STRING,
+    module_index STRING,
+    category_name STRING,
+    template_name STRING
+  >,
+  params_info STRUCT<
+    service_type STRING,
+    function_type STRING,
+    task_id STRING,
+    gen_id STRING,
+    biz_session_id STRING,
+    model STRING,
+    resolution STRING,
+    aspect_ratio STRING,
+    ratio STRING,
+    feature STRING,
+    event_from STRING,
+    event_source STRING,
+    content_type STRING,
+    page STRING,
+    tab_type STRING,
+    credit_cost STRING,
+    generate_count STRING,
+    duration STRING,
+    elapsed STRING,
+    engagement_time_msec INT64,
+    is_valid STRING,
+    is_free STRING,
+    is_frame STRING,
+    is_regenerate STRING,
+    chance_from STRING,
+    image_num STRING,
+    style_id STRING,
+    reference_type STRING,
+    change_type STRING,
+    error_code STRING,
+    service_code STRING,
+    error_msg STRING,
+    error_value STRING,
+    fail_reason STRING,
+    page_type STRING,
+    transaction_id STRING,
+    credit_count STRING,
+    purchase_content_mode STRING,
+    network_type STRING,
+    first_launch STRING,
+    search_keyword STRING
+  >,
+  event_name STRING,
+  package_name STRING,
+  app_name STRING
+)
+PARTITION BY event_date
+CLUSTER BY event_name, user_pseudo_id, country
+OPTIONS (
+  description = 'Collart Android 用户事件语义明细：DWD 事件 + 高频参数 STRUCT；渠道字段按当日用户回填'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.dm.dm_collart_android_user_event_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.dm.dm_collart_android_user_event_di`
+
+WITH event_core AS (
+  SELECT *
+  FROM `aidata2025.dwd.dwd_oper_user_event_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND lower(app_name) = 'collart_android'
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+    AND user_pseudo_id IS NOT NULL
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    -- vip 权益 SDK 内部事件，占近 3 日约 12% 行数且无分析价值；业务型 vip_subscribe* 保留
+    AND event_name NOT IN UNNEST(vip_tech_events)
+),
+
+-- 同一关联键在 params 源表存在多行（近 3 日约 3.8 万组，2~12 行不等），
+-- 先合并参数数组再打平，否则 LEFT JOIN 会退化成多对多导致行数虚增。
+event_params_merged AS (
+  SELECT
+    event_date,
+    package_name,
+    user_pseudo_id,
+    event_name,
+    event_time,
+    ARRAY_CONCAT_AGG(event_param) AS event_param
+  FROM `aidata2025.dwd.dwd_oper_user_event_params_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND lower(app_name) = 'collart_android'
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+    AND event_name NOT IN UNNEST(vip_tech_events)
+  GROUP BY event_date, package_name, user_pseudo_id, event_name, event_time
+),
+
+event_params AS (
+  SELECT
+    event_date,
+    package_name,
+    user_pseudo_id,
+    event_name,
+    event_time,
+    (
+      SELECT AS STRUCT
+        -- 会话 / 订阅
+        MAX(IF(p.key = 'ga_session_id', value_string, NULL)) AS ga_session_id,
+        MAX(IF(p.key = 'ga_session_number', value_string, NULL)) AS ga_session_number,
+        MAX(IF(p.key IN ('product_id', 'productId', 'event_product_id'), value_string, NULL)) AS product_id,
+        MAX(IF(p.key = 'price', value_string, NULL)) AS price,
+        MAX(IF(p.key = 'quantity', value_string, NULL)) AS quantity,
+        MAX(IF(p.key = 'currency', value_string, NULL)) AS currency,
+        MAX(IF(p.key IN ('is_vip', 'params_is_vip'), value_string, NULL)) AS is_vip,
+        MAX(IF(p.key IN ('transaction_id', 'event_order_id', 'order_id', 'orderId'), value_string, NULL)) AS transaction_id,
+        MAX(IF(p.key = 'page_type', value_string, NULL)) AS page_type,
+        MAX(IF(p.key = 'count', value_string, NULL)) AS credit_count,
+        MAX(IF(p.key = 'purchase_content_mode', value_string, NULL)) AS purchase_content_mode,
+
+        -- 身份 / 渠道（Android 无 device_id / advertising_id）
+        MAX(IF(p.key = 'adjust_id', value_string, NULL)) AS adjust_id,
+        MAX(IF(p.key = 'fb_campaign', value_string, NULL)) AS fb_campaign,
+        MAX(IF(p.key = 'adjust_network', value_string, NULL)) AS adjust_network,
+        MAX(IF(p.key = 'adjust_tracker_name', value_string, NULL)) AS adjust_tracker_name,
+        MAX(IF(p.key = 'adjust_campaign_name', value_string, NULL)) AS adjust_campaign_name,
+        MAX(IF(p.key = 'adjust_adgroup', value_string, NULL)) AS adjust_adgroup,
+        MAX(IF(p.key = 'campaign_info_source', value_string, NULL)) AS campaign_info_source,
+        MAX(IF(p.key = 'install_referer_url_app', value_string, NULL)) AS install_referer_url,
+        MAX(IF(p.key = 'gclid', value_string, NULL)) AS gclid,
+        MAX(IF(p.key = 'gad_source', value_string, NULL)) AS gad_source,
+        MAX(IF(p.key = 'gad_campaignid', value_string, NULL)) AS gad_campaign_id,
+        MAX(IF(p.key = 'utm_source', value_string, NULL)) AS utm_source,
+        MAX(IF(p.key = 'utm_medium', value_string, NULL)) AS utm_medium,
+
+        -- 广告
+        MAX(IF(p.key IN ('ad_platform', 'params_ad_platform'), value_string, NULL)) AS ad_platform,
+        MAX(IF(p.key = 'ad_type', value_string, NULL)) AS ad_type,
+        MAX(IF(p.key = 'ad_source', value_string, NULL)) AS ad_source,
+        MAX(IF(p.key = 'unit_id', value_string, NULL)) AS unit_id,
+        MAX(IF(p.key = 'placement', value_string, NULL)) AS placement,
+        MAX(IF(p.key = 'segment_id', value_string, NULL)) AS segment_id,
+        MAX(IF(p.key = 'ad_unit_code', value_string, NULL)) AS ad_unit_code,
+        MAX(IF(p.key = 'reward_type', value_string, NULL)) AS reward_type,
+        MAX(IF(p.key = 'reward_value', value_string, NULL)) AS reward_value,
+        MAX(IF(p.key = 'value', value_string, NULL)) AS ad_value,
+        MAX(IF(p.key = 'is_retry', value_string, NULL)) AS is_retry,
+        MAX(IF(p.key = 'ab_test_id', value_string, NULL)) AS ab_test_id,
+
+        -- 模板
+        MAX(IF(p.key = 'temp_id', value_string, NULL)) AS temp_id,
+        MAX(IF(p.key = 'event_temp_id', value_string, NULL)) AS event_temp_id,
+        MAX(IF(p.key = 'id', value_string, NULL)) AS content_id,
+        MAX(IF(p.key IN ('module_id', 'event_module_id'), value_string, NULL)) AS module_id,
+        MAX(IF(p.key IN ('module_title', 'event_module_title'), value_string, NULL)) AS module_title,
+        MAX(IF(p.key IN ('module_index', 'event_module_index'), value_string, NULL)) AS module_index,
+        MAX(IF(p.key IN ('category_name', 'event_category'), value_string, NULL)) AS category_name,
+        MAX(IF(p.key = 'name', value_string, NULL)) AS template_name,
+
+        -- AI / 错误 / 耗时 / 环境
+        MAX(IF(p.key = 'service_type', value_string, NULL)) AS service_type,
+        MAX(IF(p.key = 'function_type', value_string, NULL)) AS function_type,
+        MAX(IF(LOWER(p.key) IN ('task_id', 'taskid'), value_string, NULL)) AS task_id,
+        MAX(IF(LOWER(p.key) IN ('gen_id', 'genid'), value_string, NULL)) AS gen_id,
+        MAX(IF(p.key = 'sessionId', value_string, NULL)) AS biz_session_id,
+        MAX(IF(p.key = 'model', value_string, NULL)) AS model,
+        MAX(IF(p.key = 'resolution', value_string, NULL)) AS resolution,
+        MAX(IF(p.key = 'aspect_ratio', value_string, NULL)) AS aspect_ratio,
+        MAX(IF(p.key = 'ratio', value_string, NULL)) AS ratio,
+        MAX(IF(p.key IN ('feature', 'event_feature'), value_string, NULL)) AS feature,
+        MAX(IF(p.key = 'from', value_string, NULL)) AS event_from,
+        MAX(IF(p.key = 'source', value_string, NULL)) AS event_source,
+        MAX(IF(p.key = 'type', value_string, NULL)) AS content_type,
+        MAX(IF(p.key = 'page', value_string, NULL)) AS page,
+        MAX(IF(p.key = 'tab_type', value_string, NULL)) AS tab_type,
+        MAX(IF(p.key = 'credit_cost', value_string, NULL)) AS credit_cost,
+        MAX(IF(p.key IN ('generate_count', 'event_generate_cnt'), value_string, NULL)) AS generate_count,
+        MAX(IF(p.key IN ('duration', 'event_duration'), value_string, NULL)) AS duration,
+        MAX(IF(p.key = 'time', value_string, NULL)) AS elapsed,
+        MAX(IF(p.key = 'engagement_time_msec', value_string, NULL)) AS engagement_time_msec,
+        MAX(IF(p.key = 'is_valid', value_string, NULL)) AS is_valid,
+        MAX(IF(p.key = 'is_free', value_string, NULL)) AS is_free,
+        MAX(IF(p.key = 'is_frame', value_string, NULL)) AS is_frame,
+        MAX(IF(p.key = 'event_is_regenerate', value_string, NULL)) AS is_regenerate,
+        MAX(IF(p.key = 'chance_from', value_string, NULL)) AS chance_from,
+        MAX(IF(p.key = 'image_num', value_string, NULL)) AS image_num,
+        MAX(IF(p.key = 'styleid', value_string, NULL)) AS style_id,
+        MAX(IF(p.key = 'reference_type', value_string, NULL)) AS reference_type,
+        MAX(IF(p.key = 'change_type', value_string, NULL)) AS change_type,
+        MAX(IF(p.key IN ('errorCode', 'code'), value_string, NULL)) AS error_code,
+        MAX(IF(p.key = 'serviceCode', value_string, NULL)) AS service_code,
+        MAX(IF(p.key IN ('error_msg', 'message'), value_string, NULL)) AS error_msg,
+        MAX(IF(p.key = 'error_value', value_string, NULL)) AS error_value,
+        MAX(IF(p.key = 'reason', value_string, NULL)) AS fail_reason,
+        MAX(IF(p.key = 'network_type', value_string, NULL)) AS network_type,
+        MAX(IF(p.key = 'first_launch', value_string, NULL)) AS first_launch,
+        MAX(IF(p.key = 'text', value_string, NULL)) AS search_keyword
+      FROM (
+        SELECT
+          p.*,
+          COALESCE(
+            CAST(p.value.int_value AS STRING),
+            p.value.string_value,
+            CAST(p.value.float_value AS STRING),
+            CAST(p.value.double_value AS STRING)
+          ) AS value_string
+        FROM UNNEST(event_param) AS p
+      ) AS p
+    ) AS param
+  FROM event_params_merged
+),
+
+user_properties AS (
+  SELECT
+    package_name,
+    user_pseudo_id,
+    MAX(IF(user_properties_key = 'atlasv_uid', user_properties_value, NULL)) AS atlasv_uid,
+    MAX(IF(user_properties_key = 'android_id', user_properties_value, NULL)) AS android_id,
+    MAX(IF(user_properties_key = 'adjust_id', user_properties_value, NULL)) AS adjust_id,
+    MAX(IF(user_properties_key = 'fb_campaign', user_properties_value, NULL)) AS fb_campaign,
+    MAX(IF(user_properties_key = 'adjust_tracker_name', user_properties_value, NULL)) AS adjust_tracker_name,
+    MAX(IF(user_properties_key = 'adjust_campaign_name', user_properties_value, NULL)) AS adjust_campaign_name,
+    MAX(IF(user_properties_key = 'adjust_adgroup', user_properties_value, NULL)) AS adjust_adgroup,
+    MAX(IF(user_properties_key = 'last_gclid', user_properties_value, NULL)) AS last_gclid,
+    MAX(IF(user_properties_key = 'installer_package_name', user_properties_value, NULL)) AS installer_package_name,
+    MAX(IF(user_properties_key = 'os_sdk_version', user_properties_value, NULL)) AS os_sdk_version
+  FROM `aidata2025.dwd.dwd_oper_user_properties_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND lower(app_name) = 'collart_android'
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+  GROUP BY package_name, user_pseudo_id
+),
+
+joined AS (
+  SELECT
+    e.event_date,
+    e.event_time,
+    e.user_pseudo_id,
+    e.user_id,
+    e.country,
+    e.traffic_src_name,
+    e.traffic_src_type,
+    e.traffic_src_medium,
+    e.traffic_src_source,
+    e.app_version,
+    e.first_open_time,
+    e.is_vip,
+    e.city,
+    e.geo_continent,
+    e.geo_sub_continent,
+    e.device_category,
+    e.mobile_brand_name,
+    e.mobile_model_name,
+    e.operating_system,
+    e.device_operating_system_version,
+    e.device_vendor_id,
+    e.device_language,
+    e.event_name,
+    e.` advertising_id` AS advertising_id,
+    p.param,
+    COALESCE(e.atlasv_uid, up.atlasv_uid) AS atlasv_uid,
+    up.android_id,
+    up.adjust_id AS prop_adjust_id,
+    up.fb_campaign AS prop_fb_campaign,
+    up.adjust_tracker_name AS prop_adjust_tracker_name,
+    up.adjust_campaign_name AS prop_adjust_campaign_name,
+    up.adjust_adgroup AS prop_adjust_adgroup,
+    up.last_gclid AS prop_last_gclid,
+    up.installer_package_name,
+    up.os_sdk_version
+  FROM event_core AS e
+  LEFT JOIN event_params AS p
+    ON e.event_date = p.event_date
+   AND e.package_name = p.package_name
+   AND e.user_pseudo_id = p.user_pseudo_id
+   AND e.event_name = p.event_name
+   AND e.event_time = DATETIME(TIMESTAMP_MICROS(p.event_time))
+  LEFT JOIN user_properties AS up
+    ON e.package_name = up.package_name
+   AND e.user_pseudo_id = up.user_pseudo_id
+),
+
+-- 归因类参数只挂在 attribution_info / firebase_campaign 等极少数事件上，
+-- 直接按行取填充率不足 0.2%，需在「当日 × 用户」维度广播。
+enriched AS (
+  SELECT
+    j.*,
+    MAX(j.atlasv_uid) OVER w AS u_atlasv_uid,
+    MAX(j.param.fb_campaign) OVER w AS u_fb_campaign,
+    MAX(j.param.adjust_network) OVER w AS u_adjust_network,
+    MAX(j.param.adjust_tracker_name) OVER w AS u_adjust_tracker_name,
+    MAX(j.param.adjust_campaign_name) OVER w AS u_adjust_campaign_name,
+    MAX(j.param.adjust_adgroup) OVER w AS u_adjust_adgroup,
+    MAX(j.param.campaign_info_source) OVER w AS u_campaign_info_source,
+    MAX(j.param.install_referer_url) OVER w AS u_install_referer_url,
+    MAX(j.param.gclid) OVER w AS u_gclid,
+    MAX(j.param.gad_source) OVER w AS u_gad_source,
+    MAX(j.param.gad_campaign_id) OVER w AS u_gad_campaign_id,
+    MAX(j.param.utm_source) OVER w AS u_utm_source,
+    MAX(j.param.utm_medium) OVER w AS u_utm_medium
+  FROM joined AS j
+  WINDOW w AS (PARTITION BY j.event_date, j.user_pseudo_id)
+),
+
+-- 渠道性质：DWD 原始 traffic_src_type 只有 delivery / nature / inhouse，
+-- 达人（sptt- / spytb- / kol* / tt_official 等命名）混在 delivery 里，按老表口径单拆 kol。
+channel_typed AS (
+  SELECT
+    * EXCEPT(traffic_src_type),
+    CASE
+      WHEN traffic_src_type = 'inhouse'
+        OR LOWER(traffic_src_name) LIKE '%inhouse%' THEN 'inhouse'
+      WHEN REGEXP_CONTAINS(LOWER(traffic_src_name), r'^(kol|sptt-|spytb-|tt_|youtube_)') THEN 'kol'
+      WHEN traffic_src_type = 'delivery' THEN 'delivery'
+      WHEN NULLIF(u_gclid, '') IS NOT NULL THEN 'delivery'
+      ELSE 'nature'
+    END AS traffic_src_type
+  FROM enriched
+),
+
+-- 投放平台：仅对 delivery 细分，其余直接沿用渠道性质，保证列非空。
+-- x_delivery / tt_delivery 只认付费媒体；sptt- / tt_official 已在上一层打成 kol。
+channelized AS (
+  SELECT
+    *,
+    CASE
+      WHEN traffic_src_type != 'delivery' THEN traffic_src_type
+      WHEN UPPER(traffic_src_name) LIKE 'GA-%'
+        OR (LOWER(traffic_src_source) = 'google' AND LOWER(traffic_src_medium) = 'cpc')
+        OR NULLIF(u_gclid, '') IS NOT NULL THEN 'ga_delivery'
+      WHEN LOWER(IFNULL(traffic_src_source, '')) IN ('x', 'twitter')
+        OR LOWER(IFNULL(u_utm_source, '')) IN ('x', 'twitter')
+        OR LOWER(IFNULL(u_adjust_network, '')) IN ('x', 'twitter')
+        OR LOWER(IFNULL(u_adjust_network, '')) LIKE '%twitter%'
+        OR REGEXP_CONTAINS(UPPER(IFNULL(traffic_src_name, '')), r'^(X[-_]|CW_X_|TW[-_]|TWITTER)') THEN 'x_delivery'
+      WHEN LOWER(IFNULL(traffic_src_source, '')) LIKE '%tiktok%'
+        OR LOWER(IFNULL(traffic_src_source, '')) LIKE '%bytedance%'
+        OR LOWER(IFNULL(u_utm_source, '')) LIKE '%tiktok%'
+        OR LOWER(IFNULL(u_adjust_network, '')) LIKE '%tiktok%'
+        OR LOWER(IFNULL(u_adjust_network, '')) LIKE '%bytedance%'
+        OR REGEXP_CONTAINS(UPPER(IFNULL(traffic_src_name, '')), r'^(TT[-]|TIKTOK)') THEN 'tt_delivery'
+      WHEN UPPER(traffic_src_name) LIKE 'FB%'
+        OR UPPER(traffic_src_name) LIKE 'IG%'
+        OR LOWER(traffic_src_source) LIKE '%facebook%'
+        OR LOWER(traffic_src_source) LIKE '%instagram%' THEN 'fb_delivery'
+      ELSE 'other_delivery'
+    END AS traffic_src_platform
+  FROM channel_typed
+)
+
+SELECT
+  event_date,
+  event_time,
+  user_pseudo_id,
+  user_id,
+  country,
+  traffic_src_name,
+  traffic_src_type,
+  traffic_src_platform,
+  app_version,
+  SAFE_CAST(param.ga_session_id AS INT64) AS ga_session_id,
+  SAFE_CAST(param.ga_session_number AS INT64) AS ga_session_number,
+  first_open_time,
+  (user_id IS NOT NULL AND user_id != '') AS is_login,
+  COALESCE(is_vip, param.is_vip) AS is_vip,
+  STRUCT(
+    param.product_id AS product_id,
+    param.price AS price,
+    SAFE_CAST(param.quantity AS INT64) AS quantity,
+    param.currency AS currency
+  ) AS subscription,
+  STRUCT(
+    COALESCE(u_atlasv_uid, atlasv_uid) AS atlasv_uid,
+    android_id AS android_id,
+    COALESCE(param.adjust_id, prop_adjust_id) AS adjust_id,
+    advertising_id AS advertising_id
+  ) AS identity,
+  STRUCT(
+    city AS city,
+    geo_continent AS continent,
+    geo_sub_continent AS sub_continent
+  ) AS geo,
+  STRUCT(
+    device_category AS category,
+    mobile_brand_name AS mobile_brand_name,
+    mobile_model_name AS mobile_model_name,
+    operating_system AS operating_system,
+    device_operating_system_version AS operating_system_version,
+    os_sdk_version AS os_sdk_version,
+    device_vendor_id AS vendor_id,
+    device_language AS language,
+    installer_package_name AS installer_package_name
+  ) AS device,
+  STRUCT(
+    traffic_src_medium AS medium,
+    traffic_src_source AS source,
+    COALESCE(u_fb_campaign, prop_fb_campaign) AS fb_campaign,
+    u_adjust_network AS adjust_network,
+    COALESCE(u_adjust_tracker_name, prop_adjust_tracker_name) AS adjust_tracker_name,
+    COALESCE(u_adjust_campaign_name, prop_adjust_campaign_name) AS adjust_campaign_name,
+    COALESCE(u_adjust_adgroup, prop_adjust_adgroup) AS adjust_adgroup,
+    u_campaign_info_source AS campaign_info_source,
+    u_install_referer_url AS install_referer_url,
+    COALESCE(u_gclid, prop_last_gclid) AS gclid,
+    u_gad_source AS gad_source,
+    u_gad_campaign_id AS gad_campaign_id,
+    u_utm_source AS utm_source,
+    u_utm_medium AS utm_medium
+  ) AS traffic_src,
+  STRUCT(
+    param.ad_platform AS ad_platform,
+    param.ad_type AS ad_type,
+    param.ad_source AS ad_source,
+    param.unit_id AS unit_id,
+    param.placement AS placement,
+    param.segment_id AS segment_id,
+    param.ad_unit_code AS ad_unit_code,
+    param.reward_type AS reward_type,
+    SAFE_CAST(param.reward_value AS INT64) AS reward_value,
+    param.ad_value AS ad_value,
+    param.currency AS currency,
+    param.is_retry AS is_retry,
+    param.ab_test_id AS ab_test_id
+  ) AS ad,
+  STRUCT(
+    COALESCE(param.temp_id, param.event_temp_id, param.content_id) AS temp_id,
+    param.module_id AS module_id,
+    param.module_title AS module_title,
+    param.module_index AS module_index,
+    param.category_name AS category_name,
+    param.template_name AS template_name
+  ) AS template,
+  STRUCT(
+    param.service_type AS service_type,
+    param.function_type AS function_type,
+    param.task_id AS task_id,
+    param.gen_id AS gen_id,
+    param.biz_session_id AS biz_session_id,
+    param.model AS model,
+    param.resolution AS resolution,
+    param.aspect_ratio AS aspect_ratio,
+    param.ratio AS ratio,
+    param.feature AS feature,
+    param.event_from AS event_from,
+    param.event_source AS event_source,
+    param.content_type AS content_type,
+    param.page AS page,
+    param.tab_type AS tab_type,
+    param.credit_cost AS credit_cost,
+    param.generate_count AS generate_count,
+    param.duration AS duration,
+    param.elapsed AS elapsed,
+    SAFE_CAST(param.engagement_time_msec AS INT64) AS engagement_time_msec,
+    param.is_valid AS is_valid,
+    param.is_free AS is_free,
+    param.is_frame AS is_frame,
+    param.is_regenerate AS is_regenerate,
+    param.chance_from AS chance_from,
+    param.image_num AS image_num,
+    param.style_id AS style_id,
+    param.reference_type AS reference_type,
+    param.change_type AS change_type,
+    param.error_code AS error_code,
+    param.service_code AS service_code,
+    param.error_msg AS error_msg,
+    param.error_value AS error_value,
+    param.fail_reason AS fail_reason,
+    param.page_type AS page_type,
+    param.transaction_id AS transaction_id,
+    param.credit_count AS credit_count,
+    param.purchase_content_mode AS purchase_content_mode,
+    param.network_type AS network_type,
+    param.first_launch AS first_launch,
+    param.search_keyword AS search_keyword
+  ) AS params_info,
+  event_name,
+  'free.ai.photo.generator.collart.ai' AS package_name,
+  'collart_android' AS app_name
+FROM channelized;
+
+COMMIT;

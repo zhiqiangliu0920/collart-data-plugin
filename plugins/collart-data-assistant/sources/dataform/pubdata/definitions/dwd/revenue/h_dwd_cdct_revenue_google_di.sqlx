@@ -1,0 +1,191 @@
+config {
+    type: "operations"
+}
+
+--------- 订阅收入链路 ---------
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date}-6;
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+BEGIN TRANSACTION;
+
+-- 这里放置一系列 DML 语句
+DELETE
+FROM
+  `pubdata2025.dwd.dwd_cdct_revenue_google_di`
+WHERE
+  Order_Charged_Date BETWEEN from_date
+  AND to_date;
+
+-- 插入数据
+INSERT INTO
+  `pubdata2025.dwd.dwd_cdct_revenue_google_di`
+
+with latest_daily_rate AS (
+  SELECT
+    currency, 
+    rate
+  FROM (
+    SELECT 
+      currency, 
+      rate, 
+      ROW_NUMBER() OVER(PARTITION BY currency ORDER BY stats_date DESC,rate DESC) as rn
+    FROM `gzdw2024.gz_dim.exchange_rate_days`
+    WHERE rate IS NOT NULL
+  ) WHERE rn = 1
+),
+sales_tab as (
+  SELECT
+    SUBSTRING(CAST(Order_Charged_Date AS string),1,7) stats_mon,
+    Product_ID,
+    Order_Number,
+    Order_Charged_Date,
+    Product_Title,
+    Product_Type,
+    Country_of_Buyer,
+    Currency_of_Sale,
+    Financial_Status,
+    Item_Price,
+    Charged_Amount,
+    Taxes_Collected,
+    LOWER(SKU_ID) AS SKU_ID,
+    CASE
+      WHEN LOWER(Product_Type) ='subscription' THEN 0.15
+      ELSE 0.3
+    END AS google_fee_rate,
+    region,
+    Base_Plan_ID,
+    Order_Charged_Timestamp
+  FROM (
+    SELECT
+      *, 
+      'hz' as region
+    FROM
+      `pubdata2025.ods.ods_googleplay_sales_downloader_1d`
+    WHERE
+      Order_Charged_Date BETWEEN from_date
+      AND to_date
+    UNION ALL
+    SELECT
+      *, 
+      'hz' as region
+    FROM
+      `pubdata2025.ods.ods_googleplay_sales_etm_1d`
+    WHERE
+      Order_Charged_Date BETWEEN from_date
+      AND to_date
+    UNION ALL
+    SELECT
+      *, 
+      'hz' as region
+    FROM
+      `pubdata2025.ods.ods_googleplay_sales_lifestyle_1d`
+    WHERE
+      Order_Charged_Date BETWEEN from_date
+      AND to_date
+    UNION ALL
+    SELECT
+      *, 
+      'hz' as region
+    FROM
+      `pubdata2025.ods.ods_googleplay_sales_new_downloader_1d`
+    WHERE
+      Order_Charged_Date BETWEEN from_date
+      AND to_date
+    UNION ALL
+    SELECT
+      *, 
+      'hz' as region
+    FROM
+      `pubdata2025.ods.ods_googleplay_sales_download2025_1d`
+    WHERE
+      Order_Charged_Date BETWEEN from_date
+      AND to_date 
+    UNION ALL
+    SELECT
+      *, 
+      'gz' as region
+    FROM
+      `pubdata2025.ods.ods_googleplay_sales_vidma_1d`
+    WHERE
+      Order_Charged_Date BETWEEN from_date
+      AND to_date
+    UNION ALL
+    SELECT
+      *, 
+      'gz' as region
+    FROM
+      `pubdata2025.ods.ods_googleplay_sales_text_1d`
+    WHERE
+      Order_Charged_Date BETWEEN from_date
+      AND to_date
+  )
+)
+-- 最终计算写入
+SELECT
+  stats_mon,
+  Product_ID,
+  Order_Number,
+  Order_Charged_Date,
+  Product_Title,
+  Product_Type,
+  Country_of_Buyer,
+  Currency_of_Sale,
+  Financial_Status,
+  Item_Price,
+  Charged_Amount,
+  Taxes_Collected,
+  SKU_ID,
+  google_fee_rate,
+  ROUND(rate,4) AS rate,
+  SAFE_DIVIDE(Charged_Amount,rate) AS Charged_Amount_usd,
+  SAFE_DIVIDE(Taxes_Collected,rate) AS Taxes_Collected_usd,
+  ROUND(SAFE_DIVIDE(Charged_Amount - Taxes_Collected,rate),4) AS Revenue_Without_VAT,
+  ROUND(SAFE_DIVIDE(Charged_Amount - Taxes_Collected,rate)*google_fee_rate,4) AS Google_Fee,
+  ROUND(SAFE_DIVIDE(Charged_Amount - Taxes_Collected,rate) - SAFE_DIVIDE(Charged_Amount - Taxes_Collected,rate)*google_fee_rate,4) AS Revenue,
+  CASE
+    WHEN SKU_ID LIKE '%one_day%' THEN DATE_ADD(Order_Charged_Date, INTERVAL 1 day)
+    WHEN SKU_ID LIKE '%weekly%' THEN DATE_ADD(Order_Charged_Date, INTERVAL 7 day)
+    WHEN SKU_ID LIKE '%month%' THEN DATE_ADD(Order_Charged_Date, INTERVAL 1 month)
+    WHEN SKU_ID LIKE '%half_yearly%' THEN DATE_ADD(Order_Charged_Date, INTERVAL 6 month)
+    WHEN SKU_ID LIKE '%yearly%' AND sku_id NOT LIKE '%half_yearly%' THEN DATE_ADD(Order_Charged_Date, INTERVAL 1 year)
+    WHEN SKU_ID ='ads_free_year' THEN DATE_ADD(Order_Charged_Date, INTERVAL 1 year)
+    WHEN SKU_ID LIKE '%forevertime%'
+  OR SKU_ID LIKE '%lifetime%' THEN '2099-12-31'
+    ELSE NULL
+END
+  AS expiration_date,
+  region,
+  Base_Plan_ID,
+  Order_Charged_Timestamp
+FROM (
+  select
+   a.*,
+   COALESCE(b1.rate, b2.rate, b.rate) AS rate -- 优先级：当天日汇率(b1) > 最新有效日汇率(b2) > 月平均汇率(b)
+  from sales_tab a 
+  LEFT JOIN (-- 用于关联25年的数据
+    SELECT
+      stats_mon,
+      currency,
+      rate
+  FROM `gzdw2024.gz_dim.exchange_rate` )b
+    ON SUBSTRING(CAST(Order_Charged_Date AS string),1,7)=b.stats_mon
+    AND a.Currency_of_Sale=b.currency
+  LEFT JOIN ( -- 计算每日新增的数据
+    SELECT
+      CAST(stats_date AS date) AS stats_date,
+      currency,
+      rate
+  FROM `gzdw2024.gz_dim.exchange_rate_days` )b1
+    ON a.Order_Charged_Date=b1.stats_date
+    AND a.Currency_of_Sale=b1.currency 
+  LEFT JOIN latest_daily_rate b2 -- 如果当日分区没产出 用最新一天有数的分区
+    ON a.Currency_of_Sale = b2.currency
+)
+WHERE
+  Order_Charged_Date BETWEEN from_date
+  AND to_date;
+  --如果所有操作都成功，提交事务
+
+commit
+  ;

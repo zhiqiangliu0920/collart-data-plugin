@@ -1,0 +1,106 @@
+config {
+    type: "operations",
+    dependencies: ["h_dwd_cdct_ai_service_record_info_hi"]
+}
+
+DECLARE
+  from_date date DEFAULT ${dataform.projectConfig.vars.biz_date}-29;
+DECLARE
+  to_date date DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `dws.dws_cdct_cost_ai_service_1h`
+WHERE
+  event_date between from_date and to_date;
+  --插入分区数据--
+INSERT INTO
+  dws.dws_cdct_cost_ai_service_1h
+
+WITH completed_usage AS (
+  SELECT
+    a.create_date AS event_date,
+    LOWER(
+      CASE
+        WHEN a.app_name = 'collart-web' THEN 'collart_web'
+        WHEN a.app_name = 'collart-android' THEN 'collart_android'
+        ELSE a.app_name
+      END
+    ) AS app_name,
+    a.model_type,
+    a.task_id,
+    COALESCE(a.time_cost, 0) AS time_cost,
+    b.model AS third_party_model,
+    b.cost_unit
+  FROM `dwd.dwd_cdct_ai_service_record_info_hi` AS a
+  LEFT JOIN aidata2025.dim.dim_ai_service_cost_unit_copy AS b
+    ON a.model_type = b.model
+  WHERE a.create_date BETWEEN from_date AND to_date
+    AND a.status = 'completed'
+),
+selfhost_daily AS (
+  SELECT
+    event_date,
+    app_name,
+    '自建' AS cost_type,
+    model_type,
+    COUNT(DISTINCT task_id) AS task_num,
+    SUM(IF(model_type NOT IN ('outfit_change', 'imedt_darkfix'), time_cost, 0)) AS shared_time_cost,
+    SUM(IF(app_name = 'muselab-android' AND model_type IN ('outfit_change', 'imedt_darkfix'),time_cost,0)) AS dedicated_time_cost
+  FROM completed_usage
+  WHERE third_party_model IS NULL
+  GROUP BY event_date, app_name, model_type
+  HAVING shared_time_cost > 0 OR dedicated_time_cost > 0
+),
+selfhost_ratio AS (
+  SELECT
+    *,
+    SAFE_DIVIDE(shared_time_cost,SUM(shared_time_cost) OVER (PARTITION BY event_date)) AS shared_ratio,
+    SAFE_DIVIDE(dedicated_time_cost,SUM(dedicated_time_cost) OVER (PARTITION BY event_date)) AS dedicated_ratio
+  FROM selfhost_daily
+),
+selfhost_cost AS (
+  SELECT
+    event_date,
+    app_name,
+    cost_type,
+    model_type,
+    task_num,
+    (13000.0/ (14 * 8)/ EXTRACT(DAY FROM LAST_DAY(event_date))) * (
+      CASE
+        WHEN event_date < DATE '2026-07-13' THEN 112
+        WHEN event_date <= DATE '2026-08-27' THEN 110
+        ELSE 109
+      END * COALESCE(shared_ratio, 0)
+      + CASE
+          WHEN event_date < DATE '2026-07-13' THEN 0
+          WHEN event_date <= DATE '2026-08-27' THEN 2
+          ELSE 3
+        END * COALESCE(dedicated_ratio, 0)
+    ) AS platform_cost,
+    0.0 AS sanfang_cost
+  FROM selfhost_ratio
+),
+third_party_cost AS (
+  SELECT
+    event_date,
+    app_name,
+    '三方' AS cost_type,
+    model_type,
+    COUNT(DISTINCT task_id) AS task_num,
+    0.0 AS platform_cost,
+    SUM(cost_unit) AS sanfang_cost
+  FROM completed_usage
+  WHERE third_party_model IS NOT NULL
+  GROUP BY event_date, app_name, model_type
+)
+SELECT * FROM selfhost_cost
+UNION ALL
+SELECT * FROM third_party_cost
+;
+
+COMMIT
+;

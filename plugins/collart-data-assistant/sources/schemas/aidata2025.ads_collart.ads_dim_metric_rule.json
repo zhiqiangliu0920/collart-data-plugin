@@ -1,0 +1,75 @@
+{
+  "table": "aidata2025.ads_collart.ads_dim_metric_rule",
+  "captured_at": "2026-09-14T13:19:02.741715+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品：collart_android / vidart_ios / collart_web / collart_fashion"
+      },
+      {
+        "name": "metric_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "指标编码 / ads_oper_user_event_metric_di 列名"
+      },
+      {
+        "name": "metric_chinese_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "指标中文名"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "事件匹配表达式"
+      },
+      {
+        "name": "event_params",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "事件参数过滤，AND 拼接；可空"
+      },
+      {
+        "name": "agg_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "count_events | count_distinct_task_id"
+      },
+      {
+        "name": "is_enabled",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE",
+        "description": "是否启用"
+      },
+      {
+        "name": "is_materialized",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE",
+        "description": "TRUE 才物化到用户日宽表"
+      },
+      {
+        "name": "sort_order",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "列顺序"
+      },
+      {
+        "name": "description",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "备注"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collart",
+    "tableId": "ads_dim_metric_rule"
+  },
+  "description": "Collart four-product event metric rules. Native mirror of the authoritative Google Sheet; synchronized every 5 minutes. Draft/blank rows are preserved. See ads_dim_metric_rule_sync_log.",
+  "type": "TABLE"
+}

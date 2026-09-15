@@ -1,0 +1,89 @@
+{
+  "table": "aidata2025.ads_collart.ads_oper_collart_template_data",
+  "captured_at": "2026-09-14T13:19:03.026844+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_new",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "temp_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "show_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "click_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_service_start_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_service_success_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "save_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "generate_watch_ad_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "temp_ad_value",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscribe_value",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "template_value",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collart",
+    "tableId": "ads_oper_collart_template_data"
+  },
+  "type": "TABLE"
+}

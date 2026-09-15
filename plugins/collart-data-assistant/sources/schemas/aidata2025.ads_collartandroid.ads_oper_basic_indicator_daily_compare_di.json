@@ -1,0 +1,45 @@
+{
+  "table": "aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di",
+  "captured_at": "2026-09-14T13:19:04.228536+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "metric_name",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "yestoday",
+        "type": "FLOAT"
+      },
+      {
+        "name": "avg_7days",
+        "type": "FLOAT"
+      },
+      {
+        "name": "diff",
+        "type": "FLOAT"
+      },
+      {
+        "name": "ratio",
+        "type": "FLOAT"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collartandroid",
+    "tableId": "ads_oper_basic_indicator_daily_compare_di"
+  },
+  "clustering": {
+    "fields": [
+      "metric_name",
+      "country"
+    ]
+  },
+  "description": "Collart Android 日报环比：新 ADS 口径，昨日对比前 7 日均值",
+  "type": "TABLE"
+}

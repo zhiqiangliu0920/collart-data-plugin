@@ -1,0 +1,68 @@
+config {
+  type: "operations"
+}
+
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 1;
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collart.ads_oper_collart_web_id_map`
+(
+  user_id STRING,
+  user_pseudo_id STRING,
+  user_id_first_date DATE,
+  user_pseudo_id_first_date DATE
+)
+CLUSTER BY user_id, user_pseudo_id
+;
+
+BEGIN TRANSACTION;
+
+DELETE
+FROM
+  `aidata2025.ads_collart.ads_oper_collart_web_id_map`
+WHERE 1=1
+;
+ 
+
+INSERT INTO `aidata2025.ads_collart.ads_oper_collart_web_id_map`
+
+WITH base AS (
+  SELECT DISTINCT
+    event_date,
+    user_pseudo_id,
+    user_id
+  FROM `dwd.dwd_oper_user_event_di`
+  WHERE event_date >= '2025-11-01'
+    AND package_name = 'collart_web' 
+)
+
+select a.user_pseudo_Id,a.user_id,b.user_pseudo_id_first_date,b.user_pseudo_id_last_date,c.user_id_first_date,c.user_id_last_date
+from(
+select distinct user_Pseudo_id,user_Id
+from base 
+where user_Id is not null
+) a 
+left join (
+SELECT 
+  user_pseudo_id,
+  MIN(event_date) AS user_pseudo_id_first_date,
+  MAX(event_date) AS user_pseudo_id_last_date
+FROM base
+group by 1
+) b on a.user_pseudo_id=b.user_pseudo_id
+
+left join (
+select 
+  user_Id,
+  MIN(event_date) user_id_first_date,
+  MAX(event_date) user_id_last_date
+from base 
+where user_Id is not null 
+group by 1
+) c on a.user_id=c.user_id
+;
+
+
+COMMIT TRANSACTION;

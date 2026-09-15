@@ -1,0 +1,43 @@
+config {
+    type: "operations"
+    }
+
+DECLARE
+  from_date DATE DEFAULT date('2025-01-01');
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+BEGIN TRANSACTION;
+
+DELETE
+FROM
+  pubdata2025.ads.ads_atlasv_deliver_cost_daily
+WHERE
+  event_date >= from_date;
+INSERT INTO
+  pubdata2025.ads.ads_atlasv_deliver_cost_daily
+
+-- SELECT
+--   event_date,
+--   package_name,
+--   SUM(cost) cost
+-- FROM
+--   hzdw2024.delivery.dws_delivery_cost_di
+-- WHERE
+--   event_date < '2025-01-01'
+-- GROUP BY
+--   event_date,
+--   package_name
+
+-- 投放花费
+SELECT
+  event_date,
+  package_name,
+  SUM(cost) cost 
+FROM 
+  aidata2025.dwd.dwd_cdct_delivery_cost_di
+where event_date >= from_date
+GROUP BY ALL
+;
+
+COMMIT
+  ;

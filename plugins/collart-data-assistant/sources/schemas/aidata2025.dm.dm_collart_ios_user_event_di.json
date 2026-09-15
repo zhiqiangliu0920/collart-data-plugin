@@ -1,0 +1,375 @@
+{
+  "table": "aidata2025.dm.dm_collart_ios_user_event_di",
+  "captured_at": "2026-09-14T13:19:06.833853+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "event_time",
+        "type": "DATETIME"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING"
+      },
+      {
+        "name": "ga_session_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "ga_session_number",
+        "type": "INTEGER"
+      },
+      {
+        "name": "first_open_time",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "is_login",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "is_vip",
+        "type": "STRING"
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "product_id",
+            "type": "STRING"
+          },
+          {
+            "name": "price",
+            "type": "STRING"
+          },
+          {
+            "name": "quantity",
+            "type": "INTEGER"
+          },
+          {
+            "name": "currency",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "identity",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "adjust_id",
+            "type": "STRING"
+          },
+          {
+            "name": "clarity_user_id",
+            "type": "STRING"
+          },
+          {
+            "name": "advertising_id",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "geo",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "city",
+            "type": "STRING"
+          },
+          {
+            "name": "continent",
+            "type": "STRING"
+          },
+          {
+            "name": "sub_continent",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "device",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "category",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_brand_name",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_model_name",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system_version",
+            "type": "STRING"
+          },
+          {
+            "name": "vendor_id",
+            "type": "STRING"
+          },
+          {
+            "name": "language",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "traffic_src",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "src_medium",
+            "type": "STRING"
+          },
+          {
+            "name": "src_source",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign_id",
+            "type": "STRING"
+          },
+          {
+            "name": "ad_group_id",
+            "type": "STRING"
+          },
+          {
+            "name": "keyword_id",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "template",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "temp_id",
+            "type": "STRING"
+          },
+          {
+            "name": "module_id",
+            "type": "STRING"
+          },
+          {
+            "name": "module_index",
+            "type": "STRING"
+          },
+          {
+            "name": "category_id",
+            "type": "STRING"
+          },
+          {
+            "name": "banner_id",
+            "type": "STRING"
+          },
+          {
+            "name": "presret_id",
+            "type": "STRING"
+          },
+          {
+            "name": "template_type",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "params_info",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "service_type",
+            "type": "STRING"
+          },
+          {
+            "name": "feature_id",
+            "type": "STRING"
+          },
+          {
+            "name": "model",
+            "type": "STRING"
+          },
+          {
+            "name": "model_type",
+            "type": "STRING"
+          },
+          {
+            "name": "submodel_type",
+            "type": "STRING"
+          },
+          {
+            "name": "task_id",
+            "type": "STRING"
+          },
+          {
+            "name": "result_task_id",
+            "type": "STRING"
+          },
+          {
+            "name": "result_generation_id",
+            "type": "STRING"
+          },
+          {
+            "name": "workspace_task_id",
+            "type": "STRING"
+          },
+          {
+            "name": "result_type",
+            "type": "STRING"
+          },
+          {
+            "name": "resolution",
+            "type": "STRING"
+          },
+          {
+            "name": "ratio",
+            "type": "STRING"
+          },
+          {
+            "name": "variations",
+            "type": "INTEGER"
+          },
+          {
+            "name": "native_audio",
+            "type": "STRING"
+          },
+          {
+            "name": "credits",
+            "type": "STRING"
+          },
+          {
+            "name": "event_from",
+            "type": "STRING"
+          },
+          {
+            "name": "duration",
+            "type": "STRING"
+          },
+          {
+            "name": "engagement_time_msec",
+            "type": "INTEGER"
+          },
+          {
+            "name": "is_retry",
+            "type": "STRING"
+          },
+          {
+            "name": "error_code",
+            "type": "STRING"
+          },
+          {
+            "name": "service_code",
+            "type": "STRING"
+          },
+          {
+            "name": "error_msg",
+            "type": "STRING"
+          },
+          {
+            "name": "api",
+            "type": "STRING"
+          },
+          {
+            "name": "path",
+            "type": "STRING"
+          },
+          {
+            "name": "file_name",
+            "type": "STRING"
+          },
+          {
+            "name": "url",
+            "type": "STRING"
+          },
+          {
+            "name": "time_ms",
+            "type": "FLOAT"
+          },
+          {
+            "name": "success",
+            "type": "STRING"
+          },
+          {
+            "name": "page_type",
+            "type": "STRING"
+          },
+          {
+            "name": "project_id",
+            "type": "STRING"
+          },
+          {
+            "name": "previous_first_open_count",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dm",
+    "tableId": "dm_collart_ios_user_event_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "user_pseudo_id",
+      "country"
+    ]
+  },
+  "description": "collart ios 用户事件语义明细，字段按产品最终确认清单组织",
+  "type": "TABLE"
+}

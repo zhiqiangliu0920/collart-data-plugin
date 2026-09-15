@@ -1,0 +1,44 @@
+{
+  "table": "aidata2025.dim.dim_collart_core_event_copy",
+  "captured_at": "2026-09-14T13:19:06.389188+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_module",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_name_chinese",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "key",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "value1",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "value2",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dim",
+    "tableId": "dim_collart_core_event_copy"
+  },
+  "type": "TABLE"
+}

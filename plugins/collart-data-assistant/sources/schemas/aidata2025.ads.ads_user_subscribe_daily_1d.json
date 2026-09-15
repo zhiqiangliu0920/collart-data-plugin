@@ -1,0 +1,151 @@
+{
+  "table": "aidata2025.ads.ads_user_subscribe_daily_1d",
+  "captured_at": "2026-09-14T13:19:02.671285+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "order_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "订单日期"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "包名"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家代码"
+      },
+      {
+        "name": "country_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家名称"
+      },
+      {
+        "name": "sku_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "SKU ID"
+      },
+      {
+        "name": "product_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品类型"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "流量来源类型"
+      },
+      {
+        "name": "charged_money",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "已支付金额"
+      },
+      {
+        "name": "refunded_money",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "退款金额"
+      },
+      {
+        "name": "vip_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "订阅总收入"
+      },
+      {
+        "name": "order_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "订单数量"
+      },
+      {
+        "name": "renew_order_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订订单数量"
+      },
+      {
+        "name": "new_order_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "首订订单数量"
+      },
+      {
+        "name": "renew_user_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订用户数量"
+      },
+      {
+        "name": "new_user_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "首订用户数量"
+      },
+      {
+        "name": "renew_vip_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "续订收入"
+      },
+      {
+        "name": "new_vip_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "首订收入"
+      },
+      {
+        "name": "first_order_num",
+        "type": "INTEGER"
+      },
+      {
+        "name": "trial_conver_order_num",
+        "type": "INTEGER"
+      },
+      {
+        "name": "first_user_num",
+        "type": "INTEGER"
+      },
+      {
+        "name": "trial_conver_user_num",
+        "type": "INTEGER"
+      },
+      {
+        "name": "first_vip_revenue",
+        "type": "FLOAT"
+      },
+      {
+        "name": "trial_conver_vip_revenue",
+        "type": "FLOAT"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads",
+    "tableId": "ads_user_subscribe_daily_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "order_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name",
+      "country",
+      "product_type"
+    ]
+  },
+  "type": "TABLE"
+}

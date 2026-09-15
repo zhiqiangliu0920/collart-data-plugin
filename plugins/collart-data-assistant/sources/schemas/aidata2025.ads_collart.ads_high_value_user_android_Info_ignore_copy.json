@@ -1,0 +1,49 @@
+{
+  "table": "aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy",
+  "captured_at": "2026-09-14T13:19:02.769368+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "first_active_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "last_order_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "total_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ignore_times",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collart",
+    "tableId": "ads_high_value_user_android_Info_ignore_copy"
+  },
+  "type": "TABLE"
+}

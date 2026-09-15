@@ -1,0 +1,18 @@
+# 表字典
+
+- [aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy](aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy.md)
+- [aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di](aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di.md)（历史/不可见）
+- [aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di](aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di.md)（历史/不可见）
+- [aidata2025.ads_collart.ads_oper_tempalte_data_android · collart android模板数据表](aidata2025.ads_collart.ads_oper_tempalte_data_android.md)（历史/不可见）
+- [aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di](aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di.md)
+- [aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di](aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di.md)
+- [aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di](aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di.md)
+- [aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di](aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di.md)
+- [aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di](aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di.md)
+- [aidata2025.ads_collartandroid.ads_oper_event_metric_country_di](aidata2025.ads_collartandroid.ads_oper_event_metric_country_di.md)
+- [aidata2025.ads_collartandroid.ads_oper_user_active_di](aidata2025.ads_collartandroid.ads_oper_user_active_di.md)
+- [aidata2025.ads_collartandroid.ads_oper_user_event_metric_di](aidata2025.ads_collartandroid.ads_oper_user_event_metric_di.md)
+- [aidata2025.ads_collartandroid.ads_oper_user_profile_df](aidata2025.ads_collartandroid.ads_oper_user_profile_df.md)
+- [aidata2025.dim.dim_collart_android_core_event_copy](aidata2025.dim.dim_collart_android_core_event_copy.md)
+- [aidata2025.dim.dim_module_template_info_android · collart android模块内模板id表](aidata2025.dim.dim_module_template_info_android.md)
+- [aidata2025.dm.dm_collart_android_user_event_di](aidata2025.dm.dm_collart_android_user_event_di.md)

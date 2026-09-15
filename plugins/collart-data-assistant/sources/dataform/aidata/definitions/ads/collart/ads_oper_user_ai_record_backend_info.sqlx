@@ -1,0 +1,44 @@
+
+
+begin transaction;
+
+truncate table `aidata2025.ads_collart.ads_oper_user_ai_record_backend_info`;
+
+insert into `aidata2025.ads_collart.ads_oper_user_ai_record_backend_info`
+select a.* ,
+b.* except(client_task_id)
+from 
+(select client_task_id
+,sub_mode_type
+,prompt
+,atlas_uid
+,ai_type
+,country
+,version
+,result
+,request
+,start_resource
+from aidata2025.ods.ods_ai_request_info_1d_with_id 
+where  event_date>=DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+and length(atlas_uid)>2 
+and length(client_task_id)>2 
+)  a
+
+left join 
+(select client_task_id
+,train_task_id
+,user_id
+,model_type
+,app_name
+,cost_point
+,DATE(TIMESTAMP_SECONDS(created_at)) create_at
+,time_cost
+,status
+,temp_Id
+from hzdw2024.ods.ai_base_record_store
+where DATE(TIMESTAMP_SECONDS(created_at))>=DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+) b on a.client_task_id=b.client_task_id;
+
+
+commit;
+

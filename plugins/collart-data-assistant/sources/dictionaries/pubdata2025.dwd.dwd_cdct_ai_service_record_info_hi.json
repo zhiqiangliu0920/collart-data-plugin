@@ -1,0 +1,19 @@
+{
+  "table": "pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi",
+  "captured_at": "2026-09-14",
+  "table_metadata": {
+    "表名": "pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi",
+    "表中文名": "用户ai服务使用明细表(服务端）",
+    "表类型": "汇总表",
+    "行粒度": "每个调用任务id一行",
+    "主键字段": "task_id",
+    "上层表": "hzdw2024.ods.ai_base_record_store,hzdw2024.ods.ods_ai_record_info",
+    "更新频率": "每小时刷新",
+    "查询限制/风险提示": null,
+    "使用优先级": "高",
+    "项目": [
+      "ai"
+    ]
+  },
+  "fields": []
+}

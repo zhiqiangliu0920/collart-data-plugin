@@ -1,0 +1,143 @@
+{
+  "table": "aidata2025.ads_collart.ads_vip_user_info_all",
+  "captured_at": "2026-09-14T13:19:03.674852+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "is_r",
+        "type": "INTEGER"
+      },
+      {
+        "name": "first_open_date",
+        "type": "DATE"
+      },
+      {
+        "name": "last_active_date",
+        "type": "DATE"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING"
+      },
+      {
+        "name": "device_category",
+        "type": "STRING"
+      },
+      {
+        "name": "device_operating_system",
+        "type": "STRING"
+      },
+      {
+        "name": "mobile_brand_name",
+        "type": "STRING"
+      },
+      {
+        "name": "browser",
+        "type": "STRING"
+      },
+      {
+        "name": "last_order_date",
+        "type": "DATE"
+      },
+      {
+        "name": "total_revenue",
+        "type": "FLOAT"
+      },
+      {
+        "name": "weekly_revenue",
+        "type": "FLOAT"
+      },
+      {
+        "name": "monthly_revenue",
+        "type": "FLOAT"
+      },
+      {
+        "name": "yearly_revenue",
+        "type": "FLOAT"
+      },
+      {
+        "name": "pack_revenue",
+        "type": "FLOAT"
+      },
+      {
+        "name": "sexual_score",
+        "type": "FLOAT"
+      },
+      {
+        "name": "task_num",
+        "type": "INTEGER"
+      },
+      {
+        "name": "succeed_task_num",
+        "type": "INTEGER"
+      },
+      {
+        "name": "cost_point",
+        "type": "FLOAT"
+      },
+      {
+        "name": "total_revenue_type",
+        "type": "STRING"
+      },
+      {
+        "name": "total_revenue_type2",
+        "type": "STRING"
+      },
+      {
+        "name": "hv_user_tag",
+        "type": "STRING"
+      },
+      {
+        "name": "event",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "video_generate_success_pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "video_generate_start_pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "img_generate_success_pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "img_generate_start_pv",
+            "type": "INTEGER"
+          }
+        ]
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collart",
+    "tableId": "ads_vip_user_info_all"
+  },
+  "clustering": {
+    "fields": [
+      "app_name",
+      "user_id"
+    ]
+  },
+  "description": "Collart 三端 VIP 用户合并表：收入+画像+production is_r，日全量刷新",
+  "type": "TABLE"
+}

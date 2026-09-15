@@ -1,0 +1,222 @@
+{
+  "table": "aidata2025.ods.ods_apple_subscription_vidart_df",
+  "captured_at": "2026-09-14T13:19:08.484926+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "version",
+        "type": "STRING"
+      },
+      {
+        "name": "notificationType",
+        "type": "STRING"
+      },
+      {
+        "name": "bundleId",
+        "type": "STRING"
+      },
+      {
+        "name": "appAppleId",
+        "type": "STRING"
+      },
+      {
+        "name": "environment",
+        "type": "STRING"
+      },
+      {
+        "name": "status",
+        "type": "STRING"
+      },
+      {
+        "name": "notificationUUID",
+        "type": "STRING"
+      },
+      {
+        "name": "signedDate",
+        "type": "STRING"
+      },
+      {
+        "name": "bundleVersion",
+        "type": "STRING"
+      },
+      {
+        "name": "ri_autoRenewProductId",
+        "type": "STRING"
+      },
+      {
+        "name": "ri_autoRenewStatus",
+        "type": "STRING"
+      },
+      {
+        "name": "ri_originalTransactionId",
+        "type": "STRING"
+      },
+      {
+        "name": "ri_productId",
+        "type": "STRING"
+      },
+      {
+        "name": "ri_renewalDate",
+        "type": "STRING"
+      },
+      {
+        "name": "ri_signedDate",
+        "type": "STRING"
+      },
+      {
+        "name": "ri_environment",
+        "type": "STRING"
+      },
+      {
+        "name": "ri_recentSubscriptionStartDate",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_originalTransactionId",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_transactionId",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_productId",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_purchaseDate",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_originalPurchaseDate",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_expiresDate",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_quantity",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_type",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_inAppOwnershipType",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_signedDate",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_environment",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_bundleId",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_subscriptionGroupIdentifier",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_webOrderLineItemId",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_appAccountToken",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_storefront",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_storefrontId",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_currency",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_transactionReason",
+        "type": "STRING"
+      },
+      {
+        "name": "ti_price",
+        "type": "STRING"
+      },
+      {
+        "name": "rd_appAppleId",
+        "type": "STRING"
+      },
+      {
+        "name": "rd_bundleId",
+        "type": "STRING"
+      },
+      {
+        "name": "rd_bundleVersion",
+        "type": "STRING"
+      },
+      {
+        "name": "rd_environment",
+        "type": "STRING"
+      },
+      {
+        "name": "rd_status",
+        "type": "STRING"
+      },
+      {
+        "name": "rs_requestIdentifier",
+        "type": "STRING"
+      },
+      {
+        "name": "rs_environment",
+        "type": "STRING"
+      },
+      {
+        "name": "rs_appAppleId",
+        "type": "STRING"
+      },
+      {
+        "name": "rs_bundleId",
+        "type": "STRING"
+      },
+      {
+        "name": "rs_productId",
+        "type": "STRING"
+      },
+      {
+        "name": "rs_storefrontCountryCodes",
+        "type": "STRING"
+      },
+      {
+        "name": "rs_failedCount",
+        "type": "STRING"
+      },
+      {
+        "name": "rs_succeededCount",
+        "type": "STRING"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ods",
+    "tableId": "ods_apple_subscription_vidart_df"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

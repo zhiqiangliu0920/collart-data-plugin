@@ -1,6 +1,0 @@
-SELECT event_date,package_name,dau,dnu,revenue.purchase_revenue,revenue.new_revenue,
-  revenue.resub_revenue,revenue.credit_revenue,revenue.ad_revenue,
-  subscription.purchase_uv,subscription.purchase_uv_1d
-FROM `aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di`
-WHERE event_date BETWEEN '2026-08-28' AND '2026-09-10' AND package_name='collart_web'
-ORDER BY event_date;

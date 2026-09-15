@@ -1,0 +1,35 @@
+{
+  "table": "aidata2025.dim.collart_campaign_name_modify_copy",
+  "captured_at": "2026-09-14",
+  "table_metadata": {},
+  "fields": [
+    {
+      "字段名": "traffic_src_name_old",
+      "说明": "老的渠道名称",
+      "类型": "string",
+      "字段角色": "维度",
+      "是否核心字段": "否"
+    },
+    {
+      "字段名": "traffic_src_name_new",
+      "说明": "新的渠道名称",
+      "类型": "string",
+      "字段角色": "维度",
+      "是否核心字段": "否"
+    },
+    {
+      "字段名": "modify_date",
+      "说明": "渠道名称更改日期",
+      "类型": "date",
+      "字段角色": "时间",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": null,
+      "说明": null,
+      "类型": null,
+      "字段角色": null,
+      "是否核心字段": "否"
+    }
+  ]
+}

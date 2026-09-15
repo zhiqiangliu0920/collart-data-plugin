@@ -1,0 +1,143 @@
+{
+  "table": "aidata2025.dwd.dwd_apple_user_subscribtion_di",
+  "captured_at": "2026-09-14T13:19:07.047408+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "订阅日期（分区字段）"
+      },
+      {
+        "name": "transaction_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交易唯一标识符"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用包名"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户ID"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "firebase用户ID"
+      },
+      {
+        "name": "sku",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "商品SKU"
+      },
+      {
+        "name": "purchase_date",
+        "type": "DATETIME",
+        "mode": "NULLABLE",
+        "description": "购买时间"
+      },
+      {
+        "name": "original_purchase_date",
+        "type": "DATETIME",
+        "mode": "NULLABLE",
+        "description": "原始购买时间"
+      },
+      {
+        "name": "expires_date",
+        "type": "DATETIME",
+        "mode": "NULLABLE",
+        "description": "订阅过期时间"
+      },
+      {
+        "name": "quantity",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "购买数量"
+      },
+      {
+        "name": "sub_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "订阅类型(是否自动续订）"
+      },
+      {
+        "name": "transaction_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交易类型(RENEWAL/PURCHASE)"
+      },
+      {
+        "name": "storefront",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "商店区域代码"
+      },
+      {
+        "name": "country_code",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家/地区代码"
+      },
+      {
+        "name": "country_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家/地区名称"
+      },
+      {
+        "name": "price",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "交易价格"
+      },
+      {
+        "name": "currency",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "货币类型"
+      },
+      {
+        "name": "revenue_apple",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Apple 收入"
+      },
+      {
+        "name": "login_user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_apple_user_subscribtion_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name",
+      "sku",
+      "storefront"
+    ]
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,29 @@
+{
+  "table": "pubdata2025.ads.ads_atlasv_deliver_cost_daily",
+  "captured_at": "2026-09-14T13:19:08.762885+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "ads",
+    "tableId": "ads_atlasv_deliver_cost_daily"
+  },
+  "type": "TABLE"
+}

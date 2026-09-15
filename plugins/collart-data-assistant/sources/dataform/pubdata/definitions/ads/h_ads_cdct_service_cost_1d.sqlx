@@ -1,0 +1,187 @@
+config {
+    type: "operations",
+    dependencies: ["h_dws_cdct_cost_billing_1d",  "h_dws_cdct_cost_ai_service_1h", "h_dws_cdct_log_aws_cdn_1d"]
+}
+
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `pubdata2025.ads.ads_cdct_service_cost_1d`
+WHERE
+  event_date >= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH);
+  -----------------------------gcp --------------------------------
+INSERT INTO
+  `pubdata2025.ads.ads_cdct_service_cost_1d`
+
+SELECT
+  a.event_date,
+  a.billing_month,
+  a.region,
+  a.billing_from,
+  a.resource_type,
+  CASE
+    WHEN a.atlasv_app_name IS NULL THEN '独占'
+    ELSE '分摊'
+END
+  AS billing_type,
+  LOWER(a.atlasv_app_name) AS atlasv_app_name,
+  1 as allocate_rate,
+  CASE
+    WHEN a.atlasv_app_name IS NOT NULL THEN a.atlasv_app_name
+END
+  AS allocate_from,
+  a.cost AS cost,
+  project_name
+FROM (
+  SELECT
+    event_date,
+    billing_month,
+    region,
+    billing_from,
+    'gcp' AS resource_type,
+    SUM(cost) AS cost,
+    atlasv_app_name,
+    project_name
+  FROM
+    `pubdata2025.dws.dws_cdct_cost_billing_1d`
+  WHERE
+    event_date >= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+    AND billing_from ='gcp'
+  GROUP BY
+    region,
+    atlasv_app_name,
+    billing_from,
+    event_date,
+    billing_month,
+    project_name
+ ) a
+;
+  -----------------------------------------------aws分摊处理 -------------------------------------------------------
+  -- woolong数据按cdn埋点取大于5万点的项目按请求占比拆分
+  -- AtlasV的AmazonSageMaker的数据按ai调用次数拆分
+INSERT INTO
+  `pubdata2025.ads.ads_cdct_service_cost_1d`
+  SELECT
+    a.event_date,
+    a.billing_month,
+    a.region,
+    a.billing_from,
+    a.resource_type,
+    CASE
+      WHEN cdn_rate.app_name IS NULL THEN '独占'
+      ELSE '分摊'
+    END AS billing_type,
+    LOWER(COALESCE(cdn_rate.app_name,a.atlasv_app_name)) AS atlasv_app_name,
+    COALESCE(cdn_rate.allocate_rate,1) AS allocate_rate,
+    a.atlasv_app_name AS allocate_from,
+    a.cost*COALESCE(cdn_rate.allocate_rate,1) AS cost,
+    project_name
+  FROM (
+    SELECT
+      event_date,
+      billing_month,
+      region,
+      module,
+      billing_from,
+      CASE
+        WHEN sub_resource_name IN ('AmazonSageMaker', 'AmazonCloudFront', 'AmazonEC2') THEN sub_resource_name
+        ELSE 'other'
+      END AS resource_type,
+      SUM(cost) AS cost,
+      atlasv_app_name,
+      project_name
+    FROM
+      `pubdata2025.dws.dws_cdct_cost_billing_1d`
+    WHERE
+      event_date >= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+      AND billing_from like '%aws%'
+    GROUP BY all
+      ) a
+  ----------cdn日志-------------
+  LEFT JOIN (
+    SELECT
+      app_name,
+      event_date,
+      SAFE_DIVIDE(request_cnt, SUM(request_cnt) OVER (PARTITION BY event_date)) AS allocate_rate
+    FROM (
+      SELECT
+        app_name,
+        event_date,
+        SUM(request_cnt) AS request_cnt
+      FROM
+        pubdata2025.dws.dws_cdct_log_aws_cdn_1d
+      WHERE
+        request_cnt>50000
+        AND app_name<>''
+      GROUP BY
+        app_name,
+        event_date )
+    ) cdn_rate
+  ON
+    a.event_date=cdn_rate.event_date
+    AND a.atlasv_app_name='woolong'
+;
+  -----------------------------azure目前都放在hz shotcut，汇率按33结算-------------------------
+INSERT INTO
+  `pubdata2025.ads.ads_cdct_service_cost_1d`
+SELECT
+  event_date,
+  billing_month,
+  region,
+  billing_from,
+  sub_resource_name AS resource_type,
+  '独占' billing_type,
+  atlasv_app_name,
+  NULL AS allocate_rate,
+  NULL AS allocate_from,
+  SUM(cost) AS cost,
+  project_name
+FROM
+  pubdata2025.dws.dws_cdct_cost_billing_1d
+WHERE
+  event_date >= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+  AND billing_from ='azure'
+GROUP BY
+  event_date,
+  billing_month,
+  region,
+  atlasv_app_name,
+  billing_from,
+  sub_resource_name,
+  project_name;
+
+  ----------------------------- do 直接计算 -------------------------
+
+  --如果所有操作都成功，提交事务
+INSERT INTO
+  `pubdata2025.ads.ads_cdct_service_cost_1d`
+SELECT
+  event_date,
+  billing_month,
+  'AtlasV' as region,
+  billing_from,
+  sub_resource_name AS resource_type,
+  '独占' billing_type,
+  atlasv_app_name,
+  NULL AS allocate_rate,
+  NULL AS allocate_from,
+  SUM(cost) AS cost,
+  project_name
+FROM
+  pubdata2025.dws.dws_cdct_cost_billing_1d
+WHERE
+  event_date >= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+  AND billing_from ='do'
+GROUP BY
+  event_date,
+  billing_month,
+  region,
+  atlasv_app_name,
+  billing_from,
+  sub_resource_name,
+  project_name;
+
+COMMIT
+  ;

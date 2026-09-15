@@ -1,0 +1,402 @@
+{
+  "table": "aidata2025.dws.dws_new_user_accumlate_subscribe_1d",
+  "captured_at": "2026-09-14T13:19:08.035418+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_source_type",
+        "type": "STRING"
+      },
+      {
+        "name": "product_id",
+        "type": "STRING"
+      },
+      {
+        "name": "day1",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day2",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day3",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day4",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day5",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day6",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day7",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day8",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day9",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day10",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day11",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day12",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day13",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day14",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day15",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day16",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day17",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day18",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day19",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day20",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day21",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day22",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day23",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day24",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day25",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day26",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day27",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day28",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day29",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day30",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day31",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day32",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day33",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day34",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day35",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day36",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day37",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day38",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day39",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day40",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day41",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day42",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day43",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day44",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day45",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day46",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day47",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day48",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day49",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day50",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day51",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day52",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day53",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day54",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day55",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day56",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day57",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day58",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day59",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day60",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day61",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day62",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day63",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day64",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day65",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day66",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day67",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day68",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day69",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day70",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day71",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day72",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day73",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day74",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day75",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day76",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day77",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day78",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day79",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day80",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day81",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day82",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day83",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day84",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day85",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day86",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day87",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day88",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day89",
+        "type": "INTEGER"
+      },
+      {
+        "name": "day90",
+        "type": "INTEGER"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dws",
+    "tableId": "dws_new_user_accumlate_subscribe_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,19 @@
+{
+  "table": "aidata2025.dwd.dwd_oper_user_order_event_di",
+  "captured_at": "2026-09-14",
+  "table_metadata": {
+    "表名": "aidata2025.dwd.dwd_oper_user_order_event_di",
+    "表中文名": "客户端统计用户粒度订单表",
+    "表类型": "事实表",
+    "行粒度": "每个账单id一行",
+    "主键字段": "evnet_order_id",
+    "上层表": "aidata2025.dwd.dwd_oper_user_event_di",
+    "更新频率": "T+1  8:00",
+    "查询限制/风险提示": null,
+    "使用优先级": "中",
+    "项目": [
+      "android"
+    ]
+  },
+  "fields": []
+}

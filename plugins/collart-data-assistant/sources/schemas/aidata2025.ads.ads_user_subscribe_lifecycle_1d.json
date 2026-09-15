@@ -1,0 +1,157 @@
+{
+  "table": "aidata2025.ads.ads_user_subscribe_lifecycle_1d",
+  "captured_at": "2026-09-14T13:19:02.616292+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "original_start_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "首订日期"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "包名"
+      },
+      {
+        "name": "sku_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "SKU ID"
+      },
+      {
+        "name": "product_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品类型"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家代码"
+      },
+      {
+        "name": "country_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家名称"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "流量来源类型"
+      },
+      {
+        "name": "subscribe_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "首订数量"
+      },
+      {
+        "name": "renew_order_count1",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 1"
+      },
+      {
+        "name": "renew_order_count2",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 2"
+      },
+      {
+        "name": "renew_order_count3",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 3"
+      },
+      {
+        "name": "renew_order_count4",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 4"
+      },
+      {
+        "name": "renew_order_count5",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 5"
+      },
+      {
+        "name": "renew_order_count6",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 6"
+      },
+      {
+        "name": "renew_order_count7",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 7"
+      },
+      {
+        "name": "renew_order_count8",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 8"
+      },
+      {
+        "name": "renew_order_count9",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 9"
+      },
+      {
+        "name": "renew_order_count10",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 10"
+      },
+      {
+        "name": "renew_order_count11",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 11"
+      },
+      {
+        "name": "renew_order_count12",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订次数 12"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE",
+        "description": "是否新客"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "版本"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads",
+    "tableId": "ads_user_subscribe_lifecycle_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "original_start_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name",
+      "product_type",
+      "country"
+    ]
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,54 @@
+config {
+    type: "operations"
+} 
+
+declare begin_date date default ${dataform.projectConfig.vars.biz_date} - 4;
+declare end_date date default ${dataform.projectConfig.vars.biz_date} + 1;
+
+BEGIN TRANSACTION;
+
+DELETE FROM `pubdata2025.dws.dws_cdct_cost_google_1h`
+WHERE event_date between begin_date and end_date;
+
+insert into `pubdata2025.dws.dws_cdct_cost_google_1h`
+select
+    a.event_date,
+    a.hour,
+    a.app_name,
+    a.campaign_name,
+    a.cost,
+    a.impressions,
+    a.clicks,
+    a.ctr,
+    a.conversions,
+    a.average_cpc,
+    a.cost_per_conversion,
+    a.installs,
+    a.cost_per_install,
+    round(1.0 / c.rate, 9) as hk_us_exchange_rate,
+    a.intotime,
+    a.cost * 0.09 as gst_cost,
+    case 
+      when a.country = '2158' then 'TW'
+      when a.country = '2344' then 'HK'
+      when a.country = '2630' then 'PR'
+      when a.country = '2364' then 'IR'
+      WHEN a.country = '2192' THEN 'CU'
+      else a.country
+    end as country
+
+from `ods.ods_google_ads_campaign_1h` as a
+inner join (
+    select
+        stats_date,
+        currency,
+        any_value(rate) as rate
+    from `gzdw2024.gz_dim.exchange_rate_days`
+    group by 
+        stats_date,
+        currency
+) as c
+on c.currency = 'HKD' and (a.event_date - 1) = cast(c.stats_date as date)
+where a.event_date between begin_date and end_date;
+
+commit;

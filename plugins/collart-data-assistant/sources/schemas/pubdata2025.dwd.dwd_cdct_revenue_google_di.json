@@ -1,0 +1,139 @@
+{
+  "table": "pubdata2025.dwd.dwd_cdct_revenue_google_di",
+  "captured_at": "2026-09-14T13:19:08.971685+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "stats_mon",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Product_ID",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Order_Number",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Order_Charged_Date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Product_Title",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Product_Type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Country_of_Buyer",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Currency_of_Sale",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Financial_Status",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Item_Price",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Charged_Amount",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Taxes_Collected",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "SKU_ID",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "google_fee_rate",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rate",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Charged_Amount_usd",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Taxes_Collected_usd",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Revenue_Without_VAT",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Google_Fee",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "expiration_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "region",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "地区：hz或gz"
+      },
+      {
+        "name": "Base_Plan_ID",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "Order_Charged_Timestamp",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_cdct_revenue_google_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "Order_Charged_Date"
+  },
+  "type": "TABLE"
+}

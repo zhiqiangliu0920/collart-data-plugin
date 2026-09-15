@@ -1,0 +1,167 @@
+config {
+  type: "operations"
+}
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 3;
+DECLARE to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+BEGIN TRANSACTION;
+
+DELETE FROM `dws.dws_oper_asa_delivery_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `dws.dws_oper_asa_delivery_di`
+WITH campaign_names AS (
+  SELECT
+    stats_date AS event_date,
+    CAST(campaign_id AS STRING) AS campaign_id,
+    ANY_VALUE(campaign_name) AS campaign_name
+  FROM `pubdata2025.ods.ods_apple_campaigns_reports_1d`
+  WHERE stats_date BETWEEN from_date AND to_date
+  GROUP BY event_date, campaign_id
+),
+
+adgroup_total AS (
+  SELECT
+    a.stats_date AS event_date,
+    CAST(a.campaign_id AS STRING) AS campaign_id,
+    c.campaign_name,
+    CAST(a.adgroup_id AS STRING) AS adgroup_id,
+    a.adgroup_name,
+    a.country_region AS country,
+    a.local_spend AS cost_cny,
+    a.impressions,
+    a.taps AS clicks,
+    a.total_installs AS installs
+  FROM `pubdata2025.ods.ods_apple_adgroups_reports_1d` AS a
+  LEFT JOIN campaign_names AS c
+    ON a.stats_date = c.event_date
+   AND CAST(a.campaign_id AS STRING) = c.campaign_id
+  WHERE a.stats_date BETWEEN from_date AND to_date
+),
+
+keyword_cost AS (
+  SELECT
+    k.stats_date AS event_date,
+    a.campaign_id,
+    a.campaign_name,
+    CAST(k.adgroup_id AS STRING) AS adgroup_id,
+    a.adgroup_name,
+    k.keyword,
+    k.keyword_id,
+    k.country_region AS country,
+    k.local_spend AS cost_cny,
+    k.impressions,
+    k.taps AS clicks,
+    k.total_installs AS installs,
+    TRUE AS is_keyword_attributed
+  FROM `pubdata2025.ods.ods_apple_keyword_reports_1d` AS k
+  LEFT JOIN adgroup_total AS a
+    ON k.stats_date = a.event_date
+   AND CAST(k.adgroup_id AS STRING) = a.adgroup_id
+   AND k.country_region = a.country
+  WHERE k.stats_date BETWEEN from_date AND to_date
+),
+
+keyword_sum AS (
+  SELECT
+    event_date,
+    adgroup_id,
+    country,
+    SUM(cost_cny) AS cost_cny,
+    SUM(impressions) AS impressions,
+    SUM(clicks) AS clicks,
+    SUM(installs) AS installs
+  FROM keyword_cost
+  GROUP BY event_date, adgroup_id, country
+),
+
+adgroup_residual AS (
+  SELECT
+    a.event_date,
+    a.campaign_id,
+    a.campaign_name,
+    a.adgroup_id,
+    a.adgroup_name,
+    CAST(NULL AS STRING) AS keyword,
+    CAST(NULL AS STRING) AS keyword_id,
+    a.country,
+    GREATEST(a.cost_cny - COALESCE(k.cost_cny, 0), 0) AS cost_cny,
+    GREATEST(a.impressions - COALESCE(k.impressions, 0), 0) AS impressions,
+    GREATEST(a.clicks - COALESCE(k.clicks, 0), 0) AS clicks,
+    GREATEST(a.installs - COALESCE(k.installs, 0), 0) AS installs,
+    FALSE AS is_keyword_attributed
+  FROM adgroup_total AS a
+  LEFT JOIN keyword_sum AS k USING (event_date, adgroup_id, country)
+  WHERE a.cost_cny - COALESCE(k.cost_cny, 0) > 0.005
+     OR a.impressions - COALESCE(k.impressions, 0) > 0
+     OR a.installs - COALESCE(k.installs, 0) > 0
+),
+
+cost_raw AS (
+  SELECT * FROM keyword_cost
+  UNION ALL
+  SELECT * FROM adgroup_residual
+),
+
+cost_mapped AS (
+  SELECT
+    a.*,
+    CASE
+      WHEN LOWER(campaign_name) LIKE '%vidart%' THEN STRUCT(
+        'VidArt' AS app_name,
+        'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free' AS package_name
+      )
+      WHEN LOWER(campaign_name) LIKE '%roomai%' THEN STRUCT(
+        'AIHOME' AS app_name,
+        'ai.home.design.interior.room.decor.remodel.planner.free' AS package_name
+      )
+      WHEN LOWER(campaign_name) LIKE '%removebg%' OR LOWER(campaign_name) LIKE '%background%' THEN STRUCT(
+          'REMOVE-bg' AS app_name,
+          'background.remover.photo.eraser.retouch.editor.ai.free' AS package_name
+        )
+      WHEN LOWER(campaign_name) LIKE '%remove%' THEN STRUCT(
+        'REMOVE-ob' AS app_name,
+        'com.SpringTech.RemoveObjects' AS package_name
+      )
+      WHEN REGEXP_CONTAINS(LOWER(campaign_name),r'(^|[_ -])st([_ -]|$)|测速|测网速') THEN STRUCT(
+        'speedtest' AS app_name,
+        'co.allconnected.speedtest' AS package_name
+      )
+      WHEN LOWER(campaign_name) LIKE '%collart%' and event_date <= '2026-2-1' THEN STRUCT(
+        'COLLART' AS app_name,
+        'com.SpringTech.NewSC' AS package_name
+      )
+      ELSE STRUCT('other' AS app_name, CAST(NULL AS STRING) AS package_name)
+    END AS product
+  FROM cost_raw AS a
+),
+
+rate_cny AS (
+  SELECT CAST(stats_date AS DATE) AS event_date, rate
+  FROM `aidata2025.dim.exchange_rate_days`
+  WHERE currency = 'CNY'
+)
+
+SELECT
+  a.event_date,
+  a.product.app_name,
+  a.product.package_name,
+  a.country,
+  a.campaign_id,
+  a.campaign_name,
+  a.adgroup_id,
+  a.adgroup_name,
+  a.keyword,
+  a.is_keyword_attributed,
+  CAST(a.cost_cny AS FLOAT64) AS cost_cny,
+  CAST(SAFE_DIVIDE(a.cost_cny,COALESCE(r.rate, (SELECT rate FROM rate_cny ORDER BY event_date DESC LIMIT 1))) AS FLOAT64) AS cost_usd,
+  CAST(a.impressions AS INT64) AS impressions,
+  CAST(a.clicks AS INT64) AS clicks,
+  CAST(a.installs AS INT64) AS installs,
+  keyword_id
+FROM cost_mapped AS a
+LEFT JOIN rate_cny AS r USING (event_date)
+;
+
+COMMIT;

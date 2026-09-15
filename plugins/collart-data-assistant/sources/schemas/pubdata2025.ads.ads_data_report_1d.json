@@ -1,0 +1,82 @@
+{
+  "table": "pubdata2025.ads.ads_data_report_1d",
+  "captured_at": "2026-09-14T13:19:08.970684+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "app名称"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "包名"
+      },
+      {
+        "name": "dnu",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "新增"
+      },
+      {
+        "name": "dau",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "活跃"
+      },
+      {
+        "name": "retention",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "留存率"
+      },
+      {
+        "name": "dnu_organic",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "自然渠道新增"
+      },
+      {
+        "name": "dnu_others",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "其它渠道新增"
+      },
+      {
+        "name": "dnu_inhouse",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "内部带量新增"
+      },
+      {
+        "name": "cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "成本"
+      },
+      {
+        "name": "data_from",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "ads",
+    "tableId": "ads_data_report_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

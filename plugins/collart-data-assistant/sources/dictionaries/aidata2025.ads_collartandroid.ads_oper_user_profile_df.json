@@ -1,0 +1,17 @@
+{
+  "table": "aidata2025.ads_collartandroid.ads_oper_user_profile_df",
+  "captured_at": "2026-09-14",
+  "table_metadata": {
+    "表名": "aidata2025.ads_collartandroid.ads_oper_user_profile_df",
+    "表中文名": null,
+    "表类型": null,
+    "行粒度": null,
+    "主键字段": null,
+    "上层表": null,
+    "更新频率": null,
+    "查询限制/风险提示": null,
+    "使用优先级": null,
+    "项目": null
+  },
+  "fields": []
+}

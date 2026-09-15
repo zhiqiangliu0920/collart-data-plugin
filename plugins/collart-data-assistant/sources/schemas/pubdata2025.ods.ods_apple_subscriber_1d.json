@@ -1,0 +1,168 @@
+{
+  "table": "pubdata2025.ods.ods_apple_subscriber_1d",
+  "captured_at": "2026-09-14T13:19:09.421162+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "stats_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_apple_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_apple_id",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_group_id",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "standard_subscription_duration",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_offer_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "promotional_offer_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_offer_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_offer_duration",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "marketing_opt_in_duration",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "customer_price",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "customer_currency",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "developer_proceeds",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "proceeds_currency",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "preserved_pricing",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "proceeds_reason",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "client",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "device",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscriber_id",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscriber_id_reset",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "refund",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "purchase_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "units",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "region",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "project",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "ods",
+    "tableId": "ods_apple_subscriber_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "stats_date"
+  },
+  "type": "TABLE"
+}

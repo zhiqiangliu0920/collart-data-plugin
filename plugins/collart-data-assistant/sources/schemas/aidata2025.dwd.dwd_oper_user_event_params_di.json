@@ -1,0 +1,98 @@
+{
+  "table": "aidata2025.dwd.dwd_oper_user_event_params_di",
+  "captured_at": "2026-09-14T13:53:49.172716+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_time",
+        "type": "INTEGER"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "event_param",
+        "type": "RECORD",
+        "mode": "REPEATED",
+        "fields": [
+          {
+            "name": "key",
+            "type": "STRING"
+          },
+          {
+            "name": "value",
+            "type": "RECORD",
+            "fields": [
+              {
+                "name": "string_value",
+                "type": "STRING"
+              },
+              {
+                "name": "int_value",
+                "type": "INTEGER"
+              },
+              {
+                "name": "float_value",
+                "type": "FLOAT"
+              },
+              {
+                "name": "double_value",
+                "type": "FLOAT"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "install_source",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_oper_user_event_params_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "app_name",
+      "event_name"
+    ]
+  },
+  "type": "TABLE"
+}

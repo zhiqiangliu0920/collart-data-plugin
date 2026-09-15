@@ -1,0 +1,119 @@
+{
+  "table": "aidata2025.dwd.dwd_cdct_woolong_request_di",
+  "captured_at": "2026-09-14T13:19:07.204993+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "logged_at",
+        "type": "TIMESTAMP",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "owner_id",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "event_type",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "transaction_id",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "purchase_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cancellation_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "change_renewal_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "auto_renew_product_id",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "original_transaction_id",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "is_trial_period",
+        "type": "BOOLEAN",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "is_in_intro_offer_period",
+        "type": "BOOLEAN",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "cancellation_date_ms",
+        "type": "INTEGER",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "price_amount_micros",
+        "type": "INTEGER",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "price_currency_code",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "campaign",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "install_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "gclid",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "logged_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_cdct_woolong_request_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "logged_date"
+  },
+  "description": "乌龙请求明细",
+  "type": "TABLE"
+}

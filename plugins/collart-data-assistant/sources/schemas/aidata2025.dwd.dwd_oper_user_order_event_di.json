@@ -1,0 +1,72 @@
+{
+  "table": "aidata2025.dwd.dwd_oper_user_order_event_di",
+  "captured_at": "2026-09-14T13:19:07.569300+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "日期分区"
+      },
+      {
+        "name": "event_order_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "订阅id"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户id"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户id"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "渠道类型"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "app名称"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "包名"
+      },
+      {
+        "name": "adjust_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "adjust_id"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_oper_user_order_event_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "app_name",
+      "user_id"
+    ]
+  },
+  "type": "TABLE"
+}

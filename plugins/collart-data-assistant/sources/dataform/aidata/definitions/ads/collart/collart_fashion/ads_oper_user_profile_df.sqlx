@@ -1,0 +1,491 @@
+config {
+  type: "operations",
+  name: "ads_collartfashion_oper_user_profile_df",
+  schema: "ads_collartfashion",
+  dependencies: [
+    "ads_collartfashion_oper_user_active_di"
+  ]
+}
+
+/*
+  Collart Fashion 第三张表：用户生命周期画像（1 用户 1 行）
+  Dataform: definitions/ads/collart/collart_fashion/ads_oper_user_profile_df.sqlx
+  目标表  : aidata2025.ads_collartfashion.ads_oper_user_profile_df
+
+  更新方式：
+  - 无旧用户画像历史表可初始化 → 跳过历史骨架
+  - 日常只 MERGE 近 3 日在新 active 中有变化的用户（首跑即用近窗全量插入）
+
+  口径（2026-08-11）:
+  - identity: clarity_user_id / clarity_session_id / atlasv_id
+  - traffic_src: name/type/platform + source/medium/campaign/campaign_id/term/content
+  - page_referrer: 最早 first_visit 的完整 page.referrer（空串保留；无 first_visit 则最早事件）；只写一次
+  - is_vip BOOL = active.is_vip IN ('1','2')
+  - 收入: 汇总 active.revenue.purchase_revenue（Fashion Stripe 用户收入）
+  - active 中 revenue-only 行 is_active=FALSE，不参与活跃日期与活跃天数
+  - 禁止改动其他 dataset 表
+*/
+
+DECLARE biz_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+DECLARE change_from_date DATE DEFAULT biz_date - 2;
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartfashion.ads_oper_user_profile_df`
+(
+  package_name STRING,
+  app_name STRING,
+  user_pseudo_id STRING,
+  user_id STRING,
+  country STRING,
+  traffic_src_type STRING,
+  traffic_src_name STRING,
+  traffic_src_platform STRING,
+  page_referrer STRING,
+  first_open_date DATE,
+  first_open_time TIMESTAMP,
+  register_app_version STRING,
+  last_active_date DATE,
+  last_app_version STRING,
+  current_active_days STRUCT<
+    d7 INT64,
+    d14 INT64,
+    d30 INT64,
+    d90 INT64,
+    d360 INT64
+  >,
+  current_is_churn_14d BOOL,
+  is_vip BOOL,
+  is_remove_on_first_open BOOL,
+  is_ever_remove BOOL,
+  identity STRUCT<
+    clarity_user_id STRING,
+    clarity_session_id STRING,
+    atlasv_id STRING
+  >,
+  geo STRUCT<
+    country STRING,
+    city STRING,
+    continent STRING,
+    sub_continent STRING
+  >,
+  device STRUCT<
+    category STRING,
+    mobile_brand_name STRING,
+    mobile_model_name STRING,
+    operating_system STRING,
+    operating_system_version STRING,
+    vendor_id STRING,
+    language STRING,
+    browser STRING,
+    browser_version STRING
+  >,
+  traffic_src STRUCT<
+    name STRING,
+    type STRING,
+    platform STRING,
+    source STRING,
+    medium STRING,
+    campaign STRING,
+    campaign_id STRING,
+    term STRING,
+    content STRING
+  >,
+  subscription STRUCT<
+    first_date DATE,
+    first_product_id STRING,
+    first_app_version STRING,
+    last_date DATE,
+    last_product_id STRING,
+    last_app_version STRING,
+    purchase_cnt_all INT64,
+    credit_pack_cnt_all INT64,
+    credit_amount_all INT64
+  >,
+  revenue STRUCT<
+    purchase_revenue_all FLOAT64,
+    subscription_revenue_all FLOAT64,
+    credit_revenue_all FLOAT64,
+    ad_revenue_all FLOAT64,
+    total_revenue_all FLOAT64
+  >,
+  ltv STRUCT<
+    d1 FLOAT64,
+    d7 FLOAT64,
+    d30 FLOAT64,
+    d90 FLOAT64,
+    d360 FLOAT64
+  >,
+  retain STRUCT<
+    d2 BOOL,
+    d3 BOOL,
+    d4 BOOL,
+    d5 BOOL,
+    d6 BOOL,
+    d7 BOOL,
+    d8 BOOL,
+    d9 BOOL,
+    d10 BOOL,
+    d11 BOOL,
+    d12 BOOL,
+    d13 BOOL,
+    d14 BOOL,
+    d15 BOOL,
+    d16 BOOL,
+    d17 BOOL,
+    d18 BOOL,
+    d19 BOOL,
+    d20 BOOL,
+    d21 BOOL,
+    d22 BOOL,
+    d23 BOOL,
+    d24 BOOL,
+    d25 BOOL,
+    d26 BOOL,
+    d27 BOOL,
+    d28 BOOL,
+    d29 BOOL,
+    d30 BOOL
+  >,
+  rolling_retain STRUCT<
+    d2 BOOL,
+    d3 BOOL,
+    d4 BOOL,
+    d5 BOOL,
+    d6 BOOL,
+    d7 BOOL,
+    d8 BOOL,
+    d9 BOOL,
+    d10 BOOL,
+    d11 BOOL,
+    d12 BOOL,
+    d13 BOOL,
+    d14 BOOL,
+    d15 BOOL,
+    d16 BOOL,
+    d17 BOOL,
+    d18 BOOL,
+    d19 BOOL,
+    d20 BOOL,
+    d21 BOOL,
+    d22 BOOL,
+    d23 BOOL,
+    d24 BOOL,
+    d25 BOOL,
+    d26 BOOL,
+    d27 BOOL,
+    d28 BOOL,
+    d29 BOOL,
+    d30 BOOL
+  >,
+  profile_updated_at TIMESTAMP
+)
+CLUSTER BY user_pseudo_id
+OPTIONS(description = 'Collart Fashion 用户生命周期画像：1 用户 1 行，active 增量 MERGE（新建）');
+
+ALTER TABLE `aidata2025.ads_collartfashion.ads_oper_user_profile_df`
+ADD COLUMN IF NOT EXISTS page_referrer STRING;
+
+BEGIN TRANSACTION;
+
+MERGE `aidata2025.ads_collartfashion.ads_oper_user_profile_df` AS t
+USING (
+  WITH
+  changed_users AS (
+    SELECT DISTINCT user_pseudo_id
+    FROM `aidata2025.ads_collartfashion.ads_oper_user_active_di`
+    WHERE event_date BETWEEN change_from_date AND biz_date
+      AND user_pseudo_id IS NOT NULL
+  ),
+
+  ah AS (
+    SELECT a.*
+    FROM `aidata2025.ads_collartfashion.ads_oper_user_active_di` AS a
+    JOIN changed_users AS c USING (user_pseudo_id)
+  ),
+
+  active_profile AS (
+    SELECT
+      user_pseudo_id,
+      ARRAY_AGG(STRUCT(
+        user_id, event_date, app_version, country, is_vip,
+        first_open_time, identity, geo, device, traffic_src,
+        traffic_src_name, traffic_src_type,
+        IF(LOWER(IFNULL(traffic_src_platform, '')) IN ('x', 'x_delivery'), 'x_delivery', traffic_src_platform) AS traffic_src_platform
+      ) ORDER BY event_date DESC LIMIT 1)[OFFSET(0)] AS last,
+      ARRAY_AGG(
+        IF(
+          traffic_src_type IS NOT NULL
+            OR traffic_src_name IS NOT NULL
+            OR traffic_src_platform IS NOT NULL,
+          STRUCT(traffic_src_type AS type, traffic_src_name AS name, IF(LOWER(IFNULL(traffic_src_platform, '')) IN ('x', 'x_delivery'), 'x_delivery', traffic_src_platform) AS platform),
+          NULL
+        )
+        IGNORE NULLS
+        ORDER BY IF(traffic_src_type = 'delivery', 0, 1), event_date
+        LIMIT 1
+      )[SAFE_OFFSET(0)] AS first_preferred_channel,
+      ARRAY_AGG(country IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS first_country,
+      ARRAY_AGG(IF(is_new, country, NULL) IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS first_country_on_new,
+      LOGICAL_OR(is_vip IN ('1', '2')) AS any_vip,
+      LOGICAL_OR(IF(is_new, COALESCE(is_remove, FALSE), FALSE)) AS remove_on_first_open,
+      LOGICAL_OR(IFNULL(is_remove, FALSE)) AS any_remove,
+      COALESCE(
+        MIN(IF(is_new, event_date, NULL)),
+        DATE(
+          MIN(IF(DATE(first_open_time, 'Asia/Shanghai') <= event_date, first_open_time, NULL)),
+          'Asia/Shanghai'
+        )
+      ) AS first_open_date,
+      MIN(IF(DATE(first_open_time, 'Asia/Shanghai') <= event_date, first_open_time, NULL)) AS first_open_time,
+      ARRAY_AGG(IF(is_new, app_version, NULL) IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS register_app_version,
+      STRUCT(
+        COUNTIF(event_date BETWEEN biz_date - 6 AND biz_date) AS d7,
+        COUNTIF(event_date BETWEEN biz_date - 13 AND biz_date) AS d14,
+        COUNTIF(event_date BETWEEN biz_date - 29 AND biz_date) AS d30,
+        COUNTIF(event_date BETWEEN biz_date - 89 AND biz_date) AS d90,
+        COUNTIF(event_date BETWEEN biz_date - 359 AND biz_date) AS d360
+      ) AS current_active_days,
+      ARRAY_AGG(IF(is_new, retain, NULL) IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS retain,
+      ARRAY_AGG(IF(is_new, rolling_retain, NULL) IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS rolling_retain
+    FROM ah
+    WHERE is_active
+      AND is_studio_active
+    GROUP BY user_pseudo_id
+  ),
+
+  purchase_profile AS (
+    SELECT
+      user_pseudo_id,
+      MIN(IF(subscription.purchase_cnt > 0, event_date, NULL)) AS first_date,
+      ARRAY_AGG(IF(subscription.purchase_cnt > 0, subscription.product_ids[SAFE_OFFSET(0)], NULL)
+        IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS first_product_id,
+      ARRAY_AGG(IF(subscription.purchase_cnt > 0, app_version, NULL)
+        IGNORE NULLS ORDER BY event_date LIMIT 1)[SAFE_OFFSET(0)] AS first_app_version,
+      MAX(IF(subscription.purchase_cnt > 0, event_date, NULL)) AS last_date,
+      ARRAY_AGG(IF(subscription.purchase_cnt > 0, subscription.product_ids[SAFE_OFFSET(0)], NULL)
+        IGNORE NULLS ORDER BY event_date DESC LIMIT 1)[SAFE_OFFSET(0)] AS last_product_id,
+      ARRAY_AGG(IF(subscription.purchase_cnt > 0, app_version, NULL)
+        IGNORE NULLS ORDER BY event_date DESC LIMIT 1)[SAFE_OFFSET(0)] AS last_app_version,
+      SUM(IFNULL(subscription.purchase_cnt, 0)) AS purchase_cnt_all,
+      SUM(IFNULL(subscription.credit_pack_cnt, 0)) AS credit_pack_cnt_all,
+      SUM(IFNULL(subscription.credit_amount, 0)) AS credit_amount_all
+    FROM ah
+    GROUP BY user_pseudo_id
+  ),
+
+  rev_profile AS (
+    SELECT
+      user_pseudo_id,
+      SUM(IFNULL(revenue.purchase_revenue, 0)) AS purchase_revenue_all,
+      SUM(IFNULL(revenue.credit_revenue, 0)) AS credit_revenue_all,
+      SUM(IFNULL(revenue.new_revenue, 0) + IFNULL(revenue.resub_revenue, 0)) AS subscription_revenue_all,
+      SUM(IFNULL(revenue.ad_revenue, 0)) AS ad_revenue_all
+    FROM ah
+    GROUP BY user_pseudo_id
+  ),
+
+  ltv_profile AS (
+    SELECT
+      r.user_pseudo_id,
+      SUM(IF(DATE_DIFF(r.event_date, COALESCE(p.first_open_date, a.first_open_date), DAY) BETWEEN 0 AND 1, IFNULL(r.revenue.purchase_revenue, 0), 0)) AS d1,
+      SUM(IF(DATE_DIFF(r.event_date, COALESCE(p.first_open_date, a.first_open_date), DAY) BETWEEN 0 AND 7, IFNULL(r.revenue.purchase_revenue, 0), 0)) AS d7,
+      SUM(IF(DATE_DIFF(r.event_date, COALESCE(p.first_open_date, a.first_open_date), DAY) BETWEEN 0 AND 30, IFNULL(r.revenue.purchase_revenue, 0), 0)) AS d30,
+      SUM(IF(DATE_DIFF(r.event_date, COALESCE(p.first_open_date, a.first_open_date), DAY) BETWEEN 0 AND 90, IFNULL(r.revenue.purchase_revenue, 0), 0)) AS d90,
+      SUM(IF(DATE_DIFF(r.event_date, COALESCE(p.first_open_date, a.first_open_date), DAY) BETWEEN 0 AND 360, IFNULL(r.revenue.purchase_revenue, 0), 0)) AS d360
+    FROM `aidata2025.ads_collartfashion.ads_oper_user_active_di` AS r
+    JOIN changed_users AS c USING (user_pseudo_id)
+    LEFT JOIN `aidata2025.ads_collartfashion.ads_oper_user_profile_df` AS p USING (user_pseudo_id)
+    LEFT JOIN active_profile AS a USING (user_pseudo_id)
+    GROUP BY r.user_pseudo_id
+  ),
+
+  need_ref AS (
+    SELECT c.user_pseudo_id
+    FROM changed_users AS c
+    LEFT JOIN `aidata2025.ads_collartfashion.ads_oper_user_profile_df` AS p
+      ON p.user_pseudo_id = c.user_pseudo_id
+    WHERE p.page_referrer IS NULL
+  ),
+
+  first_visit_ref AS (
+    SELECT
+      e.user_pseudo_id,
+      IFNULL(
+        ARRAY_AGG(
+          IF(e.event_name = 'first_visit', IFNULL(e.page.referrer, ''), NULL)
+          IGNORE NULLS
+          ORDER BY e.event_time
+          LIMIT 1
+        )[SAFE_OFFSET(0)],
+        ARRAY_AGG(IFNULL(e.page.referrer, '') ORDER BY e.event_time LIMIT 1)[OFFSET(0)]
+      ) AS page_referrer
+    FROM `aidata2025.dm.dm_collart_web_user_event_di` AS e
+    JOIN need_ref AS n ON e.user_pseudo_id = n.user_pseudo_id
+    WHERE e.package_name = 'collart_fashion'
+    GROUP BY e.user_pseudo_id
+  )
+
+  SELECT
+    c.user_pseudo_id,
+    a,
+    p,
+    rv,
+    ltv,
+    fv
+  FROM changed_users AS c
+  LEFT JOIN active_profile AS a USING (user_pseudo_id)
+  LEFT JOIN purchase_profile AS p USING (user_pseudo_id)
+  LEFT JOIN rev_profile AS rv USING (user_pseudo_id)
+  LEFT JOIN ltv_profile AS ltv USING (user_pseudo_id)
+  LEFT JOIN first_visit_ref AS fv USING (user_pseudo_id)
+) AS s
+ON t.user_pseudo_id = s.user_pseudo_id
+
+WHEN MATCHED THEN UPDATE SET
+  user_id = COALESCE(s.a.last.user_id, t.user_id),
+  country = COALESCE(s.a.first_country_on_new, t.country, s.a.first_country),
+  traffic_src_type = CASE
+    WHEN t.traffic_src_type = 'delivery' THEN t.traffic_src_type
+    WHEN s.a.first_preferred_channel.type = 'delivery' THEN s.a.first_preferred_channel.type
+    ELSE COALESCE(t.traffic_src_type, s.a.first_preferred_channel.type)
+  END,
+  traffic_src_name = CASE
+    WHEN t.traffic_src_type = 'delivery' THEN t.traffic_src_name
+    WHEN s.a.first_preferred_channel.type = 'delivery' THEN s.a.first_preferred_channel.name
+    WHEN t.traffic_src_type IS NOT NULL OR t.traffic_src_name IS NOT NULL OR t.traffic_src_platform IS NOT NULL
+      THEN t.traffic_src_name
+    ELSE s.a.first_preferred_channel.name
+  END,
+  traffic_src_platform = CASE
+    WHEN t.traffic_src_type = 'delivery' THEN COALESCE(IF(LOWER(IFNULL(t.traffic_src_platform, '')) IN ('x', 'x_delivery'), 'x_delivery', t.traffic_src_platform), s.a.first_preferred_channel.platform)
+    WHEN s.a.first_preferred_channel.type = 'delivery' THEN s.a.first_preferred_channel.platform
+    WHEN t.traffic_src_type IS NOT NULL OR t.traffic_src_name IS NOT NULL OR t.traffic_src_platform IS NOT NULL
+      THEN IF(LOWER(IFNULL(t.traffic_src_platform, '')) IN ('x', 'x_delivery'), 'x_delivery', t.traffic_src_platform)
+    ELSE s.a.first_preferred_channel.platform
+  END,
+  page_referrer = IF(t.page_referrer IS NOT NULL, t.page_referrer, s.fv.page_referrer),
+  first_open_date = IF(
+    t.first_open_date IS NULL OR t.first_open_date > COALESCE(s.a.last.event_date, t.last_active_date),
+    s.a.first_open_date,
+    t.first_open_date
+  ),
+  first_open_time = IF(
+    t.first_open_time IS NULL
+      OR DATE(t.first_open_time, 'Asia/Shanghai') > COALESCE(s.a.last.event_date, t.last_active_date),
+    s.a.first_open_time,
+    t.first_open_time
+  ),
+  register_app_version = COALESCE(t.register_app_version, s.a.register_app_version),
+  last_active_date = COALESCE(s.a.last.event_date, t.last_active_date),
+  last_app_version = COALESCE(s.a.last.app_version, t.last_app_version),
+  current_active_days = COALESCE(s.a.current_active_days, t.current_active_days),
+  current_is_churn_14d = IF(COALESCE(s.a.last.event_date, t.last_active_date) IS NULL, NULL,
+    DATE_DIFF(biz_date, COALESCE(s.a.last.event_date, t.last_active_date), DAY) >= 14),
+  is_vip = COALESCE(t.is_vip, FALSE) OR COALESCE(s.a.any_vip, FALSE),
+  is_remove_on_first_open =
+    COALESCE(t.is_remove_on_first_open, FALSE) OR COALESCE(s.a.remove_on_first_open, FALSE),
+  is_ever_remove = COALESCE(t.is_ever_remove, FALSE) OR COALESCE(s.a.any_remove, FALSE),
+  identity = COALESCE(s.a.last.identity, t.identity),
+  geo = IF(s.a.last.geo IS NULL, t.geo, STRUCT(
+    s.a.last.country, s.a.last.geo.city, s.a.last.geo.continent, s.a.last.geo.sub_continent
+  )),
+  device = COALESCE(s.a.last.device, t.device),
+  traffic_src = IF(s.a.last.traffic_src IS NULL, t.traffic_src, STRUCT(
+    s.a.last.traffic_src_name,
+    s.a.last.traffic_src_type,
+    s.a.last.traffic_src_platform,
+    s.a.last.traffic_src.source,
+    s.a.last.traffic_src.medium,
+    s.a.last.traffic_src.campaign,
+    s.a.last.traffic_src.campaign_id,
+    s.a.last.traffic_src.term,
+    s.a.last.traffic_src.content
+  )),
+  subscription = STRUCT(
+    COALESCE(t.subscription.first_date, s.p.first_date),
+    COALESCE(t.subscription.first_product_id, s.p.first_product_id),
+    COALESCE(t.subscription.first_app_version, s.p.first_app_version),
+    COALESCE(s.p.last_date, t.subscription.last_date),
+    COALESCE(s.p.last_product_id, t.subscription.last_product_id),
+    COALESCE(s.p.last_app_version, t.subscription.last_app_version),
+    COALESCE(s.p.purchase_cnt_all, t.subscription.purchase_cnt_all),
+    COALESCE(s.p.credit_pack_cnt_all, t.subscription.credit_pack_cnt_all),
+    COALESCE(s.p.credit_amount_all, t.subscription.credit_amount_all)
+  ),
+  revenue = STRUCT(
+    COALESCE(s.rv.purchase_revenue_all, t.revenue.purchase_revenue_all),
+    COALESCE(s.rv.subscription_revenue_all, t.revenue.subscription_revenue_all),
+    COALESCE(s.rv.credit_revenue_all, t.revenue.credit_revenue_all),
+    COALESCE(s.rv.ad_revenue_all, t.revenue.ad_revenue_all),
+    COALESCE(s.rv.purchase_revenue_all, t.revenue.purchase_revenue_all)
+      + COALESCE(s.rv.ad_revenue_all, t.revenue.ad_revenue_all)
+  ),
+  ltv = IF(s.ltv IS NULL, t.ltv, STRUCT(s.ltv.d1, s.ltv.d7, s.ltv.d30, s.ltv.d90, s.ltv.d360)),
+  retain = COALESCE(s.a.retain, t.retain),
+  rolling_retain = COALESCE(s.a.rolling_retain, t.rolling_retain),
+  profile_updated_at = CURRENT_TIMESTAMP()
+
+WHEN NOT MATCHED THEN INSERT (
+  package_name, app_name,
+  user_pseudo_id, user_id, country, traffic_src_type, traffic_src_name, traffic_src_platform,
+  page_referrer,
+  first_open_date, first_open_time, register_app_version,
+  last_active_date, last_app_version,
+  current_active_days,
+  current_is_churn_14d, is_vip, is_remove_on_first_open, is_ever_remove,
+  identity, geo, device, traffic_src, subscription, revenue, ltv,
+  retain, rolling_retain, profile_updated_at
+) VALUES (
+  'collart_fashion',
+  'collart_fashion',
+  s.user_pseudo_id,
+  s.a.last.user_id,
+  COALESCE(s.a.first_country_on_new, s.a.first_country),
+  s.a.first_preferred_channel.type,
+  s.a.first_preferred_channel.name,
+  IF(LOWER(IFNULL(s.a.first_preferred_channel.platform, '')) IN ('x', 'x_delivery'), 'x_delivery', s.a.first_preferred_channel.platform),
+  s.fv.page_referrer,
+  s.a.first_open_date,
+  s.a.first_open_time,
+  s.a.register_app_version,
+  s.a.last.event_date,
+  s.a.last.app_version,
+  s.a.current_active_days,
+  FALSE,
+  COALESCE(s.a.any_vip, FALSE),
+  COALESCE(s.a.remove_on_first_open, FALSE),
+  COALESCE(s.a.any_remove, FALSE),
+  s.a.last.identity,
+  STRUCT(s.a.last.country, s.a.last.geo.city, s.a.last.geo.continent, s.a.last.geo.sub_continent),
+  s.a.last.device,
+  STRUCT(
+    s.a.last.traffic_src_name,
+    s.a.last.traffic_src_type,
+    s.a.last.traffic_src_platform,
+    s.a.last.traffic_src.source,
+    s.a.last.traffic_src.medium,
+    s.a.last.traffic_src.campaign,
+    s.a.last.traffic_src.campaign_id,
+    s.a.last.traffic_src.term,
+    s.a.last.traffic_src.content
+  ),
+  STRUCT(
+    s.p.first_date, s.p.first_product_id, s.p.first_app_version,
+    s.p.last_date, s.p.last_product_id, s.p.last_app_version,
+    COALESCE(s.p.purchase_cnt_all, 0),
+    COALESCE(s.p.credit_pack_cnt_all, 0),
+    COALESCE(s.p.credit_amount_all, 0)
+  ),
+  STRUCT(
+    COALESCE(s.rv.purchase_revenue_all, 0),
+    COALESCE(s.rv.subscription_revenue_all, 0),
+    COALESCE(s.rv.credit_revenue_all, 0),
+    COALESCE(s.rv.ad_revenue_all, 0),
+    COALESCE(s.rv.purchase_revenue_all, 0) + COALESCE(s.rv.ad_revenue_all, 0)
+  ),
+  STRUCT(s.ltv.d1, s.ltv.d7, s.ltv.d30, s.ltv.d90, s.ltv.d360),
+  s.a.retain,
+  s.a.rolling_retain,
+  CURRENT_TIMESTAMP()
+);
+
+COMMIT TRANSACTION;

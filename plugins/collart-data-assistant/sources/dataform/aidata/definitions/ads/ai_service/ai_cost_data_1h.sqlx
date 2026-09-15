@@ -1,0 +1,90 @@
+config {
+    type : "operations"
+}
+
+
+declare from_date date default ${dataform.projectConfig.vars.biz_date}-29;
+declare to_date date default ${dataform.projectConfig.vars.biz_date} + 1;
+
+
+begin transaction;   
+
+delete from `aidata2025.ai_service.ai_cost_data` where 
+event_date between from_date and to_date;
+
+insert into `aidata2025.ai_service.ai_cost_data`
+
+WITH app_mapping AS (
+  SELECT 'hz' atlasv_app_name,'hz' app_name UNION ALL
+  SELECT 'gz','gz' UNION ALL
+  SELECT 'vidma','Vidma Editor_android' UNION ALL
+  SELECT 'shotcut','shotcut' UNION ALL
+  SELECT 'collart_android','collart_android' UNION ALL
+  SELECT 'ttd2','ttd1' UNION ALL
+  SELECT 'scanner lens','Scannerlens' UNION ALL
+  SELECT 'recorder-pro','Recorder Pro' UNION ALL
+  SELECT 'ins3','ins3' UNION ALL
+  SELECT 'fbd2','fbd2' UNION ALL
+  SELECT 'nova downloader','free.video.downloader.converter.music' UNION ALL
+  SELECT 'vidma editor_android','Vidma Editor_android' UNION ALL
+  SELECT 'ins1','ins3' UNION ALL
+  SELECT 'remove bg','remove_bg' UNION ALL
+  SELECT 'twd','xd' UNION ALL
+  SELECT 'collart_web','collart_web' UNION ALL
+  SELECT 'recorder-lite','Recorder Lite' UNION ALL
+  SELECT 'fate-quest','hz' UNION ALL
+  SELECT 'remove obj','remove' UNION ALL
+  SELECT 'vidma-res','Vidma Editor_android' UNION ALL
+  SELECT 'speedtest','hz' UNION ALL
+  SELECT 'bedtimestory','gz' UNION ALL
+  SELECT 'pinkbird','hz' UNION ALL
+  SELECT 'net-proxy-server','gz' UNION ALL
+  SELECT 'mellowme','gz' UNION ALL
+  SELECT 'vidma-editor-android','Vidma Editor_android' UNION ALL
+  SELECT 'apps-relase-proxy','hz' UNION ALL
+  SELECT 'ai-provider-gateway','hz' UNION ALL
+  SELECT 'drama','drama' UNION ALL
+  SELECT 'shotcut-android','shotcut' UNION ALL
+  SELECT 'meeseeks','hz' UNION ALL
+  SELECT 'fbg-wow','gz' UNION ALL
+  SELECT 'ptd','ptd' UNION ALL
+  SELECT 'noteme','NoteMe iOS' UNION ALL
+  SELECT 'fbg','gz' UNION ALL
+  SELECT 'vidma-ai-internal','Vidma Editor_android' UNION ALL
+  SELECT 'collart_ios','collart_iOS' UNION ALL
+  SELECT 'drma','drama' UNION ALL
+  SELECT 'vidma-public','Vidma Editor_android' UNION ALL
+  SELECT 'vidma-ai-res','Vidma Editor_android' UNION ALL
+  SELECT 'oho-legal','hz' UNION ALL
+  SELECT 'wonderface','hz' UNION ALL
+  SELECT 'dramahub','drama'
+)
+select
+ a.event_date,
+ a.app_name,
+ a.cost_type,
+ sum(a.cost) as cost,
+ coalesce(b.package_name,'hz') as package_name
+from
+(
+SELECT
+  a.event_Date,
+  COALESCE(b.app_name,a.atlasv_app_name) AS app_name,
+  a.cost_type,
+  SUM(a.cost) AS cost
+FROM `pubdata2025.ads.ads_atlasv_service_cost_all_1d` a
+LEFT JOIN app_mapping b
+  ON LOWER(a.atlasv_app_name) = LOWER(b.atlasv_app_name)
+WHERE event_date between from_date and to_date
+GROUP BY all
+) a 
+left join aidata2025.dim.dim_product_info b 
+on a.app_name = b.app_name
+group by all
+;
+
+commit;
+
+
+
+

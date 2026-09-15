@@ -1,0 +1,103 @@
+config {
+  type: "operations",
+  name: "ads_collartfashion_oper_event_metric_country_di",
+  schema: "ads_collartfashion",
+  dependencies: ["ads_collartfashion_oper_event_metric_attr_di"]
+}
+
+/*
+  Collart Fashion 日×国家事件指标
+  Dataform: definitions/ads/collart/collart_fashion/ads_oper_event_metric_country_di.sqlx
+  SEO：STRUCT<uv,pv>；其余：STRUCT<uv,pv,new_uv,vip_uv>
+  （本文件先按 Sheet 手改，确认后再回写生成器）
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartfashion.ads_oper_event_metric_country_di`
+(
+  package_name STRING,
+  app_name STRING,
+  event_date DATE,
+  country STRING,
+  seo_show STRUCT<uv INT64, pv INT64>,
+  seo_click STRUCT<uv INT64, pv INT64>,
+  valid_action STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  inspiration_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  inspiration_template_click STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_step2_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_step3_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_step4_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_click STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_start STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_download_success STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_success STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  aimodel_generate_click STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  aimodel_generate_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  aimodel_generate_start STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  aimodel_generate_success STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  aimodel_download_success STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  vip_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  credit_pack_purchase STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  vip_subscribe_succeed STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  login_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  login_success STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>
+)
+PARTITION BY event_date CLUSTER BY country
+OPTIONS(description='ads_collartfashion 日×国家事件指标：ads_dim_metric_rule 驱动');
+BEGIN TRANSACTION;
+DELETE FROM `aidata2025.ads_collartfashion.ads_oper_event_metric_country_di` WHERE event_date BETWEEN from_date AND to_date;
+INSERT INTO `aidata2025.ads_collartfashion.ads_oper_event_metric_country_di`
+(package_name, app_name, event_date, country,
+  seo_show,
+  seo_click,
+  valid_action,
+  inspiration_show,
+  inspiration_template_click,
+  fashion_generate_show,
+  fashion_generate_step2_show,
+  fashion_generate_step3_show,
+  fashion_generate_step4_show,
+  fashion_generate_click,
+  fashion_generate_start,
+  fashion_download_success,
+  fashion_generate_success,
+  aimodel_generate_click,
+  aimodel_generate_show,
+  aimodel_generate_start,
+  aimodel_generate_success,
+  aimodel_download_success,
+  vip_show,
+  credit_pack_purchase,
+  vip_subscribe_succeed,
+  login_show,
+  login_success)
+SELECT 'collart_fashion' AS package_name, 'collart_fashion' AS app_name, event_date, country,
+  STRUCT(COALESCE(SUM(seo_show.uv),0) AS uv, COALESCE(SUM(seo_show.pv),0) AS pv) AS seo_show,  -- SEO页面曝光
+  STRUCT(COALESCE(SUM(seo_click.uv),0) AS uv, COALESCE(SUM(seo_click.pv),0) AS pv) AS seo_click,  -- SEO页面点击
+  STRUCT(COALESCE(SUM(valid_action.uv),0) AS uv, COALESCE(SUM(valid_action.pv),0) AS pv, COALESCE(SUM(IF(is_new, valid_action.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), valid_action.uv, 0)),0) AS vip_uv) AS valid_action,  -- 有效用户
+  STRUCT(COALESCE(SUM(inspiration_show.uv),0) AS uv, COALESCE(SUM(inspiration_show.pv),0) AS pv, COALESCE(SUM(IF(is_new, inspiration_show.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), inspiration_show.uv, 0)),0) AS vip_uv) AS inspiration_show,  -- 灵感页_进入灵感页
+  STRUCT(COALESCE(SUM(inspiration_template_click.uv),0) AS uv, COALESCE(SUM(inspiration_template_click.pv),0) AS pv, COALESCE(SUM(IF(is_new, inspiration_template_click.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), inspiration_template_click.uv, 0)),0) AS vip_uv) AS inspiration_template_click,  -- 灵感页_点击模板
+  STRUCT(COALESCE(SUM(fashion_generate_show.uv),0) AS uv, COALESCE(SUM(fashion_generate_show.pv),0) AS pv, COALESCE(SUM(IF(is_new, fashion_generate_show.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), fashion_generate_show.uv, 0)),0) AS vip_uv) AS fashion_generate_show,  -- fashion_进入功能页
+  STRUCT(COALESCE(SUM(fashion_generate_step2_show.uv),0) AS uv, COALESCE(SUM(fashion_generate_step2_show.pv),0) AS pv, COALESCE(SUM(IF(is_new, fashion_generate_step2_show.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), fashion_generate_step2_show.uv, 0)),0) AS vip_uv) AS fashion_generate_step2_show,  -- fashion_进入功能页_step2
+  STRUCT(COALESCE(SUM(fashion_generate_step3_show.uv),0) AS uv, COALESCE(SUM(fashion_generate_step3_show.pv),0) AS pv, COALESCE(SUM(IF(is_new, fashion_generate_step3_show.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), fashion_generate_step3_show.uv, 0)),0) AS vip_uv) AS fashion_generate_step3_show,  -- fashion_进入功能页_step3
+  STRUCT(COALESCE(SUM(fashion_generate_step4_show.uv),0) AS uv, COALESCE(SUM(fashion_generate_step4_show.pv),0) AS pv, COALESCE(SUM(IF(is_new, fashion_generate_step4_show.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), fashion_generate_step4_show.uv, 0)),0) AS vip_uv) AS fashion_generate_step4_show,  -- fashion_进入功能页_step4
+  STRUCT(COALESCE(SUM(fashion_generate_click.uv),0) AS uv, COALESCE(SUM(fashion_generate_click.pv),0) AS pv, COALESCE(SUM(IF(is_new, fashion_generate_click.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), fashion_generate_click.uv, 0)),0) AS vip_uv) AS fashion_generate_click,  -- fashion_点击generate
+  STRUCT(COALESCE(SUM(fashion_generate_start.uv),0) AS uv, COALESCE(SUM(fashion_generate_start.pv),0) AS pv, COALESCE(SUM(IF(is_new, fashion_generate_start.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), fashion_generate_start.uv, 0)),0) AS vip_uv) AS fashion_generate_start,  -- fashion_开始生成
+  STRUCT(COALESCE(SUM(fashion_download_success.uv),0) AS uv, COALESCE(SUM(fashion_download_success.pv),0) AS pv, COALESCE(SUM(IF(is_new, fashion_download_success.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), fashion_download_success.uv, 0)),0) AS vip_uv) AS fashion_download_success,  -- fashion_下载成功
+  STRUCT(COALESCE(SUM(fashion_generate_success.uv),0) AS uv, COALESCE(SUM(fashion_generate_success.pv),0) AS pv, COALESCE(SUM(IF(is_new, fashion_generate_success.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), fashion_generate_success.uv, 0)),0) AS vip_uv) AS fashion_generate_success,  -- fashion_生成成功
+  STRUCT(COALESCE(SUM(aimodel_generate_click.uv),0) AS uv, COALESCE(SUM(aimodel_generate_click.pv),0) AS pv, COALESCE(SUM(IF(is_new, aimodel_generate_click.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), aimodel_generate_click.uv, 0)),0) AS vip_uv) AS aimodel_generate_click,  -- aimodel_点击generate
+  STRUCT(COALESCE(SUM(aimodel_generate_show.uv),0) AS uv, COALESCE(SUM(aimodel_generate_show.pv),0) AS pv, COALESCE(SUM(IF(is_new, aimodel_generate_show.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), aimodel_generate_show.uv, 0)),0) AS vip_uv) AS aimodel_generate_show,  -- aimodel_进入功能页
+  STRUCT(COALESCE(SUM(aimodel_generate_start.uv),0) AS uv, COALESCE(SUM(aimodel_generate_start.pv),0) AS pv, COALESCE(SUM(IF(is_new, aimodel_generate_start.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), aimodel_generate_start.uv, 0)),0) AS vip_uv) AS aimodel_generate_start,  -- aimodel_开始生成
+  STRUCT(COALESCE(SUM(aimodel_generate_success.uv),0) AS uv, COALESCE(SUM(aimodel_generate_success.pv),0) AS pv, COALESCE(SUM(IF(is_new, aimodel_generate_success.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), aimodel_generate_success.uv, 0)),0) AS vip_uv) AS aimodel_generate_success,  -- aimodel_生成成功
+  STRUCT(COALESCE(SUM(aimodel_download_success.uv),0) AS uv, COALESCE(SUM(aimodel_download_success.pv),0) AS pv, COALESCE(SUM(IF(is_new, aimodel_download_success.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), aimodel_download_success.uv, 0)),0) AS vip_uv) AS aimodel_download_success,  -- aimodel_下载成功
+  STRUCT(COALESCE(SUM(vip_show.uv),0) AS uv, COALESCE(SUM(vip_show.pv),0) AS pv, COALESCE(SUM(IF(is_new, vip_show.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), vip_show.uv, 0)),0) AS vip_uv) AS vip_show,  -- 付费页_进入付费页
+  STRUCT(COALESCE(SUM(credit_pack_purchase.uv),0) AS uv, COALESCE(SUM(credit_pack_purchase.pv),0) AS pv, COALESCE(SUM(IF(is_new, credit_pack_purchase.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), credit_pack_purchase.uv, 0)),0) AS vip_uv) AS credit_pack_purchase,  -- 付费页_点击付费
+  STRUCT(COALESCE(SUM(vip_subscribe_succeed.uv),0) AS uv, COALESCE(SUM(vip_subscribe_succeed.pv),0) AS pv, COALESCE(SUM(IF(is_new, vip_subscribe_succeed.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), vip_subscribe_succeed.uv, 0)),0) AS vip_uv) AS vip_subscribe_succeed,  -- 付费页_付费成功
+  STRUCT(COALESCE(SUM(login_show.uv),0) AS uv, COALESCE(SUM(login_show.pv),0) AS pv, COALESCE(SUM(IF(is_new, login_show.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), login_show.uv, 0)),0) AS vip_uv) AS login_show,  -- 登录页_进入登录页面人数
+  STRUCT(COALESCE(SUM(login_success.uv),0) AS uv, COALESCE(SUM(login_success.pv),0) AS pv, COALESCE(SUM(IF(is_new, login_success.uv, 0)),0) AS new_uv, COALESCE(SUM(IF(IFNULL(is_vip, FALSE), login_success.uv, 0)),0) AS vip_uv) AS login_success  -- 登录页_登录成功人数
+FROM `aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di`
+WHERE event_date BETWEEN from_date AND to_date AND country IS NOT NULL
+GROUP BY event_date, country;
+COMMIT TRANSACTION;

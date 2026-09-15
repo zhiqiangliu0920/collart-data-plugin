@@ -1,0 +1,198 @@
+{
+  "table": "pubdata2025.ods.ods_apple_subscription_1d",
+  "captured_at": "2026-09-14T13:19:09.445701+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "stats_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_apple_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_apple_id",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_group_id",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "standard_subscription_duration",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_offer_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "promotional_offer_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "customer_price",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "customer_currency",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "developer_proceeds",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "proceeds_currency",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "preserved_pricing",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "proceeds_reason",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "client",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "device",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "state",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "active_standard_price_subscriptions",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "active_free_trial_introductory_offer_subscriptions",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "active_pay_up_front_introductory_offer_subscriptions",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "active_pay_as_you_go_introductory_offer_subscriptions",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "free_trial_promotional_offer_subscriptions",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "pay_up_front_promotional_offer_subscriptions",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "pay_as_you_go_promotional_offer_subscriptions",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "free_trial_offer_code_subscriptions",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "pay_up_front_offer_code_subscriptions",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "pay_as_you_go_offer_code_subscriptions",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "marketing_opt_ins",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_retry",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "grace_period",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscribers",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "region",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "project",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "ods",
+    "tableId": "ods_apple_subscription_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "stats_date"
+  },
+  "type": "TABLE"
+}

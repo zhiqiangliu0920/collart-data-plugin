@@ -1,0 +1,50 @@
+config {
+    type: "operations"
+}
+
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `dwd.dwd_cdct_cost_azure_billing_di`
+WHERE
+  event_date IN (
+  SELECT
+    DISTINCT DATE(ChargePeriodStart)
+  FROM
+    `ods.ods_billing_azure_cost_1d`
+  WHERE
+    _PARTITIONTIME=timestamp(CURRENT_DATE));
+  --插入分区数据--
+INSERT INTO
+  dwd.dwd_cdct_cost_azure_billing_di
+SELECT
+  DATE(ChargePeriodStart) AS event_date,
+  NULL AS atlasv_app_name,
+  NULL AS atlasv_team,
+  BillingAccountId AS billing_account_id,
+  BillingAccountName AS billing_account_name,
+  BillingAccountType AS billing_account_type,
+  BillingCurrency AS billing_currency,
+  DATE(SPLIT(BillingPeriodStart,'T')[0]) AS billing_month,
+  ChargeCategory AS charge_category,
+  ChargeSubcategory AS charge_sub_category,
+  InvoiceIssuerName AS invoice_issuer_name,
+  Region AS region,
+  ResourceId AS resource_id,
+  ResourceName AS resource_name,
+  ResourceType AS resource_type,
+  ServiceCategory AS service_category,
+  ServiceName AS service_name,
+  SkuId AS sku_id,
+  SubAccountName AS sub_account_name,
+  CAST( UsageQuantity AS float64) AS usage_quantity,
+  CAST( BilledCost AS float64) AS billing_cost
+FROM
+  `ods.ods_billing_azure_cost_1d`
+WHERE
+  _PARTITIONTIME=timestamp(CURRENT_DATE) ;
+  --如果所有操作都成功，提交事务
+COMMIT
+  ;

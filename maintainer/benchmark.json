@@ -1,0 +1,160 @@
+{
+  "method": "Same 9 questions, default CLI search then known topic read; sequential subprocesses; no model or database invocation. Not an end-to-end model-agent benchmark.",
+  "repeats": 3,
+  "actual_token_usage": null,
+  "rows": [
+    {
+      "question": "Android 收入",
+      "project": "collart_android",
+      "before": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 5098,
+        "elapsed_ms_median": 296.42
+      },
+      "after": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 2624,
+        "elapsed_ms_median": 299.61
+      }
+    },
+    {
+      "question": "免费看广告按钮点击率",
+      "project": "collart_android",
+      "before": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 3998,
+        "elapsed_ms_median": 294.71
+      },
+      "after": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 2572,
+        "elapsed_ms_median": 365.05
+      }
+    },
+    {
+      "question": "Web 画像登录号",
+      "project": "collart_web",
+      "before": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 5750,
+        "elapsed_ms_median": 376.24
+      },
+      "after": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 2842,
+        "elapsed_ms_median": 299.49
+      }
+    },
+    {
+      "question": "Fashion 收入与 Web 交集",
+      "project": "collart_fashion",
+      "before": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 5931,
+        "elapsed_ms_median": 286.14
+      },
+      "after": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 4684,
+        "elapsed_ms_median": 397.32
+      }
+    },
+    {
+      "question": "ASA 关键词归因",
+      "project": "collart_ios",
+      "before": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 2360,
+        "elapsed_ms_median": 393.68
+      },
+      "after": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 3394,
+        "elapsed_ms_median": 375.48
+      }
+    },
+    {
+      "question": "成熟留存",
+      "project": "collart_android",
+      "before": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 8857,
+        "elapsed_ms_median": 365.69
+      },
+      "after": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 2501,
+        "elapsed_ms_median": 368.4
+      }
+    },
+    {
+      "question": "ADS无法使用回退原始埋点",
+      "project": null,
+      "before": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 6216,
+        "elapsed_ms_median": 450.99
+      },
+      "after": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 3495,
+        "elapsed_ms_median": 441.72
+      }
+    },
+    {
+      "question": "没有连接只读权限",
+      "project": null,
+      "before": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 1475,
+        "elapsed_ms_median": 446.33
+      },
+      "after": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 2353,
+        "elapsed_ms_median": 423.21
+      }
+    },
+    {
+      "question": "Web 用户价值分层",
+      "project": "collart_web",
+      "before": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 3325,
+        "elapsed_ms_median": 382.76
+      },
+      "after": {
+        "commands": 2,
+        "read_commands": 1,
+        "output_characters": 1499,
+        "elapsed_ms_median": 380.93
+      }
+    }
+  ],
+  "totals": {
+    "before_characters": 43010,
+    "after_characters": 25964,
+    "character_reduction_percent": 39.63,
+    "before_ms": 3292.96,
+    "after_ms": 3351.21,
+    "commands_each_version": 18,
+    "read_commands_each_version": 9
+  }
+}

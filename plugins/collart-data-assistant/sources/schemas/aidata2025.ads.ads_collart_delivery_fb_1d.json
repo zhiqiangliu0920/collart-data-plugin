@@ -1,0 +1,143 @@
+{
+  "table": "aidata2025.ads.ads_collart_delivery_fb_1d",
+  "captured_at": "2026-09-14T13:19:02.422660+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "安装日期 分区字段"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用包名"
+      },
+      {
+        "name": "platform",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "投放平台"
+      },
+      {
+        "name": "campaign_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告系列名称"
+      },
+      {
+        "name": "adgroup_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告组名称"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家"
+      },
+      {
+        "name": "cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "投放消耗金额"
+      },
+      {
+        "name": "install",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "投放侧安装数"
+      },
+      {
+        "name": "installed_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "Adjust安装数"
+      },
+      {
+        "name": "subscribe_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "付费订阅设备数"
+      },
+      {
+        "name": "revenue_usd_1",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "D1(安装当日)累计收入"
+      },
+      {
+        "name": "revenue_usd_2",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "D2累计收入"
+      },
+      {
+        "name": "revenue_usd_3",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "D3累计收入"
+      },
+      {
+        "name": "revenue_usd_4",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "D4累计收入"
+      },
+      {
+        "name": "revenue_usd_5",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "D5累计收入"
+      },
+      {
+        "name": "revenue_usd_6",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "D6累计收入"
+      },
+      {
+        "name": "revenue_usd_7",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "D7累计收入"
+      },
+      {
+        "name": "revenue_usd_14",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "D14累计收入"
+      },
+      {
+        "name": "revenue_usd_21",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "D21累计收入"
+      },
+      {
+        "name": "revenue_usd_30",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "D30累计收入"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads",
+    "tableId": "ads_collart_delivery_fb_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "country"
+    ]
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,105 @@
+{
+  "table": "pubdata2025.dws.dws_cdct_revenue_country_1d",
+  "captured_at": "2026-09-14",
+  "table_metadata": {},
+  "fields": [
+    {
+      "字段名": "event_date",
+      "说明": "日期",
+      "类型": "date",
+      "字段角色": "时间",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "country",
+      "说明": "国家",
+      "类型": "string",
+      "字段角色": "维度",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "package_name",
+      "说明": "包名",
+      "类型": "string",
+      "字段角色": "主键",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_admob_revenue",
+      "说明": "admob广告收入",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_admob_revenue_gst",
+      "说明": "admob广告收入GST",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_admob_revenue_remove",
+      "说明": "admob广告收入重复统计部分",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_topon_revenue",
+      "说明": "topon广告收入",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_tradplus_revenue",
+      "说明": "tradplus广告收入",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_applovin_revenue",
+      "说明": "applovin广告收入",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_appodeal_revenue",
+      "说明": "appodeal广告收入",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_topon_revenue_remove",
+      "说明": "topon广告收入重复部分",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_tradplus_revenue_remove",
+      "说明": "tradplus广告收入重复部分",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_applovin_revenue_remove",
+      "说明": "applovin广告收入重复部分",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "ad_okspin_revenue",
+      "说明": "广告收入",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    }
+  ]
+}

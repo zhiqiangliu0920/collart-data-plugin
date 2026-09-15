@@ -1,0 +1,46 @@
+config {
+    type: "operations",
+    dependencies: ["h_dwd_oper_user_event_di"]
+}
+-- 每天更新最近3天分区的数据 
+declare from_date date default ${dataform.projectConfig.vars.biz_date}-2;
+declare to_date date default ${dataform.projectConfig.vars.biz_date};
+
+-- 从埋点event_di表 抽取的收入订单明细小表 增量更新
+begin transaction;
+
+-- 删除当日数据
+delete from `dwd.dwd_oper_user_order_event_di` where event_date between from_date and to_date;
+
+-- 插入当日数据
+insert into `dwd.dwd_oper_user_order_event_di`
+
+select
+      max(event_date) as event_date,
+      event_order_id,
+      max(user_id) as user_id,
+      max(user_pseudo_id) as user_pseudo_id,
+      max(traffic_src_type) as traffic_src_type,
+      max(app_name) as app_name,
+      max(package_name) as package_name,
+      max(adjust_id) as adjust_id,
+  from 
+  (select
+      event_date,
+      user_pseudo_id,
+      app_name,
+      user_id,
+      package_name,
+      event_order_id,
+      traffic_src_type,
+      adjust_id,
+      row_number() over(partition by event_order_id, app_name,package_name order by event_time desc) AS rk
+    from aidata2025.dwd.dwd_oper_user_event_di
+    where event_date between from_date and to_date
+    and event_order_id is not null
+  )where rk = 1
+  group by 
+    event_order_id
+;
+
+commit;

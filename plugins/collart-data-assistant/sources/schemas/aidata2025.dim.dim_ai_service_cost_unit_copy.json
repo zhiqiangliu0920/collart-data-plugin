@@ -1,0 +1,39 @@
+{
+  "table": "aidata2025.dim.dim_ai_service_cost_unit_copy",
+  "captured_at": "2026-09-14T13:19:06.245282+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "provider",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "service_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "model",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "total_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost_unit",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dim",
+    "tableId": "dim_ai_service_cost_unit_copy"
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,61 @@
+DECLARE
+  from_date date DEFAULT ${dataform.projectConfig.vars.biz_date}-1;
+DECLARE
+  to_date date DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+
+
+begin transaction;
+
+delete from `aidata2025.dim.dim_collart_asa_keyword_info` where stats_date between from_date and to_date;
+
+insert into `aidata2025.dim.dim_collart_asa_keyword_info`
+with campaign_id_info as(
+SELECT distinct 
+stats_Date,
+campaign_id,
+campaign_name
+from pubdata2025.ods.ods_apple_campaigns_reports_1d
+--`hzdata.campaigns.prefect_campaigns_reports_SPRING_*` 
+where stats_date  between from_date and to_date
+),
+
+adgroup_info as(
+SELECT distinct 
+stats_Date
+,campaign_id
+,adgroup_name
+,adgroup_id
+FROM pubdata2025.ods.ods_apple_adgroups_reports_1d
+--`hzdata.campaigns.prefect_adgroups_reports_SPRING_*` 
+where stats_date between from_date and to_date
+),
+
+kerword_info as(
+select 
+stats_date
+,keyword_id
+,keyword
+,adgroup_id
+,adgroup_name
+,sum(total_installs) total_installs
+from pubdata2025.ods.ods_apple_keyword_reports_1d
+--`hzdata.campaigns.prefect_keyword_reports_SPRING_*`
+where stats_date between from_date and to_date
+group by all 
+)
+
+select a.stats_date
+,a.keyword_id
+,a.keyword
+,a.adgroup_id
+,a.adgroup_name
+,b.campaign_id
+,c.campaign_name
+from kerword_info a 
+left join adgroup_info b on a.stats_date=b.stats_date and a.adgroup_id=b.adgroup_id
+left join campaign_id_info c on a.stats_date=c.stats_date and b.campaign_id=c.campaign_id;
+
+
+
+commit;

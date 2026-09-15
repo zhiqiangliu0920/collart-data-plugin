@@ -1,0 +1,500 @@
+{
+  "table": "aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di",
+  "captured_at": "2026-09-14T13:19:03.929378+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "is_vip",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING"
+      },
+      {
+        "name": "home_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "home_template_click",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "album_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "generate_ready",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "generate_save",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "video_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "framestransition_video_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "motioncontrol_video_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "referencetovideo_video_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "img2img_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "aiedit_img2img_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "multireference_img2img_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "video_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "framestransition_video_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "motioncontrol_video_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "referencetovideo_video_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "img2img_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "aiedit_img2img_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "multireference_img2img_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "video_save",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "image_save",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "img2video_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "img2video_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "text2video_video_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "img_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "text2img_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "text2video_video_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "img_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "text2img_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collartandroid",
+    "tableId": "ads_oper_event_metric_attr_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "country",
+      "app_version",
+      "is_new"
+    ]
+  },
+  "description": "Collart Android 日×默认维度事件指标：表8热指标按 active 维度上卷为 STRUCT<uv,pv>。",
+  "type": "TABLE"
+}

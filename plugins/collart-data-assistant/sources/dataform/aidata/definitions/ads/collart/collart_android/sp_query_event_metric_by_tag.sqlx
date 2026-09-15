@@ -1,0 +1,138 @@
+config {
+  type: "operations",
+  dependencies: [
+    "h_dm_collart_android_user_event_di",
+    "ads_collartandroid_oper_user_active_di"
+  ]
+}
+
+/*
+  冷指标查询过程：规则只维护在 aidata2025.ads_collart.ads_dim_metric_rule，
+  本过程只读 app_name='collart_android'。调用方只传 metric_name 和日期。
+  event_name / event_params 只允许 = 'x' / IN ('x','y') / LIKE '%x%'，
+  event_params 用 AND 拼接任意 params_info key，例如
+    service_type like '%video%' and function_type = 'motioncontrol'
+*/
+
+CREATE OR REPLACE PROCEDURE
+  `aidata2025.ads_collartandroid.sp_query_event_metric_by_tag`(
+    p_metric_name STRING,
+    p_from_date DATE,
+    p_to_date DATE
+  )
+BEGIN
+  DECLARE v_metric_chinese_name STRING;
+  DECLARE v_event_name STRING;
+  DECLARE v_event_params STRING;
+  DECLARE v_agg_type STRING;
+  DECLARE v_is_enabled BOOL;
+  DECLARE v_is_materialized BOOL;
+  DECLARE v_condition STRING;
+  DECLARE v_params_sql STRING;
+  DECLARE v_metric_expr STRING;
+  DECLARE v_sql STRING;
+  DECLARE v_rule_pattern STRING DEFAULT
+    r"(?i)^\s*(=\s*'[^']*'|in\s*\(\s*'[^']*'(\s*,\s*'[^']*')*\s*\)|like\s*'[^']*')\s*$";
+  DECLARE v_params_pattern STRING DEFAULT
+    r"(?i)^\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*(=\s*'[^']*'|in\s*\(\s*'[^']*'(\s*,\s*'[^']*')*\s*\)|like\s*'[^']*')(\s+and\s+[a-zA-Z_][a-zA-Z0-9_]*\s*(=\s*'[^']*'|in\s*\(\s*'[^']*'(\s*,\s*'[^']*')*\s*\)|like\s*'[^']*'))*\s*$";
+
+  ASSERT p_metric_name IS NOT NULL AND p_metric_name != ''
+    AS 'metric_name 不能为空';
+  ASSERT p_from_date IS NOT NULL AND p_to_date IS NOT NULL
+    AS '起止日期不能为空';
+  ASSERT p_from_date <= p_to_date
+    AS 'from_date 不能晚于 to_date';
+  ASSERT DATE_DIFF(p_to_date, p_from_date, DAY) <= 29
+    AS '单次查询最多 30 天';
+
+  SET (
+    v_metric_chinese_name,
+    v_event_name,
+    v_event_params,
+    v_agg_type,
+    v_is_enabled,
+    v_is_materialized
+  ) = (
+    SELECT AS STRUCT
+      metric_chinese_name,
+      event_name,
+      event_params,
+      agg_type,
+      is_enabled,
+      is_materialized
+    FROM `aidata2025.ads_collart.ads_dim_metric_rule`
+    WHERE app_name = 'collart_android'
+      AND metric_name = p_metric_name
+    QUALIFY ROW_NUMBER() OVER (ORDER BY sort_order) = 1
+  );
+
+  ASSERT v_event_name IS NOT NULL
+    AS '未找到 metric_name';
+  ASSERT v_is_enabled
+    AS 'metric_name 已停用';
+  ASSERT REGEXP_CONTAINS(v_event_name, v_rule_pattern)
+    AS 'event_name 表达式不合法';
+  ASSERT v_event_params IS NULL
+    OR TRIM(v_event_params) = ''
+    OR REGEXP_CONTAINS(v_event_params, v_params_pattern)
+    AS 'event_params 表达式不合法';
+  ASSERT v_agg_type IN ('count_events', 'count_distinct_task_id')
+    AS 'agg_type 不支持';
+
+  SET v_condition = CONCAT('e.event_name ', v_event_name);
+  IF v_event_params IS NOT NULL AND TRIM(v_event_params) != '' THEN
+    SET v_params_sql = REGEXP_REPLACE(
+      TRIM(v_event_params),
+      r"(?i)(^|\s+and\s+)([a-zA-Z_][a-zA-Z0-9_]*)\s*(=|in|like)",
+      r"\1LOWER(e.params_info.\2) \3"
+    );
+    SET v_condition = CONCAT(v_condition, ' AND ', v_params_sql);
+  END IF;
+
+  SET v_metric_expr = CASE v_agg_type
+    WHEN 'count_events' THEN 'COUNT(*)'
+    WHEN 'count_distinct_task_id'
+      THEN 'COUNT(DISTINCT e.params_info.task_id)'
+  END;
+
+  SET v_sql = FORMAT("""
+    WITH date_spine AS (
+      SELECT event_date
+      FROM UNNEST(GENERATE_DATE_ARRAY(@from_date, @to_date)) AS event_date
+    ),
+    matched AS (
+      SELECT
+        e.event_date,
+        COUNT(DISTINCT e.user_pseudo_id) AS uv,
+        %s AS metric_value,
+        COUNT(*) AS matched_event_rows
+      FROM `aidata2025.dm.dm_collart_android_user_event_di` AS e
+      INNER JOIN `aidata2025.ads_collartandroid.ads_oper_user_active_di` AS a
+        USING (event_date, user_pseudo_id)
+      WHERE e.event_date BETWEEN @from_date AND @to_date
+        AND %s
+      GROUP BY e.event_date
+    )
+    SELECT
+      @metric_name AS metric_name,
+      @metric_chinese_name AS metric_chinese_name,
+      @agg_type AS agg_type,
+      @is_materialized AS is_materialized,
+      d.event_date,
+      COALESCE(m.uv, 0) AS uv,
+      COALESCE(m.metric_value, 0) AS metric_value,
+      COALESCE(m.matched_event_rows, 0) AS matched_event_rows
+    FROM date_spine AS d
+    LEFT JOIN matched AS m USING (event_date)
+    ORDER BY d.event_date
+  """, v_metric_expr, v_condition);
+
+  EXECUTE IMMEDIATE v_sql
+  USING
+    p_metric_name AS metric_name,
+    v_metric_chinese_name AS metric_chinese_name,
+    v_agg_type AS agg_type,
+    v_is_materialized AS is_materialized,
+    p_from_date AS from_date,
+    p_to_date AS to_date;
+END;

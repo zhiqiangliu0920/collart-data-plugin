@@ -1,0 +1,29 @@
+{
+  "table": "aidata2025.dim.collart_campaign_name_modify_copy",
+  "captured_at": "2026-09-14T13:19:06.134579+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "traffic_src_name_old",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_name_new",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "modify_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dim",
+    "tableId": "collart_campaign_name_modify_copy"
+  },
+  "type": "TABLE"
+}

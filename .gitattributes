@@ -1,1 +1,3 @@
 * text=auto eol=lf
+# Captured evidence retains upstream whitespace; do not rewrite source hashes for style.
+plugins/collart-data-assistant/sources/dataform/** -whitespace

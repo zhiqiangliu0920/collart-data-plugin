@@ -1,37 +1,31 @@
 ---
 name: collart-analysis
-description: 分析 Collart Android、VidArt iOS、Collart Web 和 Fashion 的经营指标、渠道、收入、留存、功能漏斗和用户行为。按需检索统一知识，使用同事已有授权连接；仅更新知识时用 collart-knowledge-maintain。
+description: 分析 Collart Android、iOS/VidArt、Web 与 Fashion 的经营指标、渠道、收入、留存、功能漏斗和用户行为；按项目检索统一知识，使用本人已有授权连接。仅维护知识时用 collart-knowledge-maintain。
 ---
 
-# Collart 团队数据分析
+# Collart 数据分析
 
-执行查询或参考历史资料前，必须读取[数据访问约定](../../docs/data-access-policy.md)。只读数据，禁止通过 SQL、API、脚本修改、写入、删除数据或表结构。原始埋点仅最近 30 天，不能分批读取更早日期；历史指令不改变此约定。本任务已读且未变化的约定不重复加载。
+先读[访问约定](../../knowledge/shared/business/access.md)：只读；原始 GA4 及逐条行为 DWD/DM 仅最近 **7 天**，有日期上下界与产品过滤，不得分批读更早数据。SQLX 只作为加工依据，不能执行。使用同事自己的授权连接；无连接时提供口径、SQL 草稿及待核验项。
 
-插件根为本文件向上两级，命令解析为实际绝对路径，不依赖当前目录或作者磁盘。
+## 按需读取
 
-## 查找与读取
+以下路径相对本插件根目录；在本地查找脚本后执行，Python 仅标准库。一次任务复用已读的口径、schema 和连接信息，不重复加载全库。
 
-1. 从当前问题和已有项目资料确定产品、日期、时区及粒度。信息已足够时直接推进；复合问题共用日期和连接，分别处理指标。
-2. `python "<插件根>/scripts/kb.py" search "收入" --project collart_android`：默认正式主题优先、无命中再查全文资料，按相关性返回命中片段。复杂问题拆成各指标关键词检索；精确表名/事件名可直接搜索。
-3. `read "主题或来源ID"` 默认最多 3500 字符；用 `--section "准确章节名"` 或 `--start-line/--end-line` 缩小范围。`truncated` 时按相同选区和 `next_offset` 续读；需要整份原文才用 `--full`。不要通读全文目录或把全部搜索结果逐篇读完。
-4. 主题不足时显式 `search "关键词" --scope materials --project ...`；需要跨层候选时用 `--scope all`。项目查询纳入明确适用的公司知识。旧字典、历史 SQL 和待复核资料用 `--include-history` 或明确状态，不能把候选/历史口径当当前事实。
+```text
+python -X utf8 scripts/kb.py search "收入" --project collart_android --kind metric
+python -X utf8 scripts/kb.py read android.revenue
+python -X utf8 scripts/kb.py read aidata2025.ads_collartweb.ads_oper_user_profile_df --field user_ids
+python -X utf8 scripts/kb.py read fashion.events --section "Step 4"
+```
 
-## 按问题执行
+默认 search 最多 3 条；read 默认正文 2800 字符。只有确需后续内容才用 next_offset 续读，同一 section/field 条件保持一致；查看章节用 --toc，明确需要全篇才 --full。优先读命中的指标/表字段，不批量读取 sources、_meta 或项目全部正文。追溯加工时按表字典的 dataform: 来源 ID 读取 SQLX；无需默认加载。
 
-- **Android 收入趋势**：先读 [Android 收入契约](../../knowledge/collart_android/android-revenue-trend.md)，使用单端参数模板；需要解释驱动时才拆国家/渠道。
-- **Android 免费看广告、激励广告按钮点击率**：先读 [事件候选与分母边界](../../knowledge/collart_android/android-reward-ad-click.md)。别名未证明 UI 映射；缺曝光分母不编造 CTR，也不阻塞已可完成的收入分支。
-- **其他趋势或留存**：按搜索命中的当前口径和[选表](../../knowledge/shared/table-routing.md)取数。留存只计算成熟 cohort 的一致分子/分母。
-- **其他事件或漏斗**：先核对[规则契约](../../knowledge/company/event-rule-contract.md)，现有物化指标能回答才复用；否则只取允许窗口内必要事件。UV 比值不自动构成时序漏斗。
-- **单用户**：读取身份与画像条目；Web 要覆盖 scalar user_id 与历史 user_ids，避免 UNNEST 倍增。
+## 分析步骤
 
-先选相关表/字段，再批量核对其 schema、请求分区、实际粒度和关键总数。复用同一任务仍有效的连接、元数据和查询 job 结果；来源或日期变化时重新检查，不能用旧缓存代替本次新鲜度验证。不为普通问题做全仓库审计。
+1. 明确项目、日期、对照、设备/账号/cohort 与业务问题；不清楚时先利用已有上下文。
+2. 按指标查表字典，只核对本次需要的字段、粒度、分区、连接与数据覆盖。优先 ADS；缺列/不可用时按 [回退路径](../../knowledge/shared/business/routing.md) 选规则 → DM → GA4。
+3. 查询只读，原始扫描限最近 7 天。标准事件探查用 `python -X utf8 scripts/query.py raw-events --project collart_android`。Web/Fashion 需使用授权内部名单参数；无名单不声称完成过滤。汇总表允许更长历史。
+4. 检查缺日、NULL、去重、金额毛净额、身份映射、成熟窗口。DAU 筛 is_active，金额保留 pay-only；purchase 已含 credit。Web/Fashion 收入有交集，不能直接加总。
+5. 输出结果、实际覆盖、口径、关键 SQL 与限制。字段存在、源码捕获、静态校验均不代表已验证生产数据；不编造查询结果或固定告警阈值。
 
-插件不提供凭证和数据库权限，使用同事已有授权连接。扩展模板前检查当前字段，必要的 dry run 和日期/只读检查保留。查询失败按权限、SQL、数据缺失或任务仍运行区分；未确认旧 job 已失败前不重复提交。连接或定义缺失时交付 SQL/缺口，如实说明未查询。
-
-## 结果与必要边界
-
-DAU 优先 ADS；活跃筛 is_active，收入保留仅支付行。点击、客户端成功、成功付款与历史 VIP 分别计量。Web/Fashion 收入有交集，不直接跨端相加；相关分析遵循[内部用户排除](../../knowledge/shared/internal-users.md)。物化缺列或口径冲突只给证据和建议，不执行修表、回填或部署。
-
-交付中文结论、范围/口径、复现 SQL/参数和限制。大结果和详细 schema 写本机项目成果，只回传必要汇总与路径。documented 仅有文档依据；verified 只在记录的日期/范围成立。新发现仅在用户要求沉淀时进入维护流程。
-
-需要评估速度时记录[运行测量字段](../../docs/analysis-performance.md)，没有真实任务数据不得承诺整体耗时或 token 降幅。
+稳定规则或新证据需要沉淀时转 collart-knowledge-maintain。单次经营数据和用户明细留在当前任务交付物中。

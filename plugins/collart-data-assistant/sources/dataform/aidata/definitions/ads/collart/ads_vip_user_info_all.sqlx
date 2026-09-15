@@ -1,0 +1,345 @@
+config {
+  type: "operations",
+  name: "ads_vip_user_info_all",
+  schema: "ads_collart",
+  dependencies: [
+    "ads_collartandroid_oper_user_profile_df",
+    "ads_collartweb_oper_user_profile_df",
+    "ads_collartios_oper_user_profile_df",
+    "h_dwd_oper_sub_order_revenue_df",
+    "dim_exchange_rate_days",
+    "h_dwd_apple_user_subscribtion_di"
+  ]
+}
+
+/*
+  Collart 三端 VIP / 高价值用户合并表（日全量刷新）
+  Dataform: definitions/ads/collart/ads_vip_user_info_all.sqlx
+  目标表  : aidata2025.ads_collart.ads_vip_user_info_all
+
+  口径:
+  - 粒度: app_name × user_id
+  - 收入 spine: Android 订单 / Web orders / iOS Apple 订阅（按产品周期拆 weekly/monthly/yearly/pack）
+  - is_r: ads_high_value_user_production 中出现的 (app_name, user_id) 记为 1，否则 0
+  - 基础维度: 三端 ads_oper_user_profile_df（按 first_open_date 取首次归因）
+  - Web: UNNEST(user_ids) 挂每一个登录号；同设备多账号共享该设备首次归因，不再只挂最后一个 user_id
+  - event: ods_ai_request_info_new_1d 终身生成次数（atlas_uid=user_id；smart_gen 算生图，不算视频）
+  - 生成任务: ods_ai_request_info_new_1d sexual 审核分（近 270 天）
+    sexual_score 取 moderation_text[].severity（该数据源无 probability 字段）
+  - hv_user_tag: 近 270 天 sexual 任务按 created_at DESC 排序，
+    COUNT(task_id)<50 → unknown；
+    最近 50 次中 sexual_score>=0.6 占比>=0.3 → nsfw；否则 clean
+*/
+
+-- CREATE TABLE IF NOT EXISTS `aidata2025.ads_collart.ads_vip_user_info_all`
+-- (
+--   app_name STRING,
+--   user_id STRING,
+--   is_r INT64,
+--   first_open_date DATE,
+--   last_active_date DATE,
+--   country STRING,
+--   traffic_src_name STRING,
+--   traffic_src_type STRING,
+--   device_category STRING,
+--   device_operating_system STRING,
+--   mobile_brand_name STRING,
+--   browser STRING,
+--   last_order_date DATE,
+--   total_revenue FLOAT64,
+--   weekly_revenue FLOAT64,
+--   monthly_revenue FLOAT64,
+--   yearly_revenue FLOAT64,
+--   pack_revenue FLOAT64,
+--   sexual_score FLOAT64,
+--   task_num INT64,
+--   succeed_task_num INT64,
+--   cost_point FLOAT64,
+--   hv_user_tag STRING,
+--   total_revenue_type STRING,
+--   total_revenue_type2 STRING
+-- )
+-- CLUSTER BY app_name, user_id
+-- OPTIONS (
+--   description = 'Collart 三端 VIP 用户合并表：收入+画像+production is_r+hv_user_tag，日全量刷新'
+-- );
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collart.ads_vip_user_info_all` WHERE TRUE;
+
+INSERT INTO `aidata2025.ads_collart.ads_vip_user_info_all` (
+  app_name, user_id, is_r,
+  first_open_date, last_active_date, country, traffic_src_name, traffic_src_type,
+  device_category, device_operating_system, mobile_brand_name, browser,
+  last_order_date, total_revenue, weekly_revenue, monthly_revenue, yearly_revenue, pack_revenue,
+  sexual_score, task_num, succeed_task_num, cost_point, hv_user_tag,
+  total_revenue_type, total_revenue_type2, event
+)
+
+WITH user_value_info_raw AS (
+  -- android
+  SELECT
+    'collart-android' AS app_name,
+    CAST(user_id AS STRING) AS user_id,
+    MAX(order_date) AS last_order_date,
+    SUM(revenue) AS total_revenue,
+    SUM(IF(LOWER(product_title) LIKE '%weekly%', revenue, NULL)) AS weekly_revenue,
+    SUM(IF(LOWER(product_title) LIKE '%monthly%', revenue, NULL)) AS monthly_revenue,
+    SUM(IF(LOWER(product_title) LIKE '%yearly%', revenue, NULL)) AS yearly_revenue,
+    SUM(IF(NOT REGEXP_CONTAINS(LOWER(product_title), r'weekly|monthly|yearly'), revenue, NULL)) AS pack_revenue
+  FROM `aidata2025.dwd.dwd_oper_sub_order_revenue_df`
+  WHERE package_name = 'free.ai.photo.generator.collart.ai'
+    AND user_id IS NOT NULL
+  GROUP BY ALL
+
+  UNION ALL
+
+  -- web（ods.orders 中部分行可能标成 android/ios app_name，按原语句保留）
+select case when app_name='vidart' then 'vidart-ios' else REPLACE(app_name, '_', '-')  end app_name,
+    CAST(user_id AS STRING) AS user_id,
+    MAX(event_Date) AS last_order_date,
+    SUM(revneue) AS total_revenue,
+    SUM(IF(LOWER(product_name) LIKE '%weekly%', revneue , NULL)) AS weekly_revenue,
+    SUM(IF(LOWER(product_name) LIKE '%monthly%', revneue , NULL)) AS monthly_revenue,
+    SUM(IF(LOWER(product_name) LIKE '%yearly%', revneue , NULL)) AS yearly_revenue,
+    SUM(IF(NOT REGEXP_CONTAINS(LOWER(product_name), r'weekly|monthly|yearly'), revneue , NULL)) AS pack_revenue
+from pubdata2025.dwd.dwd_cdct_revenue_stripe_di
+where event_Date>='2025-01-01'
+and charge_type != 'expired'
+group by all
+
+  UNION ALL
+
+  -- ios
+  SELECT
+    'vidart-ios' AS app_name,
+    CAST(user_id AS STRING) AS user_id,
+    MAX(event_date) AS last_order_date,
+    SUM(revenue_apple) AS total_revenue,
+    SUM(IF(LOWER(sku) LIKE '%weekly%', revenue_apple, NULL)) AS weekly_revenue,
+    SUM(IF(LOWER(sku) LIKE '%monthly%', revenue_apple, NULL)) AS monthly_revenue,
+    SUM(IF(LOWER(sku) LIKE '%yearly%', revenue_apple, NULL)) AS yearly_revenue,
+    SUM(IF(NOT REGEXP_CONTAINS(LOWER(sku), r'weekly|monthly|yearly'), revenue_apple, NULL)) AS pack_revenue
+  FROM `aidata2025.dwd.dwd_apple_user_subscribtion_di`
+  WHERE package_name = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+    AND event_date >= '2026-03-01'
+    AND user_id IS NOT NULL
+  GROUP BY ALL
+),
+
+-- 防止 android/ios 与 web.orders 重标 app_name 导致同一 (app,user) 重复
+user_value_info AS (
+  SELECT
+    app_name,
+    user_id,
+    MAX(last_order_date) AS last_order_date,
+    SUM(total_revenue) AS total_revenue,
+    SUM(weekly_revenue) AS weekly_revenue,
+    SUM(monthly_revenue) AS monthly_revenue,
+    SUM(yearly_revenue) AS yearly_revenue,
+    SUM(pack_revenue) AS pack_revenue
+  FROM user_value_info_raw
+  WHERE user_id IS NOT NULL AND user_id != ''
+  GROUP BY app_name, user_id
+),
+
+user_basic_info AS (
+  -- android
+  SELECT
+    'collart-android' AS app_name,
+    CAST(user_id AS STRING) AS user_id,
+    MIN(first_open_date) AS first_open_date,
+    MAX(last_active_date) AS last_active_date,
+    MIN_BY(country, first_open_date) AS country,
+    MIN_BY(traffic_src_name, first_open_date) AS traffic_src_name,
+    MIN_BY(traffic_src_type, first_open_date) AS traffic_src_type,
+    MIN_BY(device.category, first_open_date) AS device_category,
+    MIN_BY(device.operating_system, first_open_date) AS device_operating_system,
+    MIN_BY(device.mobile_brand_name, first_open_date) AS mobile_brand_name,
+    CAST(NULL AS STRING) AS browser
+  FROM `aidata2025.ads_collartandroid.ads_oper_user_profile_df`
+  WHERE package_name = 'free.ai.photo.generator.collart.ai'
+    AND user_id IS NOT NULL AND user_id != ''
+  GROUP BY ALL
+
+  UNION ALL
+
+  -- web：一设备多登录号，维度挂到 user_ids 里每一个账号
+  SELECT
+    'collart-web' AS app_name,
+    CAST(uid AS STRING) AS user_id,
+    MIN(first_open_date) AS first_open_date,
+    MAX(last_active_date) AS last_active_date,
+    MIN_BY(country, first_open_date) AS country,
+    MIN_BY(traffic_src_name, first_open_date) AS traffic_src_name,
+    MIN_BY(traffic_src_type, first_open_date) AS traffic_src_type,
+    MIN_BY(device.category, first_open_date) AS device_category,
+    MIN_BY(device.operating_system, first_open_date) AS device_operating_system,
+    MIN_BY(device.mobile_brand_name, first_open_date) AS mobile_brand_name,
+    MIN_BY(device.browser, first_open_date) AS browser
+  FROM `aidata2025.ads_collartweb.ads_oper_user_profile_df`
+  CROSS JOIN UNNEST(
+    CASE
+      WHEN ARRAY_LENGTH(IFNULL(user_ids, [])) > 0 THEN user_ids
+      WHEN user_id IS NOT NULL AND user_id != '' THEN [user_id]
+      ELSE CAST([] AS ARRAY<STRING>)
+    END
+  ) AS uid
+  WHERE uid IS NOT NULL AND uid != ''
+  GROUP BY ALL
+
+  UNION ALL
+
+  -- ios
+  SELECT
+    'vidart-ios' AS app_name,
+    CAST(user_id AS STRING) AS user_id,
+    MIN(first_open_date) AS first_open_date,
+    MAX(last_active_date) AS last_active_date,
+    MIN_BY(country, first_open_date) AS country,
+    MIN_BY(traffic_src_name, first_open_date) AS traffic_src_name,
+    MIN_BY(traffic_src_type, first_open_date) AS traffic_src_type,
+    MIN_BY(device.category, first_open_date) AS device_category,
+    MIN_BY(device.operating_system, first_open_date) AS device_operating_system,
+    MIN_BY(device.mobile_brand_name, first_open_date) AS mobile_brand_name,
+    CAST(NULL AS STRING) AS browser
+  FROM `aidata2025.ads_collartios.ads_oper_user_profile_df`
+  WHERE user_id IS NOT NULL AND user_id != ''
+  GROUP BY ALL
+),
+
+-- production 表无 is_r 列：表内用户即大 R
+is_r_info AS (
+  SELECT
+    platform as app_name,
+    CAST(user_id AS STRING) AS user_id,
+    1 AS is_r,
+    hv_user_tag
+  FROM `aidata2025.ads.ads_high_value_user_production`
+  WHERE user_id IS NOT NULL AND user_id != ''
+),
+
+ods_event AS (
+  SELECT
+    IF(app_name IN ('vidart-ios', 'collart-ios'), 'vidart-ios', app_name) AS app_name,
+    CAST(atlas_uid AS STRING) AS user_id,
+    STRUCT(
+      COUNT(DISTINCT IF(is_v AND is_ok, task_id, NULL)) AS video_generate_success_pv,
+      COUNT(DISTINCT IF(is_v, task_id, NULL)) AS video_generate_start_pv,
+      COUNT(DISTINCT IF(is_i AND is_ok, task_id, NULL)) AS img_generate_success_pv,
+      COUNT(DISTINCT IF(is_i, task_id, NULL)) AS img_generate_start_pv
+    ) AS event
+  FROM (
+    SELECT
+      app_name,
+      atlas_uid,
+      task_id,
+      LOWER(IFNULL(ai_type, '')) IN ('smart_gen', 'smartgen_faceid')
+        OR LOWER(IFNULL(ai_type, '')) IN ('img2imgrecord', 'text_to_image', 'image', 'comfyui-inpainting', 'inpainting-endpoint', 'upscaler')
+        OR (LOWER(IFNULL(ai_type, '')) LIKE '%img%' AND LOWER(IFNULL(ai_type, '')) NOT LIKE '%video%') AS is_i,
+      NOT (
+        LOWER(IFNULL(ai_type, '')) IN ('smart_gen', 'smartgen_faceid')
+        OR LOWER(IFNULL(ai_type, '')) IN ('img2imgrecord', 'text_to_image', 'image', 'comfyui-inpainting', 'inpainting-endpoint', 'upscaler')
+        OR (LOWER(IFNULL(ai_type, '')) LIKE '%img%' AND LOWER(IFNULL(ai_type, '')) NOT LIKE '%video%')
+      )
+        AND (
+          LOWER(IFNULL(ai_type, '')) LIKE '%video%'
+          OR LOWER(IFNULL(mode_type, '')) LIKE '%video%'
+          OR REGEXP_CONTAINS(LOWER(IFNULL(mode_type, '')), r'(i2v|t2v|r2v|flf2v)')
+        ) AS is_v,
+      LOWER(IFNULL(status, '')) IN ('true', 'success', 'succeed', 'ok') AS is_ok
+    FROM `aidata2025.ods.ods_ai_request_info_new_1d`
+    WHERE app_name IN ('collart-android', 'collart-web', 'vidart-ios', 'collart-ios')
+      AND atlas_uid IS NOT NULL AND atlas_uid != ''
+  )
+  GROUP BY 1, 2
+),
+
+task_scored AS (
+  SELECT
+    -- ODS 用 collart-ios，收入/画像用 vidart-ios，这里统一到收入侧 app_name
+    IF(a.app_name = 'collart-ios', 'vidart-ios', a.app_name) AS app_name,
+    CAST(a.atlas_uid AS STRING) AS user_id,
+    a.task_id,
+    a.status,
+    a.cost_point,
+    ROUND(SAFE_CAST(JSON_VALUE(item, '$.severity') AS FLOAT64), 2) AS sexual_score,
+    ROW_NUMBER() OVER (
+      PARTITION BY a.app_name, a.atlas_uid
+      ORDER BY a.created_at DESC
+    ) AS task_time_order
+  FROM `aidata2025.ods.ods_ai_request_info_new_1d` AS a
+  CROSS JOIN UNNEST(JSON_EXTRACT_ARRAY(request, '$.moderation_text')) AS item
+  WHERE a.event_date >= CURRENT_DATE() - 270
+    AND a.app_name IN ('collart-android', 'collart-web', 'collart-ios')
+    AND JSON_VALUE(item, '$.category') = 'sexual'
+    AND a.atlas_uid IS NOT NULL
+),
+
+task_info AS (
+  SELECT
+    app_name,
+    user_id,
+    ROUND(AVG(sexual_score), 2) AS sexual_score,
+    COUNT(DISTINCT task_id) AS task_num,
+    COUNT(DISTINCT IF(status = 'true', task_id, NULL)) AS succeed_task_num,
+    SUM(cost_point) AS cost_point
+  FROM task_scored
+  GROUP BY ALL
+)
+
+SELECT
+  coalesce(a.app_name,b.app_name) app_name,
+  coalesce(a.user_id,b.user_id) user_id,
+  IF(b.user_id IS NOT NULL, 1, 0) AS is_r,
+  c.first_open_date,
+  c.last_active_date,
+  c.country,
+  c.traffic_src_name,
+  c.traffic_src_type,
+  c.device_category,
+  c.device_operating_system,
+  c.mobile_brand_name,
+  c.browser,
+  a.last_order_date,
+  a.total_revenue,
+  a.weekly_revenue,
+  a.monthly_revenue,
+  a.yearly_revenue,
+  a.pack_revenue,
+  d.sexual_score,
+  d.task_num,
+  d.succeed_task_num,
+  d.cost_point,
+  b.hv_user_tag,
+  CASE
+    WHEN a.total_revenue = 0 THEN '0'
+    WHEN a.total_revenue >= 500 THEN '500+'
+    WHEN a.total_revenue >= 100 THEN '100~500'
+    WHEN a.total_revenue >= 40 THEN '40~100'
+    WHEN a.total_revenue > 0 THEN '0~40'
+  END AS total_revenue_type,
+  CASE
+    WHEN a.total_revenue = 0 THEN 'zero'
+    WHEN a.total_revenue >= 500 THEN 'super'
+    WHEN a.total_revenue >= 100 THEN 'high'
+    WHEN a.total_revenue >= 40 THEN 'medium'
+    WHEN a.total_revenue > 0 THEN 'small'
+  END AS total_revenue_type2,
+  COALESCE(e.event, STRUCT(0 AS video_generate_success_pv, 0 AS video_generate_start_pv, 0 AS img_generate_success_pv, 0 AS img_generate_start_pv)) AS event
+FROM user_value_info AS a
+full JOIN is_r_info AS b
+  ON a.user_id = b.user_id AND a.app_name = b.app_name
+LEFT JOIN user_basic_info AS c
+  ON COALESCE(a.user_id, b.user_id) = c.user_id
+ AND COALESCE(a.app_name, b.app_name) = c.app_name
+LEFT JOIN task_info AS d
+  ON COALESCE(a.user_id, b.user_id) = d.user_id
+ AND COALESCE(a.app_name, b.app_name) = d.app_name
+LEFT JOIN ods_event AS e
+  ON COALESCE(a.user_id, b.user_id) = e.user_id
+ AND COALESCE(a.app_name, b.app_name) = e.app_name
+;
+
+COMMIT TRANSACTION;

@@ -1,0 +1,115 @@
+config {
+    type: "operations"
+}
+
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date}-1;
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `dwd.dwd_cdct_woolong_request_di`
+WHERE
+  logged_date BETWEEN from_date
+  AND to_date;
+INSERT INTO
+  aidata2025.dwd.dwd_cdct_woolong_request_di
+SELECT
+  logged_at,
+  owner_id,
+  event_type,
+  package_name,
+  transaction_id,
+  DATETIME(TIMESTAMP_MILLIS(SAFE_CAST(purchase_date_ms AS INT64))) AS purchase_time,
+  DATETIME(TIMESTAMP_MILLIS(SAFE_CAST(cancellation_date_ms AS INT64))) AS cancel_time,
+  DATETIME(TIMESTAMP_MILLIS(SAFE_CAST(auto_renew_status_change_date_ms AS INT64))) AS change_renewal_time,
+  auto_renew_product_id,
+  original_transaction_id,
+  is_trial_period,
+  is_in_intro_offer_period,
+  cancellation_date_ms,
+  price_amount_micros,
+  price_currency_code,
+  campaign,
+  DATETIME(TIMESTAMP_MILLIS(SAFE_CAST(install_date_ms AS INT64))) AS install_time,
+  gclid,
+  logged_date,
+  CASE
+    WHEN event_type='INITIAL_BUY' THEN '首订'
+    WHEN event_type IN('DID_RENEW') THEN '自动续订'
+    WHEN event_type='DID_CHANGE_RENEWAL_STATUS' AND auto_renew_status='true' THEN '打开续订'
+    WHEN event_type='DID_CHANGE_RENEWAL_STATUS' AND auto_renew_status='false' THEN '关闭续订'
+    WHEN event_type='CONSUMPTION_REQUEST' THEN '发起退款'
+    WHEN event_type IN('CANCEL') THEN '取消'
+    WHEN event_type IN('DID_FAIL_TO_RENEW') THEN '续订失败'
+    WHEN event_type IN('INTERACTIVE_RENEWAL') THEN '主动续订'
+    WHEN event_type IN('DID_RECOVER') THEN '失败后续订成功'
+    WHEN event_type IN('DID_CHANGE_RENEWAL_PREF') THEN '修改套餐'
+    ELSE event_type
+  END AS event_name
+FROM (
+  SELECT
+    logged_at,
+    owner_id,
+    event_type,
+    package_name,
+    transaction_id,
+    purchase_date_ms,
+    auto_renew_product_id,
+    original_transaction_id,
+    is_trial_period,
+    is_in_intro_offer_period,
+    cancellation_date_ms,
+    price_amount_micros,
+    price_currency_code,
+    campaign,
+    install_date_ms,
+    gclid,
+    DATE(logged_at) AS logged_date,
+    (
+    SELECT
+      value
+    FROM
+      UNNEST(notification_params)
+    WHERE
+      name='auto_renew_status') AS auto_renew_status,
+    (
+    SELECT
+      value
+    FROM
+      UNNEST(notification_params)
+    WHERE
+      name='auto_renew_status_change_date_ms') AS auto_renew_status_change_date_ms
+  FROM (
+    SELECT
+      *
+    FROM
+      `storytemplate-10a27.analytics_232977577.woolong_events_*`
+    WHERE
+      _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+      AND FORMAT_DATE('%Y%m%d', to_date)
+      AND transaction_id <> '0'
+    UNION ALL
+    SELECT
+      *
+    FROM
+      `fx-editor.analytics_263446298.woolong_events_*`
+    WHERE
+      _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+      AND FORMAT_DATE('%Y%m%d', to_date)
+      AND transaction_id <> '0'
+    UNION ALL
+    SELECT
+      *
+    FROM
+      `removeobjects-17cd7.analytics_348205064.woolong_events_*`
+    WHERE
+      _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+      AND FORMAT_DATE('%Y%m%d', to_date)
+      AND transaction_id <> '0' )) a;
+  -- 如果所有操作都成功，提交事务
+COMMIT
+  ;

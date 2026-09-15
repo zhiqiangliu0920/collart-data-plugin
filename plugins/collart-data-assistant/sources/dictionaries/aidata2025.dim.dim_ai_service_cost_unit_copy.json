@@ -1,0 +1,55 @@
+{
+  "table": "aidata2025.dim.dim_ai_service_cost_unit_copy",
+  "captured_at": "2026-09-14",
+  "table_metadata": {
+    "表名": "aidata2025.dim.dim_ai_service_cost_unit_copy",
+    "表中文名": "ai服务单位成本表",
+    "表类型": "维度表",
+    "行粒度": "每个model一行",
+    "主键字段": "model",
+    "上层表": "aidata2025.dim.dim_ai_service_cost_unit",
+    "更新频率": "手动维护",
+    "查询限制/风险提示": null,
+    "使用优先级": "中",
+    "项目": [
+      "collart android"
+    ]
+  },
+  "fields": [
+    {
+      "字段名": "provider",
+      "说明": "AI服务提供方",
+      "类型": "string",
+      "字段角色": "维度",
+      "是否核心字段": "否"
+    },
+    {
+      "字段名": "service_type",
+      "说明": "AI服务类型",
+      "类型": "string",
+      "字段角色": "维度",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "model",
+      "说明": "ai服务模型",
+      "类型": "string",
+      "字段角色": "维度",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "total_num",
+      "说明": null,
+      "类型": "int",
+      "字段角色": "指标",
+      "是否核心字段": "否"
+    },
+    {
+      "字段名": "cost_unit",
+      "说明": "ai服务的单次调用成本",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    }
+  ]
+}

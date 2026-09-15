@@ -1,0 +1,47 @@
+{
+  "table": "pubdata2025.dws.dws_cdct_cost_ai_service_1h",
+  "captured_at": "2026-09-14T13:53:49.569568+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "cost_type",
+        "type": "STRING"
+      },
+      {
+        "name": "model_type",
+        "type": "STRING"
+      },
+      {
+        "name": "task_num",
+        "type": "INTEGER"
+      },
+      {
+        "name": "platform_cost",
+        "type": "FLOAT"
+      },
+      {
+        "name": "sanfang_cost",
+        "type": "FLOAT"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dws",
+    "tableId": "dws_cdct_cost_ai_service_1h"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "description": "AI Service 自建机器费用及三方模型调用费用，按日期、应用和模型聚合",
+  "type": "TABLE"
+}

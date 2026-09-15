@@ -1,0 +1,135 @@
+
+config {
+    type: "operations",
+    dependencies: ["h_dwd_oper_user_basic_di"]
+}
+
+
+declare from_date date default  date_sub(${dataform.projectConfig.vars.biz_date} ,interval 31 day);
+declare to_date date default ${dataform.projectConfig.vars.biz_date};
+
+
+-- declare from_date date default '2025-01-01';
+-- declare to_date date default '2025-12-09';
+-- create or replace table aidata2025.ads.ads_aidata_retain_di as 
+
+begin transaction;
+
+-- 删除当日数据
+delete from `ads.ads_aidata_retain_di` where event_date between from_date and to_date;
+
+-- 插入当日数据
+insert into `ads.ads_aidata_retain_di`
+
+with retain as ( -- 计算留存
+  select 
+      a.package_name,
+      a.app_name,
+      a.event_date,
+      a.user_pseudo_id,
+      is_new,
+      is_vip,
+      country,
+      app_version,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=1 then a.user_pseudo_id end) retain_2,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=2 then a.user_pseudo_id end) retain_3,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=3 then a.user_pseudo_id end) retain_4,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=4 then a.user_pseudo_id end) retain_5,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=5 then a.user_pseudo_id end) retain_6,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=6 then a.user_pseudo_id end) retain_7,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=7 then a.user_pseudo_id end) retain_8,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=8 then a.user_pseudo_id end) retain_9,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=9 then a.user_pseudo_id end) retain_10,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=10 then a.user_pseudo_id end) retain_11,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=11 then a.user_pseudo_id end) retain_12,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=12 then a.user_pseudo_id end) retain_13,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=13 then a.user_pseudo_id end) retain_14,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=14 then a.user_pseudo_id end) retain_15,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=15 then a.user_pseudo_id end) retain_16,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=16 then a.user_pseudo_id end) retain_17,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=17 then a.user_pseudo_id end) retain_18,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=18 then a.user_pseudo_id end) retain_19,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=19 then a.user_pseudo_id end) retain_20,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=20 then a.user_pseudo_id end) retain_21,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=21 then a.user_pseudo_id end) retain_22,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=22 then a.user_pseudo_id end) retain_23,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=23 then a.user_pseudo_id end) retain_24,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=24 then a.user_pseudo_id end) retain_25,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=25 then a.user_pseudo_id end) retain_26,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=26 then a.user_pseudo_id end) retain_27,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=27 then a.user_pseudo_id end) retain_28,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=28 then a.user_pseudo_id end) retain_29,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=29 then a.user_pseudo_id end) retain_30,
+      count(distinct case when date_diff(b.event_date,a.event_date,day)=30 then a.user_pseudo_id end) retain_31,
+
+  from (
+    select 
+        event_date,
+        package_name,
+        user_pseudo_id,
+        vip_type as is_vip,
+        is_new,
+        country,
+        app_version,
+        app_name
+    from `dwd.dwd_oper_user_basic_di`
+    where event_date between from_date and to_date
+        and is_active=True
+  ) a
+  left join (
+    select 
+        event_date,
+        package_name,
+        user_pseudo_id,
+    from `dwd.dwd_oper_user_basic_di`
+    where event_date between from_date and to_date + 31
+        and is_active=True    
+  ) b
+  on a.package_name=b.package_name 
+  and a.user_pseudo_id=b.user_pseudo_id
+  group by 1,2,3,4,5,6,7,8
+)
+
+
+select app_name,package_name,event_date,is_new,is_vip,country,app_version,
+    count(distinct user_pseudo_id) dau
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=2 then retain_2 end) retain_2
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=3 then retain_3 end) retain_3
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=4 then retain_4 end) retain_4
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=5 then retain_5 end) retain_5
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=6 then retain_6 end) retain_6
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=7 then retain_7 end) retain_7
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=8 then retain_8 end) retain_8
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=9 then retain_9 end) retain_9
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=10 then retain_10 end) retain_10
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=11 then retain_11 end) retain_11
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=12 then retain_12 end) retain_12
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=13 then retain_13 end) retain_13
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=14 then retain_14 end) retain_14
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=15 then retain_15 end) retain_15
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=16 then retain_16 end) retain_16
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=17 then retain_17 end) retain_17
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=18 then retain_18 end) retain_18
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=19 then retain_19 end) retain_19
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=20 then retain_20 end) retain_20
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=21 then retain_21 end) retain_21
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=22 then retain_22 end) retain_22
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=23 then retain_23 end) retain_23
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=24 then retain_24 end) retain_24
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=25 then retain_25 end) retain_25
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=26 then retain_26 end) retain_26
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=27 then retain_27 end) retain_27
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=28 then retain_28 end) retain_28
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=29 then retain_29 end) retain_29
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=30 then retain_30 end) retain_30
+    ,sum(case when date_diff(CURRENT_DATE('Asia/Shanghai'),event_date,day)>=31 then retain_31 end) retain_31
+
+from retain
+group by 1,2,3,4,5,6,7
+;
+
+
+commit;
+
+
+

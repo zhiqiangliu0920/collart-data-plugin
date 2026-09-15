@@ -1,0 +1,274 @@
+config {
+    type: "operations",
+    dependencies: ["h_dwd_oper_user_basic_di"]
+}
+
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date}-30;
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `dws.dws_oper_basic_aidata_1d`
+WHERE
+  event_date BETWEEN from_date
+  AND to_date;
+INSERT INTO
+  `dws.dws_oper_basic_aidata_1d`
+WITH
+  basic AS (
+  SELECT
+    b.event_date,
+    b.traffic_src_type,
+    b.traffic_src_name,
+    b.country,
+    b.app_version,
+    b.vip_type,
+    b.adjust_src_type,
+    STRUCT( COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 0) AS day1,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 1) AS day2,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 2) AS day3,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 3) AS day4,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 4) AS day5,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 5) AS day6,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 6) AS day7,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 7) AS day8,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 8) AS day9,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 9) AS day10,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 10) AS day11,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 11) AS day12,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 12) AS day13,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 13) AS day14,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 14) AS day15,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 15) AS day16,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 16) AS day17,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 17) AS day18,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 18) AS day19,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 19) AS day20,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 20) AS day21,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 21) AS day22,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 22) AS day23,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 23) AS day24,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 24) AS day25,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 25) AS day26,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 26) AS day27,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 27) AS day28,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 28) AS day29,
+      COUNTIF(a.is_active = TRUE
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 29) AS day30 ) AS retention,
+    STRUCT( COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 0) AS day1,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 1) AS day2,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 2) AS day3,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 3) AS day4,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 4) AS day5,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 5) AS day6,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 6) AS day7,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 7) AS day8,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 8) AS day9,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 9) AS day10,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 10) AS day11,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 11) AS day12,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 12) AS day13,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 13) AS day14,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 14) AS day15,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 15) AS day16,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 16) AS day17,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 17) AS day18,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 18) AS day19,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 19) AS day20,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 20) AS day21,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 21) AS day22,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 22) AS day23,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 23) AS day24,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 24) AS day25,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 25) AS day26,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 26) AS day27,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 27) AS day28,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 28) AS day29,
+      COUNTIF(a.subscribe_time IS NOT NULL
+        AND DATE_DIFF(a.event_date, b.event_date, DAY) = 29) AS day30 ) AS subscribe,
+    b.app_name,
+    b.package_name
+  FROM (
+    SELECT
+      event_date,
+      user_pseudo_id,
+      package_name,
+      is_active,
+      subscribe_time
+    FROM
+      dwd.dwd_oper_user_basic_di
+     ) a
+    ----------------------------------获取所有活跃用户----------------------------------
+  INNER JOIN (
+    SELECT
+      event_date,
+      traffic_src_type,
+      traffic_src_name,
+      country,
+      app_version,
+      CAST(vip_type AS INTEGER) vip_type,
+      user_pseudo_id,
+      app_name,
+      package_name,
+      CAST(NULL AS STRING) AS adjust_src_type
+
+    FROM
+      dwd.dwd_oper_user_basic_di
+    WHERE
+      event_date BETWEEN from_date
+      AND to_date
+      AND is_new=TRUE
+    ) b
+    ----------------------------------获取新用户---------------------------------------------
+  ON
+    a.user_pseudo_id=b.user_pseudo_id
+    AND a.package_name=b.package_name
+  GROUP BY
+    b.event_date,
+    b.traffic_src_type,
+    b.traffic_src_name,
+    b.country,
+    b.app_version,
+    b.vip_type,
+    b.app_name,
+    b.package_name,
+    b.adjust_src_type )
+  ----------------------------------------------完成新用户留存基本信息计算---------------------------------------
+  ----------------------------------------------dau、dnu基本信息关联留存基本信息---------------------------------
+SELECT
+  a.event_date,
+  a.traffic_src_type,
+  a.traffic_src_name,
+  a.country,
+  a.app_version,
+  a.vip_type, 
+  a.dnu,
+  a.dau,
+  b.retention,
+  b.subscribe,
+  a.app_name,
+  a.package_name,
+  a.adjust_src_type
+FROM (
+  SELECT
+    event_date,
+    traffic_src_type,
+    traffic_src_name,
+    country,
+    app_version,
+    vip_type,
+    COUNTIF(is_new=TRUE) AS dnu,
+    COUNTIF(is_active=TRUE) AS dau,
+    app_name,
+    package_name,
+    adjust_src_type
+  FROM (
+    SELECT
+      event_date,
+      traffic_src_type,
+      traffic_src_name,
+      country,
+      app_version,
+      CAST(vip_type AS INTEGER) vip_type,
+      is_new,
+      is_active,
+      app_name,
+      package_name,
+      CAST(NULL AS STRING) AS adjust_src_type
+    FROM
+      dwd.dwd_oper_user_basic_di
+    WHERE
+      event_date BETWEEN from_date
+      AND to_date ) t
+  GROUP BY
+    event_date,
+    traffic_src_type,
+    traffic_src_name,
+    country,
+    app_version,
+    vip_type,
+    app_name,
+    package_name,
+    adjust_src_type ) a
+LEFT JOIN (
+  SELECT
+    *
+  FROM
+    basic ) b
+ON
+  a.event_date = b.event_date
+  AND COALESCE(a.traffic_src_name, '') = COALESCE(b.traffic_src_name, '')
+  AND COALESCE(a.traffic_src_type, '') = COALESCE(b.traffic_src_type, '')
+  AND COALESCE(a.country, '') = COALESCE(b.country, '')
+  AND COALESCE(a.app_version, '') = COALESCE(b.app_version, '')
+  AND COALESCE(a.vip_type, 0) = COALESCE(b.vip_type, 0)
+  AND COALESCE(a.package_name, '') = COALESCE(b.package_name, '')
+  AND COALESCE(a.adjust_src_type, '') = COALESCE(b.adjust_src_type, '') 
+where a.package_name<>'collart_web';
+  -- 如果所有操作都成功，提交事务
+COMMIT
+  ;
+

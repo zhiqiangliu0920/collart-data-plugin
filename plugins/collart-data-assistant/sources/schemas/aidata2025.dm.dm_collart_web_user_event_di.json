@@ -1,0 +1,395 @@
+{
+  "table": "aidata2025.dm.dm_collart_web_user_event_di",
+  "captured_at": "2026-09-14T13:19:06.859205+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "event_time",
+        "type": "DATETIME"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "is_login",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "is_vip",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING"
+      },
+      {
+        "name": "ga_session_id",
+        "type": "INTEGER"
+      },
+      {
+        "name": "ga_session_number",
+        "type": "INTEGER"
+      },
+      {
+        "name": "session_engaged",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "engagement_time_msec",
+        "type": "INTEGER"
+      },
+      {
+        "name": "first_open_time",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "page",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "location",
+            "type": "STRING"
+          },
+          {
+            "name": "title",
+            "type": "STRING"
+          },
+          {
+            "name": "referrer",
+            "type": "STRING"
+          },
+          {
+            "name": "name",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "geo",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "city",
+            "type": "STRING"
+          },
+          {
+            "name": "continent",
+            "type": "STRING"
+          },
+          {
+            "name": "sub_continent",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "device",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "device_category",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_brand_name",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_model_name",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system",
+            "type": "STRING"
+          },
+          {
+            "name": "device_operating_system_version",
+            "type": "STRING"
+          },
+          {
+            "name": "device_vendor_id",
+            "type": "STRING"
+          },
+          {
+            "name": "device_language",
+            "type": "STRING"
+          },
+          {
+            "name": "browser",
+            "type": "STRING"
+          },
+          {
+            "name": "browser_version",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "traffic",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "source",
+            "type": "STRING"
+          },
+          {
+            "name": "medium",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign_id",
+            "type": "STRING"
+          },
+          {
+            "name": "term",
+            "type": "STRING"
+          },
+          {
+            "name": "content",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "identity",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "clarity_user_id",
+            "type": "STRING"
+          },
+          {
+            "name": "clarity_session_id",
+            "type": "STRING"
+          },
+          {
+            "name": "atlasv_id",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "product_id",
+            "type": "STRING"
+          },
+          {
+            "name": "price",
+            "type": "STRING"
+          },
+          {
+            "name": "currency",
+            "type": "STRING"
+          },
+          {
+            "name": "points",
+            "type": "STRING"
+          },
+          {
+            "name": "product_type",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "web_params_info",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "service_type",
+            "type": "STRING"
+          },
+          {
+            "name": "task_id",
+            "type": "STRING"
+          },
+          {
+            "name": "feature",
+            "type": "STRING"
+          },
+          {
+            "name": "event_from",
+            "type": "STRING"
+          },
+          {
+            "name": "category",
+            "type": "STRING"
+          },
+          {
+            "name": "module_type",
+            "type": "STRING"
+          },
+          {
+            "name": "entry",
+            "type": "STRING"
+          },
+          {
+            "name": "template_id",
+            "type": "STRING"
+          },
+          {
+            "name": "list_source",
+            "type": "STRING"
+          },
+          {
+            "name": "result_id",
+            "type": "STRING"
+          },
+          {
+            "name": "result_type",
+            "type": "STRING"
+          },
+          {
+            "name": "target_path",
+            "type": "STRING"
+          },
+          {
+            "name": "total_ms",
+            "type": "FLOAT"
+          },
+          {
+            "name": "success",
+            "type": "STRING"
+          },
+          {
+            "name": "model",
+            "type": "STRING"
+          },
+          {
+            "name": "model_type",
+            "type": "STRING"
+          },
+          {
+            "name": "model_value",
+            "type": "STRING"
+          },
+          {
+            "name": "search_keyword",
+            "type": "STRING",
+            "mode": "NULLABLE",
+            "description": "Canonical template-search term extracted from end-specific event params"
+          }
+        ]
+      },
+      {
+        "name": "fashion_params_info",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "step",
+            "type": "STRING"
+          },
+          {
+            "name": "module_name",
+            "type": "STRING"
+          },
+          {
+            "name": "template_id",
+            "type": "STRING"
+          },
+          {
+            "name": "model_source",
+            "type": "STRING"
+          },
+          {
+            "name": "model_preset_id",
+            "type": "STRING"
+          },
+          {
+            "name": "outfit_type",
+            "type": "STRING"
+          },
+          {
+            "name": "outfit_preset_id",
+            "type": "STRING"
+          },
+          {
+            "name": "outfit_count",
+            "type": "INTEGER"
+          },
+          {
+            "name": "video_model",
+            "type": "STRING"
+          },
+          {
+            "name": "resolution",
+            "type": "STRING"
+          },
+          {
+            "name": "bgm_enabled",
+            "type": "STRING"
+          },
+          {
+            "name": "has_prompt",
+            "type": "STRING"
+          },
+          {
+            "name": "has_scene",
+            "type": "STRING"
+          },
+          {
+            "name": "generate_count",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dm",
+    "tableId": "dm_collart_web_user_event_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name",
+      "event_name",
+      "user_pseudo_id"
+    ]
+  },
+  "type": "TABLE"
+}

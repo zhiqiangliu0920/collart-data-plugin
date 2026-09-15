@@ -1,0 +1,227 @@
+{
+  "table": "aidata2025.dws.dws_oper_user_ad_di",
+  "captured_at": "2026-09-14T13:19:08.095442+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "日期"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "atlasv_uid",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "unit_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告位"
+      },
+      {
+        "name": "placement",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告场景"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "app名"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "包名"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "渠道名称"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "渠道类型"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "版本"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE",
+        "description": "是否新用户"
+      },
+      {
+        "name": "is_active",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE",
+        "description": "是否活跃"
+      },
+      {
+        "name": "vip_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "是否订阅"
+      },
+      {
+        "name": "ad_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告类型"
+      },
+      {
+        "name": "device_language",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "设备语言"
+      },
+      {
+        "name": "mobile_brand_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "mobile_model_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "device_total_ram",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_sdk_init_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "广告sdk启动次数"
+      },
+      {
+        "name": "ad_load_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "广告请求次数"
+      },
+      {
+        "name": "ad_load_success_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "广告请求成功次数"
+      },
+      {
+        "name": "ad_load_fail_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "广告请求失败次数"
+      },
+      {
+        "name": "ad_load_duration",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "加载时长"
+      },
+      {
+        "name": "ad_start_to_show_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "到达广告场景准备展示次数"
+      },
+      {
+        "name": "ad_success_to_show_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "达到广告场景可展示次数"
+      },
+      {
+        "name": "ad_show_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "广告填充成功后自动调show次数"
+      },
+      {
+        "name": "ad_impression_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "广告展示次数"
+      },
+      {
+        "name": "ad_impression_fail_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "广告展示失败次数"
+      },
+      {
+        "name": "ad_click_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "广告点击次数"
+      },
+      {
+        "name": "ad_close_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "广告关闭次数"
+      },
+      {
+        "name": "ad_duration",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "广告时长"
+      },
+      {
+        "name": "ad_value",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "广告价值"
+      },
+      {
+        "name": "adjust_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "advertising_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告id"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dws",
+    "tableId": "dws_oper_user_ad_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,443 @@
+config {
+  type: "operations",
+  name: "ads_collartandroid_oper_basic_indicator_country_di",
+  schema: "ads_collartandroid",
+  dependencies: [
+    "ads_collartandroid_oper_basic_indicator_attr_di",
+    "h_ads_ad_sub_revenue_1h"
+  ]
+}
+
+/*
+  Collart Android 第六张表：日 × 国家基础指标
+  Dataform: definitions/ads/collart/collart_android/ads_oper_basic_indicator_country_di.sqlx
+  目标表  : aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di
+
+  口径（已确认）:
+  - 粒度: event_date × country；保留全量国家（不 top_country 折叠）
+  - 行为: 从 ads_oper_basic_indicator_attr_di 按 country SUM
+  - dnu = 原 new_dau
+  - retain / rolling_retain：country/daily 仅统计 is_new（attr 可按 is_new 维切片，故保留全量）
+  - retain2_vip/free/by_source：新增×VIP/渠道切片的次日留存
+  - retain/rolling_retain/retain2_*：观察窗未满时置 NULL（与 attr 一致）
+  - dnu_vip/free、dnu_by_source：自 attr 的 is_new / is_vip / traffic_src_type 切片
+      by_source 子字段: organic/delivery/kol/inhouse（nature→organic）
+  - subscription: 合计 + _1d(新用户首日) + _old(老用户)；
+      _7d = 新用户注册日起 0-6 日转化 UV
+  - MAU: dwd_oper_user_basic_di 按国家、渠道匹配，过去 30 日活跃去重 UV
+  - 收入 revenue STRUCT: 全部直接取 ads_ad_sub_revenue_1h（不再走 dws 用户收入重挂）
+      revenue ← revenue（= ad_revenue + sub_revenue 总收入）
+      purchase_revenue ← sub_revenue（= new+renew+credit，不含广告）
+      resub_revenue ← renew_revenue
+      new_revenue ← new_revenue（已含 trial_conver、已排除点数包）
+      trial_conver_revenue ← 0（ads 表未拆 trial，已并入 new）
+      credit_revenue / ad_revenue / *_subscribe_uv ← 同名字段；credit_pack_uv ← credit_uv
+      ad_uv ← dws_oper_user_ad_di（ad_value>0 去重 UV，按用户活跃国挂载）
+  - 花费: cdct delivery STRUCT
+  - 不做漏斗
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+-- CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di`
+-- (
+--   package_name STRING,
+--   app_name STRING,
+--   event_date DATE,
+--   country STRING,
+--   -- 活跃 / 生命周期
+--   dau INT64,
+--   vip_dau INT64,
+--   churn_uv INT64,
+--   return_uv INT64,
+--   mau INT64,
+--   -- 新增（DNU）
+--   dnu INT64,
+--   dnu_vip INT64,
+--   dnu_free INT64,
+--   dnu_by_source STRUCT<
+--     organic INT64,
+--     delivery INT64,
+--     kol INT64,
+--     inhouse INT64
+--   >,
+--   -- 留存
+--   retain STRUCT<
+--     d2 INT64,
+--     d3 INT64,
+--     d4 INT64,
+--     d5 INT64,
+--     d6 INT64,
+--     d7 INT64,
+--     d8 INT64,
+--     d9 INT64,
+--     d10 INT64,
+--     d11 INT64,
+--     d12 INT64,
+--     d13 INT64,
+--     d14 INT64,
+--     d15 INT64,
+--     d16 INT64,
+--     d17 INT64,
+--     d18 INT64,
+--     d19 INT64,
+--     d20 INT64,
+--     d21 INT64,
+--     d22 INT64,
+--     d23 INT64,
+--     d24 INT64,
+--     d25 INT64,
+--     d26 INT64,
+--     d27 INT64,
+--     d28 INT64,
+--     d29 INT64,
+--     d30 INT64
+--   >,
+--   retain2_vip INT64,
+--   retain2_free INT64,
+--   retain2_by_source STRUCT<
+--     organic INT64,
+--     delivery INT64,
+--     kol INT64,
+--     inhouse INT64
+--   >,
+--   rolling_retain STRUCT<
+--     d2 INT64,
+--     d3 INT64,
+--     d4 INT64,
+--     d5 INT64,
+--     d6 INT64,
+--     d7 INT64,
+--     d8 INT64,
+--     d9 INT64,
+--     d10 INT64,
+--     d11 INT64,
+--     d12 INT64,
+--     d13 INT64,
+--     d14 INT64,
+--     d15 INT64,
+--     d16 INT64,
+--     d17 INT64,
+--     d18 INT64,
+--     d19 INT64,
+--     d20 INT64,
+--     d21 INT64,
+--     d22 INT64,
+--     d23 INT64,
+--     d24 INT64,
+--     d25 INT64,
+--     d26 INT64,
+--     d27 INT64,
+--     d28 INT64,
+--     d29 INT64,
+--     d30 INT64
+--   >,
+--   -- 订阅 / 收入 / 投放
+--   subscription STRUCT<
+--     subscribe_uv INT64,
+--     subscribe_uv_1d INT64,
+--     subscribe_uv_old INT64,
+--     subscribe_uv_7d INT64,
+--     credit_pack_uv INT64,
+--     credit_pack_uv_1d INT64,
+--     credit_pack_uv_old INT64,
+--     credit_pack_uv_7d INT64,
+--     credit_pack_cnt INT64,
+--     credit_amount INT64,
+--     purchase_uv INT64,
+--     purchase_uv_1d INT64
+--   >,
+--   revenue STRUCT<
+--     purchase_revenue FLOAT64,
+--     resub_revenue FLOAT64,
+--     new_revenue FLOAT64,
+--     trial_conver_revenue FLOAT64,
+--     credit_revenue FLOAT64,
+--     ad_revenue FLOAT64,
+--     new_subscribe_uv INT64,
+--     renew_subscribe_uv INT64,
+--     credit_pack_uv INT64,
+--     ad_uv INT64,
+--     revenue FLOAT64
+--   >,
+--   delivery STRUCT<
+--     cost FLOAT64,
+--     impressions INT64,
+--     clicks INT64,
+--     installs INT64
+--   >
+-- )
+-- PARTITION BY event_date
+-- CLUSTER BY country
+-- OPTIONS (
+--   description = 'Collart Android 日×国家基础指标：attr 行为上卷 + ads_ad_sub_revenue_1h 收入 + cdct 投放花费'
+-- );
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di`
+
+WITH behavior AS (
+  SELECT
+    event_date,
+    country,
+    SUM(dau) AS dau,
+    SUM(IF(is_vip, dau, 0)) AS vip_dau,
+    IF(DATE_ADD(event_date, INTERVAL 14 DAY) > to_date, NULL, SUM(churn_uv)) AS churn_uv,
+    SUM(return_uv) AS return_uv,
+    SUM(IF(is_new, dau, 0)) AS dnu,
+    SUM(IF(is_new AND IFNULL(is_vip, FALSE), dau, 0)) AS dnu_vip,
+    SUM(IF(is_new AND NOT IFNULL(is_vip, FALSE), dau, 0)) AS dnu_free,
+    STRUCT(
+      SUM(IF(is_new AND traffic_src_type = 'nature', dau, 0)) AS organic,
+      SUM(IF(is_new AND traffic_src_type = 'delivery', dau, 0)) AS delivery,
+      SUM(IF(is_new AND traffic_src_type = 'kol', dau, 0)) AS kol,
+      SUM(IF(is_new AND traffic_src_type = 'inhouse', dau, 0)) AS inhouse
+    ) AS dnu_by_source,
+    STRUCT(
+      IF(DATE_ADD(event_date, INTERVAL 1 DAY) > to_date, NULL, SUM(IF(is_new, retain.d2, NULL))) AS d2,
+      IF(DATE_ADD(event_date, INTERVAL 2 DAY) > to_date, NULL, SUM(IF(is_new, retain.d3, NULL))) AS d3,
+      IF(DATE_ADD(event_date, INTERVAL 3 DAY) > to_date, NULL, SUM(IF(is_new, retain.d4, NULL))) AS d4,
+      IF(DATE_ADD(event_date, INTERVAL 4 DAY) > to_date, NULL, SUM(IF(is_new, retain.d5, NULL))) AS d5,
+      IF(DATE_ADD(event_date, INTERVAL 5 DAY) > to_date, NULL, SUM(IF(is_new, retain.d6, NULL))) AS d6,
+      IF(DATE_ADD(event_date, INTERVAL 6 DAY) > to_date, NULL, SUM(IF(is_new, retain.d7, NULL))) AS d7,
+      IF(DATE_ADD(event_date, INTERVAL 7 DAY) > to_date, NULL, SUM(IF(is_new, retain.d8, NULL))) AS d8,
+      IF(DATE_ADD(event_date, INTERVAL 8 DAY) > to_date, NULL, SUM(IF(is_new, retain.d9, NULL))) AS d9,
+      IF(DATE_ADD(event_date, INTERVAL 9 DAY) > to_date, NULL, SUM(IF(is_new, retain.d10, NULL))) AS d10,
+      IF(DATE_ADD(event_date, INTERVAL 10 DAY) > to_date, NULL, SUM(IF(is_new, retain.d11, NULL))) AS d11,
+      IF(DATE_ADD(event_date, INTERVAL 11 DAY) > to_date, NULL, SUM(IF(is_new, retain.d12, NULL))) AS d12,
+      IF(DATE_ADD(event_date, INTERVAL 12 DAY) > to_date, NULL, SUM(IF(is_new, retain.d13, NULL))) AS d13,
+      IF(DATE_ADD(event_date, INTERVAL 13 DAY) > to_date, NULL, SUM(IF(is_new, retain.d14, NULL))) AS d14,
+      IF(DATE_ADD(event_date, INTERVAL 14 DAY) > to_date, NULL, SUM(IF(is_new, retain.d15, NULL))) AS d15,
+      IF(DATE_ADD(event_date, INTERVAL 15 DAY) > to_date, NULL, SUM(IF(is_new, retain.d16, NULL))) AS d16,
+      IF(DATE_ADD(event_date, INTERVAL 16 DAY) > to_date, NULL, SUM(IF(is_new, retain.d17, NULL))) AS d17,
+      IF(DATE_ADD(event_date, INTERVAL 17 DAY) > to_date, NULL, SUM(IF(is_new, retain.d18, NULL))) AS d18,
+      IF(DATE_ADD(event_date, INTERVAL 18 DAY) > to_date, NULL, SUM(IF(is_new, retain.d19, NULL))) AS d19,
+      IF(DATE_ADD(event_date, INTERVAL 19 DAY) > to_date, NULL, SUM(IF(is_new, retain.d20, NULL))) AS d20,
+      IF(DATE_ADD(event_date, INTERVAL 20 DAY) > to_date, NULL, SUM(IF(is_new, retain.d21, NULL))) AS d21,
+      IF(DATE_ADD(event_date, INTERVAL 21 DAY) > to_date, NULL, SUM(IF(is_new, retain.d22, NULL))) AS d22,
+      IF(DATE_ADD(event_date, INTERVAL 22 DAY) > to_date, NULL, SUM(IF(is_new, retain.d23, NULL))) AS d23,
+      IF(DATE_ADD(event_date, INTERVAL 23 DAY) > to_date, NULL, SUM(IF(is_new, retain.d24, NULL))) AS d24,
+      IF(DATE_ADD(event_date, INTERVAL 24 DAY) > to_date, NULL, SUM(IF(is_new, retain.d25, NULL))) AS d25,
+      IF(DATE_ADD(event_date, INTERVAL 25 DAY) > to_date, NULL, SUM(IF(is_new, retain.d26, NULL))) AS d26,
+      IF(DATE_ADD(event_date, INTERVAL 26 DAY) > to_date, NULL, SUM(IF(is_new, retain.d27, NULL))) AS d27,
+      IF(DATE_ADD(event_date, INTERVAL 27 DAY) > to_date, NULL, SUM(IF(is_new, retain.d28, NULL))) AS d28,
+      IF(DATE_ADD(event_date, INTERVAL 28 DAY) > to_date, NULL, SUM(IF(is_new, retain.d29, NULL))) AS d29,
+      IF(DATE_ADD(event_date, INTERVAL 29 DAY) > to_date, NULL, SUM(IF(is_new, retain.d30, NULL))) AS d30
+    ) AS retain,
+    IF(DATE_ADD(event_date, INTERVAL 1 DAY) > to_date, NULL, SUM(IF(is_new AND IFNULL(is_vip, FALSE), retain.d2, NULL))) AS retain2_vip,
+    IF(DATE_ADD(event_date, INTERVAL 1 DAY) > to_date, NULL, SUM(IF(is_new AND NOT IFNULL(is_vip, FALSE), retain.d2, NULL))) AS retain2_free,
+    IF(DATE_ADD(event_date, INTERVAL 1 DAY) > to_date, NULL, STRUCT(
+      SUM(IF(is_new AND traffic_src_type = 'nature', retain.d2, NULL)) AS organic,
+      SUM(IF(is_new AND traffic_src_type = 'delivery', retain.d2, NULL)) AS delivery,
+      SUM(IF(is_new AND traffic_src_type = 'kol', retain.d2, NULL)) AS kol,
+      SUM(IF(is_new AND traffic_src_type = 'inhouse', retain.d2, 0)) AS inhouse
+    )) AS retain2_by_source,
+    STRUCT(
+      IF(DATE_ADD(event_date, INTERVAL 1 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d2, NULL))) AS d2,
+      IF(DATE_ADD(event_date, INTERVAL 2 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d3, NULL))) AS d3,
+      IF(DATE_ADD(event_date, INTERVAL 3 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d4, NULL))) AS d4,
+      IF(DATE_ADD(event_date, INTERVAL 4 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d5, NULL))) AS d5,
+      IF(DATE_ADD(event_date, INTERVAL 5 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d6, NULL))) AS d6,
+      IF(DATE_ADD(event_date, INTERVAL 6 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d7, NULL))) AS d7,
+      IF(DATE_ADD(event_date, INTERVAL 7 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d8, NULL))) AS d8,
+      IF(DATE_ADD(event_date, INTERVAL 8 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d9, NULL))) AS d9,
+      IF(DATE_ADD(event_date, INTERVAL 9 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d10, NULL))) AS d10,
+      IF(DATE_ADD(event_date, INTERVAL 10 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d11, NULL))) AS d11,
+      IF(DATE_ADD(event_date, INTERVAL 11 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d12, NULL))) AS d12,
+      IF(DATE_ADD(event_date, INTERVAL 12 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d13, NULL))) AS d13,
+      IF(DATE_ADD(event_date, INTERVAL 13 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d14, NULL))) AS d14,
+      IF(DATE_ADD(event_date, INTERVAL 14 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d15, NULL))) AS d15,
+      IF(DATE_ADD(event_date, INTERVAL 15 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d16, NULL))) AS d16,
+      IF(DATE_ADD(event_date, INTERVAL 16 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d17, NULL))) AS d17,
+      IF(DATE_ADD(event_date, INTERVAL 17 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d18, NULL))) AS d18,
+      IF(DATE_ADD(event_date, INTERVAL 18 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d19, NULL))) AS d19,
+      IF(DATE_ADD(event_date, INTERVAL 19 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d20, NULL))) AS d20,
+      IF(DATE_ADD(event_date, INTERVAL 20 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d21, NULL))) AS d21,
+      IF(DATE_ADD(event_date, INTERVAL 21 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d22, NULL))) AS d22,
+      IF(DATE_ADD(event_date, INTERVAL 22 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d23, NULL))) AS d23,
+      IF(DATE_ADD(event_date, INTERVAL 23 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d24, NULL))) AS d24,
+      IF(DATE_ADD(event_date, INTERVAL 24 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d25, NULL))) AS d25,
+      IF(DATE_ADD(event_date, INTERVAL 25 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d26, NULL))) AS d26,
+      IF(DATE_ADD(event_date, INTERVAL 26 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d27, NULL))) AS d27,
+      IF(DATE_ADD(event_date, INTERVAL 27 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d28, NULL))) AS d28,
+      IF(DATE_ADD(event_date, INTERVAL 28 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d29, NULL))) AS d29,
+      IF(DATE_ADD(event_date, INTERVAL 29 DAY) > to_date, NULL, SUM(IF(is_new, rolling_retain.d30, NULL))) AS d30
+    ) AS rolling_retain,
+    STRUCT(
+      SUM(subscription.subscribe_uv) AS subscribe_uv,
+      SUM(IF(is_new, subscription.subscribe_uv, 0)) AS subscribe_uv_1d,
+      SUM(IF(NOT is_new, subscription.subscribe_uv, 0)) AS subscribe_uv_old,
+      IF(DATE_ADD(event_date, INTERVAL 6 DAY) > to_date, NULL, SUM(IF(is_new, subscription.subscribe_uv_7d, 0))) AS subscribe_uv_7d,
+      SUM(subscription.credit_pack_uv) AS credit_pack_uv,
+      SUM(IF(is_new, subscription.credit_pack_uv, 0)) AS credit_pack_uv_1d,
+      SUM(IF(NOT is_new, subscription.credit_pack_uv, 0)) AS credit_pack_uv_old,
+      IF(DATE_ADD(event_date, INTERVAL 6 DAY) > to_date, NULL, SUM(IF(is_new, subscription.credit_pack_uv_7d, 0))) AS credit_pack_uv_7d,
+      SUM(subscription.credit_pack_cnt) AS credit_pack_cnt,
+      SUM(subscription.credit_amount) AS credit_amount,
+      SUM(subscription.purchase_uv) AS purchase_uv,
+      SUM(IF(is_new, subscription.purchase_uv, 0)) AS purchase_uv_1d
+    ) AS subscription
+  FROM `aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di`
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date, country
+),
+
+user_country AS (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    country
+  FROM `aidata2025.ads_collartandroid.ads_oper_user_active_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND user_pseudo_id IS NOT NULL
+),
+
+dim_iso AS (
+  SELECT
+    country_name_3 AS iso2,
+    ANY_VALUE(country_name) AS country_name
+  FROM `aidata2025.dim.dim_country_info`
+  WHERE country_name_3 IS NOT NULL
+    AND country_name_3 != ''
+    AND country_name IS NOT NULL
+    AND country_name != ''
+  GROUP BY country_name_3
+),
+
+mau AS (
+  SELECT
+    a.event_date,
+    COALESCE(NULLIF(a.country, ''), 'Unknown') AS country,
+    COUNT(DISTINCT b.user_pseudo_id) AS mau
+  FROM (
+    SELECT DISTINCT
+      event_date,
+      country,
+      traffic_src_type,
+      package_name
+    FROM `aidata2025.dwd.dwd_oper_user_basic_di`
+    WHERE event_date BETWEEN from_date AND to_date
+      AND package_name = 'free.ai.photo.generator.collart.ai'
+  ) AS a
+  JOIN `aidata2025.dwd.dwd_oper_user_basic_di` AS b
+    ON a.country = b.country
+   AND a.traffic_src_type = b.traffic_src_type
+   AND a.package_name = b.package_name
+   AND b.event_date BETWEEN DATE_SUB(a.event_date, INTERVAL 29 DAY) AND a.event_date
+   AND b.is_active IS TRUE
+  WHERE b.event_date BETWEEN DATE_SUB(from_date, INTERVAL 29 DAY) AND to_date
+  GROUP BY a.event_date, country
+),
+
+-- 收入 / 订阅 UV / 广告收入：直接取 ads_ad_sub_revenue_1h（国家已是英文全名）
+rev AS (
+  SELECT
+    event_date,
+    COALESCE(NULLIF(country, ''), 'United States') AS country,
+    SUM(IFNULL(sub_revenue, 0)) AS purchase_revenue,
+    SUM(IFNULL(renew_revenue, 0)) AS resub_revenue,
+    SUM(IFNULL(new_revenue, 0)) AS new_revenue,
+    SUM(IFNULL(credit_revenue, 0)) AS credit_revenue,
+    SUM(IFNULL(ad_revenue, 0)) AS ad_revenue,
+    SUM(IFNULL(new_subscribe_uv, 0)) AS new_subscribe_uv,
+    SUM(IFNULL(renew_subscribe_uv, 0)) AS renew_subscribe_uv,
+    SUM(IFNULL(credit_uv, 0)) AS credit_pack_uv,
+    SUM(IFNULL(revenue, 0)) AS revenue
+  FROM `aidata2025.ads.ads_ad_sub_revenue_1h`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND package_name = 'free.ai.photo.generator.collart.ai'
+  GROUP BY event_date, country
+),
+
+ad_uv AS (
+  SELECT
+    a.event_date,
+    COALESCE(uc.country, NULLIF(a.country, ''), 'United States') AS country,
+    COUNT(DISTINCT a.user_pseudo_id) AS ad_uv
+  FROM `aidata2025.dws.dws_oper_user_ad_di` AS a
+  LEFT JOIN user_country AS uc
+    ON a.event_date = uc.event_date
+    AND a.user_pseudo_id = uc.user_pseudo_id
+  WHERE a.event_date BETWEEN from_date AND to_date
+    AND LOWER(a.app_name) = 'collart_android'
+    AND IFNULL(a.ad_value, 0) > 0
+  GROUP BY a.event_date, country
+),
+
+cost AS (
+  SELECT
+    a.event_date,
+    COALESCE(NULLIF(a.country_name, ''), d.country_name, a.country) AS country,
+    STRUCT(
+      COALESCE(SUM(a.cost), 0.0) AS cost,
+      COALESCE(SUM(a.impressions), 0) AS impressions,
+      COALESCE(SUM(a.clicks), 0) AS clicks,
+      COALESCE(SUM(a.installs), 0) AS installs
+    ) AS delivery
+  FROM `aidata2025.dwd.dwd_cdct_delivery_cost_di` AS a
+  LEFT JOIN dim_iso AS d
+    ON a.country = d.iso2
+  WHERE a.event_date BETWEEN from_date AND to_date
+    AND a.package_name = 'free.ai.photo.generator.collart.ai'
+  GROUP BY a.event_date, country
+),
+
+keys AS (
+  SELECT event_date, country FROM behavior WHERE country IS NOT NULL
+  UNION DISTINCT
+  SELECT event_date, country FROM mau WHERE country IS NOT NULL
+  UNION DISTINCT
+  SELECT event_date, country FROM rev WHERE country IS NOT NULL
+  UNION DISTINCT
+  SELECT event_date, country FROM ad_uv WHERE country IS NOT NULL
+  UNION DISTINCT
+  SELECT event_date, country FROM cost WHERE country IS NOT NULL
+)
+
+SELECT
+  'free.ai.photo.generator.collart.ai' AS package_name,
+  'collart_android' AS app_name,
+  k.event_date,
+  k.country,
+  COALESCE(b.dau, 0) AS dau,
+  COALESCE(b.vip_dau, 0) AS vip_dau,
+  b.churn_uv AS churn_uv,
+  COALESCE(b.return_uv, 0) AS return_uv,
+  COALESCE(m.mau, 0) AS mau,
+  COALESCE(b.dnu, 0) AS dnu,
+  COALESCE(b.dnu_vip, 0) AS dnu_vip,
+  COALESCE(b.dnu_free, 0) AS dnu_free,
+  COALESCE(b.dnu_by_source, STRUCT(0, 0, 0, 0)) AS dnu_by_source,
+  b.retain,
+  b.retain2_vip AS retain2_vip,
+  b.retain2_free AS retain2_free,
+  b.retain2_by_source AS retain2_by_source,
+  b.rolling_retain,
+  b.subscription,
+  STRUCT(
+    COALESCE(r.purchase_revenue, 0.0) AS purchase_revenue,
+    COALESCE(r.resub_revenue, 0.0) AS resub_revenue,
+    COALESCE(r.new_revenue, 0.0) AS new_revenue,
+    0.0 AS trial_conver_revenue,
+    COALESCE(r.credit_revenue, 0.0) AS credit_revenue,
+    COALESCE(r.ad_revenue, 0.0) AS ad_revenue,
+    COALESCE(r.new_subscribe_uv, 0) AS new_subscribe_uv,
+    COALESCE(r.renew_subscribe_uv, 0) AS renew_subscribe_uv,
+    COALESCE(r.credit_pack_uv, 0) AS credit_pack_uv,
+    COALESCE(au.ad_uv, 0) AS ad_uv,
+    COALESCE(r.revenue, 0.0) AS revenue
+  ) AS revenue,
+  COALESCE(c.delivery, STRUCT(0.0, 0, 0, 0)) AS delivery
+FROM keys AS k
+LEFT JOIN behavior AS b USING (event_date, country)
+LEFT JOIN mau AS m USING (event_date, country)
+LEFT JOIN rev AS r USING (event_date, country)
+LEFT JOIN ad_uv AS au USING (event_date, country)
+LEFT JOIN cost AS c USING (event_date, country);
+
+COMMIT;

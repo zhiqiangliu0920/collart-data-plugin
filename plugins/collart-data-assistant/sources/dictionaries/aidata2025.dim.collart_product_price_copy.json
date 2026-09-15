@@ -1,0 +1,43 @@
+{
+  "table": "aidata2025.dim.collart_product_price_copy",
+  "captured_at": "2026-09-14",
+  "table_metadata": {
+    "表名": "aidata2025.dim.collart_product_price_copy",
+    "表中文名": "产品商品价格表",
+    "表类型": "维度表",
+    "行粒度": "每个产品、每个商品一行",
+    "主键字段": "package_name+product_id",
+    "上层表": "aidata2025.dim.collart_product_price",
+    "更新频率": "手动维护",
+    "查询限制/风险提示": null,
+    "使用优先级": "低",
+    "项目": [
+      "collart ios",
+      "collart android",
+      "collart web"
+    ]
+  },
+  "fields": [
+    {
+      "字段名": "package_name",
+      "说明": "包名",
+      "类型": "string",
+      "字段角色": "主键",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "product_id",
+      "说明": "商品名",
+      "类型": "string",
+      "字段角色": "主键",
+      "是否核心字段": "是"
+    },
+    {
+      "字段名": "price",
+      "说明": "订阅价格",
+      "类型": "float",
+      "字段角色": "指标",
+      "是否核心字段": "是"
+    }
+  ]
+}

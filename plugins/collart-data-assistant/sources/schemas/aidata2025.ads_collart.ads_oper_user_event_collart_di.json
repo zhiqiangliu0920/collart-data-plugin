@@ -1,0 +1,8 @@
+{
+  "table": "aidata2025.ads_collart.ads_oper_user_event_collart_di",
+  "captured_at": "2026-09-14T13:19:03.355519+00:00",
+  "error": {
+    "status": 404,
+    "reason": "NOT_FOUND"
+  }
+}

@@ -1,0 +1,57 @@
+config {
+    type: "operations"
+}
+
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `pubdata2025.dwd.dwd_cdct_log_aws_cdn_di`
+WHERE
+  event_date>= DATE_SUB(CURRENT_DATE, INTERVAL 2 DAY);
+  --插入分区数据--
+INSERT INTO
+  dwd.dwd_cdct_log_aws_cdn_di
+SELECT
+  DATE( SPLIT(log_data,'	')[SAFE_OFFSET(0)]) AS event_date,
+  SPLIT(log_data,'	')[SAFE_OFFSET(1)] AS event_time,
+  SPLIT(log_data,'	')[SAFE_OFFSET(2)] AS x_edge_location,
+  CAST(SPLIT(log_data,'	')[SAFE_OFFSET(3)] AS int64) AS sc_bytes,
+  SPLIT(log_data,'	')[SAFE_OFFSET(4)] AS c_ip,
+  SPLIT(log_data,'	')[SAFE_OFFSET(5)] AS cs_method,
+  SPLIT(log_data,'	')[SAFE_OFFSET(6)] AS cs_host,
+  SPLIT(log_data,'	')[SAFE_OFFSET(7)] AS cs_uri_stem,
+  CAST(SPLIT(log_data,'	')[SAFE_OFFSET(8)] AS int64) AS cs_status,
+  SPLIT(log_data,'	')[SAFE_OFFSET(9)] AS cs_referer,
+  SPLIT(log_data,'	')[SAFE_OFFSET(10)] AS cs_user_agent,
+  SPLIT(log_data,'	')[SAFE_OFFSET(11)] AS cs_uri_query,
+  SPLIT(log_data,'	')[SAFE_OFFSET(12)] AS cs_cookie,
+  SPLIT(log_data,'	')[SAFE_OFFSET(13)] AS x_edge_result_type,
+  SPLIT(log_data,'	')[SAFE_OFFSET(14)] AS x_edge_request_id,
+  SPLIT(log_data,'	')[SAFE_OFFSET(15)] AS x_host_header,
+  SPLIT(log_data,'	')[SAFE_OFFSET(16)] AS cs_protocol,
+  CAST(SPLIT(log_data,'	')[SAFE_OFFSET(17)] AS int64) AS cs_bytes,
+  CAST(SPLIT(log_data,'	')[SAFE_OFFSET(18)] AS float64) AS time_taken,
+  SPLIT(log_data,'	')[SAFE_OFFSET(19)] AS x_forwarder_for,
+  SPLIT(log_data,'	')[SAFE_OFFSET(20)] AS ssl_protocol,
+  SPLIT(log_data,'	')[SAFE_OFFSET(21)] AS ssl_cipher,
+  SPLIT(log_data,'	')[SAFE_OFFSET(22)] AS x_edge_response_result_type,
+  SPLIT(log_data,'	')[SAFE_OFFSET(23)] AS cs_protocol_version,
+  SPLIT(log_data,'	')[SAFE_OFFSET(24)] AS fle_status,
+  SPLIT(log_data,'	')[SAFE_OFFSET(25)] AS fle_encrypted_fields,
+  CAST(SPLIT(log_data,'	')[SAFE_OFFSET(26)] AS int64) AS c_port,
+  CAST(SPLIT(log_data,'	')[SAFE_OFFSET(27)] AS float64) AS time_to_first_byte,
+  SPLIT(log_data,'	')[SAFE_OFFSET(28)] AS x_edge_detailed_result_type,
+  SPLIT(log_data,'	')[SAFE_OFFSET(29)] AS sc_content_type,
+  SPLIT(log_data,'	')[SAFE_OFFSET(30)] AS sc_content_len,
+  SPLIT(log_data,'	')[SAFE_OFFSET(31)] AS sc_range_start,
+  SPLIT(log_data,'	')[SAFE_OFFSET(32)] AS sc_range_end
+FROM
+  `pubdata2025.ods.ods_log_aws_cdn_1d`
+WHERE
+  DATE(TIMESTAMP_TRUNC(_PARTITIONTIME, DAY)) >= DATE_SUB(CURRENT_DATE, INTERVAL 3 DAY)
+  AND DATE( SPLIT(log_data,'	')[0])>= DATE_SUB(CURRENT_DATE, INTERVAL 2 DAY) ;
+  --如果所有操作都成功，提交事务
+COMMIT
+  ;

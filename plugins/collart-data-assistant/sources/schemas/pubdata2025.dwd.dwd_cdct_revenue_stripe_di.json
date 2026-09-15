@@ -1,0 +1,139 @@
+{
+  "table": "pubdata2025.dwd.dwd_cdct_revenue_stripe_di",
+  "captured_at": "2026-09-14T13:19:09.168827+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "日期分区"
+      },
+      {
+        "name": "event_timestamp",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "交易发生时间戳"
+      },
+      {
+        "name": "transaction_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Stripe 流水唯一 ID"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "所属应用名称"
+      },
+      {
+        "name": "charge_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交易类型"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "支付账户国家代码"
+      },
+      {
+        "name": "currency",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "结算币种 "
+      },
+      {
+        "name": "stripe_customer_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Stripe 客户 ID "
+      },
+      {
+        "name": "amount",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "交易总金额"
+      },
+      {
+        "name": "fee",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Stripe 收取的手续费"
+      },
+      {
+        "name": "revneue",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "净收入 (Amount - Fee)"
+      },
+      {
+        "name": "description_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交易描述信息"
+      },
+      {
+        "name": "order_status",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "流水订单状态"
+      },
+      {
+        "name": "product_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品唯一 ID "
+      },
+      {
+        "name": "product_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品名称"
+      },
+      {
+        "name": "subscription_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "关联的订阅 ID"
+      },
+      {
+        "name": "subscription_status",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "该订阅目前的实时状态"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户user_id"
+      },
+      {
+        "name": "payment_channel",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "付款平台"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_cdct_revenue_stripe_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "app_name",
+      "country",
+      "product_id"
+    ]
+  },
+  "type": "TABLE"
+}

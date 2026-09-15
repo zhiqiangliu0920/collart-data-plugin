@@ -1,0 +1,199 @@
+{
+  "table": "aidata2025.ods.orders",
+  "captured_at": "2026-09-14T13:19:08.517935+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "id",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "product_id",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "product_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "quantity",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "total_price",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "currency",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "payment_channel",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "stripe_session_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "stripe_payment_intent_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "stripe_subscription_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "stripe_customer_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "enjoypay_order_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "enjoypay_subscription_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "payermax_order_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "payermax_subscription_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "renewal_notified_at",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "payinsider_order_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "payinsider_subscription_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "payinsider_customer_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "meta_event_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "meta_event_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "meta_capi_reported_at",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "meta_capi_report_error",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "tiktok_events",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "status",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "price_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "paid_at",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_start_at",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscription_end_at",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "current_period_start_at",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "current_period_end_at",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cancel_reason",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "deleted_at",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ods",
+    "tableId": "orders"
+  },
+  "type": "TABLE"
+}

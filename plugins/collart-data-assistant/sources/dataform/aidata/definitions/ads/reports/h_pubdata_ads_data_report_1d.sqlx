@@ -1,0 +1,84 @@
+config {
+    type: "operations",
+    dependencies: ["h_dws_oper_basic_aidata_1d", "ai_cost_data_1h", "h_dwd_cdct_delivery_cost_di"]
+}
+
+DECLARE
+  run_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+BEGIN TRANSACTION;
+
+DELETE
+FROM
+  pubdata2025.ads.ads_data_report_1d
+WHERE
+  event_date BETWEEN run_date - 1
+  AND run_date
+  AND data_from='aidata';
+
+INSERT INTO
+  pubdata2025.ads.ads_data_report_1d
+
+SELECT
+  a.*,
+  IFNULL(b.delevery_cost, 0) + IFNULL(c.ai_cost, 0) cost,
+  'aidata'
+FROM (
+  SELECT
+    event_date,
+    app_name,
+    package_name,
+    SUM(dnu) AS dnu,
+    SUM(dau) AS dau,
+    IF(SUM(dau) <> 0, SUM(`retention`.day2)/SUM(dnu), NULL) AS `retention`,
+    SUM(IF(traffic_src_type='nature', dnu, 0)) AS dnu_organic,
+    SUM(IF(traffic_src_type NOT IN ('nature','inhouse'), dnu, 0)) AS dnu_others,
+    SUM(IF(traffic_src_type='inhouse', dnu, 0)) AS dnu_inhouse
+  FROM
+    dws.dws_oper_basic_aidata_1d
+  WHERE
+    event_date BETWEEN run_date-1
+    AND run_date
+  GROUP BY
+    event_date,
+    app_name,
+    package_name 
+  ) a
+
+-- 投放花费
+LEFT JOIN (
+  SELECT
+    package_name,
+    event_date,
+    SUM(IFNULL(cost, 0)) AS delevery_cost
+  FROM
+    `aidata2025.dwd.dwd_cdct_delivery_cost_di`
+  WHERE
+    event_date BETWEEN run_date - 1
+    AND run_date
+  GROUP BY
+    1,2 
+) b
+ON a.event_date = b.event_date
+AND a.package_name = b.package_name
+
+-- ai服务花费
+LEFT JOIN (
+  SELECT
+    package_name,
+    event_date,
+    SUM(IFNULL(cost, 0)) ai_cost
+  FROM
+    aidata2025.ai_service.ai_cost_data
+  WHERE
+    event_date BETWEEN run_date - 1
+    AND run_date
+  GROUP BY
+    1, 2 
+) c
+ON a.event_date=c.event_date
+AND a.package_name=c.package_name
+WHERE dau>0 
+;
+
+COMMIT
+  ;

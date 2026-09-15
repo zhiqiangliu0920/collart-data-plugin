@@ -1,0 +1,80 @@
+{
+  "table": "aidata2025.dws.dws_oper_fb_delivery_1d",
+  "captured_at": "2026-09-14T13:19:08.030602+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "campaign",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "campaign_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "spend",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "impressions",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "clicks",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "reach",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "actions",
+        "type": "RECORD",
+        "mode": "REPEATED",
+        "fields": [
+          {
+            "name": "action_type",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "action_count",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ]
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dws",
+    "tableId": "dws_oper_fb_delivery_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

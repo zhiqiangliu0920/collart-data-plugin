@@ -1,0 +1,164 @@
+{
+  "table": "aidata2025.dwd.dwd_oper_delivery_adjust_user_di",
+  "captured_at": "2026-09-14T13:19:07.271569+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "事件日期，分区字段"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用包名"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品名"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "事件名称"
+      },
+      {
+        "name": "activity_kind",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "install, event, reattribution等"
+      },
+      {
+        "name": "created_at",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "原始创建时间戳"
+      },
+      {
+        "name": "created_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE",
+        "description": "转换后的创建时间"
+      },
+      {
+        "name": "installed_at",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "原始安装时间戳"
+      },
+      {
+        "name": "installed_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE",
+        "description": "转换后的安装时间"
+      },
+      {
+        "name": "platform",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "归因平台ga, fb, tt, asa等"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家代码"
+      },
+      {
+        "name": "adid",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Adjust 唯一设备 ID"
+      },
+      {
+        "name": "campaign_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "渠道原始广告系列 ID"
+      },
+      {
+        "name": "campaign_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "渠道原始广告系列名称"
+      },
+      {
+        "name": "adgroup_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "渠道原始广告组 ID"
+      },
+      {
+        "name": "adgroup_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "渠道原始广告组名称"
+      },
+      {
+        "name": "tracker_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Adjust 追踪器全名"
+      },
+      {
+        "name": "revenue_usd",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "收入金额"
+      },
+      {
+        "name": "product_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "内购产品 ID"
+      },
+      {
+        "name": "currency",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "币种 (默认 USD)"
+      },
+      {
+        "name": "gclid",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "Google Click ID"
+      },
+      {
+        "name": "network_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "网络类型 (Search, Display等)"
+      },
+      {
+        "name": "engagement_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交互类型 (click, impression)"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_oper_delivery_adjust_user_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name",
+      "country",
+      "campaign_name",
+      "adid"
+    ]
+  },
+  "type": "TABLE"
+}

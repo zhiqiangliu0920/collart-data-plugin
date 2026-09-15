@@ -1,0 +1,49 @@
+{
+  "table": "pubdata2025.dws.dws_cdct_log_aws_cdn_1d",
+  "captured_at": "2026-09-14T13:53:49.612764+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "project",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "os",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "result_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "request_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dws",
+    "tableId": "dws_cdct_log_aws_cdn_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "description": "woloong数据通过cdn日志分摊表",
+  "type": "TABLE"
+}

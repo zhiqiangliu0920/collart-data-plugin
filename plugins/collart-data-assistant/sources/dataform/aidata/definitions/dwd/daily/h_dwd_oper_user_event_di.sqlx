@@ -1,0 +1,540 @@
+config {
+    type: "operations",
+    dependencies: ["h_dwd_oper_user_event_di-new_app"]
+}
+-- 构造两个公共的方法用于解析 event_params 和 user_properties
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date}-2;
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+CREATE TEMP FUNCTION getParamValue(
+  param ARRAY<STRUCT<key STRING, value STRUCT<string_value STRING, int_value INT64, float_value FLOAT64, double_value FLOAT64>>>,
+  target_key STRING
+) RETURNS STRING AS (
+  (SELECT 
+    COALESCE(
+      CAST(p.value.int_value AS STRING),
+      p.value.string_value,
+      CAST(p.value.float_value AS STRING),
+      CAST(p.value.double_value AS STRING)
+    )
+   FROM UNNEST(param) p WHERE p.key = target_key LIMIT 1)
+);
+
+CREATE TEMP FUNCTION getPropertyValue(
+  prop ARRAY<STRUCT<key STRING, value STRUCT<string_value STRING, int_value INT64, float_value FLOAT64, double_value FLOAT64, set_timestamp_micros INT64>>>,
+  target_key STRING
+) RETURNS STRING AS (
+  (SELECT 
+    COALESCE(
+      CAST(p.value.int_value AS STRING),
+      p.value.string_value,
+      CAST(p.value.float_value AS STRING),
+      CAST(p.value.double_value AS STRING)
+    )
+   FROM UNNEST(prop) p WHERE p.key = target_key LIMIT 1)
+);
+
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `dwd.dwd_oper_user_event_di`
+WHERE
+  event_date BETWEEN from_date
+  AND to_date
+  and app_name not in ('muselab','looksart','VibeDance_iOS','VibeDance_Android','Vidart');
+  -----------------------插入分区中数据----------------------------
+INSERT INTO
+  dwd.dwd_oper_user_event_di
+WITH base_data AS (
+    SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    device,
+    event_params,
+    user_properties,
+    traffic_source,
+    event_timestamp,
+    user_first_touch_timestamp,
+
+  FROM
+    `storytemplate-10a27.analytics_232977577.events_*`
+    ---collart
+  WHERE ( _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    OR _TABLE_SUFFIX BETWEEN CONCAT('intraday_', FORMAT_DATE('%Y%m%d', from_date))
+    AND CONCAT('intraday_', FORMAT_DATE('%Y%m%d', to_date))
+    )
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result') 
+    and (app_info.install_source <>'manual_install' or app_info.id is null)
+  UNION ALL
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    device,
+    event_params,
+    user_properties,
+    traffic_source,
+    event_timestamp,
+    user_first_touch_timestamp,
+
+  FROM
+    `fx-editor.analytics_263446298.events_*`
+    ---shotcut
+  WHERE
+    _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    AND app_info.id NOT IN ('com.my.drama.box.reel.short.stream.tv.app')
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+  UNION ALL
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    device,
+    event_params,
+    user_properties,
+    traffic_source,
+    event_timestamp,
+    user_first_touch_timestamp,
+
+  FROM
+    `removeobjects-17cd7.analytics_348205064.events_*`
+    ---remove
+  WHERE
+    _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+    UNION ALL
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    device,
+    event_params,
+    user_properties,
+    traffic_source,
+    event_timestamp,
+    user_first_touch_timestamp,
+
+  FROM
+    `home-ai-708e3.analytics_495972540.events_intraday_*`
+    ---home-ai
+  WHERE
+    _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+  UNION ALL
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    device,
+    event_params,
+    user_properties,
+    traffic_source,
+    event_timestamp,
+    user_first_touch_timestamp,
+
+  FROM
+    `removeobjects-17cd7.analytics_348205064.events_intraday_*`
+    ---remove
+  WHERE
+    _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+
+  -- 老产品数据 
+  union all  
+  select
+      event_date,
+      event_name,
+      user_pseudo_id,
+      user_id,
+      app_info,
+      geo,
+      device,
+      event_params,
+      user_properties,
+      traffic_source,
+      event_timestamp,
+      user_first_touch_timestamp,
+
+  from 
+  `speedtest-ios.analytics_152266665.events_*`
+    WHERE
+      _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+      AND FORMAT_DATE('%Y%m%d', to_date)
+      AND event_name NOT LIKE 'tech%'
+      AND event_name NOT LIKE 'dev%'
+      AND event_name NOT IN ('fire_base_start_request',
+        'isGooglePlayServicesAvailable',
+        'fire_base_end_request',
+        'launch',
+        'gp_query_purchases',
+        'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+  union all 
+  select
+      event_date,
+      event_name,
+      user_pseudo_id,
+      user_id,
+      app_info,
+      geo,
+      device,
+      event_params,
+      user_properties,
+      traffic_source,
+      event_timestamp,
+      user_first_touch_timestamp,
+
+  from 
+      `photoenhance-5754e.analytics_326551552.events_*`
+    WHERE
+      _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+      AND FORMAT_DATE('%Y%m%d', to_date)
+      AND event_name NOT LIKE 'tech%'
+      AND event_name NOT LIKE 'dev%'
+      AND event_name NOT IN ('fire_base_start_request',
+        'isGooglePlayServicesAvailable',
+        'fire_base_end_request',
+        'launch',
+        'gp_query_purchases',
+        'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+  union all 
+  select
+      event_date,
+      event_name,
+      user_pseudo_id,
+      user_id,
+      app_info,
+      geo,
+      device,
+      event_params,
+      user_properties,
+      traffic_source,
+      event_timestamp,
+      user_first_touch_timestamp,
+ 
+  from 
+      `speedtestlite-ios.analytics_243888008.events_*`
+    WHERE
+      _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+      AND FORMAT_DATE('%Y%m%d', to_date)
+      AND event_name NOT LIKE 'tech%'
+      AND event_name NOT LIKE 'dev%'
+      AND event_name NOT IN ('fire_base_start_request',
+        'isGooglePlayServicesAvailable',
+        'fire_base_end_request',
+        'launch',
+        'gp_query_purchases',
+        'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+
+),
+process_data AS (
+  SELECT
+    a.*,
+    -- 一次性解析 event_params
+    (
+      SELECT AS STRUCT
+        -- 基础广告与交易字段
+        MAX(IF(p.key = 'time', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_duration,
+        MAX(IF(p.key = 'ad_type', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS ad_type,
+        MAX(IF(p.key = 'value', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_value,
+        MAX(IF(p.key = 'unit_id', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS unit_id,
+        MAX(IF(p.key = 'from', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_from,
+        MAX(IF(p.key = 'placement', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_placement,
+        MAX(IF(p.key = 'order_id', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_order_id,
+        MAX(IF(p.key = 'product_id', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_product_id,
+        MAX(IF(p.key = 'transaction_id', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS transaction_id,
+        
+        -- 编辑与功能模块字段
+        MAX(IF(p.key = 'temp_id', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_temp_id,
+        MAX(IF(p.key = 'service_type', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_service_type,
+        MAX(IF(p.key = 'module_id', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_module_id,
+        MAX(IF(p.key = 'module_title', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_module_title,
+        MAX(IF(p.key = 'module_index', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_module_index,
+        MAX(IF(p.key = 'feature_id', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_feature_id,
+        MAX(IF(p.key = 'retouch_feature_id', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_retouch_feature_id,
+        MAX(IF(p.key = 'use_type', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_use_type,
+        MAX(IF(p.key = 'mode_type', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_mode_type,
+        MAX(IF(p.key = 'ratio', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_ratio,
+        MAX(IF(p.key = 'model', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_model,
+        MAX(IF(p.key = 'page', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_page,
+
+        -- AI/生成相关
+        MAX(IF(p.key = 'is_regenerate', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_is_regenerate,
+        MAX(IF(p.key = 'generate_count', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_generate_cnt,
+        MAX(IF(p.key = 'auto_optimization', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_auto_optimization,
+        MAX(IF(p.key = 'motion_mode', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_motion_mode,
+
+        -- 详细埋点参数 (Name/Type/Source等)
+        MAX(IF(p.key = 'engagement_time_msec', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_engagement_time_msec,
+        MAX(IF(p.key = 'source', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_source,
+        MAX(IF(p.key = 'type', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_type,
+        MAX(IF(p.key = 'name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_param_name,
+        MAX(IF(p.key = 'sort_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_sort_name,
+        MAX(IF(p.key = 'adjust_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_adjust_name,
+        MAX(IF(p.key = 'sc_value', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_sc_value,
+        MAX(IF(p.key = 'vfx_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_vfx_name,
+        MAX(IF(p.key = 'filter_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_filter_name,
+        MAX(IF(p.key = 'material_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_material_name,
+        MAX(IF(p.key = 'textfont_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_textfont_name,
+        MAX(IF(p.key = 'textemplate_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_textemplate_name,
+        MAX(IF(p.key = 'textanime_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_textanime_name,
+        MAX(IF(p.key = 'transition_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_transition_name,
+        MAX(IF(p.key = 'group_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_group_name,
+        MAX(IF(p.key = 'clipanime_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_clipanime_name,
+        MAX(IF(p.key = 'anime_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_anime_name,
+        MAX(IF(p.key = 'category', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_category,
+        MAX(IF(p.key = 'project_template', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_project_template,
+        MAX(IF(p.key = 'unlock_type', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_unlock_type,
+        MAX(IF(p.key = 'enter', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_enter,
+        MAX(IF(p.key = 'mode', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_mode,
+        MAX(IF(p.key = 'modes', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_modes,
+
+        -- 图像处理/滤镜参数
+        MAX(IF(p.key = 'error_value', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_error_value,
+        MAX(IF(p.key = 'keyframe', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_keyframe,
+        MAX(IF(p.key = 'mask', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_mask,
+        MAX(IF(p.key = 'background', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_background,
+        MAX(IF(p.key = 'chroma_key', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_chroma_key,
+        MAX(IF(p.key = 'hsl', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_hsl,
+        MAX(IF(p.key = 'enhance', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_enhance,
+        MAX(IF(p.key = 'body_fx', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_body_fx,
+        MAX(IF(p.key = 'time_limit', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_time_limit,
+        MAX(IF(p.key = 'smooth_slow_motion', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_smooth_slow_motion,
+        
+        -- 页面设计相关
+        MAX(IF(p.key = 'feature', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_feature,
+        MAX(IF(p.key = 'space_type', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_space_type,
+        MAX(IF(p.key = 'design_style', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_design_style,
+        MAX(IF(p.key = 'space_name', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS event_space_name,
+        
+        -- VIP 与 会话
+        MAX(IF(p.key = 'is_vip', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS params_is_vip,
+        MAX(IF(p.key = 'ad_platform', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS params_ad_platform,
+        MAX(IF(p.key = 'sessionId', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS session_id,
+        MAX(IF(lower(p.key) in ('task_id','taskid'), COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS task_id,
+        MAX(IF(p.key = 'id', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS temp_id,
+        MAX(IF(p.key = 'page_location', COALESCE(CAST(p.value.int_value AS STRING), p.value.string_value, CAST(p.value.float_value AS STRING), CAST(p.value.double_value AS STRING)), NULL)) AS page_location,
+      FROM UNNEST(a.event_params) AS p
+    ) AS ep,
+
+    -- 一次性解析 user_properties
+    (
+      SELECT AS STRUCT
+        MAX(IF(up.key = 'os_total_ram', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS device_total_ram,
+        MAX(IF(up.key = 'network_type', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS network_type,
+        MAX(IF(up.key = 'device_id', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS device_id,
+        MAX(IF(up.key = 'is_vip', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS props_is_vip,
+        MAX(IF(up.key = 'is_login', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS is_login,
+        MAX(IF(up.key = 'vip_product_id', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS vip_product_id,
+        MAX(IF(up.key = 'atlasv_uid', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS atlasv_uid,
+        MAX(IF(up.key = 'model_type', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS event_model_type,
+        MAX(IF(up.key = 'count', COALESCE(CAST(up.value.int_value AS int), CAST(up.value.string_value AS int), CAST(up.value.float_value AS int), CAST(up.value.double_value AS int)), NULL)) AS event_credit_count,
+        MAX(IF(up.key = 'adjust_id', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS adjust_id,
+        MAX(IF(up.key = 'os_classify', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS os_classify,
+        MAX(IF(up.key = 'os_cpu_info', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS os_cpu_info,
+        MAX(IF(up.key = 'keywordID', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS keywordID,
+        MAX(IF(up.key = 'fb_campaign', COALESCE(CAST(up.value.int_value AS STRING), up.value.string_value, CAST(up.value.float_value AS STRING), CAST(up.value.double_value AS STRING)), NULL)) AS fb_campaign
+      FROM UNNEST(a.user_properties) AS up
+    ) AS up
+  FROM base_data a
+)
+-- 最终写入
+SELECT
+  PARSE_DATE('%Y%m%d', event_date) AS event_date,
+  IFNULL(TRIM(b.app_name), 'other') AS app_name,
+  event_name,
+  user_pseudo_id,
+  user_id,
+  coalesce(app_info.id,'collart_web') AS package_name,
+  IF(traffic_source.name='' OR traffic_source.name IS NULL, 'undefined', traffic_source.name) AS traffic_src_name,
+  DATETIME(TIMESTAMP_MICROS(CAST(event_timestamp AS int64))) AS event_time,
+  traffic_source.source AS traffic_src_source,
+  CASE
+    WHEN LOWER(traffic_source.name) LIKE '%inhouse%' OR traffic_source.source LIKE '%link%' THEN 'inhouse'
+    WHEN traffic_source.name IN('(direct)', 'undefined') OR traffic_source.name IS NULL or traffic_source.name='' THEN 'nature'
+    ELSE 'delivery'
+  END AS traffic_src_type,
+  geo.country,
+  geo.city,
+  device.language AS device_language,
+  device.mobile_brand_name,
+  device.mobile_model_name,
+  app_info.version AS app_version,
+  app_info.install_source,
+  app_info.install_store,
+  up.device_total_ram AS device_total_ram,
+  up.network_type AS network_type,
+  up.device_id AS device_id,
+
+  -- VIP 逻辑
+  CASE 
+    WHEN b.app_name in ('shotcut','collart_android') THEN
+      CASE up.props_is_vip 
+        WHEN 'true' THEN '2' WHEN 'trial' THEN '1' ELSE '0' END
+    WHEN b.app_name IN ('remove', 'remove_bg', 'collart_iOS', 'AI HOME') THEN
+      IF(ep.params_is_vip = '1', '2', '0')
+    ELSE
+      IF(up.props_is_vip IN ('1', '2'), up.props_is_vip, '0')
+  END AS is_vip,
+
+  up.is_login,
+  up.vip_product_id,
+  ep.event_duration,
+  ep.ad_type,
+  ep.event_value,
+  ep.unit_id,
+  ep.event_from,
+  ep.event_placement,
+  device.advertising_id,
+  ep.event_order_id,
+  ep.event_product_id,
+  ep.event_temp_id,
+  ep.event_service_type,
+  ep.event_module_id,
+  ep.event_module_title,
+  ep.event_module_index,
+  ep.event_feature_id,
+  ep.event_retouch_feature_id,
+  ep.event_use_type,
+  ep.event_mode_type,
+  ep.event_is_regenerate,
+  ep.event_generate_cnt,
+  ep.event_auto_optimization,
+  ep.event_motion_mode,
+  ep.event_ratio,
+  ep.event_model,
+  ep.event_page,
+  up.atlasv_uid,
+  up.event_model_type,
+  up.event_credit_count,
+  NULL AS event_service_cost,
+  device.mobile_marketing_name,
+  up.adjust_id,
+  ep.event_engagement_time_msec,
+  ep.event_source,
+  ep.event_type,
+  ep.event_param_name,
+  ep.event_sort_name,
+  ep.event_adjust_name,
+  ep.event_sc_value,
+  ep.event_vfx_name,
+  ep.event_filter_name,
+  ep.event_material_name,
+  ep.event_textfont_name,
+  ep.event_textemplate_name,
+  ep.event_textanime_name,
+  ep.event_transition_name,
+  ep.event_group_name,
+  ep.event_clipanime_name,
+  ep.event_anime_name,
+  ep.event_category,
+  ep.event_project_template,
+  ep.event_unlock_type,
+  ep.event_enter,
+  ep.event_mode,
+  ep.event_modes,
+  ep.event_error_value,
+  ep.event_keyframe,
+  ep.event_mask,
+  ep.event_background,
+  ep.event_chroma_key,
+  ep.event_hsl,
+  ep.event_enhance,
+  ep.event_body_fx,
+  ep.event_time_limit,
+  ep.event_smooth_slow_motion,
+  up.os_classify,
+  up.os_cpu_info,
+  device.operating_system_version AS device_operating_system_version,
+  ep.event_feature,
+  ep.event_space_type,
+  ep.event_design_style,
+  ep.event_space_name,
+  ep.params_is_vip,
+  ep.params_ad_platform,
+  ep.session_id,
+  up.keywordID,
+  ep.transaction_id,
+  device.category as device_category,
+  device.operating_system as operating_system,
+  device.web_info.browser as browser,
+  ep.task_id,
+  ep.temp_id, -- collart_android 模版id
+  up.fb_campaign, -- collart_android campaign_name
+  ep.page_location as web_page_location, -- collart_web参数
+  TIMESTAMP_MICROS(user_first_touch_timestamp) AS first_open_time,
+  geo.continent AS geo_continent,
+  geo.sub_continent AS geo_sub_continent,
+  device.vendor_id AS device_vendor_id,
+  traffic_source.medium AS traffic_src_medium,
+
+FROM process_data a
+-- 大表关联小表的广播写法
+LEFT JOIN UNNEST(ARRAY(SELECT AS STRUCT * FROM dim.dim_product_info)) AS b 
+  ON coalesce(app_info.id,'collart_web') = b.package_name
+WHERE user_pseudo_id IS NOT NULL
+;
+
+  -- 如果所有操作都成功，提交事务
+COMMIT
+  ;
+

@@ -1,0 +1,54 @@
+{
+  "table": "aidata2025.dws.dws_oper_tiktok_ad_1d",
+  "captured_at": "2026-09-14T13:19:08.324352+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "date",
+        "type": "DATE"
+      },
+      {
+        "name": "ad_id",
+        "type": "STRING"
+      },
+      {
+        "name": "ad_name",
+        "type": "STRING"
+      },
+      {
+        "name": "ad_group_id",
+        "type": "STRING"
+      },
+      {
+        "name": "ad_group_name",
+        "type": "STRING"
+      },
+      {
+        "name": "campaign_id",
+        "type": "STRING"
+      },
+      {
+        "name": "campaign_name",
+        "type": "STRING"
+      },
+      {
+        "name": "spend",
+        "type": "FLOAT"
+      },
+      {
+        "name": "skan_conversion",
+        "type": "INTEGER"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dws",
+    "tableId": "dws_oper_tiktok_ad_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "date"
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,259 @@
+{
+  "table": "aidata2025.ods.ods_ai_request_info_new_1d",
+  "captured_at": "2026-09-14T13:19:08.299745+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "自增id"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "事件触发日期"
+      },
+      {
+        "name": "prompt",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "正向提示词"
+      },
+      {
+        "name": "negative_prompt",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "反向提示词"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用包名/名称"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家代码"
+      },
+      {
+        "name": "version",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用版本号"
+      },
+      {
+        "name": "client_task_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "客户端任务ID"
+      },
+      {
+        "name": "task_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "服务端任务ID"
+      },
+      {
+        "name": "mode_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "模式类型"
+      },
+      {
+        "name": "third_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "第三方服务名称"
+      },
+      {
+        "name": "atlas_uid",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "内部用户UID"
+      },
+      {
+        "name": "ai_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "AI类型(如 video_gen)"
+      },
+      {
+        "name": "request",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "请求参数(JSON字符串)"
+      },
+      {
+        "name": "style",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "风格参数"
+      },
+      {
+        "name": "sub_mode_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "子模式类型"
+      },
+      {
+        "name": "cost_point",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "消耗点数"
+      },
+      {
+        "name": "ai_home_design_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "AI家居设计类型标识"
+      },
+      {
+        "name": "status",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "状态"
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "description": "创建时间"
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "description": "更新时间"
+      },
+      {
+        "name": "filter_date",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "description": "过滤/分区日期(带时间戳)"
+      },
+      {
+        "name": "start_resource_moderation",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "开始资源/机器审核JSON"
+      },
+      {
+        "name": "at_uid",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "at_uid"
+      },
+      {
+        "name": "resource_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "资源类型"
+      },
+      {
+        "name": "resource_category",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "资源分类"
+      },
+      {
+        "name": "resource_severity",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "资源安全级别/严重程度"
+      },
+      {
+        "name": "start_two_resource",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "二级起点资源"
+      },
+      {
+        "name": "request_resource",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "请求资源"
+      },
+      {
+        "name": "service_task_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "服务端具体任务ID"
+      },
+      {
+        "name": "result_path",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "最终结果路径"
+      },
+      {
+        "name": "user_status",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户状态"
+      },
+      {
+        "name": "function_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "功能分类"
+      },
+      {
+        "name": "scene",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "类型"
+      },
+      {
+        "name": "business_tag",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "是否有 前置检查, pre_check"
+      },
+      {
+        "name": "business_tag_2",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "业务场景标签"
+      },
+      {
+        "name": "group_task_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "批量任务 id"
+      },
+      {
+        "name": "service_req_status",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "服务侧状态调和结果：0=未知，1=成功(completed)，2=失败(failed/nsfw)，3=未找到。"
+      },
+      {
+        "name": "failed_reason",
+        "type": "STRING",
+        "description": "失败原因；6010 表示后置检测拦截"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ods",
+    "tableId": "ods_ai_request_info_new_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "app_name",
+      "country",
+      "ai_type",
+      "atlas_uid"
+    ]
+  },
+  "type": "TABLE"
+}

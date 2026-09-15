@@ -1,0 +1,2501 @@
+{
+  "schema_version": 2,
+  "files": [
+    {
+      "path": ".agents/plugins/marketplace.json",
+      "sha256": "2a0cbb2cb3ed4fcb4344808c30dd4c8c49c261e50e125cc3c15ede7b8c1cc7a9"
+    },
+    {
+      "path": ".gitattributes",
+      "sha256": "169c73450c17cb2884a01b13d996554f15d965cd8c54a6de657530dd8e85d794"
+    },
+    {
+      "path": ".github/workflows/validate.yml",
+      "sha256": "f1dcd562b3beff742f4b823580802562103742a56fee6e310f3af0aaa37db144"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "49fdb59f3e0a8547ea1019e12ccea12a6a94f2e60d77db3a7797c5d788e68f8d"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "3c214e34e6cf8f95c77673a192a101dbfc68820d9978255d457ab62917c7c1f3"
+    },
+    {
+      "path": "INSTALL.md",
+      "sha256": "1065d5034b0f554c786d6dc2fc7248dcd651057fef9000aa88e0dcab35984f48"
+    },
+    {
+      "path": "install.ps1",
+      "sha256": "6bd67628432aab7639887c6c25d029374241101cbd416d7f572d156c32702550"
+    },
+    {
+      "path": "maintainer/benchmark.json",
+      "sha256": "7252d6525112754f379c19380b68cade023d8b4192e9e01170b8ca42839d7ffb"
+    },
+    {
+      "path": "maintainer/history/analysis-performance.md",
+      "sha256": "77d7da18cb1d69b81ee35acac89be0502c55e09da799a05e4d2c6c17f49fa2c9"
+    },
+    {
+      "path": "maintainer/history/integration.md",
+      "sha256": "c7a14cd58d9452222acecdba0b6e59b7f4fa43f36fe5b73982a60dd9b2844565"
+    },
+    {
+      "path": "maintainer/history/knowledge-update-20260914.md",
+      "sha256": "8b77b0f4bdd0cae409375f2f698619b2114a42f97550c504f290ce2433778c4a"
+    },
+    {
+      "path": "maintainer/history/maintenance.md",
+      "sha256": "f7241b55c0c7ea4f0d7c74cd7c5ba27ec9a16cd5294a7e54f4110c86760caa93"
+    },
+    {
+      "path": "maintainer/knowledge-gaps.json",
+      "sha256": "f8d3425d2b68c1b683a7be910fa7ddd01c7ca03022e64bd8801d3b49b5a0d48e"
+    },
+    {
+      "path": "maintainer/KNOWLEDGE-GAPS.md",
+      "sha256": "9e17f39fe7fc5a9af318b4e40828e8c12defb0d64ac16bca5a9ed3f18b7dd6c1"
+    },
+    {
+      "path": "maintainer/MAINTENANCE.md",
+      "sha256": "3d2dd5ff07b8c6acdf4d3704f0ab700036260a6048ae1698800e0b1f859ec9cc"
+    },
+    {
+      "path": "maintainer/migration.json",
+      "sha256": "c9a320f1664ba4eb8c1d6b723cca4bb5c48492df1b5842930c31b008c5afec01"
+    },
+    {
+      "path": "maintainer/MIGRATION.md",
+      "sha256": "1f9eb9f3941cd296d790a784b694c8b4eb3b8096b4a4c9449a955d25af29a272"
+    },
+    {
+      "path": "maintainer/source-inputs.json",
+      "sha256": "1c7d0af6b97603d85ee11e7b1404ba7a9a3861c50793e0811dc5c01e9009aa16"
+    },
+    {
+      "path": "maintainer/STRUCTURE.md",
+      "sha256": "299661d6d34921383b36a20ff105bd6ccb0cbd91b09a4aac8cf6af9abd784685"
+    },
+    {
+      "path": "maintainer/table-coverage.json",
+      "sha256": "aff9e726d8cd3b8df33b03206c604097a6fd926250675b11e6ff08bacf39245f"
+    },
+    {
+      "path": "maintainer/VALIDATION.md",
+      "sha256": "19a196f5cbf817361a0259c411f37624b8c9461a1f8037ee72fd93b82d25e071"
+    },
+    {
+      "path": "plugins/collart-data-assistant/.codex-plugin/plugin.json",
+      "sha256": "9b6c3a7bc7405c55049190961dd37eceda55c6acb1985d233de638054e6729b6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/_meta/aliases.json",
+      "sha256": "46b67459932dcb322acb814e2e40c75807d8dce9ad9d75521fa6776c6cd6e383"
+    },
+    {
+      "path": "plugins/collart-data-assistant/_meta/catalog.json",
+      "sha256": "fcf8f1e905caa37af8ea5deeb1ecde06d5201dcc0e646ad4a2aa3a570a4680ad"
+    },
+    {
+      "path": "plugins/collart-data-assistant/_meta/sources.json",
+      "sha256": "3de95d7b179312dfefb4806b55c6b0bd7374e42fcb033023353e0368586ad32f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/config/search-routing.json",
+      "sha256": "91049d6cd9b666c146c6d178d7af858dcd4124c49e13ece2d30442b3e40f4005"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/analysis/acquisition.md",
+      "sha256": "c867a7ecad576fcaf20e0a4d7d7cf95243cf802feb9fd5f40ecb43c0bb0df572"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/analysis/README.md",
+      "sha256": "df2e66e800b11c1b02953f9f816c6575848a462fc0f4de5a444fd36a2b401646"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/analysis/templates.md",
+      "sha256": "c3bef28e075dbd06e02f3ae1fc8a560ef5e81126600bfd65caaa4b2fd04e86c9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/business/product.md",
+      "sha256": "7cf9f0884107488e500c54d98ae0ba6528c4f05c58ea82ee8a90993324ec5ca2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/business/README.md",
+      "sha256": "6f5b78db32bc4ca38dbc13f37910fffbec40663c4782730b524df4683b211bcd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/events/ads.md",
+      "sha256": "4dae7c087a16d34ea480e2a7234951fea3fbcd56b32bab61568acae137cf3ec6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/events/events.md",
+      "sha256": "32704a2b5319cf7c9b11d5b49a14cb82ffcebccd502dae31879af3dbfb4960be"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/events/README.md",
+      "sha256": "f8c171c2a9fa912b170044f7ad30e15c3bc1ed0f7b9e403756cb2e35a8488c30"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/metrics/activity.md",
+      "sha256": "55c6b1dea5792e587d586de832ecadedc9750cfdf3ff4800b9c0b95534da1b82"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/metrics/conversion.md",
+      "sha256": "03e576258670a731c852a9ed1524b6e469fc594871eb2468caba25675e7299f3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/metrics/README.md",
+      "sha256": "b67eb1c0fe2efbb08eb795fee77eeafcf89c3ae78c3c902748e6fb6b1f9243a2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/metrics/revenue.md",
+      "sha256": "841fbd85cf9d76caf703c576020eef4f2d867719ef31420f4f363a9aa9967b1c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/README.md",
+      "sha256": "9d3d54000b5f6e46f859bbcaf892c31cfe83c43e55430b8cf262ac816c534b37"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/sql/android-revenue.sql",
+      "sha256": "bd0647e39dec52d4ab5bf82f498b075b32b0bc69ee4ee873d3c3529075e64ccf"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy.md",
+      "sha256": "2844016f83a86c3533f9de5c25d50bd8bd025e6a7fd56214aacd686498b07b7b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di.md",
+      "sha256": "eb7e0faaf57594cb8d5a0fb288a07126fc98f3f09f2b83a8b327ae085de84c1f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di.md",
+      "sha256": "a3fef27045c622ba12eb49273301d12edb63055dd17ccf4beb3b3fefe55dec20"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collart.ads_oper_tempalte_data_android.md",
+      "sha256": "8cab9fecf175dcb4ba54f34d75f172875deb06942bf20b0f0f144c0f422f4d60"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di.md",
+      "sha256": "bf498d7f4f801c2bf21f075684acacc49087142a700937e7595aeaab9e2ea53d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di.md",
+      "sha256": "2967d00d44f55b9a67337d0e298fe7277b3de1babad8fc2f6f4a72fd66645fcc"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di.md",
+      "sha256": "96b4b3523f9cd4dc577541ad1ad36febc980d3ad45e0f390407e42f43771983d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di.md",
+      "sha256": "82f3c0b3f8f824f365e7dcf94c0468eea823d2682501df8ce0d13f2748db8cd9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di.md",
+      "sha256": "b23ca2b8075a519cad864b7c540496c6b269b883bf869539cc64a25a6de38463"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_event_metric_country_di.md",
+      "sha256": "b75f1a037738c79f9206e0cf0afdee0e2754f646941411366b195f3a399d4b2c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_user_active_di.md",
+      "sha256": "d1433ea1dc643e708dbd8ea124a4e6bd65c42244dbf29ff3f5ad063d63d528ec"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_user_event_metric_di.md",
+      "sha256": "6bb8db5946162f58436f1fb7ece1ba1878459c2249ef416dd664370cb5f4f6d0"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_user_profile_df.md",
+      "sha256": "bbe69684c149919b5b471529e93df89c47c59214f3f75a22295956f552f0c3f0"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.dim.dim_collart_android_core_event_copy.md",
+      "sha256": "eadc6501add11d428b11904064232d2a6588044de3997d30e97d0fff8841ee32"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.dim.dim_module_template_info_android.md",
+      "sha256": "6ffae3e0749d3fe60824bb9fe04201d1cf405c040c4775abe62c8610ec3f457a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/aidata2025.dm.dm_collart_android_user_event_di.md",
+      "sha256": "2ce05e664d6e3ad8493350dc5596f89a339396d1e5d7da19368379d8a52a24b9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_android/tables/README.md",
+      "sha256": "bf003435cbcb245f8ca44ba8fc10b812971e7af75989618a94e11139a7d5f17d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/analysis/funnel.md",
+      "sha256": "e13d5b98fa239e541e3ecfc07262154a5b60f11a8f16b38c73cd9d24c2a30b38"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/analysis/README.md",
+      "sha256": "8dc9bd0daca468a5181695d0f9a10e4e8f41cbf89380e5d85dd50ad13769d491"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/business/product.md",
+      "sha256": "0a67eb0999384978f73f8f3f25b4fa174f03b17b104815b1e246b5043c9f1765"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/business/README.md",
+      "sha256": "0a37e9fac49fb66d12c6a55db7b7a41d0dfaaf12dec8fb120b77f281b04dd7be"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/events/events.md",
+      "sha256": "a2dbafc3741457972ca62a9f77603d55eb521db96f6a6c98b9c63de6f02815db"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/events/README.md",
+      "sha256": "a164f3b46321a7e078ceb375eb04749610e79e1ea6ad4ab7a562cc6e8bfdf018"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/metrics/activity.md",
+      "sha256": "da410d99f1cd31dd2550a79c92327c77429fff3bc6d9208cc9291308f68c434c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/metrics/README.md",
+      "sha256": "2f33034c334b04165017111a41467a0f66b0b87e38575006e7711cf4d0ccf55c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/metrics/revenue.md",
+      "sha256": "2f2b0d4e8b93b84d431338dbf645d4669e31ec212da835c23d0d27fa992f9be8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/README.md",
+      "sha256": "fa1c29553b35aded6f3ef008deeb45d23a18174ed26b7bf56e1499d77aab6a5e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_dim_metric_rule.md",
+      "sha256": "0c33c37f3aace69d5df936e5e1244d7d362a2d595726e839dd52b3a04c8a6a96"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di.md",
+      "sha256": "bad2bf7878ef346df026bf4ace6c6d0b5ee23217f30684ea45e3b451d7fcc13d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di.md",
+      "sha256": "4b72bab8b10da081475fe169b3ed571cbae882a376d50980f48ce1ea659a3950"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di.md",
+      "sha256": "3b6b8471d4e3093d1590c0c6e7082e3db77d0d068088ee4b66296d947f96b246"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di.md",
+      "sha256": "fce70f84d9daf3a74065e089fdbec6a7e4e470c3e4416686731abd7f0f7cfa1f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di.md",
+      "sha256": "4d91fa79e263f23b1e8b2d8f6f715a7c4f19956ad089cc7b19da30d68582bec7"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_event_metric_country_di.md",
+      "sha256": "be33e79164bbecc055b2bd3c6194bab73c434a44b4373a873ea3999e8c7427f6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_active_di.md",
+      "sha256": "223a0e47155a30528a3425995a69b578968ea777bc41b21fb66d9f69f5f96024"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_event_metric_di.md",
+      "sha256": "b9a47b5b50473c86fece5dbb131851cb6611f38bf33e8747453b8e141e5bf463"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_profile_df.md",
+      "sha256": "4afcee90a085e8fd4c93237a867d9861e8a86305228b15fe2464ab4dcc91f96a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md",
+      "sha256": "bb5602a0bddc03242a581cfcfcee4ef9f5c4eb6b4d3a310a316868f64fb36848"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_fashion/tables/README.md",
+      "sha256": "96d92798a6b183868ff4feaeef4b0365bebca92d9481d53717733dd9773837f8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/analysis/paid-users.md",
+      "sha256": "33d3dd8649ab04083f1d659124b3981038e584d497ea2b8f7d5f15fb50d6d9bd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/analysis/README.md",
+      "sha256": "24ae31defed90ace070cac085cfaffd466e86a94b3d1856b430e9a344d663e5f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/business/product.md",
+      "sha256": "0d1586c39e7d1b3a6a7d808ef68dce29a07bf89e17368c205d52b88b6d9ee46a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/business/README.md",
+      "sha256": "6c0681c03729a0f55cb3448a64217faeab9de3935bf39200676984631d5cdd6b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/events/events.md",
+      "sha256": "249d89bb6b2854086dce455ed0d817061bc63572a87e3be895b80c61e3a87644"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/events/README.md",
+      "sha256": "f1116ea4847ca1762f3be3dfb7a966a7d35532e8ba66d32b2ccd79b7c3f49c7c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/metrics/activity.md",
+      "sha256": "ca23b1c33102d5541f9b20576084ec8dfa238af30dc4d0bacc9ebdc9e4bb38db"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/metrics/asa.md",
+      "sha256": "ffe657e01941d654d98f996bb33b4a15ec560540a03dc4ba36f32edd00dadc26"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/metrics/README.md",
+      "sha256": "7d7211fd43cceb2e3220b5c5b3c572f203bc9b74585e11496227e3a07a6776e9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/README.md",
+      "sha256": "162a4b02e537d66bf6de5cbf3e383286a2842c0af7abc96fe3251700ceb3fbbe"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/sql/asa-cost.sql",
+      "sha256": "172c5ea8b894ab37beb184faaec05a431e52386d7fac7dca0dd015e5c2f8bebb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di.md",
+      "sha256": "1c1293704dd20d8f352f679830da1bf6116257b14d3ce01e8241a8739c5139fd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_basic_indicator_country_di.md",
+      "sha256": "e1a13cd38dde3a30aaf6bba9bec3251d6ca80f7bb650257fc27be9816f517808"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_basic_indicator_daily_compare_di.md",
+      "sha256": "ac2ff4d35710dc765f2ae78528ec9c5689fade2d51231fd019c839b980d97e1d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di.md",
+      "sha256": "bf5bd1a453a4052c5e9b32612c2d7a2141b296f3582d703666dd2bec98c32ec3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_event_metric_attr_di.md",
+      "sha256": "ddc0f74dfef6ae47be2d811ba17ff6458ff68c97c8a1509c0cc9969d9d77b816"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_event_metric_country_di.md",
+      "sha256": "b590ea03f3ea2a32d26ed5c502b2812997a413874fa3b468c8a2851a8d71e39c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_user_active_di.md",
+      "sha256": "9f2c644ce94ec2f9fa59492b9a2350fd53f1a9c098050ab2380649bafa30d135"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_user_event_metric_di.md",
+      "sha256": "5f8a42a087fa32a86683f07e27af928d0ec2550fe02aaf052bbab3018e3f73a6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_user_profile_df.md",
+      "sha256": "a52b519b1cecc20739715ff22920557dd7150af03fafce780e3a14303389a158"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.dim.dim_collart_asa_keyword_info.md",
+      "sha256": "b445927ec9ba3dca873161cab5148469d00bccacd6c4a0bfdb9c3533a2c8e0c4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.dm.dm_collart_ios_user_event_di.md",
+      "sha256": "3d7101a8ecdbf43aad7589e9ec03823d05d3d345777416a3df4e40f149a8f5d4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.dws.dws_oper_asa_collart_1d.md",
+      "sha256": "0b745427996d16ebe93ace124e85b796c560654b0495f18aac774229b8a11354"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.dws.dws_oper_asa_delivery_di.md",
+      "sha256": "2d67734f7ab63d88f6677179b6cac7bd0c3aa2db77f37263736176048ea8977d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.dws.dws_oper_asa_keyword_collart_1d.md",
+      "sha256": "d1729f0b55c0c1a1a9fb1c425e1256678cb37ee3dc27b2eb2fea66337797fe41"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/aidata2025.revenue.vip_event_data_ios.md",
+      "sha256": "708a18d1e35b43b18a0cf11293cf5a89e4101dbf716126b3b135d9cb8af0c656"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/README.md",
+      "sha256": "595e78ccbf85ec986348406bf397eb5883bd4620a0e81d4ee1f776c25cb87378"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_ios/tables/vidart-8b8ca.analytics_528583115.events_wildcard.md",
+      "sha256": "9fc5c374c96dbd53b7d143bfb13751698b87728cee570b052eb6b9dbcf57b7d3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/analysis/funnel.md",
+      "sha256": "d12080e8bc6317337e253f48589fadc29a51b1fa7bf8349dcc70baf2ce7be077"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/analysis/README.md",
+      "sha256": "938935a5790be006a54c18735094b71a81a6aaa558f9b7cf9e0ddc90dc7ead6f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/business/identity.md",
+      "sha256": "ddf47c4ad34795bc00cf862fbbf32f9a39851a1abaa66a9d459c51e235982127"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/business/product.md",
+      "sha256": "52809b7eb95adfd922f431d53bd5545882ed4e61f4da7ae30513fb82dba57921"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/business/README.md",
+      "sha256": "8ceaaa5e4d5c7cb62b077b29d2852e7f0ce42661f060b5e75b99fab830b7e50b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/events/events.md",
+      "sha256": "17d444ac823d563e07daee93ea26a5bec7479c778191b346903658305a82f413"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/events/README.md",
+      "sha256": "8e934b800ef5c56f0103171c449bb2672a3a6f784ce68e345fedb9fcea5931d6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/metrics/activity.md",
+      "sha256": "2597d810e2537ea2d8813a82deae719b96864153dc7f49ce454ffdf54be5e9f8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/metrics/channel.md",
+      "sha256": "3e244d75955e574d3e0d6ed71c1d7c8475cc113080720e025ae03d521dacbc12"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/metrics/conversion.md",
+      "sha256": "2e7ab7e8edca5a79a8790fdc0ef0f8af7cce1201395f25bc6dffd077cf40bd99"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/metrics/README.md",
+      "sha256": "ba0cdef71cfc9f6ca4839e9bd9da6eba81e1f42b648bf487a87f0ffdc9e4e10a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/metrics/revenue.md",
+      "sha256": "c206433e0af2f853272476db38ff7c24857e35f9143e94a0e8883de518fe13c7"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/metrics/value.md",
+      "sha256": "b02fb8b2403e2c17b3e308de5bedbd49c918c4fce48fa0cea5c98f30f1dd64ac"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/README.md",
+      "sha256": "ea7d12bb2b463b94da62693d0b8292ab20709ed2bd2adabfca696220ad9c2d40"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/sql/web-cohort.sql",
+      "sha256": "a83ee50350d8002d538619ebf93e213a6dfdb8d1f2d7fb5762c3fcc368dc69e2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/sql/web-profile.sql",
+      "sha256": "ae31c4ea7df701353f0ab0fec3b9e3f6fc5f5511f77e1e9e4d45bef0e8a5c47f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_dim_metric_rule.md",
+      "sha256": "cffe4466b817296a67552759c12585dfdc5b9f09baad8eae372b655f7d2e1f20"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di.md",
+      "sha256": "ba38578fc5b7542035f1a75e2f8a11f5109a9b26728b3e616346d9b9554d356d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di.md",
+      "sha256": "019da4287a5faf46a35049f2f1d83b7bad5ac167adeabcd96ca7ea8f0edd8bc6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di.md",
+      "sha256": "0ce255bf75519a3a88a5862d84358fcd827788c5b95546d4f84b80a58c79358b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di.md",
+      "sha256": "1f95244e0d3340ee2ad0ed4556ea90f3a5cacfa9f876b5758e5084ee95ddf414"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_event_metric_attr_di.md",
+      "sha256": "41e8bb7700211cf7e24ae4399d7c2864dc12b16ea08e048ff3bdfbdeb64a064f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_event_metric_country_di.md",
+      "sha256": "b11877bb32582098c0bc9714a0604f48eaa8579f0a222d18bba6161ea6e7142e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_active_di.md",
+      "sha256": "b68d6027f15450926d6d83dc72f586cbb77dbad733f08790d6b0fe171fa2c60a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_event_metric_di.md",
+      "sha256": "227b4d929e835e1476a934916e471765b81b7d880937e5fc33782f63d70cdc89"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md",
+      "sha256": "cb8ad165f523ffb8dde022a81f4f2633dae1825e5b674a8c7588f3993fd7df03"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/collart_web/tables/README.md",
+      "sha256": "b45429fcd8e73be1433a9f283b68ddd3e9c2773fdb9f91568dce2f1b33c143e6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/analysis/dashboard.md",
+      "sha256": "f7f656ddd9960288b90115a9942f8dcc65d916c95d2f4e093727faffba609e21"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/analysis/README.md",
+      "sha256": "b85543582aa55deda0bcab2ae1e4508815fefb9492152b38232788bb6a717240"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/business/README.md",
+      "sha256": "a24c4e4d507f9f68a7548f211dc661ac2a3e2e68a4b639cfef9f1d6cec149b7b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/events/README.md",
+      "sha256": "3f0eb599fc9b45fc175c9cfe44c7eba0dd868bcdea7ac42746e52fa0e1e09d65"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/metrics/README.md",
+      "sha256": "14a865f20c427881fd966bf83cbe1e958704a1015c386acf650bbabacfed4b3b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/README.md",
+      "sha256": "a3cfd254f18dd4ef30d06644b2dfe5d3b0eb7c393658e7fb38a7fc3f5e38bdce"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/tables/pubdata2025.ads.ads_atlasv_basic_data_daily_1h.md",
+      "sha256": "80430a931d9076404aac3f56563bd33e284654ef9663ecb281e59089e6660278"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/tables/pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h.md",
+      "sha256": "97d78de2fe0fc90c12221d17d137e6ea38230cc0a472238a2433eccfa038a44d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/tables/pubdata2025.ads.ads_atlasv_deliver_cost_daily.md",
+      "sha256": "52cc4a29267719022ba0120f73ef956d203371d4b5a3753efb8e431dcf3658b2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/tables/pubdata2025.ads.ads_data_report_1d.md",
+      "sha256": "0ffefa8578e2a4bf7dd3256cf2f3093fb499d835637e7cc9339ffa26688e436d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/company/tables/README.md",
+      "sha256": "cd552af9d9ca825cade19cde3541095ce6391ca58006026847f9b7a8ea532d26"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/INDEX.md",
+      "sha256": "cd82260208b5b5d0ec858aeb4df4662607ffd16d0a4257c57535a275146b02e0"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/analysis/diagnosis.md",
+      "sha256": "264d6432282135f8167617ea4e6f8faae958a23badc634977a9a61b8b48cfc70"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/analysis/README.md",
+      "sha256": "1dd56fa187f8929f5af9ab1502757bf8307fe5d028ffe80fa31076b75713d929"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/business/access.md",
+      "sha256": "f859ba6cd2daa618a8d16cd21f6159121541652c232497319c28fe73729bf46d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/business/README.md",
+      "sha256": "6de4021ebf016d076668df1c32da5608e0a11dbe3974174fc8f17dd20c18ba99"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/business/routing.md",
+      "sha256": "60ec2d7616727a4846439049961aeec42961839c345546af67f49b92376ccd23"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/events/event-rules.md",
+      "sha256": "a6ebb8e44f54d797f80b6240827adc007b209a7ef714d377c0da6374ab5d47b2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/events/README.md",
+      "sha256": "13648c45974aa97e5ffc440e14d1c49caa9e614ea3f01b3fda2abff00f0c049c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/metrics/activity.md",
+      "sha256": "8c171645775368022ac8e5ecd61a1fa7ae147290369e8732ea81383991028cbd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/metrics/README.md",
+      "sha256": "606a77c7a644e57cf27e9b34a658fde065e30a868a51562713155ead76ee379b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/metrics/report-windows.md",
+      "sha256": "2174681b12f8dac0458558b0c2b866ad648963eb56c82488b80cf3f6069aa61a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/metrics/revenue.md",
+      "sha256": "f43ac5e9d30e2fe1f9805b2b8e76d8dfea3937bdeef94dc02b880fcf5bcaca13"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/README.md",
+      "sha256": "b81f2f35aaa162034ffbe6653385a7c2076f7386f25ab3418bb08b2daf90b120"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/sql/country-metrics.sql",
+      "sha256": "0b8641e2ca427a1015996b0e32bab9b6b5f4cb7c206133c8dbdf63a2ee7e457b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/sql/four-platform-daily.sql",
+      "sha256": "f039a9e861e8c8ef19da9ab438ea3b2bd02487acfafa3bc2dcb38df3a5013963"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads.ads_ad_sub_revenue_1h.md",
+      "sha256": "a709982e9e0e5cddfcce32624cc9472bb01fe995b42b02520864c178e10718e9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads.ads_aidata_retain_di.md",
+      "sha256": "d65d945c0da9c51e7463a66529cd30a5d5d5a0e1100e04024cf5f0c49060131a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads.ads_collart_delivery_fb_1d.md",
+      "sha256": "7020839ef59422db2af762ec567a676ca18114cf5b9e8b3c1d84372b73127cc6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads.ads_collart_delivery_revenue_1d.md",
+      "sha256": "4b52b0d1dec5d9b6a83df76f0bcbda3c461d483c0b4a1b893aba84d1a0cc9bc8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads.ads_hangzhou_revenue_country_1d.md",
+      "sha256": "a44e054873e9fc4d1c6fca94b24c48303b4a8c7cd445a34543b632c151c1a053"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads.ads_template_recommend_foru_1d.md",
+      "sha256": "f3d9777e06d2e04c205aa8f109e0c2119dd2f97fa82936ca808c5b3950424d74"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads.ads_template_recommend_trending_1d.md",
+      "sha256": "237f07a8ff1375c675025f8926cb2137c996a1e5c2478f81ac10c0afc82bfe14"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads.ads_user_subscribe_daily_1d.md",
+      "sha256": "bf04ef915e6dfa2042d0ab4995fbc219ac1ecd438fdeae9046d28d14e2f0de1b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads.ads_user_subscribe_lifecycle_1d.md",
+      "sha256": "4f7bff54cd604e522ed9110ed41d4321421b64283fd5b0bd5461d3b59763e21c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_dim_metric_rule.md",
+      "sha256": "da92efd4569bb17930b76a08e5d15cb3b1955a41633ad7d7305fb3cf43221b0d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_oper_basic_indicator_collart_di.md",
+      "sha256": "e89cd3eeaf2d062b2182e4130be3cc57e500eb0a795e339e5b26157b3c70b194"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_oper_collart_template_data.md",
+      "sha256": "35e3b8544cd45d1245bfd87ac9cb6046719657b97b04a4af3ddecf9094f11fc6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_oper_collart_web_id_map.md",
+      "sha256": "6aa6c7a6aeedd5dfa5935393960c625664bcbbc8bbd551de5feacf38658d49c9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_oper_event_param_summary_collart_di.md",
+      "sha256": "ca7026ae9039d1612d5b4a306508bfaa5248d2c8966f7d9373058918d18755f9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_oper_event_summary_collart_di.md",
+      "sha256": "a16d9fa308ca3d1be96e9323f05a52bad4895a1b98b223ff4ce82b8fe3141fe5"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_oper_template_ad_value_collart_di.md",
+      "sha256": "ecd4316bcbb7e2b835aaeb2dd10146db125b0bce62cd5cb117fcf3f82f16d7f7"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_oper_user_ai_record_backend_info.md",
+      "sha256": "b75aa144bd54f5931b4f9eb59f64f65d492692fa94ebe7576b1fe5a221ee6e71"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_oper_user_event_collart_di.md",
+      "sha256": "840d8696a86ea4f160ed5038c57b40a7215733bedcfd164ce0345df58cd8acb5"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_oper_user_event_param_collart_di.md",
+      "sha256": "a17f8b21bba8617f7442b07dee5ca4053525d0cf39298c45d6ec10691c4afdcb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_oper_user_new_collart_di.md",
+      "sha256": "628952dca32313f157bfa088e74e0706de8d1130ad01f8d715fb7708649de6bb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_template_search_user_keyword_di.md",
+      "sha256": "49fd7548622a7dc98b554d31db5a89a39d8cbf2e8baa2ef8845d7439296a48a3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.ads_vip_user_info_all.md",
+      "sha256": "103341fb41f3343c7d32cb2252dc54a54a3cd1ba7f5399b7c26d1d6dac93dac7"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.big_r_realtime_alert_log.md",
+      "sha256": "f9522b7e61f072b370e81d5345f049995eea3e801e67a93d76bb451bd4098f21"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.big_r_realtime_today_income.md",
+      "sha256": "e6913e04faf140eab7b7c6bfd5ebe27da594eb2eff203655e7eaae407d7c3ae5"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ads_collart.big_r_user_value_state.md",
+      "sha256": "46278963bb9da81310b4079c8aef72678b0a6645f95be8c9cefa41c17364013e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ai_service.ai_cost_data.md",
+      "sha256": "53bdb7b3f67b312d6b4a6772c54c479eae3299abaabc819125db28c33c76ae55"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ai_service.ai_service_record_info_1d.md",
+      "sha256": "6acfc61ce482b25022817078397b80f98b82b21261988c55b682ea304ca56cc8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ai_service.collart_core_event_bi.md",
+      "sha256": "30c9ddf0be195e71a6fe8a8e8f5eb14671c238d5d046fb538ea19735505f4647"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dim.collart_campaign_name_modify_copy.md",
+      "sha256": "9086a15db23993413e01f7ddd3c8efcaeb3c02b9f392cba18baea637be54880a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dim.collart_product_price_copy.md",
+      "sha256": "bb465f56495a4ec49b1c0ea88c13fcbfe8a02d5280fdee0efdcdd262930501e4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dim.dim_ai_service_cost_unit_copy.md",
+      "sha256": "5bdcfa75f315c5b0c95a7027391f6f65eab5c6d483bb199a6cc012644c27449e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dim.dim_ai_service_model_info_copy.md",
+      "sha256": "96b3bb20da22d424890fd4e365cbe651754bb140d91ddabea1f5ed7bd680e399"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dim.dim_collart_core_event_copy.md",
+      "sha256": "022255c4e68d7b7074fa0a2584ae0e87efd12ad0bb731f92e6933adcf5f5ee55"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dim.dim_country_info.md",
+      "sha256": "a1c34edacdabac7ce19c138e4f412b32fd0fa7ab7b269d8dd11b189d386b7332"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dim.dim_product_info.md",
+      "sha256": "e925dbfd7b9e68bdac5ec273ad2abd288d297fea919a213047cf4c08c3a2f69b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dim.dim_product_info_copy.md",
+      "sha256": "3e18aca211df5c76c92afd67e002bdba492a0448b5fa4c327a1002ee3d0bcde3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dim.dim_template_tag.md",
+      "sha256": "d87cf75ad4373a7d44eb69ca0781c58e57c3da5706e7a5e4aa6c6daf5cd1a33a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dim.exchange_rate_days.md",
+      "sha256": "759766e3066552a9331ed05c734d687bc7c3c0464d71e83890316e1e43631196"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dm.dm_collart_web_user_event_di.md",
+      "sha256": "4ec80787e25a06682eb37f36dbcf9034bcb038fde660fe357e4340af1715f439"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dm.dm_user_profile_collart_df.md",
+      "sha256": "3c4c75ee71f413f258dd06ce6985a7bb835bef6376a83a64d755171b6dd51549"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_apple_user_subscribtion_di.md",
+      "sha256": "6e66ae3f0352f99bfc71f1405b410e264ef2d8806a03ac9e4310a815b74a8d56"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_cdct_delivery_cost_di.md",
+      "sha256": "56c26264acfffafdaf9a6a9872118f4d9d3754f997c46793e657c6effecabb70"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_cdct_woolong_request_di.md",
+      "sha256": "bc5ce0288b47de793b0a3d830306e8b89eb9ac0f3cce37a4301cd71e287ed76d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_id_convert_di.md",
+      "sha256": "05fc07079d9d692073fc5c2cc3b8f7398b0d95f3ee819d0fd742280ecd9b28ea"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_oper_delivery_adjust_user_di.md",
+      "sha256": "93f855719c620221f0bb13cc22a37c748f128b1556481301457aad551ecb2f5e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_oper_sub_order_revenue_df.md",
+      "sha256": "2cf9d18c1cf3b3212d3646ece8ea1da10e0a7dc238adf742ee9d1bf202d1217a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_basic_di.md",
+      "sha256": "833f0e17184232ba0959f268976ba49f29d421ace1748b6017afbe2709538e64"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_collart_di.md",
+      "sha256": "f7b81aa41717a6cc899c84baee8504b96a260df64ddb179eaac6b99c34455e30"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_event_di.md",
+      "sha256": "e49987256d055a25965caa94df392d57ad24786c4fb77242713189720c98af9b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_event_params_di.md",
+      "sha256": "c9fa6a755a17dbb36a069efc0bea124d09eb5a07f8a85cd8165d86192e4fc6ef"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_order_event_di.md",
+      "sha256": "7a3d88971d7e3b8cce5f900002308675996d19f17e676137b2218b7a6d0c6f68"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_properties_di.md",
+      "sha256": "a2a314387895d0028d848e7f97698df60c03f872f84692cdcf48561c0328953a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_transaction_di.md",
+      "sha256": "5b39713ee4b5d42ac406de36b61463e0376732060bbf2c6ce8b1b34950b20953"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dws.dws_id_convert_df.md",
+      "sha256": "d54459d6379ffdc79a4557f6a6fdb4e6712a929806c60be98108b032f7656a22"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dws.dws_new_user_accumlate_subscribe_1d.md",
+      "sha256": "050e83ae044a8e4f162f350a2395af416b919fabaa1d14a46b7bbe62f325a80c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dws.dws_oper_basic_aidata_1d.md",
+      "sha256": "4765e53fc5ac47c8084ec7172a5c3644519a50996c92288d24ee168397f30ae4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dws.dws_oper_delivery_collart_1d.md",
+      "sha256": "bac3179b9a38f7c04d2f9f1d996e9283dc7839acb11e642cbeb26b476aa25606"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dws.dws_oper_delivery_user_collart_1d.md",
+      "sha256": "2eae825f9f10ad0d7170b87f3defa32bbf9e1754b71bb5d2fd904088c2f48637"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dws.dws_oper_fb_delivery_1d.md",
+      "sha256": "1908218d472e3cd7910392474c14e2587b5ab6b5f684fbd378a1d10c5219403c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dws.dws_oper_tiktok_ad_1d.md",
+      "sha256": "63b5ad5982b943b245d59d14b2ae16819b443ec473cf982e279859a316e4be00"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dws.dws_oper_user_ad_di.md",
+      "sha256": "9be20c644fa4a655c1425e6fcbdd095cded48a3b34e2229c3bd15c77ea4d3c55"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.dws.dws_oper_user_sub_revenue_df.md",
+      "sha256": "b54f49fb83fec214ad0fa5ef02ffef74426a3adcc90831cdcde838584573e246"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ods.ods_ai_request_info_new_1d.md",
+      "sha256": "0f44c1983ddc9518419055301b1e52a72322f91214ec3f4bd369a52d77abef6e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ods.ods_apple_sales_1d.md",
+      "sha256": "5963c1b5ad82a145c2250d9cb7db770f347d55e9051e11ac33459c0c7fca50cf"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ods.ods_apple_subscription_muselab_df.md",
+      "sha256": "31b003d14cf2a18c68d16c60b70796d76504a4c730c821ed7c45955b164ad97b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ods.ods_apple_subscription_vibedance_df.md",
+      "sha256": "c49251fbae54ba509ebae236df736109c94f787c63af7dfb1dcc90e2bd6a214e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ods.ods_apple_subscription_vidart_df.md",
+      "sha256": "60b0bd8fb69b1960fc3d818edaa6fc1d170a52c53db7f2d76e49358e26d83d14"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/aidata2025.ods.orders.md",
+      "sha256": "b16cfb3902b7e9c1c7d103a55f00c1f06a2b146f0a28d5bf66cb183f275352cd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.ads.ads_cdct_service_cost_1d.md",
+      "sha256": "863eb9aa5ebb12eb70444a2fb4c886a33e927dc7c5c729a3a61515dd055e5d9e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi.md",
+      "sha256": "494b1d6c8d6efb68ec136f4fdd066f8bf0e27c61fcb5f5dd1f5162dcd3166bdf"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_cost_aws_billing_di.md",
+      "sha256": "80e3f0a6e740db07c2eb7e5f716622780cbf9deb5aae2c28eeb511f45253507a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_cost_azure_billing_di.md",
+      "sha256": "c5c4af624f4333259499e56032bbccf4029826f8b70a707b93a18fdb5ff42cd2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_cost_gcp_billing_di.md",
+      "sha256": "68f67c528a3c67997e8e0f83f4c9924feff13f75d9c482a2c24d704e0832f8d6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_log_aws_cdn_di.md",
+      "sha256": "4a2cc61715380c1d969820b5660e0f3da0c84e05f5b6033a9ebefae77f9d192f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_revenue_adplatform_di.md",
+      "sha256": "16292a5dfa7fde6a698fd6d01f5bacfe5c282b431ca2ada6b9addd5df6babc89"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_revenue_google_di.md",
+      "sha256": "e1e1f7d4e23349bd73552418e783fb27e75c80c85f3045cab142dc22d4f813af"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md",
+      "sha256": "d1029c6b09bb7d759b5262268ed0d2a959137b39b3e316aaf424ad3cb918993b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dws.dws_cdct_cost_ai_service_1h.md",
+      "sha256": "affb99b080ceb5782d64b8719063a293b4087a616103912daee0e482d1287289"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dws.dws_cdct_cost_billing_1d.md",
+      "sha256": "9d720b82385c4e83258a6049b96bc1bf12da005ea00cfab88f700c4bec12ddb8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dws.dws_cdct_cost_google_1h.md",
+      "sha256": "a80533c50355d717041bc373ca6ef958597228911a4b09090735e8c0f15e30c4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dws.dws_cdct_log_aws_cdn_1d.md",
+      "sha256": "c90a1a644a76f4223b54af23f528fe201d65fab955c81f0268eef5ce757dc8a5"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.dws.dws_cdct_revenue_country_1d.md",
+      "sha256": "3a7d8cf3036280c4a103f35aa2321888b7561ecada5062dac7a38acb0de3d584"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.ods.ods_apple_sales_1d.md",
+      "sha256": "8515536e9e53e9252d5b7582ddd00bceef77b1ce4f64f6d044313c6a221a9ff8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.ods.ods_apple_subscriber_1d.md",
+      "sha256": "90d6883ee6281e65437244f933006e051e7a32dd22617e6d61a969713c2e8147"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.ods.ods_apple_subscription_1d.md",
+      "sha256": "6b0c774a4efee86dc318e8e0b02d30eb24d0653d1ec3d14f94dfe2ec25fbf1b8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.ods.ods_apple_subscription_event_1d.md",
+      "sha256": "2fa63bf94c56627098ea63a5f4ce3847973238bb2d35435db3309e91f9cbdd20"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.ods.ods_woolong_subscription_1d.md",
+      "sha256": "4d6ae0ffbcb8bca6bc5b36cecece2c24d5fdaaa9948271921383e9fbad2c759f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/pubdata2025.ods.user_ai_base_video_record.md",
+      "sha256": "a9f3dfc0a672bdd55375dafa4f8774a3e03c637cfe3eba8d7ddb2bbdc6e2affd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/README.md",
+      "sha256": "adaf7eddb1c944a4d7016c3d2c593a6d4d5564374694e3accde1f653651c7f43"
+    },
+    {
+      "path": "plugins/collart-data-assistant/knowledge/shared/tables/storytemplate-10a27.analytics_232977577.events_wildcard.md",
+      "sha256": "ec5ee937233b00640bd5b1e87030f5d56b098ebefb4a37cd24cca5822594e5eb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/README.md",
+      "sha256": "844efd61a57a70a5f7307ff0abf02f0b72468ef7f7f650400414c681cfc02582"
+    },
+    {
+      "path": "plugins/collart-data-assistant/scripts/kb.py",
+      "sha256": "245a763d294c221bd3ed0b9878949d7d120defe5970f80d4d3b1da36bafff761"
+    },
+    {
+      "path": "plugins/collart-data-assistant/scripts/query.py",
+      "sha256": "407f7227dd8ea53012c7fbe8e181d8e94bc9e35b6ad0a154e410834884e90c42"
+    },
+    {
+      "path": "plugins/collart-data-assistant/skills/collart-analysis/agents/openai.yaml",
+      "sha256": "960f27796f0434ce0426c5be05d639b8347af5c2ad437bb84b6ddeb72ff4af72"
+    },
+    {
+      "path": "plugins/collart-data-assistant/skills/collart-analysis/SKILL.md",
+      "sha256": "cc162a5c4e41908f3262a294320ec56184a93309b4fb2d6235175c0fb712d4d3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/skills/collart-knowledge-maintain/agents/openai.yaml",
+      "sha256": "be102b157eb615484a3b311889f92ae2af42b286ee5c5398ed1da92bec0a1af9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/skills/collart-knowledge-maintain/SKILL.md",
+      "sha256": "30819850b2c2314b0176c461a462738d3039fbf9084e41911f16ac0e9266b369"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/ai_service/ai_cost_data_1h.sqlx",
+      "sha256": "412982681288006ccaf63b48af3d4e931619267cabbfe82e3520215c5f688976"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/ads_oper_collart_template_data.sqlx",
+      "sha256": "f6c7707450620888af1565c13147d2d6fa6c7a1b9c7c215fc19285d1efaf0b65"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/ads_oper_user_ai_record_backend_info.sqlx",
+      "sha256": "c661776f5528cf03d2ea1910e110b5f13bd81a06584028bf4b998e927f503b6c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/ads_template_search_user_keyword_di.sqlx",
+      "sha256": "557d0982aa32c4c031c93c10017eeb9b0867c93270960625ae95d46190837508"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/ads_vip_user_info_all.sqlx",
+      "sha256": "e5e0c3eaa2c86a848051d5f9716632470968c11fdbb0bc52764689a7cbd8cf81"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_android/ads_oper_basic_indicator_attr_di.sqlx",
+      "sha256": "419249794794406d6937d3df2ad3c6817cb032ac6c962b10ffef3d91c0dc87cc"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_android/ads_oper_basic_indicator_country_di.sqlx",
+      "sha256": "a96bdfc9fbc9c591508bc16171e50fee4d3a7990339f5a85c2660179f95f3c1a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_android/ads_oper_basic_indicator_daily_compare_di.sqlx",
+      "sha256": "705186097f63492b02246d63f4d771edf5ac7ee01bc32516d221db37f6a966f8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_android/ads_oper_basic_indicator_daily_di.sqlx",
+      "sha256": "738c64e19fb73f61d48a3a8b783337f89762360ebf9bb4d21493e7f020d9e9f8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_android/ads_oper_event_metric_attr_di.sqlx",
+      "sha256": "7f8f5331f0cd3398b2ad834ea66b092227f9283e25e5c62e2245a4cf4e3e9bbf"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_android/ads_oper_event_metric_country_di.sqlx",
+      "sha256": "bf1b64f1bc0adb68d6dce0a9622c72bb71bbb92b0c69e1403674d71d59b80e64"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_android/ads_oper_user_active_di.sqlx",
+      "sha256": "2ecb3eed17503a5faaf05c8254218b1c10accf43207c8becfa1473b6f03cf597"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_android/ads_oper_user_event_metric_di.sqlx",
+      "sha256": "1a7072488e2b6e1cb4e00fecdfa58dd4c75396f1e69c6d1cddfe8d2ba91ca6b6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_android/ads_oper_user_profile_df.sqlx",
+      "sha256": "053f45060407c16c64890d7d44e84fd12de53ee685d96d30c7027d73e47f36e4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_android/sp_query_event_metric_by_tag.sqlx",
+      "sha256": "e05d10505a13a5a1f683290ccdef4d5fc698e7b766397e418223f4d2fd73c951"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_attr_di.sqlx",
+      "sha256": "f3a8a38e568e8174a41fa8ea19e15c930aa3a78d52ac6e703b38913d2993f39e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_country_di.sqlx",
+      "sha256": "017464e3dce705a4ea25aa148be4f45e5151bdf5e9db30b30d338a66f5e57479"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_daily_compare_di.sqlx",
+      "sha256": "b4a2811ec5f032be7968c01b3c491734c28ee6066d02115d6beffe1186b18948"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_daily_di.sqlx",
+      "sha256": "cca15c0b8e4e5fcd039282998fd1162d3985b2bf4948a912af9d22e81457610e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_fashion/ads_oper_event_metric_attr_di.sqlx",
+      "sha256": "452351f6f75babf01391382aa9f5754a2df60c5366d34dee18e5f876d7fc1727"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_fashion/ads_oper_event_metric_country_di.sqlx",
+      "sha256": "7f7f05715e5849028009b7aebf392399879dc6e09dd7bb46f18ace68670e75fa"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_fashion/ads_oper_user_active_di.sqlx",
+      "sha256": "a2c29bd277fb40a1b5fd8f788776c87769d893d88c1e9a20d616693d47c4e887"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_fashion/ads_oper_user_event_metric_di.sqlx",
+      "sha256": "922bfcd919bd6132afd830a809dddced8dd963d16b9f70e92c7ef4bf7b718b3f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_fashion/ads_oper_user_profile_df.sqlx",
+      "sha256": "33f6c2402e6ff006c9d69e9b6e27d350fb25a326a50c17d371ac6e693990b11a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_fashion/ads_oper_user_revenue_di.sqlx",
+      "sha256": "5e20e075249f4fb35b9a8a24c25e8c5e22631a985abb9c143cd4768bb0d1a2f1"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_ios/ads_oper_basic_indicator_attr_di.sqlx",
+      "sha256": "54e1c32ebcec3316ff42af8e65996e2592468c32777528a4d23063e6429e95a3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_ios/ads_oper_basic_indicator_country_di.sqlx",
+      "sha256": "0bf197c3a92f7e5167b5a88605fc8f9611eb330f026ccf4df5fc7cdb819d0e61"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_ios/ads_oper_basic_indicator_daily_compare_di.sqlx",
+      "sha256": "82837fcc610fd6e66276b02fd4f284c1a8f5b6c7068fd5a3afc2a29d2f8c975a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_ios/ads_oper_basic_indicator_daily_di.sqlx",
+      "sha256": "4b931b51dee07b6e558086c7c2b51b0b3502f4299da0bd8ce5b39f1a8a3f38f7"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_ios/ads_oper_event_metric_attr_di.sqlx",
+      "sha256": "734e546074e781651fc859bbeb8f8592db44c6359909629affd80074b4df856c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_ios/ads_oper_event_metric_country_di.sqlx",
+      "sha256": "f5d61b2951ef4cac2bde085ffbe23da8b79e651e316decdfc86d85c32c3be164"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_ios/ads_oper_user_active_di.sqlx",
+      "sha256": "991898743c87ca496b41d60eaaf80e1346ba9c516f8e9e87938acf2e068487f5"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_ios/ads_oper_user_event_metric_di.sqlx",
+      "sha256": "a61a1bf526201c1d2e3153cd47f4cc016056dd1a5908a2aab8229d9e711aa014"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_ios/ads_oper_user_profile_df.sqlx",
+      "sha256": "ad199dc18358396894583ebe90e650ed2ca7c1dc9dec4eb188f1126d883756d8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_web/ads_oper_basic_indicator_attr_di.sqlx",
+      "sha256": "ecafea27016b46059e65b0fda5e0f19f52f8794b3b4b3f2e015892a9ac71c368"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_web/ads_oper_basic_indicator_country_di.sqlx",
+      "sha256": "3ebea568195019473b924653155b87673b5de69b808a9617899fa29333b449c5"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_web/ads_oper_basic_indicator_daily_compare_di.sqlx",
+      "sha256": "5880217575c842cf782ea6cdbd89fee6711f6fd327bd5da189129082fd534c50"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_web/ads_oper_basic_indicator_daily_di.sqlx",
+      "sha256": "947b2962d90cdd234f12dfe0eb62c95c77d516c2f443e1c7c75ad3c18ebad866"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_web/ads_oper_collart_web_id_map.sqlx",
+      "sha256": "0f59f63a2f2370c0ca8b19a9b8aab0f7345da4bb3c0ce9cd42c0348d4b980683"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_web/ads_oper_event_metric_attr_di.sqlx",
+      "sha256": "e1c85168b4b24c4a80e72f4910227aa0b5d193f6a8f41f4265e530b0059d7db0"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_web/ads_oper_event_metric_country_di.sqlx",
+      "sha256": "0c7de66890d77cc771ec2f5e458704fb7aaa43fc23c6a720cf056a4f44104b69"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_web/ads_oper_user_active_di.sqlx",
+      "sha256": "9a3c3d0648b5f8f8d45e8a2ce523f641bc7f712295135718c5258d6205ef1819"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_web/ads_oper_user_event_metric_di.sqlx",
+      "sha256": "6ca5960f4da7190b5712bf11c19893080277ac21aaa824bbc88dcdf1f303dfd3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/collart_web/ads_oper_user_profile_df.sqlx",
+      "sha256": "aab428adabb5a9220d9622d2a1ca1056d71011dc599a0555de73105adac85d91"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/collart/dim_table.sqlx",
+      "sha256": "d6a2d99ebf152fa7a2e4d42cd2e50ba6a7f6781928571d4faee08eab4c52f67d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/daily/ads_aidata_retain_di.sqlx",
+      "sha256": "ffa552bd042b4105fb19031b877f536d864de2db78865fb4ba43066a9fdfced3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/reports/h_pubdata_ads_atlasv_deliver_cost_daily.sqlx",
+      "sha256": "be73801f93edf6438988821ec6327954712ec99c31575f83cca447ac8c3a1fac"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/reports/h_pubdata_ads_data_report_1d.sqlx",
+      "sha256": "e809c89001ca96d406b34d73ec239c9a3bc82ad680393291488c8249f351eb20"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/revenue/ads_hangzhou_revenue_country_1d.sqlx",
+      "sha256": "cb20454a2c10ec03eba2c56f74fc4872c4fd35dd4447a05230bf6542010e5d2d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ads/revenue/h_ads_ad_sub_revenue_1h.sqlx",
+      "sha256": "6fd772685da2badcc98f94a1022482a0497aff893940216d289f37d2f739ef54"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dim/dim_collart_asa_keyword_info.sqlx",
+      "sha256": "cc718eb8d9a623cb0e0910d1b7091166a9a1b1c52341cfededa60ba1bb461342"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dim/dim_exchange_rate_days.sqlx",
+      "sha256": "39ed439d0ffbd3cabd6f17e3a448e6869c674e6304a1e5f1f4c5320283f5ca1e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dim/dim_module_template_info_android.sqlx",
+      "sha256": "f73550376fd6bdc68e0d1b41673e443f063d3cb656ff672384fbd0967d845c3e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dm/daily/h_dm_collart_android_user_event_di.sqlx",
+      "sha256": "94c80e73ae8e56178a8af0001b3f503cd4ee3628174a10576b4fb97dab1f2b53"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dm/daily/h_dm_collart_ios_user_event_di.sqlx",
+      "sha256": "3695f7b402a9abd5aac33fef3ec81160bbc6a94b72363a367efb0081b24b319f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dm/daily/h_dm_collart_web_user_event_di.sqlx",
+      "sha256": "5592cc954769686daa850f935f226cfd2932acaba8948ceb297fa6f196b0e863"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_apple_user_subscribtion_di.sqlx",
+      "sha256": "b7421063d404d156c51be3f84418f40861aff1bc2ebd924e92ef984c8962408e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_cdct_delivery_cost_di.sqlx",
+      "sha256": "08d1ecb7cd50ac6e36558b4cf91e92e2f06e46e3ddf13d5febb1747d7b0aa2cc"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_cdct_woolong_request_di.sqlx",
+      "sha256": "9af198b1fb9b3778ef1def6a6f73c75087d27d605fe0046c824398cd94396b5e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_id_convert_di.sqlx",
+      "sha256": "815a9554ed1695782c95739d119c133f5404e11be48a9060f87d15077d097ed8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_oper_sub_order_revenue_df.sqlx",
+      "sha256": "cd543073e00356cad0d95441f25fdfebf3c466422fffc4dd315e4d60da1e23ae"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_oper_user_basic_di.sqlx",
+      "sha256": "52455bedcd75905f9b04cafc84deb93bde370fa5596caf018e5af2c611106840"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_oper_user_event_di-new_app.sqlx",
+      "sha256": "77280ed52c9121645bd93eacd08c20a19b47d8ba4fb9f48b0cb24c4a4dd50d4e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_oper_user_event_di.sqlx",
+      "sha256": "e34b6768ab9dcbb7015305b96fdfc57f5a74c9d524aa328589266dcd90381c80"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_oper_user_event_params_di.sqlx",
+      "sha256": "1a411fa8ffdf64add86b19ea7d56fd9570d284bfb915edf319ce15f51aa33aac"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_oper_user_order_event_di.sqlx",
+      "sha256": "3d708dd1df1cc5f49709c37da703639e772ff0349c1ae717eecedf00f37e42c4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dwd/daily/h_dwd_oper_user_properties_di.sqlx",
+      "sha256": "0549e622d647e5d179780fa913f6aa9f73500bc480254825cc22ef57cb6cc3ac"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dws/daily/h_dws_id_convert_df.sqlx",
+      "sha256": "04c1e5858e722b7e3e72a45ba8a7cb70bf1e65916947e9fa3d97af165ea8ded8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dws/daily/h_dws_oper_asa_delivery_di.sqlx",
+      "sha256": "e1cdc29f133a4ddcea86c6cd5a0d2069d5086e19bc070c7a862727f2eb4820ab"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dws/daily/h_dws_oper_basic_aidata_1d.sqlx",
+      "sha256": "75b0bd3af9f84249a0dacf618cf8dd660a3c2566f9b0894d6ef1733d81c47b5c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dws/daily/h_dws_oper_user_ad_di.sqlx",
+      "sha256": "337903e64f38d95783e0f7b9002b6af544fdf6dd930a988c95ec26be2a7287ca"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/dws/daily/h_dws_oper_user_sub_revenue_df.sqlx",
+      "sha256": "2e7968d2d5f2c1c0419c2eaf74a0eaf04c91f6bb28388582c860641f44ebca4c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ods/daily/h_ods_apple_sales_1d.sqlx",
+      "sha256": "67f1918936fb12b0ed13b48d02f4bb40bfbcbdb660aff99c560b2404e741ed4a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ods/daily/h_ods_apple_subscription_muselab_df.sqlx",
+      "sha256": "cafd5371ab7c0c48c4f9e150a5cf383b5b66fa49d7693e93c9bcf0c4130ecc41"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ods/daily/h_ods_apple_subscription_vibedance_df.sqlx",
+      "sha256": "30e0de8c68c5774702bb62a1ec878e65471f9d7486cda47b39f3bb71820c9c24"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/definitions/ods/daily/h_ods_apple_subscription_vidart_df.sqlx",
+      "sha256": "8963607c458376ae6b1f022a3c61c6a0f9a3e01bb989aa4e97b3f1141dfc8799"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/aidata/includes/collart_fashion/constants.js",
+      "sha256": "ba35ec526d7160cfbc2911cb6e077c16014c4eefc2d6a6e147b425d947db8ffe"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/ads/h_ads_atlasv_basic_data_daily_1h.sqlx",
+      "sha256": "492f304595a623e720a60a5e82216d5f777d9173058e237ca3d4d857c06b331d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/ads/h_ads_cdct_service_cost_1d.sqlx",
+      "sha256": "cd732644706a27c72078490ca59783c8d1bef1669a4c6cbf52544fda4f464950"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/ads/h_pubdata_ads_atlasv_deliver_cost_daily.sqlx",
+      "sha256": "3d7520c42a23ad93a35ad57f155f55d8f7ea8e757a2c7671982463b1aa835c56"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dwd/cost/h_dwd_cdct_cost_aws_billing_di.sqlx",
+      "sha256": "d9c6b4982ce5fada416c3642a402bee0ab7fe61dc2f794bb4c8ff8ffdc7d283c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dwd/cost/h_dwd_cdct_cost_azure_billing_di.sqlx",
+      "sha256": "e8c6ebd2dbaff0f1f09a3c4994f569b3080e69c3224d2e6cacdcfc98c9fcb260"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dwd/cost/h_dwd_cdct_cost_gcp_billing_di.sqlx",
+      "sha256": "65d4114483b81e009f8be04ff473468f9971c3ec436eda8d5dde44f210bc556c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dwd/log/h_dwd_cdct_ai_service_record_info_hi.sqlx",
+      "sha256": "a3f2c4255a5700092943ed0ee88ec5194ddaf17031bdb29b7c70116556699212"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dwd/log/h_dwd_cdct_log_aws_cdn_di.sqlx",
+      "sha256": "87da4b6db0d4d588b3d67a55a7f5c747b2a57e0c1cc74d26b610e4538604f740"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dwd/revenue/h_dwd_cdct_revenue_google_di.sqlx",
+      "sha256": "7240618d8ccdf79fdc92044718e798295c8e6f66577959492d3a9c78eb401a09"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dwd/revenue/h_dwd_cdct_revenue_stripe_di.sqlx",
+      "sha256": "aa52970e6ffb90db4bd9bf01e02018d2ae1c3f7184e7abe86a7950c212fa1d77"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dws/cost/h_dws_cdct_cost_billing_1d.sqlx",
+      "sha256": "a5ceb33f82b214f0166949e5cb5950af6ab576d8c98fbe8d8d87946aa488f64b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dws/cost/h_dws_cdct_cost_google_1h.sqlx",
+      "sha256": "2e770a502aa7151fc2674960ceec989b78880f1afde40f18809002f80cf23a94"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dws/log/h_dws_cdct_cost_ai_service_1h.sqlx",
+      "sha256": "8875e2d354c001a0d6547c45b41f3741c11237dc21781e93fad35274c9b39d91"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dataform/pubdata/definitions/dws/log/h_dws_cdct_log_aws_cdn_1d.sqlx",
+      "sha256": "887768e6d550dfd7c8efb4b1259ff06d0ab254f57f0154f2b672817a8c0ddff6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads.ads_ad_sub_revenue_1h.json",
+      "sha256": "b77e8da6f89d1b9757b0b18afb82ce75404f94d5bddbf87a13206d469083390b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads.ads_aidata_retain_di.json",
+      "sha256": "fd131e2201de708d56b606e6971b6689c8b4fb4c3ee372f16a0684b7350ad106"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads.ads_collart_delivery_fb_1d.json",
+      "sha256": "b2e97bf4e697b6d27316b833c6c3fd2d48cde7caa205ef7873f1f61927ef73f2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads.ads_collart_delivery_revenue_1d.json",
+      "sha256": "ba168c0a9f89ff42cf49917476ae4758b31ef23a685cff0bd98abb99053f8cb1"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads.ads_hangzhou_revenue_country_1d.json",
+      "sha256": "cf808161e748625273c8a4c8d3288bbb12fec20b411e5a0de9ec95f47ec95b8a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads.ads_template_recommend_foru_1d.json",
+      "sha256": "0d3f087c5dc963581595f5abce0288331f90dd93d803f7aee0108e0a1e9f5cf3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads.ads_template_recommend_trending_1d.json",
+      "sha256": "48897c119bb460f385298b60fbeaf1a1ffc8ed49f2a4bc1b051a62801f6dddda"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads.ads_user_subscribe_daily_1d.json",
+      "sha256": "31549e7742eb0f1ce122434927a4d1c922320826772947a4ed5ca9042c54100f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads.ads_user_subscribe_lifecycle_1d.json",
+      "sha256": "faba9b8036a145a6fcb8a379a371d2867c8b804d242f120bf9777c9165df8082"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_basic_indicator_collart_di.json",
+      "sha256": "d73addf8975451deff5367650fe3e451d1ceb1cf5908fd41a025c238cd697061"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di.json",
+      "sha256": "5c23258a723b96100d227609ed50c8155c8029adaa8a80d0695b0d6df2404836"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di.json",
+      "sha256": "6df1d208629bf6f0d0121ffa943344357a4d75b4ff5edab04643d71ec6839bbe"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_collart_template_data.json",
+      "sha256": "42c2f4aca92c9a58181f4086783e216e6ebc3aa47924802a0cdb2409c5f28146"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_collart_web_id_map.json",
+      "sha256": "ad1f5677e22c2c7432ed6c0fd404bc5e5243899ed99680147042ede5942c12c3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_event_param_summary_collart_di.json",
+      "sha256": "0eb70286ce2f5d2f5475a56cfe742afa430570d3e870eec1d39318190aa32285"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_event_summary_collart_di.json",
+      "sha256": "4c681818c5d27371874edb655e779e8a2aea6d0a863ab18bba0e103e96607d81"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_tempalte_data_android.json",
+      "sha256": "f16ccf897cd35dc05a97cb94dabb37bbb5b2352d133a0631223bfd645560e6a5"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_template_ad_value_collart_di.json",
+      "sha256": "15d99809ddd69c04d4fe464bd9a51e0b88eb4f88cae7fc19533008c5d0b976a8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_user_ai_record_backend_info.json",
+      "sha256": "12db52bc673852b26f7f5a4a8520e29f7b7ec8b8ba4a2ea35b1e82c39b6137d4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_user_event_collart_di.json",
+      "sha256": "ebd6818a5e512823256d9f21eda9b848d4fb8eb1aaf21d20053ffbbec9de284a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_user_event_param_collart_di.json",
+      "sha256": "4d64a7113d77b81deead8b72a447a45c401752455d247ef43c520820a333e642"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_oper_user_new_collart_di.json",
+      "sha256": "b69bc43360b43b17cfcc29e236ccd0183d7b46508c187caa3c205e885795249a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.ads_vip_user_info_all.json",
+      "sha256": "a9e90c098256f1e9df6dae01278fe1bd50debfcf17df68755e4b9e2f53f289cb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.big_r_realtime_alert_log.json",
+      "sha256": "2f832e7adfb684ef4a79defabd071b2ad0ebcc78fbdcdfb92d5aa7ecdcef4009"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collart.big_r_user_value_state.json",
+      "sha256": "95c373aedbf34ade7cac011152969abc2a7d5c240f7bff8d79c6116d7494ef6d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di.json",
+      "sha256": "d5e367e8b9a79fa55c563430f791a9c259b8f01feb11de9130881a6d1f2f30cc"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di.json",
+      "sha256": "0df8d5f83ba896c47f6730ee5943081223ab83c2e5c19e534ea81e394781a78a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di.json",
+      "sha256": "75e534cbc8e8d576b880645d7fec3056e8a811a57e858f5b782b4e73e90e6225"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di.json",
+      "sha256": "232ae845c0ae34d175695e0080d1fdc6c7fc34250a8d1ccb2cb9618ead792847"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartandroid.ads_oper_event_metric_country_di.json",
+      "sha256": "ff21e8ed3045d2ed50abb762fc4c72f9dac8348fd0284ca32f2038ea7ad0233e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartandroid.ads_oper_user_active_di.json",
+      "sha256": "26e5aebd60e8c653badff27f011dc527eebd7edf67f218ff5c4d2affd44f62b8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartandroid.ads_oper_user_event_metric_di.json",
+      "sha256": "2001d7ceace64a8305f743729fa52a227f5e2458a942fa582a2054ad51eb3139"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartandroid.ads_oper_user_profile_df.json",
+      "sha256": "e461456c57e2f3e1af34549e682ec96e70d9a4f16cf23f5b1260f0e2daf7fe4a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartfashion.ads_dim_metric_rule.json",
+      "sha256": "ecb771deb9bee36f8290e2428b96b37402bddf609678738fbb4bdf1f488d1e30"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di.json",
+      "sha256": "f9df47637c59eacb877f30cbf957c14cd9931e177d73c495938136c1a425a9ce"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di.json",
+      "sha256": "b569971b4a7b8ce47c22c3de8877d8d1055cb7f04bf3ccab7419cd3ddec801d3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di.json",
+      "sha256": "f2be783e4c39ddf80c383a75c9bc8c7805728e60a93e2b844d696f25ae60517c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di.json",
+      "sha256": "385984f23fe670105d92b206e20460b9ce7ff477cd8cbe69d64e5ad37a458e34"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartfashion.ads_oper_event_metric_country_di.json",
+      "sha256": "a80ba1676793b8c91e797c991f8879505e55ba19e08cf04a029f68f94a367752"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartfashion.ads_oper_user_active_di.json",
+      "sha256": "aed4b11409d12da11286b2a24e96311163d130fd723e65ee8a12ac44f39ffb4f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartfashion.ads_oper_user_event_metric_di.json",
+      "sha256": "24e04b815914d9c07185dc8d59da89394325ca5bdf399be70792b3a38882ceb1"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartfashion.ads_oper_user_profile_df.json",
+      "sha256": "b9ecaff952ad5092f40bfdb3a4810c42df7afa307ba74ec22a5da1402aa3247e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di.json",
+      "sha256": "abc8d856cd864cb72a9f5aab52ef212417fe8faa7311583139c2a29110f74779"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartios.ads_oper_basic_indicator_country_di.json",
+      "sha256": "03531a4652002a0109169de7bd7880d9f966ce3b80487c7bdb3b10805e79d987"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di.json",
+      "sha256": "abc78bf24b44868cf4a1ffcf2f01b446f604893b9d8467822f4c9c75e365963a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartios.ads_oper_event_metric_attr_di.json",
+      "sha256": "5d37812dea5300c47d8aab613f4f25c9298cbec8f6ce25eb2c9df16e64500d93"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartios.ads_oper_event_metric_country_di.json",
+      "sha256": "3a361122aa622867d465bf1f4f09c0563dafe37aac30748d5c3355001bb306fd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartios.ads_oper_user_active_di.json",
+      "sha256": "1d32d9a63910cfb6e3aab6f09aa95547cf966aa9bdbde0aee3b2c0a8c0d5ab21"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartios.ads_oper_user_event_metric_di.json",
+      "sha256": "3a30a815c64df1e52bad5f6abd29f602f2e351ae382915cf5716d98b3eca8cf0"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartios.ads_oper_user_profile_df.json",
+      "sha256": "c99ba24f899cd122fa122e17d22e577fc325848c810ab61d48e33028f8f55043"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartweb.ads_dim_metric_rule.json",
+      "sha256": "8c7742f411d03eed54b91151f8d4265bd36815ce1af5c4c7e96a1f6c8a5e4249"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di.json",
+      "sha256": "ea86dcd50a4650c215efb7ba3719477a29fc5bc2ee91d969cbf5338de9f2d242"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di.json",
+      "sha256": "f5532cdc11f445d2b5a8472ec560fb46f0dd0f1ceccf78c772ecaa1ee0e5397d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di.json",
+      "sha256": "937f801e7893c57293703750f76c2c50427bb32991d50859c898c0583a398d40"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartweb.ads_oper_event_metric_attr_di.json",
+      "sha256": "478bf795a5c8ee2e1b0c44b680649feeb47e5a458c2eae1c8ebd35139a20f9a5"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartweb.ads_oper_event_metric_country_di.json",
+      "sha256": "aa8b8c438ac4d6af981b294f935987f048db031da007f742441125545b05468c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartweb.ads_oper_user_active_di.json",
+      "sha256": "185648f672ba68e2d30cd90e3186fd11af6950cbb8af0f33c3ac9e3a23b8b2dd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartweb.ads_oper_user_event_metric_di.json",
+      "sha256": "f05aa47439548642c3102947ea497e75eac8c9ec418911a0fb75b6bf8d871f8d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ads_collartweb.ads_oper_user_profile_df.json",
+      "sha256": "a8e111fe7e53aac7ad8217ed326bdca382db0a29f13a3f405cf9157d373a4c2e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ai_service.ai_cost_data.json",
+      "sha256": "0cb136feca2514939b4da1521af96ec830a991eec737bebd73bd5b685e245ec4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ai_service.ai_service_record_info_1d.json",
+      "sha256": "e7645f89045063074f7ab94f19ee1c340e3405b058acb49485b53484d07b3abb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ai_service.collart_core_event_bi.json",
+      "sha256": "0f906bedceb2eda911fa2469aed02f1bd719f2483409ebdfe3ee8e6671717208"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.collart_campaign_name_modify_copy.json",
+      "sha256": "650e023d5f2c533c503bd63ab790399f420509da0fdfe35d0774bc4cda9212eb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.collart_product_price_copy.json",
+      "sha256": "f4db8661a15096ded8725ab8b84ed11d69c938302e8060dd406d4d7518524c9c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.dim_ai_service_cost_unit_copy.json",
+      "sha256": "403a7cc0b58943ca6a261eedc88ad6d3d235c9c9470089f71fd4bf245fac7c97"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.dim_ai_service_model_info_copy.json",
+      "sha256": "b1c42b590275dc8de403fa22cd3e6a429f308d3e20321b2d7f9f235fb5fb605a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.dim_collart_android_core_event_copy.json",
+      "sha256": "635c579e78729a1005da82eb41269f8abaff1f8e6e1a990d5ec1eb5a505eccd2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.dim_collart_asa_keyword_info.json",
+      "sha256": "7790685580862a10b31d54139885f6c531fbf24050d4de0167115f2bd4545123"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.dim_country_info.json",
+      "sha256": "a69c8694b8ad2f59b82284578eb94eb16ca00f5494e5b900a3dcbaa71c5fecd0"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.dim_module_template_info_android.json",
+      "sha256": "47fa3d79da76a6f2f51b244d60dedeec2a4b9b5c5a9dbd8fd27d46a825589c4c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.dim_product_info.json",
+      "sha256": "1519b8e98eae41a8d89dd43bd5567b2d59df483883ae02004f07a3a8724f287d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.dim_product_info_copy.json",
+      "sha256": "9ccf0c4e450408758754a7d84c3e9cf7000d3090ba873233c0ac85012a8d0b50"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.dim_template_tag.json",
+      "sha256": "dadf6ef3bc6291c88a4c5957c18dfc9245f81979e41ea40d1b329b801cc7bcae"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dim.exchange_rate_days.json",
+      "sha256": "41c6efc2db97e7e5de70e9080e04cc730e4f0d44fe23efadd58a5bfc00c3a156"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dm.dm_collart_android_user_event_di.json",
+      "sha256": "adf4cb743af87df5992e27af10653f1f4f4f7ce714b90b7fb06914feda066c3a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dm.dm_collart_ios_user_event_di.json",
+      "sha256": "9a246a7e69745c48fad9d3a41f7f631fa97f9d7be8558a731b5fdf6b5f18be40"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dm.dm_collart_web_user_event_di.json",
+      "sha256": "cb2a571411ee48b1577635c4d6edd0d81a77d70cfa7ed3e659264d9d4103b033"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dm.dm_user_profile_collart_df.json",
+      "sha256": "6e8ad7d4b9ead772841593363bd8228c59d66ebb1dfaac45098d58b7cac7a153"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_apple_user_subscribtion_di.json",
+      "sha256": "a3f96f9d2b17b29b7b8d5371afb45434de14a5502d83bd45f27ae458d9e097a3"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_cdct_delivery_cost_di.json",
+      "sha256": "2dd8024a9ea5397dae9c1dc8fa2efe61aed15bbf314bcac8fc8190fc8c6eb797"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_cdct_woolong_request_di.json",
+      "sha256": "8c22b892aee0c7397f83155d4f4945a48b44b7707c54753949ba780f15746ae6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_id_convert_di.json",
+      "sha256": "f9918d885224814fd1eedb1c7d2328308531bd6cf46889b37f2548e95b5bea1b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_oper_delivery_adjust_user_di.json",
+      "sha256": "0bd322cb1ebd59ce4c5f3ca518290a86e71d4a2225ab56b0a41f94ca2357f10c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_oper_sub_order_revenue_df.json",
+      "sha256": "3ea5a22549a49a052f6918894f2183630172641e58cc1e1ab5533bfe28495d5b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_oper_user_basic_di.json",
+      "sha256": "821513dc811d9ec0407ed714f54cecc273c86194f618fd8c260794dba7d94665"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_oper_user_collart_di.json",
+      "sha256": "cd7ddbf5ea909e22347f4f9923688025bebd95ac2bcee744a8d2f0dce077b498"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_oper_user_event_di.json",
+      "sha256": "4c54abdff99f7e42ca741de3c844cdcebe7ecdeb50ade65ab5d88acc5259c803"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_oper_user_event_params_di.json",
+      "sha256": "193ff4db8b8fcf05e6f55dee863f97e90a1a8f80a448f64843486feb8cd3e489"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_oper_user_order_event_di.json",
+      "sha256": "30f9526c3a0db2b90bf2386f5d1e191020175cddaf97d7dc1979b64f42f073ef"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_oper_user_properties_di.json",
+      "sha256": "30dfb819b0980d5b7fb016764255ad7ae50347d671ea3f43a92b2d93673b56e1"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dwd.dwd_oper_user_transaction_di.json",
+      "sha256": "1eeccfcb9f42e75155da541407fee2583ced01484f47b907240ac2724f53b457"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_id_convert_df.json",
+      "sha256": "c376a12d0c05ff8f410619cde75fd16d977104181ff5d0699e23c01764f60a0e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_new_user_accumlate_subscribe_1d.json",
+      "sha256": "2bc96cefed064c13ae472ddfc83de1ed553622a1d7884d3f414a971b872a00c9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_oper_asa_collart_1d.json",
+      "sha256": "93fa70538041be1cb4a12684c7b7661c581534f89ad777be0b98a4f146a0ba40"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_oper_asa_delivery_di.json",
+      "sha256": "f939cf3adb8f3ed6657933e5368cda31618378faef4910b5f5010e42e52357df"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_oper_asa_keyword_collart_1d.json",
+      "sha256": "023ebb32b64f49b79242a1a722ea3217fbf71fe06c466172674a2e7349212c65"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_oper_basic_aidata_1d.json",
+      "sha256": "d0887094dc64e195ac046ef877908d8c0be94a89a0d2580a8a03f8ce20dcd5ab"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_oper_delivery_collart_1d.json",
+      "sha256": "b9d563f079f9d66fdac03421bdeb3a29bcefeda0296ec31d1abb7cde4fad9282"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_oper_delivery_user_collart_1d.json",
+      "sha256": "7776512926c39426a0765b0f226b140afe6d531673379c0965b067dfb6dd49ca"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_oper_fb_delivery_1d.json",
+      "sha256": "b23a64b070fb5c31cf931cbd752f1dbe2e674dbd55331233028e6498e23155bf"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_oper_tiktok_ad_1d.json",
+      "sha256": "d70ffb077b5cec7ea45a8deaf60c3a3ec50de5f7f56ec20d3797135d9159281b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_oper_user_ad_di.json",
+      "sha256": "d5571b6e8b4f83e733ec5043bee64a376cc46d3c427c7afe5ace698ec2f28248"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.dws.dws_oper_user_sub_revenue_df.json",
+      "sha256": "1163c89ab70ab71e66cbd6bfd1b51bd00cc4aa217efd855c1ec39dcc25e08485"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.ods.ods_ai_request_info_new_1d.json",
+      "sha256": "d9ebd240fd3406b80999428f408de72d85c8fb9bc2ac3244443d82bd49a0e6ba"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/aidata2025.revenue.vip_event_data_ios.json",
+      "sha256": "e7b596eb55cedd6a6e6fc815fef37887e8a6a1862093d6381f9f035e24961046"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.ads.ads_atlasv_basic_data_daily_1h.json",
+      "sha256": "ee42fbf2c2b48d96aab0aeddb23e943f589791ac56e16a99dc7ad71f09e07bdb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h.json",
+      "sha256": "b0a03a277d463c99a1bb1d7ea36b95c452afb6623c1c707a1b46b5500b165108"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.ads.ads_atlasv_deliver_cost_daily.json",
+      "sha256": "0cb5bdb68c409e27ce3437a5b56b8041648ef07c730a8e1256fb4a47fcab376c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.ads.ads_cdct_service_cost_1d.json",
+      "sha256": "b786db069f51804e3b80d81348a40fa50f789643dba9a463720f95aece377c75"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.ads.ads_data_report_1d.json",
+      "sha256": "504307ceb47acb5435dc9be30046f02ac0bb9cfa2b9facb428537b9fdf41a998"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi.json",
+      "sha256": "1c5c5d55b3fb2672748f60b9ddc6c6feb89e8304599ae142f7ac6b6818438d36"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.dwd.dwd_cdct_revenue_adplatform_di.json",
+      "sha256": "aad65a8aa3dbce26faf160a663f45860403f41a5053abc3efcc12702bc4db0e7"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.dwd.dwd_cdct_revenue_google_di.json",
+      "sha256": "5864cbf080d17b5e7ae549355af6d4ae879b29efc237eeeeff73211509a21bfb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.json",
+      "sha256": "d6172cf76d2aa1f4d8e5e4226fa2076e26dc1163fc3da67e0bc7c34965646e5d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.dws.dws_cdct_cost_google_1h.json",
+      "sha256": "a571709d961842d8dc954e7df0503e8e14a056669689778e55f5b2db57a6597a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.dws.dws_cdct_revenue_country_1d.json",
+      "sha256": "b25b0d48707ad900f7dbfa302f60627c9cc82a6c227f8923f37e3a17d99c6de1"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.ods.ods_apple_sales_1d.json",
+      "sha256": "2f80f5fcc232c038ea3c057c2de253f89bfd88892b636c320346c3956bdf9158"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.ods.ods_apple_subscriber_1d.json",
+      "sha256": "a750ff2abb0384967399cbc0e6696fa437da6b8a773740c9fed01e26d53012f2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.ods.ods_apple_subscription_1d.json",
+      "sha256": "caa9ca6d6df17290da51c046eb481b23f254c85baadf29496f162d6d7eac5b90"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.ods.ods_apple_subscription_event_1d.json",
+      "sha256": "288eb2df10b133c2d971d8946288183b24cb6c16ca2f03cdfa585b7fb7a079bf"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/pubdata2025.ods.ods_woolong_subscription_1d.json",
+      "sha256": "85ff8c3b650d2b3e05aff7d071eac235cd2ab26082bc21728bb96119e7b0af6e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/dictionaries/storytemplate-10a27.analytics_232977577.events_wildcard.json",
+      "sha256": "9bf4fd42a8f6ee8890992fb182cef3a5ae43d0de0880fa03d5eff8091f96e673"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads.ads_ad_sub_revenue_1h.json",
+      "sha256": "2ba2d290aa58df10bc4687404e009ae24469908cbffc01c4cb273f031ebf4cc7"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads.ads_aidata_retain_di.json",
+      "sha256": "c3d36463d6b47027db4886c3f957db56db99795f7471910a1dafd64504f2a053"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads.ads_collart_delivery_fb_1d.json",
+      "sha256": "282f9362fec4202b6ea73dc2a761242f90af5d7bccafea6fa0ec2e7361db87b2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads.ads_collart_delivery_revenue_1d.json",
+      "sha256": "ff695cdd5fb7d99830368a26edb981c4ce9372bd59e364abdacfd73e8171462e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads.ads_hangzhou_revenue_country_1d.json",
+      "sha256": "c81ef8fa558aa615667d98352d4c10b6e66c1dbb4df818b5243a6fe22950b5ae"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads.ads_template_recommend_foru_1d.json",
+      "sha256": "4fbc71d81eb62e76adad6c18ee7c913b8d9167e8206572ebea93f7ba6de16eaa"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads.ads_template_recommend_trending_1d.json",
+      "sha256": "a76b94ee127b79f4c9b31961fd1b261f1e69a1cca7637d251b834ee09349a9db"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads.ads_user_subscribe_daily_1d.json",
+      "sha256": "fc1f9fcd9ca78b3e2d0061e2efb15203a2c13b18f3ec216ffe7fdd9f3a46f797"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads.ads_user_subscribe_lifecycle_1d.json",
+      "sha256": "3c7ffb55af14a002e7bce6f0800982a1fabbbf9bf517862fb1f0bd55ee508824"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_dim_metric_rule.json",
+      "sha256": "54320b0514563aebe4b6eb2ee2f7b511bf966b4937bc8d7fe05133bde59e8b41"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy.json",
+      "sha256": "8f82955e1f6fccdc234dac56e30356568ad554496f4740fe102940b12951c871"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_basic_indicator_collart_di.json",
+      "sha256": "cba3f1a96e40a5ae28e4820111438118c92ddf82770702221e093817f622454e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di.json",
+      "sha256": "8c909123f6bae2c28cdcd6c22133d9e8a675f90b5c398698fca3f8021c92732a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di.json",
+      "sha256": "cf6bc4016699fc0bbdc566d57f4d1426767e926025506d2bbe764a6055475d83"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_collart_template_data.json",
+      "sha256": "8371cccf03df83a6d97af17a6038a17ac34e99be4a47220aae0db7cf624643e9"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_collart_web_id_map.json",
+      "sha256": "32da844adfaf1126bc754633907e3c5d131f6d7c707363d506b39f86b65b395c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_event_param_summary_collart_di.json",
+      "sha256": "bed459e6687f878850e21fc3dca52d8fb4e19c135d2e12af9a955eeb75354e83"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_event_summary_collart_di.json",
+      "sha256": "676f2d2bf422f3ef4783f1f302e7d41cfe35208ad8d3bc8efc5476243135e650"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_tempalte_data_android.json",
+      "sha256": "814a54c866526229f871c09022ca36b677cc7794485b7a7b5a3365fbd8708f21"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_template_ad_value_collart_di.json",
+      "sha256": "82d60f48ea7be827a6c2971e1f83f623d6b24eef22b48e9545b7cba414911af1"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_user_ai_record_backend_info.json",
+      "sha256": "e10a8c2498bf7c959ac8df9c59e933125fc664a8f6212e052b057788e8fc73fa"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_user_event_collart_di.json",
+      "sha256": "0dd47c85084323abd8b067ca2ee7a3826c586e99e97d6b0eca6e0b7942b465b7"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_user_event_param_collart_di.json",
+      "sha256": "3cbc064ba1126f6802fa73bc6cc9fca4c2ebff492b8b11cb0eb69926875cc1ea"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_oper_user_new_collart_di.json",
+      "sha256": "aab5e0cc7be429e996bbab2af813e7c4db7bb304f4a9e59af4c25e68d4d39ea2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_template_search_user_keyword_di.json",
+      "sha256": "d577f706761e8817fdf91378103478c4f1676f74eae4e20b17485470fe67920d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.ads_vip_user_info_all.json",
+      "sha256": "ca255e8211f5817769a9854d353911fba6158480a62c040c105e3685e08c6a99"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.big_r_realtime_alert_log.json",
+      "sha256": "99541ff171777404c245736bafbde99bb81473bfaf76e33ad5de590377aee8dc"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.big_r_realtime_today_income.json",
+      "sha256": "e2e48322443eaf9e068fbdf077eacba66c90fb099f331f5a87b6d50d495b6dc7"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collart.big_r_user_value_state.json",
+      "sha256": "bad340a62de437c0a00330082dd203d467f62a0826efe7ea1e292cc17e70cc20"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di.json",
+      "sha256": "fe477a5ed8f22d3d851a52e111ef93f904da61ea715309be5666aa7cdeed44a5"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di.json",
+      "sha256": "dd6828db9afd78b0ca54fa4a62d90cf7bb6b3f987842e9c17e370f546540ab1b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di.json",
+      "sha256": "ae996ecc3be037c641b9b8069655f027178cdcf995e7b618ce8ac9cd870fa27c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di.json",
+      "sha256": "42d43e6cb7aea4ef68f2dc46ba047726c21cb3f5313a1bc9cb5f8b74ae2f4b15"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di.json",
+      "sha256": "e31304ae40364a3b6478d1032d0410d1fdb812c7259876d646ee42211d14465a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartandroid.ads_oper_event_metric_country_di.json",
+      "sha256": "bf17e9f269ac7a747202e6da6875801d0e4cef88b4ca0d9588cc0f01b1162f5b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartandroid.ads_oper_user_active_di.json",
+      "sha256": "db7e06d87cc0b53f117e13e21430ca827e41d071eaf5e680852f3fc7559e3ac2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartandroid.ads_oper_user_event_metric_di.json",
+      "sha256": "7027913455dd22869fd7191c38980d3992af079917e5abe9d8a8203cbf7f1ada"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartandroid.ads_oper_user_profile_df.json",
+      "sha256": "d0dc0cd5f085c163b9b0f965cec591f88b646c383ec9b33902c9694839aaec63"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_dim_metric_rule.json",
+      "sha256": "30d91eb3c6721a0e8dbc8747024462b5c8ace80ef4bab8a4f878dfa6b7a0edaa"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di.json",
+      "sha256": "de97201348ab97838ed19d4006fbf372210b266826ad49ca91a8b13dd568a839"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di.json",
+      "sha256": "40d1527dfdf9bde5fbc80fa2bccba61fa6601cd424dc923484368ed1a38ef5a4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di.json",
+      "sha256": "a052962ed936ff05b6d22f09aab7082e1d38006b97cd1a574a5f1e848caf18b0"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di.json",
+      "sha256": "1935cd089d72dbe30fdeb4a703a21e3b8089131b1eb9ad06a31b1a19cb354c2b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di.json",
+      "sha256": "a24d210e3d4288154553fdba26ada0f9711f68fb7f67d453a327b40e60178426"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_oper_event_metric_country_di.json",
+      "sha256": "86ada2a403340ddd14e45480b4d29e0fa60d3387e43c4c13eaa34a0f89173535"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_oper_user_active_di.json",
+      "sha256": "6c36eeda811e5f62927249a4d719e6cebec7b057c6d56144b789a0f629cb2332"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_oper_user_event_metric_di.json",
+      "sha256": "e35af15c391ac1315c054da384296c53775319d7ca5287f50c15f7e200250251"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_oper_user_profile_df.json",
+      "sha256": "4723ed9bbc4c19934cca98089ab25aea7fc4083268ff3cb8e91833c1208823c0"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.json",
+      "sha256": "cff8482fd6c313dfdf3a3f8ae0741c16b96f76330b53d1fc3cebf415e22830f2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di.json",
+      "sha256": "96d54df177d31835f43b04bbb4abc103515d02198102648c9b6c56d6a4132fdd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartios.ads_oper_basic_indicator_country_di.json",
+      "sha256": "700119232e87d2d8ef6e94a8ef2ae8a2653a88b2faa52d2254aaa445467e126f"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartios.ads_oper_basic_indicator_daily_compare_di.json",
+      "sha256": "673cbd13e546e03664fd0b112922b162dc23a6517281b6517c9d5d45047e5352"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di.json",
+      "sha256": "f92c43363a337f0c5554117ba88b1f18695331e910b4ea4b500bc6df660ea25c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartios.ads_oper_event_metric_attr_di.json",
+      "sha256": "b1e252c70b1b6d6df587030194bf7c0bd66ed73f09a89b380090ab720335fc71"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartios.ads_oper_event_metric_country_di.json",
+      "sha256": "759bfe75de8d54b66146f29cde48502bbdb75c5ccc5fb9b0ff6b628a22886b18"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartios.ads_oper_user_active_di.json",
+      "sha256": "029ede5cb5a6874eae563e9052aad1cd7f8174a73e23fb6dc593210c37fc65f2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartios.ads_oper_user_event_metric_di.json",
+      "sha256": "befac47bcefbd6baa5ec0324473031e24a4f8467f7dd057d0686739cb562c300"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartios.ads_oper_user_profile_df.json",
+      "sha256": "edaf5d984bb2c70acbd0c54931f7a9bdded55e2b55b49f1a4928526d9c4a0d09"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartweb.ads_dim_metric_rule.json",
+      "sha256": "f5d2b18fb2c81e62e8e20b0dabc080205a39ad0f053a060e94e041adaf73bfcf"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di.json",
+      "sha256": "33f2b3cf6c5dd986d0976c1264d5a5a00ceb3d1a95b1a18553c126d4a9da3a34"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di.json",
+      "sha256": "7995195b5db44f0744a31d4c49d4bdd595b6261ec91c1d22430b1449aeea4e42"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di.json",
+      "sha256": "1e4bad3d02ee7ea98102718c487c48c7147e23ecddc7fd88b0ae226f936cabab"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di.json",
+      "sha256": "e65aecaa461dd1ed7affa8728519cdb6c4aa3b8b3bb72187dd026cfa30e1aeb6"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartweb.ads_oper_event_metric_attr_di.json",
+      "sha256": "f7dd21ec5ca4166bf2d5a4a7e6ad17e58f00b485c426957744471e114c92eb7b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartweb.ads_oper_event_metric_country_di.json",
+      "sha256": "c2bc7fece3ce98a4c925dcd63225d7cc8d1eaf1195bec2906ed4c986dd8cec72"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartweb.ads_oper_user_active_di.json",
+      "sha256": "17a9e241a0ba3a5068f763db3c0ae6f26b731e2f8e7cddc25e7c4b0660828647"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartweb.ads_oper_user_event_metric_di.json",
+      "sha256": "6787870f6b169467e47d8b7edc00afb11c9da07d7d52548d95e6ec91bd8ae8be"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ads_collartweb.ads_oper_user_profile_df.json",
+      "sha256": "a414615e88a2f227ccdb9a34cc3e4d1de472e8dba1affcf4c4b9eff69f9893bb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ai_service.ai_cost_data.json",
+      "sha256": "1f59a80691c00de2f4a60988a6b4f7e7ec47eb8eab6991384cee16c8eecfc356"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ai_service.ai_service_record_info_1d.json",
+      "sha256": "803ec780233ea534b16f82b88322a9bf0c9f0ee77fca4ca04a20cd7a6fcad742"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ai_service.collart_core_event_bi.json",
+      "sha256": "4942feb45285a0e9eb1f101ae53ee036acc548b550479673a370d1a2e0ae3634"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.collart_campaign_name_modify_copy.json",
+      "sha256": "c932a13a5af346872512d2a5b8cb6a76b4daa02fbd153adce0b556021302826b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.collart_product_price_copy.json",
+      "sha256": "a653391b55bc35119faea5edd3bfd26f14b8a5ddb613353b8777ce1348f97438"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.dim_ai_service_cost_unit_copy.json",
+      "sha256": "f6d6f7b31e9f25f2e322f387e529e19d08a317a9dbfddaec1639af744f7c8c8c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.dim_ai_service_model_info_copy.json",
+      "sha256": "72404492427385a583bb355f781b7bcd2185ed94376cc41abacb67c535e2c49e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.dim_collart_android_core_event_copy.json",
+      "sha256": "38529117f28faa40d6bf5b23f7da98ebf6a7743d89037c6473356172d6ae82cb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.dim_collart_asa_keyword_info.json",
+      "sha256": "45079f4fed108373834952920ce15555b1388c41aaf842d4da58c175f290a072"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.dim_collart_core_event_copy.json",
+      "sha256": "60d1a66afd64f4dc81a466f193893f635c600feac03c92bf7fa2fd4b8998388c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.dim_country_info.json",
+      "sha256": "8e09a2a3e623112bd985788ee4b64b55d59c61484011e280074401471b96ce0e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.dim_module_template_info_android.json",
+      "sha256": "a0e2416dba166873f9f0169fa52c4da46772206a4edff6a6e9760d26f468402e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.dim_product_info.json",
+      "sha256": "b837b08575e2c6bd24baf595d6915506123b34af5a7c1d6153ff361b228173ef"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.dim_product_info_copy.json",
+      "sha256": "78577b8df13aeff421d40bfd79eb26f23d96fe194d33c6c851695913838459b1"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.dim_template_tag.json",
+      "sha256": "4ac97934cdd752fefe10489b5b514face28e9fc56ab6045bedf6a396b273afac"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dim.exchange_rate_days.json",
+      "sha256": "c707e99b59a5d315a9a56baf917febf98303d7629c1713ea0d768701d513fc6b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dm.dm_collart_android_user_event_di.json",
+      "sha256": "ea1c3b5912b78c4e2c847a90b0b9f80feb5de28cb8bb94d34faa3d80b89426ec"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dm.dm_collart_ios_user_event_di.json",
+      "sha256": "e21f0e6a0f7c85d4625df27afc99661880d14a702d7230ff8f4a1c1dbd33b2cf"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dm.dm_collart_web_user_event_di.json",
+      "sha256": "01a834b6399dcc7d7c16c0a0e85aa3a9aad6efdedc7943effe8e6c0783ecc52a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dm.dm_user_profile_collart_df.json",
+      "sha256": "170583cdb5540c0ab6d3d28bfebe082292cfd5eea4bc5b1b47b4a179550f8d4c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_apple_user_subscribtion_di.json",
+      "sha256": "eefff0d565e49479b68e9549a974d8d69a90b0f70227f07c314508f6ee6181cc"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_cdct_delivery_cost_di.json",
+      "sha256": "e5b9a06518607cd104c7a84c0174bb31ea91217f6fab80229739ea5ad63758fa"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_cdct_woolong_request_di.json",
+      "sha256": "8f6d0a537ab291e9d8f0ce84a0edd4e3f2f8df7827b801a2f3cd6e15173dfecb"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_id_convert_di.json",
+      "sha256": "b4838f36ac5d9336e39c9c1df2fbeb45a8c11d0b35166903f7eeb2da9a91c86e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_oper_delivery_adjust_user_di.json",
+      "sha256": "e3ab3b053879f6adbfa74c4389a5248d9f9dc809ae1cda8b9542b30bc4a1321b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_oper_sub_order_revenue_df.json",
+      "sha256": "6850698e01dcd4b3aeb245ee998bb8459d1e07236033faaa87df1ca76d9e2254"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_oper_user_basic_di.json",
+      "sha256": "0d48a6434d41da04ca7364e881df294eeb9af2b859c8c9d1fb751589076e6266"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_oper_user_collart_di.json",
+      "sha256": "9bee05ccfbdbbef77ef150a512225a7ff724efec0ea220fedde0563d06fcaa61"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_oper_user_event_di.json",
+      "sha256": "540b12654b8f30b9dcdd74a95607e5d1a3dd76b9077d2ba64466d3c339537f05"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_oper_user_event_params_di.json",
+      "sha256": "4460645ba8c67d2782c72f1b590599cd3f7d94982b5dea35af32fc8669294738"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_oper_user_order_event_di.json",
+      "sha256": "b78f3ca4d53c0247a0cbd4dcdb591f9c000b782db5a63907124b3401ce880256"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_oper_user_properties_di.json",
+      "sha256": "8391f468cca1612235e09e2ab413c0ec0fe57ce131954081af23df140f7509ea"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dwd.dwd_oper_user_transaction_di.json",
+      "sha256": "1a9a0135399d9975a597ac4b81b174d36c3bac81db44dda5b30ea0d17c41b356"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_id_convert_df.json",
+      "sha256": "fd8cb534b1ba3d597f102bafc6588f0b3bc3aa6da4fa825158e97955bc3ea271"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_new_user_accumlate_subscribe_1d.json",
+      "sha256": "7b3468581fbdd2a7ce130408a690ea714ad7bbe55baeca0ce9c131cfa7dac691"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_oper_asa_collart_1d.json",
+      "sha256": "8586a0ae590b77fac0e6329b5fd5cf795e6267f85d01abcf8e8a3e280f7b8744"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_oper_asa_delivery_di.json",
+      "sha256": "90144060f7995b40d1e457a76910639230ab830332b870ac8d4d0e2c23500dda"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_oper_asa_keyword_collart_1d.json",
+      "sha256": "4e8d5f33f77561065bd6a5c9b87dfefa5d828ad9343d1109372a55a11aeddea8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_oper_basic_aidata_1d.json",
+      "sha256": "ddddddbe66e7e9648449e4cd0f30225df11f2e89be5b8100792de8d356e4cd02"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_oper_delivery_collart_1d.json",
+      "sha256": "de0af0a2f2eb72e7f8e9341f214c3486aff8c822dcf59366a53f7515a392afe2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_oper_delivery_user_collart_1d.json",
+      "sha256": "0ad4c85a164b6a0d0fd1ef278945bd246c6a73c4f0771153b181f8b7e64b574d"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_oper_fb_delivery_1d.json",
+      "sha256": "c8a52bee3c5c4d85f2c23daa6239be990bf3ab58593c55a88dfed20dd56b7d88"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_oper_tiktok_ad_1d.json",
+      "sha256": "81acebf9f987452ae36e7928e359495327d443cbf0ae49c49808e08368e761fe"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_oper_user_ad_di.json",
+      "sha256": "21320615b027fca6d6029f45dd08d0a69e9c74e2dee0e46d4f7ab37d1d142b71"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.dws.dws_oper_user_sub_revenue_df.json",
+      "sha256": "24b02b4eadd0df143cb412a360f3be3f9f69622b95e606263d376251995d58ee"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ods.ods_ai_request_info_new_1d.json",
+      "sha256": "a41c87c064bb4becee942dfd512e4ef8f6d56cd59c706b4405d2d2da5311d5cf"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ods.ods_apple_sales_1d.json",
+      "sha256": "37cc22d7ee33f4d108e1ca736e578c4bef299a21fd7e04a215e61a7c3c929b13"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ods.ods_apple_subscription_muselab_df.json",
+      "sha256": "59c0b6e11023d768525780137011e994de740a71f7c5fb39a23afd0e9825b760"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ods.ods_apple_subscription_vibedance_df.json",
+      "sha256": "eeb6f87b3c558293c681afb25a4bb563ea0c107bd9111b58b15a1b3c994483cd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ods.ods_apple_subscription_vidart_df.json",
+      "sha256": "d2309ff130fb45ec5754e5223962d65085349f5081fb772f24f056135fe59f4b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.ods.orders.json",
+      "sha256": "64637d73dea124be07b85137b045ccf835102d94ca0d2741054fd0c00dd50ee2"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/aidata2025.revenue.vip_event_data_ios.json",
+      "sha256": "89c23dab5f2f1c8df59747927010bfe5d4f11edb466d6b363ce3e4c38571007e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ads.ads_atlasv_basic_data_daily_1h.json",
+      "sha256": "0c47f40af0ee19fda9774d4dde9026374a75788b904da29734f16d09532a3d3b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h.json",
+      "sha256": "bc325161097dd5f3c7cd4c1ef3a92f6423d8f03761b1cf9e5f24719a721f8919"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ads.ads_atlasv_deliver_cost_daily.json",
+      "sha256": "6233a97fca16db6c0bfc22bb5d65fc74bd653ccf2108c3fd327ad63af6f27e0a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ads.ads_cdct_service_cost_1d.json",
+      "sha256": "a35ed55d56b9795958c935856084ad93ac254fb519df1a2a50beb4a3808f533e"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ads.ads_data_report_1d.json",
+      "sha256": "6e13d7cf46247b3da76682ce66921248607d79606e43b30b57d6a0b9d028b013"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi.json",
+      "sha256": "f6513a854233085588022d4e7f637674fe743b4a8359167665c7df0ea2c14087"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dwd.dwd_cdct_cost_aws_billing_di.json",
+      "sha256": "7bf863089d4f05226716d9fc26b50cb0aab9819a0a085de46b461f90f2899787"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dwd.dwd_cdct_cost_azure_billing_di.json",
+      "sha256": "4104736133f5f9c51e90195bf3a3cef241804ee091b4170b00f4f6fce1a02c34"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dwd.dwd_cdct_cost_gcp_billing_di.json",
+      "sha256": "8a1c692832de0c948b44033ec7a2dbea2a72df46bb25f791f662ea51821f7d8a"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dwd.dwd_cdct_log_aws_cdn_di.json",
+      "sha256": "57c553ad4e43356e05c39ce73555f22c54468142ef8ae2b6f6c7309c3b134741"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dwd.dwd_cdct_revenue_adplatform_di.json",
+      "sha256": "d7fbf38e195ab2d438c263328488ca7f821fe16fbc32850a6cd2c45004492886"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dwd.dwd_cdct_revenue_google_di.json",
+      "sha256": "c3c8221e833ccc0190915399b6883d60387de7ef3b75e2b8cfd395c7b996654b"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.json",
+      "sha256": "163720f85c4f9ea0f28c5519e4113165e17fc23acb429f4af77770315cfdbfdd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dws.dws_cdct_cost_ai_service_1h.json",
+      "sha256": "15e360629a9fb5b9a6353263b650f9c0ac1c2e09dc3b1c5820eea943aea1cf60"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dws.dws_cdct_cost_billing_1d.json",
+      "sha256": "418a8181df4892d47566fd4bdc84d543e76255515fa782a77d8d82fe5120c5b8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dws.dws_cdct_cost_google_1h.json",
+      "sha256": "64568ea7fce42bb65c24b1495e66200be0ccf9bd5b29c3ea38ce694b166599a8"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dws.dws_cdct_log_aws_cdn_1d.json",
+      "sha256": "aa789fa959fa01d2642b04faebbf8d60c701e75d9836f1f5b9e54f9fd5242623"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.dws.dws_cdct_revenue_country_1d.json",
+      "sha256": "2dc9204b1964dc9cb70db2dc1fa4c8eff8602804e13482781cf40088797ef739"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ods.ods_apple_sales_1d.json",
+      "sha256": "8c8c23bb8bb8a194e4e824cffad3eb7c7257d002a456b7acf583524b66513cb4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ods.ods_apple_subscriber_1d.json",
+      "sha256": "0a927d5bd3ecdf0f2849a443336ce6d23cb631d13cd9b5be19d191145cee8d00"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ods.ods_apple_subscription_1d.json",
+      "sha256": "bf5bc83b41f63c7c5e69c28bfc65b475c8d84f2c1dfd9e06562f88dbc2cfaeab"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ods.ods_apple_subscription_event_1d.json",
+      "sha256": "3a2fcb10c450b733fd070c54b99bbd7bda2ab8d5a5e33ee7ba7f81f4f34a1ec4"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ods.ods_woolong_subscription_1d.json",
+      "sha256": "9fcd6d8bc66d849c7eb0d8a65f1212775ad168769b8595c0d445f683dafd559c"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/pubdata2025.ods.user_ai_base_video_record.json",
+      "sha256": "f3d2bf3e663ac75470cc84708b3746da40a8520c864af950a928733650279cf0"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/storytemplate-10a27.analytics_232977577.events_wildcard.json",
+      "sha256": "b7f0affcc1849fe5eb15646e78c54fb8c74ffc1af8bbae6e718a71f9edcbdbdd"
+    },
+    {
+      "path": "plugins/collart-data-assistant/sources/schemas/vidart-8b8ca.analytics_528583115.events_wildcard.json",
+      "sha256": "5251171c85f42561c0c95e33815e129dd32bc679fef7355cf5368c2745a98a9d"
+    },
+    {
+      "path": "README.md",
+      "sha256": "42e5ac5dfba6fe4ea6eb582435c7e6e4854b53d1a4107f82d84f738f5f41b34d"
+    },
+    {
+      "path": "scripts/benchmark.py",
+      "sha256": "a688fa02d4df2de98112791da6b31c6ed1808c08bdf4123bb5f66f6f43964444"
+    },
+    {
+      "path": "scripts/build.py",
+      "sha256": "87f12d6ff6e1192a71055e0677c5ccec8e3f4e2fa4bce1b871c7c099cf5a7547"
+    },
+    {
+      "path": "scripts/source_review.py",
+      "sha256": "d3337352c4e1061bcd4ebee3d25bd15bc733091865663f9b6fd1168fa17ebfb9"
+    },
+    {
+      "path": "scripts/sync_plugin.py",
+      "sha256": "321094c6b4f4e9de56681df8887b9bea44e1e7bbb70134c4b3c39a889a9cc70c"
+    },
+    {
+      "path": "SYNC.md",
+      "sha256": "35bfcc7a82b6fa99d808dea43c78d39de6e9bed2a7d816aa7d29777dd78b4e42"
+    },
+    {
+      "path": "tests/test_structured.py",
+      "sha256": "f3927b74fcf979ca7baca3e14166a1c9ee706c624e236fb32f5f82aa9478865c"
+    },
+    {
+      "path": "tests/test_sync_plugin.py",
+      "sha256": "b86e86f20d0512623d5ebb0295845836b56c15e49f9e1d517847c87bd0350915"
+    }
+  ]
+}

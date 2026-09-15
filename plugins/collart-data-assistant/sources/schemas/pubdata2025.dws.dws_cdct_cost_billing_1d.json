@@ -1,0 +1,96 @@
+{
+  "table": "pubdata2025.dws.dws_cdct_cost_billing_1d",
+  "captured_at": "2026-09-14T13:53:49.612764+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "日期"
+      },
+      {
+        "name": "billing_from",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "账单来源"
+      },
+      {
+        "name": "atlasv_app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用名称"
+      },
+      {
+        "name": "resource_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "资源类型"
+      },
+      {
+        "name": "billing_month",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "账单月份"
+      },
+      {
+        "name": "module",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "ai模型"
+      },
+      {
+        "name": "usage_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "使用用量"
+      },
+      {
+        "name": "cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "成本"
+      },
+      {
+        "name": "sub_resource_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "资源子类型"
+      },
+      {
+        "name": "region",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "地域"
+      },
+      {
+        "name": "pricing_unit",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "unit_price",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "单价(仅对于GB作用)"
+      },
+      {
+        "name": "project_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "项目名称"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dws",
+    "tableId": "dws_cdct_cost_billing_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "description": "资源账单分摊前表",
+  "type": "TABLE"
+}

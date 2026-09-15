@@ -1,0 +1,186 @@
+{
+  "table": "aidata2025.dws.dws_oper_user_sub_revenue_df",
+  "captured_at": "2026-09-14T13:19:08.325350+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "order_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "订阅日期"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "埋点日期"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户ID"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "App名称"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "包名称"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家"
+      },
+      {
+        "name": "last_subscribe_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "最近订阅类型"
+      },
+      {
+        "name": "order_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "订阅次数"
+      },
+      {
+        "name": "first_subscribe_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "首订日期"
+      },
+      {
+        "name": "last_subscribe_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "最近一次订阅日期"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "前端透传用户ID"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE",
+        "description": "是否新客"
+      },
+      {
+        "name": "is_active",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE",
+        "description": "是否活跃"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户渠道属性"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "App版本"
+      },
+      {
+        "name": "total_revenue_today",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "当日总收入"
+      },
+      {
+        "name": "resub_revenue_today",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "当日续订收入"
+      },
+      {
+        "name": "new_revenue_today",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "当日首订收入"
+      },
+      {
+        "name": "trial_conver_revenue_today",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "当日试用转正收入"
+      },
+      {
+        "name": "total_revenue_all",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "历史总收入"
+      },
+      {
+        "name": "resub_revenue_all",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "历史续订收入"
+      },
+      {
+        "name": "new_revenue_all",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "历史首订收入"
+      },
+      {
+        "name": "trial_conver_revenue_all",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "历史试用转正收入"
+      },
+      {
+        "name": "new_order_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "首订订单数"
+      },
+      {
+        "name": "renew_order_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订订单数（转正+续订）"
+      },
+      {
+        "name": "credit_revenue_today",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "当日点数包收入"
+      },
+      {
+        "name": "credit_revenue_all",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "累计点数包收入"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dws",
+    "tableId": "dws_oper_user_sub_revenue_df"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "order_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name",
+      "user_pseudo_id"
+    ]
+  },
+  "type": "TABLE"
+}

@@ -1,7 +1,7 @@
 {
   "name": "collart-data-assistant",
-  "version": "0.4.0",
-  "description": "Collart 项目只读数据分析与团队知识维护；原始埋点仅最近 7 天。仅公司内部使用。",
+  "version": "0.5.0",
+  "description": "Collart 四端结构化知识与只读数据分析；原始埋点仅最近 7 天。仅公司内部使用。",
   "author": {
     "name": "Collart 数据团队"
   },
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Collart 团队数据助手",
     "shortDescription": "collart项目只读分析、业务口径与知识维护",
-    "longDescription": "共享可追溯的 Collart 业务知识与 SQL 模板，提供分析和知识维护入口。使用同事已有授权连接，只读数据；原始埋点仅最近 7 天。知识更新通过团队源码发布。",
+    "longDescription": "按业务、表字典、埋点、指标和分析方法检索 Collart 四端知识；表字典关联 Dataform SQLX，默认少量有界输出。使用本人授权连接，仅只读；原始埋点最近 7 天。",
     "developerName": "Collart 数据团队",
     "category": "Productivity",
     "capabilities": [],

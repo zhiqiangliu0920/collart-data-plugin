@@ -1,0 +1,272 @@
+config {
+  type: "operations",
+  name: "ads_collartios_oper_event_metric_attr_di",
+  schema: "ads_collartios",
+  dependencies: [
+    "ads_collartios_oper_user_event_metric_di",
+    "ads_collartios_oper_user_active_di"
+  ]
+}
+
+/*
+  Collart iOS 第九张表：日 × 默认维度 事件指标汇总
+  Dataform: definitions/ads/collart/collart_ios/ads_oper_event_metric_attr_di.sqlx
+  目标表  : aidata2025.ads_collartios.ads_oper_event_metric_attr_di
+
+  口径:
+  - 维度对齐表 5：is_new / is_vip / country / traffic_src_type /
+    traffic_src_platform / traffic_src_name / app_version
+  - is_vip: active 为 STRING('2')，本表转 BOOL
+  - app_version：按当日 active DAU Top5（仅 is_active 用户），其余折叠为 'other'
+  - 维度源 active_base 仅取 is_active=TRUE 行：付费-only 行（is_active=FALSE）无事件行为，
+    也不参与 DAU / 版本排名；本表无收入列，故整表按 is_active 过滤
+  - 每个热指标一列 STRUCT<uv,pv>；列名=metric_name 去 *_pv 后缀
+  - 列由 aidata2025.ads_collart.ads_dim_metric_rule is_materialized=true 驱动
+    （本文件由 _scratch/gen_event_metric_attr_sqlx_ios.py 产出，勿手改）
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartios.ads_oper_event_metric_attr_di`
+(
+  event_date DATE,
+  is_new BOOL,
+  is_vip BOOL,
+  country STRING,
+  traffic_src_type STRING,
+  traffic_src_platform STRING,
+  traffic_src_name STRING,
+  app_version STRING,
+  img2video_generate_start STRUCT<uv INT64, pv INT64>,
+  home_show STRUCT<uv INT64, pv INT64>,
+  home_template_click STRUCT<uv INT64, pv INT64>,
+  album_show STRUCT<uv INT64, pv INT64>,
+  generate_ready STRUCT<uv INT64, pv INT64>,
+  generate_save STRUCT<uv INT64, pv INT64>,
+  generate_start STRUCT<uv INT64, pv INT64>,
+  generate_success STRUCT<uv INT64, pv INT64>,
+  video_generate_start STRUCT<uv INT64, pv INT64>,
+  text2video_video_generate_start STRUCT<uv INT64, pv INT64>,
+  referencetovideo_video_generate_start STRUCT<uv INT64, pv INT64>,
+  img_generate_start STRUCT<uv INT64, pv INT64>,
+  img2img_generate_start STRUCT<uv INT64, pv INT64>,
+  text2img_generate_start STRUCT<uv INT64, pv INT64>,
+  video_generate_success STRUCT<uv INT64, pv INT64>,
+  text2video_video_generate_success STRUCT<uv INT64, pv INT64>,
+  referencetovideo_video_generate_success STRUCT<uv INT64, pv INT64>,
+  img2img_generate_success STRUCT<uv INT64, pv INT64>,
+  img_generate_success STRUCT<uv INT64, pv INT64>,
+  text2img_generate_success STRUCT<uv INT64, pv INT64>,
+  video_save STRUCT<uv INT64, pv INT64>,
+  image_save STRUCT<uv INT64, pv INT64>
+)
+PARTITION BY event_date
+CLUSTER BY country, app_version, is_new
+OPTIONS (
+  description = 'Collart iOS 日×默认维度事件指标：表8热指标按 active 维度上卷 uv/pv'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartios.ads_oper_event_metric_attr_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.ads_collartios.ads_oper_event_metric_attr_di`
+(
+  event_date,
+  is_new,
+  is_vip,
+  country,
+  traffic_src_type,
+  traffic_src_platform,
+  traffic_src_name,
+  app_version,
+  img2video_generate_start,
+  home_show,
+  home_template_click,
+  album_show,
+  generate_ready,
+  generate_save,
+  generate_start,
+  generate_success,
+  video_generate_start,
+  text2video_video_generate_start,
+  referencetovideo_video_generate_start,
+  img_generate_start,
+  img2img_generate_start,
+  text2img_generate_start,
+  video_generate_success,
+  text2video_video_generate_success,
+  referencetovideo_video_generate_success,
+  img2img_generate_success,
+  img_generate_success,
+  text2img_generate_success,
+  video_save,
+  image_save
+)
+WITH active_base AS (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    is_new,
+    (is_vip = '2') AS is_vip,
+    country,
+    traffic_src_type,
+    traffic_src_platform,
+    traffic_src_name,
+    app_version
+  FROM `aidata2025.ads_collartios.ads_oper_user_active_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND user_pseudo_id IS NOT NULL
+    AND is_active
+),
+
+top_version AS (
+  SELECT
+    event_date,
+    app_version
+  FROM (
+    SELECT
+      event_date,
+      app_version,
+      COUNT(DISTINCT user_pseudo_id) AS dau,
+      ROW_NUMBER() OVER (
+        PARTITION BY event_date
+        ORDER BY COUNT(DISTINCT user_pseudo_id) DESC, app_version
+      ) AS rn
+    FROM active_base
+    GROUP BY event_date, app_version
+  )
+  WHERE rn <= 5
+),
+
+joined AS (
+  SELECT
+    m.event_date,
+    a.is_new,
+    a.is_vip,
+    a.country,
+    a.traffic_src_type,
+    a.traffic_src_platform,
+    a.traffic_src_name,
+    IF(tv.app_version IS NULL, 'other', a.app_version) AS app_version,
+    m.* EXCEPT (event_date, user_pseudo_id)
+  FROM `aidata2025.ads_collartios.ads_oper_user_event_metric_di` AS m
+  INNER JOIN active_base AS a
+    USING (event_date, user_pseudo_id)
+  LEFT JOIN top_version AS tv
+    ON a.event_date = tv.event_date
+   AND a.app_version = tv.app_version
+  WHERE m.event_date BETWEEN from_date AND to_date
+)
+
+SELECT
+  event_date,
+  is_new,
+  is_vip,
+  country,
+  traffic_src_type,
+  traffic_src_platform,
+  traffic_src_name,
+  app_version,
+  STRUCT(
+    COUNTIF(img2video_generate_start_pv > 0) AS uv,
+    COALESCE(SUM(img2video_generate_start_pv), 0) AS pv
+  ) AS img2video_generate_start,  -- 图生视频 生成开始
+  STRUCT(
+    COUNTIF(home_show_pv > 0) AS uv,
+    COALESCE(SUM(home_show_pv), 0) AS pv
+  ) AS home_show,  -- 首页曝光
+  STRUCT(
+    COUNTIF(home_template_click_pv > 0) AS uv,
+    COALESCE(SUM(home_template_click_pv), 0) AS pv
+  ) AS home_template_click,  -- 首页模板点击
+  STRUCT(
+    COUNTIF(album_show_pv > 0) AS uv,
+    COALESCE(SUM(album_show_pv), 0) AS pv
+  ) AS album_show,  -- 相册曝光
+  STRUCT(
+    COUNTIF(generate_ready_pv > 0) AS uv,
+    COALESCE(SUM(generate_ready_pv), 0) AS pv
+  ) AS generate_ready,  -- 生成准备
+  STRUCT(
+    COUNTIF(generate_save_pv > 0) AS uv,
+    COALESCE(SUM(generate_save_pv), 0) AS pv
+  ) AS generate_save,  -- 生成保存
+  STRUCT(
+    COUNTIF(generate_start_pv > 0) AS uv,
+    COALESCE(SUM(generate_start_pv), 0) AS pv
+  ) AS generate_start,  -- 服务调用开始
+  STRUCT(
+    COUNTIF(generate_success_pv > 0) AS uv,
+    COALESCE(SUM(generate_success_pv), 0) AS pv
+  ) AS generate_success,  -- 服务调用成功
+  STRUCT(
+    COUNTIF(video_generate_start_pv > 0) AS uv,
+    COALESCE(SUM(video_generate_start_pv), 0) AS pv
+  ) AS video_generate_start,  -- 视频生成·开始
+  STRUCT(
+    COUNTIF(text2video_video_generate_start_pv > 0) AS uv,
+    COALESCE(SUM(text2video_video_generate_start_pv), 0) AS pv
+  ) AS text2video_video_generate_start,  -- AItext2video 视频生成·开始
+  STRUCT(
+    COUNTIF(referencetovideo_video_generate_start_pv > 0) AS uv,
+    COALESCE(SUM(referencetovideo_video_generate_start_pv), 0) AS pv
+  ) AS referencetovideo_video_generate_start,  -- referencetovideo 生成开始
+  STRUCT(
+    COUNTIF(img_generate_start_pv > 0) AS uv,
+    COALESCE(SUM(img_generate_start_pv), 0) AS pv
+  ) AS img_generate_start,  -- 图片生成·生成开始
+  STRUCT(
+    COUNTIF(img2img_generate_start_pv > 0) AS uv,
+    COALESCE(SUM(img2img_generate_start_pv), 0) AS pv
+  ) AS img2img_generate_start,  -- 图生图·生成开始
+  STRUCT(
+    COUNTIF(text2img_generate_start_pv > 0) AS uv,
+    COALESCE(SUM(text2img_generate_start_pv), 0) AS pv
+  ) AS text2img_generate_start,  -- 文生图·开始
+  STRUCT(
+    COUNTIF(video_generate_success_pv > 0) AS uv,
+    COALESCE(SUM(video_generate_success_pv), 0) AS pv
+  ) AS video_generate_success,  -- 视频生成·成功
+  STRUCT(
+    COUNTIF(text2video_video_generate_success_pv > 0) AS uv,
+    COALESCE(SUM(text2video_video_generate_success_pv), 0) AS pv
+  ) AS text2video_video_generate_success,  -- AItext2video 视频生成·成功
+  STRUCT(
+    COUNTIF(referencetovideo_video_generate_success_pv > 0) AS uv,
+    COALESCE(SUM(referencetovideo_video_generate_success_pv), 0) AS pv
+  ) AS referencetovideo_video_generate_success,  -- referencetovideo 生成成功
+  STRUCT(
+    COUNTIF(img2img_generate_success_pv > 0) AS uv,
+    COALESCE(SUM(img2img_generate_success_pv), 0) AS pv
+  ) AS img2img_generate_success,  -- 图生图·生成成功
+  STRUCT(
+    COUNTIF(img_generate_success_pv > 0) AS uv,
+    COALESCE(SUM(img_generate_success_pv), 0) AS pv
+  ) AS img_generate_success,  -- 图片生成·生成成功
+  STRUCT(
+    COUNTIF(text2img_generate_success_pv > 0) AS uv,
+    COALESCE(SUM(text2img_generate_success_pv), 0) AS pv
+  ) AS text2img_generate_success,  -- 文生图·成功
+  STRUCT(
+    COUNTIF(video_save_pv > 0) AS uv,
+    COALESCE(SUM(video_save_pv), 0) AS pv
+  ) AS video_save,  -- 视频保存
+  STRUCT(
+    COUNTIF(image_save_pv > 0) AS uv,
+    COALESCE(SUM(image_save_pv), 0) AS pv
+  ) AS image_save  -- 生图保存
+FROM joined
+GROUP BY
+  event_date,
+  is_new,
+  is_vip,
+  country,
+  traffic_src_type,
+  traffic_src_platform,
+  traffic_src_name,
+  app_version;
+
+COMMIT TRANSACTION;

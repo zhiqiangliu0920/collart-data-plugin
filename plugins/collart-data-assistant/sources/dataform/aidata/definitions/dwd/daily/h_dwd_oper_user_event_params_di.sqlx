@@ -1,0 +1,262 @@
+config {
+    type: "operations"
+}
+
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date}-1; 
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+
+DELETE
+FROM
+  `dwd.dwd_oper_user_event_params_di`
+WHERE
+  event_date BETWEEN from_date
+  AND to_date;
+INSERT INTO
+  dwd.dwd_oper_user_event_params_di
+
+
+with event_di as (
+    SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    -- device,
+    event_params,
+    traffic_source,
+    event_timestamp,
+
+  FROM
+    `storytemplate-10a27.analytics_232977577.events_*`
+    ---collart
+  WHERE ( _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    OR _TABLE_SUFFIX BETWEEN CONCAT('intraday_', FORMAT_DATE('%Y%m%d', from_date))
+    AND CONCAT('intraday_', FORMAT_DATE('%Y%m%d', to_date))
+    )
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result') 
+    and (app_info.install_source <>'manual_install' or app_info.id is null)
+  UNION ALL
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    -- device,
+    event_params,
+    traffic_source,
+    event_timestamp,
+
+  FROM
+    `fx-editor.analytics_263446298.events_*`
+    ---shotcut 
+  WHERE
+    _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    AND app_info.id NOT IN ('com.my.drama.box.reel.short.stream.tv.app')
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+
+  UNION ALL
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    -- device,
+    event_params,
+    traffic_source,
+    event_timestamp,
+
+  FROM
+    `removeobjects-17cd7.analytics_348205064.events_intraday_*`
+    ---remove
+  WHERE
+    _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+UNION ALL
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    -- device,
+    event_params,
+    traffic_source,
+    event_timestamp,
+
+  FROM
+    `muselab-9b0d3.analytics_530699929.events_intraday_*`
+    ---muselab
+  WHERE
+    _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result')
+    and ((app_info.id = 'ai.photo.generator.fotos.ai.image.editor.app.free' and app_info.install_source <>'manual_install')
+        or
+        (app_info.id = 'ai.photo.generator.editor.fotos.ai.image.app.free' and app_info.install_source='com.android.vending'))
+  
+  UNION ALL
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    -- device,
+    event_params,
+    traffic_source,
+    event_timestamp,
+
+  FROM
+    `muselab-9b0d3.analytics_530699929.events_*`
+    ---muselab
+  WHERE
+    _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result')
+    and ((app_info.id = 'ai.photo.generator.fotos.ai.image.editor.app.free' and app_info.install_source <>'manual_install')
+        or
+        (app_info.id = 'ai.photo.generator.editor.fotos.ai.image.app.free' and app_info.install_source='com.android.vending'))
+  
+union all 
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    -- device,
+    event_params,
+    traffic_source,
+    event_timestamp,
+
+  FROM
+    `vibedance-540a0.analytics_533044528.events_*`
+    ---vibedance
+  WHERE
+    _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+  
+union all
+  SELECT
+    event_date,
+    event_name,
+    user_pseudo_id,
+    user_id,
+    app_info,
+    geo,
+    -- device,
+    event_params,
+    traffic_source,
+    event_timestamp,
+
+  FROM
+    `vidart-8b8ca.analytics_528583115.events_*`
+    ---collart_ios (Vidart)
+  WHERE ( _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    OR _TABLE_SUFFIX BETWEEN CONCAT('intraday_', FORMAT_DATE('%Y%m%d', from_date))
+    AND CONCAT('intraday_', FORMAT_DATE('%Y%m%d', to_date))
+    )
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+    AND event_name NOT IN ('fire_base_start_request',
+      'isGooglePlayServicesAvailable',
+      'fire_base_end_request',
+      'launch',
+      'gp_query_purchases',
+      'gp_query_purchases_result') and app_info.install_source <>'manual_install'
+
+)
+
+-- 最终数据
+SELECT
+  PARSE_DATE('%Y%m%d', event_date) AS event_date,
+  CASE
+    when app_info.id is null then 'collart_web'
+    WHEN b.app_name IS NOT NULL THEN TRIM(b.app_name)
+    ELSE 'other'
+  END AS app_name,
+  user_pseudo_id,
+  user_id,
+  coalesce(app_info.id,'collart_web') AS package_name,
+  CAST(event_timestamp AS int64) AS event_time,
+  event_name,
+  app_info.version as app_version,
+  geo.country as country,
+  event_params,
+  app_info.install_source,
+  
+FROM  event_di a
+LEFT JOIN
+  UNNEST(ARRAY(
+    SELECT
+      AS STRUCT *
+    FROM
+      dim.dim_product_info )) AS b
+  -----大小表关联broadcast join的写法------
+ON
+  a.app_info.id=b.package_name
+WHERE
+  user_pseudo_id IS NOT NULL;
+
+COMMIT;

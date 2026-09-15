@@ -1,0 +1,200 @@
+{
+  "table": "aidata2025.ads_collartweb.ads_oper_user_event_metric_di",
+  "captured_at": "2026-09-14T13:19:05.885624+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING"
+      },
+      {
+        "name": "page_view_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "session_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "first_visit_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "user_engagement_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "explore_page_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "explore_card_click_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "explore_content_click_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "explore_content_generate_click_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "feature_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "photo_add_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "photo_add_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "generate_click_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "login_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "login_account_choose_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "login_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "vip_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "vip_subscribe_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "vip_subscribe_succeed_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "generate_save_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "valid_user_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img2video_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img2video_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img2img_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img2img_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "text2img_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "text2img_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "referencetovideo_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "referencetovideo_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "video_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "video_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "framestransition_video_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "motioncontrol_video_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "text2video_video_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "framestransition_video_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "motioncontrol_video_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "text2video_video_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img_generate_success_pv",
+        "type": "INTEGER"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collartweb",
+    "tableId": "ads_oper_user_event_metric_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "user_pseudo_id"
+    ]
+  },
+  "description": "ads_collartweb 用户×日事件宽表（新建）",
+  "type": "TABLE"
+}

@@ -1,0 +1,21 @@
+{
+  "table": "storytemplate-10a27.analytics_232977577.events_*",
+  "captured_at": "2026-09-14",
+  "table_metadata": {
+    "表名": "storytemplate-10a27.analytics_232977577.events_*",
+    "表中文名": "ai组原始埋点表",
+    "表类型": "日志表",
+    "行粒度": null,
+    "主键字段": null,
+    "上层表": null,
+    "更新频率": "T+1  4:00",
+    "查询限制/风险提示": null,
+    "使用优先级": "中",
+    "项目": [
+      "collart ios",
+      "collart android",
+      "collart web"
+    ]
+  },
+  "fields": []
+}

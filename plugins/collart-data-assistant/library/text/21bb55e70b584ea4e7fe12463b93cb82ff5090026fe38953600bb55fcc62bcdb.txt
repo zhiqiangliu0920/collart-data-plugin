@@ -1,9 +1,0 @@
-# Collart Fashion 数据知识：指标入口
-
-| 指标 | 定义 | 关键边界 |
-|---|---|---|
-| Fashion 新用户 | [fashion_new_user](fashion_new_user.md) | cohort 定义与未解决差异 |
-| Fashion 收入 | [fashion_revenue](fashion_revenue.md) | 订单金额与产品归属 |
-| 站点范围 | [fashion_vs_main_site_user](fashion_vs_main_site_user.md) | Fashion 默认范围与共用定义 |
-
-两站均应用 [共用内部用户过滤](../../1company/analysis_playbooks/internal_user_filter.md)，再按各指标的产品范围与身份条件统计。

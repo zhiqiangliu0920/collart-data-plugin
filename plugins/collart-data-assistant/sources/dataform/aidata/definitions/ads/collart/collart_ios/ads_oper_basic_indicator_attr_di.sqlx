@@ -1,0 +1,330 @@
+config {
+  type: "operations",
+  name: "ads_collartios_oper_basic_indicator_attr_di",
+  schema: "ads_collartios",
+  dependencies: [
+    "ads_collartios_oper_user_active_di"
+  ]
+}
+
+/*
+  Collart iOS 第五张表：日 × 默认维度基础指标
+  Dataform: definitions/ads/collart/collart_ios/ads_oper_basic_indicator_attr_di.sqlx
+  目标表  : aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di
+  上游    : ads_collartios.ads_oper_user_active_di
+
+  口径（对齐 Android 表 5 + iOS active）:
+  - 维度：is_new / is_vip / country / traffic_src_type / traffic_src_platform / traffic_src_name / app_version
+  - app_version：当日 Top5，其余折叠为 'other'；不加 city / package_name；不做 MAU
+  - retain / rolling_retain：STRUCT d2-d30（与 active 1:1，d2=次日）；COUNTIF 分子，NULL 不计
+  - 当日订阅/购点：active.subscription.is_subscribe / is_credit_pack（源=Apple IAP）
+  - 7 日内订阅/购点：含当日，date_diff ∈ [0,6]
+  - 金额：SUM(active.revenue.*)（用户粒度 Apple IAP；country/daily 汇总层另取官方 Sales）
+  - 流失/回流：COUNTIF(is_churn/is_return)；观察窗未满 NULL 不计
+  - 刷新窗口 [biz_date-30, biz_date]；源表额外前读 6 日供 7 日商业窗口
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+DECLARE source_from_date DATE DEFAULT from_date - 6;
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di`
+(
+  package_name STRING,
+  app_name STRING,
+  event_date DATE,
+  is_new BOOL,
+  is_vip BOOL,
+  country STRING,
+  traffic_src_type STRING,
+  traffic_src_platform STRING,
+  traffic_src_name STRING,
+  app_version STRING,
+  dau INT64,
+  churn_uv INT64,
+  return_uv INT64,
+  retain STRUCT<
+    d2 INT64,
+    d3 INT64,
+    d4 INT64,
+    d5 INT64,
+    d6 INT64,
+    d7 INT64,
+    d8 INT64,
+    d9 INT64,
+    d10 INT64,
+    d11 INT64,
+    d12 INT64,
+    d13 INT64,
+    d14 INT64,
+    d15 INT64,
+    d16 INT64,
+    d17 INT64,
+    d18 INT64,
+    d19 INT64,
+    d20 INT64,
+    d21 INT64,
+    d22 INT64,
+    d23 INT64,
+    d24 INT64,
+    d25 INT64,
+    d26 INT64,
+    d27 INT64,
+    d28 INT64,
+    d29 INT64,
+    d30 INT64
+  >,
+  rolling_retain STRUCT<
+    d2 INT64,
+    d3 INT64,
+    d4 INT64,
+    d5 INT64,
+    d6 INT64,
+    d7 INT64,
+    d8 INT64,
+    d9 INT64,
+    d10 INT64,
+    d11 INT64,
+    d12 INT64,
+    d13 INT64,
+    d14 INT64,
+    d15 INT64,
+    d16 INT64,
+    d17 INT64,
+    d18 INT64,
+    d19 INT64,
+    d20 INT64,
+    d21 INT64,
+    d22 INT64,
+    d23 INT64,
+    d24 INT64,
+    d25 INT64,
+    d26 INT64,
+    d27 INT64,
+    d28 INT64,
+    d29 INT64,
+    d30 INT64
+  >,
+  subscription STRUCT<
+    subscribe_uv INT64,
+    subscribe_uv_7d INT64,
+    credit_pack_uv INT64,
+    credit_pack_uv_7d INT64,
+    credit_pack_cnt INT64,
+    credit_amount INT64,
+    purchase_uv INT64
+  >,
+  revenue STRUCT<
+    purchase_revenue FLOAT64,
+    resub_revenue FLOAT64,
+    new_revenue FLOAT64,
+    trial_conver_revenue FLOAT64,
+    credit_revenue FLOAT64,
+    ad_revenue FLOAT64,
+    new_subscribe_uv INT64,
+    renew_subscribe_uv INT64,
+    credit_pack_uv INT64,
+    ad_uv INT64
+  >
+)
+PARTITION BY event_date
+CLUSTER BY country, app_version, is_new
+OPTIONS (
+  description = 'Collart iOS 日×默认维度基础指标：DAU/留存/订阅购点/流失回流/金额'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di`
+
+WITH active_raw AS (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    is_new,
+    (is_vip = '2') AS is_vip,
+    country,
+    traffic_src_type,
+    traffic_src_platform,
+    traffic_src_name,
+    app_version,
+    is_churn,
+    is_return,
+    retain,
+    rolling_retain,
+    subscription,
+    revenue
+  FROM `aidata2025.ads_collartios.ads_oper_user_active_di`
+  WHERE event_date BETWEEN source_from_date AND to_date
+    AND user_pseudo_id IS NOT NULL
+),
+
+purch_day AS (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    LOGICAL_OR(subscription.is_subscribe) AS is_subscribe,
+    LOGICAL_OR(subscription.is_credit_pack) AS is_credit_pack
+  FROM active_raw
+  GROUP BY event_date, user_pseudo_id
+),
+
+win7 AS (
+  SELECT
+    a.event_date,
+    a.user_pseudo_id,
+    LOGICAL_OR(p.is_subscribe) AS subscribe_in_7d,
+    LOGICAL_OR(p.is_credit_pack) AS credit_pack_in_7d
+  FROM active_raw AS a
+  LEFT JOIN purch_day AS p
+    ON a.user_pseudo_id = p.user_pseudo_id
+   AND DATE_DIFF(a.event_date, p.event_date, DAY) BETWEEN 0 AND 6
+  WHERE a.event_date BETWEEN from_date AND to_date
+  GROUP BY a.event_date, a.user_pseudo_id
+),
+
+active_base AS (
+  SELECT
+    a.*,
+    IF(DATE_ADD(a.event_date, INTERVAL 6 DAY) > to_date, NULL, COALESCE(w.subscribe_in_7d, FALSE)) AS subscribe_in_7d,
+    IF(DATE_ADD(a.event_date, INTERVAL 6 DAY) > to_date, NULL, COALESCE(w.credit_pack_in_7d, FALSE)) AS credit_pack_in_7d
+  FROM active_raw AS a
+  LEFT JOIN win7 AS w
+    USING (event_date, user_pseudo_id)
+  WHERE a.event_date BETWEEN from_date AND to_date
+),
+
+top_version AS (
+  SELECT
+    event_date,
+    app_version
+  FROM (
+    SELECT
+      event_date,
+      app_version,
+      COUNT(DISTINCT user_pseudo_id) AS dau,
+      ROW_NUMBER() OVER (
+        PARTITION BY event_date
+        ORDER BY COUNT(DISTINCT user_pseudo_id) DESC, app_version
+      ) AS rn
+    FROM active_base
+    GROUP BY event_date, app_version
+  )
+  WHERE rn <= 5
+)
+
+SELECT
+  'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free' AS package_name,
+  'vidart_ios' AS app_name,
+  a.event_date,
+  a.is_new,
+  a.is_vip,
+  a.country,
+  a.traffic_src_type,
+  a.traffic_src_platform,
+  a.traffic_src_name,
+  IF(t.app_version IS NULL, 'other', a.app_version) AS app_version,
+  COUNT(DISTINCT a.user_pseudo_id) AS dau,
+  IF(DATE_ADD(a.event_date, INTERVAL 14 DAY) > to_date, NULL, COUNTIF(a.is_churn IS TRUE)) AS churn_uv,
+  COUNTIF(a.is_return IS TRUE) AS return_uv,
+  STRUCT(
+    IF(DATE_ADD(a.event_date, INTERVAL 1 DAY) > to_date, NULL, COUNTIF(a.retain.d2 IS TRUE)) AS d2,
+    IF(DATE_ADD(a.event_date, INTERVAL 2 DAY) > to_date, NULL, COUNTIF(a.retain.d3 IS TRUE)) AS d3,
+    IF(DATE_ADD(a.event_date, INTERVAL 3 DAY) > to_date, NULL, COUNTIF(a.retain.d4 IS TRUE)) AS d4,
+    IF(DATE_ADD(a.event_date, INTERVAL 4 DAY) > to_date, NULL, COUNTIF(a.retain.d5 IS TRUE)) AS d5,
+    IF(DATE_ADD(a.event_date, INTERVAL 5 DAY) > to_date, NULL, COUNTIF(a.retain.d6 IS TRUE)) AS d6,
+    IF(DATE_ADD(a.event_date, INTERVAL 6 DAY) > to_date, NULL, COUNTIF(a.retain.d7 IS TRUE)) AS d7,
+    IF(DATE_ADD(a.event_date, INTERVAL 7 DAY) > to_date, NULL, COUNTIF(a.retain.d8 IS TRUE)) AS d8,
+    IF(DATE_ADD(a.event_date, INTERVAL 8 DAY) > to_date, NULL, COUNTIF(a.retain.d9 IS TRUE)) AS d9,
+    IF(DATE_ADD(a.event_date, INTERVAL 9 DAY) > to_date, NULL, COUNTIF(a.retain.d10 IS TRUE)) AS d10,
+    IF(DATE_ADD(a.event_date, INTERVAL 10 DAY) > to_date, NULL, COUNTIF(a.retain.d11 IS TRUE)) AS d11,
+    IF(DATE_ADD(a.event_date, INTERVAL 11 DAY) > to_date, NULL, COUNTIF(a.retain.d12 IS TRUE)) AS d12,
+    IF(DATE_ADD(a.event_date, INTERVAL 12 DAY) > to_date, NULL, COUNTIF(a.retain.d13 IS TRUE)) AS d13,
+    IF(DATE_ADD(a.event_date, INTERVAL 13 DAY) > to_date, NULL, COUNTIF(a.retain.d14 IS TRUE)) AS d14,
+    IF(DATE_ADD(a.event_date, INTERVAL 14 DAY) > to_date, NULL, COUNTIF(a.retain.d15 IS TRUE)) AS d15,
+    IF(DATE_ADD(a.event_date, INTERVAL 15 DAY) > to_date, NULL, COUNTIF(a.retain.d16 IS TRUE)) AS d16,
+    IF(DATE_ADD(a.event_date, INTERVAL 16 DAY) > to_date, NULL, COUNTIF(a.retain.d17 IS TRUE)) AS d17,
+    IF(DATE_ADD(a.event_date, INTERVAL 17 DAY) > to_date, NULL, COUNTIF(a.retain.d18 IS TRUE)) AS d18,
+    IF(DATE_ADD(a.event_date, INTERVAL 18 DAY) > to_date, NULL, COUNTIF(a.retain.d19 IS TRUE)) AS d19,
+    IF(DATE_ADD(a.event_date, INTERVAL 19 DAY) > to_date, NULL, COUNTIF(a.retain.d20 IS TRUE)) AS d20,
+    IF(DATE_ADD(a.event_date, INTERVAL 20 DAY) > to_date, NULL, COUNTIF(a.retain.d21 IS TRUE)) AS d21,
+    IF(DATE_ADD(a.event_date, INTERVAL 21 DAY) > to_date, NULL, COUNTIF(a.retain.d22 IS TRUE)) AS d22,
+    IF(DATE_ADD(a.event_date, INTERVAL 22 DAY) > to_date, NULL, COUNTIF(a.retain.d23 IS TRUE)) AS d23,
+    IF(DATE_ADD(a.event_date, INTERVAL 23 DAY) > to_date, NULL, COUNTIF(a.retain.d24 IS TRUE)) AS d24,
+    IF(DATE_ADD(a.event_date, INTERVAL 24 DAY) > to_date, NULL, COUNTIF(a.retain.d25 IS TRUE)) AS d25,
+    IF(DATE_ADD(a.event_date, INTERVAL 25 DAY) > to_date, NULL, COUNTIF(a.retain.d26 IS TRUE)) AS d26,
+    IF(DATE_ADD(a.event_date, INTERVAL 26 DAY) > to_date, NULL, COUNTIF(a.retain.d27 IS TRUE)) AS d27,
+    IF(DATE_ADD(a.event_date, INTERVAL 27 DAY) > to_date, NULL, COUNTIF(a.retain.d28 IS TRUE)) AS d28,
+    IF(DATE_ADD(a.event_date, INTERVAL 28 DAY) > to_date, NULL, COUNTIF(a.retain.d29 IS TRUE)) AS d29,
+    IF(DATE_ADD(a.event_date, INTERVAL 29 DAY) > to_date, NULL, COUNTIF(a.retain.d30 IS TRUE)) AS d30
+  ) AS retain,
+  STRUCT(
+    IF(DATE_ADD(a.event_date, INTERVAL 1 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d2 IS TRUE)) AS d2,
+    IF(DATE_ADD(a.event_date, INTERVAL 2 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d3 IS TRUE)) AS d3,
+    IF(DATE_ADD(a.event_date, INTERVAL 3 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d4 IS TRUE)) AS d4,
+    IF(DATE_ADD(a.event_date, INTERVAL 4 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d5 IS TRUE)) AS d5,
+    IF(DATE_ADD(a.event_date, INTERVAL 5 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d6 IS TRUE)) AS d6,
+    IF(DATE_ADD(a.event_date, INTERVAL 6 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d7 IS TRUE)) AS d7,
+    IF(DATE_ADD(a.event_date, INTERVAL 7 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d8 IS TRUE)) AS d8,
+    IF(DATE_ADD(a.event_date, INTERVAL 8 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d9 IS TRUE)) AS d9,
+    IF(DATE_ADD(a.event_date, INTERVAL 9 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d10 IS TRUE)) AS d10,
+    IF(DATE_ADD(a.event_date, INTERVAL 10 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d11 IS TRUE)) AS d11,
+    IF(DATE_ADD(a.event_date, INTERVAL 11 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d12 IS TRUE)) AS d12,
+    IF(DATE_ADD(a.event_date, INTERVAL 12 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d13 IS TRUE)) AS d13,
+    IF(DATE_ADD(a.event_date, INTERVAL 13 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d14 IS TRUE)) AS d14,
+    IF(DATE_ADD(a.event_date, INTERVAL 14 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d15 IS TRUE)) AS d15,
+    IF(DATE_ADD(a.event_date, INTERVAL 15 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d16 IS TRUE)) AS d16,
+    IF(DATE_ADD(a.event_date, INTERVAL 16 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d17 IS TRUE)) AS d17,
+    IF(DATE_ADD(a.event_date, INTERVAL 17 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d18 IS TRUE)) AS d18,
+    IF(DATE_ADD(a.event_date, INTERVAL 18 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d19 IS TRUE)) AS d19,
+    IF(DATE_ADD(a.event_date, INTERVAL 19 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d20 IS TRUE)) AS d20,
+    IF(DATE_ADD(a.event_date, INTERVAL 20 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d21 IS TRUE)) AS d21,
+    IF(DATE_ADD(a.event_date, INTERVAL 21 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d22 IS TRUE)) AS d22,
+    IF(DATE_ADD(a.event_date, INTERVAL 22 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d23 IS TRUE)) AS d23,
+    IF(DATE_ADD(a.event_date, INTERVAL 23 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d24 IS TRUE)) AS d24,
+    IF(DATE_ADD(a.event_date, INTERVAL 24 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d25 IS TRUE)) AS d25,
+    IF(DATE_ADD(a.event_date, INTERVAL 25 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d26 IS TRUE)) AS d26,
+    IF(DATE_ADD(a.event_date, INTERVAL 26 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d27 IS TRUE)) AS d27,
+    IF(DATE_ADD(a.event_date, INTERVAL 27 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d28 IS TRUE)) AS d28,
+    IF(DATE_ADD(a.event_date, INTERVAL 28 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d29 IS TRUE)) AS d29,
+    IF(DATE_ADD(a.event_date, INTERVAL 29 DAY) > to_date, NULL, COUNTIF(a.rolling_retain.d30 IS TRUE)) AS d30
+  ) AS rolling_retain,
+  STRUCT(
+    COUNTIF(a.subscription.is_subscribe) AS subscribe_uv,
+    IF(DATE_ADD(a.event_date, INTERVAL 6 DAY) > to_date, NULL, COUNTIF(a.subscribe_in_7d IS TRUE)) AS subscribe_uv_7d,
+    COUNTIF(a.subscription.is_credit_pack) AS credit_pack_uv,
+    IF(DATE_ADD(a.event_date, INTERVAL 6 DAY) > to_date, NULL, COUNTIF(a.credit_pack_in_7d IS TRUE)) AS credit_pack_uv_7d,
+    SUM(a.subscription.credit_pack_cnt) AS credit_pack_cnt,
+    SUM(a.subscription.credit_amount) AS credit_amount,
+    COUNTIF(a.subscription.is_purchase) AS purchase_uv
+  ) AS subscription,
+  STRUCT(
+    SUM(a.revenue.purchase_revenue) AS purchase_revenue,
+    SUM(a.revenue.resub_revenue) AS resub_revenue,
+    SUM(a.revenue.new_revenue) AS new_revenue,
+    SUM(a.revenue.trial_conver_revenue) AS trial_conver_revenue,
+    SUM(a.revenue.credit_revenue) AS credit_revenue,
+    SUM(a.revenue.ad_revenue) AS ad_revenue,
+    COUNTIF(a.revenue.new_revenue > 0) AS new_subscribe_uv,
+    COUNTIF(a.revenue.resub_revenue > 0) AS renew_subscribe_uv,
+    COUNTIF(a.revenue.credit_revenue > 0) AS credit_pack_uv,
+    COUNTIF(a.revenue.ad_revenue > 0) AS ad_uv
+  ) AS revenue
+FROM active_base AS a
+LEFT JOIN top_version AS t
+  ON a.event_date = t.event_date
+ AND a.app_version = t.app_version
+GROUP BY
+  a.event_date,
+  a.is_new,
+  a.is_vip,
+  a.country,
+  a.traffic_src_type,
+  a.traffic_src_platform,
+  a.traffic_src_name,
+  app_version;
+
+COMMIT;

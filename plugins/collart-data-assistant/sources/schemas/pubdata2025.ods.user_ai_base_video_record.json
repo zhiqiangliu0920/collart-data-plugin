@@ -1,0 +1,58 @@
+{
+  "table": "pubdata2025.ods.user_ai_base_video_record",
+  "captured_at": "2026-09-14T13:53:49.642317+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "data_source",
+        "type": "STRING"
+      },
+      {
+        "name": "create_time",
+        "type": "DATETIME"
+      },
+      {
+        "name": "create_date",
+        "type": "DATE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "model_type",
+        "type": "STRING"
+      },
+      {
+        "name": "client_task_id",
+        "type": "STRING"
+      },
+      {
+        "name": "task_id",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "time_cost",
+        "type": "INTEGER"
+      },
+      {
+        "name": "cost_point",
+        "type": "INTEGER"
+      },
+      {
+        "name": "status",
+        "type": "STRING"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "ods",
+    "tableId": "user_ai_base_video_record"
+  },
+  "type": "TABLE"
+}

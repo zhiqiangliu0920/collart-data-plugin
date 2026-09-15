@@ -1,6 +1,4 @@
 {
-  "schema_version": 1,
-  "note": "别名用于查找，不证明 UI 与事件对应；以返回正文的证据状态为准。",
   "intents": [
     {
       "aliases": [
@@ -13,151 +11,135 @@
         "revenue"
       ],
       "boosts": {
-        "android-revenue-trend": 140,
-        "shared-payment-evidence": 90,
-        "shared-table-routing": 70
-      }
-    },
-    {
-      "aliases": [
-        "净收入",
-        "净额",
-        "累计实收"
-      ],
-      "terms": [
-        "净收入",
-        "净额",
-        "实收"
-      ],
-      "boosts": {
-        "collart-web-user-value-tiers": 150,
-        "shared-payment-evidence": 30
+        "android.revenue": 35,
+        "web.revenue": 30,
+        "fashion.revenue": 30,
+        "shared.revenue": 20
       }
     },
     {
       "aliases": [
         "免费看广告",
-        "广告按钮",
-        "广告 按钮",
         "激励广告",
-        "激励视频",
-        "generate_watch_ad",
+        "广告按钮",
         "点击率"
       ],
       "terms": [
         "generate_watch_ad",
-        "点击率",
-        "激励"
+        "广告",
+        "点击"
       ],
       "boosts": {
-        "android-reward-ad-click": 160,
-        "company-event-rule-contract": 35
+        "android.ads": 150
       }
     },
     {
       "aliases": [
-        "留存",
-        "次留",
-        "retention"
-      ],
-      "terms": [
-        "留存",
-        "次留",
-        "retention"
-      ],
-      "boosts": {
-        "shared-retention-newuser": 90
-      }
-    },
-    {
-      "aliases": [
-        "user_ids",
         "画像",
-        "用户映射"
+        "登录号",
+        "user_ids",
+        "identity"
       ],
       "terms": [
+        "画像",
         "user_ids",
-        "画像"
+        "user_id"
       ],
       "boosts": {
-        "collart_web-identity": 90
+        "web.identity": 130
       }
     },
     {
       "aliases": [
-        "指标规则",
-        "规则表",
-        "metric_name",
-        "ads_dim_metric_rule"
+        "fashion",
+        "服装"
       ],
       "terms": [
-        "规则",
-        "metric_name"
+        "Fashion",
+        "collart_fashion"
       ],
       "boosts": {
-        "company-event-rule-contract": 100
+        "fashion.product": 15
+      }
+    },
+    {
+      "aliases": [
+        "交集",
+        "重叠"
+      ],
+      "terms": [
+        "交集",
+        "Web",
+        "Fashion"
+      ],
+      "boosts": {
+        "fashion.revenue": 140
+      }
+    },
+    {
+      "aliases": [
+        "asa",
+        "关键词"
+      ],
+      "terms": [
+        "ASA",
+        "VidArt",
+        "关键词"
+      ],
+      "boosts": {
+        "ios.asa": 170
+      }
+    },
+    {
+      "aliases": [
+        "留存",
+        "成熟",
+        "retention"
+      ],
+      "terms": [
+        "留存",
+        "成熟",
+        "retain"
+      ],
+      "boosts": {
+        "shared.activity": 130
+      }
+    },
+    {
+      "aliases": [
+        "ads无法",
+        "ads 不能",
+        "ads不可",
+        "回退",
+        "原始埋点"
+      ],
+      "terms": [
+        "ADS",
+        "回退",
+        "原始"
+      ],
+      "boosts": {
+        "shared.routing": 170,
+        "shared.access": 100
+      }
+    },
+    {
+      "aliases": [
+        "无连接",
+        "没有连接",
+        "权限",
+        "只读",
+        "7 天",
+        "7天"
+      ],
+      "terms": [
+        "连接",
+        "只读",
+        "7 天"
+      ],
+      "boosts": {
+        "shared.access": 180
       }
     }
-  ],
-  "applies_to": {
-    "company-event-rule-contract": [
-      "collart_android",
-      "collart_ios",
-      "collart_web",
-      "collart_fashion"
-    ],
-    "ai-knowledge:1company/analysis_playbooks/event_metric_from_rule.md": [
-      "collart_android",
-      "collart_ios",
-      "collart_web",
-      "collart_fashion"
-    ],
-    "shared-internal-users": [
-      "collart_web",
-      "collart_fashion"
-    ]
-  },
-  "table_routes": {
-    "shared-table-routing": [
-      "aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di",
-      "aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di",
-      "aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di",
-      "aidata2025.ads_collartandroid.ads_oper_user_active_di",
-      "aidata2025.ads_collartandroid.ads_oper_user_profile_df",
-      "aidata2025.ads_collartandroid.ads_oper_user_event_metric_di",
-      "aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di",
-      "aidata2025.ads_collartandroid.ads_oper_event_metric_country_di",
-      "aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di",
-      "aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di",
-      "aidata2025.ads_collartios.ads_oper_basic_indicator_country_di",
-      "aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di",
-      "aidata2025.ads_collartios.ads_oper_user_active_di",
-      "aidata2025.ads_collartios.ads_oper_user_profile_df",
-      "aidata2025.ads_collartios.ads_oper_user_event_metric_di",
-      "aidata2025.ads_collartios.ads_oper_event_metric_attr_di",
-      "aidata2025.ads_collartios.ads_oper_event_metric_country_di",
-      "aidata2025.ads_collartios.ads_oper_basic_indicator_daily_compare_di",
-      "aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di",
-      "aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di",
-      "aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di",
-      "aidata2025.ads_collartweb.ads_oper_user_active_di",
-      "aidata2025.ads_collartweb.ads_oper_user_profile_df",
-      "aidata2025.ads_collartweb.ads_oper_user_event_metric_di",
-      "aidata2025.ads_collartweb.ads_oper_event_metric_attr_di",
-      "aidata2025.ads_collartweb.ads_oper_event_metric_country_di",
-      "aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di",
-      "aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di",
-      "aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di",
-      "aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di",
-      "aidata2025.ads_collartfashion.ads_oper_user_active_di",
-      "aidata2025.ads_collartfashion.ads_oper_user_profile_df",
-      "aidata2025.ads_collartfashion.ads_oper_user_event_metric_di",
-      "aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di",
-      "aidata2025.ads_collartfashion.ads_oper_event_metric_country_di",
-      "aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di"
-    ],
-    "company-event-rule-contract": [
-      "aidata2025.ads_collart.ads_dim_metric_rule"
-    ]
-  }
+  ]
 }

@@ -1,0 +1,590 @@
+{
+  "table": "aidata2025.ads_collartios.ads_oper_user_profile_df",
+  "captured_at": "2026-09-14T13:19:05.506204+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING"
+      },
+      {
+        "name": "first_open_date",
+        "type": "DATE"
+      },
+      {
+        "name": "first_open_time",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "register_app_version",
+        "type": "STRING"
+      },
+      {
+        "name": "last_active_date",
+        "type": "DATE"
+      },
+      {
+        "name": "last_app_version",
+        "type": "STRING"
+      },
+      {
+        "name": "current_active_days",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d90",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d360",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "current_is_churn_14d",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "is_vip",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "is_remove_on_first_open",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "is_ever_remove",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "identity",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "adjust_id",
+            "type": "STRING"
+          },
+          {
+            "name": "clarity_user_id",
+            "type": "STRING"
+          },
+          {
+            "name": "advertising_id",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "geo",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "country",
+            "type": "STRING"
+          },
+          {
+            "name": "city",
+            "type": "STRING"
+          },
+          {
+            "name": "continent",
+            "type": "STRING"
+          },
+          {
+            "name": "sub_continent",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "device",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "category",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_brand_name",
+            "type": "STRING"
+          },
+          {
+            "name": "mobile_model_name",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system",
+            "type": "STRING"
+          },
+          {
+            "name": "operating_system_version",
+            "type": "STRING"
+          },
+          {
+            "name": "vendor_id",
+            "type": "STRING"
+          },
+          {
+            "name": "language",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "traffic_src",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "name",
+            "type": "STRING"
+          },
+          {
+            "name": "type",
+            "type": "STRING"
+          },
+          {
+            "name": "platform",
+            "type": "STRING"
+          },
+          {
+            "name": "medium",
+            "type": "STRING"
+          },
+          {
+            "name": "source",
+            "type": "STRING"
+          },
+          {
+            "name": "campaign_id",
+            "type": "STRING"
+          },
+          {
+            "name": "ad_group_id",
+            "type": "STRING"
+          },
+          {
+            "name": "keyword_id",
+            "type": "STRING"
+          }
+        ]
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "first_date",
+            "type": "DATE"
+          },
+          {
+            "name": "first_product_id",
+            "type": "STRING"
+          },
+          {
+            "name": "first_app_version",
+            "type": "STRING"
+          },
+          {
+            "name": "last_date",
+            "type": "DATE"
+          },
+          {
+            "name": "last_product_id",
+            "type": "STRING"
+          },
+          {
+            "name": "last_app_version",
+            "type": "STRING"
+          },
+          {
+            "name": "purchase_cnt_all",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_cnt_all",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_amount_all",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "revenue",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "purchase_revenue_all",
+            "type": "FLOAT"
+          },
+          {
+            "name": "subscription_revenue_all",
+            "type": "FLOAT"
+          },
+          {
+            "name": "credit_revenue_all",
+            "type": "FLOAT"
+          },
+          {
+            "name": "ad_revenue_all",
+            "type": "FLOAT"
+          },
+          {
+            "name": "total_revenue_all",
+            "type": "FLOAT"
+          }
+        ]
+      },
+      {
+        "name": "ltv",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d1",
+            "type": "FLOAT"
+          },
+          {
+            "name": "d7",
+            "type": "FLOAT"
+          },
+          {
+            "name": "d30",
+            "type": "FLOAT"
+          },
+          {
+            "name": "d90",
+            "type": "FLOAT"
+          },
+          {
+            "name": "d360",
+            "type": "FLOAT"
+          }
+        ]
+      },
+      {
+        "name": "retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d3",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d4",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d5",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d6",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d7",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d8",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d9",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d10",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d11",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d12",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d13",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d14",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d15",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d16",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d17",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d18",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d19",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d20",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d21",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d22",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d23",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d24",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d25",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d26",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d27",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d28",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d29",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d30",
+            "type": "BOOLEAN"
+          }
+        ]
+      },
+      {
+        "name": "rolling_retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d3",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d4",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d5",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d6",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d7",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d8",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d9",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d10",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d11",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d12",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d13",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d14",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d15",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d16",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d17",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d18",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d19",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d20",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d21",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d22",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d23",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d24",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d25",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d26",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d27",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d28",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d29",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "d30",
+            "type": "BOOLEAN"
+          }
+        ]
+      },
+      {
+        "name": "profile_updated_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "event",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "video_generate_success_pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "video_generate_start_pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "img_generate_success_pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "img_generate_start_pv",
+            "type": "INTEGER"
+          }
+        ]
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collartios",
+    "tableId": "ads_oper_user_profile_df"
+  },
+  "clustering": {
+    "fields": [
+      "user_pseudo_id"
+    ]
+  },
+  "description": "Collart iOS 用户生命周期画像：1 用户 1 行，历史骨架 + active 增量 MERGE",
+  "type": "TABLE"
+}

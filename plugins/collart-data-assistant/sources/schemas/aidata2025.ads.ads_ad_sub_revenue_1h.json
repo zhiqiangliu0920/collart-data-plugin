@@ -1,0 +1,99 @@
+{
+  "table": "aidata2025.ads.ads_ad_sub_revenue_1h",
+  "captured_at": "2026-09-14T13:19:02.096018+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "sub_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "new_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "renew_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "credit_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "purchase_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "new_subscribe_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "renew_subscribe_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "credit_uv",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "order_num",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "new_order_num",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "renew_order_num",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "credit_order_num",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads",
+    "tableId": "ads_ad_sub_revenue_1h"
+  },
+  "type": "TABLE"
+}

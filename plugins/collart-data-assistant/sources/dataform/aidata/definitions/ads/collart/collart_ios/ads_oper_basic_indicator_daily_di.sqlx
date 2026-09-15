@@ -1,0 +1,506 @@
+config {
+  type: "operations",
+  name: "ads_collartios_oper_basic_indicator_daily_di",
+  schema: "ads_collartios",
+  dependencies: [
+    "ads_collartios_oper_basic_indicator_country_di",
+    "ads_collartios_oper_event_metric_country_di"
+  ]
+}
+
+/*
+  Collart iOS 第七张表：日总览
+  Dataform: definitions/ads/collart/collart_ios/ads_oper_basic_indicator_daily_di.sqlx
+  目标表  : aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di
+
+  口径:
+  - 粒度: event_date × package_name（iOS 包）
+  - 行为/留存/订阅/收入/花费: SUM(aidata2025.ads_collartios.ads_oper_basic_indicator_country_di)
+  - 事件漏斗: SUM(aidata2025.ads_collartios.ads_oper_event_metric_country_di)，列名与 country 一致（含 new_uv 等分层字段）
+  - 本文件由 _scratch/gen_indicator_daily_sqlx_ios.py 产出，勿手改事件列
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di`
+(
+  package_name STRING,
+  app_name STRING,
+  event_date DATE,
+  dau INT64,
+  vip_dau INT64,
+  churn_uv INT64,
+  return_uv INT64,
+  dnu INT64,
+  dnu_vip INT64,
+  dnu_free INT64,
+  dnu_by_source STRUCT<
+    organic INT64,
+    delivery INT64,
+    kol INT64,
+    inhouse INT64
+  >,
+  retain STRUCT<
+    d2 INT64,
+    d3 INT64,
+    d4 INT64,
+    d5 INT64,
+    d6 INT64,
+    d7 INT64,
+    d8 INT64,
+    d9 INT64,
+    d10 INT64,
+    d11 INT64,
+    d12 INT64,
+    d13 INT64,
+    d14 INT64,
+    d15 INT64,
+    d16 INT64,
+    d17 INT64,
+    d18 INT64,
+    d19 INT64,
+    d20 INT64,
+    d21 INT64,
+    d22 INT64,
+    d23 INT64,
+    d24 INT64,
+    d25 INT64,
+    d26 INT64,
+    d27 INT64,
+    d28 INT64,
+    d29 INT64,
+    d30 INT64
+  >,
+  retain2_vip INT64,
+  retain2_free INT64,
+  retain2_by_source STRUCT<
+    organic INT64,
+    delivery INT64,
+    kol INT64,
+    inhouse INT64
+  >,
+  rolling_retain STRUCT<
+    d2 INT64,
+    d3 INT64,
+    d4 INT64,
+    d5 INT64,
+    d6 INT64,
+    d7 INT64,
+    d8 INT64,
+    d9 INT64,
+    d10 INT64,
+    d11 INT64,
+    d12 INT64,
+    d13 INT64,
+    d14 INT64,
+    d15 INT64,
+    d16 INT64,
+    d17 INT64,
+    d18 INT64,
+    d19 INT64,
+    d20 INT64,
+    d21 INT64,
+    d22 INT64,
+    d23 INT64,
+    d24 INT64,
+    d25 INT64,
+    d26 INT64,
+    d27 INT64,
+    d28 INT64,
+    d29 INT64,
+    d30 INT64
+  >,
+  subscription STRUCT<
+    subscribe_uv INT64,
+    subscribe_uv_1d INT64,
+    subscribe_uv_old INT64,
+    subscribe_uv_7d INT64,
+    credit_pack_uv INT64,
+    credit_pack_uv_1d INT64,
+    credit_pack_uv_old INT64,
+    credit_pack_uv_7d INT64,
+    credit_pack_cnt INT64,
+    credit_amount INT64,
+    purchase_uv INT64,
+    purchase_uv_1d INT64
+  >,
+  revenue STRUCT<
+    purchase_revenue FLOAT64,
+    resub_revenue FLOAT64,
+    new_revenue FLOAT64,
+    trial_conver_revenue FLOAT64,
+    credit_revenue FLOAT64,
+    ad_revenue FLOAT64,
+    new_subscribe_uv INT64,
+    renew_subscribe_uv INT64,
+    credit_pack_uv INT64,
+    ad_uv INT64,
+    revenue FLOAT64
+  >,
+  delivery STRUCT<
+    cost FLOAT64,
+    impressions INT64,
+    clicks INT64,
+    installs INT64
+  >,
+  img2video_generate_start STRUCT<uv INT64, pv INT64>,
+  home_show STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  home_template_click STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  album_show STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  generate_ready STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  generate_save STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  generate_start STRUCT<uv INT64, pv INT64, new_uv INT64, old_uv INT64, free_uv INT64, vip_uv INT64>,
+  generate_success STRUCT<uv INT64, pv INT64, new_uv INT64, new_pv INT64, free_pv INT64, vip_pv INT64>,
+  video_generate_start STRUCT<uv INT64, pv INT64>,
+  text2video_video_generate_start STRUCT<uv INT64, pv INT64>,
+  referencetovideo_video_generate_start STRUCT<uv INT64, pv INT64>,
+  img_generate_start STRUCT<uv INT64, pv INT64>,
+  img2img_generate_start STRUCT<uv INT64, pv INT64>,
+  text2img_generate_start STRUCT<uv INT64, pv INT64>,
+  video_generate_success STRUCT<uv INT64, pv INT64>,
+  text2video_video_generate_success STRUCT<uv INT64, pv INT64>,
+  referencetovideo_video_generate_success STRUCT<uv INT64, pv INT64>,
+  img_generate_success STRUCT<uv INT64, pv INT64>,
+  img2img_generate_success STRUCT<uv INT64, pv INT64>,
+  text2img_generate_success STRUCT<uv INT64, pv INT64>,
+  video_save STRUCT<uv INT64, pv INT64>,
+  image_save STRUCT<uv INT64, pv INT64>
+)
+PARTITION BY event_date
+CLUSTER BY package_name
+OPTIONS (
+  description = 'Collart iOS 日总览：country 行为/收入/花费上卷 + 事件漏斗'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di`
+WHERE event_date BETWEEN from_date AND to_date
+  AND package_name = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free';
+
+INSERT INTO `aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di`
+(
+  event_date,
+  package_name,
+  app_name,
+  dau,
+  vip_dau,
+  churn_uv,
+  return_uv,
+  dnu,
+  dnu_vip,
+  dnu_free,
+  dnu_by_source,
+  retain,
+  retain2_vip,
+  retain2_free,
+  retain2_by_source,
+  rolling_retain,
+  subscription,
+  revenue,
+  delivery,
+  img2video_generate_start,
+  home_show,
+  home_template_click,
+  album_show,
+  generate_ready,
+  generate_save,
+  generate_start,
+  generate_success,
+  video_generate_start,
+  text2video_video_generate_start,
+  referencetovideo_video_generate_start,
+  img_generate_start,
+  img2img_generate_start,
+  text2img_generate_start,
+  video_generate_success,
+  text2video_video_generate_success,
+  referencetovideo_video_generate_success,
+  img_generate_success,
+  img2img_generate_success,
+  text2img_generate_success,
+  video_save,
+  image_save
+)
+
+WITH basic AS (
+  SELECT
+    event_date,
+    SUM(dau) AS dau,
+    SUM(vip_dau) AS vip_dau,
+    IF(DATE_ADD(event_date, INTERVAL 14 DAY) > to_date, NULL, SUM(churn_uv)) AS churn_uv,
+    SUM(return_uv) AS return_uv,
+    SUM(dnu) AS dnu,
+    SUM(dnu_vip) AS dnu_vip,
+    SUM(dnu_free) AS dnu_free,
+    STRUCT(
+      COALESCE(SUM(dnu_by_source.organic), 0) AS organic,
+      COALESCE(SUM(dnu_by_source.delivery), 0) AS delivery,
+      COALESCE(SUM(dnu_by_source.kol), 0) AS kol,
+      COALESCE(SUM(dnu_by_source.inhouse), 0) AS inhouse
+    ) AS dnu_by_source,
+  STRUCT(
+      IF(DATE_ADD(event_date, INTERVAL 1 DAY) > to_date, NULL, SUM(b.retain.d2)) AS d2,
+      IF(DATE_ADD(event_date, INTERVAL 2 DAY) > to_date, NULL, SUM(b.retain.d3)) AS d3,
+      IF(DATE_ADD(event_date, INTERVAL 3 DAY) > to_date, NULL, SUM(b.retain.d4)) AS d4,
+      IF(DATE_ADD(event_date, INTERVAL 4 DAY) > to_date, NULL, SUM(b.retain.d5)) AS d5,
+      IF(DATE_ADD(event_date, INTERVAL 5 DAY) > to_date, NULL, SUM(b.retain.d6)) AS d6,
+      IF(DATE_ADD(event_date, INTERVAL 6 DAY) > to_date, NULL, SUM(b.retain.d7)) AS d7,
+      IF(DATE_ADD(event_date, INTERVAL 7 DAY) > to_date, NULL, SUM(b.retain.d8)) AS d8,
+      IF(DATE_ADD(event_date, INTERVAL 8 DAY) > to_date, NULL, SUM(b.retain.d9)) AS d9,
+      IF(DATE_ADD(event_date, INTERVAL 9 DAY) > to_date, NULL, SUM(b.retain.d10)) AS d10,
+      IF(DATE_ADD(event_date, INTERVAL 10 DAY) > to_date, NULL, SUM(b.retain.d11)) AS d11,
+      IF(DATE_ADD(event_date, INTERVAL 11 DAY) > to_date, NULL, SUM(b.retain.d12)) AS d12,
+      IF(DATE_ADD(event_date, INTERVAL 12 DAY) > to_date, NULL, SUM(b.retain.d13)) AS d13,
+      IF(DATE_ADD(event_date, INTERVAL 13 DAY) > to_date, NULL, SUM(b.retain.d14)) AS d14,
+      IF(DATE_ADD(event_date, INTERVAL 14 DAY) > to_date, NULL, SUM(b.retain.d15)) AS d15,
+      IF(DATE_ADD(event_date, INTERVAL 15 DAY) > to_date, NULL, SUM(b.retain.d16)) AS d16,
+      IF(DATE_ADD(event_date, INTERVAL 16 DAY) > to_date, NULL, SUM(b.retain.d17)) AS d17,
+      IF(DATE_ADD(event_date, INTERVAL 17 DAY) > to_date, NULL, SUM(b.retain.d18)) AS d18,
+      IF(DATE_ADD(event_date, INTERVAL 18 DAY) > to_date, NULL, SUM(b.retain.d19)) AS d19,
+      IF(DATE_ADD(event_date, INTERVAL 19 DAY) > to_date, NULL, SUM(b.retain.d20)) AS d20,
+      IF(DATE_ADD(event_date, INTERVAL 20 DAY) > to_date, NULL, SUM(b.retain.d21)) AS d21,
+      IF(DATE_ADD(event_date, INTERVAL 21 DAY) > to_date, NULL, SUM(b.retain.d22)) AS d22,
+      IF(DATE_ADD(event_date, INTERVAL 22 DAY) > to_date, NULL, SUM(b.retain.d23)) AS d23,
+      IF(DATE_ADD(event_date, INTERVAL 23 DAY) > to_date, NULL, SUM(b.retain.d24)) AS d24,
+      IF(DATE_ADD(event_date, INTERVAL 24 DAY) > to_date, NULL, SUM(b.retain.d25)) AS d25,
+      IF(DATE_ADD(event_date, INTERVAL 25 DAY) > to_date, NULL, SUM(b.retain.d26)) AS d26,
+      IF(DATE_ADD(event_date, INTERVAL 26 DAY) > to_date, NULL, SUM(b.retain.d27)) AS d27,
+      IF(DATE_ADD(event_date, INTERVAL 27 DAY) > to_date, NULL, SUM(b.retain.d28)) AS d28,
+      IF(DATE_ADD(event_date, INTERVAL 28 DAY) > to_date, NULL, SUM(b.retain.d29)) AS d29,
+      IF(DATE_ADD(event_date, INTERVAL 29 DAY) > to_date, NULL, SUM(b.retain.d30)) AS d30
+  ) AS retain,
+    IF(DATE_ADD(event_date, INTERVAL 1 DAY) > to_date, NULL, SUM(retain2_vip)) AS retain2_vip,
+    IF(DATE_ADD(event_date, INTERVAL 1 DAY) > to_date, NULL, SUM(retain2_free)) AS retain2_free,
+    IF(DATE_ADD(event_date, INTERVAL 1 DAY) > to_date, NULL, STRUCT(
+      SUM(retain2_by_source.organic) AS organic,
+      SUM(retain2_by_source.delivery) AS delivery,
+      SUM(retain2_by_source.kol) AS kol,
+      SUM(retain2_by_source.inhouse) AS inhouse
+    )) AS retain2_by_source,
+  STRUCT(
+      IF(DATE_ADD(event_date, INTERVAL 1 DAY) > to_date, NULL, SUM(b.rolling_retain.d2)) AS d2,
+      IF(DATE_ADD(event_date, INTERVAL 2 DAY) > to_date, NULL, SUM(b.rolling_retain.d3)) AS d3,
+      IF(DATE_ADD(event_date, INTERVAL 3 DAY) > to_date, NULL, SUM(b.rolling_retain.d4)) AS d4,
+      IF(DATE_ADD(event_date, INTERVAL 4 DAY) > to_date, NULL, SUM(b.rolling_retain.d5)) AS d5,
+      IF(DATE_ADD(event_date, INTERVAL 5 DAY) > to_date, NULL, SUM(b.rolling_retain.d6)) AS d6,
+      IF(DATE_ADD(event_date, INTERVAL 6 DAY) > to_date, NULL, SUM(b.rolling_retain.d7)) AS d7,
+      IF(DATE_ADD(event_date, INTERVAL 7 DAY) > to_date, NULL, SUM(b.rolling_retain.d8)) AS d8,
+      IF(DATE_ADD(event_date, INTERVAL 8 DAY) > to_date, NULL, SUM(b.rolling_retain.d9)) AS d9,
+      IF(DATE_ADD(event_date, INTERVAL 9 DAY) > to_date, NULL, SUM(b.rolling_retain.d10)) AS d10,
+      IF(DATE_ADD(event_date, INTERVAL 10 DAY) > to_date, NULL, SUM(b.rolling_retain.d11)) AS d11,
+      IF(DATE_ADD(event_date, INTERVAL 11 DAY) > to_date, NULL, SUM(b.rolling_retain.d12)) AS d12,
+      IF(DATE_ADD(event_date, INTERVAL 12 DAY) > to_date, NULL, SUM(b.rolling_retain.d13)) AS d13,
+      IF(DATE_ADD(event_date, INTERVAL 13 DAY) > to_date, NULL, SUM(b.rolling_retain.d14)) AS d14,
+      IF(DATE_ADD(event_date, INTERVAL 14 DAY) > to_date, NULL, SUM(b.rolling_retain.d15)) AS d15,
+      IF(DATE_ADD(event_date, INTERVAL 15 DAY) > to_date, NULL, SUM(b.rolling_retain.d16)) AS d16,
+      IF(DATE_ADD(event_date, INTERVAL 16 DAY) > to_date, NULL, SUM(b.rolling_retain.d17)) AS d17,
+      IF(DATE_ADD(event_date, INTERVAL 17 DAY) > to_date, NULL, SUM(b.rolling_retain.d18)) AS d18,
+      IF(DATE_ADD(event_date, INTERVAL 18 DAY) > to_date, NULL, SUM(b.rolling_retain.d19)) AS d19,
+      IF(DATE_ADD(event_date, INTERVAL 19 DAY) > to_date, NULL, SUM(b.rolling_retain.d20)) AS d20,
+      IF(DATE_ADD(event_date, INTERVAL 20 DAY) > to_date, NULL, SUM(b.rolling_retain.d21)) AS d21,
+      IF(DATE_ADD(event_date, INTERVAL 21 DAY) > to_date, NULL, SUM(b.rolling_retain.d22)) AS d22,
+      IF(DATE_ADD(event_date, INTERVAL 22 DAY) > to_date, NULL, SUM(b.rolling_retain.d23)) AS d23,
+      IF(DATE_ADD(event_date, INTERVAL 23 DAY) > to_date, NULL, SUM(b.rolling_retain.d24)) AS d24,
+      IF(DATE_ADD(event_date, INTERVAL 24 DAY) > to_date, NULL, SUM(b.rolling_retain.d25)) AS d25,
+      IF(DATE_ADD(event_date, INTERVAL 25 DAY) > to_date, NULL, SUM(b.rolling_retain.d26)) AS d26,
+      IF(DATE_ADD(event_date, INTERVAL 26 DAY) > to_date, NULL, SUM(b.rolling_retain.d27)) AS d27,
+      IF(DATE_ADD(event_date, INTERVAL 27 DAY) > to_date, NULL, SUM(b.rolling_retain.d28)) AS d28,
+      IF(DATE_ADD(event_date, INTERVAL 28 DAY) > to_date, NULL, SUM(b.rolling_retain.d29)) AS d29,
+      IF(DATE_ADD(event_date, INTERVAL 29 DAY) > to_date, NULL, SUM(b.rolling_retain.d30)) AS d30
+  ) AS rolling_retain,
+    STRUCT(
+      COALESCE(SUM(subscription.subscribe_uv), 0) AS subscribe_uv,
+      COALESCE(SUM(subscription.subscribe_uv_1d), 0) AS subscribe_uv_1d,
+      COALESCE(SUM(subscription.subscribe_uv_old), 0) AS subscribe_uv_old,
+      IF(DATE_ADD(event_date, INTERVAL 6 DAY) > to_date, NULL, SUM(subscription.subscribe_uv_7d)) AS subscribe_uv_7d,
+      COALESCE(SUM(subscription.credit_pack_uv), 0) AS credit_pack_uv,
+      COALESCE(SUM(subscription.credit_pack_uv_1d), 0) AS credit_pack_uv_1d,
+      COALESCE(SUM(subscription.credit_pack_uv_old), 0) AS credit_pack_uv_old,
+      IF(DATE_ADD(event_date, INTERVAL 6 DAY) > to_date, NULL, SUM(subscription.credit_pack_uv_7d)) AS credit_pack_uv_7d,
+      COALESCE(SUM(subscription.credit_pack_cnt), 0) AS credit_pack_cnt,
+      COALESCE(SUM(subscription.credit_amount), 0) AS credit_amount,
+      COALESCE(SUM(subscription.purchase_uv), 0) AS purchase_uv,
+      COALESCE(SUM(subscription.purchase_uv_1d), 0) AS purchase_uv_1d
+    ) AS subscription,
+    STRUCT(
+      COALESCE(SUM(revenue.purchase_revenue), 0.0) AS purchase_revenue,
+      COALESCE(SUM(revenue.resub_revenue), 0.0) AS resub_revenue,
+      COALESCE(SUM(revenue.new_revenue), 0.0) AS new_revenue,
+      COALESCE(SUM(revenue.trial_conver_revenue), 0.0) AS trial_conver_revenue,
+      COALESCE(SUM(revenue.credit_revenue), 0.0) AS credit_revenue,
+      COALESCE(SUM(revenue.ad_revenue), 0.0) AS ad_revenue,
+      COALESCE(SUM(revenue.new_subscribe_uv), 0) AS new_subscribe_uv,
+      COALESCE(SUM(revenue.renew_subscribe_uv), 0) AS renew_subscribe_uv,
+      COALESCE(SUM(revenue.credit_pack_uv), 0) AS credit_pack_uv,
+      COALESCE(SUM(revenue.ad_uv), 0) AS ad_uv,
+      COALESCE(SUM(revenue.revenue), 0.0) AS revenue
+    ) AS revenue,
+    STRUCT(
+      COALESCE(SUM(delivery.cost), 0.0) AS cost,
+      COALESCE(SUM(delivery.impressions), 0) AS impressions,
+      COALESCE(SUM(delivery.clicks), 0) AS clicks,
+      COALESCE(SUM(delivery.installs), 0) AS installs
+    ) AS delivery
+  FROM `aidata2025.ads_collartios.ads_oper_basic_indicator_country_di` AS b
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date
+),
+
+evt AS (
+  SELECT
+    event_date,
+  STRUCT(
+    COALESCE(SUM(img2video_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(img2video_generate_start.pv), 0) AS pv
+  ) AS img2video_generate_start,  -- 图生视频 生成开始
+  STRUCT(
+    COALESCE(SUM(home_show.uv), 0) AS uv,
+    COALESCE(SUM(home_show.pv), 0) AS pv,
+    COALESCE(SUM(home_show.new_uv), 0) AS new_uv
+  ) AS home_show,  -- 首页曝光
+  STRUCT(
+    COALESCE(SUM(home_template_click.uv), 0) AS uv,
+    COALESCE(SUM(home_template_click.pv), 0) AS pv,
+    COALESCE(SUM(home_template_click.new_uv), 0) AS new_uv
+  ) AS home_template_click,  -- 首页模板点击
+  STRUCT(
+    COALESCE(SUM(album_show.uv), 0) AS uv,
+    COALESCE(SUM(album_show.pv), 0) AS pv,
+    COALESCE(SUM(album_show.new_uv), 0) AS new_uv
+  ) AS album_show,  -- 相册曝光
+  STRUCT(
+    COALESCE(SUM(generate_ready.uv), 0) AS uv,
+    COALESCE(SUM(generate_ready.pv), 0) AS pv,
+    COALESCE(SUM(generate_ready.new_uv), 0) AS new_uv
+  ) AS generate_ready,  -- 生成准备
+  STRUCT(
+    COALESCE(SUM(generate_save.uv), 0) AS uv,
+    COALESCE(SUM(generate_save.pv), 0) AS pv,
+    COALESCE(SUM(generate_save.new_uv), 0) AS new_uv
+  ) AS generate_save,  -- 生成保存
+  STRUCT(
+    COALESCE(SUM(generate_start.uv), 0) AS uv,
+    COALESCE(SUM(generate_start.pv), 0) AS pv,
+    COALESCE(SUM(generate_start.new_uv), 0) AS new_uv,
+    COALESCE(SUM(generate_start.old_uv), 0) AS old_uv,
+    COALESCE(SUM(generate_start.free_uv), 0) AS free_uv,
+    COALESCE(SUM(generate_start.vip_uv), 0) AS vip_uv
+  ) AS generate_start,  -- 服务调用开始
+  STRUCT(
+    COALESCE(SUM(generate_success.uv), 0) AS uv,
+    COALESCE(SUM(generate_success.pv), 0) AS pv,
+    COALESCE(SUM(generate_success.new_uv), 0) AS new_uv,
+    COALESCE(SUM(generate_success.new_pv), 0) AS new_pv,
+    COALESCE(SUM(generate_success.free_pv), 0) AS free_pv,
+    COALESCE(SUM(generate_success.vip_pv), 0) AS vip_pv
+  ) AS generate_success,  -- 服务调用成功
+  STRUCT(
+    COALESCE(SUM(video_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(video_generate_start.pv), 0) AS pv
+  ) AS video_generate_start,  -- 视频生成·开始
+  STRUCT(
+    COALESCE(SUM(text2video_video_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(text2video_video_generate_start.pv), 0) AS pv
+  ) AS text2video_video_generate_start,  -- AItext2video 视频生成·开始
+  STRUCT(
+    COALESCE(SUM(referencetovideo_video_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(referencetovideo_video_generate_start.pv), 0) AS pv
+  ) AS referencetovideo_video_generate_start,  -- referencetovideo 生成开始
+  STRUCT(
+    COALESCE(SUM(img_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(img_generate_start.pv), 0) AS pv
+  ) AS img_generate_start,  -- 图片生成·生成开始
+  STRUCT(
+    COALESCE(SUM(img2img_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(img2img_generate_start.pv), 0) AS pv
+  ) AS img2img_generate_start,  -- 图生图·生成开始
+  STRUCT(
+    COALESCE(SUM(text2img_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(text2img_generate_start.pv), 0) AS pv
+  ) AS text2img_generate_start,  -- 文生图·开始
+  STRUCT(
+    COALESCE(SUM(video_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(video_generate_success.pv), 0) AS pv
+  ) AS video_generate_success,  -- 视频生成·成功
+  STRUCT(
+    COALESCE(SUM(text2video_video_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(text2video_video_generate_success.pv), 0) AS pv
+  ) AS text2video_video_generate_success,  -- AItext2video 视频生成·成功
+  STRUCT(
+    COALESCE(SUM(referencetovideo_video_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(referencetovideo_video_generate_success.pv), 0) AS pv
+  ) AS referencetovideo_video_generate_success,  -- referencetovideo 生成成功
+  STRUCT(
+    COALESCE(SUM(img_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(img_generate_success.pv), 0) AS pv
+  ) AS img_generate_success,  -- 图片生成·生成成功
+  STRUCT(
+    COALESCE(SUM(img2img_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(img2img_generate_success.pv), 0) AS pv
+  ) AS img2img_generate_success,  -- 图生图·生成成功
+  STRUCT(
+    COALESCE(SUM(text2img_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(text2img_generate_success.pv), 0) AS pv
+  ) AS text2img_generate_success,  -- 文生图·成功
+  STRUCT(
+    COALESCE(SUM(video_save.uv), 0) AS uv,
+    COALESCE(SUM(video_save.pv), 0) AS pv
+  ) AS video_save,  -- 视频保存
+  STRUCT(
+    COALESCE(SUM(image_save.uv), 0) AS uv,
+    COALESCE(SUM(image_save.pv), 0) AS pv
+  ) AS image_save  -- 生图保存
+  FROM `aidata2025.ads_collartios.ads_oper_event_metric_country_di`
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date
+)
+
+SELECT
+  COALESCE(b.event_date, e.event_date) AS event_date,
+  'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free' AS package_name,
+  'vidart_ios' AS app_name,
+  COALESCE(b.dau, 0) AS dau,
+  COALESCE(b.vip_dau, 0) AS vip_dau,
+  b.churn_uv AS churn_uv,
+  COALESCE(b.return_uv, 0) AS return_uv,
+  COALESCE(b.dnu, 0) AS dnu,
+  COALESCE(b.dnu_vip, 0) AS dnu_vip,
+  COALESCE(b.dnu_free, 0) AS dnu_free,
+  b.dnu_by_source,
+  b.retain,
+  b.retain2_vip AS retain2_vip,
+  b.retain2_free AS retain2_free,
+  b.retain2_by_source,
+  b.rolling_retain,
+  b.subscription,
+  b.revenue,
+  b.delivery,
+  COALESCE(e.img2video_generate_start, STRUCT(0, 0)) AS img2video_generate_start,
+  COALESCE(e.home_show, STRUCT(0, 0, 0)) AS home_show,
+  COALESCE(e.home_template_click, STRUCT(0, 0, 0)) AS home_template_click,
+  COALESCE(e.album_show, STRUCT(0, 0, 0)) AS album_show,
+  COALESCE(e.generate_ready, STRUCT(0, 0, 0)) AS generate_ready,
+  COALESCE(e.generate_save, STRUCT(0, 0, 0)) AS generate_save,
+  COALESCE(e.generate_start, STRUCT(0, 0, 0, 0, 0, 0)) AS generate_start,
+  COALESCE(e.generate_success, STRUCT(0, 0, 0, 0, 0, 0)) AS generate_success,
+  COALESCE(e.video_generate_start, STRUCT(0, 0)) AS video_generate_start,
+  COALESCE(e.text2video_video_generate_start, STRUCT(0, 0)) AS text2video_video_generate_start,
+  COALESCE(e.referencetovideo_video_generate_start, STRUCT(0, 0)) AS referencetovideo_video_generate_start,
+  COALESCE(e.img_generate_start, STRUCT(0, 0)) AS img_generate_start,
+  COALESCE(e.img2img_generate_start, STRUCT(0, 0)) AS img2img_generate_start,
+  COALESCE(e.text2img_generate_start, STRUCT(0, 0)) AS text2img_generate_start,
+  COALESCE(e.video_generate_success, STRUCT(0, 0)) AS video_generate_success,
+  COALESCE(e.text2video_video_generate_success, STRUCT(0, 0)) AS text2video_video_generate_success,
+  COALESCE(e.referencetovideo_video_generate_success, STRUCT(0, 0)) AS referencetovideo_video_generate_success,
+  COALESCE(e.img_generate_success, STRUCT(0, 0)) AS img_generate_success,
+  COALESCE(e.img2img_generate_success, STRUCT(0, 0)) AS img2img_generate_success,
+  COALESCE(e.text2img_generate_success, STRUCT(0, 0)) AS text2img_generate_success,
+  COALESCE(e.video_save, STRUCT(0, 0)) AS video_save,
+  COALESCE(e.image_save, STRUCT(0, 0)) AS image_save
+FROM basic AS b
+FULL OUTER JOIN evt AS e
+  USING (event_date);
+
+COMMIT TRANSACTION;

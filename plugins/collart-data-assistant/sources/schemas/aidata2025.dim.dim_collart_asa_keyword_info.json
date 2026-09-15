@@ -1,0 +1,49 @@
+{
+  "table": "aidata2025.dim.dim_collart_asa_keyword_info",
+  "captured_at": "2026-09-14T13:19:06.415784+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "stats_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "keyword_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "keyword",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "adgroup_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "adgroup_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "campaign_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "campaign_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dim",
+    "tableId": "dim_collart_asa_keyword_info"
+  },
+  "type": "TABLE"
+}

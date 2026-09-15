@@ -1,0 +1,79 @@
+{
+  "table": "aidata2025.ads.ads_template_recommend_foru_1d",
+  "captured_at": "2026-09-14T13:19:02.603251+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户id"
+      },
+      {
+        "name": "user_tag",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户tag"
+      },
+      {
+        "name": "display_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "template_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country_code",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家代码"
+      },
+      {
+        "name": "templates",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "模版列表"
+      },
+      {
+        "name": "modules",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "module列表"
+      },
+      {
+        "name": "platform",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品"
+      },
+      {
+        "name": "template_names",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "模版名称列表"
+      },
+      {
+        "name": "module_names",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "module名称列表"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads",
+    "tableId": "ads_template_recommend_foru_1d"
+  },
+  "clustering": {
+    "fields": [
+      "display_name",
+      "template_type",
+      "country_code"
+    ]
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,193 @@
+{
+  "table": "aidata2025.dwd.dwd_oper_user_transaction_di",
+  "captured_at": "2026-09-14T13:19:07.667972+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "订阅日期（分区字段）"
+      },
+      {
+        "name": "transactionId",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交易唯一标识符"
+      },
+      {
+        "name": "originalTransactionId",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "原始交易ID"
+      },
+      {
+        "name": "webOrderLineItemId",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "网页订单行项目ID"
+      },
+      {
+        "name": "bundleId",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用包标识符"
+      },
+      {
+        "name": "productId",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品ID"
+      },
+      {
+        "name": "subscriptionGroupIdentifier",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "订阅组标识符"
+      },
+      {
+        "name": "purchaseDate",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "description": "购买时间戳(毫秒)"
+      },
+      {
+        "name": "originalPurchaseDate",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "description": "原始购买时间戳(毫秒)"
+      },
+      {
+        "name": "expiresDate",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "description": "订阅过期时间戳(毫秒)"
+      },
+      {
+        "name": "quantity",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "购买数量"
+      },
+      {
+        "name": "type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交易类型(Auto-Renewable Subscription/Consumable)"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用账户令牌(UUID格式)"
+      },
+      {
+        "name": "inAppOwnershipType",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用内购买所有权类型"
+      },
+      {
+        "name": "signedDate",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "description": "数据签名时间戳"
+      },
+      {
+        "name": "offerType",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "优惠类型标识"
+      },
+      {
+        "name": "environment",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "环境类型(Production/Sandbox)"
+      },
+      {
+        "name": "transactionReason",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交易原因"
+      },
+      {
+        "name": "storefront",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "商店区域代码"
+      },
+      {
+        "name": "storefrontId",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "商店区域数字代码"
+      },
+      {
+        "name": "price",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "交易价格"
+      },
+      {
+        "name": "currency",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "货币类型(ISO代码)"
+      },
+      {
+        "name": "offerDiscountType",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "优惠折扣类型"
+      },
+      {
+        "name": "appTransactionId",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用交易ID"
+      },
+      {
+        "name": "offerPeriod",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "优惠期限(如P24D表示24天)"
+      },
+      {
+        "name": "revocationDate",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE",
+        "description": "撤销时间"
+      },
+      {
+        "name": "revocationReason",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "撤销原因"
+      },
+      {
+        "name": "event_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "推理出的事件类型"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_oper_user_transaction_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "bundleId",
+      "productId",
+      "storefront"
+    ]
+  },
+  "type": "TABLE"
+}

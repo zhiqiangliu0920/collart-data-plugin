@@ -1,0 +1,26 @@
+
+
+declare from_date date default ${dataform.projectConfig.vars.biz_date}-1;
+declare to_date date default ${dataform.projectConfig.vars.biz_date};
+
+begin transaction;
+
+delete from `aidata2025.dim.exchange_rate_days`
+where date(stats_date) between from_date and to_date;
+
+insert into `aidata2025.dim.exchange_rate_days`
+
+select 
+    stats_date,
+    currency,
+    any_value(rate)
+from 
+    gzdw2024.gz_dim.exchange_rate_days
+where date(stats_date) between from_date and to_date
+group by 
+  stats_date,
+  currency
+;
+
+
+commit;

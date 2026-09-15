@@ -1,0 +1,74 @@
+{
+  "table": "aidata2025.ai_service.collart_core_event_bi",
+  "captured_at": "2026-09-14T13:19:06.119520+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "key",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "value",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_module",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_name_chinese",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_vip",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "event_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ai_service",
+    "tableId": "collart_core_event_bi"
+  },
+  "type": "TABLE"
+}

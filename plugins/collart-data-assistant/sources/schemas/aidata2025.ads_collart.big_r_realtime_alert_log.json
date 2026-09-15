@@ -1,0 +1,45 @@
+{
+  "table": "aidata2025.ads_collart.big_r_realtime_alert_log",
+  "captured_at": "2026-09-14T13:19:03.849894+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "first_sent_at",
+        "type": "TIMESTAMP"
+      },
+      {
+        "name": "last_total_value",
+        "type": "FLOAT"
+      },
+      {
+        "name": "source",
+        "type": "STRING"
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collart",
+    "tableId": "big_r_realtime_alert_log"
+  },
+  "clustering": {
+    "fields": [
+      "app_name",
+      "user_id"
+    ]
+  },
+  "description": "Collart ?R??????????? app_name + user_id ??",
+  "type": "TABLE"
+}

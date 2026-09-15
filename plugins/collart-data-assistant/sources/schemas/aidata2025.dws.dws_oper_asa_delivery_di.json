@@ -1,0 +1,91 @@
+{
+  "table": "aidata2025.dws.dws_oper_asa_delivery_di",
+  "captured_at": "2026-09-14T13:53:49.126724+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "campaign_id",
+        "type": "STRING"
+      },
+      {
+        "name": "campaign_name",
+        "type": "STRING"
+      },
+      {
+        "name": "adgroup_id",
+        "type": "STRING"
+      },
+      {
+        "name": "adgroup_name",
+        "type": "STRING"
+      },
+      {
+        "name": "keyword",
+        "type": "STRING"
+      },
+      {
+        "name": "is_keyword_attributed",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "cost_cny",
+        "type": "FLOAT"
+      },
+      {
+        "name": "cost_usd",
+        "type": "FLOAT"
+      },
+      {
+        "name": "impressions",
+        "type": "INTEGER"
+      },
+      {
+        "name": "clicks",
+        "type": "INTEGER"
+      },
+      {
+        "name": "installs",
+        "type": "INTEGER"
+      },
+      {
+        "name": "keyword_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dws",
+    "tableId": "dws_oper_asa_delivery_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name",
+      "campaign_id",
+      "adgroup_id"
+    ]
+  },
+  "description": "ASA 投放成本明细：保留关键词成本，并以 adgroup 残差补齐无关键词投放成本",
+  "type": "TABLE"
+}

@@ -1,9 +1,0 @@
-# 首订事件与新用户转化诊断
-
-来源：`run_first_sub_analysis.py`、`run_verify_subscription.py`，原窗口为 2026-03-17～04-21；比较段为 03-24～04-06 与 04-07～04-21。没有本次重跑结果。
-
-先验证窗口、产品包名和事件字典，再分别确认新增 cohort、当窗首次成功付款、历史已付费状态。旧脚本只筛 `platform='ANDROID'`，会混入共享数据集其他 Android 产品；`COUNT(DISTINCT user_pseudo_id)` 同时统计 `first_open` 与 `subscription_first` 的并集，却命名为新用户，分母不成立。
-
-正确方法是独立生成 first_open/正式新增 cohort，再关联该 cohort 在指定观察窗口内的首笔成功支付；分母是 cohort 用户数，分子是其中首付用户数。对比前后需一致观察时长，不能直接比较 14 天与 15 天去重人群。`subscription_first` 是旧脚本假设，事件是否存在与是否为付款成功需要事件字典和订单证据；查询到 0 行不能断言“追踪完全失效”。
-
-原始 GA4 `event_date` 是日期字符串，旧脚本使用未定义 `dt`；`events_2026*` 的后缀只有月日，与 `events_*` 的八位日期不同。现有 [付费转化](../indicators/conversion.md) 统一承接业务口径，旧执行脚本不再作为知识输入；物理原件因清理受阻仍保留。

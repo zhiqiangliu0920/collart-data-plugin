@@ -1,0 +1,261 @@
+config {
+    type: "operations",
+    dependencies: ["h_dwd_oper_user_basic_di","h_dwd_oper_user_order_event_di"]
+}
+-- 每天更新最近30天分区的数据 
+declare from_date date default ${dataform.projectConfig.vars.biz_date}-30;
+declare to_date date default ${dataform.projectConfig.vars.biz_date}+1;
+
+-- 安卓端订阅收入订单明细粒度数据
+begin transaction;
+
+-- 删除当日数据
+delete from `dwd.dwd_oper_sub_order_revenue_df` where order_date between from_date and to_date;
+
+-- 插入当日数据
+insert into `dwd.dwd_oper_sub_order_revenue_df`
+
+-- 获取Google订阅收入
+with android_vip as(
+  SELECT
+    stats_mon
+    ,Product_ID 
+    ,Order_Number
+    ,Order_Charged_Date
+    ,Product_Title
+    ,Product_Type
+    ,Country_of_Buyer -- 国家
+    ,Currency_of_Sale
+    ,Financial_Status
+    ,Item_Price
+    ,Charged_Amount
+    ,Taxes_Collected    
+    ,SKU_ID
+    ,google_fee_rate
+    ,round(rate,4) as rate
+    ,Charged_Amount_usd
+    ,Taxes_Collected_usd
+    ,Revenue_Without_VAT
+    ,Google_Fee
+    ,Revenue
+  FROM  `pubdata2025.dwd.dwd_cdct_revenue_google_di`
+  where Order_Charged_Date between from_date and to_date
+
+  union all 
+   -- 计算collart和home的adjust平台投放订阅收入数据
+  SELECT 
+    substring(cast(date as string),1,7) as stats_mon
+    ,package_name as Product_ID 
+    ,null as Order_Number
+    ,`date` as Order_Charged_Date
+    ,Product_Title as Product_Title
+    ,null as Product_Type
+    ,null as Country_of_Buyer  -- null值 国家
+    ,Currency as Currency_of_Sale
+    ,null as Financial_Status
+    ,null as Item_Price
+    ,null as Charged_Amount
+    ,null as Taxes_Collected        
+    ,SKU_ID as SKU_ID
+    ,0 as google_fee_rate
+    ,1 as rate
+    ,null as Charged_Amount_usd
+    ,null as Taxes_Collected_usd
+    ,null as Revenue_Without_VAT
+    ,null as Google_Fee
+    ,safe_cast(adjusted_amount___USD___ as float64) as Revenue
+  from `pubdata2025.dwd.dwd_cdct_revenue_google_adjust_di`
+  WHERE `date` between from_date and to_date
+  and `date` is not null 
+),
+-- 取埋点表event_order_id 关联 google 订单数据
+user_tab as 
+( 
+  select
+    *
+  from dwd.dwd_oper_user_order_event_di
+),
+ -- 读用户表 获取advertising_id 与 user_pseudo_id，补全用户信息
+ user_tab2 as 
+(   
+  select
+    advertising_id,
+    max(event_date) as event_date,
+    max_by(user_pseudo_id,event_date) as user_pseudo_id,
+    max_by(user_id,event_date) as user_id,
+    max(traffic_src_type) as traffic_src_type,
+    max(traffic_src_name) as traffic_src_name,
+    max(app_name) as app_name,
+    max(package_name) as package_name,
+    max(adjust_id) as adjust_id,
+  from aidata2025.dwd.dwd_oper_user_basic_di
+  where event_date >= from_date-60
+  and advertising_id is not null
+  and advertising_id != '__REDACTED_ID__'
+  group by 
+    advertising_id
+ ),
+ adjust_tab as (
+    select 
+      package_name,
+      adid,
+      max(campaign_name) as campaign_name
+    from
+      aidata2025.dwd.dwd_oper_delivery_adjust_user_di 
+    where activity_kind = 'install'
+    group by all
+ ),
+ -- 读woolong表订阅数据，通过advertising_id 关联用户信息 user_di
+ woolong_original as (
+  SELECT 
+    original_transaction_id,
+    max(advertising_id) as advertising_id,
+    max(user_id) as user_id
+  FROM
+    `pubdata2025.ods.ods_woolong_subscription_1d`
+  group by original_transaction_id
+ ),
+
+sub_tab as (
+  SELECT
+    sub_tab.Order_Charged_Date as order_date,
+    sub_tab.Product_ID as package_name,
+    user_id,
+    advertising_id,
+    Order_Number as order_id,
+    sub_tab.original_transaction_id,
+    product_title,
+    product_type,
+    Country_of_Buyer as country,
+    financial_status,
+    case 
+      when financial_status = 'Refund' and order_number not like '%..%' then 'first'
+      when financial_status = 'Refund' and order_number like '%..%' and rk = 2 then 'trial_conver'
+      when rk = 1 and order_number like '%..0%' then 'trial_conver' 
+      when rk = 1 and order_number not like '%..%' then 'first'
+      else 'renew'
+    end as subscribe_type, 
+    item_price,
+    charged_amount,
+    taxes_collected,
+    sku_id,
+    google_fee_rate,
+    rate,
+    charged_amount_usd,
+    taxes_collected_usd,
+    revenue_without_VAT,
+    google_fee,
+    revenue,
+    case 
+      when sku_id like '%aivideo%' or sku_id like '%ai_video%' or sku_id like '%pack%' or sku_id like '%credits%' then '点数包' -- 增加点数包判断
+      when sku_id like '%year%' then '年包'
+      when sku_id like '%month%' then '月包'
+      when sku_id like '%weekly%' then '周包' 
+      else '其他' 
+    END as order_type,
+    case 
+      when expires_date < to_date-1 and rk_desc = 1 then '到期未续订'
+      when expires_date >= to_date-1 then '未到期'
+      when expires_date is null then '一次性购买'
+    else '到期已续订'
+    end as subscribe_status,
+    expires_date,
+    order_num,
+  from
+  (
+  SELECT
+    *,
+    row_number() over(partition by original_transaction_id 
+                      order by CASE WHEN financial_status='Charged' THEN 0 ELSE 1 END,order_num,order_number) as rk,
+    row_number() over(partition by original_transaction_id order by order_num desc) as rk_desc,
+  from
+  (
+    SELECT
+      *,
+      CASE
+        WHEN sku_id LIKE '%forevertime%' OR sku_id LIKE '%lifetime%' THEN DATE '2099-12-31'-- 终身会员
+        WHEN sku_id LIKE '%one_day%' THEN DATE_ADD(Order_Charged_Date, INTERVAL 1 DAY) -- 日包 +1 天
+        WHEN sku_id LIKE '%weekly%' THEN DATE_ADD(Order_Charged_Date, INTERVAL 7 DAY) -- 周包 +7 天
+        WHEN sku_id LIKE '%month%' THEN DATE_ADD(Order_Charged_Date, INTERVAL 1 MONTH) -- 月包：加1个月，不溢出
+        WHEN sku_id LIKE '%half_year%' THEN DATE_ADD(Order_Charged_Date, INTERVAL 6 MONTH) -- 半年包：加6个月，不溢出
+        WHEN sku_id LIKE '%year%' AND sku_id NOT LIKE '%half_year%' THEN DATE_ADD(Order_Charged_Date, INTERVAL 1 YEAR) -- 年包
+        ELSE NULL -- 其他类型（单次、点数包）
+      END AS expires_date,
+      CASE
+        WHEN order_number LIKE '%..%' THEN SUBSTR(order_number, 1, INSTR(order_number, '..') - 1)
+        ELSE order_number
+      END AS original_transaction_id,
+      CASE
+        WHEN order_number LIKE '%..%' THEN cast(SPLIT(order_number, '..')[OFFSET(1)] as int)
+        ELSE 0
+      END AS order_num,
+    from 
+      android_vip
+  )
+)  sub_tab
+left join woolong_original w 
+on sub_tab.original_transaction_id = w.original_transaction_id
+)
+
+-- 最终数据写入
+select
+  order_date,
+  case 
+    when Order_id like '%..%' then order_date 
+    else coalesce(u1.event_date,u2.event_date)
+  end as event_date, -- 续订订单的埋点日期由订单日期补充
+  coalesce(u1.user_pseudo_id,u2.user_pseudo_id) as user_pseudo_id,
+  a.package_name,
+  coalesce(u1.app_name,u2.app_name,d.app_name) as app_name,
+  order_id,
+  product_title,
+  product_type,
+  country,
+  financial_status,
+  subscribe_type, 
+  item_price,
+  charged_amount,
+  taxes_collected,
+  sku_id,
+  google_fee_rate,
+  rate,
+  charged_amount_usd,
+  taxes_collected_usd,
+  revenue_without_VAT,
+  google_fee,
+  a.revenue,
+  order_type,
+  original_transaction_id,
+  order_num,
+  coalesce(if(campaign_name is null,'nature','delivery'),u2.traffic_src_type,u1.traffic_src_type) as traffic_src_type,
+  coalesce(a.user_id,u1.user_id,u2.user_id) as user_id,
+  expires_date,
+  subscribe_status,
+  coalesce(u1.adjust_id,u2.adjust_id) as adjust_id,
+  '' as login_user_id,
+  trim(split(campaign_name,' (')[0]) as traffic_src_name
+
+from sub_tab a 
+left join user_tab u1
+ on a.original_transaction_id = u1.event_order_id 
+and a.package_name = u1.package_name
+left join user_tab2 u2
+ on a.advertising_id  = u2.advertising_id 
+and a.package_name = u2.package_name
+and a.advertising_id != '__REDACTED_ID__'
+and u2.advertising_id != '__REDACTED_ID__'
+left join dim.dim_product_info d
+on a.package_name = d.package_name
+left join adjust_tab e 
+on coalesce(u1.package_name,u2.package_name) = e.package_name
+and coalesce(u1.adjust_id,u2.adjust_id) = e.adid
+;
+UPDATE `aidata2025.dwd.dwd_oper_sub_order_revenue_df` a
+SET login_user_id = b.user_id
+FROM `aidata2025.ods.au_guest_binding` b
+WHERE a.user_id = b.guest_uid
+  AND a.app_name = 'collart_android'
+  AND b.user_id IS NOT NULL;
+
+commit
+;

@@ -1,0 +1,338 @@
+config {
+  type: "operations",
+  name: "ads_collartweb_oper_event_metric_country_di",
+  schema: "ads_collartweb",
+  dependencies: [
+    "ads_collartweb_oper_event_metric_attr_di"
+  ]
+}
+
+/*
+  Collart Web：日 × 国家 事件指标汇总
+  Dataform: definitions/ads/collart/collart_web/ads_oper_event_metric_country_di.sqlx
+  目标表  : aidata2025.ads_collartweb.ads_oper_event_metric_country_di
+
+  口径:
+  - 粒度: event_date × country；全量国家（不 top_country）
+  - 列名=metric_name 去 *_pv 后缀；STRUCT 内区分 uv/pv
+  - 上游: 从表 9 aidata2025.ads_collartweb.ads_oper_event_metric_attr_di 按 country SUM(uv/pv)
+  - 列由 aidata2025.ads_collart.ads_dim_metric_rule is_materialized=true 驱动
+    （本文件由 _scratch/gen_event_metric_country_sqlx_web.py 产出，勿手改）
+  - 与表 6 basic_indicator_country 并行：本表只管事件漏斗，不管 DAU/收入/花费
+  - 旧 country metric 所需的 new/old/free/vip 切片直接放在对应事件 STRUCT 内：
+      如 generate_start.new_uv / vip_uv、generate_success.new_pv / vip_pv
+  - 凡指标名含 generate_start 的列，STRUCT 必有 vip_uv（= attr.is_vip 的 uv）
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartweb.ads_oper_event_metric_country_di`
+(
+  package_name STRING,
+  app_name STRING,
+  event_date DATE,
+  country STRING,
+  video_generate_success STRUCT<uv INT64, pv INT64>,
+  video_generate_start STRUCT<uv INT64, pv INT64, vip_uv INT64>,
+  page_view STRUCT<uv INT64, pv INT64>,
+  session_start STRUCT<uv INT64, pv INT64>,
+  first_visit STRUCT<uv INT64, pv INT64>,
+  user_engagement STRUCT<uv INT64, pv INT64>,
+  generate_start STRUCT<uv INT64, pv INT64, new_uv INT64, old_uv INT64, free_uv INT64, vip_uv INT64>,
+  generate_success STRUCT<uv INT64, pv INT64, new_uv INT64, new_pv INT64, free_pv INT64, vip_pv INT64>,
+  framestransition_video_generate_start STRUCT<uv INT64, pv INT64, vip_uv INT64>,
+  motioncontrol_video_generate_start STRUCT<uv INT64, pv INT64, vip_uv INT64>,
+  explore_page_show STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  text2video_video_generate_start STRUCT<uv INT64, pv INT64, vip_uv INT64>,
+  explore_card_click STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  explore_content_click STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  explore_content_generate_click STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  feature_show STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  photo_add STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  photo_add_success STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  generate_click STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  framestransition_video_generate_success STRUCT<uv INT64, pv INT64>,
+  login_show STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  motioncontrol_video_generate_success STRUCT<uv INT64, pv INT64>,
+  login_account_choose STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  text2video_video_generate_success STRUCT<uv INT64, pv INT64>,
+  login_success STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  vip_show STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  vip_subscribe STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  vip_subscribe_succeed STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  generate_save STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  valid_user STRUCT<uv INT64, pv INT64, new_uv INT64>,
+  img2video_generate_start STRUCT<uv INT64, pv INT64, vip_uv INT64>,
+  img2video_generate_success STRUCT<uv INT64, pv INT64>,
+  img_generate_start STRUCT<uv INT64, pv INT64, vip_uv INT64>,
+  img2img_generate_start STRUCT<uv INT64, pv INT64, vip_uv INT64>,
+  img_generate_success STRUCT<uv INT64, pv INT64>,
+  img2img_generate_success STRUCT<uv INT64, pv INT64>,
+  text2img_generate_start STRUCT<uv INT64, pv INT64, vip_uv INT64>,
+  text2img_generate_success STRUCT<uv INT64, pv INT64>,
+  referencetovideo_generate_start STRUCT<uv INT64, pv INT64, vip_uv INT64>,
+  referencetovideo_generate_success STRUCT<uv INT64, pv INT64>
+)
+PARTITION BY event_date
+CLUSTER BY country
+OPTIONS (
+  description = 'Collart Web 日×国家事件指标：由表9 attr 按 country 上卷 uv/pv'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartweb.ads_oper_event_metric_country_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.ads_collartweb.ads_oper_event_metric_country_di`
+(
+  package_name,
+  app_name,
+  event_date,
+  country,
+  video_generate_success,
+  video_generate_start,
+  page_view,
+  session_start,
+  first_visit,
+  user_engagement,
+  generate_start,
+  generate_success,
+  framestransition_video_generate_start,
+  motioncontrol_video_generate_start,
+  explore_page_show,
+  text2video_video_generate_start,
+  explore_card_click,
+  explore_content_click,
+  explore_content_generate_click,
+  feature_show,
+  photo_add,
+  photo_add_success,
+  generate_click,
+  framestransition_video_generate_success,
+  login_show,
+  motioncontrol_video_generate_success,
+  login_account_choose,
+  text2video_video_generate_success,
+  login_success,
+  vip_show,
+  vip_subscribe,
+  vip_subscribe_succeed,
+  generate_save,
+  valid_user,
+  img2video_generate_start,
+  img2video_generate_success,
+  img_generate_start,
+  img2img_generate_start,
+  img_generate_success,
+  img2img_generate_success,
+  text2img_generate_start,
+  text2img_generate_success,
+  referencetovideo_generate_start,
+  referencetovideo_generate_success
+)
+SELECT
+  'collart_web' AS package_name,
+  'collart_web' AS app_name,
+  event_date,
+  country,
+  STRUCT(
+    COALESCE(SUM(video_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(video_generate_success.pv), 0) AS pv
+  ) AS video_generate_success,  -- 视频生成·成功
+  STRUCT(
+    COALESCE(SUM(video_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(video_generate_start.pv), 0) AS pv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), video_generate_start.uv, 0)), 0) AS vip_uv
+  ) AS video_generate_start,  -- 视频生成·开始
+  STRUCT(
+    COALESCE(SUM(page_view.uv), 0) AS uv,
+    COALESCE(SUM(page_view.pv), 0) AS pv
+  ) AS page_view,  -- 页面浏览
+  STRUCT(
+    COALESCE(SUM(session_start.uv), 0) AS uv,
+    COALESCE(SUM(session_start.pv), 0) AS pv
+  ) AS session_start,  -- 会话开始
+  STRUCT(
+    COALESCE(SUM(first_visit.uv), 0) AS uv,
+    COALESCE(SUM(first_visit.pv), 0) AS pv
+  ) AS first_visit,  -- 首次访问
+  STRUCT(
+    COALESCE(SUM(user_engagement.uv), 0) AS uv,
+    COALESCE(SUM(user_engagement.pv), 0) AS pv
+  ) AS user_engagement,  -- 用户互动
+  STRUCT(
+    COALESCE(SUM(generate_start.uv), 0) AS uv,
+    COALESCE(SUM(generate_start.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, generate_start.uv, 0)), 0) AS new_uv,
+    COALESCE(SUM(IF(NOT is_new, generate_start.uv, 0)), 0) AS old_uv,
+    COALESCE(SUM(IF(NOT IFNULL(is_vip, FALSE), generate_start.uv, 0)), 0) AS free_uv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), generate_start.uv, 0)), 0) AS vip_uv
+  ) AS generate_start,  -- AI 服务开始
+  STRUCT(
+    COALESCE(SUM(generate_success.uv), 0) AS uv,
+    COALESCE(SUM(generate_success.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, generate_success.uv, 0)), 0) AS new_uv,
+    COALESCE(SUM(IF(is_new, generate_success.pv, 0)), 0) AS new_pv,
+    COALESCE(SUM(IF(NOT IFNULL(is_vip, FALSE), generate_success.pv, 0)), 0) AS free_pv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), generate_success.pv, 0)), 0) AS vip_pv
+  ) AS generate_success,  -- AI 服务成功
+  STRUCT(
+    COALESCE(SUM(framestransition_video_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(framestransition_video_generate_start.pv), 0) AS pv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), framestransition_video_generate_start.uv, 0)), 0) AS vip_uv
+  ) AS framestransition_video_generate_start,  -- FramesTransition 视频生成·开始
+  STRUCT(
+    COALESCE(SUM(motioncontrol_video_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(motioncontrol_video_generate_start.pv), 0) AS pv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), motioncontrol_video_generate_start.uv, 0)), 0) AS vip_uv
+  ) AS motioncontrol_video_generate_start,  -- MotionControl 视频生成·开始
+  STRUCT(
+    COALESCE(SUM(explore_page_show.uv), 0) AS uv,
+    COALESCE(SUM(explore_page_show.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, explore_page_show.uv, 0)), 0) AS new_uv
+  ) AS explore_page_show,  -- Explore 页曝光
+  STRUCT(
+    COALESCE(SUM(text2video_video_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(text2video_video_generate_start.pv), 0) AS pv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), text2video_video_generate_start.uv, 0)), 0) AS vip_uv
+  ) AS text2video_video_generate_start,  -- AItext2video 视频生成·开始
+  STRUCT(
+    COALESCE(SUM(explore_card_click.uv), 0) AS uv,
+    COALESCE(SUM(explore_card_click.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, explore_card_click.uv, 0)), 0) AS new_uv
+  ) AS explore_card_click,  -- Explore 卡片点击
+  STRUCT(
+    COALESCE(SUM(explore_content_click.uv), 0) AS uv,
+    COALESCE(SUM(explore_content_click.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, explore_content_click.uv, 0)), 0) AS new_uv
+  ) AS explore_content_click,  -- Explore 内容点击
+  STRUCT(
+    COALESCE(SUM(explore_content_generate_click.uv), 0) AS uv,
+    COALESCE(SUM(explore_content_generate_click.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, explore_content_generate_click.uv, 0)), 0) AS new_uv
+  ) AS explore_content_generate_click,  -- Explore 内容生成点击
+  STRUCT(
+    COALESCE(SUM(feature_show.uv), 0) AS uv,
+    COALESCE(SUM(feature_show.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, feature_show.uv, 0)), 0) AS new_uv
+  ) AS feature_show,  -- 功能位曝光
+  STRUCT(
+    COALESCE(SUM(photo_add.uv), 0) AS uv,
+    COALESCE(SUM(photo_add.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, photo_add.uv, 0)), 0) AS new_uv
+  ) AS photo_add,  -- 加图
+  STRUCT(
+    COALESCE(SUM(photo_add_success.uv), 0) AS uv,
+    COALESCE(SUM(photo_add_success.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, photo_add_success.uv, 0)), 0) AS new_uv
+  ) AS photo_add_success,  -- 加图成功
+  STRUCT(
+    COALESCE(SUM(generate_click.uv), 0) AS uv,
+    COALESCE(SUM(generate_click.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, generate_click.uv, 0)), 0) AS new_uv
+  ) AS generate_click,  -- 生成点击
+  STRUCT(
+    COALESCE(SUM(framestransition_video_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(framestransition_video_generate_success.pv), 0) AS pv
+  ) AS framestransition_video_generate_success,  -- FramesTransition 视频生成·成功
+  STRUCT(
+    COALESCE(SUM(login_show.uv), 0) AS uv,
+    COALESCE(SUM(login_show.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, login_show.uv, 0)), 0) AS new_uv
+  ) AS login_show,  -- 登录曝光
+  STRUCT(
+    COALESCE(SUM(motioncontrol_video_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(motioncontrol_video_generate_success.pv), 0) AS pv
+  ) AS motioncontrol_video_generate_success,  -- MotionControl 视频生成·成功
+  STRUCT(
+    COALESCE(SUM(login_account_choose.uv), 0) AS uv,
+    COALESCE(SUM(login_account_choose.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, login_account_choose.uv, 0)), 0) AS new_uv
+  ) AS login_account_choose,  -- 登录账号选择
+  STRUCT(
+    COALESCE(SUM(text2video_video_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(text2video_video_generate_success.pv), 0) AS pv
+  ) AS text2video_video_generate_success,  -- AItext2video 视频生成·成功
+  STRUCT(
+    COALESCE(SUM(login_success.uv), 0) AS uv,
+    COALESCE(SUM(login_success.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, login_success.uv, 0)), 0) AS new_uv
+  ) AS login_success,  -- 登录成功
+  STRUCT(
+    COALESCE(SUM(vip_show.uv), 0) AS uv,
+    COALESCE(SUM(vip_show.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, vip_show.uv, 0)), 0) AS new_uv
+  ) AS vip_show,  -- VIP 页曝光
+  STRUCT(
+    COALESCE(SUM(vip_subscribe.uv), 0) AS uv,
+    COALESCE(SUM(vip_subscribe.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, vip_subscribe.uv, 0)), 0) AS new_uv
+  ) AS vip_subscribe,  -- VIP 订阅点击
+  STRUCT(
+    COALESCE(SUM(vip_subscribe_succeed.uv), 0) AS uv,
+    COALESCE(SUM(vip_subscribe_succeed.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, vip_subscribe_succeed.uv, 0)), 0) AS new_uv
+  ) AS vip_subscribe_succeed,  -- VIP 订阅成功
+  STRUCT(
+    COALESCE(SUM(generate_save.uv), 0) AS uv,
+    COALESCE(SUM(generate_save.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, generate_save.uv, 0)), 0) AS new_uv
+  ) AS generate_save,  -- 结果下载/保存
+  STRUCT(
+    COALESCE(SUM(valid_user.uv), 0) AS uv,
+    COALESCE(SUM(valid_user.pv), 0) AS pv,
+    COALESCE(SUM(IF(is_new, valid_user.uv, 0)), 0) AS new_uv
+  ) AS valid_user,  -- 有效行为用户(OR)
+  STRUCT(
+    COALESCE(SUM(img2video_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(img2video_generate_start.pv), 0) AS pv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), img2video_generate_start.uv, 0)), 0) AS vip_uv
+  ) AS img2video_generate_start,  -- 图生视频 生成开始
+  STRUCT(
+    COALESCE(SUM(img2video_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(img2video_generate_success.pv), 0) AS pv
+  ) AS img2video_generate_success,  -- 图生视频 生成成功
+  STRUCT(
+    COALESCE(SUM(img_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(img_generate_start.pv), 0) AS pv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), img_generate_start.uv, 0)), 0) AS vip_uv
+  ) AS img_generate_start,  -- 图片生成·生成开始
+  STRUCT(
+    COALESCE(SUM(img2img_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(img2img_generate_start.pv), 0) AS pv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), img2img_generate_start.uv, 0)), 0) AS vip_uv
+  ) AS img2img_generate_start,  -- 图生图·生成开始
+  STRUCT(
+    COALESCE(SUM(img_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(img_generate_success.pv), 0) AS pv
+  ) AS img_generate_success,  -- 图片生成·生成成功
+  STRUCT(
+    COALESCE(SUM(img2img_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(img2img_generate_success.pv), 0) AS pv
+  ) AS img2img_generate_success,  -- 图生图·生成成功
+  STRUCT(
+    COALESCE(SUM(text2img_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(text2img_generate_start.pv), 0) AS pv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), text2img_generate_start.uv, 0)), 0) AS vip_uv
+  ) AS text2img_generate_start,  -- 文生图·开始
+  STRUCT(
+    COALESCE(SUM(text2img_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(text2img_generate_success.pv), 0) AS pv
+  ) AS text2img_generate_success,  -- 文生图·成功
+  STRUCT(
+    COALESCE(SUM(referencetovideo_generate_start.uv), 0) AS uv,
+    COALESCE(SUM(referencetovideo_generate_start.pv), 0) AS pv,
+    COALESCE(SUM(IF(IFNULL(is_vip, FALSE), referencetovideo_generate_start.uv, 0)), 0) AS vip_uv
+  ) AS referencetovideo_generate_start,  -- referencetovideo 生成开始
+  STRUCT(
+    COALESCE(SUM(referencetovideo_generate_success.uv), 0) AS uv,
+    COALESCE(SUM(referencetovideo_generate_success.pv), 0) AS pv
+  ) AS referencetovideo_generate_success  -- referencetovideo 生成成功
+FROM `aidata2025.ads_collartweb.ads_oper_event_metric_attr_di`
+WHERE event_date BETWEEN from_date AND to_date
+  AND country IS NOT NULL
+GROUP BY event_date, country;
+
+COMMIT TRANSACTION;

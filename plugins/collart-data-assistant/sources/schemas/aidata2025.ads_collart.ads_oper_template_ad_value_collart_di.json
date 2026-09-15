@@ -1,0 +1,43 @@
+{
+  "table": "aidata2025.ads_collart.ads_oper_template_ad_value_collart_di",
+  "captured_at": "2026-09-14T13:19:03.147979+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "temp_id",
+        "type": "STRING"
+      },
+      {
+        "name": "generate_watch_ad_num",
+        "type": "INTEGER"
+      },
+      {
+        "name": "temp_ad_value",
+        "type": "FLOAT"
+      },
+      {
+        "name": "subscribe_value",
+        "type": "FLOAT"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collart",
+    "tableId": "ads_oper_template_ad_value_collart_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "temp_id"
+    ]
+  },
+  "type": "TABLE"
+}

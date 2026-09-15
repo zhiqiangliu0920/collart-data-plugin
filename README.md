@@ -1,23 +1,30 @@
-# Collart Data Plugin
+# Collart 数据分析插件
 
-GitHub 分发地址：[zhiqiangliu0920/collart-data-plugin](https://github.com/zhiqiangliu0920/collart-data-plugin)。同事从该仓库下载或更新完整插件；安装入口见 [INSTALL.md](INSTALL.md)。
+**0.5.0** 将 Collart Android、iOS/VidArt、Web 和 Fashion 的业务定义、表结构、埋点、指标及分析方法组织成统一知识，供同事在 Codex 中按需查询和分析。
 
-使用约定：只读数据，禁止写入/修改/删除表；原始埋点仅查询最近 30 天。安装前阅读 [数据访问约定](plugins/collart-data-assistant/docs/data-access-policy.md)，连接账号的数据库只读权限需另行配置。
+- [安装与使用](INSTALL.md)
+- [新结构与文件作用](maintainer/STRUCTURE.md)
+- [知识入口](plugins/collart-data-assistant/knowledge/INDEX.md)
+- [迁移清单](maintainer/MIGRATION.md)、[验证结果](maintainer/VALIDATION.md)、[知识缺口](maintainer/KNOWLEDGE-GAPS.md)
 
-面向 Collart 团队的知识与 Codex 插件。维护者于 2026-09-14 确认直接同步到当前 Public 仓库；仓库公开不授予任何数据库访问权限。原始资料继续在各自目录维护：
+数据只读，原始逐条行为仅最近 **7 天**；长期分析使用已有汇总、画像、收入或成本表。插件没有数据连接凭证；同事使用各自授权连接。数据库 IAM/网关负责强制访问控制，插件文档不是数据库权限开关。
 
-`ai-knowledge + cursor_summary + codex_summary → collart-data-plugin`
+## 目录
 
-- [统一主题](plugins/collart-data-assistant/knowledge/INDEX.md)：公司与四端指标、业务规则、历史案例及待复核口径。
-- [完整来源资料](plugins/collart-data-assistant/library/INDEX.md)：表字典、报告、SQL、血缘源码与两个旧包；保留日期、范围和来源。
-- [SQL 入口](plugins/collart-data-assistant/library/SQL.md)：全文 SQL 与维护的 presets。
-- [来源台账](plugins/collart-data-assistant/library/catalog.json) / [待处理](plugins/collart-data-assistant/library/pending.json)：每份来源的收录、重复、历史、排除或待处理状态。
-- [安装](INSTALL.md) / [持续整合发布](SYNC.md)。
+```text
+.agents/plugins/marketplace.json  Codex marketplace 入口
+plugins/collart-data-assistant/   安装给同事的完整分析包
+  .codex-plugin/plugin.json      名称、版本与技能入口
+  skills/                       分析与知识维护两个轻量入口
+  knowledge/                    项目 → 五类知识；相关长 SQL
+  sources/                      SQLX、必要依赖、schema/飞书证据
+  _meta/                        索引、来源和旧 ID 映射
+  config/                       检索意图规则
+  scripts/                      search/read 与只读 SQL 模板生成
+maintainer/                     维护流程、变更记录、验收与缺口
+scripts/                        确定性构建、来源复核与分发工具
+tests/                          结构、检索、查询边界与同步测试
+.github/workflows/               GitHub 自动校验
+```
 
-## 使用与维护
-
-两个插件入口仍为 collart-analysis 与 collart-knowledge-maintain。业务资料先改原来源；统一主题在暂存版本中结合来源维护。历史包保留原内部名称，作为来源资料，不额外加载其旧执行流程。
-
-插件副本可以独立检索，不依赖维护者磁盘；数据查询使用每个人自己的授权连接。仓库不携带凭证、个人运行状态或原始用户明细。
-
-验证命令：`python -B plugins/collart-data-assistant/scripts/kb.py check`。documented 表示有资料依据；历史验证只在原日期与范围内成立。本次整理没有重新查询生产数据。
+原 ai-knowledge 仍是来源之一，原目录未改动；插件正文是维护中的规范知识，不再自动镜像原始资料目录。来源变动先定位受影响条目，复核后构建发布；[维护流程](maintainer/MAINTENANCE.md)。

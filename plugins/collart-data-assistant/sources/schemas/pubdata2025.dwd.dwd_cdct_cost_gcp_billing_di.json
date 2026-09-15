@@ -1,0 +1,96 @@
+{
+  "table": "pubdata2025.dwd.dwd_cdct_cost_gcp_billing_di",
+  "captured_at": "2026-09-14T13:53:49.209717+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "查询日期"
+      },
+      {
+        "name": "atlasv_app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "公司项目名称"
+      },
+      {
+        "name": "atlasv_team",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "公司团队"
+      },
+      {
+        "name": "google_project_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "项目id"
+      },
+      {
+        "name": "google_project_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "项目名称"
+      },
+      {
+        "name": "sku_description",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "sku描述"
+      },
+      {
+        "name": "sku_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "sku ID"
+      },
+      {
+        "name": "service_description",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "服务描述"
+      },
+      {
+        "name": "service_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "服务id"
+      },
+      {
+        "name": "cost_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "消费类型"
+      },
+      {
+        "name": "usage_amount",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "用量统计"
+      },
+      {
+        "name": "usage_unit",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用量单位"
+      },
+      {
+        "name": "original_total",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "账单金额"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_cdct_cost_gcp_billing_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

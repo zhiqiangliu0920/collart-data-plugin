@@ -1,0 +1,85 @@
+{
+  "table": "aidata2025.ads_collart.big_r_user_value_state",
+  "captured_at": "2026-09-14T13:19:03.821740+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "lifetime_value",
+        "type": "FLOAT"
+      },
+      {
+        "name": "pending_value",
+        "type": "FLOAT"
+      },
+      {
+        "name": "txn_count",
+        "type": "INTEGER"
+      },
+      {
+        "name": "first_paid_at",
+        "type": "DATETIME"
+      },
+      {
+        "name": "last_paid_at",
+        "type": "DATETIME"
+      },
+      {
+        "name": "cross_50_at",
+        "type": "DATETIME"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "sexual_score",
+        "type": "FLOAT"
+      },
+      {
+        "name": "task_num",
+        "type": "INTEGER"
+      },
+      {
+        "name": "is_r",
+        "type": "INTEGER"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING"
+      },
+      {
+        "name": "first_open_date",
+        "type": "DATE"
+      },
+      {
+        "name": "last_active_date",
+        "type": "DATE"
+      },
+      {
+        "name": "updated_at",
+        "type": "DATETIME"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collart",
+    "tableId": "big_r_user_value_state"
+  },
+  "clustering": {
+    "fields": [
+      "app_name",
+      "user_id"
+    ]
+  },
+  "description": "Collart 大R 用户累计水位 + 画像属性；准实时只读本表",
+  "type": "TABLE"
+}

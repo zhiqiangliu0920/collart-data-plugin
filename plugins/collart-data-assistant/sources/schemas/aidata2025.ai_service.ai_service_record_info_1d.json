@@ -1,0 +1,73 @@
+{
+  "table": "aidata2025.ai_service.ai_service_record_info_1d",
+  "captured_at": "2026-09-14T13:19:05.977478+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "data_source",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "create_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "create_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "model_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "client_task_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "task_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "time_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost_point",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "status",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ai_service",
+    "tableId": "ai_service_record_info_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "create_date"
+  },
+  "type": "TABLE"
+}

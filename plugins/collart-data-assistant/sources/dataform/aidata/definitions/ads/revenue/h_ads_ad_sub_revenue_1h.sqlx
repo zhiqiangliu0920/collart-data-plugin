@@ -1,0 +1,262 @@
+config {
+    type: "operations",
+    dependencies: ["h_dwd_oper_sub_order_revenue_df","dim_exchange_rate_days","h_ods_apple_sales_1d"]
+}
+
+
+--------------------
+DECLARE from_date DATE DEFAULT  "2025-01-01";
+
+BEGIN TRANSACTION;
+DELETE
+FROM  `aidata2025.ads.ads_ad_sub_revenue_1h`
+WHERE  event_date >= from_date;
+
+
+-----------------------------------------
+INSERT INTO
+  aidata2025.ads.ads_ad_sub_revenue_1h
+
+
+-- 广告收入 (全量 from 20250101)
+with ad_revenue as
+(
+select 
+  event_date,
+  a.package_name,
+  country,
+  sum(coalesce(ad_admob_revenue,0)+coalesce(ad_admob_revenue_gst,0)-coalesce(ad_admob_revenue_remove,0)
+  +coalesce(ad_topon_revenue,0)-coalesce(ad_topon_revenue_remove,0)
+  +coalesce(ad_tradplus_revenue,0)-coalesce(ad_tradplus_revenue_remove,0)
+  +coalesce(ad_applovin_revenue,0)-coalesce(ad_applovin_revenue_remove,0)
+  +coalesce(ad_appodeal_revenue,0)+coalesce(ad_okspin_revenue,0)+coalesce(ad_yandex_revenue,0)
+  ) ad_revenue
+from pubdata2025.dws.dws_cdct_revenue_country_1d a 
+left join aidata2025.dim.dim_product_info_copy b on a.package_name=b.package_name
+where event_date >= from_date
+and b.team='ai_photo'
+group by 1, 2, 3 
+),
+
+ios_sales_apple AS (
+  SELECT
+    CAST(a.stats_date AS DATE) AS event_date,
+    CASE WHEN a.sku LIKE 'Collart%' THEN 'com.SpringTech.NewSC' ELSE a.package_name END AS package_name,
+    country_code,
+   SUM(units * developer_proceeds / b.rate) AS sub_revenue,
+   SUM(IF(a.product_type_identifier = 'IAY' AND a.subscription = 'Renewal', units * developer_proceeds / b.rate, 0)) AS renew_revenue,
+   SUM(IF(a.product_type_identifier = 'IAY' AND a.subscription = 'New', units * developer_proceeds / b.rate, 0)) AS new_revenue,
+   SUM(IF(a.product_type_identifier <>'IAY', units * developer_proceeds / b.rate, 0)) AS credit_revenue,
+
+    SUM(IF(a.product_type_identifier in('IAY','IA1') , a.units, 0)) AS order_num,
+    SUM(IF(a.product_type_identifier = 'IAY' AND a.subscription = 'Renewal', a.units, 0)) AS renew_order_num,
+    SUM(IF(a.product_type_identifier = 'IAY' AND a.subscription = 'New', a.units, 0)) AS new_order_num,
+    SUM(IF(a.product_type_identifier <>'IAY', a.units, 0)) AS credit_order_num
+  FROM `aidata2025.ods.ods_apple_sales_1d` a
+  left join `aidata2025.dim.exchange_rate_days` b 
+    on cast(a.stats_date as date) = cast(b.stats_date as date) and a.currency_of_proceeds=b.currency
+  WHERE CAST(a.stats_date AS DATE) >= from_date
+  and revenue_usd >0
+  GROUP BY 1, 2, 3
+),
+
+ios_sales_dwd AS (
+  SELECT
+    event_date,
+    package_name,
+    country_code,
+    COUNT(DISTINCT IF(d.sub_type in( 'Auto-Renewable Subscription','Consumable'), d.user_id, NULL)) AS purchase_uv,
+    COUNT(DISTINCT IF(d.sub_type = 'Auto-Renewable Subscription' AND d.transaction_type = 'RENEWAL', d.user_id, NULL)) AS renew_subscribe_uv,
+    COUNT(DISTINCT IF(d.sub_type = 'Auto-Renewable Subscription' AND d.transaction_type = 'PURCHASE', d.user_id, NULL)) AS new_subscribe_uv,
+    COUNT(DISTINCT IF(d.sub_type = 'Consumable', d.user_id, NULL)) AS credit_uv
+  FROM `aidata2025.dwd.dwd_apple_user_subscribtion_di` d
+  WHERE d.event_date >= from_date
+  GROUP BY 1, 2, 3
+),
+
+-- 订阅收入 (全量 from 20250101)
+subscr_revenue as(
+    -- 安卓订阅收入
+    SELECT
+      order_date as event_date,
+      package_name,
+      country,
+      sum(revenue) as sub_revenue,
+      SUM(IF(subscribe_type in ('first','trial_conver') and order_type <> '点数包',revenue,0)) AS new_revenue,
+      SUM(IF(subscribe_type in ('renew'),revenue,0)) AS renew_revenue,
+      SUM(IF(order_type = '点数包',revenue,0)) AS credit_revenue,
+
+        count(distinct user_id) as purchase_uv,
+        count(distinct IF(subscribe_type in ('first','trial_conver') and order_type <> '点数包',user_id,null)) as new_subscribe_uv,
+        count(distinct IF(subscribe_type in ('renew'),user_id,null)) as renew_subscribe_uv, 
+        count(distinct IF(order_type = '点数包',user_id,null)) AS credit_uv,
+
+        count(distinct order_id) order_num,
+        count(distinct IF(subscribe_type in ('first','trial_conver') and order_type <> '点数包',order_id,null)) as new_order_num,
+        count(distinct IF(subscribe_type in ('renew'),order_id,null)) as renew_order_num, 
+        count(distinct IF(order_type = '点数包',order_id,null)) AS credit_order_num,
+
+    FROM
+        aidata2025.dwd.dwd_oper_sub_order_revenue_df
+    WHERE
+        order_date>= from_date
+    group by 
+        order_date,
+        package_name,
+        country
+
+    -----ios收入
+    union all
+    SELECT
+    a.event_date,
+    a.package_name,
+    a.country_code,
+
+    a.sub_revenue,
+    a.new_revenue,
+    a.renew_revenue,
+    a.credit_revenue,
+ 
+    COALESCE(d.purchase_uv, 0) AS purchase_uv,
+    COALESCE(d.new_subscribe_uv, 0) AS new_subscribe_uv,
+    COALESCE(d.renew_subscribe_uv, 0) AS renew_subscribe_uv,    
+    COALESCE(d.credit_uv, 0) AS credit_uv,
+
+    a.order_num,
+    a.new_order_num,
+    a.renew_order_num,
+    a.credit_order_num,
+  FROM ios_sales_apple a
+  LEFT JOIN ios_sales_dwd d
+    ON a.event_date = d.event_date
+  AND a.package_name = d.package_name
+  AND a.country_code = d.country_code
+
+    ------collart web 收入
+    union all
+    select 
+     event_Date 
+    ,package_name
+    ,a.country
+    ,sum(revneue) sub_revenue
+    ,sum(case when description_type = 'Subscription creation' and revneue>0 and lower(product_name) not like '%pack%' then revneue end) new_revenue
+    ,sum(case when description_type = 'Subscription update' and revneue>0  and lower(product_name) not like '%pack%' then revneue end) renew_revenue
+    ,sum(case when  revneue>0 and description_type='credit'  then revneue end) credit_revenue
+
+    ,count(distinct case when description_type in('Subscription creation','Subscription update') and revneue>0 then user_id end) purchase_uv
+    ,count(distinct case when description_type = 'Subscription creation' and revneue>0 and lower(product_name) not like '%pack%' then user_id end) new_subscribe_uv
+    ,count(distinct case when description_type = 'Subscription update' and revneue>0  and lower(product_name) not like '%pack%' then user_id end) renew_subscribe_uv
+    ,count(distinct case when  revneue>0 and description_type='credit' then transaction_id end) credit_uv
+
+    ,count(distinct case when description_type in('Subscription creation','Subscription update') and revneue>0 then transaction_Id end) order_num
+    ,count(distinct case when description_type = 'Subscription creation' and revneue>0 and lower(product_name) not like '%pack%' then transaction_Id end) new_order_num
+    ,count(distinct case when description_type = 'Subscription update' and revneue>0  and lower(product_name) not like '%pack%' then transaction_Id end) renew_order_num
+    ,count(distinct case when  revneue>0 and description_type='credit' then transaction_id end) credit_order_num
+    from (
+      select distinct 
+        event_date
+        ,event_timestamp
+        ,user_id
+        ,transaction_Id
+        ,app_name
+        ,case 
+          when app_name='vidart' then'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+          when app_name='collart_android' then 'free.ai.photo.generator.collart.ai'
+          else 'collart_web'
+        end as package_name
+        ,charge_type
+        ,country
+        ,stripe_customer_id
+        ,amount
+        ,fee
+        ,revneue
+        ,description_type
+        ,product_name
+      from pubdata2025.dwd.dwd_cdct_revenue_stripe_di
+    ) a 
+    where a.event_date>=from_date
+    and revneue>0
+    and charge_type != 'expired'
+    group by all
+
+  ---collart fashion 收入（ADS country，不再读 ads_oper_revenue_collart_fashion_di）
+    union all
+    select
+      event_date,
+      'collart_fashion' AS package_name,
+      country,
+      revenue.purchase_revenue AS sub_revenue,
+      revenue.new_revenue AS new_revenue,
+      revenue.resub_revenue AS renew_revenue,
+      revenue.credit_revenue AS credit_revenue,
+      subscription.purchase_uv AS purchase_uv,
+      revenue.new_subscribe_uv AS new_subscribe_uv,
+      revenue.renew_subscribe_uv AS renew_subscribe_uv,
+      revenue.credit_pack_uv AS credit_uv,
+      CAST(NULL AS INT64) AS order_num,
+      CAST(NULL AS INT64) AS new_order_num,
+      CAST(NULL AS INT64) AS renew_order_num,
+      CAST(NULL AS INT64) AS credit_order_num
+    from `aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di`
+    where event_date >= from_date
+)
+
+
+-- 最终数据
+select
+  event_date,
+  coalesce(c2c.country_name,'United States') country,
+  d.package_name,
+
+  ad_revenue,
+
+  sub_revenue,
+  new_revenue,
+  renew_revenue,
+  credit_revenue,
+
+  purchase_uv,
+  new_subscribe_uv,
+  renew_subscribe_uv,
+  credit_uv,
+
+  order_num,
+  new_order_num,
+  renew_order_num,
+  credit_order_num,
+
+  d.revenue,
+from (
+  select 
+    event_date,
+    country,
+    package_name,
+
+    ad.ad_revenue,
+    sub_revenue,
+    new_revenue,
+    renew_revenue,
+    credit_revenue,
+
+    purchase_uv,
+    new_subscribe_uv,
+    renew_subscribe_uv,
+    credit_uv,
+
+    order_num,
+    new_order_num,
+    renew_order_num,
+    credit_order_num,
+
+    ifnull(ad.ad_revenue, 0)+ifnull(sub_revenue, 0) as revenue
+  from subscr_revenue sub
+  full join ad_revenue ad 
+  using(event_date, country, package_name)
+) d
+left join `aidata2025.dim.dim_country_info` c2c on if(d.country='Russia','RU',d.country)  = c2c.country_name_3
+left join aidata2025.dim.dim_product_info_copy f on d.package_name = f.package_name
+where f.team='ai_photo'
+;
+
+
+commit;

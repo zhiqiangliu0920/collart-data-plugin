@@ -1,0 +1,184 @@
+config {
+    type: "operations",
+    dependencies: ["h_ods_apple_sales_1d"]
+}
+
+
+--------------------
+DECLARE from_date DATE DEFAULT  "2025-01-01";
+
+BEGIN TRANSACTION;
+DELETE
+FROM  `aidata2025.ads.ads_hangzhou_revenue_country_1d`
+WHERE  event_date >= from_date;
+
+Insert INTO
+`aidata2025.ads.ads_hangzhou_revenue_country_1d`
+
+with  ad_platform_info as (
+--------------广告——ai产品
+select 
+  event_date,
+  a.package_name,
+  coalesce(c2c.country_name,'United States') country,
+  sum(coalesce(ad_admob_revenue,0)+coalesce(ad_admob_revenue_gst,0)-coalesce(ad_admob_revenue_remove,0))  google_ad_revenue,
+  sum(coalesce(ad_topon_revenue,0)-coalesce(ad_topon_revenue_remove,0)
+  +coalesce(ad_tradplus_revenue,0)-coalesce(ad_tradplus_revenue_remove,0)
+  +coalesce(ad_applovin_revenue,0)-coalesce(ad_applovin_revenue_remove,0)
+  +coalesce(ad_appodeal_revenue,0)+coalesce(ad_okspin_revenue,0))  else_ad_revenue,
+
+  sum(coalesce(ad_admob_revenue,0)+coalesce(ad_admob_revenue_gst,0)-coalesce(ad_admob_revenue_remove,0)
+  +coalesce(ad_topon_revenue,0)-coalesce(ad_topon_revenue_remove,0)
+  +coalesce(ad_tradplus_revenue,0)-coalesce(ad_tradplus_revenue_remove,0)
+  +coalesce(ad_applovin_revenue,0)-coalesce(ad_applovin_revenue_remove,0)
+  +coalesce(ad_appodeal_revenue,0)+coalesce(ad_okspin_revenue,0)
+  ) ad_revenue
+from pubdata2025.dws.dws_cdct_revenue_country_1d a 
+left join aidata2025.dim.dim_product_info_copy b on a.package_name=b.package_name
+left join `hzdw2024.hz_dim.dim_country` c2c on a.country = c2c.country_name_3
+where event_date >='2025-01-01'
+and b.team='ai_photo'
+group by 1, 2, 3 
+
+union all 
+-------------广告——下载器产品
+select 
+  event_date,
+  package_name,
+  coalesce(c2c.country_name,'United States') country,
+  sum(coalesce(ad_admob_revenue,0)+coalesce(ad_admob_revenue_gst,0)-coalesce(ad_admob_revenue_remove,0))  google_ad_revenue,
+  sum(coalesce(ad_topon_revenue,0)-coalesce(ad_topon_revenue_remove,0)
+  +coalesce(ad_tradplus_revenue,0)-coalesce(ad_tradplus_revenue_remove,0)
+  +coalesce(ad_applovin_revenue,0)-coalesce(ad_applovin_revenue_remove,0)
+  +coalesce(ad_appodeal_revenue,0)+coalesce(ad_okspin_revenue,0))  else_ad_revenue,
+
+  sum(coalesce(ad_admob_revenue,0)+coalesce(ad_admob_revenue_gst,0)-coalesce(ad_admob_revenue_remove,0)
+  +coalesce(ad_topon_revenue,0)-coalesce(ad_topon_revenue_remove,0)
+  +coalesce(ad_tradplus_revenue,0)-coalesce(ad_tradplus_revenue_remove,0)
+  +coalesce(ad_applovin_revenue,0)-coalesce(ad_applovin_revenue_remove,0)
+  +coalesce(ad_appodeal_revenue,0)+coalesce(ad_okspin_revenue,0)
+  ) ad_revenue
+from pubdata2025.dws.dws_cdct_revenue_country_1d a 
+left join `hzdw2024.hz_dim.dim_country` c2c on a.country = c2c.country_name_3
+where event_date >= "2025-01-01"
+and package_name in (
+  'instagram.video.downloader.story.saver',
+  'instagram.video.downloader.story.saver.ig',
+  'instagram.video.downloader.story.saver.ig.insaver',
+  'instasaver.instagram.video.downloader.photo',
+  'instasaver.instagram.video.downloader.photo.ig',
+  'statussaver.videodownloader.downloadstatus.savestatus.storysaver',
+  'pin.pinterest.video.downloader.forpinterest.pinsaver',
+  'tiktok.video.downloader.nowatermark.tiktokdownload',
+  'tiktok.video.downloader.nowatermark.tiktokdownload.snaptik',
+  'facebook.video.downloader.savefrom.fb',
+  'facebook.video.downloader.savefrom.fb.saver.fast',
+  'twittervideodownloader.twitter.videoindir.savegif.twdown',
+  'com.my.drama.box.reel.short.stream.tv.app'
+)
+group by 1, 2, 3 
+),
+
+
+vip_platform_info as 
+(
+---安卓产品订阅——下载器
+select event_Date
+,package_name
+,country
+,sub_revenue google_vip_revenue
+,null as apple_vip_revenue
+--,ad_Revenue
+--,revenue
+from `downloaddata2025.ads.ads_ad_sub_revenue_1h` 
+where event_Date>='2025-01-01'
+and package_name in (
+  'instagram.video.downloader.story.saver',
+  'instagram.video.downloader.story.saver.ig',
+  'instagram.video.downloader.story.saver.ig.insaver',
+  'instasaver.instagram.video.downloader.photo',
+  'instasaver.instagram.video.downloader.photo.ig',
+  'statussaver.videodownloader.downloadstatus.savestatus.storysaver',
+  'pin.pinterest.video.downloader.forpinterest.pinsaver',
+  'tiktok.video.downloader.nowatermark.tiktokdownload',
+  'tiktok.video.downloader.nowatermark.tiktokdownload.snaptik',
+  'facebook.video.downloader.savefrom.fb',
+  'facebook.video.downloader.savefrom.fb.saver.fast',
+  'twittervideodownloader.twitter.videoindir.savegif.twdown',
+  'com.my.drama.box.reel.short.stream.tv.app'
+)
+
+union all 
+-- 安卓产品订阅——ai产品
+SELECT
+    order_date as event_date,
+    a.package_name,
+    coalesce(c2c.country_name,'United States') country,
+    sum(a.revenue) as google_vip_revenue,
+    null as apple_vip_revenue
+FROM
+    aidata2025.dwd.dwd_oper_sub_order_revenue_df a
+    left join aidata2025.dim.dim_product_info_copy f on a.package_name = f.package_name
+    left join `hzdw2024.hz_dim.dim_country` c2c on a.country = c2c.country_name_3
+where order_date>='2025-01-01'
+    and f.team='ai_photo'
+group by 
+    order_date,
+    package_name,
+    country
+
+union all 
+----苹果产品订阅-ai产品
+    select 
+    a.stats_date event_date
+    ,case when  sku like 'Collart%' then 'com.SpringTech.NewSC' else package_name end as package_name
+    ,coalesce(c2c.country_name,'United States') country
+    ,null as google_vip_revenue
+    ,sum(units * developer_proceeds / b.rate) as apple_vip_revenue
+    from aidata2025.ods.ods_apple_sales_1d a 
+    left join `gzdw2024.gz_dim.exchange_rate_days` b 
+    on cast(a.stats_date as date) = cast(b.stats_date as date) and a.currency_of_proceeds=b.currency
+    left join `hzdw2024.hz_dim.dim_country` c2c on a.country_code = c2c.country_name_3
+    WHERE a.stats_date>='2025-01-01'
+    group by a.stats_date
+    ,country
+    ,package_name
+)
+
+select 
+event_date
+,package_name
+,country
+,sum(google_ad_revenue) google_ad_revenue
+,sum(else_ad_revenue) else_ad_revenue
+,sum(ad_revenue) ad_revenue
+
+,sum(google_vip_revenue) google_vip_revenue
+,sum(apple_vip_revenue) apple_vip_revenue
+,sum(ifnull(google_vip_revenue,0))+sum(ifnull(apple_vip_revenue,0)) vip_revenue
+
+,sum(ifnull(ad_revenue,0))+sum(ifnull(google_vip_revenue,0))+sum(ifnull(apple_vip_revenue,0)) revenue
+
+
+from(
+select coalesce(a.event_date,b.event_date) event_date
+,coalesce(a.package_name,b.package_name) package_name
+,coalesce(a.country,b.country) country
+,google_ad_revenue
+,else_ad_revenue
+,ad_revenue
+
+,google_vip_revenue
+,apple_vip_revenue
+from ad_platform_info a
+full join vip_platform_info b 
+on a.event_date=b.event_date 
+and a.package_name=b.package_name
+and a.country=B.country
+)
+where event_date>='2025-01-01'
+--and package_name='video.editor.videomaker.effects.fx'
+group by all 
+;
+
+commit;

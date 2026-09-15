@@ -1,0 +1,207 @@
+{
+  "table": "aidata2025.dwd.dwd_oper_user_basic_di",
+  "captured_at": "2026-09-14T13:19:07.329791+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "同步日期"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "项目名称"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "firebase上报的用户id"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "userid"
+      },
+      {
+        "name": "adjust_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "adjust_id"
+      },
+      {
+        "name": "atlasv_uid",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "包名"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "投放来源（nature/delivery）"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "投放来源名称"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家"
+      },
+      {
+        "name": "country_level",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "国家等级"
+      },
+      {
+        "name": "city",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "城市"
+      },
+      {
+        "name": "device_language",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "设备语言"
+      },
+      {
+        "name": "device_total_ram",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "设备内存"
+      },
+      {
+        "name": "mobile_brand_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "手机品牌"
+      },
+      {
+        "name": "mobile_model_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "机型"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "版本号"
+      },
+      {
+        "name": "network_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "网络环境"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE",
+        "description": "是否新客"
+      },
+      {
+        "name": "is_active",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE",
+        "description": "是否活跃"
+      },
+      {
+        "name": "register_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE",
+        "description": "注册时间"
+      },
+      {
+        "name": "mobile_marketing_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscribe_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE",
+        "description": "订阅时间"
+      },
+      {
+        "name": "subscribe_product_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "订阅ID"
+      },
+      {
+        "name": "os_classify",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "os_cpu_info",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscriptions",
+        "type": "RECORD",
+        "mode": "REPEATED",
+        "fields": [
+          {
+            "name": "product_id",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "sub_time",
+            "type": "DATETIME",
+            "mode": "NULLABLE"
+          }
+        ]
+      },
+      {
+        "name": "advertising_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户标识 每个用户唯一"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_oper_user_basic_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "app_name",
+      "package_name",
+      "country",
+      "user_pseudo_id"
+    ]
+  },
+  "description": "ai影像所有app用户通用基础信息",
+  "type": "TABLE"
+}

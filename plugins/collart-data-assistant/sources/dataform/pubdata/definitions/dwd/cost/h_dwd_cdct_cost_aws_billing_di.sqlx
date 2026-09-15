@@ -1,0 +1,84 @@
+config {
+    type: "operations"
+}
+
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `dwd.dwd_cdct_cost_aws_billing_di`
+WHERE
+  event_date >= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH);
+  --插入分区数据--
+
+insert into dwd.dwd_cdct_cost_aws_billing_di
+SELECT
+  DATE(split(identity_time_interval,'T')[0]) as event_date,
+  NULL AS atlasv_app_name,
+  NULL AS atlasv_team,
+  bill_bill_type,
+  bill_billing_entity,
+  DATE( bill_billing_period_start_date) as billing_month,
+  bill_invoice_id,
+  bill_invoicing_entity,
+  bill_payer_account_id,
+  bill_payer_account_name,
+  identity_line_item_id,
+  line_item_blended_cost,
+  line_item_currency_code,
+  line_item_legal_entity,
+  line_item_line_item_description,
+  line_item_line_item_type,
+  line_item_product_code,
+  line_item_tax_type,
+  line_item_unblended_cost,
+  line_item_usage_account_id,
+  line_item_usage_account_name,
+  line_item_usage_amount,
+  product,
+  JSON_VALUE(resource_tags, '$.user_project') as user_project,
+  JSON_VALUE(resource_tags, '$.user_business') as region,
+  JSON_VALUE(resource_tags, '$.user_name') as source_name,
+  pricing_unit
+FROM
+  ods.ods_billing_aws_cost_1d
+  where DATE(bill_billing_period_start_date)>= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+
+union all 
+
+SELECT
+  DATE(split(identity_time_interval,'T')[0]) as event_date,
+  CAST(NULL AS STRING) AS atlasv_app_name,
+  CAST(NULL AS STRING) AS atlasv_team,
+  bill_bill_type,
+  bill_billing_entity,
+  DATE( bill_billing_period_start_date) as billing_month,
+  bill_invoice_id,
+  null as bill_invoicing_entity, -- null
+  bill_payer_account_id,
+  'vidma' as bill_payer_account_name, -- null
+  identity_line_item_id,
+  line_item_blended_cost,
+  line_item_currency_code,
+  line_item_legal_entity,
+  line_item_line_item_description,
+  line_item_line_item_type,
+  line_item_product_code,
+  line_item_tax_type,
+  line_item_unblended_cost,
+  line_item_usage_account_id,
+  'vidma' as line_item_usage_account_name, -- null
+  line_item_usage_amount,
+  product_product_name, -- product
+  resource_tags_user_project, -- user_project
+  product_region, -- region
+  resource_tags_user_name, -- source_name
+  pricing_unit
+FROM
+  ods.ods_billing_aws_cdn_cost_1d
+  where DATE(bill_billing_period_start_date)>= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+  ;
+  --如果所有操作都成功，提交事务
+COMMIT
+  ;

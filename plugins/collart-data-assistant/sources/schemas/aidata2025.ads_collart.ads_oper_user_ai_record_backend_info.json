@@ -1,0 +1,109 @@
+{
+  "table": "aidata2025.ads_collart.ads_oper_user_ai_record_backend_info",
+  "captured_at": "2026-09-14T13:19:03.408870+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "client_task_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "sub_mode_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "prompt",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "atlas_uid",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ai_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "version",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "result",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "request",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "start_resource",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "train_task_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "model_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost_point",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "create_at",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "time_cost",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "status",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "temp_Id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collart",
+    "tableId": "ads_oper_user_ai_record_backend_info"
+  },
+  "type": "TABLE"
+}

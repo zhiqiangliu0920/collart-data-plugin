@@ -1,0 +1,422 @@
+config {
+  type: "operations",
+  name: "ads_collartweb_oper_basic_indicator_daily_compare_di",
+  schema: "ads_collartweb",
+  dependencies: [
+    "ads_collartweb_oper_basic_indicator_country_di",
+    "ads_collartweb_oper_event_metric_country_di",
+    "ads_collartweb_oper_user_active_di"
+  ]
+}
+
+/*
+  Collart Web 日报环比表：新 ADS 替代旧
+  ads_collart.ads_oper_basic_metric_agent_collart_web_di。
+
+  上游：
+  - country_di：DAU/DNU/收入/次留（retain.d2 已仅新用户）
+  - event_metric_country_di：漏斗与 AI 服务 UV/PV
+  - active_di：login_dau / login_new_user / retain2_login（attr 无 is_login 维）
+
+  粒度：metric_name × country（all + top_country 分桶）
+  窗口：昨日 vs 前 7 日均值；收入 / arpu / 次留类 +1 日错位（对齐旧 agent）
+*/
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di`
+(
+  metric_name STRING,
+  country STRING,
+  yestoday FLOAT64,
+  avg_7days FLOAT64,
+  diff FLOAT64,
+  ratio FLOAT64
+)
+CLUSTER BY metric_name, country
+OPTIONS (
+  description = 'Collart Web 日报环比：新 ADS 口径，昨日对比前 7 日均值'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di`
+WHERE TRUE;
+
+INSERT INTO `aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di`
+(
+  metric_name,
+  country,
+  yestoday,
+  avg_7days,
+  diff,
+  ratio
+)
+
+WITH date_span AS (
+  SELECT
+    DATE_SUB(CURRENT_DATE(), INTERVAL 9 DAY) AS from_date,
+    DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY) AS to_date
+),
+
+country_basic AS (
+  SELECT
+    event_date,
+    aidata2025.ads_collart.top_country(country) AS country,
+    SUM(revenue.revenue) AS total_revenue,
+    SUM(revenue.new_revenue) AS new_revenue,
+    SUM(revenue.resub_revenue) AS renew_revenue,
+    SUM(revenue.credit_revenue) AS pack_revenue,
+    SUM(subscription.purchase_uv_1d) AS vip_user_0,
+    SUM(dnu) AS new_user,
+    SUM(vip_dau) AS vip_dau,
+    SUM(dau) AS dau,
+    SUM(dnu_by_source.organic) AS organic_new_user,
+    SUM(dnu_by_source.delivery) AS delivery_new_user,
+    SUM(retain.d2) AS retain2_new_user,
+    SUM(dnu_vip) AS vip_new_user,
+    SUM(retain2_vip) AS retain2_vip_new_user
+  FROM `aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di`, date_span
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date, country
+),
+
+country_event AS (
+  SELECT
+    event_date,
+    aidata2025.ads_collart.top_country(country) AS country,
+    SUM(valid_user.new_uv) AS new_valid_user,
+    SUM(explore_page_show.new_uv) AS new_explore_page_show_user,
+    SUM(explore_content_click.new_uv) AS new_explore_content_click_user,
+    SUM(explore_content_generate_click.new_uv) AS new_explore_content_generate_click_user,
+    SUM(feature_show.new_uv) AS new_feature_show_user,
+    SUM(photo_add.new_uv) AS new_photo_add_user,
+    SUM(photo_add_success.new_uv) AS new_photo_add_success_user,
+    SUM(generate_click.new_uv) AS new_generate_click_user,
+    SUM(generate_start.new_uv) AS new_ai_service_start_user,
+    SUM(generate_success.new_uv) AS new_ai_service_success_user,
+    SUM(generate_save.new_uv) AS new_generate_save_user,
+    SUM(login_show.new_uv) AS new_login_show_user,
+    SUM(login_account_choose.new_uv) AS new_login_account_choose_user,
+    SUM(login_success.new_uv) AS new_login_success_user,
+    SUM(img2video_generate_start.uv) AS img2video_ai_service_start_user,
+    SUM(img2img_generate_start.uv) AS img2img_ai_service_start_user,
+    SUM(text2video_video_generate_start.uv) AS text2video_ai_service_start_user,
+    SUM(text2img_generate_start.uv) AS text2img_ai_service_start_user,
+    SUM(generate_success.pv) AS ai_service_success_num,
+    SUM(generate_start.pv) AS ai_service_start_num,
+    SUM(img2video_generate_success.pv) AS img2video_ai_service_success_num,
+    SUM(img2video_generate_start.pv) AS img2video_ai_service_start_num,
+    SUM(img2img_generate_success.pv) AS img2img_ai_service_success_num,
+    SUM(img2img_generate_start.pv) AS img2img_ai_service_start_num,
+    SUM(text2video_video_generate_success.pv) AS text2video_ai_service_success_num,
+    SUM(text2video_video_generate_start.pv) AS text2video_ai_service_start_num,
+    SUM(text2img_generate_success.pv) AS text2img_ai_service_success_num,
+    SUM(text2img_generate_start.pv) AS text2img_ai_service_start_num
+  FROM `aidata2025.ads_collartweb.ads_oper_event_metric_country_di`, date_span
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date, country
+),
+
+login_by_country AS (
+  SELECT
+    event_date,
+    aidata2025.ads_collart.top_country(country) AS country,
+    COUNTIF(is_active AND IFNULL(is_login, FALSE)) AS login_dau,
+    COUNTIF(is_active AND is_new AND IFNULL(is_login, FALSE)) AS login_new_user,
+    COUNTIF(is_active AND is_new AND IFNULL(is_login, FALSE) AND IFNULL(retain.d2, FALSE)) AS retain2_login_new_user
+  FROM `aidata2025.ads_collartweb.ads_oper_user_active_di`, date_span
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date, country
+),
+
+country_src AS (
+  SELECT
+    b.event_date,
+    b.country,
+    b.total_revenue,
+    b.new_revenue,
+    b.renew_revenue,
+    b.pack_revenue,
+    b.vip_user_0,
+    b.new_user,
+    b.vip_dau,
+    b.dau,
+    l.login_dau,
+    b.organic_new_user,
+    b.delivery_new_user,
+    b.retain2_new_user,
+    l.login_new_user,
+    l.retain2_login_new_user,
+    b.vip_new_user,
+    b.retain2_vip_new_user,
+    e.new_valid_user,
+    e.new_explore_page_show_user,
+    e.new_explore_content_click_user,
+    e.new_explore_content_generate_click_user,
+    e.new_feature_show_user,
+    e.new_photo_add_user,
+    e.new_photo_add_success_user,
+    e.new_generate_click_user,
+    e.new_ai_service_start_user,
+    e.new_ai_service_success_user,
+    e.new_generate_save_user,
+    e.new_login_show_user,
+    e.new_login_account_choose_user,
+    e.new_login_success_user,
+    e.img2video_ai_service_start_user,
+    e.img2img_ai_service_start_user,
+    e.text2video_ai_service_start_user,
+    e.text2img_ai_service_start_user,
+    e.ai_service_success_num,
+    e.ai_service_start_num,
+    e.img2video_ai_service_success_num,
+    e.img2video_ai_service_start_num,
+    e.img2img_ai_service_success_num,
+    e.img2img_ai_service_start_num,
+    e.text2video_ai_service_success_num,
+    e.text2video_ai_service_start_num,
+    e.text2img_ai_service_success_num,
+    e.text2img_ai_service_start_num
+  FROM country_basic AS b
+  LEFT JOIN country_event AS e USING (event_date, country)
+  LEFT JOIN login_by_country AS l USING (event_date, country)
+),
+
+all_basic AS (
+  SELECT
+    event_date,
+    'all' AS country,
+    SUM(revenue.revenue) AS total_revenue,
+    SUM(revenue.new_revenue) AS new_revenue,
+    SUM(revenue.resub_revenue) AS renew_revenue,
+    SUM(revenue.credit_revenue) AS pack_revenue,
+    SUM(subscription.purchase_uv_1d) AS vip_user_0,
+    SUM(dnu) AS new_user,
+    SUM(vip_dau) AS vip_dau,
+    SUM(dau) AS dau,
+    SUM(dnu_by_source.organic) AS organic_new_user,
+    SUM(dnu_by_source.delivery) AS delivery_new_user,
+    SUM(retain.d2) AS retain2_new_user,
+    SUM(dnu_vip) AS vip_new_user,
+    SUM(retain2_vip) AS retain2_vip_new_user
+  FROM `aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di`, date_span
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date
+),
+
+all_event AS (
+  SELECT
+    event_date,
+    'all' AS country,
+    SUM(valid_user.new_uv) AS new_valid_user,
+    SUM(explore_page_show.new_uv) AS new_explore_page_show_user,
+    SUM(explore_content_click.new_uv) AS new_explore_content_click_user,
+    SUM(explore_content_generate_click.new_uv) AS new_explore_content_generate_click_user,
+    SUM(feature_show.new_uv) AS new_feature_show_user,
+    SUM(photo_add.new_uv) AS new_photo_add_user,
+    SUM(photo_add_success.new_uv) AS new_photo_add_success_user,
+    SUM(generate_click.new_uv) AS new_generate_click_user,
+    SUM(generate_start.new_uv) AS new_ai_service_start_user,
+    SUM(generate_success.new_uv) AS new_ai_service_success_user,
+    SUM(generate_save.new_uv) AS new_generate_save_user,
+    SUM(login_show.new_uv) AS new_login_show_user,
+    SUM(login_account_choose.new_uv) AS new_login_account_choose_user,
+    SUM(login_success.new_uv) AS new_login_success_user,
+    SUM(img2video_generate_start.uv) AS img2video_ai_service_start_user,
+    SUM(img2img_generate_start.uv) AS img2img_ai_service_start_user,
+    SUM(text2video_video_generate_start.uv) AS text2video_ai_service_start_user,
+    SUM(text2img_generate_start.uv) AS text2img_ai_service_start_user,
+    SUM(generate_success.pv) AS ai_service_success_num,
+    SUM(generate_start.pv) AS ai_service_start_num,
+    SUM(img2video_generate_success.pv) AS img2video_ai_service_success_num,
+    SUM(img2video_generate_start.pv) AS img2video_ai_service_start_num,
+    SUM(img2img_generate_success.pv) AS img2img_ai_service_success_num,
+    SUM(img2img_generate_start.pv) AS img2img_ai_service_start_num,
+    SUM(text2video_video_generate_success.pv) AS text2video_ai_service_success_num,
+    SUM(text2video_video_generate_start.pv) AS text2video_ai_service_start_num,
+    SUM(text2img_generate_success.pv) AS text2img_ai_service_success_num,
+    SUM(text2img_generate_start.pv) AS text2img_ai_service_start_num
+  FROM `aidata2025.ads_collartweb.ads_oper_event_metric_country_di`, date_span
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date
+),
+
+login_all AS (
+  SELECT
+    event_date,
+    'all' AS country,
+    COUNTIF(is_active AND IFNULL(is_login, FALSE)) AS login_dau,
+    COUNTIF(is_active AND is_new AND IFNULL(is_login, FALSE)) AS login_new_user,
+    COUNTIF(is_active AND is_new AND IFNULL(is_login, FALSE) AND IFNULL(retain.d2, FALSE)) AS retain2_login_new_user
+  FROM `aidata2025.ads_collartweb.ads_oper_user_active_di`, date_span
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date
+),
+
+daily_all AS (
+  SELECT
+    b.event_date,
+    b.country,
+    b.total_revenue,
+    b.new_revenue,
+    b.renew_revenue,
+    b.pack_revenue,
+    b.vip_user_0,
+    b.new_user,
+    b.vip_dau,
+    b.dau,
+    l.login_dau,
+    b.organic_new_user,
+    b.delivery_new_user,
+    b.retain2_new_user,
+    l.login_new_user,
+    l.retain2_login_new_user,
+    b.vip_new_user,
+    b.retain2_vip_new_user,
+    e.new_valid_user,
+    e.new_explore_page_show_user,
+    e.new_explore_content_click_user,
+    e.new_explore_content_generate_click_user,
+    e.new_feature_show_user,
+    e.new_photo_add_user,
+    e.new_photo_add_success_user,
+    e.new_generate_click_user,
+    e.new_ai_service_start_user,
+    e.new_ai_service_success_user,
+    e.new_generate_save_user,
+    e.new_login_show_user,
+    e.new_login_account_choose_user,
+    e.new_login_success_user,
+    e.img2video_ai_service_start_user,
+    e.img2img_ai_service_start_user,
+    e.text2video_ai_service_start_user,
+    e.text2img_ai_service_start_user,
+    e.ai_service_success_num,
+    e.ai_service_start_num,
+    e.img2video_ai_service_success_num,
+    e.img2video_ai_service_start_num,
+    e.img2img_ai_service_success_num,
+    e.img2img_ai_service_start_num,
+    e.text2video_ai_service_success_num,
+    e.text2video_ai_service_start_num,
+    e.text2img_ai_service_success_num,
+    e.text2img_ai_service_start_num
+  FROM all_basic AS b
+  LEFT JOIN all_event AS e USING (event_date, country)
+  LEFT JOIN login_all AS l USING (event_date, country)
+),
+
+src AS (
+  SELECT * FROM daily_all
+  UNION ALL
+  SELECT * FROM country_src
+),
+
+basic_data AS (
+  SELECT
+    event_date,
+    country,
+    AVG(total_revenue) AS `收入`,
+    AVG(new_revenue) AS `首次订阅收入`,
+    AVG(renew_revenue) AS `续订收入`,
+    AVG(pack_revenue) AS `点数包收入`,
+    SAFE_DIVIDE(SUM(vip_user_0), SUM(new_user)) AS `首日订阅转化率`,
+    SAFE_DIVIDE(SUM(vip_dau), SUM(dau)) AS `dau中付费用户占比`,
+    SAFE_DIVIDE(SUM(login_dau), SUM(dau)) AS `dau中登录用户占比`,
+    SAFE_DIVIDE(AVG(total_revenue), AVG(dau)) AS `arpu`,
+    AVG(new_user) AS `日均新增`,
+    AVG(organic_new_user) AS `自然新增`,
+    AVG(delivery_new_user) AS `投放新增`,
+    AVG(dau) AS `DAU`,
+    AVG(IF(retain2_new_user > 0, SAFE_DIVIDE(retain2_new_user, new_user), NULL)) AS `次日留存`,
+    AVG(IF(retain2_login_new_user > 0, SAFE_DIVIDE(retain2_login_new_user, login_new_user), NULL)) AS `登录用户次留`,
+    AVG(IF(retain2_vip_new_user > 0, SAFE_DIVIDE(retain2_vip_new_user, vip_new_user), NULL)) AS `付费用户次留`,
+    AVG(SAFE_DIVIDE(new_valid_user, new_user)) AS `有效用户占比`,
+    AVG(SAFE_DIVIDE(new_explore_page_show_user, new_user)) AS `新用户模板展示率`,
+    AVG(SAFE_DIVIDE(new_explore_content_click_user, new_user)) AS `新用户模板点击率`,
+    AVG(SAFE_DIVIDE(new_explore_content_generate_click_user, new_user)) AS `新用户模板点击生成率`,
+    AVG(SAFE_DIVIDE(new_feature_show_user, new_user)) AS `新用户进入功能页`,
+    AVG(SAFE_DIVIDE(new_photo_add_user, new_user)) AS `新用户添加照片`,
+    AVG(SAFE_DIVIDE(new_photo_add_success_user, new_user)) AS `新用户添加照片成功`,
+    AVG(SAFE_DIVIDE(new_generate_click_user, new_user)) AS `新用户点击生成`,
+    AVG(SAFE_DIVIDE(new_ai_service_start_user, new_user)) AS `新用户ai服务开始生成`,
+    AVG(SAFE_DIVIDE(new_ai_service_success_user, new_user)) AS `新用户ai服务生成成功`,
+    AVG(SAFE_DIVIDE(new_generate_save_user, new_user)) AS `新用户ai服务保存`,
+    AVG(SAFE_DIVIDE(new_login_show_user, new_user)) AS `新用户登录界面展示`,
+    AVG(SAFE_DIVIDE(new_login_account_choose_user, new_user)) AS `新用户点击登录方式`,
+    AVG(SAFE_DIVIDE(new_login_success_user, new_user)) AS `新用户登录转化`,
+    AVG(SAFE_DIVIDE(img2video_ai_service_start_user, dau)) AS `img2video_ai服务渗透率`,
+    AVG(SAFE_DIVIDE(img2img_ai_service_start_user, dau)) AS `img2img_ai服务渗透率`,
+    AVG(SAFE_DIVIDE(text2video_ai_service_start_user, dau)) AS `text2video_ai服务渗透率`,
+    AVG(SAFE_DIVIDE(text2img_ai_service_start_user, dau)) AS `text2img_ai服务渗透率`,
+    AVG(SAFE_DIVIDE(ai_service_success_num, ai_service_start_num)) AS `ai服务成功率`,
+    AVG(SAFE_DIVIDE(img2video_ai_service_success_num, img2video_ai_service_start_num)) AS `img2video_ai服务成功率`,
+    AVG(SAFE_DIVIDE(img2img_ai_service_success_num, img2img_ai_service_start_num)) AS `img2img_ai服务成功率`,
+    AVG(SAFE_DIVIDE(text2video_ai_service_success_num, text2video_ai_service_start_num)) AS `text2video_ai服务成功率`,
+    AVG(SAFE_DIVIDE(text2img_ai_service_success_num, text2img_ai_service_start_num)) AS `text2img_ai服务成功率`
+  FROM src
+  GROUP BY ALL
+),
+
+daily_long AS (
+  SELECT event_date, country, metric_name, metric_value
+  FROM basic_data
+  UNPIVOT (
+    metric_value FOR metric_name IN (
+      `收入`, `首次订阅收入`, `续订收入`, `点数包收入`,
+      `首日订阅转化率`, `dau中登录用户占比`, `dau中付费用户占比`, `arpu`,
+      `日均新增`, `自然新增`, `投放新增`, `DAU`,
+      `次日留存`, `登录用户次留`, `付费用户次留`,
+      `有效用户占比`,
+      `新用户模板展示率`, `新用户模板点击率`, `新用户模板点击生成率`,
+      `新用户进入功能页`, `新用户添加照片`, `新用户添加照片成功`, `新用户点击生成`,
+      `新用户ai服务开始生成`, `新用户ai服务生成成功`, `新用户ai服务保存`,
+      `新用户登录界面展示`, `新用户点击登录方式`, `新用户登录转化`,
+      `img2video_ai服务渗透率`, `img2img_ai服务渗透率`,
+      `text2video_ai服务渗透率`, `text2img_ai服务渗透率`,
+      `ai服务成功率`,
+      `img2video_ai服务成功率`, `img2img_ai服务成功率`,
+      `text2video_ai服务成功率`, `text2img_ai服务成功率`
+    )
+  )
+),
+
+daily_adj AS (
+  SELECT
+    IF(
+      metric_name IN (
+        '收入', '广告收入', '首次订阅收入', '续订收入', '点数包收入',
+        'arpu', '次日留存', '免费用户次留', '付费用户次留', '登录用户次留'
+      ),
+      DATE_ADD(event_date, INTERVAL 1 DAY),
+      event_date
+    ) AS event_date,
+    country,
+    metric_name,
+    metric_value
+  FROM daily_long
+),
+
+agent_data AS (
+  SELECT 'yestoday' AS metric_type, country, metric_name, metric_value
+  FROM daily_adj
+  WHERE event_date = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+
+  UNION ALL
+
+  SELECT 'avg_7days' AS metric_type, country, metric_name, AVG(metric_value) AS metric_value
+  FROM daily_adj
+  WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 8 DAY) AND DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY)
+  GROUP BY country, metric_name
+)
+
+SELECT
+  metric_name,
+  country,
+  MAX(IF(metric_type = 'yestoday', metric_value, NULL)) AS yestoday,
+  MAX(IF(metric_type = 'avg_7days', metric_value, NULL)) AS avg_7days,
+  MAX(IF(metric_type = 'yestoday', metric_value, NULL)) - MAX(IF(metric_type = 'avg_7days', metric_value, NULL)) AS diff,
+  SAFE_DIVIDE(MAX(IF(metric_type = 'yestoday', metric_value, NULL)), MAX(IF(metric_type = 'avg_7days', metric_value, NULL))) - 1 AS ratio
+FROM agent_data
+GROUP BY metric_name, country;
+
+COMMIT TRANSACTION;

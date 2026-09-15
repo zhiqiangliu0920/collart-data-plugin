@@ -1,0 +1,971 @@
+{
+  "captured_at": "2026-09-14",
+  "tables": [
+    {
+      "id": "table:aidata2025.ads.ads_ad_sub_revenue_1h",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 11,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads.ads_collart_delivery_fb_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 38
+    },
+    {
+      "id": "table:aidata2025.ads.ads_collart_delivery_revenue_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 2,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads.ads_template_recommend_foru_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 12
+    },
+    {
+      "id": "table:aidata2025.ads.ads_template_recommend_trending_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 10
+    },
+    {
+      "id": "table:aidata2025.ads.ads_user_subscribe_daily_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 6,
+      "definition_differences": 30
+    },
+    {
+      "id": "table:aidata2025.ads.ads_user_subscribe_lifecycle_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 42
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_dim_metric_rule",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 7,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_basic_indicator_collart_di",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_collart_template_data",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 15,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_collart_web_id_map",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 6,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_event_param_summary_collart_di",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_event_summary_collart_di",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_tempalte_data_android",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_template_ad_value_collart_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 5,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_user_ai_record_backend_info",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 19,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_user_event_collart_di",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_user_event_param_collart_di",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_oper_user_new_collart_di",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_template_search_user_keyword_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 15,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.ads_vip_user_info_all",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 30,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.big_r_realtime_alert_log",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 6,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.big_r_realtime_today_income",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collart.big_r_user_value_state",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 16,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 92,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 114,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 6,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 220,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 103,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartandroid.ads_oper_event_metric_country_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 110,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartandroid.ads_oper_user_active_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 129,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartandroid.ads_oper_user_event_metric_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 35,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartandroid.ads_oper_user_profile_df",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 148,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_dim_metric_rule",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 91,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 112,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 6,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 222,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 79,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_oper_event_metric_country_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 115,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_oper_user_active_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 122,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_oper_user_event_metric_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 27,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_oper_user_profile_df",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 136,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartfashion.ads_oper_user_revenue_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 15,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 92,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_country_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 113,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_daily_compare_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 6,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 191,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartios.ads_oper_event_metric_attr_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 74,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartios.ads_oper_event_metric_country_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 83,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartios.ads_oper_user_active_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 117,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartios.ads_oper_user_event_metric_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 24,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartios.ads_oper_user_profile_df",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 137,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartweb.ads_dim_metric_rule",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 91,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 112,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 6,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 258,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartweb.ads_oper_event_metric_attr_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 130,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartweb.ads_oper_event_metric_country_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 157,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartweb.ads_oper_user_active_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 119,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartweb.ads_oper_user_event_metric_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 44,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ads_collartweb.ads_oper_user_profile_df",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 142,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ai_service.ai_cost_data",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 3,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ai_service.ai_service_record_info_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 2
+    },
+    {
+      "id": "table:aidata2025.ai_service.collart_core_event_bi",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dim.collart_campaign_name_modify_copy",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dim.collart_product_price_copy",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dim.dim_ai_service_model_info_copy",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 4
+    },
+    {
+      "id": "table:aidata2025.dim.dim_collart_core_event_copy",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 6,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dim.dim_country_info",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dim.dim_module_template_info_android",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 26
+    },
+    {
+      "id": "table:aidata2025.dim.dim_product_info",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dim.dim_product_info_copy",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dim.dim_template_tag",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 2
+    },
+    {
+      "id": "table:aidata2025.dm.dm_collart_android_user_event_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 118,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dm.dm_collart_ios_user_event_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 81,
+      "definition_differences": 3
+    },
+    {
+      "id": "table:aidata2025.dm.dm_collart_web_user_event_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 87,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dm.dm_user_profile_collart_df",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_apple_user_subscribtion_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 2,
+      "definition_differences": 42
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_cdct_delivery_cost_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 3,
+      "definition_differences": 34
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_cdct_woolong_request_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 8
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_id_convert_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 4
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_oper_delivery_adjust_user_di",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 48
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_oper_sub_order_revenue_df",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 2,
+      "definition_differences": 44
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_oper_user_basic_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 2,
+      "definition_differences": 40
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_oper_user_collart_di",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 3
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_oper_user_event_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 3,
+      "definition_differences": 10
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_oper_user_event_params_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 17,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_oper_user_order_event_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 1
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_oper_user_properties_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 6
+    },
+    {
+      "id": "table:aidata2025.dwd.dwd_oper_user_transaction_di",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 56
+    },
+    {
+      "id": "table:aidata2025.dws.dws_id_convert_df",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 12
+    },
+    {
+      "id": "table:aidata2025.dws.dws_new_user_accumlate_subscribe_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dws.dws_oper_asa_collart_1d",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dws.dws_oper_asa_delivery_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 16,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dws.dws_oper_asa_keyword_collart_1d",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dws.dws_oper_basic_aidata_1d",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 60,
+      "definition_differences": 4
+    },
+    {
+      "id": "table:aidata2025.dws.dws_oper_delivery_collart_1d",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dws.dws_oper_delivery_user_collart_1d",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dws.dws_oper_fb_delivery_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 2,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dws.dws_oper_tiktok_ad_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.dws.dws_oper_user_ad_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 38
+    },
+    {
+      "id": "table:aidata2025.dws.dws_oper_user_sub_revenue_df",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 52
+    },
+    {
+      "id": "table:aidata2025.ods.ods_ai_request_info_new_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 9
+    },
+    {
+      "id": "table:aidata2025.ods.ods_apple_sales_1d",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 33,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ods.ods_apple_subscription_muselab_df",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 50,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ods.ods_apple_subscription_vibedance_df",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 50,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ods.ods_apple_subscription_vidart_df",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 51,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:aidata2025.ods.orders",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 36,
+      "definition_differences": 1
+    },
+    {
+      "id": "table:aidata2025.revenue.vip_event_data_ios",
+      "missing_schema": true,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.ads.ads_cdct_service_cost_1d",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 2
+    },
+    {
+      "id": "table:pubdata2025.ads.ads_data_report_1d",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 14
+    },
+    {
+      "id": "table:pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 11,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.dwd.dwd_cdct_cost_aws_billing_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 27,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.dwd.dwd_cdct_cost_azure_billing_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 21,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.dwd.dwd_cdct_log_aws_cdn_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 33,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.dwd.dwd_cdct_revenue_adplatform_di",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 2
+    },
+    {
+      "id": "table:pubdata2025.dwd.dwd_cdct_revenue_google_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 19,
+      "definition_differences": 2
+    },
+    {
+      "id": "table:pubdata2025.dwd.dwd_cdct_revenue_stripe_di",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 0,
+      "definition_differences": 38
+    },
+    {
+      "id": "table:pubdata2025.dws.dws_cdct_cost_ai_service_1h",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 7,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.dws.dws_cdct_cost_billing_1d",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 1,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.dws.dws_cdct_cost_google_1h",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 1,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.dws.dws_cdct_log_aws_cdn_1d",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 6,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.dws.dws_cdct_revenue_country_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 1,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.ods.ods_apple_sales_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.ods.ods_apple_subscriber_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.ods.ods_apple_subscription_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.ods.ods_apple_subscription_event_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:pubdata2025.ods.ods_woolong_subscription_1d",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 0,
+      "definition_differences": 4
+    },
+    {
+      "id": "table:pubdata2025.ods.user_ai_base_video_record",
+      "missing_schema": false,
+      "missing_sqlx": false,
+      "unexplained_fields": 11,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:storytemplate-10a27.analytics_232977577.events_*",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 217,
+      "definition_differences": 0
+    },
+    {
+      "id": "table:vidart-8b8ca.analytics_528583115.events_*",
+      "missing_schema": false,
+      "missing_sqlx": true,
+      "unexplained_fields": 217,
+      "definition_differences": 0
+    }
+  ],
+  "business": [
+    "各端完整跨版本事件触发定义尚不齐全",
+    "releaseConfig 源码未对照最新成功 workflow invocation",
+    "未运行金额、唯一键、日期覆盖等生产查询",
+    "内部账号名单需使用者已授权连接提供，发行包不携带名单",
+    "部分 schema 字段未提供业务解释；飞书/旧文档差异保留待复核"
+  ]
+}

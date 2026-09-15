@@ -1,0 +1,136 @@
+config {
+    type: "operations"
+}
+-- 每天更新最近2天分区的数据
+-- 清洗规则：
+-- s1: aidata2025.ods.ai_user_base_record 来源：dynamodb s3 bucket：ai_user_base_record_bak
+-- s2: aidata2025.ods.user_a_i_base_video_record 来源：mysql aibaseprod库
+-- s3: hzdw2024.ods.ai_base_record_store
+-- s4: hzdw2024.ods.ods_ai_record_info
+-- 计算逻辑：s1新品 s2老产品 无交集 直接 union all，s3完全包含在s1+s2中，不再计算 和s4按照task_id去重取并集
+-- time_cost时长字段对于一些无效时长(>1day)的，限制上限为1h
+
+DECLARE
+  from_date date DEFAULT ${dataform.projectConfig.vars.biz_date}-1;
+DECLARE
+  to_date date DEFAULT ${dataform.projectConfig.vars.biz_date}+1;
+
+-- user_a_i_base_video_record 是cdc表 不能放在事务里 先独立建表
+CREATE OR REPLACE TABLE `ods.user_ai_base_video_record` AS
+SELECT 
+  'new_data' AS data_source,
+  DATETIME(TIMESTAMP_SECONDS(CAST(created_at AS INT64)), "Asia/Shanghai") AS create_time,
+  DATE(TIMESTAMP_SECONDS(CAST(created_at AS INT64)), "Asia/Shanghai") AS create_date,
+  app_name,
+  model_type,
+  client_task_id,
+  train_task_id AS task_id,
+  user_id,
+  DATETIME_DIFF(
+    DATETIME(TIMESTAMP_SECONDS(CAST(updated_at AS INT64)), "Asia/Shanghai"),
+    DATETIME(TIMESTAMP_SECONDS(CAST(created_at AS INT64)), "Asia/Shanghai"),
+    SECOND
+  ) AS time_cost,
+  cost_point,
+  status
+FROM `aidata2025.ods_aibaseprod.user_a_i_base_video_record`
+WHERE DATE(TIMESTAMP_SECONDS(CAST(created_at AS INT64)), "Asia/Shanghai") BETWEEN from_date AND to_date
+;
+
+BEGIN TRANSACTION;
+DELETE
+FROM
+  `dwd.dwd_cdct_ai_service_record_info_hi`
+WHERE
+  create_date BETWEEN from_date
+  AND to_date;
+  --插入分区数据--
+INSERT INTO
+  `dwd.dwd_cdct_ai_service_record_info_hi`
+WITH
+-- 新链路明细 ods
+new_base AS (
+  SELECT
+    'new_data' AS data_source,
+    DATETIME(TIMESTAMP_SECONDS(created_at), "Asia/Shanghai") AS create_time,
+    DATE(TIMESTAMP_SECONDS(created_at), "Asia/Shanghai") AS create_date,
+    app_name,
+    model_type,
+    client_task_id,
+    train_task_id AS task_id,
+    user_id,
+    DATETIME_DIFF(
+      DATETIME(TIMESTAMP_SECONDS(CAST(updated_at AS INT64)), "Asia/Shanghai"),
+      DATETIME(TIMESTAMP_SECONDS(CAST(created_at AS INT64)), "Asia/Shanghai"),
+      SECOND
+    ) AS time_cost,
+    CAST(cost_point AS INT64) AS cost_point,
+    status
+  FROM `aidata2025.ods.ai_user_base_record`
+  WHERE DATE(TIMESTAMP_SECONDS(created_at), "Asia/Shanghai") BETWEEN from_date AND to_date
+
+  UNION ALL
+
+  SELECT
+    *
+  FROM `ods.user_ai_base_video_record`
+  
+),
+
+-- history
+history_tab AS (
+  select 
+    'old_data' data_source
+    ,DATETIME(TIMESTAMP_SECONDS(update_time), "Asia/Shanghai") create_time
+    ,DATE(TIMESTAMP_SECONDS(update_time), "Asia/Shanghai") create_date
+    ,app_name
+    ,model_type
+    ,client_task_id
+    ,task_id
+    ,user_id
+    ,time_cost/1000 time_cost
+    ,-cost_credits as cost_point
+    ,status
+  from hzdw2024.ods.ods_ai_record_info a
+  where DATE(TIMESTAMP_SECONDS(update_time), "Asia/Shanghai") between from_date AND to_date
+  group by all
+),
+
+history_only as (
+  select
+    a.*
+  from history_tab a 
+  left join new_base b 
+  on a.create_date = b.create_date
+  and a.task_id = b.task_id
+  where b.task_id is null
+),
+
+merged as (
+  SELECT
+    *
+  FROM new_base
+  UNION ALL
+  SELECT
+    *
+  FROM history_only 
+)
+-- 最终写入
+SELECT
+  data_source,
+  create_time,
+  create_date,
+  app_name,
+  model_type,
+  client_task_id,
+  task_id,
+  user_id,
+  LEAST(GREATEST(IFNULL(time_cost, 0), 0), 3600) AS time_cost,  -- 时长上限 1 小时
+  cost_point,
+  status
+FROM merged
+;
+
+COMMIT;
+
+

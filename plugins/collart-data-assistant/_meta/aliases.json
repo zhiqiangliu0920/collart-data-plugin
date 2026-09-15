@@ -1,0 +1,3157 @@
+{
+  "ai-knowledge:0global/KNOWLEDGE_MAINTENANCE.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/history/2026-03-25/sql_standards/sql-best-practices.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/history/2026-04-02/sql_standards/bq_advanced_tips.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/history/bq_advanced_tips.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/skills/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/skills/ai-knowledge-maintain/SKILL.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/skills/ai-knowledge-maintain/agents/openai.yaml": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/skills/ai-knowledge-maintain/routing.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/skills/ai-knowledge-maintain/table-template.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/skills/collart-event-metric-sync/SKILL.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/skills/collart-event-metric-sync/reference.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/sql_standards/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/sql_standards/analysis_standards.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/sql_standards/bigquery_redlines.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/sql_standards/bq_advanced_tips.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/sql_standards/common_params.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/sql_standards/sql-best-practices.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:0global/sql_standards/sql_best_practices.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/analysis_playbooks/collart_ads_redlines.md": {
+    "id": "shared.revenue"
+  },
+  "ai-knowledge:1company/analysis_playbooks/company_revenue_monitor_image.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/analysis_playbooks/dashboard_reconciliation.md": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:1company/analysis_playbooks/data-analysis-skill.md": {
+    "id": "shared.diagnosis"
+  },
+  "ai-knowledge:1company/analysis_playbooks/event_metric_from_rule.md": {
+    "id": "shared.event-rules"
+  },
+  "ai-knowledge:1company/analysis_playbooks/ga4_new_product_discovery.md": {
+    "id": "shared.diagnosis"
+  },
+  "ai-knowledge:1company/analysis_playbooks/internal_user_filter.md": {
+    "id": "shared.access"
+  },
+  "ai-knowledge:1company/analysis_playbooks/weekly_meeting_summary_method.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/1company/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/ai/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/android/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/collart_android/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/collart_ios/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/collart_web/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/generation_report.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/hangzhou/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/ios/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_ad_sub_revenue_1h.md": {
+    "id": "table:aidata2025.ads.ads_ad_sub_revenue_1h"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_aidata_retain_di.md": {
+    "id": "table:aidata2025.ads.ads_aidata_retain_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_collart_delivery_fb_1d.md": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_fb_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_collart_delivery_kol_1d.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_collart_delivery_revenue_1d.md": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_revenue_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_hangzhou_revenue_country_1d.md": {
+    "id": "table:aidata2025.ads.ads_hangzhou_revenue_country_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_template_recommend_foru_1d.md": {
+    "id": "table:aidata2025.ads.ads_template_recommend_foru_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_template_recommend_trending_1d.md": {
+    "id": "table:aidata2025.ads.ads_template_recommend_trending_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_user_subscribe_daily_1d.md": {
+    "id": "table:aidata2025.ads.ads_user_subscribe_daily_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads.ads_user_subscribe_lifecycle_1d.md": {
+    "id": "table:aidata2025.ads.ads_user_subscribe_lifecycle_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_high_value_user_Info.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_high_value_user_android_Info.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_high_value_user_prompt_info.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_oper_basic_indicator_collart_di.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_oper_event_param_summary_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_event_param_summary_collart_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_oper_event_summary_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_event_summary_collart_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_oper_tempalte_data_android.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_tempalte_data_android"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_oper_tempalte_data_android_BigQuery_–_AIDATA_–_Google_Cloud_控制台.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_tempalte_data_android"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_oper_user_event_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_event_collart_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_oper_user_event_param_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_event_param_collart_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ads_collart.ads_oper_user_new_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_new_collart_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ai_service.ai_cost_data.md": {
+    "id": "table:aidata2025.ai_service.ai_cost_data"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ai_service.ai_service_data.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ai_service.ai_service_detail.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ai_service.ai_service_record_info_1d.md": {
+    "id": "table:aidata2025.ai_service.ai_service_record_info_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ai_service.collart_core_event_bi.md": {
+    "id": "table:aidata2025.ai_service.collart_core_event_bi"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.collart_campaign_name_modify_copy.md": {
+    "id": "table:aidata2025.dim.collart_campaign_name_modify_copy"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.collart_product_price_copy.md": {
+    "id": "table:aidata2025.dim.collart_product_price_copy"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_ai_service_cost_unit_copy.md": {
+    "id": "table:aidata2025.dim.dim_ai_service_cost_unit_copy"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_ai_service_model_info_copy.md": {
+    "id": "table:aidata2025.dim.dim_ai_service_model_info_copy"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_collart_android_core_event_copy.md": {
+    "id": "table:aidata2025.dim.dim_collart_android_core_event_copy"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_collart_asa_keyword_info.md": {
+    "id": "table:aidata2025.dim.dim_collart_asa_keyword_info"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_country_info.md": {
+    "id": "table:aidata2025.dim.dim_country_info"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_country_rank_info.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_module_template_info_android.md": {
+    "id": "table:aidata2025.dim.dim_module_template_info_android"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_product_info.md": {
+    "id": "table:aidata2025.dim.dim_product_info"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_product_info_copy.md": {
+    "id": "table:aidata2025.dim.dim_product_info_copy"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.dim_template_tag.md": {
+    "id": "table:aidata2025.dim.dim_template_tag"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dim.exchange_rate_days.md": {
+    "id": "table:aidata2025.dim.exchange_rate_days"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dm.dm_user_profile_collart_df.md": {
+    "id": "table:aidata2025.dm.dm_user_profile_collart_df"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_apple_user_subscribtion_di.md": {
+    "id": "table:aidata2025.dwd.dwd_apple_user_subscribtion_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_cdct_delivery_cost_di.md": {
+    "id": "table:aidata2025.dwd.dwd_cdct_delivery_cost_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_cdct_woolong_request_di.md": {
+    "id": "table:aidata2025.dwd.dwd_cdct_woolong_request_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_id_convert_di.md": {
+    "id": "table:aidata2025.dwd.dwd_id_convert_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_oper_delivery_adjust_user_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_delivery_adjust_user_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_oper_delivery_collart_di.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_oper_sub_order_revenue_df.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_sub_order_revenue_df"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_oper_user_aitask_di.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_oper_user_basic_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_basic_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_oper_user_collart_di.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_oper_user_event_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_event_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_oper_user_order_event_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_order_event_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_oper_user_properties_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_properties_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dwd.dwd_oper_user_transaction_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_transaction_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_id_convert_df.md": {
+    "id": "table:aidata2025.dws.dws_id_convert_df"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_new_user_accumlate_subscribe_1d.md": {
+    "id": "table:aidata2025.dws.dws_new_user_accumlate_subscribe_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_asa_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_asa_collart_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_asa_keyword_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_asa_keyword_collart_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_basic_aidata_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_basic_aidata_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_delivery_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_delivery_collart_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_delivery_user_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_delivery_user_collart_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_fb_delivery_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_fb_delivery_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_newuser_lifecycle_1d.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_tiktok_ad_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_tiktok_ad_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_user_ad_di.md": {
+    "id": "table:aidata2025.dws.dws_oper_user_ad_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_user_ad_shotcut_1d.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.dws.dws_oper_user_sub_revenue_df.md": {
+    "id": "table:aidata2025.dws.dws_oper_user_sub_revenue_df"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.ods.ods_ai_request_info_new_1d.md": {
+    "id": "table:aidata2025.ods.ods_ai_request_info_new_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/aidata2025.revenue.vip_event_data_ios.md": {
+    "id": "table:aidata2025.revenue.vip_event_data_ios"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/hzdw2024.ods.ai_base_record_store.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/hzdw2024.ods.ods_ai_record_info.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ads.ads_atlasv_basic_data_daily_1h.md": {
+    "id": "table:pubdata2025.ads.ads_atlasv_basic_data_daily_1h"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ads.ads_atlasv_basic_data_daily_2024.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h.md": {
+    "id": "table:pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ads.ads_atlasv_deliver_cost_daily.md": {
+    "id": "table:pubdata2025.ads.ads_atlasv_deliver_cost_daily"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ads.ads_cdct_service_cost_1d.md": {
+    "id": "table:pubdata2025.ads.ads_cdct_service_cost_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ads.ads_data_report_1d.md": {
+    "id": "table:pubdata2025.ads.ads_data_report_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.dwd.dwd_cdct_revenue_adplatform_di.md": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_adplatform_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.dwd.dwd_cdct_revenue_google_di.md": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_google_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_stripe_di"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.dws.dws_cdct_cost_google_1h.md": {
+    "id": "table:pubdata2025.dws.dws_cdct_cost_google_1h"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.dws.dws_cdct_log_ai_record_1d.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.dws.dws_cdct_revenue_country_1d.md": {
+    "id": "table:pubdata2025.dws.dws_cdct_revenue_country_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ods.ods_apple_sales_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_sales_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ods.ods_apple_subscriber_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_subscriber_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ods.ods_apple_subscription_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_subscription_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ods.ods_apple_subscription_event_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_subscription_event_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/pubdata2025.ods.ods_woolong_subscription_1d.md": {
+    "id": "table:pubdata2025.ods.ods_woolong_subscription_1d"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/tables/storytemplate-10a27.analytics_232977577.events.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/2026-05-21/table_dictionary_export/unassigned/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/history/undated/dashboard_snapshot/backfill.sql": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:1company/history/undated/dashboard_snapshot/backfill_snapshot.py": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:1company/history/undated/dashboard_snapshot/reconcile_snapshot.py": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:1company/history/undated/dashboard_snapshot/reconciliation_qa.json": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:1company/history/undated/dashboard_snapshot/source_qa.json": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:1company/indicators/collart_daily_report_date_windows.md": {
+    "id": "shared.report-windows"
+  },
+  "ai-knowledge:1company/indicators/event_metric_from_rule.md": {
+    "id": "shared.event-rules"
+  },
+  "ai-knowledge:1company/indicators/subscription_purchase.md": {
+    "id": "shared.revenue"
+  },
+  "ai-knowledge:1company/lineage/dashboard_pipeline.md": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:1company/lineage/warehouse_sources.md": {
+    "id": "table:aidata2025.ads.ads_ad_sub_revenue_1h"
+  },
+  "ai-knowledge:1company/sql_presets/query_metric_from_rule.sql@c24d38f3cbbe": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/tables/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/tables/ads_dim_metric_rule.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:1company/tables/ads_dim_metric_rule_catalog.md": {
+    "id": "shared.event-rules"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads.ads_ad_sub_revenue_1h.md": {
+    "id": "table:aidata2025.ads.ads_ad_sub_revenue_1h"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads.ads_aidata_retain_di.md": {
+    "id": "table:aidata2025.ads.ads_aidata_retain_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads.ads_hangzhou_revenue_country_1d.md": {
+    "id": "table:aidata2025.ads.ads_hangzhou_revenue_country_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads.ads_user_subscribe_daily_1d.md": {
+    "id": "table:aidata2025.ads.ads_user_subscribe_daily_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads.ads_user_subscribe_lifecycle_1d.md": {
+    "id": "table:aidata2025.ads.ads_user_subscribe_lifecycle_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads_collart.ads_dim_metric_rule.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads_collart.ads_oper_event_param_summary_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_event_param_summary_collart_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads_collart.ads_oper_event_summary_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_event_summary_collart_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads_collart.ads_oper_user_event_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_event_collart_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads_collart.ads_oper_user_event_param_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_event_param_collart_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ads_collart.ads_oper_user_new_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_new_collart_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ai_service.ai_cost_data.md": {
+    "id": "table:aidata2025.ai_service.ai_cost_data"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ai_service.ai_service_record_info_1d.md": {
+    "id": "table:aidata2025.ai_service.ai_service_record_info_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ai_service.collart_core_event_bi.md": {
+    "id": "table:aidata2025.ai_service.collart_core_event_bi"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dim.collart_campaign_name_modify_copy.md": {
+    "id": "table:aidata2025.dim.collart_campaign_name_modify_copy"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dim.collart_product_price_copy.md": {
+    "id": "table:aidata2025.dim.collart_product_price_copy"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dim.dim_ai_service_model_info_copy.md": {
+    "id": "table:aidata2025.dim.dim_ai_service_model_info_copy"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dim.dim_collart_asa_keyword_info.md": {
+    "id": "table:aidata2025.dim.dim_collart_asa_keyword_info"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dim.dim_country_info.md": {
+    "id": "table:aidata2025.dim.dim_country_info"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dim.dim_product_info.md": {
+    "id": "table:aidata2025.dim.dim_product_info"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dim.dim_product_info_copy.md": {
+    "id": "table:aidata2025.dim.dim_product_info_copy"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dim.dim_template_tag.md": {
+    "id": "table:aidata2025.dim.dim_template_tag"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dim.exchange_rate_days.md": {
+    "id": "table:aidata2025.dim.exchange_rate_days"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dm.dm_user_profile_collart_df.md": {
+    "id": "table:aidata2025.dm.dm_user_profile_collart_df"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_apple_user_subscribtion_di.md": {
+    "id": "table:aidata2025.dwd.dwd_apple_user_subscribtion_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_cdct_delivery_cost_di.md": {
+    "id": "table:aidata2025.dwd.dwd_cdct_delivery_cost_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_cdct_woolong_request_di.md": {
+    "id": "table:aidata2025.dwd.dwd_cdct_woolong_request_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_id_convert_di.md": {
+    "id": "table:aidata2025.dwd.dwd_id_convert_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_oper_delivery_adjust_user_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_delivery_adjust_user_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_oper_sub_order_revenue_df.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_sub_order_revenue_df"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_oper_user_basic_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_basic_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_oper_user_event_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_event_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_oper_user_order_event_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_order_event_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_oper_user_properties_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_properties_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dwd.dwd_oper_user_transaction_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_transaction_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_id_convert_df.md": {
+    "id": "table:aidata2025.dws.dws_id_convert_df"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_new_user_accumlate_subscribe_1d.md": {
+    "id": "table:aidata2025.dws.dws_new_user_accumlate_subscribe_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_oper_asa_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_asa_collart_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_oper_asa_keyword_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_asa_keyword_collart_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_oper_basic_aidata_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_basic_aidata_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_oper_delivery_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_delivery_collart_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_oper_delivery_user_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_delivery_user_collart_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_oper_fb_delivery_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_fb_delivery_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_oper_tiktok_ad_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_tiktok_ad_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_oper_user_ad_di.md": {
+    "id": "table:aidata2025.dws.dws_oper_user_ad_di"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_oper_user_ad_shotcut_1d.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/tables/aidata2025.dws.dws_oper_user_sub_revenue_df.md": {
+    "id": "table:aidata2025.dws.dws_oper_user_sub_revenue_df"
+  },
+  "ai-knowledge:1company/tables/aidata2025.ods.ods_ai_request_info_new_1d.md": {
+    "id": "table:aidata2025.ods.ods_ai_request_info_new_1d"
+  },
+  "ai-knowledge:1company/tables/aidata2025.revenue.vip_event_data_ios.md": {
+    "id": "table:aidata2025.revenue.vip_event_data_ios"
+  },
+  "ai-knowledge:1company/tables/cross_product_tables.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ads.ads_atlasv_basic_data_daily_1h.md": {
+    "id": "table:pubdata2025.ads.ads_atlasv_basic_data_daily_1h"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ads.ads_atlasv_basic_data_daily_2024.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h.md": {
+    "id": "table:pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ads.ads_atlasv_deliver_cost_daily.md": {
+    "id": "table:pubdata2025.ads.ads_atlasv_deliver_cost_daily"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ads.ads_cdct_service_cost_1d.md": {
+    "id": "table:pubdata2025.ads.ads_cdct_service_cost_1d"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ads.ads_data_report_1d.md": {
+    "id": "table:pubdata2025.ads.ads_data_report_1d"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.dwd.dwd_cdct_revenue_adplatform_di.md": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_adplatform_di"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.dwd.dwd_cdct_revenue_google_di.md": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_google_di"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.dws.dws_cdct_cost_google_1h.md": {
+    "id": "table:pubdata2025.dws.dws_cdct_cost_google_1h"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.dws.dws_cdct_revenue_country_1d.md": {
+    "id": "table:pubdata2025.dws.dws_cdct_revenue_country_1d"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ods.ods_apple_sales_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_sales_1d"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ods.ods_apple_subscriber_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_subscriber_1d"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ods.ods_apple_subscription_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_subscription_1d"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ods.ods_apple_subscription_event_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_subscription_event_1d"
+  },
+  "ai-knowledge:1company/tables/pubdata2025.ods.ods_woolong_subscription_1d.md": {
+    "id": "table:pubdata2025.ods.ods_woolong_subscription_1d"
+  },
+  "ai-knowledge:1company/tables/warehouse_metadata_gaps.md": {
+    "id": "table:aidata2025.dwd.dwd_cdct_delivery_cost_di"
+  },
+  "ai-knowledge:README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/company_dashboard_backfill/backfill.sql": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:_generated/company_dashboard_backfill/backfill_snapshot.py": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:_generated/company_dashboard_backfill/reconcile_snapshot.py": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:_generated/company_dashboard_backfill/reconciliation_qa.json": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:_generated/company_dashboard_backfill/source_qa.json": {
+    "id": "company.dashboard"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/build_catalog.py@a99697aeca66": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/dm_quality.json@a6b09692f423": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/dm_quality.sql@4a78632b3968": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/fashion_warehouse_review.md@30963c0d69f6": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/inspect_readonly.py@4643a2bb0eee": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/jobs.sql@5019f20f5a93": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/profile_consistency.json@9a52e3db591a": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/profile_consistency.sql@3075ab1ae893": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/raw_table_overlap.json@432604ac9d85": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/raw_table_overlap.sql@10e9c29ae7cf": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/reconciliation.json@a8bbb04cd4e6": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/reconciliation.sql@ddf3433ba787": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/revenue_country.json@4523b8686223": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/revenue_country.sql@4e54b41f6c5e": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/shared_revenue_reconciliation.json@9e4db192d746": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/shared_revenue_reconciliation.sql@868f7e486fe4": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/ads_template_search_user_keyword_di.sqlx@557d0982aa32": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_attr_di.sqlx@4ab000c478eb": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_country_di.sqlx@aa9195c66f5a": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_daily_compare_di.sqlx@17463965c87a": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_daily_di.sqlx@bc2be0c59665": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_event_metric_attr_di.sqlx@44562e1c18b0": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_event_metric_country_di.sqlx@02b193c7af56": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_user_active_di.sqlx@1d62410fb5a7": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_user_event_metric_di.sqlx@041e8c489b60": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/ads_oper_user_profile_df.sqlx@10dd58b1498f": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/create_fashion_tables.sqlx@7210d68b8358": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/fashion_active_revenue_enrichment.sqlx@5e4016b9fa32": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/fashion_daily_metric.sqlx@876d3c1a1c5c": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/fashion_revenue.sqlx@848af9a531d4": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_fashion/fashion_user_revenue.sqlx@0b32a3175899": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_web/ads_oper_basic_indicator_daily_di.sqlx@947b2962d90c": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_web/ads_oper_user_active_di.sqlx@98930437c99c": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/collart/collart_web/ads_oper_user_event_metric_di.sqlx@6ca5960f4da7": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/ads/revenue/h_ads_ad_sub_revenue_1h.sqlx@867192af7b39": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/dm/daily/h_dm_collart_web_user_event_di.sqlx@e41849213437": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/sources/definitions/dwd/daily/h_dwd_cdct_delivery_cost_di.sqlx@08d1ecb7cd50": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/summarize_jobs.py@14ed21bc3ac3": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/table_metadata.json@540c6d21b14b": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/task_inventory.md@58d8723e1fae": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/fashion_warehouse_audit_20260909/validate_artifacts.py@4bc2eace80bd": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/1company/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/ai/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/android/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/collart_android/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/collart_ios/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/collart_web/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/generation_report.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/hangzhou/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/ios/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads.ads_ad_sub_revenue_1h.md": {
+    "id": "table:aidata2025.ads.ads_ad_sub_revenue_1h"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads.ads_aidata_retain_di.md": {
+    "id": "table:aidata2025.ads.ads_aidata_retain_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads.ads_collart_delivery_fb_1d.md": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_fb_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads.ads_collart_delivery_kol_1d.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads.ads_collart_delivery_revenue_1d.md": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_revenue_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads.ads_hangzhou_revenue_country_1d.md": {
+    "id": "table:aidata2025.ads.ads_hangzhou_revenue_country_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads.ads_template_recommend_foru_1d.md": {
+    "id": "table:aidata2025.ads.ads_template_recommend_foru_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads.ads_template_recommend_trending_1d.md": {
+    "id": "table:aidata2025.ads.ads_template_recommend_trending_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads.ads_user_subscribe_daily_1d.md": {
+    "id": "table:aidata2025.ads.ads_user_subscribe_daily_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads.ads_user_subscribe_lifecycle_1d.md": {
+    "id": "table:aidata2025.ads.ads_user_subscribe_lifecycle_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_high_value_user_Info.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_high_value_user_android_Info.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_high_value_user_prompt_info.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_high_value_user_web_info.md@6c72d553a695": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_basic_indicator_collart_di.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di.md@8396a754f6d0": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_web_di.md@b0d0c7651ebe": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_web_di.md@1be7c6190c1b": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_stripe_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_event_param_summary_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_event_param_summary_collart_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_event_summary_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_event_summary_collart_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_tempalte_data_android.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_tempalte_data_android"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_tempalte_data_android_BigQuery_–_AIDATA_–_Google_Cloud_控制台.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_tempalte_data_android"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_user_event_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_event_collart_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_user_event_param_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_event_param_collart_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_user_new_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_new_collart_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ads_collart.ads_oper_user_new_collartweb_di.md@f2b558b76aa8": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ai_service.ai_cost_data.md": {
+    "id": "table:aidata2025.ai_service.ai_cost_data"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ai_service.ai_service_data.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ai_service.ai_service_detail.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ai_service.ai_service_record_info_1d.md": {
+    "id": "table:aidata2025.ai_service.ai_service_record_info_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ai_service.collart_core_event_bi.md": {
+    "id": "table:aidata2025.ai_service.collart_core_event_bi"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.collart_campaign_name_modify_copy.md": {
+    "id": "table:aidata2025.dim.collart_campaign_name_modify_copy"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.collart_product_price_copy.md": {
+    "id": "table:aidata2025.dim.collart_product_price_copy"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_ai_service_cost_unit_copy.md": {
+    "id": "table:aidata2025.dim.dim_ai_service_cost_unit_copy"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_ai_service_model_info_copy.md": {
+    "id": "table:aidata2025.dim.dim_ai_service_model_info_copy"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_collart_android_core_event_copy.md": {
+    "id": "table:aidata2025.dim.dim_collart_android_core_event_copy"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_collart_asa_keyword_info.md": {
+    "id": "table:aidata2025.dim.dim_collart_asa_keyword_info"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_collart_web_core_event_copy.md@4c6ba3538a37": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_country_info.md": {
+    "id": "table:aidata2025.dim.dim_country_info"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_country_rank_info.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_module_template_info_android.md": {
+    "id": "table:aidata2025.dim.dim_module_template_info_android"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_product_info.md": {
+    "id": "table:aidata2025.dim.dim_product_info"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_product_info_copy.md": {
+    "id": "table:aidata2025.dim.dim_product_info_copy"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.dim_template_tag.md": {
+    "id": "table:aidata2025.dim.dim_template_tag"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dim.exchange_rate_days.md": {
+    "id": "table:aidata2025.dim.exchange_rate_days"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dm.dm_user_profile_collart_df.md": {
+    "id": "table:aidata2025.dm.dm_user_profile_collart_df"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_apple_user_subscribtion_di.md": {
+    "id": "table:aidata2025.dwd.dwd_apple_user_subscribtion_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_cdct_delivery_cost_di.md": {
+    "id": "table:aidata2025.dwd.dwd_cdct_delivery_cost_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_cdct_woolong_request_di.md": {
+    "id": "table:aidata2025.dwd.dwd_cdct_woolong_request_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_id_convert_di.md": {
+    "id": "table:aidata2025.dwd.dwd_id_convert_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_delivery_adjust_user_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_delivery_adjust_user_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_delivery_collart_di.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_sub_order_revenue_df.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_sub_order_revenue_df"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_user_aitask_di.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_user_basic_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_basic_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_user_collart_di.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_user_collartweb_di.md@93cc4df1f17f": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_user_event_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_event_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_user_order_event_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_order_event_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_user_properties_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_properties_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dwd.dwd_oper_user_transaction_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_transaction_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_id_convert_df.md": {
+    "id": "table:aidata2025.dws.dws_id_convert_df"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_new_user_accumlate_subscribe_1d.md": {
+    "id": "table:aidata2025.dws.dws_new_user_accumlate_subscribe_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_asa_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_asa_collart_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_asa_keyword_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_asa_keyword_collart_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_basic_aidata_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_basic_aidata_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_delivery_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_delivery_collart_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_delivery_user_collart_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_delivery_user_collart_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_fb_delivery_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_fb_delivery_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_newuser_lifecycle_1d.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_tiktok_ad_1d.md": {
+    "id": "table:aidata2025.dws.dws_oper_tiktok_ad_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_user_ad_di.md": {
+    "id": "table:aidata2025.dws.dws_oper_user_ad_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_user_ad_shotcut_1d.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.dws.dws_oper_user_sub_revenue_df.md": {
+    "id": "table:aidata2025.dws.dws_oper_user_sub_revenue_df"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.ods.ods_ai_request_info_new_1d.md": {
+    "id": "table:aidata2025.ods.ods_ai_request_info_new_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/aidata2025.revenue.vip_event_data_ios.md": {
+    "id": "table:aidata2025.revenue.vip_event_data_ios"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/hzdw2024.ods.ai_base_record_store.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/hzdw2024.ods.ods_ai_record_info.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ads.ads_atlasv_basic_data_daily_1h.md": {
+    "id": "table:pubdata2025.ads.ads_atlasv_basic_data_daily_1h"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ads.ads_atlasv_basic_data_daily_2024.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h.md": {
+    "id": "table:pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ads.ads_atlasv_deliver_cost_daily.md": {
+    "id": "table:pubdata2025.ads.ads_atlasv_deliver_cost_daily"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ads.ads_cdct_service_cost_1d.md": {
+    "id": "table:pubdata2025.ads.ads_cdct_service_cost_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ads.ads_data_report_1d.md": {
+    "id": "table:pubdata2025.ads.ads_data_report_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.dwd.dwd_cdct_revenue_adplatform_di.md": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_adplatform_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.dwd.dwd_cdct_revenue_google_di.md": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_google_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_stripe_di"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.dws.dws_cdct_cost_google_1h.md": {
+    "id": "table:pubdata2025.dws.dws_cdct_cost_google_1h"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.dws.dws_cdct_log_ai_record_1d.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.dws.dws_cdct_revenue_country_1d.md": {
+    "id": "table:pubdata2025.dws.dws_cdct_revenue_country_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ods.ods_apple_sales_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_sales_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ods.ods_apple_subscriber_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_subscriber_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ods.ods_apple_subscription_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_subscription_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ods.ods_apple_subscription_event_1d.md": {
+    "id": "table:pubdata2025.ods.ods_apple_subscription_event_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/pubdata2025.ods.ods_woolong_subscription_1d.md": {
+    "id": "table:pubdata2025.ods.ods_woolong_subscription_1d"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/tables/storytemplate-10a27.analytics_232977577.events.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/table_docs_20260521/unassigned/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/Web最近7日收入分析.md@6f52d844765c": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/active_revenue_history.json@0beaee5059e2": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/active_revenue_history.sql@4e74fbf3f4dc": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/ads_daily.json@0d50e5f118f7": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/ads_daily.sql@eb3654c464ac": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/build_report.py@ffdfa8cc26cb": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/country_changes.csv@47ec07be8165": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/daily_revenue.csv@db258ba1b735": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/freshness.json@bb0d8605c0f3": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/freshness.sql@bfcacba934db": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/product_changes.csv@5ec92ede03c8": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/qa.json@698ae9a91f5d": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/qa.sql@f777930d4aac": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/query.py@475c9ea9cce3": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/recheck_0911.json@cc73cf0457ff": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/recheck_0911.sql@bea49599e17b": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/reconciliation.csv@2b72162541bf": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/revenue_type_changes.csv@c16961813db8": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/schemas.json@93f618c34d65": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_analysis.json@3c9477f35e67": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_analysis.sql@fcad3247fcb4": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_probe.json@162eb86b660e": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/stripe_probe.sql@0b212b025d77": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:_generated/web_revenue_7d_20260912/summary.json@b512a273b529": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/analysis_playbooks/big_r_manual_entry.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/analysis_playbooks/big_r_realtime_broadcast.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/analysis_playbooks/dau_diagnosis.md": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/analysis_playbooks/first_subscription_diagnosis.md": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/analysis_playbooks/template_coverage_diagnosis.md": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/analysis_playbooks/vibedance_diagnosis_framework.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/history/2026-04-20/indicators/dau_baseline.md": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/history/2026-05-14/analysis_scripts/dau_platform_diagnosis_20260514.py": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/history/2026-05-14/analysis_scripts/dau_platform_diagnosis_20260514_part2.py": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/history/2026-05-14/analysis_scripts/vibedance_exploration_20260514.py": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/history/2026-09-02/tables/aidata2025.ads_collartandroid.ads_dim_event_tag.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:collart_android/history/2026-09-02/tables/aidata2025.ads_collartandroid.ads_dim_metric_rule.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/analyze_results.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/bounce_analysis.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/bounce_analysis_v2.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/bounce_india.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/bq_check_missing_temp.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/check_missing_temp_v2.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/check_missing_temp_v3.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/compare_all_countries.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/compare_countries.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/daily_missing_temp_analysis.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/run_ai_analysis.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/run_first_sub_analysis.py": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/run_verify_subscription.py": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/history/undated/analysis_scripts/temp_query.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/aiedit_funnel.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/banner_ctr.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/category_ctr.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/conversion.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/core_ctr.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/dau.sql": {
+    "id": "android.activity"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/feature_ctr.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/feature_usage.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/image_show.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/module_ctr.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/retention.sql": {
+    "id": "android.activity"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/search_uv.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/service_type.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/history/undated/indicator_sql/video_show.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/indicators/aiedit_funnel.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/banner_ctr.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/category_ctr.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/conversion.md": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/conversion.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/core_ctr.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/dau.md": {
+    "id": "android.activity"
+  },
+  "ai-knowledge:collart_android/indicators/dau.sql": {
+    "id": "android.activity"
+  },
+  "ai-knowledge:collart_android/indicators/dau_baseline.md": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/indicators/event_usage.md": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/feature_ctr.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/feature_usage.md": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/feature_usage.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/image_show.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/module_ctr.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/retention.md": {
+    "id": "android.activity"
+  },
+  "ai-knowledge:collart_android/indicators/retention.sql": {
+    "id": "android.activity"
+  },
+  "ai-knowledge:collart_android/indicators/russia_orders_payment_broadcast.md": {
+    "id": "shared.revenue"
+  },
+  "ai-knowledge:collart_android/indicators/search_uv.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/service_type.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/indicators/video_show.sql": {
+    "id": "android.conversion"
+  },
+  "ai-knowledge:collart_android/lineage/lineage.md": {
+    "id": "android.product"
+  },
+  "ai-knowledge:collart_android/lineage/table_lineage.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/lineage/warehouse_sources.md": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_fb_1d"
+  },
+  "ai-knowledge:collart_android/product/core_metrics.md": {
+    "id": "android.product"
+  },
+  "ai-knowledge:collart_android/product/home_screenshots.md": {
+    "id": "android.product"
+  },
+  "ai-knowledge:collart_android/sql-snippets/ai_analysis_comprehensive.sql@10f9dd9bcd41": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/ai_error_code_trend.sql@4793a166aa64": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/ai_error_explore.sql@451dd3ffb275": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/ai_service_explore.sql@01cb5c17124c": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/ai_service_success_rate.sql@2b15ef4c7596": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/analyze_results.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/sql-snippets/android_credit_direct_buy_novip.sql@8730fe5543c8": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/ai_service_start_daily.sql@d0aaae9ae3e9": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/ai_service_start_function_type_20260409.sql@65229bccd083": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/ai_service_start_key_values.sql@21fbaccd4800": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/android_feature_click.sql@5a05b66e8cf9": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/android_video_image_show.sql@b492b086d212": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bounce_analysis.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bounce_analysis_v2.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bounce_india.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/bq_check_missing_temp.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/check_missing_temp_v2.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/check_missing_temp_v3.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/collart_android_daily_20260312.sql@5e2386fe932b": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/collart_funnel_analysis.sql@186d67d08e40": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/collart_web_top_country_template_preference.sql@514f3f98e7ae": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/compare_all_countries.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/compare_countries.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/daily_missing_temp_analysis.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/dau_by_country_7days.sql@de071b539946": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/home_feature_ctr_20260409.sql@7618189e87c3": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/motion_control_top20_country.sql@6bf909d0f8b2": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/motioncontrol_model_stats_20260407.sql@3e810baed30e": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/new_user_d1_retention_by_event_20260415.sql@e4a6a8d72a5f": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/pack_purchase_interval_20260414.sql@4eca783c04b3": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/pay_path_analysis_20260414.sql@162d0836efce": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/search_keywords_distribution_20260409.sql@6f05a60d7296": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/temp_query.py": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_analysis_report_20260402.sql@191581c1a70a": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_ctr_analysis_20260402.sql@76ccbc9f4a05": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_ctr_top20_20260401.sql@891aea0ba78e": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_20260401.sql@f3140f00b1ce": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_click_rate_20260402.sql@1e7b20cbd287": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_click_rate_20260406.sql@955e76c98da0": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_click_rate_gt10000_20260404.sql@2e5f918b26e3": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_click_rate_gt1000_20260402.sql@ee2b243fb28e": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_click_rate_gt1000_20260403.sql@a2ac2931a6e9": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_click_rate_gt1000_20260404.sql@f92204aa7dec": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_click_rate_gt1000_20260407.sql@6e26d028606f": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_show_uv_20260403.sql@464d3aedc860": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_show_uv_20260404.sql@4c62e1c2b8d7": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_top10_show_uv_gt5000_20260406.sql@772b31d2144f": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/archive/2026-05/template_yesterday_final_check.sql@9571328645f5": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/check_dau_schema.sql@d93685af60b0": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/dau_3day_trend_20260420.sql@0a2c2e9b52da": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/dau_3day_trend_20260420_v2.sql@beae50dea22b": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/dau_platform_diagnosis_20260514.py": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/sql-snippets/dau_platform_diagnosis_20260514_part2.py": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/sql-snippets/dau_top10_countries.sql@902612d16fdd": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/dau_yesterday.sql@c946911833e9": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/first_day_subscription_rate_trend.sql@712c6f96c815": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/first_sub_rate_analysis_20260422.sql@3591c4159839": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/foryou_vs_trending_20260527.sql@ede0f1f7e3b1": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/kol_invite_code_analysis_20260420.sql@57a830ca9ee8": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/run_ai_analysis.py": {
+    "id": "android.templates"
+  },
+  "ai-knowledge:collart_android/sql-snippets/run_first_sub_analysis.py": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/sql-snippets/run_verify_subscription.py": {
+    "id": "android.acquisition"
+  },
+  "ai-knowledge:collart_android/sql-snippets/russia_ad_cap_10_to_5.sql@02088c2133cd": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/russia_dau_ad_success_dist.sql@a15a1eb25f57": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/russia_home_temp_show_failed_diagnosis_20260727.sql@01f4f885cb0a": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/us_trending_recommend_stability_20260527.sql@a12be3c482f7": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/verify_subscription_tracking_20260422.sql@7f78d4b33fa1": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/vibedance_core_analysis.sql@f89cbf2763b1": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/vibedance_exploration.sql@5e745065033c": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/vibedance_exploration_20260514.py": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/sql-snippets/violation_guard_dialog_stats.sql@173138ea95ac": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/tables/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/tables/ads_oper_basic_indicator_collart_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_indicator_collart_di"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads.ads_collart_delivery_fb_1d.md": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_fb_1d"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads.ads_collart_delivery_revenue_1d.md": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_revenue_1d"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads.ads_template_recommend_foru_1d.md": {
+    "id": "table:aidata2025.ads.ads_template_recommend_foru_1d"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads.ads_template_recommend_trending_1d.md": {
+    "id": "table:aidata2025.ads.ads_template_recommend_trending_1d"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy.md": {
+    "id": "table:aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collart.ads_oper_tempalte_data_android.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_tempalte_data_android"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collart.big_r_realtime_alert_log.md": {
+    "id": "table:aidata2025.ads_collart.big_r_realtime_alert_log"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collart.big_r_realtime_today_income.md": {
+    "id": "table:aidata2025.ads_collart.big_r_realtime_today_income"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collart.big_r_user_value_state.md": {
+    "id": "table:aidata2025.ads_collart.big_r_user_value_state"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collartandroid.ads_dim_event_tag.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collartandroid.ads_dim_metric_rule.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di.md": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collartandroid.ads_oper_event_metric_country_di.md": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_event_metric_country_di"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.ads_collartandroid.ads_oper_user_event_metric_di.md": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_user_event_metric_di"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.dim.dim_ai_service_cost_unit_copy.md": {
+    "id": "table:aidata2025.dim.dim_ai_service_cost_unit_copy"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.dim.dim_collart_android_core_event_copy.md": {
+    "id": "table:aidata2025.dim.dim_collart_android_core_event_copy"
+  },
+  "ai-knowledge:collart_android/tables/aidata2025.dim.dim_module_template_info_android.md": {
+    "id": "table:aidata2025.dim.dim_module_template_info_android"
+  },
+  "ai-knowledge:collart_android/tables/dwd_oper_user_collart_di.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:collart_android/tables/storytemplate-10a27.analytics_232977577.events_.md": {
+    "id": "table:storytemplate-10a27.analytics_232977577.events_*"
+  },
+  "ai-knowledge:collart_android/tables/table_config.json": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_android/tables/warehouse_metadata_gaps.md": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_new_collart_di"
+  },
+  "ai-knowledge:collart_fashion/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_fashion/analysis_playbooks/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_fashion/analysis_playbooks/cohort_dashboard_analysis.md": {
+    "id": "fashion.funnel"
+  },
+  "ai-knowledge:collart_fashion/analysis_playbooks/fashion_video_funnel.md": {
+    "id": "fashion.funnel"
+  },
+  "ai-knowledge:collart_fashion/analysis_playbooks/internal_user_filter.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_fashion/history/2026-08-27/indicators/fashion_revenue.md": {
+    "id": "fashion.revenue"
+  },
+  "ai-knowledge:collart_fashion/history/2026-09-02/tables/aidata2025.ads_collartfashion.ads_dim_metric_rule.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:collart_fashion/history/2026-09-09/tables/aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di.md": {
+    "id": "fashion.revenue"
+  },
+  "ai-knowledge:collart_fashion/history/2026-09-09/tables/aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di.md": {
+    "id": "fashion.revenue"
+  },
+  "ai-knowledge:collart_fashion/history/2026-09-09/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_revenue_di"
+  },
+  "ai-knowledge:collart_fashion/history/undated/sql/fashion_daily_core_metrics.sql": {
+    "id": "fashion.funnel"
+  },
+  "ai-knowledge:collart_fashion/history/undated/sql/fashion_new_user_orders.sql": {
+    "id": "fashion.funnel"
+  },
+  "ai-knowledge:collart_fashion/history/undated/sql/fashion_pbi_dashboard.sql": {
+    "id": "fashion.funnel"
+  },
+  "ai-knowledge:collart_fashion/indicators/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_fashion/indicators/fashion_new_user.md": {
+    "id": "fashion.activity"
+  },
+  "ai-knowledge:collart_fashion/indicators/fashion_revenue.md": {
+    "id": "fashion.revenue"
+  },
+  "ai-knowledge:collart_fashion/indicators/fashion_vs_main_site_user.md": {
+    "id": "fashion.product"
+  },
+  "ai-knowledge:collart_fashion/lineage/revenue_pipeline.md": {
+    "id": "fashion.revenue"
+  },
+  "ai-knowledge:collart_fashion/product/ai_fashion_video_product.md": {
+    "id": "fashion.product"
+  },
+  "ai-knowledge:collart_fashion/product/fashion_tracking_events.md": {
+    "id": "fashion.events"
+  },
+  "ai-knowledge:collart_fashion/product/project_config.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_fashion/sql_presets/fashion_daily_core_metrics.sql": {
+    "id": "fashion.funnel"
+  },
+  "ai-knowledge:collart_fashion/sql_presets/fashion_new_user_orders.sql": {
+    "id": "fashion.funnel"
+  },
+  "ai-knowledge:collart_fashion/sql_presets/fashion_pbi_dashboard.sql": {
+    "id": "fashion.funnel"
+  },
+  "ai-knowledge:collart_fashion/tables/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di.md@40d25d0661ce": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_revenue_collart_fashion_di.md": {
+    "id": "fashion.revenue"
+  },
+  "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_user_new_collartweb_di.md@08ea15fc5ffd": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_fashion/tables/aidata2025.ads_collart.ads_oper_user_revenue_collart_fashion_di.md": {
+    "id": "fashion.revenue"
+  },
+  "ai-knowledge:collart_fashion/tables/aidata2025.ads_collartfashion.ads_dim_metric_rule.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_active_di.md": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_active_di"
+  },
+  "ai-knowledge:collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_event_metric_di.md": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_event_metric_di"
+  },
+  "ai-knowledge:collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_revenue_di"
+  },
+  "ai-knowledge:collart_fashion/tables/aidata2025.ods.orders.md": {
+    "id": "table:aidata2025.ods.orders"
+  },
+  "ai-knowledge:collart_fashion/tables/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_stripe_di"
+  },
+  "ai-knowledge:collart_fashion/tables/storytemplate-10a27.analytics_232977577.events_.md": {
+    "id": "table:storytemplate-10a27.analytics_232977577.events_*"
+  },
+  "ai-knowledge:collart_ios/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_ios/analysis/check_template_params.py": {
+    "id": "ios.events"
+  },
+  "ai-knowledge:collart_ios/analysis/test_bq_access.py": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_ios/analysis/vip_paid_user_analysis.py": {
+    "id": "ios.paid-users"
+  },
+  "ai-knowledge:collart_ios/analysis/vip_user_ai_deep.py": {
+    "id": "ios.paid-users"
+  },
+  "ai-knowledge:collart_ios/analysis/vip_user_behavior_deep.py": {
+    "id": "ios.paid-users"
+  },
+  "ai-knowledge:collart_ios/analysis_playbooks/paid_user_behavior.md": {
+    "id": "ios.paid-users"
+  },
+  "ai-knowledge:collart_ios/history/2026-09-02/tables/aidata2025.ads_collartios.ads_dim_metric_rule.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:collart_ios/history/undated/analysis_scripts/check_template_params.py": {
+    "id": "ios.events"
+  },
+  "ai-knowledge:collart_ios/history/undated/analysis_scripts/test_bq_access.py": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_ios/history/undated/analysis_scripts/vip_paid_user_analysis.py": {
+    "id": "ios.paid-users"
+  },
+  "ai-knowledge:collart_ios/history/undated/analysis_scripts/vip_user_ai_deep.py": {
+    "id": "ios.paid-users"
+  },
+  "ai-knowledge:collart_ios/history/undated/analysis_scripts/vip_user_behavior_deep.py": {
+    "id": "ios.paid-users"
+  },
+  "ai-knowledge:collart_ios/indicators/asa_delivery.md": {
+    "id": "ios.asa"
+  },
+  "ai-knowledge:collart_ios/indicators/russia_orders_payment.md": {
+    "id": "shared.revenue"
+  },
+  "ai-knowledge:collart_ios/lineage/warehouse_sources.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:collart_ios/product/event_parameter_discovery.md": {
+    "id": "ios.events"
+  },
+  "ai-knowledge:collart_ios/sql_presets/asa_daily_cost.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_ios/sql_presets/asa_delivery_1d.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_ios/sql_presets/asa_delivery_revenue_v2.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_ios/sql_presets/russia_payment_broadcast.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_ios/tables/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_ios/tables/aidata2025.ads_collartios.ads_dim_metric_rule.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:collart_ios/tables/aidata2025.dm.dm_collart_ios_user_event_di.md": {
+    "id": "table:aidata2025.dm.dm_collart_ios_user_event_di"
+  },
+  "ai-knowledge:collart_ios/tables/warehouse_metadata_gaps.md": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "ai-knowledge:collart_web/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/analysis_playbooks/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/analysis_playbooks/internal_user_filter.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/analysis_playbooks/session_funnel_diagnosis.md": {
+    "id": "web.funnel"
+  },
+  "ai-knowledge:collart_web/history/2026-03-15/indicators/user_segmentation.md": {
+    "id": "web.value"
+  },
+  "ai-knowledge:collart_web/history/2026-03-16/indicators/user_value_tier.md": {
+    "id": "web.value"
+  },
+  "ai-knowledge:collart_web/history/2026-09-02/tables/aidata2025.ads_collartweb.ads_dim_metric_rule.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:collart_web/history/undated/indicator_sql/conversion.sql": {
+    "id": "web.conversion"
+  },
+  "ai-knowledge:collart_web/history/undated/indicator_sql/dau.sql": {
+    "id": "web.activity"
+  },
+  "ai-knowledge:collart_web/history/undated/indicator_sql/page_conversion.sql": {
+    "id": "web.conversion"
+  },
+  "ai-knowledge:collart_web/history/undated/indicator_sql/retention.sql": {
+    "id": "web.activity"
+  },
+  "ai-knowledge:collart_web/indicators/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/indicators/channel_attribution.md": {
+    "id": "web.channel"
+  },
+  "ai-knowledge:collart_web/indicators/conversion.md": {
+    "id": "web.conversion"
+  },
+  "ai-knowledge:collart_web/indicators/conversion.sql": {
+    "id": "web.conversion"
+  },
+  "ai-knowledge:collart_web/indicators/dau.md": {
+    "id": "web.activity"
+  },
+  "ai-knowledge:collart_web/indicators/dau.sql": {
+    "id": "web.activity"
+  },
+  "ai-knowledge:collart_web/indicators/fashion_vs_main_site_user.md": {
+    "id": "web.product"
+  },
+  "ai-knowledge:collart_web/indicators/new_user_pseudo_id.md": {
+    "id": "web.activity"
+  },
+  "ai-knowledge:collart_web/indicators/page_conversion.md": {
+    "id": "web.conversion"
+  },
+  "ai-knowledge:collart_web/indicators/page_conversion.sql": {
+    "id": "web.conversion"
+  },
+  "ai-knowledge:collart_web/indicators/retention.md": {
+    "id": "web.activity"
+  },
+  "ai-knowledge:collart_web/indicators/retention.sql": {
+    "id": "web.activity"
+  },
+  "ai-knowledge:collart_web/indicators/user_segmentation.md": {
+    "id": "web.value"
+  },
+  "ai-knowledge:collart_web/indicators/user_value_tier.md": {
+    "id": "web.value"
+  },
+  "ai-knowledge:collart_web/lineage/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/lineage/lineage.md": {
+    "id": "web.product"
+  },
+  "ai-knowledge:collart_web/lineage/warehouse_sources.md": {
+    "id": "table:aidata2025.ods.orders"
+  },
+  "ai-knowledge:collart_web/product/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/product/core_metrics.md": {
+    "id": "web.product"
+  },
+  "ai-knowledge:collart_web/product/page_structure.md": {
+    "id": "web.product"
+  },
+  "ai-knowledge:collart_web/product/project_config.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/ai_service_start_daily.sql@31bd448c7466": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/ai_service_start_key_values_web.sql@29ff634bc374": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/banner_ctr_3days_20260326.sql@e0fa2a899ee1": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/banner_ctr_3days_summary_20260326.sql@8b779ab2af71": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/campaign_new_users_3days_20260311.sql@96c8a54b02cd": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/claim_funnel_analysis_20260415.md@d44231f2dfed": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/collart_web_nav_banner_ctr_7days.sql@c6f76d11591b": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/collart_web_nav_banner_ctr_7days_v2.sql@06d7e8f0e323": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/collart_web_whale_user_analysis.sql@b457de2f2a90": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/daily_metrics_new_active_explore.sql@1a0ac6085e34": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/event_analysis_templates.md@3b5e0dfd1581": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/explore_conversion_new_vs_old.sql@676bf4e59cb0": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/kol_web_user_behavior_funnel_20260413.sql@7e8ccfc38005": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/new_old_user_explore_conversion.sql@c13d4bf9ee25": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/new_user_subscription_funnel.sql@90f2531535be": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/new_users_by_country_7days.sql@8dafe076c20a": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/sql_coding_standards.md@484d23096a4c": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/traffic_overview_7days_20260311.sql@4971ba92ced7": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/web_fb_ads_payment_by_country_20260401.sql@d55155dc88e6": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/web_fb_ads_payment_full_countries_20260401.sql@a427c9bb54e7": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/web_fb_payment_20260401.sql@98aed72c354e": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/web_fb_payment_by_country_20260401.sql@6c267e2aae7d": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/web_template_click_rate_7d.sql@2615684a2598": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/web_template_click_rate_7d_check.sql@11158990bd82": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/archive/2026-05/weekly_metrics_20260311.sql@f5365205ed86": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/fashion_first_then_main_site_users.sql@9f4fada2aa9b": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/fb_delivery_payment_conversion_20260710.sql@b571f6282dfe": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/fb_delivery_user_ids_20260710.sql@c311641d9beb": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/igdrama_recent_7d_20260617.sql@2640e40ad8bd": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/korea_new_user_growth_20260715.sql@d3db426b906f": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/seo_pages_paid_users_20260630.sql@def6db2fcb4e": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/soft_allure_paid_users_20260626.sql@31b7535fec5d": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/soft_allure_paid_users_diagnostic_20260626.sql@a6471ca40548": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/web_dau_device_distribution_20260422.sql@39489fcd6713": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/web_revenue_20260512.sql@28da6e66f3a4": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/weekend_fashion_click_users_real_use_20260629.sql@1a50ac7d330c": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/weekend_fashion_generate_new_old_20260629.sql@206b02de452d": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/weekend_fashion_video_generate_click_new_old_20260629.sql@d915c33879d7": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/weekend_sea_fashion_real_generate_new_old_20260629.sql@dc993c39649e": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql-snippets/weekly_core_metrics_20260702.sql@6bb1b29f7ab6": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql_presets/fashion_vs_main_site_user.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql_presets/internal_user_filter.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql_presets/new_user_by_pseudo_id.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql_presets/profile_lookup_by_user_id.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql_presets/profile_lookup_by_user_id.sql@8bd5492613a1": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/sql_presets/user_grain_revenue_from_stripe.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/tables/README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/tables/aidata2025.ads_collart.ads_oper_basic_indicator_collartweb_di.md@40d25d0661ce": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/tables/aidata2025.ads_collart.ads_oper_user_new_collartweb_di.md@fb6638373767": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "ai-knowledge:collart_web/tables/aidata2025.ads_collartweb.ads_dim_metric_rule.md": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "ai-knowledge:collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_user_profile_df"
+  },
+  "ai-knowledge:collart_web/tables/aidata2025.ods.orders.md": {
+    "id": "table:aidata2025.ods.orders"
+  },
+  "ai-knowledge:collart_web/tables/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_stripe_di"
+  },
+  "ai-knowledge:collart_web/tables/storytemplate-10a27.analytics_232977577.events_.md": {
+    "id": "table:storytemplate-10a27.analytics_232977577.events_*"
+  },
+  "aidata2025.ads.ads_ad_sub_revenue_1h": {
+    "id": "table:aidata2025.ads.ads_ad_sub_revenue_1h"
+  },
+  "aidata2025.ads.ads_aidata_retain_di": {
+    "id": "table:aidata2025.ads.ads_aidata_retain_di"
+  },
+  "aidata2025.ads.ads_collart_delivery_fb_1d": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_fb_1d"
+  },
+  "aidata2025.ads.ads_collart_delivery_revenue_1d": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_revenue_1d"
+  },
+  "aidata2025.ads.ads_hangzhou_revenue_country_1d": {
+    "id": "table:aidata2025.ads.ads_hangzhou_revenue_country_1d"
+  },
+  "aidata2025.ads.ads_template_recommend_foru_1d": {
+    "id": "table:aidata2025.ads.ads_template_recommend_foru_1d"
+  },
+  "aidata2025.ads.ads_template_recommend_trending_1d": {
+    "id": "table:aidata2025.ads.ads_template_recommend_trending_1d"
+  },
+  "aidata2025.ads.ads_user_subscribe_daily_1d": {
+    "id": "table:aidata2025.ads.ads_user_subscribe_daily_1d"
+  },
+  "aidata2025.ads.ads_user_subscribe_lifecycle_1d": {
+    "id": "table:aidata2025.ads.ads_user_subscribe_lifecycle_1d"
+  },
+  "aidata2025.ads_collart.ads_dim_metric_rule": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule"
+  },
+  "aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy": {
+    "id": "table:aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy"
+  },
+  "aidata2025.ads_collart.ads_oper_basic_indicator_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_indicator_collart_di"
+  },
+  "aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di"
+  },
+  "aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di"
+  },
+  "aidata2025.ads_collart.ads_oper_collart_template_data": {
+    "id": "table:aidata2025.ads_collart.ads_oper_collart_template_data"
+  },
+  "aidata2025.ads_collart.ads_oper_collart_web_id_map": {
+    "id": "table:aidata2025.ads_collart.ads_oper_collart_web_id_map"
+  },
+  "aidata2025.ads_collart.ads_oper_event_param_summary_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_event_param_summary_collart_di"
+  },
+  "aidata2025.ads_collart.ads_oper_event_summary_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_event_summary_collart_di"
+  },
+  "aidata2025.ads_collart.ads_oper_tempalte_data_android": {
+    "id": "table:aidata2025.ads_collart.ads_oper_tempalte_data_android"
+  },
+  "aidata2025.ads_collart.ads_oper_template_ad_value_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_template_ad_value_collart_di"
+  },
+  "aidata2025.ads_collart.ads_oper_user_ai_record_backend_info": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_ai_record_backend_info"
+  },
+  "aidata2025.ads_collart.ads_oper_user_event_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_event_collart_di"
+  },
+  "aidata2025.ads_collart.ads_oper_user_event_param_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_event_param_collart_di"
+  },
+  "aidata2025.ads_collart.ads_oper_user_new_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_new_collart_di"
+  },
+  "aidata2025.ads_collart.ads_template_search_user_keyword_di": {
+    "id": "table:aidata2025.ads_collart.ads_template_search_user_keyword_di"
+  },
+  "aidata2025.ads_collart.ads_vip_user_info_all": {
+    "id": "table:aidata2025.ads_collart.ads_vip_user_info_all"
+  },
+  "aidata2025.ads_collart.big_r_realtime_alert_log": {
+    "id": "table:aidata2025.ads_collart.big_r_realtime_alert_log"
+  },
+  "aidata2025.ads_collart.big_r_realtime_today_income": {
+    "id": "table:aidata2025.ads_collart.big_r_realtime_today_income"
+  },
+  "aidata2025.ads_collart.big_r_user_value_state": {
+    "id": "table:aidata2025.ads_collart.big_r_user_value_state"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_event_metric_country_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_event_metric_country_di"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_user_active_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_user_active_di"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_user_event_metric_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_user_event_metric_di"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_user_profile_df": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_user_profile_df"
+  },
+  "aidata2025.ads_collartfashion.ads_dim_metric_rule": {
+    "id": "table:aidata2025.ads_collartfashion.ads_dim_metric_rule"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_event_metric_country_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_event_metric_country_di"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_user_active_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_active_di"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_user_event_metric_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_event_metric_di"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_user_profile_df": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_profile_df"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_user_revenue_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_revenue_di"
+  },
+  "aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di"
+  },
+  "aidata2025.ads_collartios.ads_oper_basic_indicator_country_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_country_di"
+  },
+  "aidata2025.ads_collartios.ads_oper_basic_indicator_daily_compare_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_daily_compare_di"
+  },
+  "aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di"
+  },
+  "aidata2025.ads_collartios.ads_oper_event_metric_attr_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_event_metric_attr_di"
+  },
+  "aidata2025.ads_collartios.ads_oper_event_metric_country_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_event_metric_country_di"
+  },
+  "aidata2025.ads_collartios.ads_oper_user_active_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_user_active_di"
+  },
+  "aidata2025.ads_collartios.ads_oper_user_event_metric_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_user_event_metric_di"
+  },
+  "aidata2025.ads_collartios.ads_oper_user_profile_df": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_user_profile_df"
+  },
+  "aidata2025.ads_collartweb.ads_dim_metric_rule": {
+    "id": "table:aidata2025.ads_collartweb.ads_dim_metric_rule"
+  },
+  "aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di"
+  },
+  "aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di"
+  },
+  "aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di"
+  },
+  "aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di"
+  },
+  "aidata2025.ads_collartweb.ads_oper_event_metric_attr_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_event_metric_attr_di"
+  },
+  "aidata2025.ads_collartweb.ads_oper_event_metric_country_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_event_metric_country_di"
+  },
+  "aidata2025.ads_collartweb.ads_oper_user_active_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_user_active_di"
+  },
+  "aidata2025.ads_collartweb.ads_oper_user_event_metric_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_user_event_metric_di"
+  },
+  "aidata2025.ads_collartweb.ads_oper_user_profile_df": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_user_profile_df"
+  },
+  "aidata2025.ai_service.ai_cost_data": {
+    "id": "table:aidata2025.ai_service.ai_cost_data"
+  },
+  "aidata2025.ai_service.ai_service_record_info_1d": {
+    "id": "table:aidata2025.ai_service.ai_service_record_info_1d"
+  },
+  "aidata2025.ai_service.collart_core_event_bi": {
+    "id": "table:aidata2025.ai_service.collart_core_event_bi"
+  },
+  "aidata2025.dim.collart_campaign_name_modify_copy": {
+    "id": "table:aidata2025.dim.collart_campaign_name_modify_copy"
+  },
+  "aidata2025.dim.collart_product_price_copy": {
+    "id": "table:aidata2025.dim.collart_product_price_copy"
+  },
+  "aidata2025.dim.dim_ai_service_cost_unit_copy": {
+    "id": "table:aidata2025.dim.dim_ai_service_cost_unit_copy"
+  },
+  "aidata2025.dim.dim_ai_service_model_info_copy": {
+    "id": "table:aidata2025.dim.dim_ai_service_model_info_copy"
+  },
+  "aidata2025.dim.dim_collart_android_core_event_copy": {
+    "id": "table:aidata2025.dim.dim_collart_android_core_event_copy"
+  },
+  "aidata2025.dim.dim_collart_asa_keyword_info": {
+    "id": "table:aidata2025.dim.dim_collart_asa_keyword_info"
+  },
+  "aidata2025.dim.dim_collart_core_event_copy": {
+    "id": "table:aidata2025.dim.dim_collart_core_event_copy"
+  },
+  "aidata2025.dim.dim_country_info": {
+    "id": "table:aidata2025.dim.dim_country_info"
+  },
+  "aidata2025.dim.dim_module_template_info_android": {
+    "id": "table:aidata2025.dim.dim_module_template_info_android"
+  },
+  "aidata2025.dim.dim_product_info": {
+    "id": "table:aidata2025.dim.dim_product_info"
+  },
+  "aidata2025.dim.dim_product_info_copy": {
+    "id": "table:aidata2025.dim.dim_product_info_copy"
+  },
+  "aidata2025.dim.dim_template_tag": {
+    "id": "table:aidata2025.dim.dim_template_tag"
+  },
+  "aidata2025.dim.exchange_rate_days": {
+    "id": "table:aidata2025.dim.exchange_rate_days"
+  },
+  "aidata2025.dm.dm_collart_android_user_event_di": {
+    "id": "table:aidata2025.dm.dm_collart_android_user_event_di"
+  },
+  "aidata2025.dm.dm_collart_ios_user_event_di": {
+    "id": "table:aidata2025.dm.dm_collart_ios_user_event_di"
+  },
+  "aidata2025.dm.dm_collart_web_user_event_di": {
+    "id": "table:aidata2025.dm.dm_collart_web_user_event_di"
+  },
+  "aidata2025.dm.dm_user_profile_collart_df": {
+    "id": "table:aidata2025.dm.dm_user_profile_collart_df"
+  },
+  "aidata2025.dwd.dwd_apple_user_subscribtion_di": {
+    "id": "table:aidata2025.dwd.dwd_apple_user_subscribtion_di"
+  },
+  "aidata2025.dwd.dwd_cdct_delivery_cost_di": {
+    "id": "table:aidata2025.dwd.dwd_cdct_delivery_cost_di"
+  },
+  "aidata2025.dwd.dwd_cdct_woolong_request_di": {
+    "id": "table:aidata2025.dwd.dwd_cdct_woolong_request_di"
+  },
+  "aidata2025.dwd.dwd_id_convert_di": {
+    "id": "table:aidata2025.dwd.dwd_id_convert_di"
+  },
+  "aidata2025.dwd.dwd_oper_delivery_adjust_user_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_delivery_adjust_user_di"
+  },
+  "aidata2025.dwd.dwd_oper_sub_order_revenue_df": {
+    "id": "table:aidata2025.dwd.dwd_oper_sub_order_revenue_df"
+  },
+  "aidata2025.dwd.dwd_oper_user_basic_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_basic_di"
+  },
+  "aidata2025.dwd.dwd_oper_user_collart_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di"
+  },
+  "aidata2025.dwd.dwd_oper_user_event_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_event_di"
+  },
+  "aidata2025.dwd.dwd_oper_user_event_params_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_event_params_di"
+  },
+  "aidata2025.dwd.dwd_oper_user_order_event_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_order_event_di"
+  },
+  "aidata2025.dwd.dwd_oper_user_properties_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_properties_di"
+  },
+  "aidata2025.dwd.dwd_oper_user_transaction_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_transaction_di"
+  },
+  "aidata2025.dws.dws_id_convert_df": {
+    "id": "table:aidata2025.dws.dws_id_convert_df"
+  },
+  "aidata2025.dws.dws_new_user_accumlate_subscribe_1d": {
+    "id": "table:aidata2025.dws.dws_new_user_accumlate_subscribe_1d"
+  },
+  "aidata2025.dws.dws_oper_asa_collart_1d": {
+    "id": "table:aidata2025.dws.dws_oper_asa_collart_1d"
+  },
+  "aidata2025.dws.dws_oper_asa_delivery_di": {
+    "id": "table:aidata2025.dws.dws_oper_asa_delivery_di"
+  },
+  "aidata2025.dws.dws_oper_asa_keyword_collart_1d": {
+    "id": "table:aidata2025.dws.dws_oper_asa_keyword_collart_1d"
+  },
+  "aidata2025.dws.dws_oper_basic_aidata_1d": {
+    "id": "table:aidata2025.dws.dws_oper_basic_aidata_1d"
+  },
+  "aidata2025.dws.dws_oper_delivery_collart_1d": {
+    "id": "table:aidata2025.dws.dws_oper_delivery_collart_1d"
+  },
+  "aidata2025.dws.dws_oper_delivery_user_collart_1d": {
+    "id": "table:aidata2025.dws.dws_oper_delivery_user_collart_1d"
+  },
+  "aidata2025.dws.dws_oper_fb_delivery_1d": {
+    "id": "table:aidata2025.dws.dws_oper_fb_delivery_1d"
+  },
+  "aidata2025.dws.dws_oper_tiktok_ad_1d": {
+    "id": "table:aidata2025.dws.dws_oper_tiktok_ad_1d"
+  },
+  "aidata2025.dws.dws_oper_user_ad_di": {
+    "id": "table:aidata2025.dws.dws_oper_user_ad_di"
+  },
+  "aidata2025.dws.dws_oper_user_sub_revenue_df": {
+    "id": "table:aidata2025.dws.dws_oper_user_sub_revenue_df"
+  },
+  "aidata2025.ods.ods_ai_request_info_new_1d": {
+    "id": "table:aidata2025.ods.ods_ai_request_info_new_1d"
+  },
+  "aidata2025.ods.ods_apple_sales_1d": {
+    "id": "table:aidata2025.ods.ods_apple_sales_1d"
+  },
+  "aidata2025.ods.ods_apple_subscription_muselab_df": {
+    "id": "table:aidata2025.ods.ods_apple_subscription_muselab_df"
+  },
+  "aidata2025.ods.ods_apple_subscription_vibedance_df": {
+    "id": "table:aidata2025.ods.ods_apple_subscription_vibedance_df"
+  },
+  "aidata2025.ods.ods_apple_subscription_vidart_df": {
+    "id": "table:aidata2025.ods.ods_apple_subscription_vidart_df"
+  },
+  "aidata2025.ods.orders": {
+    "id": "table:aidata2025.ods.orders"
+  },
+  "aidata2025.revenue.vip_event_data_ios": {
+    "id": "table:aidata2025.revenue.vip_event_data_ios"
+  },
+  "android-revenue-trend": {
+    "id": "android.revenue"
+  },
+  "android-reward-ad-click": {
+    "id": "android.ads"
+  },
+  "codex_summary:CHANGELOG.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:README.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:SKILL.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:agents/openai.yaml": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:catalog.json": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:knowledge/INDEX.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:knowledge/collart_fashion/revenue-boundary.md": {
+    "id": "fashion.revenue"
+  },
+  "codex_summary:knowledge/collart_web/channel-attribution.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:knowledge/collart_web/identity.md": {
+    "id": "web.identity"
+  },
+  "codex_summary:knowledge/shared/analysis-playbook.md": {
+    "id": "shared.diagnosis"
+  },
+  "codex_summary:knowledge/shared/core-metrics.md": {
+    "id": "shared.activity"
+  },
+  "codex_summary:knowledge/shared/event-evidence.md": {
+    "id": "shared.event-rules"
+  },
+  "codex_summary:knowledge/shared/known-conflicts.md": {
+    "id": "shared.routing"
+  },
+  "codex_summary:knowledge/shared/payment-evidence.md": {
+    "id": "shared.revenue"
+  },
+  "codex_summary:knowledge/shared/project-overview.md": {
+    "id": "shared.routing"
+  },
+  "codex_summary:knowledge/shared/sql-practice.md": {
+    "id": "shared.access"
+  },
+  "codex_summary:knowledge/shared/table-routing.md": {
+    "id": "shared.routing"
+  },
+  "codex_summary:knowledge/shared/warehouse-lineage.md": {
+    "id": "shared.routing"
+  },
+  "codex_summary:provenance/excerpts/ads-redlines.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/ads-routing.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/events.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/fashion-orders.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/legacy-conversion.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/legacy-ios.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/metrics.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/playbooks.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/retention.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/revenue.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/web-channel.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/excerpts/web-profile.txt": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:provenance/sources.json": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:references/maintenance.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:scripts/kb.py": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "codex_summary:tests/test_kb.py": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "collart-android-dau-source-selection": {
+    "id": "android.activity"
+  },
+  "collart-android-first-subscription-diagnosis": {
+    "id": "android.acquisition"
+  },
+  "collart-android-template-coverage-diagnosis": {
+    "id": "android.templates"
+  },
+  "collart-fashion-cohort-dashboard-analysis": {
+    "id": "fashion.funnel"
+  },
+  "collart-fashion-product-funnel": {
+    "id": "fashion.funnel"
+  },
+  "collart-fashion-warehouse-audit-20260909": {
+    "id": "fashion.revenue"
+  },
+  "collart-ios-asa-history-boundary": {
+    "id": "ios.asa"
+  },
+  "collart-web-revenue-report-20260912": {
+    "id": "web.revenue"
+  },
+  "collart-web-session-funnel-diagnosis": {
+    "id": "web.funnel"
+  },
+  "collart-web-user-value-tiers": {
+    "id": "web.value"
+  },
+  "collart_fashion-revenue-boundary": {
+    "id": "fashion.revenue"
+  },
+  "collart_web-channel-attribution": {
+    "id": "web.channel"
+  },
+  "collart_web-identity": {
+    "id": "web.identity"
+  },
+  "company-dashboard-pipeline": {
+    "id": "company.dashboard"
+  },
+  "company-event-rule-contract": {
+    "id": "shared.event-rules"
+  },
+  "company-ga4-product-discovery": {
+    "id": "shared.diagnosis"
+  },
+  "company-purchase-union": {
+    "id": "shared.revenue"
+  },
+  "company-report-windows": {
+    "id": "shared.report-windows"
+  },
+  "cursor_summary:SKILL.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:TEAM_SETUP.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:ask-templates.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:channels-attribution.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:data-caveats.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:internal-users.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:metric-glossary.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:metric-upgrades.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:platforms.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:playbooks.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:presets/country_metrics.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:presets/extract_event_param.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:presets/four_platform_daily.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:presets/internal_user_filter.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:presets/probe_event_names.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:presets/web_new_user_cohort.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:presets/web_profile_by_userid.sql": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:raw-events.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:retention-newuser.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:revenue-subscription.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:sql-standards.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "cursor_summary:table-routing.md": {
+    "archived": true,
+    "reason": "历史报告、重复摘录或非必要资料已退出发行包；保留旧版本哈希与迁移记录。"
+  },
+  "pubdata2025.ads.ads_atlasv_basic_data_daily_1h": {
+    "id": "table:pubdata2025.ads.ads_atlasv_basic_data_daily_1h"
+  },
+  "pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h": {
+    "id": "table:pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h"
+  },
+  "pubdata2025.ads.ads_atlasv_deliver_cost_daily": {
+    "id": "table:pubdata2025.ads.ads_atlasv_deliver_cost_daily"
+  },
+  "pubdata2025.ads.ads_cdct_service_cost_1d": {
+    "id": "table:pubdata2025.ads.ads_cdct_service_cost_1d"
+  },
+  "pubdata2025.ads.ads_data_report_1d": {
+    "id": "table:pubdata2025.ads.ads_data_report_1d"
+  },
+  "pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi"
+  },
+  "pubdata2025.dwd.dwd_cdct_cost_aws_billing_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_cost_aws_billing_di"
+  },
+  "pubdata2025.dwd.dwd_cdct_cost_azure_billing_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_cost_azure_billing_di"
+  },
+  "pubdata2025.dwd.dwd_cdct_cost_gcp_billing_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_cost_gcp_billing_di"
+  },
+  "pubdata2025.dwd.dwd_cdct_log_aws_cdn_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_log_aws_cdn_di"
+  },
+  "pubdata2025.dwd.dwd_cdct_revenue_adplatform_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_adplatform_di"
+  },
+  "pubdata2025.dwd.dwd_cdct_revenue_google_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_google_di"
+  },
+  "pubdata2025.dwd.dwd_cdct_revenue_stripe_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_stripe_di"
+  },
+  "pubdata2025.dws.dws_cdct_cost_ai_service_1h": {
+    "id": "table:pubdata2025.dws.dws_cdct_cost_ai_service_1h"
+  },
+  "pubdata2025.dws.dws_cdct_cost_billing_1d": {
+    "id": "table:pubdata2025.dws.dws_cdct_cost_billing_1d"
+  },
+  "pubdata2025.dws.dws_cdct_cost_google_1h": {
+    "id": "table:pubdata2025.dws.dws_cdct_cost_google_1h"
+  },
+  "pubdata2025.dws.dws_cdct_log_aws_cdn_1d": {
+    "id": "table:pubdata2025.dws.dws_cdct_log_aws_cdn_1d"
+  },
+  "pubdata2025.dws.dws_cdct_revenue_country_1d": {
+    "id": "table:pubdata2025.dws.dws_cdct_revenue_country_1d"
+  },
+  "pubdata2025.ods.ods_apple_sales_1d": {
+    "id": "table:pubdata2025.ods.ods_apple_sales_1d"
+  },
+  "pubdata2025.ods.ods_apple_subscriber_1d": {
+    "id": "table:pubdata2025.ods.ods_apple_subscriber_1d"
+  },
+  "pubdata2025.ods.ods_apple_subscription_1d": {
+    "id": "table:pubdata2025.ods.ods_apple_subscription_1d"
+  },
+  "pubdata2025.ods.ods_apple_subscription_event_1d": {
+    "id": "table:pubdata2025.ods.ods_apple_subscription_event_1d"
+  },
+  "pubdata2025.ods.ods_woolong_subscription_1d": {
+    "id": "table:pubdata2025.ods.ods_woolong_subscription_1d"
+  },
+  "pubdata2025.ods.user_ai_base_video_record": {
+    "id": "table:pubdata2025.ods.user_ai_base_video_record"
+  },
+  "shared-analysis-playbook": {
+    "id": "shared.diagnosis"
+  },
+  "shared-ask-templates": {
+    "id": "shared.diagnosis"
+  },
+  "shared-core-metrics": {
+    "id": "shared.activity"
+  },
+  "shared-data-access-policy": {
+    "id": "shared.access"
+  },
+  "shared-data-caveats": {
+    "id": "shared.diagnosis"
+  },
+  "shared-event-evidence": {
+    "id": "shared.event-rules"
+  },
+  "shared-internal-users": {
+    "id": "shared.access"
+  },
+  "shared-knowledge-maintenance-boundary": {
+    "archived": true,
+    "reason": "维护流程/历史升级记录退出分析包；有效边界已整合，详情见仓库 maintainer。"
+  },
+  "shared-known-conflicts": {
+    "id": "shared.routing"
+  },
+  "shared-metric-upgrades": {
+    "archived": true,
+    "reason": "维护流程/历史升级记录退出分析包；有效边界已整合，详情见仓库 maintainer。"
+  },
+  "shared-payment-evidence": {
+    "id": "shared.revenue"
+  },
+  "shared-project-overview": {
+    "id": "shared.routing"
+  },
+  "shared-retention-newuser": {
+    "id": "shared.activity"
+  },
+  "shared-sql-practice": {
+    "id": "shared.access"
+  },
+  "shared-table-routing": {
+    "id": "shared.routing"
+  },
+  "shared-warehouse-history-boundary": {
+    "id": "shared.routing"
+  },
+  "shared-warehouse-lineage": {
+    "id": "shared.routing"
+  },
+  "storytemplate-10a27.analytics_232977577.events_*": {
+    "id": "table:storytemplate-10a27.analytics_232977577.events_*"
+  },
+  "vidart-8b8ca.analytics_528583115.events_*": {
+    "id": "table:vidart-8b8ca.analytics_528583115.events_*"
+  }
+}

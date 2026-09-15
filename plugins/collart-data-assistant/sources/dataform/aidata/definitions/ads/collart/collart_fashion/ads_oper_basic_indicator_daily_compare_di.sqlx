@@ -1,0 +1,336 @@
+config {
+  type: "operations",
+  name: "ads_collartfashion_oper_basic_indicator_daily_compare_di",
+  schema: "ads_collartfashion",
+  dependencies: [
+    "ads_collartfashion_oper_user_active_di",
+    "ads_collartfashion_oper_event_metric_attr_di"
+  ]
+}
+
+/*
+  Collart Fashion 日报环比表：昨日 vs 前 7 日均值
+  目标表: aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di
+
+  总览（不拆 new）：
+    SEO页面访问量=seo_show.uv；SEO页面点击率=seo_click.uv/seo_show.uv
+    新增访客数=COUNTIF(is_studio_active AND is_studio_new)
+    DAU=COUNTIF(is_studio_active)
+    次日留存=studio_new 且 retain.d2 / 新增访客数
+    收入=purchase_revenue（自然日，不错位）
+    付费用户id=COUNT DISTINCT purchase_revenue>0（排除内部用户；自然日）
+    仅次日留存 +1 日错位（观察窗未满）
+
+  漏斗拆 _uv / _new_uv：
+    漏斗读 event_metric_attr（is_new=is_studio_new，含 SEO）；人数=SUM(uv)，次数=SUM(pv)
+    有效行为占比_uv=valid_action.uv/DAU；_new_uv=valid_action.new_uv/DNU
+    模板点击率=template_click/inspiration_show
+    生成成功率=success.pv/start.pv
+    付费页_点击付费=credit_pack_purchase（埋点点击）；付费成功=vip_subscribe_succeed
+*/
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di`
+(
+  metric_name STRING,
+  country STRING,
+  yestoday FLOAT64,
+  avg_7days FLOAT64,
+  diff FLOAT64,
+  ratio FLOAT64
+)
+CLUSTER BY metric_name, country
+OPTIONS (
+  description = 'Collart Fashion 日报环比：总览 + 漏斗 uv/new_uv，昨日对比前 7 日均值'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di`
+WHERE TRUE;
+
+INSERT INTO `aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di`
+(
+  metric_name,
+  country,
+  yestoday,
+  avg_7days,
+  diff,
+  ratio
+)
+
+WITH date_span AS (
+  SELECT
+    DATE_SUB(CURRENT_DATE(), INTERVAL 9 DAY) AS from_date,
+    DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY) AS to_date
+),
+
+internal_users AS (
+  SELECT user_id
+  FROM UNNEST([
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__',
+    '__REDACTED_ID__'
+  ]) AS user_id
+),
+
+studio_raw AS (
+  SELECT
+    a.event_date,
+    g.country_grain AS country,
+    COUNTIF(IFNULL(a.is_studio_active, FALSE)) AS dau,
+    COUNTIF(IFNULL(a.is_studio_active, FALSE) AND IFNULL(a.is_studio_new, FALSE)) AS dnu,
+    COUNTIF(IFNULL(a.is_studio_active, FALSE) AND IFNULL(a.is_studio_new, FALSE) AND IFNULL(a.retain.d2, FALSE)) AS retain2,
+    SUM(a.revenue.purchase_revenue) AS purchase_revenue,
+    COUNT(DISTINCT IF(iu.user_id IS NULL AND IFNULL(a.revenue.purchase_revenue, 0) > 0, a.user_pseudo_id, NULL)) AS paid_uv
+  FROM `aidata2025.ads_collartfashion.ads_oper_user_active_di` AS a
+  LEFT JOIN internal_users AS iu
+    ON a.user_id = iu.user_id
+  CROSS JOIN date_span
+  CROSS JOIN UNNEST([
+    STRUCT('all' AS country_grain),
+    STRUCT(aidata2025.ads_collart.top_country(a.country) AS country_grain)
+  ]) AS g
+  WHERE a.event_date BETWEEN from_date AND to_date
+    AND a.package_name = 'collart_fashion'
+    AND (IFNULL(a.is_studio_active, FALSE) OR IFNULL(a.revenue.purchase_revenue, 0) > 0)
+    AND g.country_grain IS NOT NULL
+  GROUP BY ALL
+),
+
+event_raw AS (
+  SELECT
+    e.event_date,
+    g.country_grain AS country,
+    SUM(e.seo_show.uv) AS seo_show_uv,
+    SUM(e.seo_click.uv) AS seo_click_uv,
+    SUM(e.valid_action.uv) AS valid_action_uv,
+    SUM(IF(e.is_new, e.valid_action.uv, 0)) AS valid_action_new_uv,
+    SUM(e.login_show.uv) AS login_show_uv,
+    SUM(IF(e.is_new, e.login_show.uv, 0)) AS login_show_new_uv,
+    SUM(e.login_success.uv) AS login_success_uv,
+    SUM(IF(e.is_new, e.login_success.uv, 0)) AS login_success_new_uv,
+    SUM(e.inspiration_show.uv) AS inspiration_show_uv,
+    SUM(IF(e.is_new, e.inspiration_show.uv, 0)) AS inspiration_show_new_uv,
+    SUM(e.inspiration_template_click.uv) AS inspiration_click_uv,
+    SUM(IF(e.is_new, e.inspiration_template_click.uv, 0)) AS inspiration_click_new_uv,
+    SUM(e.fashion_generate_show.uv) AS fashion_show_uv,
+    SUM(IF(e.is_new, e.fashion_generate_show.uv, 0)) AS fashion_show_new_uv,
+    SUM(e.fashion_generate_click.uv) AS fashion_click_uv,
+    SUM(IF(e.is_new, e.fashion_generate_click.uv, 0)) AS fashion_click_new_uv,
+    SUM(e.fashion_generate_start.uv) AS fashion_start_uv,
+    SUM(IF(e.is_new, e.fashion_generate_start.uv, 0)) AS fashion_start_new_uv,
+    SUM(e.fashion_generate_start.pv) AS fashion_start_pv,
+    SUM(IF(e.is_new, e.fashion_generate_start.pv, 0)) AS fashion_start_new_pv,
+    SUM(e.fashion_generate_success.pv) AS fashion_success_pv,
+    SUM(IF(e.is_new, e.fashion_generate_success.pv, 0)) AS fashion_success_new_pv,
+    SUM(e.aimodel_generate_show.uv) AS aimodel_show_uv,
+    SUM(IF(e.is_new, e.aimodel_generate_show.uv, 0)) AS aimodel_show_new_uv,
+    SUM(e.aimodel_generate_click.uv) AS aimodel_click_uv,
+    SUM(IF(e.is_new, e.aimodel_generate_click.uv, 0)) AS aimodel_click_new_uv,
+    SUM(e.aimodel_generate_start.uv) AS aimodel_start_uv,
+    SUM(IF(e.is_new, e.aimodel_generate_start.uv, 0)) AS aimodel_start_new_uv,
+    SUM(e.aimodel_generate_start.pv) AS aimodel_start_pv,
+    SUM(IF(e.is_new, e.aimodel_generate_start.pv, 0)) AS aimodel_start_new_pv,
+    SUM(e.aimodel_generate_success.pv) AS aimodel_success_pv,
+    SUM(IF(e.is_new, e.aimodel_generate_success.pv, 0)) AS aimodel_success_new_pv,
+    SUM(e.vip_show.uv) AS vip_show_uv,
+    SUM(IF(e.is_new, e.vip_show.uv, 0)) AS vip_show_new_uv,
+    SUM(e.credit_pack_purchase.uv) AS pay_click_uv,
+    SUM(IF(e.is_new, e.credit_pack_purchase.uv, 0)) AS pay_click_new_uv,
+    SUM(e.vip_subscribe_succeed.uv) AS pay_success_uv,
+    SUM(IF(e.is_new, e.vip_subscribe_succeed.uv, 0)) AS pay_success_new_uv
+  FROM `aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di` AS e
+  CROSS JOIN date_span
+  CROSS JOIN UNNEST([
+    STRUCT('all' AS country_grain),
+    STRUCT(aidata2025.ads_collart.top_country(e.country) AS country_grain)
+  ]) AS g
+  WHERE e.event_date BETWEEN from_date AND to_date
+    AND g.country_grain IS NOT NULL
+  GROUP BY ALL
+),
+
+src AS (
+  SELECT
+    b.event_date,
+    b.country,
+    b.dau,
+    b.dnu,
+    b.retain2,
+    b.purchase_revenue,
+    IFNULL(b.paid_uv, 0) AS paid_uv,
+    IFNULL(e.seo_show_uv, 0) AS seo_show_uv,
+    IFNULL(e.seo_click_uv, 0) AS seo_click_uv,
+    IFNULL(e.valid_action_uv, 0) AS valid_action_uv,
+    IFNULL(e.valid_action_new_uv, 0) AS valid_action_new_uv,
+    IFNULL(e.login_show_uv, 0) AS login_show_uv,
+    IFNULL(e.login_show_new_uv, 0) AS login_show_new_uv,
+    IFNULL(e.login_success_uv, 0) AS login_success_uv,
+    IFNULL(e.login_success_new_uv, 0) AS login_success_new_uv,
+    IFNULL(e.inspiration_show_uv, 0) AS inspiration_show_uv,
+    IFNULL(e.inspiration_show_new_uv, 0) AS inspiration_show_new_uv,
+    IFNULL(e.inspiration_click_uv, 0) AS inspiration_click_uv,
+    IFNULL(e.inspiration_click_new_uv, 0) AS inspiration_click_new_uv,
+    IFNULL(e.fashion_show_uv, 0) AS fashion_show_uv,
+    IFNULL(e.fashion_show_new_uv, 0) AS fashion_show_new_uv,
+    IFNULL(e.fashion_click_uv, 0) AS fashion_click_uv,
+    IFNULL(e.fashion_click_new_uv, 0) AS fashion_click_new_uv,
+    IFNULL(e.fashion_start_uv, 0) AS fashion_start_uv,
+    IFNULL(e.fashion_start_new_uv, 0) AS fashion_start_new_uv,
+    IFNULL(e.fashion_start_pv, 0) AS fashion_start_pv,
+    IFNULL(e.fashion_start_new_pv, 0) AS fashion_start_new_pv,
+    IFNULL(e.fashion_success_pv, 0) AS fashion_success_pv,
+    IFNULL(e.fashion_success_new_pv, 0) AS fashion_success_new_pv,
+    IFNULL(e.aimodel_show_uv, 0) AS aimodel_show_uv,
+    IFNULL(e.aimodel_show_new_uv, 0) AS aimodel_show_new_uv,
+    IFNULL(e.aimodel_click_uv, 0) AS aimodel_click_uv,
+    IFNULL(e.aimodel_click_new_uv, 0) AS aimodel_click_new_uv,
+    IFNULL(e.aimodel_start_uv, 0) AS aimodel_start_uv,
+    IFNULL(e.aimodel_start_new_uv, 0) AS aimodel_start_new_uv,
+    IFNULL(e.aimodel_start_pv, 0) AS aimodel_start_pv,
+    IFNULL(e.aimodel_start_new_pv, 0) AS aimodel_start_new_pv,
+    IFNULL(e.aimodel_success_pv, 0) AS aimodel_success_pv,
+    IFNULL(e.aimodel_success_new_pv, 0) AS aimodel_success_new_pv,
+    IFNULL(e.vip_show_uv, 0) AS vip_show_uv,
+    IFNULL(e.vip_show_new_uv, 0) AS vip_show_new_uv,
+    IFNULL(e.pay_click_uv, 0) AS pay_click_uv,
+    IFNULL(e.pay_click_new_uv, 0) AS pay_click_new_uv,
+    IFNULL(e.pay_success_uv, 0) AS pay_success_uv,
+    IFNULL(e.pay_success_new_uv, 0) AS pay_success_new_uv
+  FROM studio_raw AS b
+  LEFT JOIN event_raw AS e USING (event_date, country)
+),
+
+basic_data AS (
+  SELECT
+    event_date,
+    country,
+    AVG(seo_show_uv) AS `SEO页面访问量`,
+    AVG(SAFE_DIVIDE(seo_click_uv, seo_show_uv)) AS `SEO页面点击率`,
+    AVG(dnu) AS `新增访客数`,
+    AVG(IF(retain2 > 0, SAFE_DIVIDE(retain2, dnu), NULL)) AS `次日留存`,
+    AVG(dau) AS `DAU`,
+    AVG(purchase_revenue) AS `收入`,
+    AVG(paid_uv) AS `付费用户id`,
+    AVG(SAFE_DIVIDE(valid_action_uv, dau)) AS `有效行为占比_uv`,
+    AVG(SAFE_DIVIDE(valid_action_new_uv, dnu)) AS `有效行为占比_new_uv`,
+    AVG(login_show_uv) AS `登录页_进入登录页面人数_uv`,
+    AVG(login_show_new_uv) AS `登录页_进入登录页面人数_new_uv`,
+    AVG(login_success_uv) AS `登录页_登录成功人数_uv`,
+    AVG(login_success_new_uv) AS `登录页_登录成功人数_new_uv`,
+    AVG(inspiration_show_uv) AS `灵感页_进入灵感页人数_uv`,
+    AVG(inspiration_show_new_uv) AS `灵感页_进入灵感页人数_new_uv`,
+    AVG(SAFE_DIVIDE(inspiration_click_uv, inspiration_show_uv)) AS `灵感页_模板点击率_uv`,
+    AVG(SAFE_DIVIDE(inspiration_click_new_uv, inspiration_show_new_uv)) AS `灵感页_模板点击率_new_uv`,
+    AVG(fashion_show_uv) AS `fashion_进入功能页_uv`,
+    AVG(fashion_show_new_uv) AS `fashion_进入功能页_new_uv`,
+    AVG(fashion_click_uv) AS `fashion_点击generater人数_uv`,
+    AVG(fashion_click_new_uv) AS `fashion_点击generater人数_new_uv`,
+    AVG(fashion_start_uv) AS `fashion_开始生成人数_uv`,
+    AVG(fashion_start_new_uv) AS `fashion_开始生成人数_new_uv`,
+    AVG(fashion_start_pv) AS `fashion_开始生成次数_uv`,
+    AVG(fashion_start_new_pv) AS `fashion_开始生成次数_new_uv`,
+    AVG(fashion_success_pv) AS `fashion_生成成功次数_uv`,
+    AVG(fashion_success_new_pv) AS `fashion_生成成功次数_new_uv`,
+    AVG(SAFE_DIVIDE(fashion_success_pv, fashion_start_pv)) AS `fashion_生成成功率_uv`,
+    AVG(SAFE_DIVIDE(fashion_success_new_pv, fashion_start_new_pv)) AS `fashion_生成成功率_new_uv`,
+    AVG(aimodel_show_uv) AS `aimodel_进入功能页人数_uv`,
+    AVG(aimodel_show_new_uv) AS `aimodel_进入功能页人数_new_uv`,
+    AVG(aimodel_click_uv) AS `aimodel_点击generate人数_uv`,
+    AVG(aimodel_click_new_uv) AS `aimodel_点击generate人数_new_uv`,
+    AVG(aimodel_start_uv) AS `aimodel_开始生成人数_uv`,
+    AVG(aimodel_start_new_uv) AS `aimodel_开始生成人数_new_uv`,
+    AVG(aimodel_start_pv) AS `aimodel_开始生成次数_uv`,
+    AVG(aimodel_start_new_pv) AS `aimodel_开始生成次数_new_uv`,
+    AVG(aimodel_success_pv) AS `aimodel_生成成功次数_uv`,
+    AVG(aimodel_success_new_pv) AS `aimodel_生成成功次数_new_uv`,
+    AVG(SAFE_DIVIDE(aimodel_success_pv, aimodel_start_pv)) AS `aimodel_生成成功率_uv`,
+    AVG(SAFE_DIVIDE(aimodel_success_new_pv, aimodel_start_new_pv)) AS `aimodel_生成成功率_new_uv`,
+    AVG(vip_show_uv) AS `付费页_进入付费页人数_uv`,
+    AVG(vip_show_new_uv) AS `付费页_进入付费页人数_new_uv`,
+    AVG(pay_click_uv) AS `付费页_点击付费人数_uv`,
+    AVG(pay_click_new_uv) AS `付费页_点击付费人数_new_uv`,
+    AVG(pay_success_uv) AS `付费页_付费成功人数_uv`,
+    AVG(pay_success_new_uv) AS `付费页_付费成功人数_new_uv`
+  FROM src
+  GROUP BY ALL
+),
+
+daily_long AS (
+  SELECT event_date, country, metric_name, metric_value
+  FROM basic_data
+  UNPIVOT (
+    metric_value FOR metric_name IN (
+      `SEO页面访问量`, `SEO页面点击率`, `新增访客数`, `次日留存`, `DAU`, `收入`, `付费用户id`,
+      `有效行为占比_uv`, `有效行为占比_new_uv`,
+      `登录页_进入登录页面人数_uv`, `登录页_进入登录页面人数_new_uv`,
+      `登录页_登录成功人数_uv`, `登录页_登录成功人数_new_uv`,
+      `灵感页_进入灵感页人数_uv`, `灵感页_进入灵感页人数_new_uv`,
+      `灵感页_模板点击率_uv`, `灵感页_模板点击率_new_uv`,
+      `fashion_进入功能页_uv`, `fashion_进入功能页_new_uv`,
+      `fashion_点击generater人数_uv`, `fashion_点击generater人数_new_uv`,
+      `fashion_开始生成人数_uv`, `fashion_开始生成人数_new_uv`,
+      `fashion_开始生成次数_uv`, `fashion_开始生成次数_new_uv`,
+      `fashion_生成成功次数_uv`, `fashion_生成成功次数_new_uv`,
+      `fashion_生成成功率_uv`, `fashion_生成成功率_new_uv`,
+      `aimodel_进入功能页人数_uv`, `aimodel_进入功能页人数_new_uv`,
+      `aimodel_点击generate人数_uv`, `aimodel_点击generate人数_new_uv`,
+      `aimodel_开始生成人数_uv`, `aimodel_开始生成人数_new_uv`,
+      `aimodel_开始生成次数_uv`, `aimodel_开始生成次数_new_uv`,
+      `aimodel_生成成功次数_uv`, `aimodel_生成成功次数_new_uv`,
+      `aimodel_生成成功率_uv`, `aimodel_生成成功率_new_uv`,
+      `付费页_进入付费页人数_uv`, `付费页_进入付费页人数_new_uv`,
+      `付费页_点击付费人数_uv`, `付费页_点击付费人数_new_uv`,
+      `付费页_付费成功人数_uv`, `付费页_付费成功人数_new_uv`
+    )
+  )
+),
+
+daily_adj AS (
+  SELECT
+    IF(metric_name IN ('次日留存'), DATE_ADD(event_date, INTERVAL 1 DAY), event_date) AS event_date,
+    country,
+    metric_name,
+    metric_value
+  FROM daily_long
+),
+
+agent_data AS (
+  SELECT 'yestoday' AS metric_type, country, metric_name, metric_value
+  FROM daily_adj
+  WHERE event_date = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+
+  UNION ALL
+
+  SELECT 'avg_7days' AS metric_type, country, metric_name, AVG(metric_value) AS metric_value
+  FROM daily_adj
+  WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 8 DAY) AND DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY)
+  GROUP BY country, metric_name
+)
+
+SELECT
+  metric_name,
+  country,
+  MAX(IF(metric_type = 'yestoday', metric_value, NULL)) AS yestoday,
+  MAX(IF(metric_type = 'avg_7days', metric_value, NULL)) AS avg_7days,
+  MAX(IF(metric_type = 'yestoday', metric_value, NULL)) - MAX(IF(metric_type = 'avg_7days', metric_value, NULL)) AS diff,
+  SAFE_DIVIDE(MAX(IF(metric_type = 'yestoday', metric_value, NULL)), MAX(IF(metric_type = 'avg_7days', metric_value, NULL))) - 1 AS ratio
+FROM agent_data
+GROUP BY metric_name, country;
+
+COMMIT TRANSACTION;

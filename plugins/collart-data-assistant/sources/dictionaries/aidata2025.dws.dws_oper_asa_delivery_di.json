@@ -1,0 +1,17 @@
+{
+  "table": "aidata2025.dws.dws_oper_asa_delivery_di",
+  "captured_at": "2026-09-14",
+  "table_metadata": {
+    "表名": "aidata2025.dws.dws_oper_asa_delivery_di",
+    "表中文名": "asa投放平台数据",
+    "表类型": "事实表",
+    "行粒度": null,
+    "主键字段": null,
+    "上层表": null,
+    "更新频率": null,
+    "查询限制/风险提示": null,
+    "使用优先级": null,
+    "项目": null
+  },
+  "fields": []
+}

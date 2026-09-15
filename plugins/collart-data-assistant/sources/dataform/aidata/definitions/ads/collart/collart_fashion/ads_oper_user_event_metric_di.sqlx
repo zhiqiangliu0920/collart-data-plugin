@@ -1,0 +1,167 @@
+config {
+  type: "operations",
+  name: "ads_collartfashion_oper_user_event_metric_di",
+  schema: "ads_collartfashion",
+  dependencies: ["h_dm_collart_web_user_event_di", "ads_collartfashion_oper_user_active_di"]
+}
+
+/*
+  Collart Fashion 用户×日事件宽表
+  Dataform: definitions/ads/collart/collart_fashion/ads_oper_user_event_metric_di.sqlx
+  列由 aidata2025.ads_collart.ads_dim_metric_rule is_materialized=true 驱动
+  用户集：当日 active 有行即可，不再按 is_active / is_studio_active 过滤（含 SEO-only）
+  （本文件先按 Sheet 手改，确认后再回写生成器）
+
+  Sheet 校正（写入 SQL 时已规范化，未改 Sheet）：
+  - event_name 弯引号 ’ → '
+  - valid_action_pv 最后一项 login_account_choose 补闭合引号
+  - fashion_generate_step{2,3,4} 的 event_params 从 step=N 写成 step = 'N'
+  - seo_show_pv = page_view AND REGEXP_CONTAINS(page_location, ...)
+  - aimodel_download_success_pv = ai_result_download AND (service_type = 'ai_model' OR page_location LIKE '%ai-model%')
+  - Sheet 付费成功列名 vip_subscribe_succeed，UEM 列用 vip_subscribe_succeed_pv
+  - step 在 DM 的 fashion_params_info，不在 web_params_info
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartfashion.ads_oper_user_event_metric_di`
+(
+  package_name STRING,
+  app_name STRING,
+  event_date DATE,
+  user_pseudo_id STRING,
+  seo_show_pv INT64,
+  seo_click_pv INT64,
+  valid_action_pv INT64,
+  inspiration_show_pv INT64,
+  inspiration_template_click_pv INT64,
+  fashion_generate_show_pv INT64,
+  fashion_generate_step2_show_pv INT64,
+  fashion_generate_step3_show_pv INT64,
+  fashion_generate_step4_show_pv INT64,
+  fashion_generate_click_pv INT64,
+  fashion_generate_start_pv INT64,
+  fashion_download_success_pv INT64,
+  fashion_generate_success_pv INT64,
+  aimodel_generate_click_pv INT64,
+  aimodel_generate_show_pv INT64,
+  aimodel_generate_start_pv INT64,
+  aimodel_generate_success_pv INT64,
+  aimodel_download_success_pv INT64,
+  vip_show_pv INT64,
+  credit_pack_purchase_pv INT64,
+  vip_subscribe_succeed_pv INT64,
+  login_show_pv INT64,
+  login_success_pv INT64
+)
+PARTITION BY event_date
+CLUSTER BY user_pseudo_id
+OPTIONS (description = 'Collart Fashion 用户×日事件宽表：ads_dim_metric_rule 驱动');
+
+BEGIN TRANSACTION;
+DELETE FROM `aidata2025.ads_collartfashion.ads_oper_user_event_metric_di`
+WHERE event_date BETWEEN from_date AND to_date;
+INSERT INTO `aidata2025.ads_collartfashion.ads_oper_user_event_metric_di`
+(
+  package_name,
+  app_name,
+  event_date,
+  user_pseudo_id,
+  seo_show_pv,
+  seo_click_pv,
+  valid_action_pv,
+  inspiration_show_pv,
+  inspiration_template_click_pv,
+  fashion_generate_show_pv,
+  fashion_generate_step2_show_pv,
+  fashion_generate_step3_show_pv,
+  fashion_generate_step4_show_pv,
+  fashion_generate_click_pv,
+  fashion_generate_start_pv,
+  fashion_download_success_pv,
+  fashion_generate_success_pv,
+  aimodel_generate_click_pv,
+  aimodel_generate_show_pv,
+  aimodel_generate_start_pv,
+  aimodel_generate_success_pv,
+  aimodel_download_success_pv,
+  vip_show_pv,
+  credit_pack_purchase_pv,
+  vip_subscribe_succeed_pv,
+  login_show_pv,
+  login_success_pv
+)
+WITH act AS (
+  SELECT event_date, user_pseudo_id
+  FROM `aidata2025.ads_collartfashion.ads_oper_user_active_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND user_pseudo_id IS NOT NULL
+),
+evt AS (
+  SELECT
+    e.event_date,
+    e.user_pseudo_id,
+    e.event_name,
+    e.page.location AS page_location,
+    e.web_params_info.task_id AS task_id,
+    LOWER(e.web_params_info.service_type) AS service_type,
+    LOWER(e.fashion_params_info.step) AS step
+  FROM `aidata2025.dm.dm_collart_web_user_event_di` AS e
+  INNER JOIN act USING (event_date, user_pseudo_id)
+  WHERE e.event_date BETWEEN from_date AND to_date
+    AND e.package_name = 'collart_fashion'
+    AND e.event_name IN (
+      'ai_result_download',
+      'ai_service_start',
+      'ai_service_success',
+      'credit_pack_purchase',
+      'fashion_ai_model_generate_click',
+      'fashion_ai_model_show',
+      'fashion_ai_model_upload_success',
+      'fashion_generator_show',
+      'fashion_inspiration_template_click',
+      'fashion_inspiration_template_recreate',
+      'fashion_inspiration_template_show',
+      'fashion_video_generate_click',
+      'fashion_welcome_action_click',
+      'login_account_choose',
+      'login_account_success',
+      'login_show',
+      'login_success',
+      'page_view',
+      'vip_show',
+      'vip_subscribe_succeed'
+    )
+)
+SELECT
+  'collart_fashion' AS package_name,
+  'collart_fashion' AS app_name,
+  event_date,
+  user_pseudo_id,
+  COUNTIF(event_name = 'page_view' AND REGEXP_CONTAINS(COALESCE(page_location, ''), r'collart\.ai/[^/]+/ai-fashion-video')) AS seo_show_pv,  -- SEO页面曝光
+  COUNTIF(event_name = 'fashion_welcome_action_click') AS seo_click_pv,  -- SEO页面点击
+  COUNTIF(event_name IN ('fashion_inspiration_template_click', 'fashion_generator_show', 'fashion_ai_model_upload_success', 'credit_pack_purchase', 'login_account_choose')) AS valid_action_pv,  -- 有效用户
+  COUNTIF(event_name = 'fashion_inspiration_template_show') AS inspiration_show_pv,  -- 灵感页_进入灵感页
+  COUNTIF(event_name IN ('fashion_inspiration_template_click', 'fashion_inspiration_template_recreate')) AS inspiration_template_click_pv,  -- 灵感页_点击模板
+  COUNTIF(event_name = 'fashion_generator_show') AS fashion_generate_show_pv,  -- fashion_进入功能页
+  COUNTIF(event_name = 'fashion_generator_show' AND step = '2') AS fashion_generate_step2_show_pv,  -- fashion_进入功能页_step2
+  COUNTIF(event_name = 'fashion_generator_show' AND step = '3') AS fashion_generate_step3_show_pv,  -- fashion_进入功能页_step3
+  COUNTIF(event_name = 'fashion_generator_show' AND step = '4') AS fashion_generate_step4_show_pv,  -- fashion_进入功能页_step4
+  COUNTIF(event_name = 'fashion_video_generate_click') AS fashion_generate_click_pv,  -- fashion_点击generate
+  COUNTIF(event_name = 'ai_service_start' AND service_type = 'fashion_video') AS fashion_generate_start_pv,  -- fashion_开始生成
+  COUNTIF(event_name = 'ai_result_download' AND service_type = 'fashion_video') AS fashion_download_success_pv,  -- fashion_下载成功
+  COUNTIF(event_name = 'ai_service_success' AND service_type = 'fashion_video') AS fashion_generate_success_pv,  -- fashion_生成成功
+  COUNTIF(event_name = 'fashion_ai_model_generate_click') AS aimodel_generate_click_pv,  -- aimodel_点击generate
+  COUNTIF(event_name = 'fashion_ai_model_show') AS aimodel_generate_show_pv,  -- aimodel_进入功能页
+  COUNTIF(event_name = 'ai_service_start' AND service_type = 'ai_model') AS aimodel_generate_start_pv,  -- aimodel_开始生成
+  COUNTIF(event_name = 'ai_service_success' AND service_type = 'ai_model') AS aimodel_generate_success_pv,  -- aimodel_生成成功
+  COUNTIF(event_name = 'ai_result_download' AND (service_type = 'ai_model' OR page_location LIKE '%ai-model%')) AS aimodel_download_success_pv,  -- aimodel_下载成功
+  COUNTIF(event_name = 'vip_show') AS vip_show_pv,  -- 付费页_进入付费页
+  COUNTIF(event_name = 'credit_pack_purchase') AS credit_pack_purchase_pv,  -- 付费页_点击付费
+  COUNTIF(event_name = 'vip_subscribe_succeed') AS vip_subscribe_succeed_pv,  -- 付费页_付费成功
+  COUNTIF(event_name = 'login_show') AS login_show_pv,  -- 登录页_进入登录页面人数
+  COUNTIF(event_name IN ('login_success', 'login_account_success')) AS login_success_pv  -- 登录页_登录成功人数
+FROM evt
+GROUP BY event_date, user_pseudo_id;
+COMMIT TRANSACTION;

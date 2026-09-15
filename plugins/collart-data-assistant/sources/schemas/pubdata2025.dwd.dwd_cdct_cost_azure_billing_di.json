@@ -1,0 +1,123 @@
+{
+  "table": "pubdata2025.dwd.dwd_cdct_cost_azure_billing_di",
+  "captured_at": "2026-09-14T13:53:49.189420+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "atlasv_app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "atlasv_team",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_account_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_account_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_account_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_currency",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_month",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "charge_category",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "charge_sub_category",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "invoice_issuer_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "region",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "resource_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "resource_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "resource_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "service_category",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "service_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "sku_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "sub_account_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "usage_quantity",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_cdct_cost_azure_billing_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

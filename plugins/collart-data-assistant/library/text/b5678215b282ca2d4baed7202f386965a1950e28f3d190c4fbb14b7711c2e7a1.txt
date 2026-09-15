@@ -1,4 +1,0 @@
-interface:
-  display_name: "团队数据知识库"
-  short_description: "检索和维护公司数据分析知识，追踪业务口径、来源、有效范围与验证状态"
-  default_prompt: "使用 $team-data-knowledge 查找本次分析相关的项目、数据表和指标口径，并标明来源与待核验项。"

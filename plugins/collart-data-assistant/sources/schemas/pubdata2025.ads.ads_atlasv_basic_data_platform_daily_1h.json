@@ -1,0 +1,74 @@
+{
+  "table": "pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h",
+  "captured_at": "2026-09-14T13:19:08.783788+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_Date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "apple_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "google_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "meta_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "tt_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "else_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "apple_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "google_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "meta_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "tt_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "else_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "ads",
+    "tableId": "ads_atlasv_basic_data_platform_daily_1h"
+  },
+  "type": "TABLE"
+}

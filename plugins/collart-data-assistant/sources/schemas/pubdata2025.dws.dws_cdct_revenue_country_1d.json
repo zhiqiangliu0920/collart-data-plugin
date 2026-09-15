@@ -1,0 +1,93 @@
+{
+  "table": "pubdata2025.dws.dws_cdct_revenue_country_1d",
+  "captured_at": "2026-09-14T13:19:09.242828+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_admob_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_admob_revenue_gst",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_admob_revenue_remove",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_topon_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_tradplus_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_applovin_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_appodeal_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_topon_revenue_remove",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_tradplus_revenue_remove",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_applovin_revenue_remove",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_okspin_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_yandex_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dws",
+    "tableId": "dws_cdct_revenue_country_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

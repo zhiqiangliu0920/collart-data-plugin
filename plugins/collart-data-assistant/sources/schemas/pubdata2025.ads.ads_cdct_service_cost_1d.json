@@ -1,0 +1,74 @@
+{
+  "table": "pubdata2025.ads.ads_cdct_service_cost_1d",
+  "captured_at": "2026-09-14T13:19:08.968680+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_month",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "region",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_from",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "resource_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "atlasv_app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "allocate_rate",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "allocate_from",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "project_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "项目名称"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "ads",
+    "tableId": "ads_cdct_service_cost_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

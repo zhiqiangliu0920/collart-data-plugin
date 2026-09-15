@@ -1,0 +1,61 @@
+{
+  "table": "aidata2025.dwd.dwd_id_convert_di",
+  "captured_at": "2026-09-14T13:19:07.247572+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "description": "日期"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "description": "包名"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "description": "app名"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "description": ""
+      },
+      {
+        "name": "atlasv_uid",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "advertising_id",
+        "type": "STRING",
+        "description": "ga id "
+      },
+      {
+        "name": "adjust_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_id_convert_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name"
+    ]
+  },
+  "type": "TABLE"
+}

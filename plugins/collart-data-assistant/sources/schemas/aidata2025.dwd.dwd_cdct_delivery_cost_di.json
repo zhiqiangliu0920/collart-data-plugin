@@ -1,0 +1,148 @@
+{
+  "table": "aidata2025.dwd.dwd_cdct_delivery_cost_di",
+  "captured_at": "2026-09-14T13:19:07.115429+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "REQUIRED",
+        "description": "业务日期，用于分区"
+      },
+      {
+        "name": "delivery_type",
+        "type": "STRING",
+        "mode": "REQUIRED",
+        "description": "投放渠道类型:ga,tt,fb,asa"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "App名称"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "应用包名"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家或地区代码"
+      },
+      {
+        "name": "campaign_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告系列 ID"
+      },
+      {
+        "name": "campaign_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告系列名称"
+      },
+      {
+        "name": "adgroup_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告组 ID"
+      },
+      {
+        "name": "adgroup_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "广告组名称"
+      },
+      {
+        "name": "ad_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "素材/广告 ID"
+      },
+      {
+        "name": "ad_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "素材/广告名称"
+      },
+      {
+        "name": "keyword",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "搜索关键词 (主要用于ASA)"
+      },
+      {
+        "name": "impressions",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "展示次数"
+      },
+      {
+        "name": "clicks",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "点击次数 (ASA对应taps)"
+      },
+      {
+        "name": "cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "标准消耗成本"
+      },
+      {
+        "name": "installs",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "安装转化数 (GA/ASA对应Installs, TT对应SKAN等)"
+      },
+      {
+        "name": "conversions",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "通用转化事件数 (如GA中的Conversions)"
+      },
+      {
+        "name": "actions",
+        "type": "RECORD",
+        "mode": "REPEATED",
+        "fields": [
+          {
+            "name": "action_type",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "action_count",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ]
+      },
+      {
+        "name": "country_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_cdct_delivery_cost_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name",
+      "campaign_name"
+    ]
+  },
+  "type": "TABLE"
+}

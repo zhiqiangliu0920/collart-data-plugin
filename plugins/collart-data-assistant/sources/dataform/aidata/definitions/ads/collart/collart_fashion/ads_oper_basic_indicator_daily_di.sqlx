@@ -1,0 +1,422 @@
+config {
+  type: "operations",
+  name: "ads_collartfashion_oper_basic_indicator_daily_di",
+  schema: "ads_collartfashion",
+  dependencies: [
+    "ads_collartfashion_oper_basic_indicator_country_di",
+    "ads_collartfashion_oper_event_metric_country_di"
+  ]
+}
+
+/*
+  Collart Fashion 第七张表：日总览（含事件漏斗）
+  Dataform: definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_daily_di.sqlx
+  目标表  : aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di
+  - 行为/留存/订阅/收入/花费: SUM(country)；DAU/DNU 已是 studio（attr is_studio_active / is_studio_new）
+  - 事件漏斗: SUM(event_metric_country)；含 SEO-only 用户；SEO 仅 uv/pv，其余带 new_uv/vip_uv
+  - revenue 无 trial_conver_revenue（2026-08-11 确认）
+  （本文件先按 Sheet 手改，确认后再回写生成器）
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di`
+(
+  event_date DATE,
+  package_name STRING,
+  dau INT64,
+  vip_dau INT64,
+  churn_uv INT64,
+  return_uv INT64,
+  dnu INT64,
+  dnu_vip INT64,
+  dnu_free INT64,
+  dnu_by_source STRUCT<
+    organic INT64,
+    delivery INT64,
+    kol INT64,
+    inhouse INT64
+  >,
+  retain STRUCT<
+    d2 INT64,
+    d3 INT64,
+    d4 INT64,
+    d5 INT64,
+    d6 INT64,
+    d7 INT64,
+    d8 INT64,
+    d9 INT64,
+    d10 INT64,
+    d11 INT64,
+    d12 INT64,
+    d13 INT64,
+    d14 INT64,
+    d15 INT64,
+    d16 INT64,
+    d17 INT64,
+    d18 INT64,
+    d19 INT64,
+    d20 INT64,
+    d21 INT64,
+    d22 INT64,
+    d23 INT64,
+    d24 INT64,
+    d25 INT64,
+    d26 INT64,
+    d27 INT64,
+    d28 INT64,
+    d29 INT64,
+    d30 INT64
+  >,
+  retain2_vip INT64,
+  retain2_free INT64,
+  retain2_by_source STRUCT<
+    organic INT64,
+    delivery INT64,
+    kol INT64,
+    inhouse INT64
+  >,
+  rolling_retain STRUCT<
+    d2 INT64,
+    d3 INT64,
+    d4 INT64,
+    d5 INT64,
+    d6 INT64,
+    d7 INT64,
+    d8 INT64,
+    d9 INT64,
+    d10 INT64,
+    d11 INT64,
+    d12 INT64,
+    d13 INT64,
+    d14 INT64,
+    d15 INT64,
+    d16 INT64,
+    d17 INT64,
+    d18 INT64,
+    d19 INT64,
+    d20 INT64,
+    d21 INT64,
+    d22 INT64,
+    d23 INT64,
+    d24 INT64,
+    d25 INT64,
+    d26 INT64,
+    d27 INT64,
+    d28 INT64,
+    d29 INT64,
+    d30 INT64
+  >,
+  subscription STRUCT<
+    subscribe_uv INT64,
+    subscribe_uv_1d INT64,
+    subscribe_uv_old INT64,
+    subscribe_uv_7d INT64,
+    credit_pack_uv INT64,
+    credit_pack_uv_1d INT64,
+    credit_pack_uv_old INT64,
+    credit_pack_uv_7d INT64,
+    credit_pack_cnt INT64,
+    credit_amount INT64,
+    purchase_uv INT64,
+    purchase_uv_1d INT64
+  >,
+  revenue STRUCT<
+    purchase_revenue FLOAT64,
+    resub_revenue FLOAT64,
+    new_revenue FLOAT64,
+    credit_revenue FLOAT64,
+    ad_revenue FLOAT64,
+    new_subscribe_uv INT64,
+    renew_subscribe_uv INT64,
+    credit_pack_uv INT64,
+    ad_uv INT64,
+    revenue FLOAT64
+  >,
+  delivery STRUCT<
+    cost FLOAT64,
+    impressions INT64,
+    clicks INT64,
+    installs INT64
+  >,
+  seo_show STRUCT<uv INT64, pv INT64>,
+  seo_click STRUCT<uv INT64, pv INT64>,
+  valid_action STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  inspiration_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  inspiration_template_click STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_step2_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_step3_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_step4_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_click STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_start STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_download_success STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  fashion_generate_success STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  aimodel_generate_click STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  aimodel_generate_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  aimodel_generate_start STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  aimodel_generate_success STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  aimodel_download_success STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  vip_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  credit_pack_purchase STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  vip_subscribe_succeed STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  login_show STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>,
+  login_success STRUCT<uv INT64, pv INT64, new_uv INT64, vip_uv INT64>
+)
+PARTITION BY event_date
+CLUSTER BY package_name
+OPTIONS(description='Collart Fashion 日总览：country 上卷 + 事件漏斗（新建）');
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di`
+WHERE event_date BETWEEN from_date AND to_date
+  AND package_name = 'collart_fashion';
+
+INSERT INTO `aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di`
+(
+  event_date,
+  package_name,
+  dau,
+  vip_dau,
+  churn_uv,
+  return_uv,
+  dnu,
+  dnu_vip,
+  dnu_free,
+  dnu_by_source,
+  retain,
+  retain2_vip,
+  retain2_free,
+  retain2_by_source,
+  rolling_retain,
+  subscription,
+  revenue,
+  delivery,
+  seo_show,
+  seo_click,
+  valid_action,
+  inspiration_show,
+  inspiration_template_click,
+  fashion_generate_show,
+  fashion_generate_step2_show,
+  fashion_generate_step3_show,
+  fashion_generate_step4_show,
+  fashion_generate_click,
+  fashion_generate_start,
+  fashion_download_success,
+  fashion_generate_success,
+  aimodel_generate_click,
+  aimodel_generate_show,
+  aimodel_generate_start,
+  aimodel_generate_success,
+  aimodel_download_success,
+  vip_show,
+  credit_pack_purchase,
+  vip_subscribe_succeed,
+  login_show,
+  login_success
+)
+
+WITH basic AS (
+  SELECT
+    event_date,
+    SUM(dau) AS dau,
+    SUM(vip_dau) AS vip_dau,
+    SUM(churn_uv) AS churn_uv,
+    SUM(return_uv) AS return_uv,
+    SUM(dnu) AS dnu,
+    SUM(dnu_vip) AS dnu_vip,
+    SUM(dnu_free) AS dnu_free,
+    STRUCT(
+      COALESCE(SUM(dnu_by_source.organic), 0) AS organic,
+      COALESCE(SUM(dnu_by_source.delivery), 0) AS delivery,
+      COALESCE(SUM(dnu_by_source.kol), 0) AS kol,
+      COALESCE(SUM(dnu_by_source.inhouse), 0) AS inhouse
+    ) AS dnu_by_source,
+  STRUCT(
+    COALESCE(SUM(b.retain.d2), 0) AS d2,
+    COALESCE(SUM(b.retain.d3), 0) AS d3,
+    COALESCE(SUM(b.retain.d4), 0) AS d4,
+    COALESCE(SUM(b.retain.d5), 0) AS d5,
+    COALESCE(SUM(b.retain.d6), 0) AS d6,
+    COALESCE(SUM(b.retain.d7), 0) AS d7,
+    COALESCE(SUM(b.retain.d8), 0) AS d8,
+    COALESCE(SUM(b.retain.d9), 0) AS d9,
+    COALESCE(SUM(b.retain.d10), 0) AS d10,
+    COALESCE(SUM(b.retain.d11), 0) AS d11,
+    COALESCE(SUM(b.retain.d12), 0) AS d12,
+    COALESCE(SUM(b.retain.d13), 0) AS d13,
+    COALESCE(SUM(b.retain.d14), 0) AS d14,
+    COALESCE(SUM(b.retain.d15), 0) AS d15,
+    COALESCE(SUM(b.retain.d16), 0) AS d16,
+    COALESCE(SUM(b.retain.d17), 0) AS d17,
+    COALESCE(SUM(b.retain.d18), 0) AS d18,
+    COALESCE(SUM(b.retain.d19), 0) AS d19,
+    COALESCE(SUM(b.retain.d20), 0) AS d20,
+    COALESCE(SUM(b.retain.d21), 0) AS d21,
+    COALESCE(SUM(b.retain.d22), 0) AS d22,
+    COALESCE(SUM(b.retain.d23), 0) AS d23,
+    COALESCE(SUM(b.retain.d24), 0) AS d24,
+    COALESCE(SUM(b.retain.d25), 0) AS d25,
+    COALESCE(SUM(b.retain.d26), 0) AS d26,
+    COALESCE(SUM(b.retain.d27), 0) AS d27,
+    COALESCE(SUM(b.retain.d28), 0) AS d28,
+    COALESCE(SUM(b.retain.d29), 0) AS d29,
+    COALESCE(SUM(b.retain.d30), 0) AS d30
+  ) AS retain,
+    COALESCE(SUM(retain2_vip), 0) AS retain2_vip,
+    COALESCE(SUM(retain2_free), 0) AS retain2_free,
+    STRUCT(
+      COALESCE(SUM(retain2_by_source.organic), 0) AS organic,
+      COALESCE(SUM(retain2_by_source.delivery), 0) AS delivery,
+      COALESCE(SUM(retain2_by_source.kol), 0) AS kol,
+      COALESCE(SUM(retain2_by_source.inhouse), 0) AS inhouse
+    ) AS retain2_by_source,
+  STRUCT(
+    COALESCE(SUM(b.rolling_retain.d2), 0) AS d2,
+    COALESCE(SUM(b.rolling_retain.d3), 0) AS d3,
+    COALESCE(SUM(b.rolling_retain.d4), 0) AS d4,
+    COALESCE(SUM(b.rolling_retain.d5), 0) AS d5,
+    COALESCE(SUM(b.rolling_retain.d6), 0) AS d6,
+    COALESCE(SUM(b.rolling_retain.d7), 0) AS d7,
+    COALESCE(SUM(b.rolling_retain.d8), 0) AS d8,
+    COALESCE(SUM(b.rolling_retain.d9), 0) AS d9,
+    COALESCE(SUM(b.rolling_retain.d10), 0) AS d10,
+    COALESCE(SUM(b.rolling_retain.d11), 0) AS d11,
+    COALESCE(SUM(b.rolling_retain.d12), 0) AS d12,
+    COALESCE(SUM(b.rolling_retain.d13), 0) AS d13,
+    COALESCE(SUM(b.rolling_retain.d14), 0) AS d14,
+    COALESCE(SUM(b.rolling_retain.d15), 0) AS d15,
+    COALESCE(SUM(b.rolling_retain.d16), 0) AS d16,
+    COALESCE(SUM(b.rolling_retain.d17), 0) AS d17,
+    COALESCE(SUM(b.rolling_retain.d18), 0) AS d18,
+    COALESCE(SUM(b.rolling_retain.d19), 0) AS d19,
+    COALESCE(SUM(b.rolling_retain.d20), 0) AS d20,
+    COALESCE(SUM(b.rolling_retain.d21), 0) AS d21,
+    COALESCE(SUM(b.rolling_retain.d22), 0) AS d22,
+    COALESCE(SUM(b.rolling_retain.d23), 0) AS d23,
+    COALESCE(SUM(b.rolling_retain.d24), 0) AS d24,
+    COALESCE(SUM(b.rolling_retain.d25), 0) AS d25,
+    COALESCE(SUM(b.rolling_retain.d26), 0) AS d26,
+    COALESCE(SUM(b.rolling_retain.d27), 0) AS d27,
+    COALESCE(SUM(b.rolling_retain.d28), 0) AS d28,
+    COALESCE(SUM(b.rolling_retain.d29), 0) AS d29,
+    COALESCE(SUM(b.rolling_retain.d30), 0) AS d30
+  ) AS rolling_retain,
+    STRUCT(
+      COALESCE(SUM(subscription.subscribe_uv), 0) AS subscribe_uv,
+      COALESCE(SUM(subscription.subscribe_uv_1d), 0) AS subscribe_uv_1d,
+      COALESCE(SUM(subscription.subscribe_uv_old), 0) AS subscribe_uv_old,
+      COALESCE(SUM(subscription.subscribe_uv_7d), 0) AS subscribe_uv_7d,
+      COALESCE(SUM(subscription.credit_pack_uv), 0) AS credit_pack_uv,
+      COALESCE(SUM(subscription.credit_pack_uv_1d), 0) AS credit_pack_uv_1d,
+      COALESCE(SUM(subscription.credit_pack_uv_old), 0) AS credit_pack_uv_old,
+      COALESCE(SUM(subscription.credit_pack_uv_7d), 0) AS credit_pack_uv_7d,
+      COALESCE(SUM(subscription.credit_pack_cnt), 0) AS credit_pack_cnt,
+      COALESCE(SUM(subscription.credit_amount), 0) AS credit_amount,
+      COALESCE(SUM(subscription.purchase_uv), 0) AS purchase_uv,
+      COALESCE(SUM(subscription.purchase_uv_1d), 0) AS purchase_uv_1d
+    ) AS subscription,
+    STRUCT(
+      COALESCE(SUM(revenue.purchase_revenue), 0.0) AS purchase_revenue,
+      SUM(revenue.resub_revenue) AS resub_revenue,
+      SUM(revenue.new_revenue) AS new_revenue,
+      COALESCE(SUM(revenue.credit_revenue), 0.0) AS credit_revenue,
+      COALESCE(SUM(revenue.ad_revenue), 0.0) AS ad_revenue,
+      COALESCE(SUM(revenue.new_subscribe_uv), 0) AS new_subscribe_uv,
+      COALESCE(SUM(revenue.renew_subscribe_uv), 0) AS renew_subscribe_uv,
+      COALESCE(SUM(revenue.credit_pack_uv), 0) AS credit_pack_uv,
+      COALESCE(SUM(revenue.ad_uv), 0) AS ad_uv,
+      COALESCE(SUM(revenue.revenue), 0.0) AS revenue
+    ) AS revenue,
+    STRUCT(
+      COALESCE(SUM(delivery.cost), 0.0) AS cost,
+      COALESCE(SUM(delivery.impressions), 0) AS impressions,
+      COALESCE(SUM(delivery.clicks), 0) AS clicks,
+      COALESCE(SUM(delivery.installs), 0) AS installs
+    ) AS delivery
+  FROM `aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di` AS b
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date
+),
+
+evt AS (
+  SELECT
+    event_date,
+  STRUCT(COALESCE(SUM(seo_show.uv), 0) AS uv, COALESCE(SUM(seo_show.pv), 0) AS pv) AS seo_show,  -- SEO页面曝光
+  STRUCT(COALESCE(SUM(seo_click.uv), 0) AS uv, COALESCE(SUM(seo_click.pv), 0) AS pv) AS seo_click,  -- SEO页面点击
+  STRUCT(COALESCE(SUM(valid_action.uv), 0) AS uv, COALESCE(SUM(valid_action.pv), 0) AS pv, COALESCE(SUM(valid_action.new_uv), 0) AS new_uv, COALESCE(SUM(valid_action.vip_uv), 0) AS vip_uv) AS valid_action,  -- 有效用户
+  STRUCT(COALESCE(SUM(inspiration_show.uv), 0) AS uv, COALESCE(SUM(inspiration_show.pv), 0) AS pv, COALESCE(SUM(inspiration_show.new_uv), 0) AS new_uv, COALESCE(SUM(inspiration_show.vip_uv), 0) AS vip_uv) AS inspiration_show,  -- 灵感页_进入灵感页
+  STRUCT(COALESCE(SUM(inspiration_template_click.uv), 0) AS uv, COALESCE(SUM(inspiration_template_click.pv), 0) AS pv, COALESCE(SUM(inspiration_template_click.new_uv), 0) AS new_uv, COALESCE(SUM(inspiration_template_click.vip_uv), 0) AS vip_uv) AS inspiration_template_click,  -- 灵感页_点击模板
+  STRUCT(COALESCE(SUM(fashion_generate_show.uv), 0) AS uv, COALESCE(SUM(fashion_generate_show.pv), 0) AS pv, COALESCE(SUM(fashion_generate_show.new_uv), 0) AS new_uv, COALESCE(SUM(fashion_generate_show.vip_uv), 0) AS vip_uv) AS fashion_generate_show,  -- fashion_进入功能页
+  STRUCT(COALESCE(SUM(fashion_generate_step2_show.uv), 0) AS uv, COALESCE(SUM(fashion_generate_step2_show.pv), 0) AS pv, COALESCE(SUM(fashion_generate_step2_show.new_uv), 0) AS new_uv, COALESCE(SUM(fashion_generate_step2_show.vip_uv), 0) AS vip_uv) AS fashion_generate_step2_show,  -- fashion_进入功能页_step2
+  STRUCT(COALESCE(SUM(fashion_generate_step3_show.uv), 0) AS uv, COALESCE(SUM(fashion_generate_step3_show.pv), 0) AS pv, COALESCE(SUM(fashion_generate_step3_show.new_uv), 0) AS new_uv, COALESCE(SUM(fashion_generate_step3_show.vip_uv), 0) AS vip_uv) AS fashion_generate_step3_show,  -- fashion_进入功能页_step3
+  STRUCT(COALESCE(SUM(fashion_generate_step4_show.uv), 0) AS uv, COALESCE(SUM(fashion_generate_step4_show.pv), 0) AS pv, COALESCE(SUM(fashion_generate_step4_show.new_uv), 0) AS new_uv, COALESCE(SUM(fashion_generate_step4_show.vip_uv), 0) AS vip_uv) AS fashion_generate_step4_show,  -- fashion_进入功能页_step4
+  STRUCT(COALESCE(SUM(fashion_generate_click.uv), 0) AS uv, COALESCE(SUM(fashion_generate_click.pv), 0) AS pv, COALESCE(SUM(fashion_generate_click.new_uv), 0) AS new_uv, COALESCE(SUM(fashion_generate_click.vip_uv), 0) AS vip_uv) AS fashion_generate_click,  -- fashion_点击generate
+  STRUCT(COALESCE(SUM(fashion_generate_start.uv), 0) AS uv, COALESCE(SUM(fashion_generate_start.pv), 0) AS pv, COALESCE(SUM(fashion_generate_start.new_uv), 0) AS new_uv, COALESCE(SUM(fashion_generate_start.vip_uv), 0) AS vip_uv) AS fashion_generate_start,  -- fashion_开始生成
+  STRUCT(COALESCE(SUM(fashion_download_success.uv), 0) AS uv, COALESCE(SUM(fashion_download_success.pv), 0) AS pv, COALESCE(SUM(fashion_download_success.new_uv), 0) AS new_uv, COALESCE(SUM(fashion_download_success.vip_uv), 0) AS vip_uv) AS fashion_download_success,  -- fashion_下载成功
+  STRUCT(COALESCE(SUM(fashion_generate_success.uv), 0) AS uv, COALESCE(SUM(fashion_generate_success.pv), 0) AS pv, COALESCE(SUM(fashion_generate_success.new_uv), 0) AS new_uv, COALESCE(SUM(fashion_generate_success.vip_uv), 0) AS vip_uv) AS fashion_generate_success,  -- fashion_生成成功
+  STRUCT(COALESCE(SUM(aimodel_generate_click.uv), 0) AS uv, COALESCE(SUM(aimodel_generate_click.pv), 0) AS pv, COALESCE(SUM(aimodel_generate_click.new_uv), 0) AS new_uv, COALESCE(SUM(aimodel_generate_click.vip_uv), 0) AS vip_uv) AS aimodel_generate_click,  -- aimodel_点击generate
+  STRUCT(COALESCE(SUM(aimodel_generate_show.uv), 0) AS uv, COALESCE(SUM(aimodel_generate_show.pv), 0) AS pv, COALESCE(SUM(aimodel_generate_show.new_uv), 0) AS new_uv, COALESCE(SUM(aimodel_generate_show.vip_uv), 0) AS vip_uv) AS aimodel_generate_show,  -- aimodel_进入功能页
+  STRUCT(COALESCE(SUM(aimodel_generate_start.uv), 0) AS uv, COALESCE(SUM(aimodel_generate_start.pv), 0) AS pv, COALESCE(SUM(aimodel_generate_start.new_uv), 0) AS new_uv, COALESCE(SUM(aimodel_generate_start.vip_uv), 0) AS vip_uv) AS aimodel_generate_start,  -- aimodel_开始生成
+  STRUCT(COALESCE(SUM(aimodel_generate_success.uv), 0) AS uv, COALESCE(SUM(aimodel_generate_success.pv), 0) AS pv, COALESCE(SUM(aimodel_generate_success.new_uv), 0) AS new_uv, COALESCE(SUM(aimodel_generate_success.vip_uv), 0) AS vip_uv) AS aimodel_generate_success,  -- aimodel_生成成功
+  STRUCT(COALESCE(SUM(aimodel_download_success.uv), 0) AS uv, COALESCE(SUM(aimodel_download_success.pv), 0) AS pv, COALESCE(SUM(aimodel_download_success.new_uv), 0) AS new_uv, COALESCE(SUM(aimodel_download_success.vip_uv), 0) AS vip_uv) AS aimodel_download_success,  -- aimodel_下载成功
+  STRUCT(COALESCE(SUM(vip_show.uv), 0) AS uv, COALESCE(SUM(vip_show.pv), 0) AS pv, COALESCE(SUM(vip_show.new_uv), 0) AS new_uv, COALESCE(SUM(vip_show.vip_uv), 0) AS vip_uv) AS vip_show,  -- 付费页_进入付费页
+  STRUCT(COALESCE(SUM(credit_pack_purchase.uv), 0) AS uv, COALESCE(SUM(credit_pack_purchase.pv), 0) AS pv, COALESCE(SUM(credit_pack_purchase.new_uv), 0) AS new_uv, COALESCE(SUM(credit_pack_purchase.vip_uv), 0) AS vip_uv) AS credit_pack_purchase,  -- 付费页_点击付费
+  STRUCT(COALESCE(SUM(vip_subscribe_succeed.uv), 0) AS uv, COALESCE(SUM(vip_subscribe_succeed.pv), 0) AS pv, COALESCE(SUM(vip_subscribe_succeed.new_uv), 0) AS new_uv, COALESCE(SUM(vip_subscribe_succeed.vip_uv), 0) AS vip_uv) AS vip_subscribe_succeed,  -- 付费页_付费成功
+  STRUCT(COALESCE(SUM(login_show.uv), 0) AS uv, COALESCE(SUM(login_show.pv), 0) AS pv, COALESCE(SUM(login_show.new_uv), 0) AS new_uv, COALESCE(SUM(login_show.vip_uv), 0) AS vip_uv) AS login_show,  -- 登录页_进入登录页面人数
+  STRUCT(COALESCE(SUM(login_success.uv), 0) AS uv, COALESCE(SUM(login_success.pv), 0) AS pv, COALESCE(SUM(login_success.new_uv), 0) AS new_uv, COALESCE(SUM(login_success.vip_uv), 0) AS vip_uv) AS login_success  -- 登录页_登录成功人数
+  FROM `aidata2025.ads_collartfashion.ads_oper_event_metric_country_di`
+  WHERE event_date BETWEEN from_date AND to_date
+  GROUP BY event_date
+)
+
+SELECT
+  COALESCE(b.event_date, e.event_date) AS event_date,
+  'collart_fashion' AS package_name,
+  COALESCE(b.dau, 0) AS dau,
+  COALESCE(b.vip_dau, 0) AS vip_dau,
+  COALESCE(b.churn_uv, 0) AS churn_uv,
+  COALESCE(b.return_uv, 0) AS return_uv,
+  COALESCE(b.dnu, 0) AS dnu,
+  COALESCE(b.dnu_vip, 0) AS dnu_vip,
+  COALESCE(b.dnu_free, 0) AS dnu_free,
+  b.dnu_by_source,
+  b.retain,
+  COALESCE(b.retain2_vip, 0) AS retain2_vip,
+  COALESCE(b.retain2_free, 0) AS retain2_free,
+  b.retain2_by_source,
+  b.rolling_retain,
+  b.subscription,
+  b.revenue,
+  b.delivery,
+  COALESCE(e.seo_show, STRUCT(0, 0)) AS seo_show,
+  COALESCE(e.seo_click, STRUCT(0, 0)) AS seo_click,
+  COALESCE(e.valid_action, STRUCT(0, 0, 0, 0)) AS valid_action,
+  COALESCE(e.inspiration_show, STRUCT(0, 0, 0, 0)) AS inspiration_show,
+  COALESCE(e.inspiration_template_click, STRUCT(0, 0, 0, 0)) AS inspiration_template_click,
+  COALESCE(e.fashion_generate_show, STRUCT(0, 0, 0, 0)) AS fashion_generate_show,
+  COALESCE(e.fashion_generate_step2_show, STRUCT(0, 0, 0, 0)) AS fashion_generate_step2_show,
+  COALESCE(e.fashion_generate_step3_show, STRUCT(0, 0, 0, 0)) AS fashion_generate_step3_show,
+  COALESCE(e.fashion_generate_step4_show, STRUCT(0, 0, 0, 0)) AS fashion_generate_step4_show,
+  COALESCE(e.fashion_generate_click, STRUCT(0, 0, 0, 0)) AS fashion_generate_click,
+  COALESCE(e.fashion_generate_start, STRUCT(0, 0, 0, 0)) AS fashion_generate_start,
+  COALESCE(e.fashion_download_success, STRUCT(0, 0, 0, 0)) AS fashion_download_success,
+  COALESCE(e.fashion_generate_success, STRUCT(0, 0, 0, 0)) AS fashion_generate_success,
+  COALESCE(e.aimodel_generate_click, STRUCT(0, 0, 0, 0)) AS aimodel_generate_click,
+  COALESCE(e.aimodel_generate_show, STRUCT(0, 0, 0, 0)) AS aimodel_generate_show,
+  COALESCE(e.aimodel_generate_start, STRUCT(0, 0, 0, 0)) AS aimodel_generate_start,
+  COALESCE(e.aimodel_generate_success, STRUCT(0, 0, 0, 0)) AS aimodel_generate_success,
+  COALESCE(e.aimodel_download_success, STRUCT(0, 0, 0, 0)) AS aimodel_download_success,
+  COALESCE(e.vip_show, STRUCT(0, 0, 0, 0)) AS vip_show,
+  COALESCE(e.credit_pack_purchase, STRUCT(0, 0, 0, 0)) AS credit_pack_purchase,
+  COALESCE(e.vip_subscribe_succeed, STRUCT(0, 0, 0, 0)) AS vip_subscribe_succeed,
+  COALESCE(e.login_show, STRUCT(0, 0, 0, 0)) AS login_show,
+  COALESCE(e.login_success, STRUCT(0, 0, 0, 0)) AS login_success
+FROM basic AS b
+FULL OUTER JOIN evt AS e
+  USING (event_date);
+
+COMMIT TRANSACTION;

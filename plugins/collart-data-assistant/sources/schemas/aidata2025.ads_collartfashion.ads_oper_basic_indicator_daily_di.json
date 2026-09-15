@@ -1,0 +1,973 @@
+{
+  "table": "aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di",
+  "captured_at": "2026-09-14T13:19:04.685564+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "dau",
+        "type": "INTEGER"
+      },
+      {
+        "name": "vip_dau",
+        "type": "INTEGER"
+      },
+      {
+        "name": "churn_uv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "return_uv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "dnu",
+        "type": "INTEGER"
+      },
+      {
+        "name": "dnu_vip",
+        "type": "INTEGER"
+      },
+      {
+        "name": "dnu_free",
+        "type": "INTEGER"
+      },
+      {
+        "name": "dnu_by_source",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "organic",
+            "type": "INTEGER"
+          },
+          {
+            "name": "delivery",
+            "type": "INTEGER"
+          },
+          {
+            "name": "kol",
+            "type": "INTEGER"
+          },
+          {
+            "name": "inhouse",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d3",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d4",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d5",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d6",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d8",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d9",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d10",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d11",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d12",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d13",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d15",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d16",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d17",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d18",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d19",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d20",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d21",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d22",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d23",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d24",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d25",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d26",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d27",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d28",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d29",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "retain2_vip",
+        "type": "INTEGER"
+      },
+      {
+        "name": "retain2_free",
+        "type": "INTEGER"
+      },
+      {
+        "name": "retain2_by_source",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "organic",
+            "type": "INTEGER"
+          },
+          {
+            "name": "delivery",
+            "type": "INTEGER"
+          },
+          {
+            "name": "kol",
+            "type": "INTEGER"
+          },
+          {
+            "name": "inhouse",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "rolling_retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d3",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d4",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d5",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d6",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d8",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d9",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d10",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d11",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d12",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d13",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d15",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d16",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d17",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d18",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d19",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d20",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d21",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d22",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d23",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d24",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d25",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d26",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d27",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d28",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d29",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_1d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_old",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_7d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_1d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_old",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_7d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_cnt",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_amount",
+            "type": "INTEGER"
+          },
+          {
+            "name": "purchase_uv",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "purchase_uv_1d",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ]
+      },
+      {
+        "name": "revenue",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "purchase_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "resub_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "credit_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "ad_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "renew_subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "ad_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "revenue",
+            "type": "FLOAT"
+          }
+        ]
+      },
+      {
+        "name": "delivery",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "cost",
+            "type": "FLOAT"
+          },
+          {
+            "name": "impressions",
+            "type": "INTEGER"
+          },
+          {
+            "name": "clicks",
+            "type": "INTEGER"
+          },
+          {
+            "name": "installs",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "seo_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "seo_click",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "valid_action",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "inspiration_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "inspiration_template_click",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "fashion_generate_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "fashion_generate_step2_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "fashion_generate_step3_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "fashion_generate_step4_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "fashion_generate_click",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "fashion_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "fashion_download_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "fashion_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "aimodel_generate_click",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "aimodel_generate_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "aimodel_generate_start",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "aimodel_generate_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "aimodel_download_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "vip_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "credit_pack_purchase",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "vip_subscribe_succeed",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "login_show",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "login_success",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "pv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "new_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "vip_uv",
+            "type": "INTEGER"
+          }
+        ]
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collartfashion",
+    "tableId": "ads_oper_basic_indicator_daily_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name"
+    ]
+  },
+  "type": "TABLE"
+}

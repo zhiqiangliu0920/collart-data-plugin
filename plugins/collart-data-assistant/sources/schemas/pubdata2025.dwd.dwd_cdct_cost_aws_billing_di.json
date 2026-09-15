@@ -1,0 +1,153 @@
+{
+  "table": "pubdata2025.dwd.dwd_cdct_cost_aws_billing_di",
+  "captured_at": "2026-09-14T13:53:49.240295+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "atlasv_app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "atlasv_team",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "bill_bill_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "bill_billing_entity",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "billing_month",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "bill_invoice_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "bill_invoicing_entity",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "bill_payer_account_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "bill_payer_account_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "identity_line_item_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_blended_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_currency_code",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_legal_entity",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_line_item_description",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_line_item_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_product_code",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_tax_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_unblended_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_usage_account_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_usage_account_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "line_item_usage_amount",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "product",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_project",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "region",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "source_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "pricing_unit",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_cdct_cost_aws_billing_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

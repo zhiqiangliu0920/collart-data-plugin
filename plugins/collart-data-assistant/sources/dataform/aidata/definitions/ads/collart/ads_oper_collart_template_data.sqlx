@@ -1,0 +1,200 @@
+config {
+    type: "operations"
+}
+
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date}-1;
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+-- CREATE TABLE IF NOT EXISTS `aidata2025.ads_collart.ads_oper_template_ad_value_collart_di`
+-- (
+--   event_date DATE,
+--   temp_id STRING,
+--   generate_watch_ad_num INT64,
+--   temp_ad_value FLOAT64,
+--   subscribe_value FLOAT64
+-- )
+-- PARTITION BY event_date
+-- CLUSTER BY temp_id
+-- ;
+
+BEGIN TRANSACTION;
+
+DELETE
+FROM
+  `aidata2025.ads_collart.ads_oper_collart_template_data`
+WHERE
+  event_date BETWEEN from_date AND to_date;
+
+INSERT INTO
+  `aidata2025.ads_collart.ads_oper_collart_template_data`
+
+WITH raw_data AS (
+  SELECT
+    PARSE_DATE('%Y%m%d', a.event_date) AS event_date,
+    CASE
+      WHEN app_info.id = 'free.ai.photo.generator.collart.ai' THEN 'collart_android'
+      WHEN app_info.id IS NULL THEN 'collart_web'
+    END AS app_name,
+    a.user_pseudo_id,
+    aidata2025.ads_collart.top_country(geo.country) country,
+    case when b.user_Pseudo_id is not null then 'new' else 'old' end as is_new,
+    event_name,
+    -- 漏斗模板 ID：id / template_id / temp_id
+    COALESCE(
+      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'temp_id'),
+      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'template_id'),
+      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'id')
+    ) AS temp_id,
+    -- 价值侧模板 ID：仅 temp_id（对齐 ads_oper_template_ad_value 口径）
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'placement') AS ad_placement,
+    (SELECT value.double_value FROM UNNEST(event_params) WHERE key = 'value') AS ad_value,
+    (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'product_id') AS product_id
+  FROM `storytemplate-10a27.analytics_232977577.events_*` a 
+  left join (
+    select first_open_Date, user_pseudo_id from  `aidata2025.ads_collartandroid.ads_oper_user_profile_df` 
+    where first_open_Date between from_date and to_date
+    union all
+    select first_open_Date, user_pseudo_id from  `aidata2025.ads_collartweb.ads_oper_user_profile_df`
+    where first_open_Date between from_date and to_date)
+    b on PARSE_DATE('%Y%m%d', a.event_date)  = b.first_open_Date and a.user_pseudo_id = b.user_pseudo_id
+  WHERE a._TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+                          AND FORMAT_DATE('%Y%m%d', to_date)
+      AND event_name IN (
+      'Home_Template_Show', 'explore_content_show',
+      'Home_Template_Click', 'explore_content_click',
+      'ai_service_start',
+      'ai_service_success',
+      'ai_service_download_start',
+      'vip_subscribe_succeed',
+      'generate_watch_ad',
+      'ad_value'
+    )
+    and (app_info.id is null or app_Info.id='free.ai.photo.generator.collart.ai')
+
+    union all 
+    select  PARSE_DATE('%Y%m%d', a.event_date) AS event_date
+    ,'vidart' as app_name
+    ,a.user_pseudo_id
+    ,aidata2025.ads_collart.top_country(geo.country) country
+    ,case when b.user_Pseudo_id is not null then 'new' else 'old' end as is_new
+    ,event_name
+    , COALESCE(
+      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'temp_id'),
+      (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'material_id')) temp_id
+    , (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'placement') AS ad_placement
+    , (SELECT value.double_value FROM UNNEST(event_params) WHERE key = 'value') AS ad_value
+    , (SELECT value.string_value FROM UNNEST(event_params) WHERE key = 'product_id') AS product_id
+    from `vidart-8b8ca.analytics_528583115.events_*` a 
+    left join (select first_open_Date,user_pseudo_id
+    from aidata2025.ads_collartios.ads_oper_user_profile_df
+    where package_name='ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+    and first_open_Date between from_date and to_date
+    ) b on PARSE_DATE('%Y%m%d', a.event_date)  = b.first_open_Date and a.user_pseudo_id = b.user_pseudo_id
+    where  _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', from_date) AND FORMAT_DATE('%Y%m%d', to_date)
+    and  app_info.install_source <>"manual_install"  
+    and app_info.id='ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+    and event_name in('temp_show','temp_click','ai_service_start','ai_service_success','ai_service_download_start')
+),
+
+-- ---------- 漏斗（Android + Web）----------
+funnel AS (
+  SELECT
+    event_date,
+    app_name,
+    country,
+    is_new,
+    temp_id,
+    COUNT(DISTINCT IF( event_name IN ('Home_Template_Show', 'explore_content_show','temp_show'), user_pseudo_id, NULL )) AS show_uv,
+    COUNT(DISTINCT IF( event_name IN ('Home_Template_Click', 'explore_content_click','temp_click'), user_pseudo_id, NULL)) AS click_uv,
+    COUNT(DISTINCT IF(event_name = 'ai_service_start', user_pseudo_id, NULL)) AS ai_service_start_uv,
+    COUNT(DISTINCT IF(event_name = 'ai_service_success', user_pseudo_id, NULL)) AS ai_service_success_uv,
+    COUNT(DISTINCT IF(event_name = 'ai_service_download_start', user_pseudo_id, NULL)) AS save_uv,
+    COUNT(DISTINCT IF(event_name = 'vip_subscribe_succeed', user_pseudo_id, NULL)) AS vip_uv
+  FROM raw_data
+  WHERE temp_id IS NOT NULL
+  GROUP BY ALL
+),
+
+-- ---------- Android 模板价值（同粒度：country × is_new × temp_id）----------
+android_value_events AS (
+  SELECT
+    event_date,
+    app_name,
+    country,
+    is_new,
+    event_name,
+    temp_id,
+    ad_placement,
+    ad_value,
+    product_id
+  FROM raw_data
+  WHERE event_name IN ('generate_watch_ad', 'ad_value', 'vip_subscribe_succeed')
+),
+
+-- 单价按 event_date × country × is_new（与汇总维度对齐；不含 temp_id）
+ad_value_unit AS (
+  SELECT
+    event_date,
+    app_name,
+    country,
+    SAFE_DIVIDE(
+      SUM(IF(event_name = 'ad_value' AND ad_placement = 'reward_template_detail', ad_value, NULL)),
+      COUNTIF(event_name = 'generate_watch_ad' AND temp_id IS NOT NULL)
+    ) AS temp_ad_value_unit
+  FROM android_value_events
+  GROUP BY ALL
+),
+
+template_ad_value AS (
+  SELECT
+    a.event_date,
+    a.app_name,
+    a.country,
+    a.is_new,
+    a.temp_id,
+    SUM(IF(a.event_name = 'generate_watch_ad', 1, 0)) AS generate_watch_ad_num,
+    SUM(IF(a.event_name = 'generate_watch_ad', u.temp_ad_value_unit, 0)) AS temp_ad_value,
+    SUM( CASE WHEN a.event_name = 'vip_subscribe_succeed' AND a.product_id LIKE '%weekly%' THEN 4.99
+        WHEN a.event_name = 'vip_subscribe_succeed' AND a.product_id LIKE '%yearly%' THEN 39.99
+        WHEN a.event_name = 'vip_subscribe_succeed' AND a.product_id LIKE '%200%' THEN 4.99
+        WHEN a.event_name = 'vip_subscribe_succeed' AND a.product_id LIKE '%1000%' THEN 24.99
+        WHEN a.event_name = 'vip_subscribe_succeed' AND a.product_id LIKE '%2000%' THEN 49.99
+        WHEN a.event_name = 'vip_subscribe_succeed' AND a.product_id LIKE '%5000%' THEN 119.99
+        ELSE 0  END  ) AS subscribe_value
+  FROM android_value_events AS a
+  LEFT JOIN ad_value_unit AS u
+    ON a.event_date = u.event_date
+   AND a.country = u.country
+  WHERE a.temp_id IS NOT NULL
+  GROUP BY ALL
+)
+
+SELECT
+  COALESCE(f.event_date, v.event_date) AS event_date,
+  COALESCE(f.app_name, v.app_name) AS app_name,
+  COALESCE(f.country, v.country) AS country,
+  COALESCE(f.is_new, v.is_new) AS is_new,
+  COALESCE(f.temp_id, v.temp_id) AS temp_id,
+
+  f.show_uv,
+  f.click_uv,
+  f.ai_service_start_uv,
+  f.ai_service_success_uv,
+  f.save_uv,
+  f.vip_uv,
+  v.generate_watch_ad_num,
+  v.temp_ad_value,
+  v.subscribe_value,
+  IFNULL(v.temp_ad_value, 0) + IFNULL(v.subscribe_value, 0) AS template_value
+FROM funnel AS f
+FULL OUTER JOIN template_ad_value AS v on f.event_date = v.event_date
+ AND f.country = v.country
+ AND f.is_new = v.is_new
+ AND f.temp_id = v.temp_id
+where  (f.app_name<>'collart_android' Or show_uv>50)
+
+;
+
+COMMIT TRANSACTION;

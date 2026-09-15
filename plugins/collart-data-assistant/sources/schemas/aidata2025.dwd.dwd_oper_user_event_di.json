@@ -1,0 +1,491 @@
+{
+  "table": "aidata2025.dwd.dwd_oper_user_event_di",
+  "captured_at": "2026-09-14T13:19:07.474656+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_name",
+        "type": "STRING"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_time",
+        "type": "DATETIME"
+      },
+      {
+        "name": "traffic_src_source",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "city",
+        "type": "STRING"
+      },
+      {
+        "name": "device_language",
+        "type": "STRING"
+      },
+      {
+        "name": "mobile_brand_name",
+        "type": "STRING"
+      },
+      {
+        "name": "mobile_model_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING"
+      },
+      {
+        "name": "install_source",
+        "type": "STRING"
+      },
+      {
+        "name": "install_store",
+        "type": "STRING"
+      },
+      {
+        "name": "device_total_ram",
+        "type": "STRING"
+      },
+      {
+        "name": "network_type",
+        "type": "STRING"
+      },
+      {
+        "name": "device_id",
+        "type": "STRING"
+      },
+      {
+        "name": "is_vip",
+        "type": "STRING"
+      },
+      {
+        "name": "is_login",
+        "type": "STRING"
+      },
+      {
+        "name": "vip_product_id",
+        "type": "STRING"
+      },
+      {
+        "name": "event_duration",
+        "type": "STRING"
+      },
+      {
+        "name": "ad_type",
+        "type": "STRING"
+      },
+      {
+        "name": "event_value",
+        "type": "STRING"
+      },
+      {
+        "name": "unit_id",
+        "type": "STRING"
+      },
+      {
+        "name": "event_from",
+        "type": "STRING"
+      },
+      {
+        "name": "event_placement",
+        "type": "STRING"
+      },
+      {
+        "name": " advertising_id",
+        "type": "STRING"
+      },
+      {
+        "name": "event_order_id",
+        "type": "STRING"
+      },
+      {
+        "name": "event_product_id",
+        "type": "STRING"
+      },
+      {
+        "name": "event_temp_id",
+        "type": "STRING"
+      },
+      {
+        "name": "event_service_type",
+        "type": "STRING"
+      },
+      {
+        "name": "event_module_id",
+        "type": "STRING"
+      },
+      {
+        "name": "event_module_title",
+        "type": "STRING"
+      },
+      {
+        "name": "event_module_index",
+        "type": "STRING"
+      },
+      {
+        "name": "event_feature_id",
+        "type": "STRING"
+      },
+      {
+        "name": "event_retouch_feature_id",
+        "type": "STRING"
+      },
+      {
+        "name": "event_use_type",
+        "type": "STRING"
+      },
+      {
+        "name": "event_mode_type",
+        "type": "STRING"
+      },
+      {
+        "name": "event_is_regenerate",
+        "type": "STRING"
+      },
+      {
+        "name": "event_generate_cnt",
+        "type": "STRING"
+      },
+      {
+        "name": "event_auto_optimization",
+        "type": "STRING"
+      },
+      {
+        "name": "event_motion_mode",
+        "type": "STRING"
+      },
+      {
+        "name": "event_ratio",
+        "type": "STRING"
+      },
+      {
+        "name": "event_model",
+        "type": "STRING"
+      },
+      {
+        "name": "event_page",
+        "type": "STRING"
+      },
+      {
+        "name": "atlasv_uid",
+        "type": "STRING"
+      },
+      {
+        "name": "event_model_type",
+        "type": "STRING"
+      },
+      {
+        "name": "event_credit_count",
+        "type": "INTEGER"
+      },
+      {
+        "name": "event_service_cost",
+        "type": "FLOAT"
+      },
+      {
+        "name": "mobile_marketing_name",
+        "type": "STRING"
+      },
+      {
+        "name": "adjust_id",
+        "type": "STRING"
+      },
+      {
+        "name": "event_engagement_time_msec",
+        "type": "STRING"
+      },
+      {
+        "name": "event_source",
+        "type": "STRING"
+      },
+      {
+        "name": "event_type",
+        "type": "STRING"
+      },
+      {
+        "name": "event_param_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_sort_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_adjust_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_sc_value",
+        "type": "STRING"
+      },
+      {
+        "name": "event_vfx_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_filter_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_material_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_textfont_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_textemplate_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_textanime_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_transition_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_group_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_clipanime_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_anime_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_category",
+        "type": "STRING"
+      },
+      {
+        "name": "event_project_template",
+        "type": "STRING"
+      },
+      {
+        "name": "event_unlock_type",
+        "type": "STRING"
+      },
+      {
+        "name": "event_enter",
+        "type": "STRING"
+      },
+      {
+        "name": "event_mode",
+        "type": "STRING"
+      },
+      {
+        "name": "event_modes",
+        "type": "STRING"
+      },
+      {
+        "name": "event_error_value",
+        "type": "STRING"
+      },
+      {
+        "name": "event_keyframe",
+        "type": "STRING"
+      },
+      {
+        "name": "event_mask",
+        "type": "STRING"
+      },
+      {
+        "name": "event_background",
+        "type": "STRING"
+      },
+      {
+        "name": "event_chroma_key",
+        "type": "STRING"
+      },
+      {
+        "name": "event_hsl",
+        "type": "STRING"
+      },
+      {
+        "name": "event_enhance",
+        "type": "STRING"
+      },
+      {
+        "name": "event_body_fx",
+        "type": "STRING"
+      },
+      {
+        "name": "event_time_limit",
+        "type": "STRING"
+      },
+      {
+        "name": "event_smooth_slow_motion",
+        "type": "STRING"
+      },
+      {
+        "name": "os_classify",
+        "type": "STRING"
+      },
+      {
+        "name": "os_cpu_info",
+        "type": "STRING"
+      },
+      {
+        "name": "device_operating_system_version",
+        "type": "STRING"
+      },
+      {
+        "name": "event_feature",
+        "type": "STRING"
+      },
+      {
+        "name": "event_space_type",
+        "type": "STRING"
+      },
+      {
+        "name": "event_design_style",
+        "type": "STRING"
+      },
+      {
+        "name": "event_space_name",
+        "type": "STRING"
+      },
+      {
+        "name": "params_is_vip",
+        "type": "STRING"
+      },
+      {
+        "name": "params_ad_platform",
+        "type": "STRING"
+      },
+      {
+        "name": "session_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "会话session_id"
+      },
+      {
+        "name": "keywordID",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "transaction_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "event_param = 'transaction_id''"
+      },
+      {
+        "name": "device_category",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "operating_system",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "browser",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "task_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "模型调用任务id"
+      },
+      {
+        "name": "temp_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "模版id"
+      },
+      {
+        "name": "fb_campaign",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "web_page_location",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "first_open_time",
+        "type": "TIMESTAMP",
+        "description": "用户首次打开时间"
+      },
+      {
+        "name": "geo_continent",
+        "type": "STRING",
+        "description": "大洲"
+      },
+      {
+        "name": "geo_sub_continent",
+        "type": "STRING",
+        "description": "次大洲"
+      },
+      {
+        "name": "device_vendor_id",
+        "type": "STRING",
+        "description": "iOS vendor_id"
+      },
+      {
+        "name": "traffic_src_medium",
+        "type": "STRING",
+        "description": "归因渠道 medium"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_oper_user_event_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "app_name",
+      "event_name"
+    ]
+  },
+  "type": "TABLE"
+}

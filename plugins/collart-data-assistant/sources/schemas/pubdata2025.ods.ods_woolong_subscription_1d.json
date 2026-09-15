@@ -1,0 +1,86 @@
+{
+  "table": "pubdata2025.ods.ods_woolong_subscription_1d",
+  "captured_at": "2026-09-14T13:19:09.407234+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "original_transaction_id",
+        "type": "STRING"
+      },
+      {
+        "name": "plan_id",
+        "type": "STRING"
+      },
+      {
+        "name": "is_in_trial_period",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "currency",
+        "type": "STRING"
+      },
+      {
+        "name": "gclid",
+        "type": "STRING"
+      },
+      {
+        "name": "adid",
+        "type": "STRING"
+      },
+      {
+        "name": "ip",
+        "type": "STRING"
+      },
+      {
+        "name": "idfa",
+        "type": "STRING"
+      },
+      {
+        "name": "install_timestamp",
+        "type": "INTEGER"
+      },
+      {
+        "name": "advertising_id",
+        "type": "STRING"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING"
+      },
+      {
+        "name": "auto_renew",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "price",
+        "type": "NUMERIC"
+      },
+      {
+        "name": "campaign",
+        "type": "STRING"
+      },
+      {
+        "name": "introductory_price",
+        "type": "NUMERIC"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "ods",
+    "tableId": "ods_woolong_subscription_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,289 @@
+---
+id: "table:aidata2025.ads_collartweb.ads_oper_user_profile_df"
+title: "aidata2025.ads_collartweb.ads_oper_user_profile_df"
+project: "collart_web"
+kind: "table"
+status: "documented"
+sources: ["ai-knowledge:collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md", "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_user_profile_df.sqlx", "feishu:aidata2025.ads_collartweb.ads_oper_user_profile_df", "schema:aidata2025.ads_collartweb.ads_oper_user_profile_df"]
+tags: ["ads_oper_user_profile_df", "字段", "schema", "SQLX"]
+tables: ["aidata2025.ads_collartweb.ads_oper_user_profile_df"]
+review_required: true
+applies_to: []
+---
+
+# aidata2025.ads_collartweb.ads_oper_user_profile_df
+
+## 使用边界
+
+表元数据读取成功；未读取数据行，未验证完整日期覆盖、金额或最近任务运行。
+
+只读；本页 SQLX 是加工依据，不可执行。原始事件及逐条行为 DWD/DM 均限最近 7 天并有日期与产品过滤；汇总、画像和收入表可按适用范围分析更长历史。字段语义未经线上业务值验证。
+
+## 表结构与粒度
+
+| 项 | 定义及来源 |
+|---|---|
+| 物理表 | `aidata2025.ads_collartweb.ads_oper_user_profile_df` |
+| 粒度 | 每个 user_pseudo_id 一行（源码说明；账号不是主键） |
+| 主键/去重键 | user_pseudo_id；BigQuery 未声明即不代表强制唯一约束 |
+| 分区 | 未声明时间/范围分区 |
+| 聚簇 | user_pseudo_id |
+| 更新 | 未说明；具体重写/MERGE 窗口见加工依据 |
+| 捕获状态 | schema: documented；Dataform releaseConfig 源码与实际运行版本分开 |
+
+## 完整字段
+
+字段名/类型/mode 以本次 schema 为准，含所有嵌套层级；解释优先 schema 描述，其次飞书，再用旧文档。来源都未解释时明确未知，不把字段名翻译当验证。存在语义冲突时需复核。
+
+| 字段 | 类型 | Mode | 解释 | 解释来源 |
+|---|---|---|---|---|
+| `package_name` | STRING | NULLABLE | 未说明 | 缺口 |
+| `app_name` | STRING | NULLABLE | 未说明 | 缺口 |
+| `user_pseudo_id` | STRING | NULLABLE | 未说明 | 缺口 |
+| `user_id` | STRING | NULLABLE | 未说明 | 缺口 |
+| `country` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src_type` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src_name` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src_platform` | STRING | NULLABLE | 未说明 | 缺口 |
+| `first_open_date` | DATE | NULLABLE | 未说明 | 缺口 |
+| `first_open_time` | TIMESTAMP | NULLABLE | 未说明 | 缺口 |
+| `register_app_version` | STRING | NULLABLE | 未说明 | 缺口 |
+| `last_active_date` | DATE | NULLABLE | 未说明 | 缺口 |
+| `last_app_version` | STRING | NULLABLE | 未说明 | 缺口 |
+| `current_active_days` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `current_active_days.d7` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `current_active_days.d14` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `current_active_days.d30` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `current_active_days.d90` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `current_active_days.d360` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `current_is_churn_14d` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `is_vip` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `is_remove_on_first_open` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `is_ever_remove` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `identity` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `identity.clarity_user_id` | STRING | NULLABLE | 未说明 | 缺口 |
+| `identity.clarity_session_id` | STRING | NULLABLE | 未说明 | 缺口 |
+| `identity.atlasv_id` | STRING | NULLABLE | 未说明 | 缺口 |
+| `geo` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `geo.country` | STRING | NULLABLE | 未说明 | 缺口 |
+| `geo.city` | STRING | NULLABLE | 未说明 | 缺口 |
+| `geo.continent` | STRING | NULLABLE | 未说明 | 缺口 |
+| `geo.sub_continent` | STRING | NULLABLE | 未说明 | 缺口 |
+| `device` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `device.category` | STRING | NULLABLE | 未说明 | 缺口 |
+| `device.mobile_brand_name` | STRING | NULLABLE | 未说明 | 缺口 |
+| `device.mobile_model_name` | STRING | NULLABLE | 未说明 | 缺口 |
+| `device.operating_system` | STRING | NULLABLE | 未说明 | 缺口 |
+| `device.operating_system_version` | STRING | NULLABLE | 未说明 | 缺口 |
+| `device.vendor_id` | STRING | NULLABLE | 未说明 | 缺口 |
+| `device.language` | STRING | NULLABLE | 未说明 | 缺口 |
+| `device.browser` | STRING | NULLABLE | 未说明 | 缺口 |
+| `device.browser_version` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `traffic_src.name` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src.type` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src.platform` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src.source` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src.medium` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src.campaign` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src.campaign_id` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src.term` | STRING | NULLABLE | 未说明 | 缺口 |
+| `traffic_src.content` | STRING | NULLABLE | 未说明 | 缺口 |
+| `subscription` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `subscription.first_date` | DATE | NULLABLE | 未说明 | 缺口 |
+| `subscription.first_product_id` | STRING | NULLABLE | 未说明 | 缺口 |
+| `subscription.first_app_version` | STRING | NULLABLE | 未说明 | 缺口 |
+| `subscription.last_date` | DATE | NULLABLE | 未说明 | 缺口 |
+| `subscription.last_product_id` | STRING | NULLABLE | 未说明 | 缺口 |
+| `subscription.last_app_version` | STRING | NULLABLE | 未说明 | 缺口 |
+| `subscription.purchase_cnt_all` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `subscription.credit_pack_cnt_all` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `subscription.credit_amount_all` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `revenue` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `revenue.purchase_revenue_all` | FLOAT | NULLABLE | 未说明 | 缺口 |
+| `revenue.subscription_revenue_all` | FLOAT | NULLABLE | 未说明 | 缺口 |
+| `revenue.credit_revenue_all` | FLOAT | NULLABLE | 未说明 | 缺口 |
+| `revenue.ad_revenue_all` | FLOAT | NULLABLE | 未说明 | 缺口 |
+| `revenue.total_revenue_all` | FLOAT | NULLABLE | 未说明 | 缺口 |
+| `ltv` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `ltv.d1` | FLOAT | NULLABLE | 未说明 | 缺口 |
+| `ltv.d7` | FLOAT | NULLABLE | 未说明 | 缺口 |
+| `ltv.d30` | FLOAT | NULLABLE | 未说明 | 缺口 |
+| `ltv.d90` | FLOAT | NULLABLE | 未说明 | 缺口 |
+| `ltv.d360` | FLOAT | NULLABLE | 未说明 | 缺口 |
+| `retain` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `retain.d2` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d3` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d4` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d5` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d6` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d7` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d8` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d9` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d10` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d11` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d12` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d13` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d14` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d15` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d16` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d17` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d18` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d19` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d20` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d21` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d22` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d23` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d24` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d25` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d26` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d27` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d28` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d29` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `retain.d30` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d2` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d3` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d4` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d5` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d6` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d7` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d8` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d9` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d10` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d11` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d12` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d13` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d14` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d15` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d16` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d17` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d18` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d19` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d20` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d21` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d22` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d23` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d24` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d25` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d26` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d27` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d28` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d29` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `rolling_retain.d30` | BOOLEAN | NULLABLE | 未说明 | 缺口 |
+| `profile_updated_at` | TIMESTAMP | NULLABLE | 未说明 | 缺口 |
+| `event` | RECORD | NULLABLE | 未说明 | 缺口 |
+| `event.video_generate_success_pv` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `event.video_generate_start_pv` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `event.img_generate_success_pv` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `event.img_generate_start_pv` | INTEGER | NULLABLE | 未说明 | 缺口 |
+| `page_referrer` | STRING | NULLABLE | 未说明 | 缺口 |
+| `user_ids` | STRING | REPEATED | 未说明 | 缺口 |
+
+## 来源有而当前 schema 未见的字段
+
+可能是历史列、旧嵌套命名或缺失 schema，未自动映射到相似新字段。
+
+| 字段 | 来源类型 | 来源说明 |
+|---|---|---|
+| `ads_oper_collart_web_id_map` | user_pseudo_id | 设备↔登录号映射 |
+| `ads_oper_user_active_di` | user_pseudo_id | 日活、当日末次 `user_id`、收入 |
+| `dm.dm_collart_web_user_event_di` | user_id` 或 `user_pseudo_id | 按登录号数「有调用的天数」比画像滚动窗口更稳 |
+
+## 表专属业务说明
+
+## 2. 核心作用
+本表主要用于以下场景：
+1. 查单设备生命周期：首末活跃、渠道、VIP、终身收入、generate PV
+2. **按登录 UUID 反查设备画像**（必须走 `user_ids`，见 §4）
+3. 常规上一跳用终身 sticky `page_referrer`，不必再扫 `events_*`
+
+## 5. 关联表
+
+| 关联表 | 关联字段 | 用途 |
+|--------|---------|------|
+| `ads_oper_user_active_di` | `user_pseudo_id` | 日活、当日末次 `user_id`、收入 |
+| `ads_oper_collart_web_id_map` | `user_pseudo_id` | 设备↔登录号映射 |
+| `dm.dm_collart_web_user_event_di` | `user_id` 或 `user_pseudo_id` | 按登录号数「有调用的天数」比画像滚动窗口更稳 |
+
+## 6. 数据质量与风险提示
+
+- 极端设备可绑数千个登录号（验证例：E613 所在设备 `user_ids` 长度 2886，`user_id` 已滚到别的号）。
+- `is_vip` / 终身收入来自 SUM(active)，与订单表冲突时以 Stripe / active.revenue 为准，不要只用 `ods.orders`。
+- 本字段目前是 **Web** 画像；Fashion 是否同步以现网 schema 为准，不要默认有 `user_ids`。
+
+## 加工依据与关联关系
+
+- 加工源码：`dataform:aidata/definitions/ads/collart/collart_web/ads_oper_user_profile_df.sqlx`；仓库 `aidata`，路径 `definitions/ads/collart/collart_web/ads_oper_user_profile_df.sqlx`，版本 `9af2cc4ed39c61edb920c7ceba68425d366924a8`，捕获 `2026-09-14T13:18:53.037587+00:00`。同一 SQLX 的产出：`aidata2025.ads_collartweb.ads_oper_user_profile_df`。
+
+源码说明摘录（保留原定义日期；不能当作本次运行验证）：
+
+```text
+Collart Web 第三张表：用户生命周期画像（1 用户 1 行）
+  Dataform: definitions/ads/collart/collart_web/ads_oper_user_profile_df.sqlx
+  目标表  : aidata2025.ads_collartweb.ads_oper_user_profile_df
+
+  更新方式：
+  - 无旧用户画像历史表可初始化 → 跳过历史骨架
+  - 日常 MERGE：近 3 日 active / UEM 变化用户
+  event：终身事件 PV，来自 ads_oper_user_event_metric_di 对用户 SUM(*_pv)。
+
+  口径（2026-08-11）:
+  - identity: clarity_user_id / clarity_session_id / atlasv_id
+  - traffic_src: name/type/platform + source/medium/campaign/campaign_id/term/content
+  - page_referrer: 最早 first_visit 的完整 page.referrer（空串保留；无 first_visit 则最早事件）；只写一次
+  - user_id: 该设备最后一次登录号（active 非空 user_id 与 id_map.user_id_last_date 取更晚）
+  - user_ids: 该设备历史绑定过的全部登录号（id_map ∪ active）；按登录号查用 UNNEST(user_ids)
+  - is_vip BOOL = active.is_vip IN ('1','2')
+  - 收入 / LTV：SUM(active.revenue)，不再 id_map orphan 二次叠加（too_new 已进 active）
+  - 禁止改动其他 dataset 表
+
+  is_active 分流（active 表含「付费-only」行 is_active=FALSE）:
+  - 活跃类（last_active_date / current_active_days / 14 日流失 / retain / 首次归因与维度快照）
+    仅取 is_active=TRUE 行；
+  - 订阅次数与收入 / LTV 不过滤 is_active，付费-only 行照常累计。
+```
+
+releaseConfig 指向的编译源码已捕获；未读取当前工作区编辑，也未核验最新 workflow invocation 的实际执行版本。引用的 includes 保存在 sources/dataform，可按源码相对路径追溯。原始哈希与分发文件哈希分别记录在 _meta/sources.json；若隐私常量脱敏，则分发版不是字节级原件。
+
+### 过滤、关联、去重与窗口线索
+
+下列为静态语句定位片段，顺序和完整表达式以源码为准，不是可执行查询。
+
+```text
+DECLARE biz_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+DECLARE change_from_date DATE DEFAULT biz_date - 2;
+WHERE event_date BETWEEN change_from_date AND biz_date
+AND user_pseudo_id IS NOT NULL
+JOIN changed_users AS c USING (user_pseudo_id)
+ORDER BY IF(traffic_src_type = 'delivery', 0, 1), event_date
+WHERE is_active
+GROUP BY user_pseudo_id
+LEFT JOIN `aidata2025.ads_collartweb.ads_oper_user_profile_df` AS p USING (user_pseudo_id)
+LEFT JOIN active_profile AS a USING (user_pseudo_id)
+GROUP BY r.user_pseudo_id
+GROUP BY e.user_pseudo_id
+LEFT JOIN `aidata2025.ads_collartweb.ads_oper_user_profile_df` AS p
+ON p.user_pseudo_id = c.user_pseudo_id
+WHERE p.page_referrer IS NULL
+ORDER BY e.event_time
+JOIN need_ref AS n ON e.user_pseudo_id = n.user_pseudo_id
+WHERE e.package_name = 'collart_web'
+WHERE a.user_id IS NOT NULL AND a.user_id != ''
+WHERE m.user_id IS NOT NULL AND m.user_id != ''
+LEFT JOIN purchase_profile AS p USING (user_pseudo_id)
+LEFT JOIN rev_profile AS rv USING (user_pseudo_id)
+LEFT JOIN ltv_profile AS ltv USING (user_pseudo_id)
+LEFT JOIN event_profile AS ev USING (user_pseudo_id)
+LEFT JOIN first_visit_ref AS fv USING (user_pseudo_id)
+LEFT JOIN login_ids AS ids USING (user_pseudo_id)
+ON t.user_pseudo_id = s.user_pseudo_id
+WHEN MATCHED THEN UPDATE SET
+WHEN NOT MATCHED THEN INSERT (
+```
+- 物理上游：`aidata2025.ads_collart.ads_oper_collart_web_id_map`
+- 物理上游：`aidata2025.ads_collartweb.ads_oper_user_active_di`
+- 物理上游：`aidata2025.ads_collartweb.ads_oper_user_event_metric_di`
+- 物理上游：`aidata2025.dm.dm_collart_web_user_event_di`
+
+画像是设备粒度。按登录号检索用 user_id = @user_id OR @user_id IN UNNEST(user_ids)（字段存在时）；多账号/多设备需单独归并。滚动活跃只随触达的 MERGE 行更新，历史未变设备可能不是今天状态。

@@ -1,0 +1,190 @@
+config {
+    type: "operations",
+    dependencies: ["h_dwd_oper_user_basic_di", "h_dwd_oper_sub_order_revenue_df"]
+}
+
+DECLARE
+  from_date date DEFAULT DATE('2024-08-01');
+DECLARE
+  to_date date DEFAULT ${dataform.projectConfig.vars.biz_date}+1;
+  -- 安卓端订阅收入用户粒度汇总数据
+BEGIN TRANSACTION;
+  -- 删除当日数据
+DELETE
+FROM
+  `dws.dws_oper_user_sub_revenue_df`
+WHERE
+  order_date BETWEEN from_date
+  AND to_date;
+  -- 插入当日数据
+INSERT INTO
+  `dws.dws_oper_user_sub_revenue_df`
+SELECT
+  sub_tab.order_date,
+  sub_tab.event_date,
+  sub_tab.user_pseudo_id,
+  sub_tab.app_name,
+  sub_tab.package_name,
+  sub_tab.country,
+  -- 订阅属性
+  last_subscribe_type,
+  order_num,
+  first_subscribe_date,
+  last_subscribe_date,
+  -- 用户属性
+  user_id,
+  is_new,
+  is_active,
+  traffic_src_type,
+  app_version,
+  -- 收入金额指标
+  total_revenue_today,
+  resub_revenue_today,
+  new_revenue_today,
+  trial_conver_revenue_today,
+  total_revenue_all,
+  resub_revenue_all,
+  new_revenue_all,
+  trial_conver_revenue_all,
+  new_order_num,
+  renew_order_num,
+  credit_revenue_today,
+  credit_revenue_all
+FROM (
+  SELECT
+    a.order_date,
+    a.event_date,
+    a.user_pseudo_id,
+    a.app_name,
+    a.package_name,
+    a.country,
+    user_id,
+    is_new,
+    is_active,
+    traffic_src_type,
+    app_version,
+    last_subscribe_type,
+    order_num,
+    first_subscribe_date,
+    last_subscribe_date,
+    total_revenue_today,
+    credit_revenue_today,
+    resub_revenue_today,
+    new_revenue_today,
+    trial_conver_revenue_today,
+    total_revenue_all,
+    credit_revenue_all,
+    resub_revenue_all,
+    new_revenue_all,
+    trial_conver_revenue_all,
+    new_order_num,
+    renew_order_num
+  FROM (
+    SELECT
+      order_date,
+      sub_tab.event_date,
+      sub_tab.user_pseudo_id,
+      sub_tab.app_name,
+      sub_tab.package_name,
+      country,
+      MAX(coalesce(sub_tab.user_id,user_tab.user_id)) AS user_id,
+      MAX(traffic_src_type) AS traffic_src_type,
+      MAX(is_new) AS is_new,
+      MAX(is_active) AS is_active,
+      MAX(app_version) AS app_version,
+      -- 当日最新收入相关指标
+      MAX_BY(subscribe_type,order_date) AS last_subscribe_type,
+      SUM(revenue) AS total_revenue_today,
+      SUM(IF(order_type = '点数包',revenue,0)) AS credit_revenue_today,
+      SUM(IF(subscribe_type = 'renew',revenue,0)) AS resub_revenue_today,
+      SUM(IF(subscribe_type = 'first',revenue,0)) AS new_revenue_today,
+      SUM(IF(subscribe_type = 'trial_conver',revenue,0)) AS trial_conver_revenue_today,
+      count(distinct IF(subscribe_type in ('renew','trial_conver'),order_id,null)) as renew_order_num,
+      count(distinct IF(subscribe_type = 'first',order_id,null)) as new_order_num,
+    FROM 
+     (
+      SELECT
+        order_date,
+        user_pseudo_id,
+        user_id,
+        order_id,
+        app_name,
+        package_name,
+        country,
+        event_date,
+        subscribe_type,
+        revenue,
+        order_type,
+        traffic_src_type
+      FROM
+        dwd.dwd_oper_sub_order_revenue_df
+      WHERE
+        order_date BETWEEN from_date
+        AND to_date
+     ) sub_tab
+    LEFT JOIN
+      -- 用户相关属性计算
+      (
+      SELECT
+        event_date,
+        user_pseudo_id,
+        user_id,
+        app_name,
+        package_name,
+        is_new,
+        is_active,
+        app_version,
+      FROM
+        dwd.dwd_oper_user_basic_di
+      WHERE
+        event_date BETWEEN from_date
+        AND to_date 
+      ) user_tab
+    ON
+      sub_tab.user_pseudo_id = user_tab.user_pseudo_id
+      AND sub_tab.app_name = user_tab.app_name
+      AND sub_tab.event_date = user_tab.event_date
+    GROUP BY
+      order_date,
+      sub_tab.event_date,
+      sub_tab.user_pseudo_id,
+      sub_tab.app_name,
+      sub_tab.package_name,
+      country
+  )a
+  LEFT JOIN (
+    SELECT
+      user_pseudo_id,
+      app_name,
+      package_name,
+      country,
+      -- 长周期订阅属性计算
+      COUNT(1) AS order_num,
+      MIN(order_date) AS first_subscribe_date,
+      MAX(order_date) AS last_subscribe_date,
+      SUM(revenue) AS total_revenue_all,
+      SUM(IF(order_type = '点数包',revenue,0)) AS credit_revenue_all,
+      SUM(IF(subscribe_type = 'renew',revenue,0)) AS resub_revenue_all,
+      SUM(IF(subscribe_type = 'first',revenue,0)) AS new_revenue_all,
+      SUM(IF(subscribe_type = 'trial_conver',revenue,0)) AS trial_conver_revenue_all,
+    FROM
+      dwd.dwd_oper_sub_order_revenue_df
+    WHERE
+      order_date BETWEEN from_date
+      AND to_date
+    GROUP BY
+      user_pseudo_id,
+      app_name,
+      package_name,
+      country
+      ) b
+  ON
+    a.user_pseudo_id = b.user_pseudo_id
+    AND a.app_name = b.app_name
+    AND a.package_name = b.package_name
+    AND a.country = b.country 
+) sub_tab 
+;
+
+COMMIT
+  ;

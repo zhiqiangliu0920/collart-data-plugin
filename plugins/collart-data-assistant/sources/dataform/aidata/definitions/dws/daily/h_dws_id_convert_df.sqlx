@@ -1,0 +1,137 @@
+config {
+  type : "operations",
+  dependencies : ["h_dwd_id_convert_di"]
+}
+
+
+
+declare from_date date default ${dataform.projectConfig.vars.biz_date};
+
+
+begin transaction;
+
+create temp table changed_id_keys as
+select distinct package_name, user_pseudo_id
+from `aidata2025.dwd.dwd_id_convert_di`
+where event_date >= from_date;
+
+
+delete from `aidata2025.dws.dws_id_convert_df` a
+where event_date >= from_date or exists (
+  select 1 
+  from changed_id_keys b
+  where b.package_name = a.package_name
+  and b.user_pseudo_id = a.user_pseudo_id
+);
+
+
+insert into `aidata2025.dws.dws_id_convert_df` (
+  event_date, package_name, app_name, user_pseudo_id,
+  atlasv_uid, user_id, advertising_id, adjust_id
+)
+with tmp as (
+    select
+      max(event_date) as event_date,
+      package_name, 
+      max(app_name) app_name,
+      user_pseudo_id,
+      array_agg(distinct if(atlasv_uid != '', atlasv_uid, null) ignore nulls) atlasv_uid,
+      array_agg(distinct if(user_id != '', user_id, null) ignore nulls) user_id,
+      array_agg(distinct if(advertising_id not in ('', "__REDACTED_ID__") , advertising_id, null) ignore nulls) advertising_id,
+      array_agg(distinct if(adjust_id != '', adjust_id, null) ignore nulls) adjust_id
+  from `aidata2025.dwd.dwd_id_convert_di`
+  where event_date >= from_date
+  group by package_name, user_pseudo_id   
+)
+select 
+    event_date,
+    package_name,
+    app_name,
+    user_pseudo_id,
+    atlasv_uid,
+    user_id,
+    advertising_id,
+    adjust_id
+from tmp
+left join unnest(atlasv_uid) atlasv_uid
+left join unnest(user_id) user_id
+left join unnest(advertising_id) advertising_id
+left join unnest(adjust_id) adjust_id;
+
+
+commit;
+
+
+
+
+
+
+
+
+
+
+-- begin transaction;
+
+-- -- 删除存在数据
+-- delete from `aidata2025.dws.dws_id_convert_df`
+-- where event_date >= from_date;
+
+-- -- 插入新增数据
+-- insert into `aidata2025.dws.dws_id_convert_df` 
+-- select 
+--   event_date,
+--   package_name,
+--   app_name,
+--   user_pseudo_id,
+--   atlasv_uid,
+--   advertising_id,
+--   user_id,
+--   adjust_id
+-- from `aidata2025.dwd.dwd_id_convert_di` 
+-- where event_date >= from_date;
+
+-- -- 删除过期数据 (仅保留最新一天数据)
+-- delete from `aidata2025.dws.dws_id_convert_df` a
+-- where exists (
+--   select 1 
+--   from (
+--     select event_date, package_name, user_pseudo_id 
+--     from `aidata2025.dws.dws_id_convert_df` 
+--     -- join 筛选出现新数据的用户 全量数据
+--     join (
+--       select distinct package_name, user_pseudo_id
+--       from `aidata2025.dwd.dwd_id_convert_di`
+--       where event_date >= from_date
+--     ) using (package_name, user_pseudo_id) 
+--     -- qualify 筛选出历史数据信息
+--     qualify dense_rank() over (partition by package_name, user_pseudo_id order by event_date desc) > 5
+--   ) b
+--   where a.event_date = b.event_date
+--   and a.package_name = b.package_name
+--   and a.user_pseudo_id = b.user_pseudo_id
+-- );
+
+
+-- commit;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

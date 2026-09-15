@@ -1,0 +1,238 @@
+config {
+    type: "operations"
+}
+
+--------- web 订阅收入 ---------
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date}-5;
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+BEGIN TRANSACTION;
+
+-- 这里放置一系列 DML 语句
+DELETE
+FROM
+  `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+WHERE
+  event_date BETWEEN from_date
+  AND to_date;
+INSERT INTO
+  `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+WITH product_tab AS (
+  SELECT
+    a.event_date,
+    a.transaction_time,
+    a.app_name,
+    a.ref_id,
+    a.order_id,
+    a.transaction_id,
+    a.user_id,
+    a.transaction_status,
+    a.amount,
+    a.currency,
+    a.product_id,
+    a.product_name,
+    a.subscription_id,
+    a.recurring_type,
+    a.gateway_id,
+    a.acquirer,
+    a.billing_country,
+    b.subscription_period_name
+  FROM `pubdata2025.ods.ods_payinsider_order_report_1d` AS a
+  LEFT JOIN `pubdata2025.dim.dim_payinsider_product_price` AS b
+    ON a.event_date = b.event_date
+    AND a.app_name = b.app_name
+    AND a.product_id = b.product_id
+    AND a.currency = b.currency
+  WHERE a.event_date BETWEEN from_date AND to_date
+    AND a.transaction_status = 'Approved'
+    AND a.response_code = 'Success'
+),
+
+stripe_tab AS (
+  SELECT
+    a.event_date,
+    a.event_timestamp,
+    a.transaction_id,
+    a.payment_intent_id,
+    -- a.payinsider_transaction_id,
+    a.app_name,
+    a.type AS charge_type,
+    a.country,
+    a.currency,
+    a.stripe_customer_id,
+    a.amount,
+    a.fee,
+    a.net AS revneue,
+    CASE
+      WHEN a.description IS NULL THEN 'credit'
+      ELSE a.description
+    END AS description_type,
+    a.status AS order_status,
+    a.product_id,
+    c.product_name,
+    a.subscription_id,
+    b.status AS subscription_status,
+    COALESCE(a.user_id, JSON_VALUE(b.metadata, '$.user_id')) AS user_id,
+    'stripe' AS payment_channel
+  FROM `pubdata2025.ods.ods_stripe_balance_transactions_1d` AS a
+  LEFT JOIN (
+    select
+      distinct
+      subscription_id,
+      app_name,
+      status,
+      metadata
+    from `pubdata2025.ods.ods_stripe_subscriptions_1d`
+  ) b
+    ON a.subscription_id = b.subscription_id
+    AND a.app_name = b.app_name
+  LEFT JOIN `pubdata2025.dim.dim_stripe_product_info_df` AS c
+    ON a.product_id = c.product_id
+  WHERE a.event_date BETWEEN from_date AND to_date
+  AND a.type IN ('charge', 'payment')
+),
+
+payssion_tab AS (
+  SELECT
+    event_date,
+    UNIX_SECONDS(
+      TIMESTAMP(DATETIME(transaction_time), "Asia/Shanghai")
+    ) AS event_timestamp,
+    transaction_id,
+    app_name,
+    'charge' AS charge_type,
+    billing_country AS country,
+    currency,
+    CAST(NULL AS STRING) AS stripe_customer_id,
+    amount,
+    CAST(NULL AS NUMERIC) AS fee,
+    amount AS revneue,
+    CASE
+      WHEN subscription_id IS NOT NULL THEN 'subscription'
+      ELSE 'credit'
+    END AS description_type,
+    transaction_status AS order_status,
+    product_id,
+    product_name,
+    subscription_id,
+    recurring_type AS subscription_status,
+    user_id,
+    'payssion' AS payment_channel
+  FROM product_tab
+  WHERE acquirer = 'Payssion'
+)
+
+-- Stripe 原生收入 + PayInsider 路由到 Stripe 的收入
+SELECT
+  max(a.event_date) as event_date, -- 取最新一天的订单 订单粒度去重
+  a.event_timestamp,
+  a.transaction_id,
+  if(a.app_name='collart-Web','collart_web',a.app_name) as app_name,
+  a.charge_type,
+  a.country,
+  a.currency,
+  a.stripe_customer_id,
+  a.amount,
+  a.fee,
+  a.revneue,
+  case 
+    when b.recurring_type ='init' then 'Subscription creation'
+    when b.recurring_type ='recurring' then 'Subscription update'
+    else a.description_type
+  end description_type,
+  max(a.order_status),
+  COALESCE(a.product_id, b.product_id) AS product_id,
+  COALESCE(a.product_name, b.product_name) AS product_name,
+  COALESCE(a.subscription_id, b.subscription_id) AS subscription_id,
+  a.subscription_status,
+  COALESCE(a.user_id, b.user_id) AS user_id,
+  CASE
+    WHEN b.gateway_id IS NOT NULL THEN 'payinsider_stripe'
+    ELSE a.payment_channel
+  END AS payment_channel
+FROM stripe_tab AS a
+LEFT JOIN product_tab AS b
+  ON a.payment_intent_id = b.gateway_id
+group by all
+
+
+UNION ALL
+
+-- PayInsider 路由到 Payssion 的收入
+SELECT
+  event_date,
+    UNIX_SECONDS(
+      TIMESTAMP(DATETIME(a.transaction_time), "Asia/Shanghai")
+    ) AS event_timestamp,
+    transaction_id,
+    app_name,
+    'charge' AS charge_type,
+    billing_country AS country,
+    a.currency,
+    CAST(NULL AS STRING) AS stripe_customer_id,
+    amount,
+    CAST(NULL AS NUMERIC) AS fee,
+    SAFE_DIVIDE(a.amount,c.rate) AS revneue,
+    CASE
+      WHEN subscription_id IS NOT NULL THEN 'subscription'
+      ELSE 'credit'
+    END AS description_type,
+    transaction_status AS order_status,
+    product_id,
+    product_name,
+    subscription_id,
+    recurring_type AS subscription_status,
+    user_id,
+    'payssion' AS payment_channel
+  
+FROM product_tab a 
+LEFT JOIN `aidata2025.dim.exchange_rate_days` AS c
+  on a.event_date = date(c.stats_date)
+  and a.currency = c.currency
+WHERE a.acquirer = 'Payssion'
+
+UNION ALL
+
+-- EnjoyPay 收入
+SELECT
+  DATE(a.updated_at) AS event_date,
+  UNIX_SECONDS(a.updated_at) AS event_timestamp,
+  a.enjoypay_order_id AS transaction_id,
+  'collart_web' AS app_name,
+  CASE
+    WHEN a.status = 'paid' THEN 'charge'
+    ELSE 'expired'
+  END AS charge_type,
+  'Russia' AS country,
+  a.currency,
+  '' AS stripe_customer_id,
+  a.total_price / 100 AS amount,
+  (a.total_price / 100) * 0.05 AS fee,
+  (a.total_price * 0.95 / 100) / b.rate AS revneue,
+  'credit' AS description_type,
+  a.status AS order_status,
+  CASE
+    WHEN a.product_id = 7 THEN 'prod_TMNqT1rz53GMM3'
+    WHEN a.product_id = 8 THEN 'prod_TMNqA49VSQZPz6'
+    WHEN a.product_id = 9 THEN 'prod_TMNp7PuALjit2C'
+    WHEN a.product_id = 10 THEN 'prod_TMNpRWxlu8X7IO'
+    WHEN a.product_id = 11 THEN 'prod_TMNorQtrjydPif'
+  END AS product_id,
+  a.product_name,
+  a.enjoypay_subscription_id AS subscription_id,
+  a.price_type AS subscription_status,
+  a.user_id,
+  'enjoypay' AS payment_channel
+FROM `aidata2025.ods.orders` AS a
+LEFT JOIN `aidata2025.dim.exchange_rate_days` AS b
+  ON DATE(a.updated_at) = DATE(b.stats_date)
+  AND a.currency = b.currency
+WHERE a.payment_channel = 'enjoypay'
+  AND a.status = 'paid'
+  and DATE(a.updated_at) between from_date and to_date
+;
+
+COMMIT
+;
+

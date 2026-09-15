@@ -1,0 +1,128 @@
+config {
+    type: "operations"
+}
+DECLARE
+  from_date date DEFAULT ${dataform.projectConfig.vars.biz_date}-1;
+DECLARE
+  to_date date DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+BEGIN TRANSACTION;
+
+DELETE
+FROM
+  dwd.dwd_oper_user_properties_di
+WHERE
+  event_date BETWEEN from_date
+  AND to_date;
+INSERT INTO
+  dwd.dwd_oper_user_properties_di
+
+WITH
+  user_event AS (
+  SELECT
+    event_date,
+    app_info.id AS package_name,
+    user_pseudo_id,
+    event_timestamp,
+    p.key AS user_properties_key,
+    COALESCE(
+      CAST(p.value.int_value AS STRING),
+      CAST(p.value.string_value AS STRING),
+      CAST(p.value.float_value AS STRING),
+      CAST(p.value.double_value AS STRING)
+    ) AS user_properties_value
+  FROM `home-ai-708e3.analytics_495972540.events_intraday_*`,
+  UNNEST(user_properties) AS p
+  WHERE _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date) AND FORMAT_DATE('%Y%m%d', to_date)
+    AND app_info.id = 'ai.home.design.interior.room.decor.remodel.planner.free'
+  
+  UNION ALL
+   SELECT
+    event_date,
+    coalesce(app_info.id,'collart_web') AS package_name,
+    user_pseudo_id,
+    event_timestamp,
+    p.key AS user_properties_key,
+    COALESCE(
+      CAST(p.value.int_value AS STRING),
+      CAST(p.value.string_value AS STRING),
+      CAST(p.value.float_value AS STRING),
+      CAST(p.value.double_value AS STRING)
+    ) AS user_properties_value
+  FROM `storytemplate-10a27.analytics_232977577.events_*`,
+  UNNEST(user_properties) AS p
+  WHERE ( _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    OR _TABLE_SUFFIX BETWEEN CONCAT('intraday_', FORMAT_DATE('%Y%m%d', from_date))
+    AND CONCAT('intraday_', FORMAT_DATE('%Y%m%d', to_date))
+    )
+  and (app_info.install_source <>'manual_install' or app_info.id is null)
+  
+  UNION ALL
+   SELECT
+    event_date,
+    app_info.id AS package_name,
+    user_pseudo_id,
+    event_timestamp,
+    p.key AS user_properties_key,
+    COALESCE(
+      CAST(p.value.int_value AS STRING),
+      CAST(p.value.string_value AS STRING),
+      CAST(p.value.float_value AS STRING),
+      CAST(p.value.double_value AS STRING)
+    ) AS user_properties_value
+  FROM `fx-editor.analytics_263446298.events_*`,
+  UNNEST(user_properties) AS p
+  WHERE _table_suffix BETWEEN FORMAT_DATE('%Y%m%d', from_date) AND FORMAT_DATE('%Y%m%d',  to_date)
+    -- and app_info.id = 'video.editor.videomaker.effects.fx'
+    and (p.key in ('user_id','installer_package_name','os_total_ram','is_vip','device_id',
+                  'atlasv_uid','adjust_id','os_classify','last_gclid','os_sdk_int',
+                  'install_date')
+        or p.key like 'firebase_exp_%')
+  
+UNION ALL
+  SELECT
+    event_date,
+    app_info.id AS package_name,
+    user_pseudo_id,
+    event_timestamp,
+    p.key AS user_properties_key,
+    COALESCE(
+      CAST(p.value.int_value AS STRING),
+      CAST(p.value.string_value AS STRING),
+      CAST(p.value.float_value AS STRING),
+      CAST(p.value.double_value AS STRING)
+    ) AS user_properties_value
+  FROM `vidart-8b8ca.analytics_528583115.events_*`,
+  UNNEST(user_properties) AS p
+  WHERE ( _TABLE_SUFFIX BETWEEN FORMAT_DATE('%Y%m%d', from_date)
+    AND FORMAT_DATE('%Y%m%d', to_date)
+    OR _TABLE_SUFFIX BETWEEN CONCAT('intraday_', FORMAT_DATE('%Y%m%d', from_date))
+    AND CONCAT('intraday_', FORMAT_DATE('%Y%m%d', to_date))
+    )
+    AND app_info.id = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+
+  )
+
+SELECT
+  PARSE_DATE('%Y%m%d', a.event_date) AS event_date,
+  a.package_name,
+  b.app_name,
+  a.user_pseudo_id,
+  a.user_properties_key,
+  a.user_properties_value
+FROM (
+  -- 按用户 + 属性名分组，取时间戳最大的那一行：即最后一次有值的属性，防止漏传
+  SELECT *
+  FROM user_event
+  QUALIFY ROW_NUMBER() OVER(
+    PARTITION BY user_pseudo_id, user_properties_key 
+    ORDER BY event_timestamp DESC
+  ) = 1
+) AS a
+LEFT JOIN dim.dim_product_info AS b
+ON a.package_name = b.package_name
+;
+
+COMMIT;
+

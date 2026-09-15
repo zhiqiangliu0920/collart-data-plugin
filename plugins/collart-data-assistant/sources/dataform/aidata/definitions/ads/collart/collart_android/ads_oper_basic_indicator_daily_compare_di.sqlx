@@ -1,0 +1,315 @@
+config {
+  type: "operations",
+  name: "ads_collartandroid_oper_basic_indicator_daily_compare_di",
+  schema: "ads_collartandroid",
+  dependencies: [
+    "ads_collartandroid_oper_basic_indicator_daily_di",
+    "ads_collartandroid_oper_basic_indicator_country_di",
+    "ads_collartandroid_oper_event_metric_country_di"
+  ]
+}
+
+/*
+  Collart Android 日报环比表：新 ADS 替代旧
+  ads_collart.ads_oper_basic_metric_agent_collart_android_di。
+
+  粒度：metric_name × country；country 保留 all + 旧 top_country 分桶。
+  窗口：昨日 vs 前 7 日均值；收入与成熟次留按旧任务保持 +1 日错位。
+  次日留存：用 country/daily 的 retain.d2（已仅新用户）；VIP/免费切片仍用 retain2_*。
+*/
+
+-- CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di`
+-- (
+--   metric_name STRING,
+--   country STRING,
+--   yestoday FLOAT64,
+--   avg_7days FLOAT64,
+--   diff FLOAT64,
+--   ratio FLOAT64
+-- )
+-- CLUSTER BY metric_name, country
+-- OPTIONS (
+--   description = 'Collart Android 日报环比：新 ADS 口径，昨日对比前 7 日均值'
+-- );
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di`
+WHERE TRUE;
+
+INSERT INTO `aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di`
+(
+  metric_name,
+  country,
+  yestoday,
+  avg_7days,
+  diff,
+  ratio
+)
+
+WITH daily_all AS (
+  SELECT
+    event_date,
+    'all' AS country,
+    revenue.revenue AS total_revenue,
+    revenue.ad_revenue AS ad_revenue,
+    revenue.new_revenue AS new_revenue,
+    revenue.resub_revenue AS renew_revenue,
+    revenue.credit_revenue AS pack_revenue,
+    subscription.purchase_uv_1d AS vip_user_0,
+    dnu AS new_user,
+    vip_dau,
+    dau,
+    subscription.credit_pack_uv AS vip_pack_user,
+    subscription.credit_pack_uv_1d AS vip_pack_user_0,
+    subscription.credit_pack_uv_old AS vip_pack_user_old,
+    dnu_by_source.organic AS organic_new_user,
+    dnu_by_source.delivery AS delivery_new_user,
+    mau,
+    retain.d2 AS retain2_new_user,
+    dnu_free AS free_new_user,
+    retain2_free AS retain2_free_new_user,
+    dnu_vip AS vip_new_user,
+    retain2_vip AS retain2_vip_new_user,
+    home_show.new_uv AS new_home_show_user,
+    home_template_click.new_uv AS new_home_template_click_user,
+    album_show.new_uv AS new_album_show_user,
+    generate_ready.new_uv AS new_generate_ready_user,
+    generate_start.new_uv AS new_generate_start_user,
+    generate_success.new_uv AS new_generate_success_user,
+    generate_save.new_uv AS new_generate_save_user,
+    generate_start.uv AS generate_start_user,
+    generate_start.vip_uv AS vip_generate_start_user,
+    generate_start.free_uv AS free_generate_start_user,
+    video_generate_start.uv AS video_generate_start_user,
+    img2img_generate_start.uv AS img2img_generate_start_user,
+    generate_success.pv AS generate_success_num,
+    generate_success.new_pv AS new_generate_success_num,
+    generate_success.vip_pv AS vip_generate_success_num,
+    generate_success.free_pv AS free_generate_success_num,
+    video_generate_success.pv AS video_generate_success_num,
+    img2img_generate_success.pv AS img2img_generate_success_num,
+    video_save.pv AS video_save_num,
+    image_save.pv AS image_save_num,
+    generate_start.pv AS generate_start_num,
+    video_generate_start.pv AS video_generate_start_num,
+    img2img_generate_start.pv AS img2img_generate_start_num,
+    home_template_click.uv AS temp_content_click_user
+  FROM `aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di`
+  WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 9 DAY) AND DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+),
+
+country_basic AS (
+  SELECT
+    event_date,
+    aidata2025.ads_collart.top_country(country) AS country,
+    SUM(revenue.revenue) AS total_revenue,
+    SUM(revenue.ad_revenue) AS ad_revenue,
+    SUM(revenue.new_revenue) AS new_revenue,
+    SUM(revenue.resub_revenue) AS renew_revenue,
+    SUM(revenue.credit_revenue) AS pack_revenue,
+    SUM(subscription.purchase_uv_1d) AS vip_user_0,
+    SUM(dnu) AS new_user,
+    SUM(vip_dau) AS vip_dau,
+    SUM(dau) AS dau,
+    SUM(subscription.credit_pack_uv) AS vip_pack_user,
+    SUM(subscription.credit_pack_uv_1d) AS vip_pack_user_0,
+    SUM(subscription.credit_pack_uv_old) AS vip_pack_user_old,
+    SUM(dnu_by_source.organic) AS organic_new_user,
+    SUM(dnu_by_source.delivery) AS delivery_new_user,
+    SUM(mau) AS mau,
+    SUM(retain.d2) AS retain2_new_user,
+    SUM(dnu_free) AS free_new_user,
+    SUM(retain2_free) AS retain2_free_new_user,
+    SUM(dnu_vip) AS vip_new_user,
+    SUM(retain2_vip) AS retain2_vip_new_user
+  FROM `aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di`
+  WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 9 DAY) AND DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+  GROUP BY event_date, country
+),
+
+country_event AS (
+  SELECT
+    event_date,
+    aidata2025.ads_collart.top_country(country) AS country,
+    SUM(home_show.new_uv) AS new_home_show_user,
+    SUM(home_template_click.new_uv) AS new_home_template_click_user,
+    SUM(album_show.new_uv) AS new_album_show_user,
+    SUM(generate_ready.new_uv) AS new_generate_ready_user,
+    SUM(generate_start.new_uv) AS new_generate_start_user,
+    SUM(generate_success.new_uv) AS new_generate_success_user,
+    SUM(generate_save.new_uv) AS new_generate_save_user,
+    SUM(generate_start.uv) AS generate_start_user,
+    SUM(generate_start.vip_uv) AS vip_generate_start_user,
+    SUM(generate_start.free_uv) AS free_generate_start_user,
+    SUM(video_generate_start.uv) AS video_generate_start_user,
+    SUM(img2img_generate_start.uv) AS img2img_generate_start_user,
+    SUM(generate_success.pv) AS generate_success_num,
+    SUM(generate_success.new_pv) AS new_generate_success_num,
+    SUM(generate_success.vip_pv) AS vip_generate_success_num,
+    SUM(generate_success.free_pv) AS free_generate_success_num,
+    SUM(video_generate_success.pv) AS video_generate_success_num,
+    SUM(img2img_generate_success.pv) AS img2img_generate_success_num,
+    SUM(video_save.pv) AS video_save_num,
+    SUM(image_save.pv) AS image_save_num,
+    SUM(generate_start.pv) AS generate_start_num,
+    SUM(video_generate_start.pv) AS video_generate_start_num,
+    SUM(img2img_generate_start.pv) AS img2img_generate_start_num,
+    SUM(home_template_click.uv) AS temp_content_click_user
+  FROM `aidata2025.ads_collartandroid.ads_oper_event_metric_country_di`
+  WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 9 DAY) AND DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+  GROUP BY event_date, country
+),
+
+country_src AS (
+  SELECT
+    b.*,
+    e.new_home_show_user,
+    e.new_home_template_click_user,
+    e.new_album_show_user,
+    e.new_generate_ready_user,
+    e.new_generate_start_user,
+    e.new_generate_success_user,
+    e.new_generate_save_user,
+    e.generate_start_user,
+    e.vip_generate_start_user,
+    e.free_generate_start_user,
+    e.video_generate_start_user,
+    e.img2img_generate_start_user,
+    e.generate_success_num,
+    e.new_generate_success_num,
+    e.vip_generate_success_num,
+    e.free_generate_success_num,
+    e.video_generate_success_num,
+    e.img2img_generate_success_num,
+    e.video_save_num,
+    e.image_save_num,
+    e.generate_start_num,
+    e.video_generate_start_num,
+    e.img2img_generate_start_num,
+    e.temp_content_click_user
+  FROM country_basic AS b
+  LEFT JOIN country_event AS e USING (event_date, country)
+),
+
+src AS (
+  SELECT * FROM daily_all
+  UNION ALL
+  SELECT * FROM country_src
+),
+
+basic_data AS (
+  SELECT
+    event_date,
+    country,
+    AVG(total_revenue) AS `收入`,
+    AVG(ad_revenue) AS `广告收入`,
+    AVG(new_revenue) AS `首次订阅收入`,
+    AVG(renew_revenue) AS `续订收入`,
+    AVG(pack_revenue) AS `点数包收入`,
+    SAFE_DIVIDE(SUM(vip_user_0), SUM(new_user)) AS `首日订阅转化率`,
+    SAFE_DIVIDE(SUM(vip_dau), SUM(dau)) AS `dau中付费用户占比`,
+    SAFE_DIVIDE(AVG(total_revenue), AVG(dau)) AS `arpu`,
+    SAFE_DIVIDE(SUM(vip_pack_user), SUM(vip_dau)) AS `点数包购买转化率`,
+    SAFE_DIVIDE(SUM(vip_pack_user_0), SUM(vip_user_0)) AS `订阅用户购买点数转化率_新用户`,
+    SAFE_DIVIDE(SUM(vip_pack_user_old), SUM(vip_dau - vip_user_0)) AS `订阅用户购买点数转化率_老用户`,
+    AVG(new_user) AS `日均新增`,
+    AVG(organic_new_user) AS `自然新增`,
+    AVG(delivery_new_user) AS `投放新增`,
+    AVG(dau) AS `DAU`,
+    AVG(mau) AS `MAU`,
+    SAFE_DIVIDE(AVG(dau), AVG(mau)) AS `DAU_MAU`,
+    AVG(IF(retain2_new_user > 0, SAFE_DIVIDE(retain2_new_user, new_user), NULL)) AS `次日留存`,
+    AVG(IF(retain2_free_new_user > 0, SAFE_DIVIDE(retain2_free_new_user, free_new_user), NULL)) AS `免费用户次留`,
+    AVG(IF(retain2_vip_new_user > 0, SAFE_DIVIDE(retain2_vip_new_user, vip_new_user), NULL)) AS `付费用户次留`,
+    AVG(SAFE_DIVIDE(new_home_show_user, new_user)) AS `新用户进入主页`,
+    AVG(SAFE_DIVIDE(new_home_template_click_user, new_user)) AS `新用户模板点击`,
+    AVG(SAFE_DIVIDE(new_album_show_user, new_user)) AS `新用户进入相册页`,
+    AVG(SAFE_DIVIDE(new_generate_ready_user, new_user)) AS `新用户触发开始生成`,
+    AVG(SAFE_DIVIDE(new_generate_start_user, new_user)) AS `新用户开始生成`,
+    AVG(SAFE_DIVIDE(new_generate_save_user, new_user)) AS `新用户保存成功`,
+    AVG(SAFE_DIVIDE(generate_start_user, dau)) AS `ai服务渗透率`,
+    AVG(SAFE_DIVIDE(vip_generate_start_user, vip_dau)) AS `付费用户ai服务渗透率`,
+    AVG(SAFE_DIVIDE(free_generate_start_user, dau - vip_dau)) AS `免费用户ai服务渗透率`,
+    AVG(SAFE_DIVIDE(video_generate_start_user, dau)) AS `aivideo服务渗透率`,
+    AVG(SAFE_DIVIDE(img2img_generate_start_user, dau)) AS `生图服务渗透率`,
+    AVG(SAFE_DIVIDE(generate_success_num, generate_start_user)) AS `ai服务人均使用次数`,
+    AVG(SAFE_DIVIDE(new_generate_success_num, new_generate_start_user)) AS `新用户ai服务人均使用次数`,
+    AVG(SAFE_DIVIDE(vip_generate_success_num, vip_generate_start_user)) AS `付费用户ai服务人均使用次数`,
+    AVG(SAFE_DIVIDE(free_generate_success_num, free_generate_start_user)) AS `免费用户ai服务人均使用次数`,
+    AVG(SAFE_DIVIDE(video_generate_success_num, video_generate_start_user)) AS `aivideo人均使用次数`,
+    AVG(SAFE_DIVIDE(img2img_generate_success_num, img2img_generate_start_user)) AS `生图人均使用次数`,
+    AVG(SAFE_DIVIDE(video_save_num, video_generate_success_num)) AS `aivideo_服务保存率`,
+    AVG(SAFE_DIVIDE(image_save_num, img2img_generate_success_num)) AS `生图_服务保存率`,
+    AVG(SAFE_DIVIDE(generate_success_num, generate_start_num)) AS `ai服务成功率`,
+    AVG(SAFE_DIVIDE(video_generate_success_num, video_generate_start_num)) AS `aivideo_服务成功率`,
+    AVG(SAFE_DIVIDE(img2img_generate_success_num, img2img_generate_start_num)) AS `生图_服务成功率`,
+    AVG(SAFE_DIVIDE(temp_content_click_user, dau)) AS `模板点击率`
+  FROM src
+  GROUP BY ALL
+),
+
+daily_long AS (
+  SELECT event_date, country, metric_name, metric_value
+  FROM basic_data
+  UNPIVOT (
+    metric_value FOR metric_name IN (
+      `收入`, `广告收入`, `首次订阅收入`, `续订收入`, `点数包收入`,
+      `首日订阅转化率`, `dau中付费用户占比`, `arpu`,
+      `点数包购买转化率`, `订阅用户购买点数转化率_新用户`, `订阅用户购买点数转化率_老用户`,
+      `日均新增`, `自然新增`, `投放新增`, `DAU`, `MAU`, `DAU_MAU`,
+      `次日留存`, `免费用户次留`, `付费用户次留`,
+      `新用户进入主页`, `新用户模板点击`, `新用户进入相册页`,
+      `新用户触发开始生成`, `新用户开始生成`, `新用户保存成功`,
+      `ai服务渗透率`, `付费用户ai服务渗透率`, `免费用户ai服务渗透率`,
+      `aivideo服务渗透率`, `生图服务渗透率`,
+      `ai服务人均使用次数`, `新用户ai服务人均使用次数`,
+      `付费用户ai服务人均使用次数`, `免费用户ai服务人均使用次数`,
+      `aivideo人均使用次数`, `生图人均使用次数`,
+      `aivideo_服务保存率`, `生图_服务保存率`,
+      `ai服务成功率`, `aivideo_服务成功率`, `生图_服务成功率`,
+      `模板点击率`
+    )
+  )
+),
+
+daily_adj AS (
+  SELECT
+    IF(
+      metric_name IN (
+        '收入', '广告收入', '首次订阅收入', '续订收入', '点数包收入',
+        'arpu', '次日留存', '免费用户次留', '付费用户次留'
+      ),
+      DATE_ADD(event_date, INTERVAL 1 DAY),
+      event_date
+    ) AS event_date,
+    country,
+    metric_name,
+    metric_value
+  FROM daily_long
+),
+
+agent_data AS (
+  SELECT 'yestoday' AS metric_type, country, metric_name, metric_value
+  FROM daily_adj
+  WHERE event_date = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+
+  UNION ALL
+
+  SELECT 'avg_7days' AS metric_type, country, metric_name, AVG(metric_value) AS metric_value
+  FROM daily_adj
+  WHERE event_date BETWEEN DATE_SUB(CURRENT_DATE(), INTERVAL 8 DAY) AND DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY)
+  GROUP BY country, metric_name
+)
+
+SELECT
+  metric_name,
+  country,
+  MAX(IF(metric_type = 'yestoday', metric_value, NULL)) AS yestoday,
+  MAX(IF(metric_type = 'avg_7days', metric_value, NULL)) AS avg_7days,
+  MAX(IF(metric_type = 'yestoday', metric_value, NULL)) - MAX(IF(metric_type = 'avg_7days', metric_value, NULL)) AS diff,
+  SAFE_DIVIDE(MAX(IF(metric_type = 'yestoday', metric_value, NULL)), MAX(IF(metric_type = 'avg_7days', metric_value, NULL))) - 1 AS ratio
+FROM agent_data
+GROUP BY metric_name, country;
+
+COMMIT TRANSACTION;

@@ -1,0 +1,264 @@
+{
+  "table": "aidata2025.ods.ods_apple_subscription_muselab_df",
+  "captured_at": "2026-09-14T13:19:08.296750+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "version",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "notificationType",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "bundleId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "appAppleId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "environment",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "status",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "notificationUUID",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "signedDate",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "bundleVersion",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ri_autoRenewProductId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ri_autoRenewStatus",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ri_originalTransactionId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ri_productId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ri_renewalDate",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ri_signedDate",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ri_environment",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ri_recentSubscriptionStartDate",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_originalTransactionId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_transactionId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_productId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_purchaseDate",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_originalPurchaseDate",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_expiresDate",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_quantity",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_inAppOwnershipType",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_signedDate",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_environment",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_bundleId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_subscriptionGroupIdentifier",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_webOrderLineItemId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_appAccountToken",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_storefront",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_storefrontId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_currency",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_transactionReason",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ti_price",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rd_appAppleId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rd_bundleId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rd_bundleVersion",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rd_environment",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rd_status",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rs_requestIdentifier",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rs_environment",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rs_appAppleId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rs_bundleId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rs_productId",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rs_storefrontCountryCodes",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rs_failedCount",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rs_succeededCount",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ods",
+    "tableId": "ods_apple_subscription_muselab_df"
+  },
+  "type": "TABLE"
+}

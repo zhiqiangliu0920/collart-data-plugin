@@ -1,0 +1,160 @@
+{
+  "table": "aidata2025.dwd.dwd_oper_user_collart_di",
+  "captured_at": "2026-09-14T13:19:07.413366+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country_level",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "city",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "device_language",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "device_total_ram",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "mobile_brand_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "mobile_model_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "network_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "register_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "atlasv_uid",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "mobile_marketing_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_vip",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_remove",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_purchase",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscribe_time",
+        "type": "DATETIME",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "subscribe_product_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "device_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "advertising_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_active",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE",
+        "description": "是否活跃"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_oper_user_collart_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "description": "collart用户粒度信息",
+  "type": "TABLE"
+}

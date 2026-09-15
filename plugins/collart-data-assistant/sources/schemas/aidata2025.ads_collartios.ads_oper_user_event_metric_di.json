@@ -1,0 +1,120 @@
+{
+  "table": "aidata2025.ads_collartios.ads_oper_user_event_metric_di",
+  "captured_at": "2026-09-14T13:19:05.385927+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING"
+      },
+      {
+        "name": "home_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "home_template_click_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "album_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "generate_ready_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "generate_save_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "video_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "referencetovideo_video_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img2img_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "video_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "referencetovideo_video_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img2img_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "video_save_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "image_save_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img2video_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "text2video_video_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "text2img_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "text2video_video_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "img_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "text2img_generate_success_pv",
+        "type": "INTEGER"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collartios",
+    "tableId": "ads_oper_user_event_metric_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "user_pseudo_id"
+    ]
+  },
+  "description": "Collart iOS 用户×日事件行为宽表：ads_dim_metric_rule 驱动",
+  "type": "TABLE"
+}

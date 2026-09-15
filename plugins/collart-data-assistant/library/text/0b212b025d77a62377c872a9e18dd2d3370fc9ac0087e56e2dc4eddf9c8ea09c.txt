@@ -1,8 +1,0 @@
-SELECT app_name, charge_type, order_status, subscription_status, currency, description_type,
-  COUNT(*) AS row_count, COUNT(DISTINCT transaction_id) AS transactions,
-  COUNTIF(transaction_id IS NULL) AS missing_transaction, COUNTIF(user_id IS NULL) AS missing_user,
-  CAST(SUM(amount) AS FLOAT64) AS amount, CAST(SUM(revneue) AS FLOAT64) AS net_revenue,
-  MIN(event_timestamp) AS min_timestamp, MAX(event_timestamp) AS max_timestamp
-FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
-WHERE event_date BETWEEN '2026-09-09' AND '2026-09-11'
-GROUP BY ALL;

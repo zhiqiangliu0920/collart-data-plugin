@@ -1,0 +1,216 @@
+{
+  "table": "aidata2025.dwd.dwd_oper_sub_order_revenue_df",
+  "captured_at": "2026-09-14T13:19:07.308580+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "order_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "订阅日期"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "埋点日期"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户ID"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "包名称"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "app名称"
+      },
+      {
+        "name": "order_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "订单ID"
+      },
+      {
+        "name": "product_title",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "订阅产品类型"
+      },
+      {
+        "name": "product_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品类型"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家"
+      },
+      {
+        "name": "financial_status",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "交易状态"
+      },
+      {
+        "name": "subscribe_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "订阅类型"
+      },
+      {
+        "name": "item_price",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "产品价格"
+      },
+      {
+        "name": "charged_amount",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "交易金额"
+      },
+      {
+        "name": "taxes_collected",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "税收金额"
+      },
+      {
+        "name": "sku_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "产品ID"
+      },
+      {
+        "name": "google_fee_rate",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Google 收费比率"
+      },
+      {
+        "name": "rate",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "汇率"
+      },
+      {
+        "name": "charged_amount_usd",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "汇率计算后的交易金额"
+      },
+      {
+        "name": "taxes_collected_usd",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "汇率计算后的税收金额"
+      },
+      {
+        "name": "revenue_without_VAT",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "税后收入"
+      },
+      {
+        "name": "google_fee",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "税后 Google 收费金额"
+      },
+      {
+        "name": "revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "最终收入"
+      },
+      {
+        "name": "order_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "购买产品类型(年/月/日/点数包）"
+      },
+      {
+        "name": "original_transaction_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "原始订单号"
+      },
+      {
+        "name": "order_num",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "续订单数(第几次续订）"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户流量渠道"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "用户id(woolong)"
+      },
+      {
+        "name": "expires_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "到期日期"
+      },
+      {
+        "name": "subscribe_status",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "订阅状态（到期续订、到期未续订、未到期、一次性购买)"
+      },
+      {
+        "name": "adjust_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "adjust平台对应id"
+      },
+      {
+        "name": "login_user_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_oper_sub_order_revenue_df"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "order_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name",
+      "product_type",
+      "country",
+      "user_pseudo_id"
+    ]
+  },
+  "type": "TABLE"
+}

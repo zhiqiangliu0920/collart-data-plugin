@@ -1,0 +1,63 @@
+{
+  "table": "aidata2025.dws.dws_id_convert_df",
+  "captured_at": "2026-09-14T13:19:07.695025+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "description": "用户事件最后出现日期"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "description": "包名"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "description": "app名"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING",
+        "description": "firebase id"
+      },
+      {
+        "name": "atlasv_uid",
+        "type": "STRING",
+        "description": "atlasv 统一id"
+      },
+      {
+        "name": "advertising_id",
+        "type": "STRING",
+        "description": "gaid"
+      },
+      {
+        "name": "user_id",
+        "type": "STRING",
+        "description": "支付信息id"
+      },
+      {
+        "name": "adjust_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dws",
+    "tableId": "dws_id_convert_df"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "package_name"
+    ]
+  },
+  "type": "TABLE"
+}

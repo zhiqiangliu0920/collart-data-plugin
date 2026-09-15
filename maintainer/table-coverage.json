@@ -1,0 +1,1918 @@
+{
+  "aidata2025.ads.ads_ad_sub_revenue_1h": {
+    "id": "table:aidata2025.ads.ads_ad_sub_revenue_1h",
+    "path": "knowledge/shared/tables/aidata2025.ads.ads_ad_sub_revenue_1h.md",
+    "schema_fields": 17,
+    "source_only_fields": 4,
+    "unexplained_fields": 11,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/revenue/h_ads_ad_sub_revenue_1h.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di",
+      "aidata2025.dim.dim_country_info",
+      "aidata2025.dim.exchange_rate_days",
+      "aidata2025.dwd.dwd_apple_user_subscribtion_di",
+      "aidata2025.ods.ods_apple_sales_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads.ads_aidata_retain_di": {
+    "id": "table:aidata2025.ads.ads_aidata_retain_di",
+    "path": "knowledge/shared/tables/aidata2025.ads.ads_aidata_retain_di.md",
+    "schema_fields": 38,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/daily/ads_aidata_retain_di.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads.ads_collart_delivery_fb_1d": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_fb_1d",
+    "path": "knowledge/shared/tables/aidata2025.ads.ads_collart_delivery_fb_1d.md",
+    "schema_fields": 20,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads.ads_collart_delivery_revenue_1d": {
+    "id": "table:aidata2025.ads.ads_collart_delivery_revenue_1d",
+    "path": "knowledge/shared/tables/aidata2025.ads.ads_collart_delivery_revenue_1d.md",
+    "schema_fields": 29,
+    "source_only_fields": 1,
+    "unexplained_fields": 2,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads.ads_hangzhou_revenue_country_1d": {
+    "id": "table:aidata2025.ads.ads_hangzhou_revenue_country_1d",
+    "path": "knowledge/shared/tables/aidata2025.ads.ads_hangzhou_revenue_country_1d.md",
+    "schema_fields": 10,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/revenue/ads_hangzhou_revenue_country_1d.sqlx"
+    ],
+    "upstream": [
+      "downloaddata2025.ads.ads_ad_sub_revenue_1h",
+      "gzdw2024.gz_dim.exchange_rate_days",
+      "hzdw2024.hz_dim.dim_country"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads.ads_template_recommend_foru_1d": {
+    "id": "table:aidata2025.ads.ads_template_recommend_foru_1d",
+    "path": "knowledge/shared/tables/aidata2025.ads.ads_template_recommend_foru_1d.md",
+    "schema_fields": 10,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads.ads_template_recommend_trending_1d": {
+    "id": "table:aidata2025.ads.ads_template_recommend_trending_1d",
+    "path": "knowledge/shared/tables/aidata2025.ads.ads_template_recommend_trending_1d.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads.ads_user_subscribe_daily_1d": {
+    "id": "table:aidata2025.ads.ads_user_subscribe_daily_1d",
+    "path": "knowledge/shared/tables/aidata2025.ads.ads_user_subscribe_daily_1d.md",
+    "schema_fields": 23,
+    "source_only_fields": 0,
+    "unexplained_fields": 6,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads.ads_user_subscribe_lifecycle_1d": {
+    "id": "table:aidata2025.ads.ads_user_subscribe_lifecycle_1d",
+    "path": "knowledge/shared/tables/aidata2025.ads.ads_user_subscribe_lifecycle_1d.md",
+    "schema_fields": 22,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collart.ads_dim_metric_rule": {
+    "id": "table:aidata2025.ads_collart.ads_dim_metric_rule",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_dim_metric_rule.md",
+    "schema_fields": 10,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy": {
+    "id": "table:aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collart.ads_high_value_user_android_Info_ignore_copy.md",
+    "schema_fields": 7,
+    "source_only_fields": 0,
+    "unexplained_fields": 7,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collart.ads_oper_basic_indicator_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_indicator_collart_di",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_oper_basic_indicator_collart_di.md",
+    "schema_fields": 0,
+    "source_only_fields": 27,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collart.ads_oper_basic_metric_collart_android_di.md",
+    "schema_fields": 0,
+    "source_only_fields": 71,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collart.ads_oper_basic_metric_country_collart_android_di.md",
+    "schema_fields": 0,
+    "source_only_fields": 71,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collart.ads_oper_collart_template_data": {
+    "id": "table:aidata2025.ads_collart.ads_oper_collart_template_data",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_oper_collart_template_data.md",
+    "schema_fields": 15,
+    "source_only_fields": 0,
+    "unexplained_fields": 15,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/ads_oper_collart_template_data.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartandroid.ads_oper_user_profile_df",
+      "aidata2025.ads_collartweb.ads_oper_user_profile_df",
+      "storytemplate-10a27.analytics_232977577.events_*",
+      "vidart-8b8ca.analytics_528583115.events_*"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collart.ads_oper_collart_web_id_map": {
+    "id": "table:aidata2025.ads_collart.ads_oper_collart_web_id_map",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_oper_collart_web_id_map.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 6,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_collart_web_id_map.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collart.ads_oper_event_param_summary_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_event_param_summary_collart_di",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_oper_event_param_summary_collart_di.md",
+    "schema_fields": 0,
+    "source_only_fields": 12,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collart.ads_oper_event_summary_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_event_summary_collart_di",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_oper_event_summary_collart_di.md",
+    "schema_fields": 0,
+    "source_only_fields": 11,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collart.ads_oper_tempalte_data_android": {
+    "id": "table:aidata2025.ads_collart.ads_oper_tempalte_data_android",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collart.ads_oper_tempalte_data_android.md",
+    "schema_fields": 0,
+    "source_only_fields": 6,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collart.ads_oper_template_ad_value_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_template_ad_value_collart_di",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_oper_template_ad_value_collart_di.md",
+    "schema_fields": 5,
+    "source_only_fields": 0,
+    "unexplained_fields": 5,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/ads_oper_collart_template_data.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collart.ads_oper_collart_template_data",
+      "aidata2025.ads_collartandroid.ads_oper_user_profile_df",
+      "aidata2025.ads_collartweb.ads_oper_user_profile_df",
+      "storytemplate-10a27.analytics_232977577.events_*",
+      "vidart-8b8ca.analytics_528583115.events_*"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collart.ads_oper_user_ai_record_backend_info": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_ai_record_backend_info",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_oper_user_ai_record_backend_info.md",
+    "schema_fields": 19,
+    "source_only_fields": 0,
+    "unexplained_fields": 19,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/ads_oper_user_ai_record_backend_info.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collart.ads_oper_user_event_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_event_collart_di",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_oper_user_event_collart_di.md",
+    "schema_fields": 0,
+    "source_only_fields": 29,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collart.ads_oper_user_event_param_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_event_param_collart_di",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_oper_user_event_param_collart_di.md",
+    "schema_fields": 0,
+    "source_only_fields": 31,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collart.ads_oper_user_new_collart_di": {
+    "id": "table:aidata2025.ads_collart.ads_oper_user_new_collart_di",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_oper_user_new_collart_di.md",
+    "schema_fields": 0,
+    "source_only_fields": 44,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collart.ads_template_search_user_keyword_di": {
+    "id": "table:aidata2025.ads_collart.ads_template_search_user_keyword_di",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_template_search_user_keyword_di.md",
+    "schema_fields": 15,
+    "source_only_fields": 0,
+    "unexplained_fields": 15,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/ads_template_search_user_keyword_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dm.dm_collart_android_user_event_di",
+      "aidata2025.dm.dm_collart_web_user_event_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collart.ads_vip_user_info_all": {
+    "id": "table:aidata2025.ads_collart.ads_vip_user_info_all",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.ads_vip_user_info_all.md",
+    "schema_fields": 30,
+    "source_only_fields": 0,
+    "unexplained_fields": 30,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/ads_vip_user_info_all.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads.ads_high_value_user_production",
+      "aidata2025.ads_collartandroid.ads_oper_user_profile_df",
+      "aidata2025.ads_collartios.ads_oper_user_profile_df",
+      "aidata2025.ads_collartweb.ads_oper_user_profile_df",
+      "aidata2025.dwd.dwd_apple_user_subscribtion_di",
+      "aidata2025.dwd.dwd_oper_sub_order_revenue_df",
+      "aidata2025.ods.ods_ai_request_info_new_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collart.big_r_realtime_alert_log": {
+    "id": "table:aidata2025.ads_collart.big_r_realtime_alert_log",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.big_r_realtime_alert_log.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 6,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collart.big_r_realtime_today_income": {
+    "id": "table:aidata2025.ads_collart.big_r_realtime_today_income",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.big_r_realtime_today_income.md",
+    "schema_fields": 0,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collart.big_r_user_value_state": {
+    "id": "table:aidata2025.ads_collart.big_r_user_value_state",
+    "path": "knowledge/shared/tables/aidata2025.ads_collart.big_r_user_value_state.md",
+    "schema_fields": 16,
+    "source_only_fields": 0,
+    "unexplained_fields": 16,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di.md",
+    "schema_fields": 92,
+    "source_only_fields": 0,
+    "unexplained_fields": 92,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_android/ads_oper_basic_indicator_attr_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartandroid.ads_oper_user_active_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di.md",
+    "schema_fields": 114,
+    "source_only_fields": 0,
+    "unexplained_fields": 114,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_android/ads_oper_basic_indicator_country_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads.ads_ad_sub_revenue_1h",
+      "aidata2025.ads_collartandroid.ads_oper_basic_indicator_attr_di",
+      "aidata2025.ads_collartandroid.ads_oper_user_active_di",
+      "aidata2025.dim.dim_country_info",
+      "aidata2025.dwd.dwd_cdct_delivery_cost_di",
+      "aidata2025.dwd.dwd_oper_user_basic_di",
+      "aidata2025.dws.dws_oper_user_ad_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_compare_di.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 6,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_android/ads_oper_basic_indicator_daily_compare_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di",
+      "aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di",
+      "aidata2025.ads_collartandroid.ads_oper_event_metric_country_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_basic_indicator_daily_di.md",
+    "schema_fields": 220,
+    "source_only_fields": 0,
+    "unexplained_fields": 220,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_android/ads_oper_basic_indicator_daily_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartandroid.ads_oper_basic_indicator_country_di",
+      "aidata2025.ads_collartandroid.ads_oper_event_metric_country_di",
+      "aidata2025.ai_service.ai_cost_data"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di.md",
+    "schema_fields": 103,
+    "source_only_fields": 0,
+    "unexplained_fields": 103,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_android/ads_oper_event_metric_attr_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartandroid.ads_oper_user_active_di",
+      "aidata2025.ads_collartandroid.ads_oper_user_event_metric_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_event_metric_country_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_event_metric_country_di",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_event_metric_country_di.md",
+    "schema_fields": 110,
+    "source_only_fields": 0,
+    "unexplained_fields": 110,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_android/ads_oper_event_metric_country_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartandroid.ads_oper_event_metric_attr_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_user_active_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_user_active_di",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_user_active_di.md",
+    "schema_fields": 129,
+    "source_only_fields": 0,
+    "unexplained_fields": 129,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_android/ads_oper_user_active_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dm.dm_collart_android_user_event_di",
+      "aidata2025.dws.dws_oper_user_ad_di",
+      "aidata2025.dws.dws_oper_user_sub_revenue_df",
+      "pubdata2025.dwd.dwd_cdct_revenue_stripe_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_user_event_metric_di": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_user_event_metric_di",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_user_event_metric_di.md",
+    "schema_fields": 35,
+    "source_only_fields": 0,
+    "unexplained_fields": 35,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_android/ads_oper_user_event_metric_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartandroid.ads_oper_user_active_di",
+      "aidata2025.dm.dm_collart_android_user_event_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartandroid.ads_oper_user_profile_df": {
+    "id": "table:aidata2025.ads_collartandroid.ads_oper_user_profile_df",
+    "path": "knowledge/collart_android/tables/aidata2025.ads_collartandroid.ads_oper_user_profile_df.md",
+    "schema_fields": 148,
+    "source_only_fields": 0,
+    "unexplained_fields": 148,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_android/ads_oper_user_profile_df.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartandroid.ads_oper_user_active_di",
+      "aidata2025.ads_collartandroid.ads_oper_user_event_metric_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartfashion.ads_dim_metric_rule": {
+    "id": "table:aidata2025.ads_collartfashion.ads_dim_metric_rule",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_dim_metric_rule.md",
+    "schema_fields": 0,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di.md",
+    "schema_fields": 91,
+    "source_only_fields": 0,
+    "unexplained_fields": 91,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_attr_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartfashion.ads_oper_user_active_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di.md",
+    "schema_fields": 112,
+    "source_only_fields": 0,
+    "unexplained_fields": 112,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_country_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_compare_di.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 6,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_daily_compare_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di",
+      "aidata2025.ads_collartfashion.ads_oper_user_active_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_basic_indicator_daily_di.md",
+    "schema_fields": 222,
+    "source_only_fields": 0,
+    "unexplained_fields": 222,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_fashion/ads_oper_basic_indicator_daily_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartfashion.ads_oper_basic_indicator_country_di",
+      "aidata2025.ads_collartfashion.ads_oper_event_metric_country_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di.md",
+    "schema_fields": 79,
+    "source_only_fields": 0,
+    "unexplained_fields": 79,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_fashion/ads_oper_event_metric_attr_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartfashion.ads_oper_user_active_di",
+      "aidata2025.ads_collartfashion.ads_oper_user_event_metric_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_event_metric_country_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_event_metric_country_di",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_event_metric_country_di.md",
+    "schema_fields": 115,
+    "source_only_fields": 0,
+    "unexplained_fields": 115,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_fashion/ads_oper_event_metric_country_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartfashion.ads_oper_event_metric_attr_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_user_active_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_active_di",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_active_di.md",
+    "schema_fields": 122,
+    "source_only_fields": 0,
+    "unexplained_fields": 122,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_fashion/ads_oper_user_active_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartfashion.ads_oper_user_revenue_di",
+      "aidata2025.ads_collartweb.ads_oper_user_active_di",
+      "aidata2025.dm.dm_collart_web_user_event_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_user_event_metric_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_event_metric_di",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_event_metric_di.md",
+    "schema_fields": 27,
+    "source_only_fields": 0,
+    "unexplained_fields": 27,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_fashion/ads_oper_user_event_metric_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartfashion.ads_oper_user_active_di",
+      "aidata2025.dm.dm_collart_web_user_event_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_user_profile_df": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_profile_df",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_profile_df.md",
+    "schema_fields": 136,
+    "source_only_fields": 0,
+    "unexplained_fields": 136,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_fashion/ads_oper_user_profile_df.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartfashion.ads_oper_user_active_di",
+      "aidata2025.dm.dm_collart_web_user_event_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartfashion.ads_oper_user_revenue_di": {
+    "id": "table:aidata2025.ads_collartfashion.ads_oper_user_revenue_di",
+    "path": "knowledge/collart_fashion/tables/aidata2025.ads_collartfashion.ads_oper_user_revenue_di.md",
+    "schema_fields": 25,
+    "source_only_fields": 0,
+    "unexplained_fields": 15,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_fashion/ads_oper_user_revenue_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dm.dm_collart_web_user_event_di",
+      "pubdata2025.dwd.dwd_cdct_revenue_stripe_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di",
+    "path": "knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di.md",
+    "schema_fields": 92,
+    "source_only_fields": 0,
+    "unexplained_fields": 92,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_ios/ads_oper_basic_indicator_attr_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartios.ads_oper_user_active_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartios.ads_oper_basic_indicator_country_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_country_di",
+    "path": "knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_basic_indicator_country_di.md",
+    "schema_fields": 113,
+    "source_only_fields": 0,
+    "unexplained_fields": 113,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_ios/ads_oper_basic_indicator_country_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads.ads_ad_sub_revenue_1h",
+      "aidata2025.ads_collartios.ads_oper_basic_indicator_attr_di",
+      "aidata2025.dim.dim_country_info",
+      "aidata2025.dwd.dwd_cdct_delivery_cost_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartios.ads_oper_basic_indicator_daily_compare_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_daily_compare_di",
+    "path": "knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_basic_indicator_daily_compare_di.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 6,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_ios/ads_oper_basic_indicator_daily_compare_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartios.ads_oper_basic_indicator_country_di",
+      "aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di",
+      "aidata2025.ads_collartios.ads_oper_event_metric_country_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di",
+    "path": "knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_basic_indicator_daily_di.md",
+    "schema_fields": 191,
+    "source_only_fields": 0,
+    "unexplained_fields": 191,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_ios/ads_oper_basic_indicator_daily_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartios.ads_oper_basic_indicator_country_di",
+      "aidata2025.ads_collartios.ads_oper_event_metric_country_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartios.ads_oper_event_metric_attr_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_event_metric_attr_di",
+    "path": "knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_event_metric_attr_di.md",
+    "schema_fields": 74,
+    "source_only_fields": 0,
+    "unexplained_fields": 74,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_ios/ads_oper_event_metric_attr_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartios.ads_oper_user_active_di",
+      "aidata2025.ads_collartios.ads_oper_user_event_metric_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartios.ads_oper_event_metric_country_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_event_metric_country_di",
+    "path": "knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_event_metric_country_di.md",
+    "schema_fields": 83,
+    "source_only_fields": 0,
+    "unexplained_fields": 83,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_ios/ads_oper_event_metric_country_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartios.ads_oper_event_metric_attr_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartios.ads_oper_user_active_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_user_active_di",
+    "path": "knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_user_active_di.md",
+    "schema_fields": 117,
+    "source_only_fields": 0,
+    "unexplained_fields": 117,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_ios/ads_oper_user_active_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dm.dm_collart_ios_user_event_di",
+      "aidata2025.dwd.dwd_apple_user_subscribtion_di",
+      "pubdata2025.dwd.dwd_cdct_revenue_stripe_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartios.ads_oper_user_event_metric_di": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_user_event_metric_di",
+    "path": "knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_user_event_metric_di.md",
+    "schema_fields": 24,
+    "source_only_fields": 0,
+    "unexplained_fields": 24,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_ios/ads_oper_user_event_metric_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartios.ads_oper_user_active_di",
+      "aidata2025.dm.dm_collart_ios_user_event_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartios.ads_oper_user_profile_df": {
+    "id": "table:aidata2025.ads_collartios.ads_oper_user_profile_df",
+    "path": "knowledge/collart_ios/tables/aidata2025.ads_collartios.ads_oper_user_profile_df.md",
+    "schema_fields": 137,
+    "source_only_fields": 0,
+    "unexplained_fields": 137,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_ios/ads_oper_user_profile_df.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartios.ads_oper_user_active_di",
+      "aidata2025.ads_collartios.ads_oper_user_event_metric_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartweb.ads_dim_metric_rule": {
+    "id": "table:aidata2025.ads_collartweb.ads_dim_metric_rule",
+    "path": "knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_dim_metric_rule.md",
+    "schema_fields": 0,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di",
+    "path": "knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di.md",
+    "schema_fields": 91,
+    "source_only_fields": 0,
+    "unexplained_fields": 91,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_basic_indicator_attr_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartweb.ads_oper_user_active_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di",
+    "path": "knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di.md",
+    "schema_fields": 112,
+    "source_only_fields": 0,
+    "unexplained_fields": 112,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_basic_indicator_country_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads.ads_ad_sub_revenue_1h",
+      "aidata2025.ads_collartweb.ads_oper_basic_indicator_attr_di",
+      "aidata2025.dim.dim_country_info",
+      "aidata2025.dwd.dwd_cdct_delivery_cost_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di",
+    "path": "knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_compare_di.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 6,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_basic_indicator_daily_compare_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di",
+      "aidata2025.ads_collartweb.ads_oper_event_metric_country_di",
+      "aidata2025.ads_collartweb.ads_oper_user_active_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di",
+    "path": "knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_basic_indicator_daily_di.md",
+    "schema_fields": 258,
+    "source_only_fields": 0,
+    "unexplained_fields": 258,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_basic_indicator_daily_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartweb.ads_oper_basic_indicator_country_di",
+      "aidata2025.ads_collartweb.ads_oper_event_metric_country_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartweb.ads_oper_event_metric_attr_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_event_metric_attr_di",
+    "path": "knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_event_metric_attr_di.md",
+    "schema_fields": 130,
+    "source_only_fields": 0,
+    "unexplained_fields": 130,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_event_metric_attr_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartweb.ads_oper_user_active_di",
+      "aidata2025.ads_collartweb.ads_oper_user_event_metric_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartweb.ads_oper_event_metric_country_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_event_metric_country_di",
+    "path": "knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_event_metric_country_di.md",
+    "schema_fields": 157,
+    "source_only_fields": 0,
+    "unexplained_fields": 157,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_event_metric_country_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartweb.ads_oper_event_metric_attr_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartweb.ads_oper_user_active_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_user_active_di",
+    "path": "knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_active_di.md",
+    "schema_fields": 119,
+    "source_only_fields": 0,
+    "unexplained_fields": 119,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_user_active_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collart.ads_oper_collart_web_id_map",
+      "aidata2025.dm.dm_collart_web_user_event_di",
+      "pubdata2025.dwd.dwd_cdct_revenue_stripe_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartweb.ads_oper_user_event_metric_di": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_user_event_metric_di",
+    "path": "knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_event_metric_di.md",
+    "schema_fields": 44,
+    "source_only_fields": 0,
+    "unexplained_fields": 44,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_user_event_metric_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collartweb.ads_oper_user_active_di",
+      "aidata2025.dm.dm_collart_web_user_event_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ads_collartweb.ads_oper_user_profile_df": {
+    "id": "table:aidata2025.ads_collartweb.ads_oper_user_profile_df",
+    "path": "knowledge/collart_web/tables/aidata2025.ads_collartweb.ads_oper_user_profile_df.md",
+    "schema_fields": 142,
+    "source_only_fields": 3,
+    "unexplained_fields": 142,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/collart_web/ads_oper_user_profile_df.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ads_collart.ads_oper_collart_web_id_map",
+      "aidata2025.ads_collartweb.ads_oper_user_active_di",
+      "aidata2025.ads_collartweb.ads_oper_user_event_metric_di",
+      "aidata2025.dm.dm_collart_web_user_event_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ai_service.ai_cost_data": {
+    "id": "table:aidata2025.ai_service.ai_cost_data",
+    "path": "knowledge/shared/tables/aidata2025.ai_service.ai_cost_data.md",
+    "schema_fields": 5,
+    "source_only_fields": 3,
+    "unexplained_fields": 3,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/ai_service/ai_cost_data_1h.sqlx"
+    ],
+    "upstream": [
+      "pubdata2025.ads.ads_atlasv_service_cost_all_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ai_service.ai_service_record_info_1d": {
+    "id": "table:aidata2025.ai_service.ai_service_record_info_1d",
+    "path": "knowledge/shared/tables/aidata2025.ai_service.ai_service_record_info_1d.md",
+    "schema_fields": 11,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ai_service.collart_core_event_bi": {
+    "id": "table:aidata2025.ai_service.collart_core_event_bi",
+    "path": "knowledge/shared/tables/aidata2025.ai_service.collart_core_event_bi.md",
+    "schema_fields": 12,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.collart_campaign_name_modify_copy": {
+    "id": "table:aidata2025.dim.collart_campaign_name_modify_copy",
+    "path": "knowledge/shared/tables/aidata2025.dim.collart_campaign_name_modify_copy.md",
+    "schema_fields": 3,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.collart_product_price_copy": {
+    "id": "table:aidata2025.dim.collart_product_price_copy",
+    "path": "knowledge/shared/tables/aidata2025.dim.collart_product_price_copy.md",
+    "schema_fields": 3,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.dim_ai_service_cost_unit_copy": {
+    "id": "table:aidata2025.dim.dim_ai_service_cost_unit_copy",
+    "path": "knowledge/shared/tables/aidata2025.dim.dim_ai_service_cost_unit_copy.md",
+    "schema_fields": 5,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/dim_table.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dim.dim_collart_android_core_event_copy",
+      "aidata2025.dim.dim_collart_core_event_copy"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.dim_ai_service_model_info_copy": {
+    "id": "table:aidata2025.dim.dim_ai_service_model_info_copy",
+    "path": "knowledge/shared/tables/aidata2025.dim.dim_ai_service_model_info_copy.md",
+    "schema_fields": 7,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.dim_collart_android_core_event_copy": {
+    "id": "table:aidata2025.dim.dim_collart_android_core_event_copy",
+    "path": "knowledge/collart_android/tables/aidata2025.dim.dim_collart_android_core_event_copy.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/dim_table.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dim.dim_ai_service_cost_unit_copy",
+      "aidata2025.dim.dim_collart_core_event_copy"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.dim_collart_asa_keyword_info": {
+    "id": "table:aidata2025.dim.dim_collart_asa_keyword_info",
+    "path": "knowledge/collart_ios/tables/aidata2025.dim.dim_collart_asa_keyword_info.md",
+    "schema_fields": 7,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/dim/dim_collart_asa_keyword_info.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.dim_collart_core_event_copy": {
+    "id": "table:aidata2025.dim.dim_collart_core_event_copy",
+    "path": "knowledge/shared/tables/aidata2025.dim.dim_collart_core_event_copy.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 6,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/collart/dim_table.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dim.dim_ai_service_cost_unit_copy",
+      "aidata2025.dim.dim_collart_android_core_event_copy"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.dim_country_info": {
+    "id": "table:aidata2025.dim.dim_country_info",
+    "path": "knowledge/shared/tables/aidata2025.dim.dim_country_info.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.dim_module_template_info_android": {
+    "id": "table:aidata2025.dim.dim_module_template_info_android",
+    "path": "knowledge/collart_android/tables/aidata2025.dim.dim_module_template_info_android.md",
+    "schema_fields": 11,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/dim/dim_module_template_info_android.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dws.dws_template_recommend_score_di",
+      "aidata2025.ods.module_template",
+      "aidata2025.ods.template"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.dim_product_info": {
+    "id": "table:aidata2025.dim.dim_product_info",
+    "path": "knowledge/shared/tables/aidata2025.dim.dim_product_info.md",
+    "schema_fields": 7,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.dim_product_info_copy": {
+    "id": "table:aidata2025.dim.dim_product_info_copy",
+    "path": "knowledge/shared/tables/aidata2025.dim.dim_product_info_copy.md",
+    "schema_fields": 7,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.dim_template_tag": {
+    "id": "table:aidata2025.dim.dim_template_tag",
+    "path": "knowledge/shared/tables/aidata2025.dim.dim_template_tag.md",
+    "schema_fields": 14,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dim.exchange_rate_days": {
+    "id": "table:aidata2025.dim.exchange_rate_days",
+    "path": "knowledge/shared/tables/aidata2025.dim.exchange_rate_days.md",
+    "schema_fields": 3,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/dim/dim_exchange_rate_days.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dm.dm_collart_android_user_event_di": {
+    "id": "table:aidata2025.dm.dm_collart_android_user_event_di",
+    "path": "knowledge/collart_android/tables/aidata2025.dm.dm_collart_android_user_event_di.md",
+    "schema_fields": 119,
+    "source_only_fields": 0,
+    "unexplained_fields": 118,
+    "sqlx": [
+      "dataform:aidata/definitions/dm/daily/h_dm_collart_android_user_event_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dwd.dwd_oper_user_event_di",
+      "aidata2025.dwd.dwd_oper_user_event_params_di",
+      "aidata2025.dwd.dwd_oper_user_properties_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dm.dm_collart_ios_user_event_di": {
+    "id": "table:aidata2025.dm.dm_collart_ios_user_event_di",
+    "path": "knowledge/collart_ios/tables/aidata2025.dm.dm_collart_ios_user_event_di.md",
+    "schema_fields": 84,
+    "source_only_fields": 0,
+    "unexplained_fields": 81,
+    "sqlx": [
+      "dataform:aidata/definitions/dm/daily/h_dm_collart_ios_user_event_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dwd.dwd_oper_user_event_di",
+      "aidata2025.dwd.dwd_oper_user_event_params_di",
+      "aidata2025.dwd.dwd_oper_user_properties_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dm.dm_collart_web_user_event_di": {
+    "id": "table:aidata2025.dm.dm_collart_web_user_event_di",
+    "path": "knowledge/shared/tables/aidata2025.dm.dm_collart_web_user_event_di.md",
+    "schema_fields": 88,
+    "source_only_fields": 0,
+    "unexplained_fields": 87,
+    "sqlx": [
+      "dataform:aidata/definitions/dm/daily/h_dm_collart_web_user_event_di.sqlx"
+    ],
+    "upstream": [
+      "storytemplate-10a27.analytics_232977577.events_*"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dm.dm_user_profile_collart_df": {
+    "id": "table:aidata2025.dm.dm_user_profile_collart_df",
+    "path": "knowledge/shared/tables/aidata2025.dm.dm_user_profile_collart_df.md",
+    "schema_fields": 5,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_apple_user_subscribtion_di": {
+    "id": "table:aidata2025.dwd.dwd_apple_user_subscribtion_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_apple_user_subscribtion_di.md",
+    "schema_fields": 20,
+    "source_only_fields": 1,
+    "unexplained_fields": 2,
+    "sqlx": [
+      "dataform:aidata/definitions/dwd/daily/h_dwd_apple_user_subscribtion_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ods.au_guest_binding",
+      "aidata2025.ods.ods_apple_subscription_muselab_df",
+      "aidata2025.ods.ods_apple_subscription_vibedance_df",
+      "aidata2025.ods.ods_apple_subscription_vidart_df",
+      "pubdata2025.ods.ods_woolong_subscription_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_cdct_delivery_cost_di": {
+    "id": "table:aidata2025.dwd.dwd_cdct_delivery_cost_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_cdct_delivery_cost_di.md",
+    "schema_fields": 21,
+    "source_only_fields": 0,
+    "unexplained_fields": 3,
+    "sqlx": [
+      "dataform:aidata/definitions/dwd/daily/h_dwd_cdct_delivery_cost_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dws.dws_oper_tiktok_ad_1d",
+      "pubdata2025.dws.dws_cdct_cost_delivery_fb_1d",
+      "pubdata2025.dws.dws_cdct_cost_google_1h"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_cdct_woolong_request_di": {
+    "id": "table:aidata2025.dwd.dwd_cdct_woolong_request_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_cdct_woolong_request_di.md",
+    "schema_fields": 20,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/dwd/daily/h_dwd_cdct_woolong_request_di.sqlx"
+    ],
+    "upstream": [
+      "fx-editor.analytics_263446298.woolong_events_*",
+      "removeobjects-17cd7.analytics_348205064.woolong_events_*",
+      "storytemplate-10a27.analytics_232977577.woolong_events_*"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_id_convert_di": {
+    "id": "table:aidata2025.dwd.dwd_id_convert_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_id_convert_di.md",
+    "schema_fields": 8,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/dwd/daily/h_dwd_id_convert_di.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_oper_delivery_adjust_user_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_delivery_adjust_user_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_oper_delivery_adjust_user_di.md",
+    "schema_fields": 23,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_oper_sub_order_revenue_df": {
+    "id": "table:aidata2025.dwd.dwd_oper_sub_order_revenue_df",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_oper_sub_order_revenue_df.md",
+    "schema_fields": 32,
+    "source_only_fields": 0,
+    "unexplained_fields": 2,
+    "sqlx": [
+      "dataform:aidata/definitions/dwd/daily/h_dwd_oper_sub_order_revenue_df.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ods.au_guest_binding",
+      "pubdata2025.dwd.dwd_cdct_revenue_google_adjust_di",
+      "pubdata2025.dwd.dwd_cdct_revenue_google_di",
+      "pubdata2025.ods.ods_woolong_subscription_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_oper_user_basic_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_basic_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_basic_di.md",
+    "schema_fields": 31,
+    "source_only_fields": 0,
+    "unexplained_fields": 2,
+    "sqlx": [
+      "dataform:aidata/definitions/dwd/daily/h_dwd_oper_user_basic_di.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_oper_user_collart_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_collart_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_collart_di.md",
+    "schema_fields": 28,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_oper_user_event_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_event_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_event_di.md",
+    "schema_fields": 112,
+    "source_only_fields": 1,
+    "unexplained_fields": 3,
+    "sqlx": [
+      "dataform:aidata/definitions/dwd/daily/h_dwd_oper_user_event_di-new_app.sqlx",
+      "dataform:aidata/definitions/dwd/daily/h_dwd_oper_user_event_di.sqlx"
+    ],
+    "upstream": [
+      "fx-editor.analytics_263446298.events_*",
+      "home-ai-708e3.analytics_495972540.events_intraday_*",
+      "muselab-9b0d3.analytics_530699929.events_*",
+      "muselab-9b0d3.analytics_530699929.events_intraday_*",
+      "photoenhance-5754e.analytics_326551552.events_*",
+      "removeobjects-17cd7.analytics_348205064.events_*",
+      "removeobjects-17cd7.analytics_348205064.events_intraday_*",
+      "speedtest-ios.analytics_152266665.events_*",
+      "speedtestlite-ios.analytics_243888008.events_*",
+      "storytemplate-10a27.analytics_232977577.events_*",
+      "vibedance-540a0.analytics_533044528.events_*",
+      "vibedance-540a0.analytics_533044528.events_intraday_*",
+      "vidart-8b8ca.analytics_528583115.events_*",
+      "vidart-8b8ca.analytics_528583115.events_intraday_*"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_oper_user_event_params_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_event_params_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_event_params_di.md",
+    "schema_fields": 17,
+    "source_only_fields": 0,
+    "unexplained_fields": 17,
+    "sqlx": [
+      "dataform:aidata/definitions/dwd/daily/h_dwd_oper_user_event_params_di.sqlx"
+    ],
+    "upstream": [
+      "fx-editor.analytics_263446298.events_*",
+      "muselab-9b0d3.analytics_530699929.events_*",
+      "muselab-9b0d3.analytics_530699929.events_intraday_*",
+      "removeobjects-17cd7.analytics_348205064.events_intraday_*",
+      "storytemplate-10a27.analytics_232977577.events_*",
+      "vibedance-540a0.analytics_533044528.events_*",
+      "vidart-8b8ca.analytics_528583115.events_*"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_oper_user_order_event_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_order_event_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_order_event_di.md",
+    "schema_fields": 8,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/dwd/daily/h_dwd_oper_user_order_event_di.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_oper_user_properties_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_properties_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_properties_di.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/dwd/daily/h_dwd_oper_user_properties_di.sqlx"
+    ],
+    "upstream": [
+      "fx-editor.analytics_263446298.events_*",
+      "home-ai-708e3.analytics_495972540.events_intraday_*",
+      "storytemplate-10a27.analytics_232977577.events_*",
+      "vidart-8b8ca.analytics_528583115.events_*"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dwd.dwd_oper_user_transaction_di": {
+    "id": "table:aidata2025.dwd.dwd_oper_user_transaction_di",
+    "path": "knowledge/shared/tables/aidata2025.dwd.dwd_oper_user_transaction_di.md",
+    "schema_fields": 28,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dws.dws_id_convert_df": {
+    "id": "table:aidata2025.dws.dws_id_convert_df",
+    "path": "knowledge/shared/tables/aidata2025.dws.dws_id_convert_df.md",
+    "schema_fields": 8,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/dws/daily/h_dws_id_convert_df.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dwd.dwd_id_convert_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dws.dws_new_user_accumlate_subscribe_1d": {
+    "id": "table:aidata2025.dws.dws_new_user_accumlate_subscribe_1d",
+    "path": "knowledge/shared/tables/aidata2025.dws.dws_new_user_accumlate_subscribe_1d.md",
+    "schema_fields": 96,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dws.dws_oper_asa_collart_1d": {
+    "id": "table:aidata2025.dws.dws_oper_asa_collart_1d",
+    "path": "knowledge/collart_ios/tables/aidata2025.dws.dws_oper_asa_collart_1d.md",
+    "schema_fields": 0,
+    "source_only_fields": 23,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.dws.dws_oper_asa_delivery_di": {
+    "id": "table:aidata2025.dws.dws_oper_asa_delivery_di",
+    "path": "knowledge/collart_ios/tables/aidata2025.dws.dws_oper_asa_delivery_di.md",
+    "schema_fields": 16,
+    "source_only_fields": 0,
+    "unexplained_fields": 16,
+    "sqlx": [
+      "dataform:aidata/definitions/dws/daily/h_dws_oper_asa_delivery_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dim.exchange_rate_days",
+      "pubdata2025.ods.ods_apple_adgroups_reports_1d",
+      "pubdata2025.ods.ods_apple_campaigns_reports_1d",
+      "pubdata2025.ods.ods_apple_keyword_reports_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dws.dws_oper_asa_keyword_collart_1d": {
+    "id": "table:aidata2025.dws.dws_oper_asa_keyword_collart_1d",
+    "path": "knowledge/collart_ios/tables/aidata2025.dws.dws_oper_asa_keyword_collart_1d.md",
+    "schema_fields": 0,
+    "source_only_fields": 24,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.dws.dws_oper_basic_aidata_1d": {
+    "id": "table:aidata2025.dws.dws_oper_basic_aidata_1d",
+    "path": "knowledge/shared/tables/aidata2025.dws.dws_oper_basic_aidata_1d.md",
+    "schema_fields": 73,
+    "source_only_fields": 0,
+    "unexplained_fields": 60,
+    "sqlx": [
+      "dataform:aidata/definitions/dws/daily/h_dws_oper_basic_aidata_1d.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dws.dws_oper_delivery_collart_1d": {
+    "id": "table:aidata2025.dws.dws_oper_delivery_collart_1d",
+    "path": "knowledge/shared/tables/aidata2025.dws.dws_oper_delivery_collart_1d.md",
+    "schema_fields": 0,
+    "source_only_fields": 8,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.dws.dws_oper_delivery_user_collart_1d": {
+    "id": "table:aidata2025.dws.dws_oper_delivery_user_collart_1d",
+    "path": "knowledge/shared/tables/aidata2025.dws.dws_oper_delivery_user_collart_1d.md",
+    "schema_fields": 0,
+    "source_only_fields": 8,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "aidata2025.dws.dws_oper_fb_delivery_1d": {
+    "id": "table:aidata2025.dws.dws_oper_fb_delivery_1d",
+    "path": "knowledge/shared/tables/aidata2025.dws.dws_oper_fb_delivery_1d.md",
+    "schema_fields": 12,
+    "source_only_fields": 0,
+    "unexplained_fields": 2,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dws.dws_oper_tiktok_ad_1d": {
+    "id": "table:aidata2025.dws.dws_oper_tiktok_ad_1d",
+    "path": "knowledge/shared/tables/aidata2025.dws.dws_oper_tiktok_ad_1d.md",
+    "schema_fields": 9,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dws.dws_oper_user_ad_di": {
+    "id": "table:aidata2025.dws.dws_oper_user_ad_di",
+    "path": "knowledge/shared/tables/aidata2025.dws.dws_oper_user_ad_di.md",
+    "schema_fields": 36,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/dws/daily/h_dws_oper_user_ad_di.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.dws.dws_oper_user_sub_revenue_df": {
+    "id": "table:aidata2025.dws.dws_oper_user_sub_revenue_df",
+    "path": "knowledge/shared/tables/aidata2025.dws.dws_oper_user_sub_revenue_df.md",
+    "schema_fields": 27,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/dws/daily/h_dws_oper_user_sub_revenue_df.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ods.ods_ai_request_info_new_1d": {
+    "id": "table:aidata2025.ods.ods_ai_request_info_new_1d",
+    "path": "knowledge/shared/tables/aidata2025.ods.ods_ai_request_info_new_1d.md",
+    "schema_fields": 39,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ods.ods_apple_sales_1d": {
+    "id": "table:aidata2025.ods.ods_apple_sales_1d",
+    "path": "knowledge/shared/tables/aidata2025.ods.ods_apple_sales_1d.md",
+    "schema_fields": 33,
+    "source_only_fields": 0,
+    "unexplained_fields": 33,
+    "sqlx": [
+      "dataform:aidata/definitions/ods/daily/h_ods_apple_sales_1d.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ods.ods_apple_subscription_muselab_df": {
+    "id": "table:aidata2025.ods.ods_apple_subscription_muselab_df",
+    "path": "knowledge/shared/tables/aidata2025.ods.ods_apple_subscription_muselab_df.md",
+    "schema_fields": 50,
+    "source_only_fields": 0,
+    "unexplained_fields": 50,
+    "sqlx": [
+      "dataform:aidata/definitions/ods/daily/h_ods_apple_subscription_muselab_df.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ods.ods_apple_subscription_vibedance_df": {
+    "id": "table:aidata2025.ods.ods_apple_subscription_vibedance_df",
+    "path": "knowledge/shared/tables/aidata2025.ods.ods_apple_subscription_vibedance_df.md",
+    "schema_fields": 50,
+    "source_only_fields": 0,
+    "unexplained_fields": 50,
+    "sqlx": [
+      "dataform:aidata/definitions/ods/daily/h_ods_apple_subscription_vibedance_df.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ods.ods_apple_subscription_vidart_df": {
+    "id": "table:aidata2025.ods.ods_apple_subscription_vidart_df",
+    "path": "knowledge/shared/tables/aidata2025.ods.ods_apple_subscription_vidart_df.md",
+    "schema_fields": 51,
+    "source_only_fields": 0,
+    "unexplained_fields": 51,
+    "sqlx": [
+      "dataform:aidata/definitions/ods/daily/h_ods_apple_subscription_vidart_df.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.ods.orders": {
+    "id": "table:aidata2025.ods.orders",
+    "path": "knowledge/shared/tables/aidata2025.ods.orders.md",
+    "schema_fields": 37,
+    "source_only_fields": 7,
+    "unexplained_fields": 36,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "aidata2025.revenue.vip_event_data_ios": {
+    "id": "table:aidata2025.revenue.vip_event_data_ios",
+    "path": "knowledge/collart_ios/tables/aidata2025.revenue.vip_event_data_ios.md",
+    "schema_fields": 0,
+    "source_only_fields": 10,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "not_found"
+  },
+  "pubdata2025.ads.ads_atlasv_basic_data_daily_1h": {
+    "id": "table:pubdata2025.ads.ads_atlasv_basic_data_daily_1h",
+    "path": "knowledge/company/tables/pubdata2025.ads.ads_atlasv_basic_data_daily_1h.md",
+    "schema_fields": 23,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:pubdata/definitions/ads/h_ads_atlasv_basic_data_daily_1h.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dim.dim_product_info",
+      "hzdata.firebase.prefect_total_metrics_20*"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h": {
+    "id": "table:pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h",
+    "path": "knowledge/company/tables/pubdata2025.ads.ads_atlasv_basic_data_platform_daily_1h.md",
+    "schema_fields": 12,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.ads.ads_atlasv_deliver_cost_daily": {
+    "id": "table:pubdata2025.ads.ads_atlasv_deliver_cost_daily",
+    "path": "knowledge/company/tables/pubdata2025.ads.ads_atlasv_deliver_cost_daily.md",
+    "schema_fields": 3,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/reports/h_pubdata_ads_atlasv_deliver_cost_daily.sqlx",
+      "dataform:pubdata/definitions/ads/h_pubdata_ads_atlasv_deliver_cost_daily.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.ads.ads_cdct_service_cost_1d": {
+    "id": "table:pubdata2025.ads.ads_cdct_service_cost_1d",
+    "path": "knowledge/shared/tables/pubdata2025.ads.ads_cdct_service_cost_1d.md",
+    "schema_fields": 11,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:pubdata/definitions/ads/h_ads_cdct_service_cost_1d.sqlx"
+    ],
+    "upstream": [
+      "pubdata2025.dws.dws_cdct_cost_billing_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.ads.ads_data_report_1d": {
+    "id": "table:pubdata2025.ads.ads_data_report_1d",
+    "path": "knowledge/company/tables/pubdata2025.ads.ads_data_report_1d.md",
+    "schema_fields": 11,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:aidata/definitions/ads/reports/h_pubdata_ads_data_report_1d.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dwd.dwd_cdct_delivery_cost_di"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi",
+    "path": "knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_ai_service_record_info_hi.md",
+    "schema_fields": 11,
+    "source_only_fields": 0,
+    "unexplained_fields": 11,
+    "sqlx": [
+      "dataform:pubdata/definitions/dwd/log/h_dwd_cdct_ai_service_record_info_hi.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ods.ai_user_base_record",
+      "aidata2025.ods_aibaseprod.user_a_i_base_video_record"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dwd.dwd_cdct_cost_aws_billing_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_cost_aws_billing_di",
+    "path": "knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_cost_aws_billing_di.md",
+    "schema_fields": 27,
+    "source_only_fields": 0,
+    "unexplained_fields": 27,
+    "sqlx": [
+      "dataform:pubdata/definitions/dwd/cost/h_dwd_cdct_cost_aws_billing_di.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dwd.dwd_cdct_cost_azure_billing_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_cost_azure_billing_di",
+    "path": "knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_cost_azure_billing_di.md",
+    "schema_fields": 21,
+    "source_only_fields": 0,
+    "unexplained_fields": 21,
+    "sqlx": [
+      "dataform:pubdata/definitions/dwd/cost/h_dwd_cdct_cost_azure_billing_di.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dwd.dwd_cdct_cost_gcp_billing_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_cost_gcp_billing_di",
+    "path": "knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_cost_gcp_billing_di.md",
+    "schema_fields": 13,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:pubdata/definitions/dwd/cost/h_dwd_cdct_cost_gcp_billing_di.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dwd.dwd_cdct_log_aws_cdn_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_log_aws_cdn_di",
+    "path": "knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_log_aws_cdn_di.md",
+    "schema_fields": 33,
+    "source_only_fields": 0,
+    "unexplained_fields": 33,
+    "sqlx": [
+      "dataform:pubdata/definitions/dwd/log/h_dwd_cdct_log_aws_cdn_di.sqlx"
+    ],
+    "upstream": [
+      "pubdata2025.ods.ods_log_aws_cdn_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dwd.dwd_cdct_revenue_adplatform_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_adplatform_di",
+    "path": "knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_revenue_adplatform_di.md",
+    "schema_fields": 16,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dwd.dwd_cdct_revenue_google_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_google_di",
+    "path": "knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_revenue_google_di.md",
+    "schema_fields": 24,
+    "source_only_fields": 19,
+    "unexplained_fields": 19,
+    "sqlx": [
+      "dataform:pubdata/definitions/dwd/revenue/h_dwd_cdct_revenue_google_di.sqlx"
+    ],
+    "upstream": [
+      "gzdw2024.gz_dim.exchange_rate",
+      "gzdw2024.gz_dim.exchange_rate_days",
+      "pubdata2025.ods.ods_googleplay_sales_download2025_1d",
+      "pubdata2025.ods.ods_googleplay_sales_downloader_1d",
+      "pubdata2025.ods.ods_googleplay_sales_etm_1d",
+      "pubdata2025.ods.ods_googleplay_sales_lifestyle_1d",
+      "pubdata2025.ods.ods_googleplay_sales_new_downloader_1d",
+      "pubdata2025.ods.ods_googleplay_sales_text_1d",
+      "pubdata2025.ods.ods_googleplay_sales_vidma_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dwd.dwd_cdct_revenue_stripe_di": {
+    "id": "table:pubdata2025.dwd.dwd_cdct_revenue_stripe_di",
+    "path": "knowledge/shared/tables/pubdata2025.dwd.dwd_cdct_revenue_stripe_di.md",
+    "schema_fields": 19,
+    "source_only_fields": 4,
+    "unexplained_fields": 0,
+    "sqlx": [
+      "dataform:pubdata/definitions/dwd/revenue/h_dwd_cdct_revenue_stripe_di.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dim.exchange_rate_days",
+      "aidata2025.ods.orders",
+      "pubdata2025.dim.dim_payinsider_product_price",
+      "pubdata2025.dim.dim_stripe_product_info_df",
+      "pubdata2025.ods.ods_payinsider_order_report_1d",
+      "pubdata2025.ods.ods_stripe_balance_transactions_1d",
+      "pubdata2025.ods.ods_stripe_subscriptions_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dws.dws_cdct_cost_ai_service_1h": {
+    "id": "table:pubdata2025.dws.dws_cdct_cost_ai_service_1h",
+    "path": "knowledge/shared/tables/pubdata2025.dws.dws_cdct_cost_ai_service_1h.md",
+    "schema_fields": 7,
+    "source_only_fields": 0,
+    "unexplained_fields": 7,
+    "sqlx": [
+      "dataform:pubdata/definitions/dws/log/h_dws_cdct_cost_ai_service_1h.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dws.dws_cdct_cost_billing_1d": {
+    "id": "table:pubdata2025.dws.dws_cdct_cost_billing_1d",
+    "path": "knowledge/shared/tables/pubdata2025.dws.dws_cdct_cost_billing_1d.md",
+    "schema_fields": 13,
+    "source_only_fields": 0,
+    "unexplained_fields": 1,
+    "sqlx": [
+      "dataform:pubdata/definitions/dws/cost/h_dws_cdct_cost_billing_1d.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.dim.dim_ai_service_cost_unit_copy",
+      "gzdw2024.gz_dim.exchange_rate_days",
+      "pubdata2025.ods.ods_billing_digitalocean_insights_1d"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dws.dws_cdct_cost_google_1h": {
+    "id": "table:pubdata2025.dws.dws_cdct_cost_google_1h",
+    "path": "knowledge/shared/tables/pubdata2025.dws.dws_cdct_cost_google_1h.md",
+    "schema_fields": 17,
+    "source_only_fields": 0,
+    "unexplained_fields": 1,
+    "sqlx": [
+      "dataform:pubdata/definitions/dws/cost/h_dws_cdct_cost_google_1h.sqlx"
+    ],
+    "upstream": [
+      "gzdw2024.gz_dim.exchange_rate_days"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dws.dws_cdct_log_aws_cdn_1d": {
+    "id": "table:pubdata2025.dws.dws_cdct_log_aws_cdn_1d",
+    "path": "knowledge/shared/tables/pubdata2025.dws.dws_cdct_log_aws_cdn_1d.md",
+    "schema_fields": 6,
+    "source_only_fields": 0,
+    "unexplained_fields": 6,
+    "sqlx": [
+      "dataform:pubdata/definitions/dws/log/h_dws_cdct_log_aws_cdn_1d.sqlx"
+    ],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.dws.dws_cdct_revenue_country_1d": {
+    "id": "table:pubdata2025.dws.dws_cdct_revenue_country_1d",
+    "path": "knowledge/shared/tables/pubdata2025.dws.dws_cdct_revenue_country_1d.md",
+    "schema_fields": 15,
+    "source_only_fields": 0,
+    "unexplained_fields": 1,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.ods.ods_apple_sales_1d": {
+    "id": "table:pubdata2025.ods.ods_apple_sales_1d",
+    "path": "knowledge/shared/tables/pubdata2025.ods.ods_apple_sales_1d.md",
+    "schema_fields": 33,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.ods.ods_apple_subscriber_1d": {
+    "id": "table:pubdata2025.ods.ods_apple_subscriber_1d",
+    "path": "knowledge/shared/tables/pubdata2025.ods.ods_apple_subscriber_1d.md",
+    "schema_fields": 30,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.ods.ods_apple_subscription_1d": {
+    "id": "table:pubdata2025.ods.ods_apple_subscription_1d",
+    "path": "knowledge/shared/tables/pubdata2025.ods.ods_apple_subscription_1d.md",
+    "schema_fields": 36,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.ods.ods_apple_subscription_event_1d": {
+    "id": "table:pubdata2025.ods.ods_apple_subscription_event_1d",
+    "path": "knowledge/shared/tables/pubdata2025.ods.ods_apple_subscription_event_1d.md",
+    "schema_fields": 32,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.ods.ods_woolong_subscription_1d": {
+    "id": "table:pubdata2025.ods.ods_woolong_subscription_1d",
+    "path": "knowledge/shared/tables/pubdata2025.ods.ods_woolong_subscription_1d.md",
+    "schema_fields": 17,
+    "source_only_fields": 0,
+    "unexplained_fields": 0,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "pubdata2025.ods.user_ai_base_video_record": {
+    "id": "table:pubdata2025.ods.user_ai_base_video_record",
+    "path": "knowledge/shared/tables/pubdata2025.ods.user_ai_base_video_record.md",
+    "schema_fields": 11,
+    "source_only_fields": 0,
+    "unexplained_fields": 11,
+    "sqlx": [
+      "dataform:pubdata/definitions/dwd/log/h_dwd_cdct_ai_service_record_info_hi.sqlx"
+    ],
+    "upstream": [
+      "aidata2025.ods.ai_user_base_record",
+      "aidata2025.ods_aibaseprod.user_a_i_base_video_record"
+    ],
+    "metadata_status": "schema_observed"
+  },
+  "storytemplate-10a27.analytics_232977577.events_*": {
+    "id": "table:storytemplate-10a27.analytics_232977577.events_*",
+    "path": "knowledge/shared/tables/storytemplate-10a27.analytics_232977577.events_wildcard.md",
+    "schema_fields": 217,
+    "source_only_fields": 0,
+    "unexplained_fields": 217,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  },
+  "vidart-8b8ca.analytics_528583115.events_*": {
+    "id": "table:vidart-8b8ca.analytics_528583115.events_*",
+    "path": "knowledge/collart_ios/tables/vidart-8b8ca.analytics_528583115.events_wildcard.md",
+    "schema_fields": 217,
+    "source_only_fields": 0,
+    "unexplained_fields": 217,
+    "sqlx": [],
+    "upstream": [],
+    "metadata_status": "schema_observed"
+  }
+}

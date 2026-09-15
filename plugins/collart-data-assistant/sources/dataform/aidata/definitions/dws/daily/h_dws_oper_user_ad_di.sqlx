@@ -1,0 +1,156 @@
+config {
+    type: "operations",
+    dependencies: ["h_dwd_oper_user_event_di", "h_dwd_oper_user_basic_di"]
+}
+
+DECLARE
+  from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date}-2;
+DECLARE
+  to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `dws.dws_oper_user_ad_di`
+WHERE
+  event_date BETWEEN from_date
+  AND to_date;
+  --插入分区中etm-ins数据
+INSERT INTO
+  `dws.dws_oper_user_ad_di`
+SELECT
+  a.event_date,
+  a.user_pseudo_id,
+  b.user_id,
+  b.atlasv_uid,
+  a.unit_id,
+  a.placement,
+  b.country,
+  b.app_name,
+  a.package_name,
+  b.traffic_src_name,
+  b.traffic_src_type,
+  b.app_version,
+  b.is_new,
+  b.is_active,
+  b.vip_type,
+  a.ad_type,
+  b.device_language,
+  b.mobile_brand_name,
+  b.mobile_model_name,
+  b.device_total_ram,
+  a.ad_sdk_init_cnt,
+  a.ad_load_cnt,
+  a.ad_load_success_cnt,
+  a.ad_load_fail_cnt,
+  a.ad_load_duration,
+  a.ad_start_to_show_cnt,
+  a.ad_success_to_show_cnt,
+  a.ad_show_cnt,
+  a.ad_impression_cnt,
+  a.ad_impression_fail_cnt,
+  a.ad_click_cnt,
+  a.ad_close_cnt,
+  a.ad_duration,
+  a.ad_value,
+  b.adjust_id,
+  b.advertising_id
+FROM (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    unit_id,
+    event_placement AS placement,
+    package_name,
+    MAX(ad_type) AS ad_type,
+    COUNTIF(event_name='ad_sdk_init') AS ad_sdk_init_cnt,
+    COUNTIF(event_name='ad_load_c') AS ad_load_cnt,
+    COUNTIF(event_name='ad_load_success_c') AS ad_load_success_cnt,
+    COUNTIF(event_name='ad_load_fail_c') AS ad_load_fail_cnt,
+    SUM(CASE
+        WHEN event_name='ad_load_success_c' THEN SAFE_CAST( CASE
+          WHEN event_duration IS NULL THEN '0'
+          ELSE event_duration
+      END
+        AS FLOAT64)
+    END
+      ) AS ad_load_duration,
+    COUNTIF(event_name='ad_start_to_show') AS ad_start_to_show_cnt,
+    COUNTIF(event_name='ad_success_to_show') AS ad_success_to_show_cnt,
+    COUNTIF(event_name='ad_show_c') AS ad_show_cnt,
+    COUNTIF(event_name='ad_impression_c') AS ad_impression_cnt,
+    COUNTIF(event_name='ad_impression_fail_c') AS ad_impression_fail_cnt,
+    COUNTIF(event_name='ad_click_c') AS ad_click_cnt,
+    COUNTIF(event_name='ad_close_c') AS ad_close_cnt,
+    SUM(CASE
+        WHEN event_name='ad_close_c' THEN SAFE_CAST( CASE
+          WHEN event_duration IS NULL THEN '0'
+          ELSE event_duration
+      END
+        AS FLOAT64)
+    END
+      ) AS ad_duration,
+    SUM(CASE
+        WHEN event_name='ad_value' THEN SAFE_CAST( CASE
+          WHEN event_value IS NULL THEN '0'
+          ELSE event_value END
+        AS FLOAT64)
+    END
+      ) AS ad_value
+  FROM
+    `dwd.dwd_oper_user_event_di`
+  WHERE
+    event_date BETWEEN from_date AND to_date
+    AND event_name IN ('ad_sdk_init',
+      'ad_load_c',
+      'ad_load_success_c',
+      'ad_load_fail_c',
+      'ad_start_to_show',
+      'ad_success_to_show',
+      'ad_show_c',
+      'ad_impression_c',
+      'ad_impression_fail_c',
+      'ad_click_c',
+      'ad_close_c',
+      'ad_value')
+  GROUP BY
+    event_date,
+    user_pseudo_id,
+    package_name,
+    unit_id,
+    event_placement ) a
+-- 关联用户信息
+INNER JOIN (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    adjust_id,
+    user_id,
+    atlasv_uid,
+    country,
+    app_name,
+    package_name,
+    traffic_src_name,
+    traffic_src_type,
+    app_version,
+    is_new,
+    is_active,
+    vip_type,
+    device_language,
+    mobile_brand_name,
+    mobile_model_name,
+    device_total_ram,
+    advertising_id
+  FROM 
+    dwd.dwd_oper_user_basic_di
+  WHERE
+    event_date BETWEEN from_date
+    AND to_date ) b
+ON
+  a.user_pseudo_id=b.user_pseudo_id
+  AND a.event_date=b.event_date
+  AND a.package_name=b.package_name;
+  -- 如果所有操作都成功，提交事务
+COMMIT
+  ;

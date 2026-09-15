@@ -1,0 +1,104 @@
+{
+  "table": "pubdata2025.dwd.dwd_cdct_revenue_adplatform_di",
+  "captured_at": "2026-09-14T13:19:08.966674+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_platform",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "region",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_source_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_unit_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_unit_display_label",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "platform",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_format",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "request_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "impression_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "click_cnt",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_bidding",
+        "type": "BOOLEAN",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "matched_requests",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "请求成功"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dwd",
+    "tableId": "dwd_cdct_revenue_adplatform_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "ad_platform"
+    ]
+  },
+  "type": "TABLE"
+}

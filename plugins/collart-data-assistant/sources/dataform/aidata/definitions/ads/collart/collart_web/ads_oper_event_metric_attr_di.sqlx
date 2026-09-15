@@ -1,0 +1,170 @@
+config {
+  type: "operations",
+  name: "ads_collartweb_oper_event_metric_attr_di",
+  schema: "ads_collartweb",
+  dependencies: ["ads_collartweb_oper_user_event_metric_di", "ads_collartweb_oper_user_active_di"]
+}
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartweb.ads_oper_event_metric_attr_di`
+(
+  package_name STRING,
+  app_name STRING,
+  event_date DATE, is_new BOOL, is_vip BOOL, country STRING,
+  traffic_src_type STRING, traffic_src_platform STRING, traffic_src_name STRING, app_version STRING,
+  video_generate_start STRUCT<uv INT64, pv INT64>,
+  video_generate_success STRUCT<uv INT64, pv INT64>,
+  page_view STRUCT<uv INT64, pv INT64>,
+  session_start STRUCT<uv INT64, pv INT64>,
+  first_visit STRUCT<uv INT64, pv INT64>,
+  user_engagement STRUCT<uv INT64, pv INT64>,
+  generate_start STRUCT<uv INT64, pv INT64>,
+  generate_success STRUCT<uv INT64, pv INT64>,
+  framestransition_video_generate_start STRUCT<uv INT64, pv INT64>,
+  motioncontrol_video_generate_start STRUCT<uv INT64, pv INT64>,
+  explore_page_show STRUCT<uv INT64, pv INT64>,
+  explore_card_click STRUCT<uv INT64, pv INT64>,
+  text2video_video_generate_start STRUCT<uv INT64, pv INT64>,
+  explore_content_click STRUCT<uv INT64, pv INT64>,
+  explore_content_generate_click STRUCT<uv INT64, pv INT64>,
+  feature_show STRUCT<uv INT64, pv INT64>,
+  photo_add STRUCT<uv INT64, pv INT64>,
+  photo_add_success STRUCT<uv INT64, pv INT64>,
+  generate_click STRUCT<uv INT64, pv INT64>,
+  login_show STRUCT<uv INT64, pv INT64>,
+  framestransition_video_generate_success STRUCT<uv INT64, pv INT64>,
+  motioncontrol_video_generate_success STRUCT<uv INT64, pv INT64>,
+  login_account_choose STRUCT<uv INT64, pv INT64>,
+  login_success STRUCT<uv INT64, pv INT64>,
+  text2video_video_generate_success STRUCT<uv INT64, pv INT64>,
+  vip_show STRUCT<uv INT64, pv INT64>,
+  vip_subscribe STRUCT<uv INT64, pv INT64>,
+  vip_subscribe_succeed STRUCT<uv INT64, pv INT64>,
+  generate_save STRUCT<uv INT64, pv INT64>,
+  valid_user STRUCT<uv INT64, pv INT64>,
+  img2video_generate_start STRUCT<uv INT64, pv INT64>,
+  img2video_generate_success STRUCT<uv INT64, pv INT64>,
+  img2img_generate_start STRUCT<uv INT64, pv INT64>,
+  img_generate_start STRUCT<uv INT64, pv INT64>,
+  img2img_generate_success STRUCT<uv INT64, pv INT64>,
+  img_generate_success STRUCT<uv INT64, pv INT64>,
+  text2img_generate_start STRUCT<uv INT64, pv INT64>,
+  text2img_generate_success STRUCT<uv INT64, pv INT64>,
+  referencetovideo_generate_start STRUCT<uv INT64, pv INT64>,
+  referencetovideo_generate_success STRUCT<uv INT64, pv INT64>
+)
+PARTITION BY event_date CLUSTER BY country, is_new
+OPTIONS(description='ads_collartweb 日×维度事件指标（新建）');
+BEGIN TRANSACTION;
+DELETE FROM `aidata2025.ads_collartweb.ads_oper_event_metric_attr_di` WHERE event_date BETWEEN from_date AND to_date;
+INSERT INTO `aidata2025.ads_collartweb.ads_oper_event_metric_attr_di`
+(package_name, app_name, event_date, is_new, is_vip, country, traffic_src_type, traffic_src_platform, traffic_src_name, app_version,
+  video_generate_start,
+  video_generate_success,
+  page_view,
+  session_start,
+  first_visit,
+  user_engagement,
+  generate_start,
+  generate_success,
+  framestransition_video_generate_start,
+  motioncontrol_video_generate_start,
+  explore_page_show,
+  explore_card_click,
+  text2video_video_generate_start,
+  explore_content_click,
+  explore_content_generate_click,
+  feature_show,
+  photo_add,
+  photo_add_success,
+  generate_click,
+  login_show,
+  framestransition_video_generate_success,
+  motioncontrol_video_generate_success,
+  login_account_choose,
+  login_success,
+  text2video_video_generate_success,
+  vip_show,
+  vip_subscribe,
+  vip_subscribe_succeed,
+  generate_save,
+  valid_user,
+  img2video_generate_start,
+  img2video_generate_success,
+  img2img_generate_start,
+  img_generate_start,
+  img2img_generate_success,
+  img_generate_success,
+  text2img_generate_start,
+  text2img_generate_success,
+  referencetovideo_generate_start,
+  referencetovideo_generate_success)
+-- 维度源仅取 is_active=TRUE 行：付费-only 行无事件行为，也不参与 DAU / 版本排名
+WITH active_base AS (
+  SELECT event_date, user_pseudo_id, is_new, (is_vip IN ('1','2')) AS is_vip, country,
+    traffic_src_type, traffic_src_platform, traffic_src_name, app_version
+  FROM `aidata2025.ads_collartweb.ads_oper_user_active_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND is_active
+),
+top_version AS (
+  SELECT event_date, app_version FROM (
+    SELECT event_date, app_version, ROW_NUMBER() OVER (
+      PARTITION BY event_date ORDER BY COUNT(DISTINCT user_pseudo_id) DESC, app_version
+    ) rn
+    FROM active_base GROUP BY 1,2
+  ) WHERE rn <= 5
+),
+joined AS (
+  SELECT m.event_date, a.is_new, a.is_vip, a.country, a.traffic_src_type, a.traffic_src_platform,
+    a.traffic_src_name, IF(tv.app_version IS NULL, 'other', a.app_version) AS app_version,
+    m.* EXCEPT(event_date, user_pseudo_id, package_name, app_name)
+  FROM `aidata2025.ads_collartweb.ads_oper_user_event_metric_di` m
+  JOIN active_base a USING (event_date, user_pseudo_id)
+  LEFT JOIN top_version tv ON a.event_date=tv.event_date AND a.app_version=tv.app_version
+  WHERE m.event_date BETWEEN from_date AND to_date
+)
+SELECT 'collart_web' AS package_name, 'collart_web' AS app_name, event_date, is_new, is_vip, country, traffic_src_type, traffic_src_platform, traffic_src_name, app_version,
+  STRUCT(COUNTIF(video_generate_start_pv>0), COALESCE(SUM(video_generate_start_pv),0)) AS video_generate_start,  -- 视频生成·开始
+  STRUCT(COUNTIF(video_generate_success_pv>0), COALESCE(SUM(video_generate_success_pv),0)) AS video_generate_success,  -- 视频生成·成功
+  STRUCT(COUNTIF(page_view_pv>0), COALESCE(SUM(page_view_pv),0)) AS page_view,  -- 页面浏览
+  STRUCT(COUNTIF(session_start_pv>0), COALESCE(SUM(session_start_pv),0)) AS session_start,  -- 会话开始
+  STRUCT(COUNTIF(first_visit_pv>0), COALESCE(SUM(first_visit_pv),0)) AS first_visit,  -- 首次访问
+  STRUCT(COUNTIF(user_engagement_pv>0), COALESCE(SUM(user_engagement_pv),0)) AS user_engagement,  -- 用户互动
+  STRUCT(COUNTIF(generate_start_pv>0), COALESCE(SUM(generate_start_pv),0)) AS generate_start,  -- AI 服务开始
+  STRUCT(COUNTIF(generate_success_pv>0), COALESCE(SUM(generate_success_pv),0)) AS generate_success,  -- AI 服务成功
+  STRUCT(COUNTIF(framestransition_video_generate_start_pv>0), COALESCE(SUM(framestransition_video_generate_start_pv),0)) AS framestransition_video_generate_start,  -- FramesTransition 视频生成·开始
+  STRUCT(COUNTIF(motioncontrol_video_generate_start_pv>0), COALESCE(SUM(motioncontrol_video_generate_start_pv),0)) AS motioncontrol_video_generate_start,  -- MotionControl 视频生成·开始
+  STRUCT(COUNTIF(explore_page_show_pv>0), COALESCE(SUM(explore_page_show_pv),0)) AS explore_page_show,  -- Explore 页曝光
+  STRUCT(COUNTIF(explore_card_click_pv>0), COALESCE(SUM(explore_card_click_pv),0)) AS explore_card_click,  -- Explore 卡片点击
+  STRUCT(COUNTIF(text2video_video_generate_start_pv>0), COALESCE(SUM(text2video_video_generate_start_pv),0)) AS text2video_video_generate_start,  -- AItext2video 视频生成·开始
+  STRUCT(COUNTIF(explore_content_click_pv>0), COALESCE(SUM(explore_content_click_pv),0)) AS explore_content_click,  -- Explore 内容点击
+  STRUCT(COUNTIF(explore_content_generate_click_pv>0), COALESCE(SUM(explore_content_generate_click_pv),0)) AS explore_content_generate_click,  -- Explore 内容生成点击
+  STRUCT(COUNTIF(feature_show_pv>0), COALESCE(SUM(feature_show_pv),0)) AS feature_show,  -- 功能位曝光
+  STRUCT(COUNTIF(photo_add_pv>0), COALESCE(SUM(photo_add_pv),0)) AS photo_add,  -- 加图
+  STRUCT(COUNTIF(photo_add_success_pv>0), COALESCE(SUM(photo_add_success_pv),0)) AS photo_add_success,  -- 加图成功
+  STRUCT(COUNTIF(generate_click_pv>0), COALESCE(SUM(generate_click_pv),0)) AS generate_click,  -- 生成点击
+  STRUCT(COUNTIF(login_show_pv>0), COALESCE(SUM(login_show_pv),0)) AS login_show,  -- 登录曝光
+  STRUCT(COUNTIF(framestransition_video_generate_success_pv>0), COALESCE(SUM(framestransition_video_generate_success_pv),0)) AS framestransition_video_generate_success,  -- FramesTransition 视频生成·成功
+  STRUCT(COUNTIF(motioncontrol_video_generate_success_pv>0), COALESCE(SUM(motioncontrol_video_generate_success_pv),0)) AS motioncontrol_video_generate_success,  -- MotionControl 视频生成·成功
+  STRUCT(COUNTIF(login_account_choose_pv>0), COALESCE(SUM(login_account_choose_pv),0)) AS login_account_choose,  -- 登录账号选择
+  STRUCT(COUNTIF(login_success_pv>0), COALESCE(SUM(login_success_pv),0)) AS login_success,  -- 登录成功
+  STRUCT(COUNTIF(text2video_video_generate_success_pv>0), COALESCE(SUM(text2video_video_generate_success_pv),0)) AS text2video_video_generate_success,  -- AItext2video 视频生成·成功
+  STRUCT(COUNTIF(vip_show_pv>0), COALESCE(SUM(vip_show_pv),0)) AS vip_show,  -- VIP 页曝光
+  STRUCT(COUNTIF(vip_subscribe_pv>0), COALESCE(SUM(vip_subscribe_pv),0)) AS vip_subscribe,  -- VIP 订阅点击
+  STRUCT(COUNTIF(vip_subscribe_succeed_pv>0), COALESCE(SUM(vip_subscribe_succeed_pv),0)) AS vip_subscribe_succeed,  -- VIP 订阅成功
+  STRUCT(COUNTIF(generate_save_pv>0), COALESCE(SUM(generate_save_pv),0)) AS generate_save,  -- 结果下载/保存
+  STRUCT(COUNTIF(valid_user_pv>0), COALESCE(SUM(valid_user_pv),0)) AS valid_user,  -- 有效行为用户(OR)
+  STRUCT(COUNTIF(img2video_generate_start_pv>0), COALESCE(SUM(img2video_generate_start_pv),0)) AS img2video_generate_start,  -- 图生视频 生成开始
+  STRUCT(COUNTIF(img2video_generate_success_pv>0), COALESCE(SUM(img2video_generate_success_pv),0)) AS img2video_generate_success,  -- 图生视频 生成成功
+  STRUCT(COUNTIF(img2img_generate_start_pv>0), COALESCE(SUM(img2img_generate_start_pv),0)) AS img2img_generate_start,  -- 图生图·生成开始
+  STRUCT(COUNTIF(img_generate_start_pv>0), COALESCE(SUM(img_generate_start_pv),0)) AS img_generate_start,  -- 图片生成·生成开始
+  STRUCT(COUNTIF(img2img_generate_success_pv>0), COALESCE(SUM(img2img_generate_success_pv),0)) AS img2img_generate_success,  -- 图生图·生成成功
+  STRUCT(COUNTIF(img_generate_success_pv>0), COALESCE(SUM(img_generate_success_pv),0)) AS img_generate_success,  -- 图片生成·生成成功
+  STRUCT(COUNTIF(text2img_generate_start_pv>0), COALESCE(SUM(text2img_generate_start_pv),0)) AS text2img_generate_start,  -- 文生图·开始
+  STRUCT(COUNTIF(text2img_generate_success_pv>0), COALESCE(SUM(text2img_generate_success_pv),0)) AS text2img_generate_success,  -- 文生图·成功
+  STRUCT(COUNTIF(referencetovideo_generate_start_pv>0), COALESCE(SUM(referencetovideo_generate_start_pv),0)) AS referencetovideo_generate_start,  -- referencetovideo 生成开始
+  STRUCT(COUNTIF(referencetovideo_generate_success_pv>0), COALESCE(SUM(referencetovideo_generate_success_pv),0)) AS referencetovideo_generate_success  -- referencetovideo 生成成功
+FROM joined
+GROUP BY 3,4,5,6,7,8,9,10;
+COMMIT TRANSACTION;

@@ -1,0 +1,33 @@
+config {
+    type: "operations"
+}
+-- 每天更新最近3天分区的数据 
+DECLARE
+  from_date date DEFAULT ${dataform.projectConfig.vars.biz_date}-2;
+DECLARE
+  to_date date DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+-- ios订阅收入订单明细粒度数据
+BEGIN TRANSACTION;
+
+-- 删除近30天数据 每天更近最近30天
+DELETE
+FROM
+  `ods.ods_apple_sales_1d`
+WHERE
+  stats_date BETWEEN from_date
+  AND to_date;
+
+-- 插入当日数据
+INSERT INTO
+  `ods.ods_apple_sales_1d`
+select
+  *
+from pubdata2025.ods.ods_apple_sales_1d
+where stats_date BETWEEN from_date
+  AND to_date
+;
+
+COMMIT
+
+;

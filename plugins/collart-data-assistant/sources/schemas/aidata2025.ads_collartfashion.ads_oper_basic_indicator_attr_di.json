@@ -1,0 +1,398 @@
+{
+  "table": "aidata2025.ads_collartfashion.ads_oper_basic_indicator_attr_di",
+  "captured_at": "2026-09-14T13:19:04.749542+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "is_new",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "is_vip",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_platform",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING"
+      },
+      {
+        "name": "dau",
+        "type": "INTEGER"
+      },
+      {
+        "name": "churn_uv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "return_uv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d3",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d4",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d5",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d6",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d8",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d9",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d10",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d11",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d12",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d13",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d15",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d16",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d17",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d18",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d19",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d20",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d21",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d22",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d23",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d24",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d25",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d26",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d27",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d28",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d29",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "rolling_retain",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "d2",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d3",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d4",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d5",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d6",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d7",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d8",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d9",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d10",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d11",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d12",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d13",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d14",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d15",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d16",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d17",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d18",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d19",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d20",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d21",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d22",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d23",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d24",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d25",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d26",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d27",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d28",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d29",
+            "type": "INTEGER"
+          },
+          {
+            "name": "d30",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      {
+        "name": "subscription",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "subscribe_uv_7d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv_7d",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_cnt",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_amount",
+            "type": "INTEGER"
+          },
+          {
+            "name": "purchase_uv",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ]
+      },
+      {
+        "name": "revenue",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "purchase_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "resub_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "credit_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "ad_revenue",
+            "type": "FLOAT"
+          },
+          {
+            "name": "new_subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "renew_subscribe_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "credit_pack_uv",
+            "type": "INTEGER"
+          },
+          {
+            "name": "ad_uv",
+            "type": "INTEGER"
+          }
+        ]
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collartfashion",
+    "tableId": "ads_oper_basic_indicator_attr_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "country",
+      "app_version",
+      "is_new"
+    ]
+  },
+  "type": "TABLE"
+}

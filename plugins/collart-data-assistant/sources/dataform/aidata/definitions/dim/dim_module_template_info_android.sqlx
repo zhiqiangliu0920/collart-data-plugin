@@ -1,0 +1,293 @@
+config {
+    type: "operations"
+}
+
+DECLARE
+  from_date date DEFAULT ${dataform.projectConfig.vars.biz_date}-1;
+DECLARE
+  to_date date DEFAULT ${dataform.projectConfig.vars.biz_date};
+BEGIN TRANSACTION;
+DELETE
+FROM
+  `aidata2025.dim.dim_module_template_info_android`
+WHERE
+  1=1;
+INSERT INTO
+  `aidata2025.dim.dim_module_template_info_android`
+WITH
+  module_temp_union_info AS(
+  SELECT
+    a.module_id,
+    a.module_unique_id
+    -- ,a.categories
+    -- ,a.category_id
+    ,
+    c.temp_id,
+    c.temp_unique_id,
+    c.is_vip,
+    1 AS from_type,
+    0 AS priority
+  FROM (
+    SELECT
+      id module_id,
+      unique_id AS module_unique_id,
+      categories,
+      SAFE_CAST (category_id AS int64) category_id
+    FROM
+      aidata2025.ods.module
+    CROSS JOIN
+      UNNEST(SPLIT(REGEXP_REPLACE(categories, r'[\[\]\s]', ''), ',')) AS category_id
+    WHERE
+      platform='collart-android'
+      AND (status='online'
+        OR unique_Id='high_value_module_nsfw')
+      AND deleted_at=0 ) a
+  LEFT JOIN (
+    SELECT
+      id temp_Id,
+      unique_id temp_unique_id,
+      is_vip,
+      categories,
+      SAFE_CAST (category_id AS int64) category_id
+    FROM
+      aidata2025.ods.template
+    CROSS JOIN
+      UNNEST(SPLIT(REGEXP_REPLACE(categories, r'[\[\]\s]', ''), ',')) AS category_id
+    WHERE
+      platform='collart-android'
+      AND status='online'
+      AND deleted_at=0) c
+  ON
+    a.category_id=c.category_id
+  WHERE
+    temp_id IS NOT NULL
+  UNION DISTINCT
+    ------每个tag下包含的模板
+  SELECT
+    a.module_id,
+    a.module_unique_id,
+    c.temp_id,
+    c.temp_unique_Id,
+    c.is_vip,
+    2 AS from_type,
+    0 AS priority
+  FROM (
+    SELECT
+      id module_id,
+      unique_id AS module_unique_id,
+      tags,
+      SAFE_CAST(tag_Id AS int64) tag_id
+    FROM
+      aidata2025.ods.module
+    CROSS JOIN
+      UNNEST(SPLIT(REGEXP_REPLACE(tags, r'[\[\]\s]', ''), ',')) AS tag_id
+    WHERE
+      platform='collart-android'
+      AND (status='online'
+        OR unique_Id='high_value_module_nsfw')
+      AND deleted_at=0 ) a
+  LEFT JOIN (
+    SELECT
+      id temp_Id,
+      unique_id temp_unique_id,
+      is_vip,
+      tags,
+      SAFE_CAST (tag_id AS int64) tag_id
+    FROM
+      aidata2025.ods.template
+    CROSS JOIN
+      UNNEST(SPLIT(REGEXP_REPLACE(tags, r'[\[\]\s]', ''), ',')) AS tag_id
+    WHERE
+      platform='collart-android'
+      AND status='online'
+      AND deleted_at=0) c
+  ON
+    a.tag_id=c.tag_id
+  WHERE
+    temp_id IS NOT NULL
+    --------------直接添加的模板
+  UNION DISTINCT
+  SELECT
+    a.module_id,
+    a.module_unique_id,
+    c.temp_id,
+    c.temp_unique_id,
+    c.is_vip,
+    3 AS from_type,
+    b.priority
+  FROM (
+    SELECT
+      id module_id,
+      unique_id AS module_unique_id
+    FROM
+      aidata2025.ods.module
+    WHERE
+      platform='collart-android'
+      AND (status='online'
+        OR unique_Id='high_value_module_nsfw')
+      AND deleted_at=0 ) a
+  LEFT JOIN
+    `aidata2025.ods.module_template` b
+  ON
+    a.module_id=b.module_id
+  LEFT JOIN (
+    SELECT
+      id temp_Id,
+      unique_id temp_unique_id,
+      is_vip
+    FROM
+      aidata2025.ods.template
+    WHERE
+      platform='collart-android'
+      AND status='online'
+      AND deleted_at=0) c
+  ON
+    b.template_id=c.temp_id
+  WHERE
+    temp_id IS NOT NULL ),
+  module_temp_distinct_info AS(
+  SELECT
+    module_id,
+    module_unique_id,
+    temp_id,
+    temp_unique_id,
+    is_vip,
+    MAX(from_type) from_type,
+    CASE
+      WHEN MAX(from_type)=3 THEN 3
+      ELSE 1
+  END
+    AS from_type2,
+    MAX(priority) manual_priority
+  FROM
+    module_temp_union_info
+  GROUP BY
+    ALL ),
+  
+  rnd AS (
+  SELECT
+    module_id,
+    module_unique_id,
+    temp_id,
+    temp_unique_id,
+    is_vip,
+    from_type,
+    from_type2,
+    manual_priority,
+    -- 按天稳定的"随机键"（基于 Asia/Singapore 当天 + module_id + temp_id）
+    ABS(FARM_FINGERPRINT( CONCAT(CAST(CURRENT_DATE('Asia/Singapore') AS STRING), '#', CAST(module_id AS STRING), '#', CAST(temp_id AS STRING)) )) AS rand_key
+  FROM
+    `module_temp_distinct_info` ),
+  
+  ranked AS (
+  SELECT
+    module_id,
+    module_unique_id,
+    temp_id,
+    temp_unique_id,
+    is_vip,
+    from_type,
+    from_type2,
+    manual_priority,
+    ROW_NUMBER() OVER (PARTITION BY module_id, is_vip ORDER BY rand_key ) AS rn_in_group,
+    COUNTIF(is_vip = 0) OVER (PARTITION BY module_id) AS free_cnt
+  FROM
+    rnd )
+
+
+SELECT
+  'US' country_code,
+  module_id,
+  module_unique_id,
+  temp_id template_id,
+  temp_unique_id,
+  is_vip,
+  -- 交替位置：免费占奇数位，付费占偶数位；多余付费接到尾部
+  from_type,
+  from_type2,
+  a.manual_priority,
+  rn_in_group,
+  -- case when from_type=3 then a.manual_priority+5000
+  --       when from_type in(1,2) then
+  --        5000-( CASE   WHEN is_vip = 0 THEN 2 * rn_in_group - 1
+  --     WHEN rn_in_group <= free_cnt THEN 2 * rn_in_group
+  --     ELSE 2 * free_cnt + (rn_in_group - free_cnt) end) end  as priority
+  5000-(
+    CASE
+      WHEN is_vip = 0 THEN 2 * rn_in_group - 1
+      WHEN rn_in_group <= free_cnt THEN 2 * rn_in_group
+      ELSE 2 * free_cnt + (rn_in_group - free_cnt)
+  END
+    ) priority
+FROM
+  ranked a
+LEFT JOIN (
+  SELECT
+    unique_id,
+    priority,
+    online_at,
+    template_type,
+    CASE
+      WHEN template_type LIKE '%Video%' THEN 'Video'
+      ELSE 'Image'
+  END
+    template_type2
+  FROM
+    aidata2025.ods.template
+  WHERE
+    platform='collart-android'
+    AND deleted_at = 0 ) d
+ON
+  a.temp_unique_Id=d.unique_id
+where module_id<>110
+  --order by module_id,priority desc
+
+union all 
+ SELECT
+ 'US' country_code,
+  110 as module_id,
+  'New-Android' as module_unique_id,
+  t.temp_id template_id,
+  t.unique_id template_unique_id,
+  null as is_vip,
+  null as from_type,
+  null as from_type2,
+  null as manual_priority,
+  null as rn_in_group,
+  null as priority
+FROM (
+  SELECT
+    id AS temp_id,
+    unique_id,
+    created_at
+  FROM `aidata2025.ods.template`
+  WHERE platform = 'collart-android'
+    AND status = 'online'
+    AND deleted_at = 0
+    AND created_at IS NOT NULL
+  QUALIFY ROW_NUMBER() OVER (ORDER BY created_at DESC) <= 30
+) t
+LEFT JOIN (
+  SELECT
+    b.id AS temp_id,
+    a.temp_score,
+    ROW_NUMBER() OVER (
+      PARTITION BY a.country_name, a.traffic_src_type
+      ORDER BY a.temp_score DESC
+    ) AS rank_num
+  FROM `aidata2025.dws.dws_template_recommend_score_di` a
+  JOIN `aidata2025.ods.template` b
+    ON a.temp_id = b.unique_id
+  WHERE b.platform = 'collart-android'
+    AND b.status = 'online'
+    AND b.deleted_at = 0
+    AND b.created_at IS NOT NULL
+    AND a.event_date =  current_date()-1
+    AND a.traffic_src_type = 'all'
+    AND a.country_code = 'all'
+) s
+  ON t.temp_id = s.temp_id
+
+;
+
+commit;

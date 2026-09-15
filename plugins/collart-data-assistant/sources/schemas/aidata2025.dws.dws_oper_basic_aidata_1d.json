@@ -1,0 +1,389 @@
+{
+  "table": "aidata2025.dws.dws_oper_basic_aidata_1d",
+  "captured_at": "2026-09-14T13:19:07.896242+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_version",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_type",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dnu",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "dau",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retention",
+        "type": "RECORD",
+        "mode": "NULLABLE",
+        "fields": [
+          {
+            "name": "day1",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day2",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day3",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day4",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day5",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day6",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day7",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day8",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day9",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day10",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day11",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day12",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day13",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day14",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day15",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day16",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day17",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day18",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day19",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day20",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day21",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day22",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day23",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day24",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day25",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day26",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day27",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day28",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day29",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day30",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ],
+        "description": "留存用户数，针对新用户"
+      },
+      {
+        "name": "subscribe",
+        "type": "RECORD",
+        "mode": "NULLABLE",
+        "fields": [
+          {
+            "name": "day1",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day2",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day3",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day4",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day5",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day6",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day7",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day8",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day9",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day10",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day11",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day12",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day13",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day14",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day15",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day16",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day17",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day18",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day19",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day20",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day21",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day22",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day23",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day24",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day25",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day26",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day27",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day28",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day29",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "day30",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ],
+        "description": "订阅用户数，针对新用户"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "adjust_src_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dws",
+    "tableId": "dws_oper_basic_aidata_1d"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

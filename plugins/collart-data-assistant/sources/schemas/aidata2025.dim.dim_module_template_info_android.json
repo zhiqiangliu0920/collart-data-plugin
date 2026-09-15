@@ -1,0 +1,80 @@
+{
+  "table": "aidata2025.dim.dim_module_template_info_android",
+  "captured_at": "2026-09-14T13:19:06.560231+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "country_code",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "国家代码"
+      },
+      {
+        "name": "module_id",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE",
+        "description": "模块 ID"
+      },
+      {
+        "name": "module_unique_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "模块唯一标识"
+      },
+      {
+        "name": "template_id",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE",
+        "description": "模板 ID"
+      },
+      {
+        "name": "temp_unique_id",
+        "type": "STRING",
+        "mode": "NULLABLE",
+        "description": "模板唯一标识"
+      },
+      {
+        "name": "is_vip",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "是否 VIP 用户（1 是，0 否）"
+      },
+      {
+        "name": "from_type",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "入口类型一级分类"
+      },
+      {
+        "name": "from_type2",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "入口类型二级分类"
+      },
+      {
+        "name": "manual_priority",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "人工调整后的优先级"
+      },
+      {
+        "name": "rn_in_group",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "组内排序行号"
+      },
+      {
+        "name": "priority",
+        "type": "INTEGER",
+        "mode": "NULLABLE",
+        "description": "最终优先级"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dim",
+    "tableId": "dim_module_template_info_android"
+  },
+  "type": "TABLE"
+}

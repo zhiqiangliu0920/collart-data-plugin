@@ -1,0 +1,196 @@
+config {
+    type: "operations",
+    dependencies: ["h_ods_apple_subscription_vidart_df", "h_ods_apple_subscription_muselab_df",
+                   "h_dwd_oper_user_basic_di","h_ods_apple_subscription_vibedance_df",
+                   "h_ods_apple_sales_1d"]
+}
+-- 每天更新最近30天分区的数据 
+DECLARE
+  from_date date DEFAULT ${dataform.projectConfig.vars.biz_date}-30;
+DECLARE
+  to_date date DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+-- ios订阅收入订单明细粒度数据
+BEGIN TRANSACTION;
+
+-- 删除近30天数据 每天更近最近30天
+DELETE
+FROM
+  `dwd.dwd_apple_user_subscribtion_di`
+WHERE
+  event_date BETWEEN from_date
+  AND to_date;
+
+-- 插入当日数据
+INSERT INTO
+  `dwd.dwd_apple_user_subscribtion_di`
+-- 苹果订单表 通过 country和sku 关联收入
+WITH currency_tab AS (
+  SELECT
+    package_name,
+    country_name,
+    country_code,
+    country_name_4,
+    a.sku,
+    SAFE_DIVIDE(SUM(revenue_usd),SUM(units)) AS revenue_apple,
+  FROM (
+    SELECT
+      stats_date,
+      package_name,
+      currency_of_proceeds,
+      country_code,
+      sku,
+      revenue_usd,
+      units,
+    FROM
+      aidata2025.ods.ods_apple_sales_1d
+    WHERE
+      stats_date between from_date-30 and to_date
+      AND revenue_usd <>0
+      AND units <>0 
+      )a
+  -- LEFT JOIN
+  --   aidata2025.dim.exchange_rate_days b
+  -- ON
+  --   DATE(a.stats_date) = DATE(b.stats_date)
+  --   AND a.currency_of_proceeds = b.currency
+  LEFT JOIN
+    aidata2025.dim.dim_country_info c
+  ON
+    LOWER(a.country_code)=LOWER(country_name_3)
+  GROUP BY
+    country_name,
+    country_code,
+    country_name_4,
+    package_name,
+    a.sku
+),
+
+-- 取woolong表订阅数据，关联用户信息 user_di
+woolong_original AS (
+  SELECT
+    original_transaction_id,
+    MAX(advertising_id) AS advertising_id,
+    MAX(user_id) AS user_id
+  FROM
+    `pubdata2025.ods.ods_woolong_subscription_1d`
+  GROUP BY
+    original_transaction_id 
+),
+
+-- 取用户信息表 关联user_pesudo_id
+user_map as (
+  SELECT
+    user_id,
+    max_by(user_pseudo_id,event_date) AS user_pseudo_id
+  FROM dwd.dwd_oper_user_basic_di
+  where event_date between from_date-30 and to_date
+  and lower(app_name) in ('looksart','vidart','vibedance_ios')
+  GROUP BY user_id
+)
+
+-- 每日增量数据 
+SELECT
+  event_date,
+  transaction_id,
+  a.package_name,
+  a.user_id,
+  user_pseudo_id,
+  a.sku,
+  purchase_date,
+  original_purchase_date,
+  expires_date,
+  CAST(quantity AS int64) AS quantity,
+  sub_type,
+  transaction_type,
+  storefront,
+  country_code,
+  country_name,
+  price,
+  a.currency,
+  revenue_apple*quantity,
+  '' as login_user_id,
+  e.app_name
+FROM (
+  SELECT
+    DATE(TIMESTAMP_MILLIS(CAST(ti_purchasedate AS INT64))) AS event_date,
+    ti_transactionId AS transaction_id,
+    ti_originalTransactionId AS original_transaction_id,
+    bundleId AS package_name,
+    COALESCE(ri_productId,ti_productId) AS sku,
+    DATETIME(TIMESTAMP_MILLIS(CAST(ti_purchasedate AS INT64))) AS purchase_date,
+    DATETIME(TIMESTAMP_MILLIS(CAST(ti_originalPurchaseDate AS INT64))) AS original_purchase_date,
+    DATETIME(TIMESTAMP_MILLIS(CAST(ti_expiresDate AS INT64))) AS expires_date,
+    IF(notificationtype in ('REVOKE','REFUND'),-1,1) AS quantity,
+    ti_type AS sub_type,
+    ti_transactionReason AS transaction_type,
+    ti_storefront AS storefront,
+    IF(notificationtype in ('REVOKE','REFUND'),-CAST(ti_price AS int64),CAST(ti_price AS int64))/1000 AS price,
+    ti_currency AS currency,
+    ti_appAccountToken as user_id,
+  FROM(
+    select
+      distinct
+      to_date as event_date,
+      *
+    FROM
+    `aidata2025.ods.ods_apple_subscription_muselab_df`
+    WHERE DATE(TIMESTAMP_MILLIS(CAST(ti_purchasedate AS INT64))) between from_date and to_date
+    -- AND ti_price IS NOT NULL 要计算试用的
+    AND rd_environment = 'Production'
+    AND notificationtype not IN (
+      'EXPIRED', 'DID_FAIL_TO_RENEW', 'DID_CHANGE_RENEWAL_STATUS',
+      'CONSUMPTION_REQUEST','DID_CHANGE_RENEWAL_PREF','OFFER_REDEEMED','REFUND_DECLINED')
+    
+    -- vidart
+    union all
+    select
+      distinct
+      *
+    FROM
+    `aidata2025.ods.ods_apple_subscription_vidart_df`
+    WHERE DATE(TIMESTAMP_MILLIS(CAST(ti_purchasedate AS INT64))) between from_date and to_date
+    AND rd_environment = 'Production'
+    AND notificationtype not IN (
+      'EXPIRED', 'DID_FAIL_TO_RENEW', 'DID_CHANGE_RENEWAL_STATUS',
+      'CONSUMPTION_REQUEST','DID_CHANGE_RENEWAL_PREF','OFFER_REDEEMED','REFUND_DECLINED')
+
+    -- vibedance
+    union all
+    select
+      distinct
+      to_date as event_date,
+      *
+    FROM
+    `aidata2025.ods.ods_apple_subscription_vibedance_df`
+    WHERE DATE(TIMESTAMP_MILLIS(CAST(ti_purchasedate AS INT64))) between from_date and to_date
+    AND rd_environment = 'Production'
+    AND notificationtype not IN (
+      'EXPIRED', 'DID_FAIL_TO_RENEW', 'DID_CHANGE_RENEWAL_STATUS',
+      'CONSUMPTION_REQUEST','DID_CHANGE_RENEWAL_PREF','OFFER_REDEEMED','REFUND_DECLINED')
+  )
+ ) a
+LEFT JOIN
+  currency_tab c
+ON
+  a.storefront = c.country_name_4
+  AND a.sku = c.sku
+  AND a.package_name = c.package_name
+left join 
+ woolong_original d 
+on a.original_transaction_id = d.original_transaction_id
+left join user_map 
+on a.user_id = user_map.user_id
+left join dim.dim_product_info e
+on a.package_name = e.package_name
+;
+-- 登录用户增加登录后id
+UPDATE `aidata2025.dwd.dwd_apple_user_subscribtion_di` a
+SET login_user_id = b.user_id
+FROM `aidata2025.ods.au_guest_binding` b
+WHERE a.user_id = b.guest_uid
+  AND lower(a.app_name) = 'vidart'
+  AND b.user_id IS NOT NULL;
+
+COMMIT
+;

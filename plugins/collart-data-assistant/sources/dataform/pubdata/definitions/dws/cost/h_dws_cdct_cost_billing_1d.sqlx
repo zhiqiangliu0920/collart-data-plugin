@@ -1,0 +1,278 @@
+config {
+    type: "operations",
+    dependencies: ["h_dwd_cdct_cost_aws_billing_di", "h_dwd_cdct_cost_gcp_billing_di", "h_dwd_cdct_cost_azure_billing_di","h_dwd_cdct_ai_service_record_info_hi"]
+}
+
+BEGIN TRANSACTION;
+  -- 这里放置一系列 DML 语句
+  --删除分区数据
+DELETE
+FROM
+  `dws.dws_cdct_cost_billing_1d`
+WHERE
+  event_date >= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH);
+  --插入分区数据--
+INSERT INTO
+  dws.dws_cdct_cost_billing_1d
+WITH ai_app_daily_rate AS (
+  -- 未配置三方计费模型即为自建；按当天各 app 完成调用的去重 task 数分摊。
+  SELECT
+    event_date,
+    app_name,
+    SAFE_DIVIDE(task_num, SUM(task_num) OVER (PARTITION BY event_date)) AS allocate_rate
+  FROM
+  (SELECT
+    create_date AS event_date,
+    LOWER(
+      CASE
+        WHEN app_name = 'collart-web' THEN 'collart_web'
+        WHEN app_name = 'collart-android' THEN 'collart_android'
+        ELSE app_name
+      END
+    ) AS app_name,
+    COUNT(DISTINCT task_id) AS task_num
+  FROM `dwd.dwd_cdct_ai_service_record_info_hi` AS a
+  WHERE create_date >= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+    AND status = 'completed'
+    AND NULLIF(TRIM(app_name), '') IS NOT NULL
+    AND NULLIF(TRIM(task_id), '') IS NOT NULL
+    AND NOT EXISTS (
+      SELECT 1
+      FROM `aidata2025.dim.dim_ai_service_cost_unit_copy` AS b
+      WHERE b.model = a.model_type
+    )
+  GROUP BY 1, 2
+  )
+),
+billing_base AS (
+select
+  event_date,
+  billing_from,
+  atlasv_app_name,
+  resource_name,
+  billing_month,
+  module,
+  usage_cnt,
+  case 
+    when billing_from = 'aws-39599' and pricing_unit = 'GB' then unit_price*usage_cnt
+    else cost
+  end as cost,
+  sub_resource_name,
+  region,
+  pricing_unit,
+  unit_price,
+  project_name
+from 
+(SELECT
+  event_date,
+  billing_from,
+  CASE
+    WHEN app_name='未知' AND region='gz' THEN 'Vidma'
+    WHEN app_name IN ('all', 'boss', 'cortex', 'hz-rds', 'other', 'zing') OR region='AtlasV' THEN region
+    ELSE app_name
+  END AS atlasv_app_name,
+  resource_name,
+  billing_month,
+  module,
+  CAST(SUM(line_item_usage_amount) AS int64) AS usage_cnt,
+  SUM(line_item_blended_cost) AS cost,
+  sub_resource_name,
+  region,
+  pricing_unit,
+  if(pricing_unit = 'GB' and billing_from = 'aws-39599',0.006,1) as unit_price,
+  user_project as project_name
+FROM (
+  SELECT
+    event_date,
+    case 
+      when line_item_usage_account_id = '364912439599' then 'aws-39599'
+      else 'aws' 
+    end AS billing_from,
+    CASE
+      WHEN user_project LIKE 'collart%' THEN 'collart'
+      WHEN user_project LIKE 'remove%' THEN 'remove'
+      WHEN user_project ='fate-quest' THEN 'game'
+      WHEN user_project ='siren' THEN 'bedtimestory'
+      WHEN user_project IS NOT NULL THEN user_project
+      ELSE '未知'
+    END AS app_name,
+    'server' AS resource_name,
+    billing_month AS billing_month,
+    source_name AS module,
+    line_item_usage_amount,
+    line_item_blended_cost,
+    line_item_product_code AS sub_resource_name,
+    CASE
+      WHEN line_item_usage_account_name ='vidma' THEN 'gz'
+      WHEN region LIKE '%gz%' THEN 'gz'
+      WHEN region LIKE '%hz%' THEN 'hz'
+      ELSE 'AtlasV'
+    END
+    AS region,
+    pricing_unit,
+    user_project,
+    
+  FROM
+    dwd.dwd_cdct_cost_aws_billing_di
+  WHERE
+    event_date>= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+)
+GROUP BY all
+
+UNION ALL
+
+SELECT
+  event_date,
+  'azure' AS billing_from,
+  'shotcut' AS app_name,
+  'AI service' AS resource_name,
+  billing_month AS billing_month,
+  '未知' AS module,
+  CAST(SUM(usage_quantity) AS int64) AS usage_cnt,
+  SUM(billing_cost)/(CASE
+      WHEN sum(b.rate) !=0 THEN sum(b.rate)
+      ELSE 30
+  END
+    ) AS cost,
+  --------------手写新台币和美元汇率大约33-----------
+  'AI service' AS sub_resource_name,
+  'hz' AS region,
+  null as pricing_unit,
+  1 as unit_price,
+  null as project_name
+FROM
+  dwd.dwd_cdct_cost_azure_billing_di a
+LEFT JOIN (
+  SELECT
+    *
+  FROM
+    `gzdw2024.gz_dim.exchange_rate_days`
+  WHERE
+    currency='TWD') b
+ON
+  a.event_date=CAST(b.stats_date AS date)
+WHERE
+  event_date>= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+GROUP BY
+  event_date,
+  billing_month
+
+UNION ALL
+
+SELECT
+  event_date,
+  'gcp' AS billing_from,
+  CASE
+    WHEN google_project_name IN( 'nova downloader', 'Recorder-Pro', 'Scanner Lens', 'Recorder-Lite' ) THEN google_project_name
+    WHEN google_project_name IN( 'etm-ins No2') THEN 'ins3'
+    WHEN google_project_name= 'instasaver No1' THEN 'ins1'
+    WHEN google_project_name IN('Shotcut Editor') THEN 'shotcut'
+    WHEN google_project_name='RemoveObjects' THEN 'remove'
+    WHEN google_project_name='Collart' THEN 'collart'
+    WHEN google_project_name='Fastget-fb downloader' THEN 'fbd2'
+    WHEN google_project_name='TikTokDownloader' THEN 'ttd2'
+    WHEN google_project_name IN ('DownloadData') THEN 'downloader'
+    WHEN google_project_name='twdown' THEN 'twd'
+    WHEN google_project_name='Vidma-Editor-Android' THEN 'Vidma Editor_android'
+    WHEN google_project_name='fb-ai-avatar-puzzle' THEN 'games'
+    WHEN google_project_name in ('GZDW','brainburst','VidmaDev') THEN 'gz'
+    WHEN google_project_name in ('Atlasv-Android-Team','x-service','SpeedTest','HZDW') THEN 'hz'
+    ELSE 'AtlasV'
+END
+  AS app_name,
+  'server' AS resource_name,
+  DATE_TRUNC(event_date, MONTH) AS billing_month,
+  '未知' AS module,
+  CAST(SUM(usage_amount) AS int64) AS usage_cnt,
+  SUM(original_total) AS cost,
+  sku_description AS sub_resource_name,
+  CASE
+    WHEN google_project_name IN(
+        'nova downloader', 'Recorder-Pro', 'Scanner Lens', 'Recorder-Lite','Vidma-Editor-Android', 
+        'fb-ai-avatar-puzzle','GZDW','brainburst','VidmaDev','VidmaEditor-iOS','AI Note') THEN 'gz'
+    WHEN google_project_name IN( 
+        'etm-ins No2','instasaver No1','DownloadData','AIDATA','HZDW','x-service','TikTokDownloader','twdown','Atlasv-Android-Team'
+        'Shotcut Editor','PubData', 'RemoveObjects','Collart','Fastget-fb downloader','atlasv-internal') THEN 'hz'
+    ELSE 'AtlasV'
+  END
+  AS region,
+  null as pricing_unit,
+  1 as unit_price,
+  google_project_name as project_name
+FROM
+  dwd.dwd_cdct_cost_gcp_billing_di
+WHERE
+  event_date>= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+GROUP BY all
+
+union all 
+SELECT
+  stats_date as event_date,
+  'do' as billing_from,
+  case 
+    when project_name = 'collart-test' then 'collart'
+    when project_name = 'richman-media' then 'shotcut' 
+    when project_name = 'media-processor (professional)' then 'collart'  
+    when project_name = 'imagix-storage' then 'imagix'
+    when project_name = 'downloader-media' then 'downloader'
+    when project_name = 'short-drama' then 'drama'
+    when project_name is null and description like '%search-server%' then 'ai-infra'  
+    when project_name is null and description like '%Spaces Storage%' then 'ai-infra'  
+    when project_name is null and description like '%Spaces (%' then  'ai-infra'
+    else project_name
+  end as app_name,
+  'server' AS resource_name,
+  DATE_TRUNC(stats_date, MONTH) AS billing_month,
+  '未知' AS module,
+  count(1) AS usage_cnt,
+  SUM(amount) AS cost,
+  sku AS sub_resource_name,
+  region,
+  null as pricing_unit,
+  1 as unit_price,
+  project_name
+FROM `pubdata2025.ods.ods_billing_digitalocean_insights_1d`
+where stats_date >= DATE_SUB(DATE_TRUNC(CURRENT_DATE, MONTH), INTERVAL 1 MONTH)
+group by all
+)
+)
+SELECT
+    a.event_date,
+    a.billing_from,
+    CASE
+      WHEN r.app_name IS NOT NULL THEN r.app_name
+      ELSE a.atlasv_app_name
+    END AS atlasv_app_name,
+    a.resource_name,
+    a.billing_month,
+    a.module,
+    CASE
+      WHEN r.app_name IS NOT NULL THEN CAST(ROUND(a.usage_cnt * r.allocate_rate) AS INT64)
+      ELSE a.usage_cnt
+    END AS usage_cnt,
+    CASE
+      WHEN r.app_name IS NOT NULL THEN a.cost * r.allocate_rate
+      ELSE a.cost
+    END AS cost,
+    a.sub_resource_name,
+    case 
+      when r.app_name in ('collart_android','muselab-android','remove-android','shotcut','vibedance-android',
+      'collart_web','picfix','ins3','vidart-ios','muselab-ios','dramahub','micmic-ios','homeai-ios','platform-aiweb') then 'hz'
+      when r.app_name in ('ohoweb-game','vidma-android') then 'gz'
+      else a.region
+    end as region,
+    a.pricing_unit,
+    a.unit_price,
+    a.project_name,
+  FROM billing_base AS a
+  LEFT JOIN ai_app_daily_rate AS r
+    ON a.event_date = r.event_date
+    AND a.billing_from LIKE '%aws%'
+    AND (
+      a.sub_resource_name IN ('AWSLambda', 'AmazonApiGateway','AmazonSageMaker','AmazonRDS','AWSQueueService','AmazonRoute53')
+      or (a.billing_from = 'aws' and a.project_name in ('aibase','infra','inference-gw'))
+    )
+  ;
+  --如果所有操作都成功，提交事务
+COMMIT
+  ;

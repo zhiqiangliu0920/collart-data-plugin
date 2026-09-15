@@ -1,0 +1,86 @@
+{
+  "table": "aidata2025.ads_collart.ads_template_search_user_keyword_di",
+  "captured_at": "2026-09-14T13:19:03.498866+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "product_name",
+        "type": "STRING"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING"
+      },
+      {
+        "name": "user_key",
+        "type": "STRING"
+      },
+      {
+        "name": "search_keyword_raw",
+        "type": "STRING"
+      },
+      {
+        "name": "search_keyword",
+        "type": "STRING"
+      },
+      {
+        "name": "country",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_type",
+        "type": "STRING"
+      },
+      {
+        "name": "traffic_src_name",
+        "type": "STRING"
+      },
+      {
+        "name": "search_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "search_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "search_failed_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "search_click_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "refreshed_at",
+        "type": "TIMESTAMP"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collart",
+    "tableId": "ads_template_search_user_keyword_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "app_name",
+      "search_keyword",
+      "country"
+    ]
+  },
+  "description": "Collart Android/Web template search user-keyword daily fact; Power BI import source",
+  "type": "TABLE"
+}

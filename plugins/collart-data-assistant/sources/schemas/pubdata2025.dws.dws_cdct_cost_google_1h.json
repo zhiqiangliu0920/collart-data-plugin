@@ -1,0 +1,103 @@
+{
+  "table": "pubdata2025.dws.dws_cdct_cost_google_1h",
+  "captured_at": "2026-09-14T13:19:09.141827+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "hour",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "campaign_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "impressions",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "clicks",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ctr",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "conversions",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "average_cpc",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost_per_conversion",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "installs",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost_per_install",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "hk_us_exchange_rate",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "intotime",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "gst_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "dws",
+    "tableId": "dws_cdct_cost_google_1h"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "type": "TABLE"
+}

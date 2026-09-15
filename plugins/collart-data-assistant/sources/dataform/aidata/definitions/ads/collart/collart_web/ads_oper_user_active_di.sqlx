@@ -1,0 +1,754 @@
+config {
+  type: "operations",
+  name: "ads_collartweb_oper_user_active_di",
+  schema: "ads_collartweb",
+  dependencies: [
+    "h_dm_collart_web_user_event_di"
+  ]
+}
+
+/*
+  Collart Web 第二张表：用户日事实表（活跃 ∪ 当日有收入）
+  Dataform: definitions/ads/collart/collart_web/ads_oper_user_active_di.sqlx
+  目标表  : aidata2025.ads_collartweb.ads_oper_user_active_di
+
+  【已确认口径 2026-08-11】见 OPEN_QUESTIONS_WEB_FASHION.md
+  - DM 过滤: package_name = 'collart_web'（ads 层 package_name 统一为 'collart_web'）
+  - 粒度: event_date × user_pseudo_id；行 = 当日活跃 OR 当日有 Stripe 收入
+  - is_active = page_view / user_engagement / session_start / first_visit（落表）
+  - 付费-only 行 is_active=FALSE；维度取最近一次活跃日快照；retain/churn/return 仅基于活跃日
+  - 下游: DAU/新增/留存/流失/回流滤 is_active；SUM(revenue) 不过滤
+  - is_new   = first_visit（付费-only 为 FALSE）
+  - is_vip: 保留原始值('0'/'1')；下游 VIP 判定用 is_vip IN ('1','2')
+  - 收入: Stripe dwd_cdct_revenue_stripe_di，按 user_id 归属到 user_pseudo_id：
+      1) 同日 DM 事件末次 user_pseudo_id 优先
+      2) 兜底 ads_collart.ads_oper_collart_web_id_map 最近一次绑定（不再卡首见日）
+      两级均未命中的收入行不进表（mapped_miss）。真 miss 不硬挂设备。
+  - 刷新: DELETE/INSERT [biz_date-30, biz_date]
+  - 禁止改动其他 dataset 表
+*/
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 30;
+DECLARE to_date   DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+DECLARE source_from_date DATE DEFAULT from_date - 14;
+
+CREATE TABLE IF NOT EXISTS `aidata2025.ads_collartweb.ads_oper_user_active_di`
+(
+  package_name STRING,
+  app_name STRING,
+  event_date DATE,
+  user_pseudo_id STRING,
+  user_id STRING,
+  country STRING,
+  app_version STRING,
+  is_new BOOL,
+  is_churn BOOL,
+  is_return BOOL,
+  is_remove BOOL,
+  is_login BOOL,
+  is_active BOOL,
+  is_vip STRING,
+  first_open_time TIMESTAMP,
+  traffic_src_name STRING,
+  traffic_src_type STRING,
+  traffic_src_platform STRING,
+  identity STRUCT<
+    clarity_user_id STRING,
+    clarity_session_id STRING,
+    atlasv_id STRING
+  >,
+  geo STRUCT<
+    city STRING,
+    continent STRING,
+    sub_continent STRING
+  >,
+  device STRUCT<
+    category STRING,
+    mobile_brand_name STRING,
+    mobile_model_name STRING,
+    operating_system STRING,
+    operating_system_version STRING,
+    vendor_id STRING,
+    language STRING,
+    browser STRING,
+    browser_version STRING
+  >,
+  traffic_src STRUCT<
+    source STRING,
+    medium STRING,
+    campaign STRING,
+    campaign_id STRING,
+    term STRING,
+    content STRING
+  >,
+  subscription STRUCT<
+    product_ids ARRAY<STRING>,
+    purchase_cnt INT64,
+    is_subscribe BOOL,
+    is_credit_pack BOOL,
+    credit_pack_cnt INT64,
+    credit_amount INT64,
+    sub_in_7d BOOL,
+    credit_pack_in_7d BOOL,
+    is_purchase BOOL
+  >,
+  revenue STRUCT<
+    purchase_revenue FLOAT64,
+    resub_revenue FLOAT64,
+    new_revenue FLOAT64,
+    credit_revenue FLOAT64,
+    ad_revenue FLOAT64
+  >,
+  retain STRUCT<
+    d2 BOOL,
+    d3 BOOL,
+    d4 BOOL,
+    d5 BOOL,
+    d6 BOOL,
+    d7 BOOL,
+    d8 BOOL,
+    d9 BOOL,
+    d10 BOOL,
+    d11 BOOL,
+    d12 BOOL,
+    d13 BOOL,
+    d14 BOOL,
+    d15 BOOL,
+    d16 BOOL,
+    d17 BOOL,
+    d18 BOOL,
+    d19 BOOL,
+    d20 BOOL,
+    d21 BOOL,
+    d22 BOOL,
+    d23 BOOL,
+    d24 BOOL,
+    d25 BOOL,
+    d26 BOOL,
+    d27 BOOL,
+    d28 BOOL,
+    d29 BOOL,
+    d30 BOOL
+  >,
+  rolling_retain STRUCT<
+    d2 BOOL,
+    d3 BOOL,
+    d4 BOOL,
+    d5 BOOL,
+    d6 BOOL,
+    d7 BOOL,
+    d8 BOOL,
+    d9 BOOL,
+    d10 BOOL,
+    d11 BOOL,
+    d12 BOOL,
+    d13 BOOL,
+    d14 BOOL,
+    d15 BOOL,
+    d16 BOOL,
+    d17 BOOL,
+    d18 BOOL,
+    d19 BOOL,
+    d20 BOOL,
+    d21 BOOL,
+    d22 BOOL,
+    d23 BOOL,
+    d24 BOOL,
+    d25 BOOL,
+    d26 BOOL,
+    d27 BOOL,
+    d28 BOOL,
+    d29 BOOL,
+    d30 BOOL
+  >
+)
+PARTITION BY event_date
+CLUSTER BY user_pseudo_id, country
+OPTIONS (
+  description = 'Collart Web 用户日事实：活跃∪当日 Stripe 收入，含 is_active（新建表，不改其他表）'
+);
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.ads_collartweb.ads_oper_user_active_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.ads_collartweb.ads_oper_user_active_di` (
+  package_name, app_name, event_date, user_pseudo_id, user_id, country, app_version,
+  is_new, is_churn, is_return, is_remove, is_login, is_active, is_vip, first_open_time,
+  traffic_src_name, traffic_src_type, traffic_src_platform,
+  identity, geo, device, traffic_src, subscription, revenue, retain, rolling_retain
+)
+
+WITH ev AS (
+  SELECT *
+  FROM `aidata2025.dm.dm_collart_web_user_event_di`
+  WHERE event_date BETWEEN source_from_date AND to_date
+    AND package_name = 'collart_web'
+    AND user_pseudo_id IS NOT NULL
+),
+
+agg AS (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    COUNTIF(event_name = 'first_visit') > 0 AS is_new,
+    COUNTIF(event_name IN (
+      'page_view', 'user_engagement', 'session_start', 'first_visit'
+    )) > 0 AS is_active,
+    FALSE AS is_remove,
+    LOGICAL_OR(is_vip IN ('1', '2')) AS any_vip,
+    LOGICAL_OR(traffic_src_type = 'delivery') AS any_delivery,
+    LOGICAL_OR(COALESCE(page.location, '') LIKE '%utm_source=X%') AS any_x
+  FROM ev
+  GROUP BY event_date, user_pseudo_id
+),
+
+last_ev AS (
+  SELECT * EXCEPT(rn)
+  FROM (
+    SELECT
+      event_date,
+      user_pseudo_id,
+      user_id,
+      country,
+      CAST(NULL AS STRING) AS app_version,
+      is_login,
+      is_vip,
+      first_open_time,
+      traffic_src_name,
+      traffic_src_type,
+      CASE
+        WHEN LOWER(IFNULL(traffic_src_platform, '')) IN ('x', 'x_delivery') THEN 'x_delivery'
+        WHEN NULLIF(traffic_src_platform, '') IS NOT NULL THEN traffic_src_platform
+        WHEN traffic_src_type != 'delivery' THEN traffic_src_type
+        WHEN COALESCE(page.location, '') LIKE '%utm_source=X%'
+          OR LOWER(COALESCE(traffic.source, '')) IN ('x', 'twitter')
+          OR REGEXP_CONTAINS(UPPER(COALESCE(traffic_src_name, '')), r'^(X[-_]|CW_X_|TW[-_]|TWITTER)') THEN 'x_delivery'
+        WHEN LOWER(COALESCE(traffic.source, '')) LIKE '%tiktok%'
+          OR LOWER(COALESCE(traffic.source, '')) LIKE '%bytedance%'
+          OR LOWER(REGEXP_EXTRACT(COALESCE(page.location, ''), r'[?&]utm_source=([^&#]+)')) LIKE '%tiktok%'
+          OR REGEXP_CONTAINS(UPPER(COALESCE(traffic_src_name, '')), r'^(TT[-]|TIKTOK)') THEN 'tt_delivery'
+        WHEN LOWER(COALESCE(traffic.medium, '')) = 'paid_social'
+          OR REGEXP_CONTAINS(LOWER(COALESCE(traffic_src_name, '')), r'(^fb[-_]|meta|facebook)')
+          OR UPPER(COALESCE(traffic_src_name, '')) LIKE 'IG%'
+          OR LOWER(COALESCE(traffic.source, '')) LIKE '%facebook%'
+          OR LOWER(COALESCE(traffic.source, '')) IN ('ig', 'instagram') THEN 'fb_delivery'
+        WHEN LOWER(COALESCE(traffic.medium, '')) IN ('cpc', 'ppc', 'paid', 'paid_search', 'display', 'cpv', 'cpm')
+          OR REGEXP_CONTAINS(LOWER(COALESCE(traffic_src_name, '')), r'(^ga[-_]|google.?ads)') THEN 'ga_delivery'
+        WHEN LOWER(COALESCE(traffic.source, '')) LIKE '%applovin%' THEN 'applovin_delivery'
+        ELSE 'other_delivery'
+      END AS traffic_src_platform,
+      identity,
+      geo,
+      device,
+      traffic,
+      ROW_NUMBER() OVER (
+        PARTITION BY event_date, user_pseudo_id
+        ORDER BY event_time DESC
+      ) AS rn
+    FROM ev
+  )
+  WHERE rn = 1
+),
+
+-- 当日最后一次 delivery 快照，避免末次 nature 冲掉投放 name/platform
+delivery_ev AS (
+  SELECT * EXCEPT(rn)
+  FROM (
+    SELECT
+      event_date,
+      user_pseudo_id,
+      traffic_src_name,
+      traffic_src_type,
+      CASE
+        WHEN LOWER(IFNULL(traffic_src_platform, '')) IN ('x', 'x_delivery') THEN 'x_delivery'
+        WHEN NULLIF(traffic_src_platform, '') IS NOT NULL THEN traffic_src_platform
+        WHEN COALESCE(page.location, '') LIKE '%utm_source=X%'
+          OR LOWER(COALESCE(traffic.source, '')) IN ('x', 'twitter')
+          OR REGEXP_CONTAINS(UPPER(COALESCE(traffic_src_name, '')), r'^(X[-_]|CW_X_|TW[-_]|TWITTER)') THEN 'x_delivery'
+        WHEN LOWER(COALESCE(traffic.source, '')) LIKE '%tiktok%'
+          OR LOWER(COALESCE(traffic.source, '')) LIKE '%bytedance%'
+          OR LOWER(REGEXP_EXTRACT(COALESCE(page.location, ''), r'[?&]utm_source=([^&#]+)')) LIKE '%tiktok%'
+          OR REGEXP_CONTAINS(UPPER(COALESCE(traffic_src_name, '')), r'^(TT[-]|TIKTOK)') THEN 'tt_delivery'
+        WHEN LOWER(COALESCE(traffic.medium, '')) = 'paid_social'
+          OR REGEXP_CONTAINS(LOWER(COALESCE(traffic_src_name, '')), r'(^fb[-_]|meta|facebook)')
+          OR UPPER(COALESCE(traffic_src_name, '')) LIKE 'IG%'
+          OR LOWER(COALESCE(traffic.source, '')) LIKE '%facebook%'
+          OR LOWER(COALESCE(traffic.source, '')) IN ('ig', 'instagram') THEN 'fb_delivery'
+        WHEN LOWER(COALESCE(traffic.medium, '')) IN ('cpc', 'ppc', 'paid', 'paid_search', 'display', 'cpv', 'cpm')
+          OR REGEXP_CONTAINS(LOWER(COALESCE(traffic_src_name, '')), r'(^ga[-_]|google.?ads)') THEN 'ga_delivery'
+        WHEN LOWER(COALESCE(traffic.source, '')) LIKE '%applovin%' THEN 'applovin_delivery'
+        ELSE 'other_delivery'
+      END AS traffic_src_platform,
+      traffic,
+      ROW_NUMBER() OVER (
+        PARTITION BY event_date, user_pseudo_id
+        ORDER BY IF(COALESCE(page.location, '') LIKE '%utm_source=X%', 0, 1), event_time DESC
+      ) AS rn
+    FROM ev
+    WHERE traffic_src_type = 'delivery'
+  )
+  WHERE rn = 1
+),
+
+
+-- Stripe 交易行去重（transaction 粒度）
+stripe_raw AS (
+  SELECT DISTINCT
+    event_date,
+    transaction_id,
+    user_id,
+    description_type,
+    product_name,
+    revneue
+  FROM `pubdata2025.dwd.dwd_cdct_revenue_stripe_di`
+  WHERE event_date BETWEEN source_from_date AND to_date
+    AND revneue > 0
+    AND user_id IS NOT NULL
+    AND LOWER(app_name) LIKE 'collart%web%'
+),
+
+-- 同日 user_id → 主 user_pseudo_id（末次事件），避免一笔收入挂多 pseudo
+uid_map AS (
+  SELECT
+    event_date,
+    user_id,
+    ARRAY_AGG(user_pseudo_id ORDER BY event_time DESC LIMIT 1)[OFFSET(0)] AS user_pseudo_id
+  FROM ev
+  WHERE user_id IS NOT NULL AND user_id <> ''
+  GROUP BY event_date, user_id
+),
+
+-- 历史兜底映射：user_id → 最近一次绑定的 user_pseudo_id（跨日/无同日事件的收入归属）
+uid_map_hist AS (
+  SELECT
+    user_id,
+    ARRAY_AGG(user_pseudo_id ORDER BY user_id_last_date DESC, user_pseudo_id_last_date DESC LIMIT 1)[OFFSET(0)] AS user_pseudo_id,
+    ARRAY_AGG(user_pseudo_id_first_date ORDER BY user_id_last_date DESC, user_pseudo_id_last_date DESC LIMIT 1)[OFFSET(0)] AS pseudo_first_date
+  FROM `aidata2025.ads_collart.ads_oper_collart_web_id_map`
+  WHERE user_id IS NOT NULL AND user_id <> ''
+    AND user_pseudo_id IS NOT NULL AND user_pseudo_id <> ''
+  GROUP BY user_id
+),
+
+-- 收入行级映射：同日事件优先，其次历史 id_map（不卡首见日，too_new 也进 active）
+stripe_mapped AS (
+  SELECT
+    s.event_date,
+    COALESCE(m.user_pseudo_id, h.user_pseudo_id) AS user_pseudo_id,
+    s.transaction_id,
+    s.description_type,
+    s.product_name,
+    s.revneue
+  FROM stripe_raw AS s
+  LEFT JOIN uid_map AS m USING (event_date, user_id)
+  LEFT JOIN uid_map_hist AS h USING (user_id)
+),
+
+-- 按 user_pseudo_id×日 聚合（五拆分）；两级映射均未命中的收入行不进表
+stripe_all AS (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    ARRAY_AGG(DISTINCT product_name IGNORE NULLS) AS product_ids,
+    COUNT(DISTINCT transaction_id) AS purchase_cnt,
+    LOGICAL_OR(description_type IN ('Subscription creation', 'Subscription update')) AS is_subscribe,
+    LOGICAL_OR(description_type = 'credit') AS is_credit_pack,
+    COUNTIF(description_type = 'credit') AS credit_pack_cnt,
+    SUM(IF(description_type = 'credit',
+           SAFE_CAST(REGEXP_EXTRACT(product_name, r'(\d+)') AS INT64), 0)) AS credit_amount,
+    SUM(revneue) AS purchase_revenue,
+    SUM(IF(description_type = 'Subscription creation', revneue, 0)) AS new_revenue,
+    SUM(IF(description_type = 'Subscription update', revneue, 0)) AS resub_revenue,
+    SUM(IF(description_type = 'credit', revneue, 0)) AS credit_revenue,
+    LOGICAL_OR(description_type IN ('Subscription creation', 'Subscription update')) AS has_sub,
+    LOGICAL_OR(description_type = 'credit') AS has_credit
+  FROM stripe_mapped
+  WHERE user_pseudo_id IS NOT NULL
+  GROUP BY event_date, user_pseudo_id
+),
+
+-- 仅活跃（engaged）用户日；device 在此对齐目标表字段名，便于与目标表 UNION ALL 取历史维度
+active_all AS (
+  SELECT
+    a.event_date,
+    a.user_pseudo_id,
+    a.is_new,
+    a.is_remove,
+    l.user_id,
+    'collart_web' AS package_name,
+    l.country,
+    l.app_version,
+    l.is_login,
+    TRUE AS is_active,
+    IF(a.any_vip, '1', COALESCE(l.is_vip, '0')) AS is_vip,
+    l.first_open_time,
+    IF(a.any_delivery, COALESCE(d.traffic_src_name, l.traffic_src_name), l.traffic_src_name) AS traffic_src_name,
+    IF(a.any_delivery, 'delivery', l.traffic_src_type) AS traffic_src_type,
+    IF(a.any_x, 'x_delivery', IF(a.any_delivery, COALESCE(d.traffic_src_platform, l.traffic_src_platform), l.traffic_src_platform)) AS traffic_src_platform,
+    l.identity,
+    l.geo,
+    STRUCT(
+      l.device.device_category AS category,
+      l.device.mobile_brand_name AS mobile_brand_name,
+      l.device.mobile_model_name AS mobile_model_name,
+      l.device.operating_system AS operating_system,
+      l.device.device_operating_system_version AS operating_system_version,
+      l.device.device_vendor_id AS vendor_id,
+      l.device.device_language AS language,
+      l.device.browser AS browser,
+      l.device.browser_version AS browser_version
+    ) AS device,
+    IF(a.any_delivery, COALESCE(d.traffic, l.traffic), l.traffic) AS traffic_src
+  FROM agg AS a
+  JOIN last_ev AS l USING (event_date, user_pseudo_id)
+  LEFT JOIN delivery_ev AS d USING (event_date, user_pseudo_id)
+  WHERE a.is_active
+),
+
+active AS (
+  SELECT *
+  FROM active_all
+  WHERE event_date BETWEEN from_date AND to_date
+),
+
+-- 当日有 Stripe 收入但当日未活跃的用户日（补行，避免收入丢失）
+pay_only_keys AS (
+  SELECT p.event_date, p.user_pseudo_id
+  FROM stripe_all AS p
+  LEFT JOIN active AS a USING (event_date, user_pseudo_id)
+  WHERE p.event_date BETWEEN from_date AND to_date
+    AND IFNULL(p.purchase_revenue, 0) > 0
+    AND a.user_pseudo_id IS NULL
+),
+
+-- 维度来源：本次窗口活跃日 + 目标表历史活跃日（400 日回看）
+dim_src AS (
+  SELECT
+    event_date, user_pseudo_id, user_id, country, app_version, is_login, is_vip,
+    first_open_time, traffic_src_name, traffic_src_type, traffic_src_platform,
+    identity, geo, device, traffic_src
+  FROM active_all
+  UNION ALL
+  SELECT
+    event_date, user_pseudo_id, user_id, country, app_version, is_login, is_vip,
+    first_open_time, traffic_src_name, traffic_src_type, traffic_src_platform,
+    identity, geo, device, traffic_src
+  FROM `aidata2025.ads_collartweb.ads_oper_user_active_di`
+  WHERE event_date < from_date
+    AND event_date >= DATE_SUB(from_date, INTERVAL 400 DAY)
+    AND IFNULL(is_active, TRUE)
+),
+
+pay_only AS (
+  SELECT
+    p.event_date,
+    p.user_pseudo_id,
+    FALSE AS is_new,
+    FALSE AS is_remove,
+    d.user_id,
+    'collart_web' AS package_name,
+    COALESCE(d.country, 'unknown') AS country,
+    d.app_version,
+    COALESCE(d.is_login, FALSE) AS is_login,
+    FALSE AS is_active,
+    COALESCE(d.is_vip, '0') AS is_vip,
+    d.first_open_time,
+    d.traffic_src_name,
+    d.traffic_src_type,
+    d.traffic_src_platform,
+    d.identity,
+    d.geo,
+    d.device,
+    d.traffic_src
+  FROM pay_only_keys AS p
+  LEFT JOIN (
+    SELECT * EXCEPT (rn)
+    FROM (
+      SELECT
+        p2.event_date AS pay_date,
+        p2.user_pseudo_id,
+        d2.user_id,
+        d2.country,
+        d2.app_version,
+        d2.is_login,
+        d2.is_vip,
+        d2.first_open_time,
+        d2.traffic_src_name,
+        d2.traffic_src_type,
+        d2.traffic_src_platform,
+        d2.identity,
+        d2.geo,
+        d2.device,
+        d2.traffic_src,
+        ROW_NUMBER() OVER (
+          PARTITION BY p2.event_date, p2.user_pseudo_id
+          ORDER BY d2.event_date DESC
+        ) AS rn
+      FROM pay_only_keys AS p2
+      JOIN dim_src AS d2
+        ON d2.user_pseudo_id = p2.user_pseudo_id
+       AND d2.event_date <= p2.event_date
+    )
+    WHERE rn = 1
+  ) AS d
+    ON d.pay_date = p.event_date
+   AND d.user_pseudo_id = p.user_pseudo_id
+),
+
+output_base AS (
+  SELECT * FROM active
+  UNION ALL
+  SELECT * FROM pay_only
+),
+
+
+fwd AS (
+  SELECT
+    a.event_date,
+    a.user_pseudo_id,
+    LOGICAL_OR(b.has_sub) AS sub_in_7d,
+    LOGICAL_OR(b.has_credit) AS credit_pack_in_7d
+  FROM active AS a
+  LEFT JOIN stripe_all AS b
+    ON a.user_pseudo_id = b.user_pseudo_id
+   AND DATE_DIFF(b.event_date, a.event_date, DAY) BETWEEN 1 AND 7
+   AND (b.has_sub OR b.has_credit)
+  GROUP BY a.event_date, a.user_pseudo_id
+),
+
+retain_flags AS (
+  SELECT
+    event_date,
+    user_pseudo_id,
+    LOGICAL_OR(diff = 1) AS r1,
+    LOGICAL_OR(diff = 2) AS r2,
+    LOGICAL_OR(diff = 3) AS r3,
+    LOGICAL_OR(diff = 4) AS r4,
+    LOGICAL_OR(diff = 5) AS r5,
+    LOGICAL_OR(diff = 6) AS r6,
+    LOGICAL_OR(diff = 7) AS r7,
+    LOGICAL_OR(diff = 8) AS r8,
+    LOGICAL_OR(diff = 9) AS r9,
+    LOGICAL_OR(diff = 10) AS r10,
+    LOGICAL_OR(diff = 11) AS r11,
+    LOGICAL_OR(diff = 12) AS r12,
+    LOGICAL_OR(diff = 13) AS r13,
+    LOGICAL_OR(diff = 14) AS r14,
+    LOGICAL_OR(diff = 15) AS r15,
+    LOGICAL_OR(diff = 16) AS r16,
+    LOGICAL_OR(diff = 17) AS r17,
+    LOGICAL_OR(diff = 18) AS r18,
+    LOGICAL_OR(diff = 19) AS r19,
+    LOGICAL_OR(diff = 20) AS r20,
+    LOGICAL_OR(diff = 21) AS r21,
+    LOGICAL_OR(diff = 22) AS r22,
+    LOGICAL_OR(diff = 23) AS r23,
+    LOGICAL_OR(diff = 24) AS r24,
+    LOGICAL_OR(diff = 25) AS r25,
+    LOGICAL_OR(diff = 26) AS r26,
+    LOGICAL_OR(diff = 27) AS r27,
+    LOGICAL_OR(diff = 28) AS r28,
+    LOGICAL_OR(diff = 29) AS r29,
+    LOGICAL_OR(diff <= 1) AS rr1,
+    LOGICAL_OR(diff <= 2) AS rr2,
+    LOGICAL_OR(diff <= 3) AS rr3,
+    LOGICAL_OR(diff <= 4) AS rr4,
+    LOGICAL_OR(diff <= 5) AS rr5,
+    LOGICAL_OR(diff <= 6) AS rr6,
+    LOGICAL_OR(diff <= 7) AS rr7,
+    LOGICAL_OR(diff <= 8) AS rr8,
+    LOGICAL_OR(diff <= 9) AS rr9,
+    LOGICAL_OR(diff <= 10) AS rr10,
+    LOGICAL_OR(diff <= 11) AS rr11,
+    LOGICAL_OR(diff <= 12) AS rr12,
+    LOGICAL_OR(diff <= 13) AS rr13,
+    LOGICAL_OR(diff <= 14) AS rr14,
+    LOGICAL_OR(diff <= 15) AS rr15,
+    LOGICAL_OR(diff <= 16) AS rr16,
+    LOGICAL_OR(diff <= 17) AS rr17,
+    LOGICAL_OR(diff <= 18) AS rr18,
+    LOGICAL_OR(diff <= 19) AS rr19,
+    LOGICAL_OR(diff <= 20) AS rr20,
+    LOGICAL_OR(diff <= 21) AS rr21,
+    LOGICAL_OR(diff <= 22) AS rr22,
+    LOGICAL_OR(diff <= 23) AS rr23,
+    LOGICAL_OR(diff <= 24) AS rr24,
+    LOGICAL_OR(diff <= 25) AS rr25,
+    LOGICAL_OR(diff <= 26) AS rr26,
+    LOGICAL_OR(diff <= 27) AS rr27,
+    LOGICAL_OR(diff <= 28) AS rr28,
+    LOGICAL_OR(diff <= 29) AS rr29
+  FROM (
+    SELECT
+      a.event_date,
+      a.user_pseudo_id,
+      DATE_DIFF(b.event_date, a.event_date, DAY) AS diff
+    FROM active AS a
+    JOIN active_all AS b
+      ON a.user_pseudo_id = b.user_pseudo_id
+     AND DATE_DIFF(b.event_date, a.event_date, DAY) BETWEEN 1 AND 29
+  )
+  GROUP BY event_date, user_pseudo_id
+),
+
+coverage AS (
+  SELECT MIN(event_date) AS min_event_date FROM ev
+),
+
+lifecycle_flags AS (
+  SELECT
+    a.event_date,
+    a.user_pseudo_id,
+    IF(
+      DATE_ADD(a.event_date, INTERVAL 14 DAY) > to_date,
+      NULL,
+      NOT EXISTS (
+        SELECT 1 FROM active_all AS n
+        WHERE n.user_pseudo_id = a.user_pseudo_id
+          AND DATE_DIFF(n.event_date, a.event_date, DAY) BETWEEN 1 AND 14
+      )
+    ) AS is_churn,
+    IF(
+      a.is_new,
+      FALSE,
+      IF(
+        DATE_SUB(a.event_date, INTERVAL 14 DAY) < c.min_event_date,
+        NULL,
+        NOT EXISTS (
+          SELECT 1 FROM active_all AS p
+          WHERE p.user_pseudo_id = a.user_pseudo_id
+            AND DATE_DIFF(a.event_date, p.event_date, DAY) BETWEEN 1 AND 14
+        )
+      )
+    ) AS is_return
+  FROM active AS a
+  CROSS JOIN coverage AS c
+)
+
+SELECT
+  'collart_web' AS package_name,
+  'collart_web' AS app_name,
+  f.event_date,
+  f.user_pseudo_id,
+  f.user_id,
+  f.country,
+  f.app_version,
+  f.is_new,
+  lf.is_churn,
+  lf.is_return,
+  f.is_remove,
+  f.is_login,
+  f.is_active,
+  f.is_vip,
+  f.first_open_time,
+  f.traffic_src_name,
+  f.traffic_src_type,
+  f.traffic_src_platform,
+  STRUCT(
+    f.identity.clarity_user_id,
+    f.identity.clarity_session_id,
+    f.identity.atlasv_id
+  ) AS identity,
+  STRUCT(
+    f.geo.city,
+    f.geo.continent,
+    f.geo.sub_continent
+  ) AS geo,
+  f.device,
+  STRUCT(
+    f.traffic_src.source,
+    f.traffic_src.medium,
+    f.traffic_src.campaign,
+    f.traffic_src.campaign_id,
+    f.traffic_src.term,
+    f.traffic_src.content
+  ) AS traffic_src,
+  STRUCT(
+    COALESCE(ap.product_ids, []) AS product_ids,
+    COALESCE(ap.purchase_cnt, 0) AS purchase_cnt,
+    COALESCE(ap.is_subscribe, FALSE) AS is_subscribe,
+    COALESCE(ap.is_credit_pack, FALSE) AS is_credit_pack,
+    COALESCE(ap.credit_pack_cnt, 0) AS credit_pack_cnt,
+    COALESCE(ap.credit_amount, 0) AS credit_amount,
+    IF(DATE_ADD(f.event_date, INTERVAL 7 DAY) > to_date, NULL, COALESCE(fw.sub_in_7d, FALSE)) AS sub_in_7d,
+    IF(DATE_ADD(f.event_date, INTERVAL 7 DAY) > to_date, NULL, COALESCE(fw.credit_pack_in_7d, FALSE)) AS credit_pack_in_7d,
+    (COALESCE(ap.is_subscribe, FALSE) OR COALESCE(ap.is_credit_pack, FALSE)) AS is_purchase
+  ) AS subscription,
+  STRUCT(
+    COALESCE(ap.purchase_revenue, 0.0) AS purchase_revenue,
+    COALESCE(ap.resub_revenue, 0.0) AS resub_revenue,
+    COALESCE(ap.new_revenue, 0.0) AS new_revenue,
+    COALESCE(ap.credit_revenue, 0.0) AS credit_revenue,
+    0.0 AS ad_revenue
+  ) AS revenue,
+  STRUCT(
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 1 DAY) > to_date, NULL, COALESCE(rf.r1, FALSE)) AS d2,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 2 DAY) > to_date, NULL, COALESCE(rf.r2, FALSE)) AS d3,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 3 DAY) > to_date, NULL, COALESCE(rf.r3, FALSE)) AS d4,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 4 DAY) > to_date, NULL, COALESCE(rf.r4, FALSE)) AS d5,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 5 DAY) > to_date, NULL, COALESCE(rf.r5, FALSE)) AS d6,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 6 DAY) > to_date, NULL, COALESCE(rf.r6, FALSE)) AS d7,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 7 DAY) > to_date, NULL, COALESCE(rf.r7, FALSE)) AS d8,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 8 DAY) > to_date, NULL, COALESCE(rf.r8, FALSE)) AS d9,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 9 DAY) > to_date, NULL, COALESCE(rf.r9, FALSE)) AS d10,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 10 DAY) > to_date, NULL, COALESCE(rf.r10, FALSE)) AS d11,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 11 DAY) > to_date, NULL, COALESCE(rf.r11, FALSE)) AS d12,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 12 DAY) > to_date, NULL, COALESCE(rf.r12, FALSE)) AS d13,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 13 DAY) > to_date, NULL, COALESCE(rf.r13, FALSE)) AS d14,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 14 DAY) > to_date, NULL, COALESCE(rf.r14, FALSE)) AS d15,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 15 DAY) > to_date, NULL, COALESCE(rf.r15, FALSE)) AS d16,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 16 DAY) > to_date, NULL, COALESCE(rf.r16, FALSE)) AS d17,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 17 DAY) > to_date, NULL, COALESCE(rf.r17, FALSE)) AS d18,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 18 DAY) > to_date, NULL, COALESCE(rf.r18, FALSE)) AS d19,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 19 DAY) > to_date, NULL, COALESCE(rf.r19, FALSE)) AS d20,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 20 DAY) > to_date, NULL, COALESCE(rf.r20, FALSE)) AS d21,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 21 DAY) > to_date, NULL, COALESCE(rf.r21, FALSE)) AS d22,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 22 DAY) > to_date, NULL, COALESCE(rf.r22, FALSE)) AS d23,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 23 DAY) > to_date, NULL, COALESCE(rf.r23, FALSE)) AS d24,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 24 DAY) > to_date, NULL, COALESCE(rf.r24, FALSE)) AS d25,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 25 DAY) > to_date, NULL, COALESCE(rf.r25, FALSE)) AS d26,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 26 DAY) > to_date, NULL, COALESCE(rf.r26, FALSE)) AS d27,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 27 DAY) > to_date, NULL, COALESCE(rf.r27, FALSE)) AS d28,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 28 DAY) > to_date, NULL, COALESCE(rf.r28, FALSE)) AS d29,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 29 DAY) > to_date, NULL, COALESCE(rf.r29, FALSE)) AS d30
+  ) AS retain,
+  STRUCT(
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 1 DAY) > to_date, NULL, COALESCE(rf.rr1, FALSE)) AS d2,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 2 DAY) > to_date, NULL, COALESCE(rf.rr2, FALSE)) AS d3,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 3 DAY) > to_date, NULL, COALESCE(rf.rr3, FALSE)) AS d4,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 4 DAY) > to_date, NULL, COALESCE(rf.rr4, FALSE)) AS d5,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 5 DAY) > to_date, NULL, COALESCE(rf.rr5, FALSE)) AS d6,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 6 DAY) > to_date, NULL, COALESCE(rf.rr6, FALSE)) AS d7,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 7 DAY) > to_date, NULL, COALESCE(rf.rr7, FALSE)) AS d8,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 8 DAY) > to_date, NULL, COALESCE(rf.rr8, FALSE)) AS d9,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 9 DAY) > to_date, NULL, COALESCE(rf.rr9, FALSE)) AS d10,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 10 DAY) > to_date, NULL, COALESCE(rf.rr10, FALSE)) AS d11,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 11 DAY) > to_date, NULL, COALESCE(rf.rr11, FALSE)) AS d12,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 12 DAY) > to_date, NULL, COALESCE(rf.rr12, FALSE)) AS d13,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 13 DAY) > to_date, NULL, COALESCE(rf.rr13, FALSE)) AS d14,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 14 DAY) > to_date, NULL, COALESCE(rf.rr14, FALSE)) AS d15,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 15 DAY) > to_date, NULL, COALESCE(rf.rr15, FALSE)) AS d16,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 16 DAY) > to_date, NULL, COALESCE(rf.rr16, FALSE)) AS d17,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 17 DAY) > to_date, NULL, COALESCE(rf.rr17, FALSE)) AS d18,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 18 DAY) > to_date, NULL, COALESCE(rf.rr18, FALSE)) AS d19,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 19 DAY) > to_date, NULL, COALESCE(rf.rr19, FALSE)) AS d20,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 20 DAY) > to_date, NULL, COALESCE(rf.rr20, FALSE)) AS d21,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 21 DAY) > to_date, NULL, COALESCE(rf.rr21, FALSE)) AS d22,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 22 DAY) > to_date, NULL, COALESCE(rf.rr22, FALSE)) AS d23,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 23 DAY) > to_date, NULL, COALESCE(rf.rr23, FALSE)) AS d24,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 24 DAY) > to_date, NULL, COALESCE(rf.rr24, FALSE)) AS d25,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 25 DAY) > to_date, NULL, COALESCE(rf.rr25, FALSE)) AS d26,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 26 DAY) > to_date, NULL, COALESCE(rf.rr26, FALSE)) AS d27,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 27 DAY) > to_date, NULL, COALESCE(rf.rr27, FALSE)) AS d28,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 28 DAY) > to_date, NULL, COALESCE(rf.rr28, FALSE)) AS d29,
+    IF(NOT f.is_active OR DATE_ADD(f.event_date, INTERVAL 29 DAY) > to_date, NULL, COALESCE(rf.rr29, FALSE)) AS d30
+  ) AS rolling_retain
+FROM output_base AS f
+LEFT JOIN lifecycle_flags AS lf USING (event_date, user_pseudo_id)
+LEFT JOIN fwd AS fw USING (event_date, user_pseudo_id)
+LEFT JOIN retain_flags AS rf USING (event_date, user_pseudo_id)
+LEFT JOIN stripe_all AS ap USING (event_date, user_pseudo_id);
+
+COMMIT TRANSACTION;

@@ -1,0 +1,84 @@
+{
+  "table": "aidata2025.dim.dim_template_tag",
+  "captured_at": "2026-09-14T13:19:06.834853+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "event_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "tem_digital_id",
+        "type": "BIGNUMERIC",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "temp_id",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "temp_title",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "description",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "categories",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "is_vip",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "create_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "service_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "temp_scene_tags",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "temp_style_tags",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "temp_gameplay_tags",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "temp_audience_tags",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "temp_nsfw_tags",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dim",
+    "tableId": "dim_template_tag"
+  },
+  "type": "TABLE"
+}

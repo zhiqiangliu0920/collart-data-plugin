@@ -1,0 +1,262 @@
+config {
+    type: "operations"
+}
+
+
+--------------------
+DECLARE from_date DATE DEFAULT  "2025-01-01";
+
+BEGIN TRANSACTION;
+DELETE
+FROM  `pubdata2025.ads.ads_atlasv_basic_data_daily_1h`
+WHERE  stats_date >= '2025-01-01';
+
+
+-----------------------------------------
+INSERT INTO
+  pubdata2025.ads.ads_atlasv_basic_data_daily_1h
+
+with product_info as
+(select stats_date,package_name,app_name,platform,app_type,city,team
+from unnest(GENERATE_DATE_ARRAY('2025-01-01', date_add(current_Date,interval -1 day))) stats_date
+join (select package_name,app_name,platform,app_type,city,team from `aidata2025.dim.dim_product_info`) on 1=1 
+),
+
+
+hangzhou_revenue_info as(
+
+-----AI影像组收入数据
+select event_Date stats_date
+,package_name
+,sum(revenue) revenue
+,sum(sub_revenue) vip_revenue
+,sum(ad_revenue) ad_revenue
+from aidata2025.ads.ads_ad_sub_revenue_1h
+where event_date>='2025-01-01'
+group by 1,2 
+
+-----下载器组收入数据
+union all
+select event_Date  stats_date
+,a.package_name
+,sum(a.revenue) revenue
+,sum(sub_revenue) vip_revenue
+,sum(ad_revenue) ad_revenue
+from 	downloaddata2025.ads.ads_ad_sub_revenue_1h a
+left join aidata2025.dim.dim_product_info_copy b on a.package_name=b.package_name
+where event_date >= "2025-01-01"
+and b.team<>'ai_photo'
+group by 1,2 
+),
+
+hangzhou_active_info as
+(
+----老产品新增活跃数据(7月之前数据)      
+select PARSE_DATE('%Y%m%d', stats_date) stats_date
+,package_name
+,new_users
+,null as retain_2
+,null as retain_7
+,new_users_organic
+,active_users
+from `hzdata.firebase.prefect_total_metrics_20*`
+where _TABLE_SUFFIX between '250101' and  '250630'
+and country='TOTAL'
+and package_name not in('instagram.video.downloader.story.saver',
+'tiktok.video.downloader.nowatermark.tiktokdownload',
+'instagram.video.downloader.story.saver.ig',
+'instasaver.instagram.video.downloader.photo',
+'facebook.video.downloader.savefrom.fb',
+'video.editor.videomaker.effects.fx',
+'instasaver.instagram.video.downloader.photo.ig',
+'facebook.video.downloader.savefrom.fb.saver.fast',
+'twittervideodownloader.twitter.videoindir.savegif.twdown',
+'tiktok.video.downloader.nowatermark.tiktokdownload.snaptik',
+'com.SpringTech.NewSC',
+'free.ai.photo.generator.collart.ai',
+'free.ai.headshot.photo.generator.face.app',
+'ai.headshot.photo.generator.face.app.free',
+'com.SpringTech.RemoveObjects'
+)
+
+-----下载器组新增活跃数据
+union all
+select a.stats_date
+,a.package_name
+,a.new_users
+,a.retain_2
+,b.retain_7
+,a.new_users_organic
+,a.active_users
+from
+(
+  select a.event_date stats_date,
+  package_name, 
+  SUM(case when is_new then dau end) AS new_users, 
+  sum(case when is_new then retain_1day end)/SUM(case when is_new then dau end) retain_2,
+  --sum(case when is_new then retain_7 end)/SUM(case when is_new then dau end) retain_7,
+  sum(case when is_new and traffic_src_type in ('nature','inhouse') then dau end) new_users_organic,
+  SUM(dau) AS active_users
+  from downloaddata2025.ads.ads_user_change_1d a 
+  where a.event_date>='2025-01-01'
+  and package_name in (
+    'instagram.video.downloader.story.saver',
+    'instagram.video.downloader.story.saver.ig',
+    'instagram.video.downloader.story.saver.ig.insaver',
+    'instasaver.instagram.video.downloader.photo',
+    'instasaver.instagram.video.downloader.photo.ig',
+    'statussaver.videodownloader.downloadstatus.savestatus.storysaver',
+    'pin.pinterest.video.downloader.forpinterest.pinsaver',
+    'tiktok.video.downloader.nowatermark.tiktokdownload',
+    'tiktok.video.downloader.nowatermark.tiktokdownload.snaptik',
+    'facebook.video.downloader.savefrom.fb',
+    'facebook.video.downloader.savefrom.fb.saver.fast',
+    'twittervideodownloader.twitter.videoindir.savegif.twdown',
+    'com.my.drama.box.reel.short.stream.tv.app'
+  )
+  group by 1,2
+)a
+left join(
+  select event_date as stats_date 
+  ,package_name
+  ,count(distinct if(is_retain7=1,user_pseudo_id,null))/count(distinct user_pseudo_id) retain_7
+  from downloaddata2025.ads.ads_new_user_revenue_1d 
+  where event_date>='2025-01-01'
+  and traffic_source_name like '%ga%'
+  and package_name in (
+    'instagram.video.downloader.story.saver',
+    'instagram.video.downloader.story.saver.ig',
+    'instagram.video.downloader.story.saver.ig.insaver',
+    'instasaver.instagram.video.downloader.photo',
+    'instasaver.instagram.video.downloader.photo.ig',
+    'statussaver.videodownloader.downloadstatus.savestatus.storysaver',
+    'pin.pinterest.video.downloader.forpinterest.pinsaver',
+    'tiktok.video.downloader.nowatermark.tiktokdownload',
+    'tiktok.video.downloader.nowatermark.tiktokdownload.snaptik',
+    'facebook.video.downloader.savefrom.fb',
+    'facebook.video.downloader.savefrom.fb.saver.fast',
+    'twittervideodownloader.twitter.videoindir.savegif.twdown',
+    'com.my.drama.box.reel.short.stream.tv.app'
+  )
+  group by 1,2
+)b
+on a.stats_date=b.stats_date 
+and a.package_name=b.package_name
+
+
+----ai组新增活跃数据
+union all
+select 
+event_Date stats_date,
+package_name,
+sum(dnu) new_users,
+sum(retention.day2)/sum(dnu) retain_2,
+sum(retention.day7)/sum(dnu) retain_7,
+sum(case when traffic_src_type='nature' then dnu end) new_users_organic,
+sum(dau) active_users
+from aidata2025.dws.dws_oper_basic_aidata_1d
+where event_date>='2025-01-01'
+and package_name<>'ai.headshot.photo.generator.face.app.free'
+group by 1,2
+),
+
+
+
+all_revenue_info as(
+select a.stats_date
+,a.team     
+,a.package_name
+,a.app_name
+,a.platform
+,a.app_type
+,a.city
+,c.revenue
+,c.vip_revenue
+,c.ad_revenue
+,b.new_users
+,b.new_users_organic
+,b.active_users
+,d.cost
+,retain_2
+,retain_7
+,ifnull(f.cost,0) else_cost
+from product_info   a 
+left join hangzhou_active_info b on a.package_name=b.package_name and a.stats_date=b.stats_date
+left join hangzhou_revenue_info c on a.package_name=c.package_name and a.stats_date=c.stats_date
+left join pubdata2025.ads.ads_atlasv_deliver_cost_daily d on a.package_name=d.package_name and a.stats_date=d.event_date
+left join (
+select event_Date ,app_name ,sum(cost) cost
+ from aidata2025.ai_service.ai_cost_data
+ group by all) f on  a.app_name=f.app_name and a.stats_date=f.event_Date
+where a.city='hangzhou'
+
+
+union all 
+select a.stats_date
+       ,a.team
+      ,a.package_name
+      ,a.app_name
+      ,a.platform
+      ,a.app_type
+      ,a.city
+      ,b.revenue
+      ,b.vip_revenue
+      ,b.ad_revenue
+      ,b.new_users
+      ,b.new_users_organic
+      ,b.active_users
+      ,b.cost
+      ,b.retain_2
+      ,b.retain_7
+      ,b.else_cost
+from product_info a 
+left join gzdw2024.gz_bi.dws_daily_app_reports b on a.package_name=b.package_name and a.stats_date=b.stats_date
+where a.city='guangzhou'
+and b.stats_date>='2025-01-01'
+
+union all 
+select *,null as retain_2,null as retain_7,null as else_cost  
+from pubdata2025.ads.ads_atlasv_basic_data_daily_2024
+where stats_date<'2025-01-01'),
+
+
+revenue_level_info as 
+(select app_name,  
+case when avg(revenue-ifnull(cost,0)-ifnull(else_cost,0)) >=3000 then '3000+'
+     when avg(revenue-ifnull(cost,0)-ifnull(else_cost,0)) >=2000 then '2000+'
+     when avg(revenue-ifnull(cost,0)-ifnull(else_cost,0)) >=1500 then '1500+'
+     when avg(revenue-ifnull(cost,0)-ifnull(else_cost,0)) >=1000 then '1000+'
+     else '<1000' end as revenue_level
+from all_revenue_info 
+where stats_Date between date_sub(current_date, INTERVAL 8 day) and date_sub(current_date, INTERVAL 2 day)
+group by app_name
+)
+
+
+select stats_date
+      ,team
+      ,package_name
+      ,app_name
+      ,platform
+      ,app_type
+      ,city
+      ,revenue
+      ,vip_revenue
+      ,ad_revenue
+      ,new_users
+      ,new_users_organic
+      ,active_users
+      ,cost
+      ,else_cost
+      ,lag(revenue,1) over(partition by package_name order by stats_date) revenue_last
+      ,lag(new_users,1) over(partition by package_name order by stats_date) new_users_last
+      ,lag(active_users,1) over(partition by package_name order by stats_date) active_users_last
+      ,case when app_name in('speedtest_iOS','pinkbird_iOS') then 0 else lag(cost,1) over(partition by package_name order by stats_date) end cost_last
+      ,lag(else_cost,1) over(partition by package_name order by stats_date) else_cost_last
+      ,case when city='guangzhou'then retain_2 else lag(retain_2,1) over(partition by app_name order by stats_Date) end retan_2
+      ,case when city='guangzhou'then retain_7 else lag(retain_7,6) over(partition by app_name order by stats_Date) end retan_7 
+      ,revenue_level           
+from all_revenue_info
+left join revenue_level_info  using(app_name)
+;
+commit;

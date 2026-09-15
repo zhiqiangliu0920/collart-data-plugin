@@ -1,0 +1,129 @@
+{
+  "table": "pubdata2025.ads.ads_atlasv_basic_data_daily_1h",
+  "captured_at": "2026-09-14T13:19:08.721343+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "stats_date",
+        "type": "DATE",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "team",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "package_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "platform",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "app_type",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "city",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "vip_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "ad_revenue",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "new_users",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "new_users_organic",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "active_users",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "else_cost",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_last",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "new_users_last",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "active_users_last",
+        "type": "INTEGER",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "cost_last",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "else_cost_last",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retan_2",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "retan_7",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "revenue_level",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "pubdata2025",
+    "datasetId": "ads",
+    "tableId": "ads_atlasv_basic_data_daily_1h"
+  },
+  "type": "TABLE"
+}

@@ -1,0 +1,132 @@
+{
+  "table": "aidata2025.ads_collartfashion.ads_oper_user_event_metric_di",
+  "captured_at": "2026-09-14T13:19:04.712895+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "package_name",
+        "type": "STRING"
+      },
+      {
+        "name": "app_name",
+        "type": "STRING"
+      },
+      {
+        "name": "event_date",
+        "type": "DATE"
+      },
+      {
+        "name": "user_pseudo_id",
+        "type": "STRING"
+      },
+      {
+        "name": "vip_subscribe_succeed_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "seo_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "seo_click_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "valid_action_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "inspiration_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "inspiration_template_click_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "fashion_generate_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "fashion_generate_step2_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "fashion_generate_step3_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "fashion_generate_step4_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "fashion_generate_click_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "fashion_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "fashion_download_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "fashion_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "aimodel_generate_click_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "aimodel_generate_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "aimodel_generate_start_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "aimodel_generate_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "aimodel_download_success_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "vip_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "credit_pack_purchase_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "login_show_pv",
+        "type": "INTEGER"
+      },
+      {
+        "name": "login_success_pv",
+        "type": "INTEGER"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "ads_collartfashion",
+    "tableId": "ads_oper_user_event_metric_di"
+  },
+  "timePartitioning": {
+    "type": "DAY",
+    "field": "event_date"
+  },
+  "clustering": {
+    "fields": [
+      "user_pseudo_id"
+    ]
+  },
+  "description": "ads_collartfashion 用户×日事件宽表（新建）",
+  "type": "TABLE"
+}

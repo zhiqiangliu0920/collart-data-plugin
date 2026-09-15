@@ -1,0 +1,29 @@
+{
+  "table": "aidata2025.dim.exchange_rate_days",
+  "captured_at": "2026-09-14T13:19:06.759405+00:00",
+  "schema": {
+    "fields": [
+      {
+        "name": "stats_date",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "currency",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      },
+      {
+        "name": "rate",
+        "type": "FLOAT",
+        "mode": "NULLABLE"
+      }
+    ]
+  },
+  "tableReference": {
+    "projectId": "aidata2025",
+    "datasetId": "dim",
+    "tableId": "exchange_rate_days"
+  },
+  "type": "TABLE"
+}

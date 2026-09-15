@@ -1,0 +1,257 @@
+config {
+  type: "operations",
+  dependencies: [
+    "h_dwd_oper_user_event_di",
+    "h_dwd_oper_user_event_params_di",
+    "h_dwd_oper_user_properties_di"
+  ]
+}
+
+DECLARE from_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date} - 2;
+DECLARE to_date DATE DEFAULT ${dataform.projectConfig.vars.biz_date};
+
+BEGIN TRANSACTION;
+
+DELETE FROM `aidata2025.dm.dm_collart_ios_user_event_di`
+WHERE event_date BETWEEN from_date AND to_date;
+
+INSERT INTO `aidata2025.dm.dm_collart_ios_user_event_di`
+
+WITH event_core AS (
+  SELECT *
+  FROM `aidata2025.dwd.dwd_oper_user_event_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    and lower(app_name) = 'vidart'
+    AND package_name = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+    AND user_pseudo_id IS NOT NULL
+    AND event_name NOT LIKE 'tech%'
+    AND event_name NOT LIKE 'dev%'
+),
+
+event_params AS (
+  SELECT
+    event_date,
+    package_name,
+    user_pseudo_id,
+    event_name,
+    event_time,
+    (
+      SELECT AS STRUCT
+        MAX(IF(p.key IN ('product_id', 'active_product_id'), value_string, NULL)) AS product_id,
+        MAX(IF(p.key = 'price', value_string, NULL)) AS price,
+        MAX(IF(p.key = 'quantity', value_string, NULL)) AS quantity,
+        MAX(IF(p.key = 'currency', value_string, NULL)) AS currency,
+        MAX(IF(p.key IN ('is_vip', 'params_is_vip'), value_string, NULL)) AS is_vip,
+        MAX(IF(p.key = 'ga_session_id', value_string, NULL)) AS ga_session_id,
+        MAX(IF(p.key = 'ga_session_number', value_string, NULL)) AS ga_session_number,
+        MAX(IF(p.key IN ('campaignID', 'campaign'), value_string, NULL)) AS campaign_id,
+        -- firebase_campaign 用 term 传关键词；user_properties 用 keywordID
+        MAX(IF(p.key IN ('keywordID', 'term'), value_string, NULL)) AS keyword_id,
+        MAX(IF(p.key IN ('temp_id', 'material_id'), value_string, NULL)) AS temp_id,
+        MAX(IF(p.key = 'module_id', value_string, NULL)) AS module_id,
+        MAX(IF(p.key = 'module_index', value_string, NULL)) AS module_index,
+        MAX(IF(p.key = 'category_id', value_string, NULL)) AS category_id,
+        MAX(IF(p.key = 'banner_id', value_string, NULL)) AS banner_id,
+        MAX(IF(p.key = 'presret_id', value_string, NULL)) AS presret_id,
+        MAX(IF(p.key = 'template_type', value_string, NULL)) AS template_type,
+        MAX(IF(p.key = 'service_type', value_string, NULL)) AS service_type,
+        MAX(IF(p.key = 'feature_id', value_string, NULL)) AS feature_id,
+        MAX(IF(p.key = 'model', value_string, NULL)) AS model,
+        MAX(IF(p.key = 'model_type', value_string, NULL)) AS model_type,
+        MAX(IF(p.key = 'submodel_type', value_string, NULL)) AS submodel_type,
+        MAX(IF(LOWER(p.key) IN ('task_id', 'taskid'), value_string, NULL)) AS task_id,
+        MAX(IF(LOWER(p.key) = 'resulttaskid', value_string, NULL)) AS result_task_id,
+        MAX(IF(LOWER(p.key) = 'resultgenerationid', value_string, NULL)) AS result_generation_id,
+        MAX(IF(p.key = 'workspace_task_id', value_string, NULL)) AS workspace_task_id,
+        MAX(IF(p.key = 'result_type', value_string, NULL)) AS result_type,
+        MAX(IF(p.key = 'resolution', value_string, NULL)) AS resolution,
+        MAX(IF(p.key = 'ratio', value_string, NULL)) AS ratio,
+        MAX(IF(p.key = 'variations', value_string, NULL)) AS variations,
+        MAX(IF(p.key = 'native_audio', value_string, NULL)) AS native_audio,
+        MAX(IF(p.key = 'credits', value_string, NULL)) AS credits,
+        MAX(IF(p.key = 'from', value_string, NULL)) AS event_from,
+        MAX(IF(p.key = 'duration', value_string, NULL)) AS duration,
+        MAX(IF(p.key = 'engagement_time_msec', value_string, NULL)) AS engagement_time_msec,
+        MAX(IF(p.key = 'is_retry', value_string, NULL)) AS is_retry,
+        MAX(IF(p.key IN ('errorCode', 'code'), value_string, NULL)) AS error_code,
+        MAX(IF(p.key = 'serviceCode', value_string, NULL)) AS service_code,
+        MAX(IF(p.key IN ('error_msg', 'error'), value_string, NULL)) AS error_msg,
+        MAX(IF(p.key = 'api', value_string, NULL)) AS api,
+        MAX(IF(p.key = 'path', value_string, NULL)) AS path,
+        MAX(IF(p.key = 'file_name', value_string, NULL)) AS file_name,
+        MAX(IF(p.key = 'url', value_string, NULL)) AS url,
+        MAX(IF(p.key = 'time_ms', value_string, NULL)) AS time_ms,
+        MAX(IF(p.key = 'success', value_string, NULL)) AS success,
+        MAX(IF(p.key = 'page_type', value_string, NULL)) AS page_type,
+        MAX(IF(p.key = 'projectid', value_string, NULL)) AS project_id,
+        MAX(IF(p.key = 'previous_first_open_count', value_string, NULL)) AS previous_first_open_count
+      FROM (
+        SELECT
+          p.*,
+          COALESCE(
+            CAST(p.value.int_value AS STRING),
+            p.value.string_value,
+            CAST(p.value.float_value AS STRING),
+            CAST(p.value.double_value AS STRING)
+          ) AS value_string
+        FROM UNNEST(event_param) AS p
+      ) AS p
+    ) AS param
+  FROM `aidata2025.dwd.dwd_oper_user_event_params_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND package_name = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+    and lower(app_name) = 'vidart'
+),
+
+user_properties AS (
+  SELECT
+    package_name,
+    user_pseudo_id,
+    MAX(IF(user_properties_key = 'clarity_user_id', user_properties_value, NULL)) AS clarity_user_id,
+    MAX(IF(user_properties_key = 'adGroupID', user_properties_value, NULL)) AS ad_group_id,
+    MAX(IF(user_properties_key = 'campaignID', user_properties_value, NULL)) AS campaign_id,
+    MAX(IF(user_properties_key = 'keywordID', user_properties_value, NULL)) AS keyword_id
+  FROM `aidata2025.dwd.dwd_oper_user_properties_di`
+  WHERE event_date BETWEEN from_date AND to_date
+    AND package_name = 'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free'
+    and lower(app_name) = 'vidart'
+  GROUP BY package_name, user_pseudo_id
+)
+
+SELECT
+  'ai.photo.video.generator.fotos.ai.image.picture.editor.app.free' AS package_name,
+  'vidart_ios' AS app_name,
+  e.event_date,
+  e.event_time, ----转化为北京时间
+  e.user_pseudo_id, 
+  e.user_id,
+  e.country,
+  e.traffic_src_name,
+  CASE
+    WHEN e.traffic_src_type = 'inhouse' OR LOWER(IFNULL(e.traffic_src_name, '')) LIKE '%inhouse%' THEN 'inhouse'
+    WHEN REGEXP_CONTAINS(LOWER(IFNULL(e.traffic_src_name, '')), r'^(kol|sptt-|spytb-|tt_|youtube_)') THEN 'kol'
+    WHEN e.traffic_src_type = 'delivery' THEN 'delivery'
+    ELSE 'nature'
+  END AS traffic_src_type,
+  CASE
+    WHEN e.traffic_src_type = 'inhouse' OR LOWER(IFNULL(e.traffic_src_name, '')) LIKE '%inhouse%' THEN 'inhouse'
+    WHEN REGEXP_CONTAINS(LOWER(IFNULL(e.traffic_src_name, '')), r'^(kol|sptt-|spytb-|tt_|youtube_)') THEN 'kol'
+    WHEN e.traffic_src_type != 'delivery' THEN 'nature'
+    WHEN LOWER(IFNULL(e.traffic_src_source, '')) = 'apple'
+      OR REGEXP_CONTAINS(IFNULL(COALESCE(p.param.campaign_id, up.campaign_id, e.traffic_src_name), ''), r'^[0-9]{6,}$') THEN 'asa'
+    WHEN UPPER(IFNULL(e.traffic_src_name, '')) LIKE 'GA-%'
+      OR (LOWER(IFNULL(e.traffic_src_source, '')) = 'google' AND LOWER(IFNULL(e.traffic_src_medium, '')) = 'cpc') THEN 'ga_delivery'
+    WHEN LOWER(IFNULL(e.traffic_src_source, '')) IN ('x', 'twitter')
+      OR REGEXP_CONTAINS(UPPER(IFNULL(e.traffic_src_name, '')), r'^(X[-_]|CW_X_|TW[-_]|TWITTER)') THEN 'x_delivery'
+    WHEN LOWER(IFNULL(e.traffic_src_source, '')) LIKE '%tiktok%'
+      OR LOWER(IFNULL(e.traffic_src_source, '')) LIKE '%bytedance%'
+      OR REGEXP_CONTAINS(UPPER(IFNULL(e.traffic_src_name, '')), r'^(TT[-]|TIKTOK)') THEN 'tt_delivery'
+    WHEN UPPER(IFNULL(e.traffic_src_name, '')) LIKE 'FB%'
+      OR UPPER(IFNULL(e.traffic_src_name, '')) LIKE 'IG%'
+      OR LOWER(IFNULL(e.traffic_src_source, '')) LIKE '%facebook%'
+      OR LOWER(IFNULL(e.traffic_src_source, '')) LIKE '%instagram%' THEN 'fb_delivery'
+    ELSE 'other_delivery'
+  END AS traffic_src_platform,
+  e.app_version,
+  SAFE_CAST(p.param.ga_session_id AS INT64) AS ga_session_id,
+  SAFE_CAST(p.param.ga_session_number AS INT64) AS ga_session_number,
+  e.first_open_time,
+  (e.user_id IS NOT NULL AND e.user_id != '') AS is_login,
+  e.is_vip,
+  STRUCT(
+    p.param.product_id,
+    p.param.price,
+    SAFE_CAST(p.param.quantity AS INT64),
+    p.param.currency
+  ) AS subscription,
+  STRUCT(
+    e.adjust_id AS adjust_id,
+    up.clarity_user_id AS clarity_user_id,
+    e.` advertising_id` AS advertising_id
+  ) AS identity,
+  STRUCT(
+    e.city,
+    e.geo_continent,
+    e.geo_sub_continent
+  ) AS geo,
+  STRUCT(
+    e.device_category,
+    e.mobile_brand_name,
+    e.mobile_model_name,
+    e.operating_system,
+    e.device_operating_system_version,
+    e.device_vendor_id,
+    e.device_language
+  ) AS device,
+  STRUCT(
+    e.traffic_src_medium,
+    e.traffic_src_source,
+    -- ASA 三级兜底：event_params → user_properties → traffic_src_name（Apple 时常直接等于 campaign_id）
+    COALESCE(
+      NULLIF(p.param.campaign_id, ''),
+      NULLIF(up.campaign_id, ''),
+      IF(
+        LOWER(IFNULL(e.traffic_src_source, '')) = 'apple'
+          AND REGEXP_CONTAINS(IFNULL(e.traffic_src_name, ''), r'^[0-9]{6,}$'),
+        e.traffic_src_name,
+        NULL
+      )
+    ),
+    up.ad_group_id,
+    COALESCE(NULLIF(p.param.keyword_id, ''), NULLIF(up.keyword_id, ''))
+  ) AS traffic_src,
+  STRUCT(
+    p.param.temp_id,
+    p.param.module_id,
+    p.param.module_index,
+    p.param.category_id,
+    p.param.banner_id,
+    p.param.presret_id,
+    p.param.template_type
+  ) AS template,
+  STRUCT(
+    p.param.service_type,
+    p.param.feature_id,
+    p.param.model,
+    p.param.model_type,
+    p.param.submodel_type,
+    p.param.task_id,
+    p.param.result_task_id,
+    p.param.result_generation_id,
+    p.param.workspace_task_id,
+    p.param.result_type,
+    p.param.resolution,
+    p.param.ratio,
+    SAFE_CAST(p.param.variations AS INT64),
+    p.param.native_audio,
+    p.param.credits,
+    p.param.event_from,
+    p.param.duration,
+    SAFE_CAST(p.param.engagement_time_msec AS INT64),
+    p.param.is_retry,
+    p.param.error_code,
+    p.param.service_code,
+    p.param.error_msg,
+    p.param.api,
+    p.param.path,
+    p.param.file_name,
+    p.param.url,
+    SAFE_CAST(p.param.time_ms AS FLOAT64),
+    p.param.success,
+    p.param.page_type,
+    p.param.project_id,
+    p.param.previous_first_open_count
+  ) AS params_info,
+  e.event_name
+FROM event_core AS e
+LEFT JOIN event_params AS p
+  ON e.event_date = p.event_date
+ AND e.package_name = p.package_name
+ AND e.user_pseudo_id = p.user_pseudo_id
+ AND e.event_name = p.event_name
+ AND e.event_time = DATETIME(TIMESTAMP_MICROS(p.event_time))
+LEFT JOIN user_properties AS up
+  ON e.package_name = up.package_name
+ AND e.user_pseudo_id = up.user_pseudo_id;
+
+COMMIT;
